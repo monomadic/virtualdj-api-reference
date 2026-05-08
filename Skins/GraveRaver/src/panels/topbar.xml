@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <panel name="header_main" visible="yes">
+    <!-- ALL: TOP BAR
+      height: 43px
+    -->
+    <!-- background -->
+    <visual class="gfx_shape" width="1920-2-2" height="45" coloroff="dark_3"/>
+    <!-- DECK LAYOUT BUTTONS -->
+    <group x="70" y="0">
+      <button tooltip="Pro" class="button_main" action="set '@$hauntingproskinmode' 0 &amp; load_skin" width="60" height="45" bordersize="0" query="var_equal '@$hauntingproskinmode' 0">
+        <off color="transparent"/>
+        <on color="#222222"/>
+        <over color="transparent"/>
+        <down color="#222222"/>
+        <selected color="#333333"/>
+        <text overcolor="white" size="12" oncolor="white" text="PRO"/>
+      </button>
+      <button x="+60" tooltip="Performance" class="button_main" action="set '@$hauntingproskinmode' 1 &amp; load_skin" width="60" height="45" bordersize="0" query="var_equal '@$hauntingproskinmode' 1">
+        <off color="transparent"/>
+        <on color="#222222"/>
+        <over color="transparent"/>
+        <down color="#222222"/>
+        <selected color="#333333"/>
+        <text overcolor="white" size="12" oncolor="white" text="PERF"/>
+      </button>
+      <button x="+120" tooltip="Stack" class="button_main" action="set '@$hauntingproskinmode' 2 &amp; load_skin" width="60" height="45" bordersize="0" query="var_equal '@$hauntingproskinmode' 2">
+        <off color="transparent"/>
+        <on color="#222222"/>
+        <over color="transparent"/>
+        <down color="#222222"/>
+        <selected color="#333333"/>
+        <text overcolor="white" size="12" oncolor="white" text="STACK"/>
+      </button>
+    </group>
+    <!-- NUMBER OF DECKS -->
+    <group x="340" y="+2">
+      <!-- border -->
+      <visual x="+0" y="+7" width="65" height="30">
+        <off shape="square" color="transparent" border_size="1" border="#333333" radius="6"/>
+      </visual>
+      <!-- blackout -->
+      <visual x="+16" y="+0" width="32" height="13" visibility="1.0">
+        <off shape="square" color="black"/>
+      </visual>
+      <!-- 2 DECK BUTTON -->
+      <button x="+3" y="+8" width="30" height="28" tooltip="2 Decks (4 Swap)" class="button_main" action="set '@$hauntinglayout' 0 &amp; set '@$4decks' 1 &amp; load_skin" bordersize="0" query="var_equal '@$hauntinglayout' 0 ? var_equal '@$4decks' 1">
+        <off color="transparent"/>
+        <text overcolor="#999999" fontsize="14" weight="bold" oncolor="white" text="2"/>
+      </button>
+      <!-- 4 DECK BUTTON -->
+      <button x="+32" y="+8" width="30" height="28" tooltip="4 Decks" class="button_main" action="set '@$hauntinglayout' 1 &amp; set '@$4decks' 1 &amp; load_skin" bordersize="0">
+        <off color="transparent"/>
+        <text overcolor="#999999" fontsize="14" weight="bold" oncolor="white" text="4"/>
+      </button>
+      <!-- label -->
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="65" height="14"/>
+        <text fontsize="9" weight="normal" color="#999999" align="center" text="DECKS" important="true"/>
+      </textzone>
+    </group>
+    <!-- DECK MODE BUTTONS -->
+    <group x="250" y="0">
+      <!-- bottom bar toggle -->
+      <button x="420" y="8" tooltip="UTILITY BAR MODE\nToggle between utility bar and hashtag bar at the bottom of the screen." class="button_main" action="toggle '@$hauntingutilitybar' &amp; load_skin" textsize="10" textcolor="needle" textaction="var_equal '@$hauntingutilitybar' 1 ? get_text 'ON' : get_text 'OFF'" query="get_var '@$hauntingutilitybar'">
+        <size width="33" height="33"/>
+        <off color="dark_1"/>
+        <on color="dark_8"/>
+        <selected color="dark_5"/>
+      </button>
+      <!-- <button tooltip="BORDER MODE\nShow or hide the active deck border." class="button_main" x="+30" action="toggle '@$dd_bordermode'" width="26" height="27" textsize="12" textcoloron="needle" text="B" coloroff="panel_background" coloron="#222222" bordersize="0"/> -->
+      <!-- <button tooltip="BROWSER ZOOM\nToggle browser zoom mode." class="button_main" x="+0" action="browser_zoom" width="70" height="42" textsize="12" textcoloron="needle" text="LIBRARY" coloroff="#101010" coloron="#222222" bordersize="0"/> -->
+      <!-- <button tooltip="" class="button_main" x="+122" action="setting 'showLyrics'" width="60" height="27" textsize="12" textcoloron="needle" text="LYRICS" coloroff="#101010" coloron="#222222" bordersize="0"/> -->
+      <!-- <button tooltip="SAMPLE PADS\nToggle sample pads." class="button_main" x="+125" action="sideview_triggerpad 'sideview' &amp; sideview_triggerpad &amp; show_splitpanel 'sideview'" width="70" height="27" textsize="12" textcoloron="needle" text="SAMPLES" coloroff="#101010" coloron="#222222" bordersize="0" query=""/> -->
+    </group>
+    <group visibility="browser_zoom" x="680" y="8">
+      <button tooltip="SHOW WAVEFORMS\nShow or hide waveforms in browser zoom mode." class="button_main" x="+90" action="toggle '@$hide_zoom_waveforms' &amp; load_skin" width="80" height="27" textsize="12" textcoloron="needle" text="WAVES" coloroff="panel_background" coloron="#222222" bordersize="0" query="var_equal '@$hide_zoom_waveforms' '1'"/>
+    </group>
+    <!-- XL CUSTOM BUTTON -->
+    <button class="custom_button" source="100" x="+960-64" y="+8" width="130" height="26" coloroff="black">
+      <off color="black" border="#888888"/>
+      <on color="#000000"/>
+      <over color="#000000" border="white"/>
+      <down color="#000000" border="#888888"/>
+      <selected color="#000000"/>
+      <text overcolor="white" size="14" oncolor="white" align="center"/>
+    </button>
+    <!-- SETTINGS -->
+    <group x="1070" y="+5">
+      <!-- GLOBAL QUANT -->
+      <group x="+90" y="+0">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="65" height="16"/>
+          <text fontsize="9" weight="normal" color="#999999" align="center" text="QUANTIZE" important="true"/>
+        </textzone>
+        <button class="button_main" x="+0" y="+0+14" width="65" height="15" action="param_equal `setting 'globalQuantize'` 1  ? setting 'globalQuantize' 4  : param_equal `setting 'globalQuantize'` 4  ? setting 'globalQuantize' 16 : param_equal `setting 'globalQuantize'` 16 ? setting 'globalQuantize' 32 : setting 'globalQuantize' 1" textsize="12" textaction="param_equal `setting 'globalQuantize' 1 ? get_text 'BEAT'`" coloroff="#111111" coloron="#111111" bordersize="1" textcolor="#999999" textcoloron="white" brcoloroff="#999999" brcoloron="#999999" query="slip_mode ? blink 800ms : off"/>
+      </group>
+      <!-- CUE MODE -->
+      <group x="+160" y="+0">
+        <textzone>
+          <size width="65" height="16"/>
+          <text fontsize="9" weight="normal" color="#999999" align="center" text="CUE MODE" important="true"/>
+        </textzone>
+        <button class="button_main" x="+0" y="+0+14" width="65" height="15" action="setting 'hotcueMode'" textsize="12" textaction="setting 'hotCueMode' &amp; param_uppercase" coloroff="#111111" coloron="#111111" bordersize="1" textcolor="#999999" textcoloron="white" brcoloroff="#999999" brcoloron="#999999" query="slip_mode ? blink 800ms : off"/>
+      </group>
+      <!-- SYNC BUTTONS -->
+      <group x="+250" y="+0">
+        <textzone>
+          <size width="26+26+26" height="16"/>
+          <text fontsize="9" weight="normal" color="#999999" align="center" text="GLOBAL SYNC" important="true"/>
+        </textzone>
+        <group y="+14">
+          <!-- MASTER TEMPO BUTTON -->
+          <button class="button_main" x="+0" y="+0" width="25" height="15" tooltip="Master Tempo" action="master_tempo" textsize="10" text="MT" coloron="#2D003D" textcoloron="#A800FF" bordersize="1" brcoloron="#A800FF"/>
+          <!-- MASTERDECK AUTO BUTTON -->
+          <button class="button_main" x="+26" y="+0" width="25" height="15" tooltip="Masterdeck Auto" action="masterdeck_auto" textsize="10" text="M" textcoloron="orange" bordersize="1" brcoloron="orange" coloron="#222200"/>
+          <!-- GLOBAL QUANTIZE BUTTON -->
+          <button class="button_main" x="+52" y="+0" width="25" height="15" tooltip="Quantize All" action="deck 1 quantize_all &amp; deck 2 quantize_all &amp; deck 3 quantize_all &amp; deck 4 quantize_all" textsize="10" text="Q" textcoloron="#88FF88" bordersize="1" brcoloron="#88FF88" coloron="#002200"/>
+        </group>
+      </group>
+    </group>
+    <group x="850" y="8">
+      <!-- REFRESH BUTTON -->
+      <button tooltip="RELOAD SKIN" action="load_skin">
+        <size width="42" height="27"/>
+        <off color="transparent"/>
+        <icon sysicon="sampler_loop" width="22" height="22" coloroff="#CCCCCC" colorover="#FFFFFF"/>
+      </button>
+      <!-- SETTINGS BUTTON -->
+      <button action="reinit_controller" x="+180">
+        <size width="42" height="27"/>
+        <off color="transparent"/>
+        <icon sysicon="sampler_loop" width="25" height="25" coloroff="#CCCCCC" colorover="#FFFFFF"/>
+      </button>
+      <!-- SETTINGS BUTTON -->
+      <!-- <button action="settings" x="+180"> -->
+      <!-- <size width="42" height="27"/> -->
+      <!-- <off color="#000000"/> -->
+      <!-- <over color="#222222"/> -->
+      <!-- <icon sysicon="settings" width="25" height="25" coloroff="#CCCCCC" colorover="#FFFFFF"/> -->
+      <!-- </button> -->
+    </group>
+    <!-- TOP BAR -->
+    <panel class="topbar" x="0" y="0"/>
+    <!-- Accent bottom border line -->
+    <line x="0" y="45" width="1920" height="1" highlight="dark_8" shadow="#00000000"/>
+  </panel>
+</module>

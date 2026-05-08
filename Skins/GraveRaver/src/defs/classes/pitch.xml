@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="PITCH">
+    <line color="faderlines" x="+0" y="+0" width="38" height="1"/>
+    <line color="faderlines" x="+2" y="+13" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+13*2" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+13*3" width="34" height="1"/>
+    <line color="faderlines" x="+0" y="+13*4" width="38" height="1"/>
+    <line color="faderlines" x="+2" y="+13*5" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+13*6" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+13*7" width="34" height="1"/>
+    <line color="faderlines" x="+0" y="+13*8" width="38" height="1"/>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7"/>
+      <size width="38" height="119"/>
+      <on width="-27" height="-8" color="knobprogressoff" border="#333333" border_size="1" radius="3" shape="square"/>
+      <off width="-27" height="-8" color="deckcolor" border="#222222" border_size="1" radius="3" shape="square"/>
+      <fader color="#333333" width="38" height="14" border="#555555"/>
+    </slider>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7+6"/>
+      <size width="38" height="119-12"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+    <button x="-7" y="+115" width="52" height="16" action="beatlock" query="beatlock">
+      <off color="button_background3" border="button_background3" border_size="1" radius="5"/>
+      <on color="button_background3" border="white" border_size="1" radius="5"/>
+      <over color="button_background3" border="button_background3" border_size="1" radius="5"/>
+      <down color="button_background3" border="white" border_size="1" radius="5"/>
+      <text dy="-1" text="BEATLOCK" fontsize="8" coloroff="dark_8" coloron="needle" align="center"/>
+    </button>
+  </define>
+  <define class="pitch_ex">
+    <line color="faderlines2" x="+0" y="+0" width="38" height="1"/>
+    <line color="faderlines2" x="+2" y="+12" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+12*2" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+12*3" width="34" height="1"/>
+    <line color="faderlines2" x="+0" y="+12*4" width="38" height="1"/>
+    <line color="faderlines2" x="+2" y="+12*5" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+12*6" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+12*7" width="34" height="1"/>
+    <line color="faderlines2" x="+0" y="+12*8" width="38" height="1"/>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7"/>
+      <size width="38" height="119-8"/>
+      <on width="-24" height="-8" color="knobprogressoff" border="panel_background" border_size="4" shape="square"/>
+      <off width="-24" height="-8" color="deckcolor" border="panel_background" border_size="4" shape="square"/>
+      <fader color="faderbackground" width="38" height="14"/>
+    </slider>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7+6"/>
+      <size width="38" height="119-12-8"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+  </define>
+  <define class="pitch_video">
+    <line color="faderlines2" x="+0" y="+0" width="38" height="1"/>
+    <line color="faderlines2" x="+2" y="+17" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+17*2" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+17*3" width="34" height="1"/>
+    <line color="faderlines2" x="+0" y="+17*4" width="38" height="1"/>
+    <line color="faderlines2" x="+2" y="+17*5" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+17*6" width="34" height="1"/>
+    <line color="faderlines2" x="+2" y="+17*7" width="34" height="1"/>
+    <line color="faderlines2" x="+0" y="+17*8" width="38" height="1"/>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7"/>
+      <size width="38" height="119+32"/>
+      <on width="-24" height="-8" color="knobprogressoff" border="panel_background" border_size="4" shape="square"/>
+      <off width="-24" height="-8" color="deckcolor" border="panel_background" border_size="4" shape="square"/>
+      <fader color="faderbackground" width="38" height="14"/>
+    </slider>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7+6"/>
+      <size width="38" height="119-12+32"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+  </define>
+  <define class="pitch_stack">
+    <line color="faderlines2" x="+0" y="+0" width="38" height="1"/>
+    <line color="faderlines2" x="+0" y="+48" width="38" height="1"/>
+    <line color="faderlines2" x="+0" y="+48+48" width="38" height="1"/>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7"/>
+      <size width="38" height="111"/>
+      <on width="-24" height="-8" color="knobprogressoff" border="panel_background" border_size="4" shape="square"/>
+      <off width="-24" height="-8" color="deckcolor" border="panel_background" border_size="4" shape="square"/>
+      <fader color="faderbackground" width="38" height="14"/>
+    </slider>
+    <slider action="pitch" rightclick="pitch_zero" dblclick="pitch_reset" orientation="vertical" direction="down" frommiddle="true">
+      <pos x="+0" y="-7+6"/>
+      <size width="38" height="111-12"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+  </define>
+  <define class="DECK_LEVEL">
+    <!-- FADER LINES -->
+    <group x="+0" y="+7">
+      <!-- <line color="faderlines" x="+0" y="+0" width="38" height="1"/> -->
+      <line color="faderlines" x="+3" y="+12" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*2" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*3" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*4" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*5" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*6" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*7" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*8" width="32" height="1"/>
+      <line color="faderlines" x="+3" y="+12*9" width="32" height="1"/>
+      <!-- <line color="faderlines" x="+0" y="+12*10" width="38" height="1"/> -->
+    </group>
+    <group x="+14" y="+0">
+      <!-- BLACK STRIP -->
+      <!-- <visual width="10" height="123"> -->
+      <!-- <pos x="+0" y="+0"/> -->
+      <!-- <off shape="square" color="black" radius="3"/> -->
+      <!-- </visual> -->
+      <!-- LEVEL -->
+      <visual source="get_level" type="linear" orientation="vertical" direction="up" granularity="23">
+        <pos x="+0" y="+5"/>
+        <size width="10" height="123"/>
+        <off shape="square" color="black" radius="2"/>
+        <on shape="square" color="deckcolor" radius="2"/>
+      </visual>
+      <visual source="get_level" type="linear" orientation="vertical" direction="up" granularity="23" visibility="not masterdeck">
+        <pos x="+0" y="+5"/>
+        <size width="10" height="123"/>
+        <off shape="square" color="black" radius="2"/>
+        <on shape="square" color="deckcolor" radius="2"/>
+      </visual>
+      <visual source="get_level" type="linear" orientation="vertical" direction="up" granularity="23" visibility="masterdeck">
+        <pos x="+0" y="+5"/>
+        <size width="10" height="123"/>
+        <off shape="square" color="black" radius="2"/>
+        <on shape="square" color="color_masterdeck" radius="2"/>
+      </visual>
+    </group>
+    <!-- SLIDER -->
+    <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+      <pos x="+0" y="+0"/>
+      <size width="38" height="135"/>
+      <off width="-27" height="-8" color="transparent" border="#333333" border_size="1" radius="3" shape="square"/>
+      <on width="-27" height="-8" color="transparent" border="#333333" border_size="1" radius="3" shape="square"/>
+      <fader color="#333333" width="38" height="14" border="#555555"/>
+    </slider>
+    <!-- SLIDER PIECE -->
+    <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+      <pos x="+0" y="+0+6"/>
+      <size width="38" height="135-12"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+  </define>
+  <define class="deck_level_ex">
+    <line color="faderlines" x="+0" y="+0" width="38" height="1"/>
+    <line color="faderlines" x="+2" y="+12" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*2" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*3" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*4" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*5" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*6" width="34" height="1"/>
+    <line color="faderlines" x="+2" y="+12*7" width="34" height="1"/>
+    <line color="faderlines" x="+0" y="+12*8" width="38" height="1"/>
+    <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+      <pos x="+0" y="-7"/>
+      <size width="38" height="135-24"/>
+      <off width="-24" height="-8" color="xf_progressbackground" border="xf_background" border_size="4" shape="square"/>
+      <on width="-24" height="-8" color="mastercoloron" border="xf_background" border_size="4" shape="square"/>
+      <fader color="faderbackground2" width="38" height="14"/>
+    </slider>
+    <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+      <pos x="+0" y="-7+6"/>
+      <size width="38" height="135-12-24"/>
+      <fader color="faderbackgroundline" width="38" height="2"/>
+    </slider>
+  </define>
+  <define class="crossfader">
+    <!-- <button class="button_main" x="-5" y="+0" width="38" height="38" action="auto_crossfade 0%" rightclick="crossfader 0%" tooltip="Auto-Crossfader Left\nRight-click: Crossfader 0%" coloroff="transparent" coloron="transparent" brcoloroff="transparent" brcoloron="transparent" textsize="10" textcolor="textoff3" textcoloron="needle" iconsize="30" sysicon="arrowleft" query="crossfader 0%" visibility="var_equal '@$4decks' 0"/> -->
+    <!-- <button class="button_main" x="+240" y="+0" width="38" height="38" action="auto_crossfade 100%" rightclick="crossfader 100%" tooltip="Auto-Crossfader Right\nRight-click: Crossfader 100%"coloroff="transparent" coloron="transparent" brcoloroff="transparent" brcoloron="transparent" textsize="10" textcolor="textoff3" textcoloron="needle" iconsize="30" sysicon="arrowright" query="crossfader 100%" visibility="var_equal '@$4decks' 0"/> -->
+    <!-- <group name="channel_assign" x="-10" visibility="var_not_equal '@$4decks' 0"> -->
+    <!-- <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 leftcross" text="1" coloron="waveform_active1" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 leftcross" text="2" coloron="waveform_active2" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 leftcross" text="3" coloron="waveform_active3" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 leftcross" text="4" coloron="waveform_active4" bordersize="0"/> -->
+    <!-- </group> -->
+    <!-- <group name="channel_assign" x="+244" visibility="var_not_equal '@$4decks' 0"> -->
+    <!-- <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 rightcross" text="1" coloron="waveform_active1" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 rightcross" text="2" coloron="waveform_active2" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 rightcross" text="3" coloron="waveform_active3" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 rightcross" text="4" coloron="waveform_active4" bordersize="0"/> -->
+    <!-- </group> -->
+    <!-- <line color="faderlines" x="960-18-18-18-18-18" y="+0" width="1" height="38" /> -->
+    <!-- <line color="faderlines" x="960-18-18-18-18" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960-18-18-18" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960-18-18" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960-18" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960" y="+0" width="1" height="38" /> -->
+    <!-- <line color="faderlines" x="960+17" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960+18+17" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960+18+18+17" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960+18+18+18+17" y="+2" width="1" height="34" /> -->
+    <!-- <line color="faderlines" x="960+18+18+18+17+18" y="+0" width="1" height="38" /> -->
+    <!-- <slider action="crossfader" rightclick="crossfader 50%" dblclick="crossfader 50%" orientation="horizontal" frommiddle="true"> -->
+    <!-- <pos x="+30+9" y="+0"/> -->
+    <!-- <size width="194" height="38"/> -->
+    <!-- <off width="-4" height="-24" color="xf_progressbackground" border="xf_background" border_size="4" shape="square"/> -->
+    <!-- <on width="-4" height="-24" color="mastercoloron" border="xf_background" border_size="4" shape="square"/> -->
+    <!-- <fader color="faderbackground2" width="14" height="38"/> -->
+    <!-- </slider> -->
+    <!-- <slider action="crossfader" rightclick="crossfader 50%" dblclick="crossfader 50%" orientation="horizontal" frommiddle="true"> -->
+    <!-- <pos x="+30+9+6" y="+0"/> -->
+    <!-- <size width="194-12" height="38"/> -->
+    <!-- <fader color="faderbackgroundline" width="2" height="38"/> -->
+    <!-- </slider> -->
+    <panel class="xfader_panel" x="-20" y="-10"/>
+  </define>
+  <define class="video_crossfader">
+    <group name="channel_assign" x="-3" visibility="var_equal '@$hauntinglayout' 1">
+      <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 leftvideo" text="1" coloron="waveform_active1" bordersize="0"/>
+      <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 leftvideo" text="2" coloron="waveform_active2" bordersize="0"/>
+      <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 leftvideo" text="3" coloron="waveform_active3" bordersize="0"/>
+      <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 leftvideo" text="4" coloron="waveform_active4" bordersize="0"/>
+    </group>
+    <group name="channel_assign" x="+226" visibility="var_equal '@$hauntinglayout' 1">
+      <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 rightvideo" text="1" coloron="waveform_active1" bordersize="0"/>
+      <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 rightvideo" text="2" coloron="waveform_active2" bordersize="0"/>
+      <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 rightvideo" text="3" coloron="waveform_active3" bordersize="0"/>
+      <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 rightvideo" text="4" coloron="waveform_active4" bordersize="0"/>
+    </group>
+    <line color="faderlines2" x="960-18-18-18-18+6" y="+4" width="1" height="38-8"/>
+    <line color="faderlines2" x="960" y="+4" width="1" height="38-8"/>
+    <line color="faderlines2" x="960+18+18+18+18-7" y="+4" width="1" height="38-8"/>
+    <slider action="video_crossfader" rightclick="video_crossfader 50%" dblclick="video_crossfader 50%" orientation="horizontal" frommiddle="true">
+      <pos x="+31+26" y="+0"/>
+      <size width="198-26-26" height="38"/>
+      <off width="-4" height="-22" color="knobprogressoff" border="panel_background" border_size="4" shape="square"/>
+      <on width="-4" height="-22" color="br_focus" border="panel_background" border_size="4" shape="square"/>
+      <fader color="faderbackground" width="14" height="24"/>
+    </slider>
+    <slider action="video_crossfader" rightclick="video_crossfader 50%" dblclick="video_crossfader 50%" orientation="horizontal" frommiddle="true">
+      <pos x="+31+6+26" y="+0"/>
+      <size width="198-12-26-26" height="38"/>
+      <fader color="faderbackgroundline" width="2" height="24"/>
+    </slider>
+  </define>
+  <define class="video_crossfader_ex">
+    <group name="channel_assign" x="-3+7" visibility="var_equal '@$4decks' 1">
+      <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 leftvideo" text="1" coloron="waveform_active1" bordersize="0"/>
+      <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 leftvideo" text="2" coloron="waveform_active2" bordersize="0"/>
+      <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 leftvideo" text="3" coloron="waveform_active3" bordersize="0"/>
+      <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 leftvideo" text="4" coloron="waveform_active4" bordersize="0"/>
+    </group>
+    <group name="channel_assign" x="+226-7" visibility="var_equal '@$4decks' 1">
+      <button class="button_main" x="+0" y="+0" width="18" height="18" action="deck 1 rightvideo" text="1" coloron="waveform_active1" bordersize="0"/>
+      <button class="button_main" x="+20" y="+0" width="18" height="18" action="deck 2 rightvideo" text="2" coloron="waveform_active2" bordersize="0"/>
+      <button class="button_main" x="+0" y="+20" width="18" height="18" action="deck 3 rightvideo" text="3" coloron="waveform_active3" bordersize="0"/>
+      <button class="button_main" x="+20" y="+20" width="18" height="18" action="deck 4 rightvideo" text="4" coloron="waveform_active4" bordersize="0"/>
+    </group>
+    <line color="faderlines2" x="+130-18-18-18-18+6" y="+4" width="1" height="38-8"/>
+    <line color="faderlines2" x="+130" y="+4" width="1" height="38-8"/>
+    <line color="faderlines2" x="+130+18+18+18+18-7" y="+4" width="1" height="38-8"/>
+    <slider action="video_crossfader" rightclick="video_crossfader 50%" dblclick="video_crossfader 50%" orientation="horizontal" frommiddle="true">
+      <pos x="+31+26" y="+0"/>
+      <size width="198-26-26" height="38"/>
+      <off width="-4" height="-22" color="knobprogressoff" border="panel_background" border_size="4" shape="square"/>
+      <on width="-4" height="-22" color="br_focus" border="panel_background" border_size="4" shape="square"/>
+      <fader color="faderbackground" width="14" height="24"/>
+    </slider>
+    <slider action="video_crossfader" rightclick="video_crossfader 50%" dblclick="video_crossfader 50%" orientation="horizontal" frommiddle="true">
+      <pos x="+31+6+26" y="+0"/>
+      <size width="198-12-26-26" height="38"/>
+      <fader color="faderbackgroundline" width="2" height="24"/>
+    </slider>
+  </define>
+  <define class="PITCH_ZONE">
+    <!-- <visual class="gfx_shape" x="+0" y="+0" width="58" height="170" coloroff="#000000" bordercolor="#333333" border_size="2"/> -->
+    <group visibility="loaded">
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="58" height="15"/>
+        <text fontsize="12" weight="" color="#CCCCCC" align="center" text="BPM" important="true"/>
+      </textzone>
+      <!-- PITCH RANGE -->
+      <!-- <button class="button_main" x="+0" y="+0" action="pitch_range '8,16,32,50' +1" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch range +8,16,32,50.\nRigth-click: Pitch range -8,16,32,50." width="58" height="24" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '+-%pitchrange'"/> -->
+      <!-- SLIDER -->
+      <panel class="pitch" x="+11" y="+25"/>
+      <!-- PITCH RESET -->
+      <button class="button_main" x="+0" y="+6+30+4+30+2+62" width="58" height="24" action="pitch_reset 4bt" coloroff="transparent" brcoloroff="transparent" textcolor="textoff2" textaction="get_text '%Ppitch%'" query="pitch_reset ? blink 400ms"/>
+      <button class="button_main" x="+0" y="+6+30+4+30+2+62" width="58" height="24" action="pitch_reset 4bt" coloroff="#330000" brcoloroff="button_background3" textsize="14" textcolor="red" textaction="get_text '%Ppitch%'" query="pitch_reset ? blink 1bt" visibility="param_add `get_bpm` `get_bpm 'absolute' &amp; param_multiply -1` &amp; param_bigger 25 ? blink 500ms : off"/>
+      <!-- + and - -->
+      <!-- <button class="button_main" x="+0" y="+6+30+4+30+6+62+12" width="29" height="18" action="pitch_bend -2% 500ms" rightclick="pitch_range '8,16,32,50' -1"  tooltip="Pitch Bend.\nRigth-click: Pitch range -8,16,32,50." textsize="14" text="-" visibility="var_not_equal '@$hauntingjogtype' 0"/> -->
+      <!-- <button class="button_main" x="+29" y="+6+30+4+30+6+62+12" width="29" height="18" action="pitch_bend +2% 500ms" rightclick="pitch_range '8,16,32,50' +1" tooltip="Pitch Bend.\nRigth-click: Pitch range +8,16,32,50." textsize="14" text="+" visibility="var_not_equal '@$hauntingjogtype' 0"/> -->
+      <!-- <button x="+0" y="+0" width="26" height="26" action="master_tempo on ? master_tempo off : master_tempo on" coloroff="cue_color [SOURCE]" textcolor="white"> -->
+      <!-- <off color="cue_color [SOURCE]"/> -->
+      <!-- <over color="cue_color [SOURCE] ? constant 0.4"/> -->
+      <!-- <icon dx="+2" sysicon="arrowright" color="white" colordown="white" colorselected="white" width="25" height="25" /> -->
+      <!-- <text size="8" dx="22" dy="2">PITCH LOCK</text> -->
+      <!-- </button> -->
+      <!-- Master Tempo (Pitch Lock) toggle button -->
+      <!-- <button class="button_main" -->
+      <!-- x="+5" y="+150" width="50" height="15" -->
+      <!-- visible="yes" available="yes" -->
+      <!-- action="master_tempo on ? master_tempo off : master_tempo on" -->
+      <!-- query="master_tempo" -->
+      <!-- text="PITCHLOCK" -->
+      <!-- textdx="22" textdy="2" -->
+      <!-- textsize="8" align="center" -->
+      <!-- textcolor="#CCCCCC" textcoloron="#FFFFFF" -->
+      <!-- coloroff="#444444" coloron="#444444" -->
+      <!-- brcoloroff="#000000" brcoloron="#FFFFFF" -->
+      <!-- > -->
+      <!-- lock vs. unlock icon -->
+      <!-- <icon width="16" height="16" -->
+      <!-- sysicon="lock" sysiconon="lock_open" -->
+      <!-- colordown="white" colorselected="white" -->
+      <!-- color="#CCCCCC" coloron="#00FF00"/> -->
+      <!-- <icon dx="+2" sysicon="lock" color="white" colordown="white" colorselected="white" width="25" height="25" /> -->
+      <!-- </button> -->
+      <!-- PITCH SLIDER: PITCH LOCK BUTTON -->
+      <!-- <button class="button_main" x="+0" y="+150" width="60" height="16" action="master_tempo on ? master_tempo off : master_tempo on" query="master_tempo" textsize="8" text="PITCH LOCK" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle" query="slip_mode ? blink 800ms : off"/> -->
+    </group>
+  </define>
+  <define class="pitch_zone_ex">
+    <button class="button_main" x="+0" y="+6" width="58" height="18" action="pitch_reset" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '%Ppitch%'" query="pitch_reset ? blink 400ms"/>
+    <panel class="pitch_ex" x="+11" y="+6+28"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+62+12-8" width="29" height="18" action="pitch_bend -2% 500ms" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch Bend.\nRigth-click: Pitch range -8,16,32,50." textsize="14" text="-" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+29" y="+6+30+4+30+6+62+12-8" width="29" height="18" action="pitch_bend +2% 500ms" rightclick="pitch_range '8,16,32,50' +1" tooltip="Pitch Bend.\nRigth-click: Pitch range +8,16,32,50." textsize="14" text="+" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+62+12-8" action="pitch_range '8,16,32,50' +1" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch range +8,16,32,50.\nRigth-click: Pitch range -8,16,32,50." width="58" height="18" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '±%pitchrange'" visibility="var_equal '@$hauntingjogtype' 0"/>
+  </define>
+  <define class="pitch_zone_stack">
+    <button class="button_main" x="+0" y="+6" width="58" height="18" action="pitcht_reset" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '%Ppitch%'" query="pitch_reset ? blink 400ms"/>
+    <panel class="pitch_stack" x="+11" y="+6+28"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+64" width="29" height="18" action="pitch_bend -2% 500ms" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch Bend.\nRigth-click: Pitch range -8,16,32,50." textsize="14" text="-" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+29" y="+6+30+4+30+6+64" width="29" height="18" action="pitch_bend +2% 500ms" rightclick="pitch_range '8,16,32,50' +1" tooltip="Pitch Bend.\nRigth-click: Pitch range +8,16,32,50." textsize="14" text="+" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+64" action="pitch_range '8,16,32,50' +1" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch range +8,16,32,50.\nRigth-click: Pitch range -8,16,32,50." width="58" height="18" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '±%pitchrange'" visibility="var_equal '@$hauntingjogtype' 0"/>
+  </define>
+  <define class="pitch_zone_vertical">
+    <button class="button_main" x="+0" y="+6" width="60" height="16" action="vinyl_mode" textsize="11" text="VINYL" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+    <button class="button_main" x="+0" y="+6+16+2" width="60" height="16" action="slip_mode" textsize="11" text="SLIP" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle" query="slip_mode ? blink 800ms : off"/>
+    <button class="button_main" x="+0" y="+6+50" width="58" height="18" action="pitch_reset" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '%Ppitch%'" query="pitch_reset ? blink 400ms"/>
+    <panel class="pitch" x="+11" y="+6+28+50"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+62+12+50" width="29" height="18" action="pitch_bend -2% 500ms" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch Bend.\nRigth-click: Pitch range -8,16,32,50." textsize="14" text="-" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+29" y="+6+30+4+30+6+62+12+50" width="29" height="18" action="pitch_bend +2% 500ms" rightclick="pitch_range '8,16,32,50' +1" tooltip="Pitch Bend.\nRigth-click: Pitch range +8,16,32,50." textsize="14" text="+" visibility="var_not_equal '@$hauntingjogtype' 0"/>
+    <button class="button_main" x="+0" y="+6+30+4+30+6+62+12+50" action="pitch_range '8,16,32,50' +1" rightclick="pitch_range '8,16,32,50' -1" tooltip="Pitch range +8,16,32,50.\nRigth-click: Pitch range -8,16,32,50." width="58" height="18" coloroff="button_background3" brcoloroff="button_background3" textsize="14" textcolor="textoff2" textaction="get_text '±%pitchrange'" visibility="var_equal '@$hauntingjogtype' 0"/>
+  </define>
+</defs>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs xmlns:xi="http://www.w3.org/2001/XInclude">
+  <!-- These Pro layout shells are selected by @$hauntinglayout: 0 = two-deck / swap, 1 = full four-deck -->
+  <define class="PRO_2DECKS" placeholders="*panelname">
+    <!-- Wave-size offset ladder extracted to keep the shell readable -->
+    <xi:include href="positions/pro-2decks.xml" xpointer="xpointer(/positions/*)"/>
+    <panel class="area_deck_pro_left" x="0" panelname="deck1" deck="1" visibility="not deck 3 leftdeck"/>
+    <panel class="area_deck_pro_left" x="0" panelname="deck3" deck="3" visibility="deck 3 leftdeck"/>
+    <panel class="area_deck_pro_right" x="+1920-800" panelname="deck2" deck="2" visibility="not deck 4 rightdeck"/>
+    <panel class="area_deck_pro_right" x="+1920-800" panelname="deck4" deck="4" visibility="deck 4 rightdeck"/>
+    <!-- DECK: PAD PAGES SECTION -->
+    <group y="+175" x="+36">
+      <!-- bg left (black behind pads) -->
+      <!-- <visual x="+0" y="+0" width="750" height="324"> -->
+      <!-- <off shape="square" color="#050505" radius="10" bordersize="1" border="dark_5"/> -->
+      <!-- </visual> -->
+      <group name="custom_buttons" visibility="false">
+        <!-- CLASS: CUSTOM_BUTTON_1 -->
+        <define class="CUSTOM_BUTTON_1" action="custom_button [SOURCE]" deck="[DECK]" border_size="1" rightclick="custom_button_edit [SOURCE]" placeholders="*source,*deck,width=70,height=20">
+          <size width="[WIDTH]" height="[HEIGHT]"/>
+          <off color="#000000" border="#888888" radius="3"/>
+          <down color="#222222" border="#888888" radius="3"/>
+          <selected color="transparent" border="deckcolor" radius="3"/>
+          <text fontsize="10" color="#DDDDDD" colorselected="deckcolor" colordown="#888888" align="center" action="custom_button_name [SOURCE]"/>
+        </define>
+        <!-- CUSTOM BUTTONS LEFT -->
+        <group x="+15" y="+10">
+          <button class="custom_button_1" source="400" deck="1" width="80" y="+0"/>
+          <button class="custom_button_1" source="401" deck="1" width="80" y="+24"/>
+          <button class="custom_button_1" source="402" deck="1" width="80" y="+24*2"/>
+          <button class="custom_button_1" source="403" deck="1" width="80" y="+24*3"/>
+          <button class="custom_button_1" source="404" deck="1" width="80" y="+24*4"/>
+          <button class="custom_button_1" source="405" deck="1" width="80" y="+24*5"/>
+          <button class="custom_button_1" source="406" deck="1" width="80" y="+24*6"/>
+          <button class="custom_button_1" source="407" deck="1" width="80" y="+24*7"/>
+        </group>
+        <!-- CUSTOM BUTTONS RIGHT -->
+        <group x="+1920-80-80-10" y="+12">
+          <button class="custom_button_1" source="400" deck="2" width="80" y="+0"/>
+          <button class="custom_button_1" source="401" deck="2" width="80" y="+24"/>
+          <button class="custom_button_1" source="402" deck="2" width="80" y="+24*2"/>
+          <button class="custom_button_1" source="403" deck="2" width="80" y="+24*3"/>
+          <button class="custom_button_1" source="404" deck="2" width="80" y="+24*4"/>
+          <button class="custom_button_1" source="405" deck="2" width="80" y="+24*5"/>
+          <button class="custom_button_1" source="406" deck="2" width="80" y="+24*6"/>
+          <button class="custom_button_1" source="407" deck="2" width="80" y="+24*7"/>
+        </group>
+      </group>
+      <!-- bg right -->
+      <!-- <visual x="1920-800+5+2" y="+0" width="750" height="224"> -->
+      <!-- <off shape="square" color="black" radius="10" bordersize="1" border="#000000"/> -->
+      <!-- </visual> -->
+      <!-- PRO: 2 DECK: PAD PAGES PANEL -->
+      <group x="+0" y="+0">
+        <group x="+5" y="+5">
+          <panel class="pad_page_selector_panel" deck="1" panelname="[PANELNAME]_1" visibility="not deck 3 leftdeck"/>
+          <panel class="pad_page_selector_panel" deck="3" panelname="[PANELNAME]_3" visibility="deck 3 leftdeck"/>
+        </group>
+        <group x="1920/2+125+5" y="+5">
+          <panel class="pad_page_selector_panel" deck="2" panelname="[PANELNAME]_2" visibility="not deck 4 rightdeck"/>
+          <panel class="pad_page_selector_panel" deck="4" panelname="[PANELNAME]_4" visibility="deck 4 rightdeck"/>
+        </group>
+      </group>
+    </group>
+    <group y="+450-25">
+      <!-- TRANSPORT 2 DECK -->
+      <panel class="transport_bar" deck="3" x="+0" deckside="left" visibility="deck 3 leftdeck"/>
+      <panel class="transport_bar" deck="1" x="+0" deckside="left" visibility="not deck 3 leftdeck"/>
+      <panel class="transport_bar" deck="2" x="+1920-2-800" deckside="right" visibility="not deck 4 rightdeck"/>
+      <panel class="transport_bar" deck="4" x="+1920-2-800" deckside="right" visibility="deck 4 rightdeck"/>
+    </group>
+    <!-- PRO: 2 DECK: MIXER PANEL / MIDDLE PANEL -->
+    <group x="+800">
+      <group name="tabs">
+        <button class="button_main" x="+2" width="78" height="23" action="skin_panel 'audiomixer' on" tooltip="AUDIO\nShow the audio (mixer) controls, like equalizers, gain, level, pfl, etc" textcolor="textdarker" textcoloron="needle" text="MIXER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+        <!-- <button class="button_main" x="+2+78" width="78" height="23" action="skin_panel 'videomixer' on" tooltip="VIDEO\nShow the video controls, like video previews, source, effects, etc" textcolor="textdarker" textcoloron="needle" text="VIDEO" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/> -->
+        <button class="button_main" x="+2+78" width="78" height="23" action="skin_panel 'samplermixer' on" tooltip="SAMPLER\nShow the sampler controls" textcolor="textdarker" textcoloron="needle" text="SAMPLER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+        <button class="button_main" x="+2+78+78" width="78" height="23" action="skin_panel 'scratchmixer' on" tooltip="SCRATCH\nShow a scratch-optimized view with vertical waveforms and scratch options" textcolor="textdarker" textcoloron="needle" text="WAVE" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+        <button class="button_main" x="+2+78+78+78" width="78" height="23" action="skin_panel 'mastermixer' on" textcolor="textdarker" tooltip="MASTER\nShow some general controls, like record/broadcast, microphone, or master effects" textcoloron="needle" text="MASTER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+      </group>
+      <!-- panel -->
+      <panel name="content" class="mixer" x="+4" y="+24"/>
+    </group>
+    <panel class="pro_2decks_overlays" x="+35" y="+0" deck="1"/>
+    <panel class="pro_2decks_overlays" x="+35" y="+0" deck="3"/>
+    <panel class="pro_2decks_overlays" x="+1920-800-4" y="+0" deck="2"/>
+    <panel class="pro_2decks_overlays" x="+1920-800-4" y="+0" deck="4"/>
+    <!-- <panel class="pro_2decks_overlays" deck="rightdeck"/> -->
+  </define>
+  <define class="PRO_4DECKS" placeholders="*panelname">
+    <!-- Wave-size offset ladder extracted to keep the shell readable -->
+    <xi:include href="positions/pro-4decks.xml" xpointer="xpointer(/positions/*)"/>
+    <!-- shared mini deck strip -->
+    <!-- LEFT: BOTTOM -->
+    <panel class="area_deck_pro_left" x="+0" panelname="deck1" deck="1" visibility="deck 3 leftdeck"/>
+    <panel class="area_deck_pro_left" x="+0" panelname="deck3" deck="3" visibility="deck 1 leftdeck"/>
+    <!-- LEFT: TOP -->
+    <panel class="area_deck_pro_left" x="+0" panelname="deck1" deck="1" visibility="deck 1 leftdeck" y="+100+2"/>
+    <panel class="area_deck_pro_left" x="+0" panelname="deck3" deck="3" visibility="deck 3 leftdeck" y="+100+2"/>
+    <!-- PRO: 4 DECKS: MIXER PANEL / MIDDLE PANEL -->
+    <group x="+802" y="+0">
+      <!-- MIDDLE PANEL BORDER -->
+      <visual x="+4" y="+25" width="308" height="600">
+        <off shape="square" color="#000000" radius="6" bordersize="1" border="dark_6"/>
+      </visual>
+      <!-- tabs -->
+      <button class="button_main" x="+12" width="78" height="23" action="skin_panel 'audiomixer' on" tooltip="AUDIO\nShow the audio (mixer) controls, like equalizers, gain, level, pfl, etc" textcolor="textdarker" textcoloron="needle" text="MIXER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+      <!-- <button class="button_main" x="+7+78" width="78" height="23" action="skin_panel 'videomixer' on" tooltip="VIDEO\nShow the video controls, like video previews, source, effects, etc" textcolor="textdarker" textcoloron="needle" text="VIDEO" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/> -->
+      <button class="button_main" x="+7+78" width="78" height="23" action="skin_panel 'samplermixer' on" tooltip="SAMPLER\nShow the sampler" textcolor="textdarker" textcoloron="needle" text="SAMPLER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+      <button class="button_main" x="+0+78+78" width="78" height="23" action="skin_panel 'scratchmixer' on" tooltip="SCRATCH\nShow a scratch-optimized view with vertical waveforms and scratch options" textcolor="textdarker" textcoloron="needle" text="WAVE" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+      <button class="button_main" x="+0+76+78+78" width="78" height="23" action="skin_panel 'mastermixer' on" textcolor="textdarker" tooltip="MASTER\nShow some general controls, like record/broadcast, microphone, or master effects" textcoloron="needle" text="MASTER" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background"/>
+    </group>
+    <!-- MIDDLE -->
+    <panel class="mixer_4decks" x="+2+800+2" y="+24"/>
+    <!-- RIGHT: TOP -->
+    <panel class="AREA_DECK_PRO_RIGHT" x="+1920-0-800" panelname="deck2" deck="2" visibility="deck 2 rightdeck"/>
+    <panel class="AREA_DECK_PRO_RIGHT" x="+1920-0-800" panelname="deck4" deck="4" visibility="deck 4 rightdeck"/>
+    <!-- RIGHT: BOTTOM -->
+    <panel class="AREA_DECK_PRO_RIGHT" x="+1920-0-800" y="+100+2" panelname="deck2" deck="2" visibility="deck 4 rightdeck"/>
+    <panel class="AREA_DECK_PRO_RIGHT" x="+1920-0-800" y="+100+2" panelname="deck4" deck="4" visibility="deck 2 rightdeck"/>
+    <!-- RACKS (PADS, ETC) -->
+    <panel class="pro_racks" x="+2" y="-2"/>
+    <group y="+389">
+      <!-- TRANSPORT 4 DECK -->
+      <panel class="transport_bar" deck="3" x="+0" deckside="left" visibility="deck 3 leftdeck"/>
+      <panel class="transport_bar" deck="1" x="+0" deckside="left" visibility="not deck 3 leftdeck"/>
+      <panel class="transport_bar" deck="2" x="+1920-2-800" deckside="right" visibility="not deck 4 rightdeck"/>
+      <panel class="transport_bar" deck="4" x="+1920-2-800" deckside="right" visibility="deck 4 rightdeck"/>
+    </group>
+  </define>
+  <define class="PRO_2DECKS_MINI" placeholders="*panelname">
+    <!-- Wave-size offset ladder extracted to keep the shell readable -->
+    <xi:include href="positions/pro-2decks-mini.xml" xpointer="xpointer(/positions/*)"/>
+    <!-- LEFT: TOP -->
+    <panel class="AREA_DECK_MINI" x="+2" panelname="deck1" deck="1" visibility="deck 1 leftdeck"/>
+    <panel class="AREA_DECK_MINI" x="+2" panelname="deck3" deck="3" visibility="deck 3 leftdeck"/>
+    <!-- <panel class="AREA_DECK_MINI" x="+2" panelname="deck3" deck="3" visibility="deck 3 leftdeck"/> -->
+    <panel class="levels_mini" x="+2+800+2"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" panelname="deck2" deck="2" visibility="not deck 4 rightdeck"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" panelname="deck4" deck="4" visibility="deck 4 rightdeck"/>
+  </define>
+  <define class="PRO_4DECKS_MINI" placeholders="*panelname">
+    <!-- Wave-size offset ladder extracted to keep the shell readable -->
+    <xi:include href="positions/pro-4decks-mini.xml" xpointer="xpointer(/positions/*)"/>
+    <!-- LEFT: TOP -->
+    <panel class="AREA_DECK_MINI" x="+2" panelname="deck1" deck="1" visibility="deck 1 leftdeck"/>
+    <panel class="AREA_DECK_MINI" x="+2" panelname="deck3" deck="3" visibility="deck 3 leftdeck"/>
+    <panel class="AREA_DECK_MINI" x="+2" y="+98+2" panelname="deck3" deck="3" visibility="not deck 3 leftdeck"/>
+    <panel class="AREA_DECK_MINI" x="+2" y="+98+2" panelname="deck1" deck="1" visibility="not deck 1 leftdeck"/>
+    <panel class="levels_mini" x="+2+800+2"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" panelname="deck2" deck="2" visibility="deck 2 rightdeck"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" panelname="deck4" deck="4" visibility="deck 4 rightdeck"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" y="+98+2" panelname="deck2" deck="2" visibility="not deck 2 rightdeck"/>
+    <panel class="AREA_DECK_MINI" x="+1920-878-2" y="+98+2" panelname="deck4" deck="4" visibility="not deck 4 rightdeck"/>
+  </define>
+  <define class="PRO_DECKS_NO_WAVES">
+    <panel class="pro_2decks" condition="var_equal '@$hauntinglayout' 0"/>
+    <panel class="pro_4decks" condition="var_equal '@$hauntinglayout' 1"/>
+    <!-- browsers -->
+    <panel class="browser_overlay_plain" y="+432+2" width="1920" height="1080-432-2-2-38" condition="var_equal '@$hauntinglayout' 0 ? var_equal '@$hauntingutilitybar' 1"/>
+    <panel class="browser_overlay_plain" y="+432+2" width="1920" height="1080-432-2-2" condition="var_equal '@$hauntinglayout' 0 ? var_equal '@$hauntingutilitybar' 0"/>
+    <panel class="browser_overlay_plain" y="+432+2+216+2" width="1920" height="1080-432-2-2-216-2-38" condition="var_equal '@$hauntinglayout' 1 ? var_equal '@$hauntingutilitybar' 1"/>
+    <panel class="browser_overlay_plain" y="+432+2+216+2" width="1920" height="1080-432-2-2-216-2" condition="var_equal '@$hauntinglayout' 1 ? var_equal '@$hauntingutilitybar' 0"/>
+  </define>
+  <define class="PROMINI_DECKS_NO_WAVES">
+    <panel class="pro_2decks_mini" y="+0" condition="var_equal '@$hauntinglayout' 0"/>
+    <panel class="pro_4decks_mini" y="+0" condition="var_equal '@$hauntinglayout' 1"/>
+    <!-- browsers -->
+    <panel class="browser_overlay_plain" y="+98" width="1920" height="1080-46-100-2-50" condition="var_equal '@$hauntinglayout' 0 ? var_equal '@$hauntingutilitybar' 1"/>
+    <panel class="browser_overlay_plain" y="+98" width="1920" height="1080-46-100-2" condition="var_equal '@$hauntinglayout' 0 ? var_equal '@$hauntingutilitybar' 0"/>
+    <panel class="browser_overlay_plain" y="+100+100" width="1920" height="1080-50-100-100-50" condition="var_equal '@$hauntinglayout' 1 ? var_equal '@$hauntingutilitybar' 1"/>
+    <panel class="browser_overlay_plain" y="+100+100" width="1920" height="1080-50-100-100" condition="var_equal '@$hauntinglayout' 1 ? var_equal '@$hauntingutilitybar' 0"/>
+  </define>
+</defs>

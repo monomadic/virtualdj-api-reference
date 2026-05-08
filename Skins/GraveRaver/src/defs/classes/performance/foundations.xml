@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="loop_direct">
+    <group y="+2">
+      <button class="custom_button2" coloroff="button_background2" source="301" x="+88*0+1" y="+0" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="302" x="+88*1+1" y="+0" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="303" x="+88*2+1" y="+0" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="304" x="+88*0+1" y="+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="305" x="+88*1+1" y="+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="306" x="+88*2+1" y="+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="307" x="+88*0+1" y="+27+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="308" x="+88*1+1" y="+27+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="309" x="+88*2+1" y="+27+27" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="310" x="+88*0+1" y="+27*3" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="311" x="+88*1+1" y="+27*3" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="312" x="+88*2+1" y="+27*3" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="313" x="+88*0+1" y="+27*4" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="314" x="+88*1+1" y="+27*4" width="86" height="25"/>
+      <button class="custom_button2" coloroff="button_background2" source="315" x="+88*2+1" y="+27*4" width="86" height="25"/>
+    </group>
+    <!-- LOOP SELECT -->
+    <!-- <group name="dark_buttons" condition="var_not_equal '@$hauntingcolorscheme' 4"> -->
+    <!-- <button class="button_main" x="+10" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.03125 &amp; loop : loop_pad_page 2 ? loop_select 0.0625 &amp; loop : loop_pad_page 3 ? loop_select 0.125 &amp; loop : loop_pad_page 4 ? loop_select 0.25 &amp; loop : loop_pad_page 5 ? loop_select 0.5 &amp; loop : loop_pad_page 6 ? loop_select 1 &amp; loop" textaction="loop_pad 1" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.0625 &amp; loop : loop_pad_page 2 ? loop_select 0.125 &amp; loop : loop_pad_page 3 ? loop_select 0.25 &amp; loop : loop_pad_page 4 ? loop_select 0.5 &amp; loop : loop_pad_page 5 ? loop_select 1 &amp; loop : loop_pad_page 6 ? loop_select 2 &amp; loop" textaction="loop_pad 2" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.125 &amp; loop : loop_pad_page 2 ? loop_select 0.25 &amp; loop : loop_pad_page 3 ? loop_select 0.5 &amp; loop : loop_pad_page 4 ? loop_select 1 &amp; loop : loop_pad_page 5 ? loop_select 2 &amp; loop : loop_pad_page 6 ? loop_select 4 &amp; loop" textaction="loop_pad 3" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.25 &amp; loop : loop_pad_page 2 ? loop_select 0.5 &amp; loop : loop_pad_page 3 ? loop_select 1 &amp; loop : loop_pad_page 4 ? loop_select 2 &amp; loop : loop_pad_page 5 ? loop_select 4 &amp; loop : loop_pad_page 6 ? loop_select 8 &amp; loop" textaction="loop_pad 4" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.5 &amp; loop : loop_pad_page 2 ? loop_select 1 &amp; loop : loop_pad_page 3 ? loop_select 2 &amp; loop : loop_pad_page 4 ? loop_select 4 &amp; loop : loop_pad_page 5 ? loop_select 8 &amp; loop : loop_pad_page 6 ? loop_select 16 &amp; loop" textaction="loop_pad 5" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 1 &amp; loop : loop_pad_page 2 ? loop_select 2 &amp; loop : loop_pad_page 3 ? loop_select 4 &amp; loop : loop_pad_page 4 ? loop_select 8 &amp; loop : loop_pad_page 5 ? loop_select 16 &amp; loop : loop_pad_page 6 ? loop_select 32 &amp; loop" textaction="loop_pad 6" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 2 &amp; loop : loop_pad_page 2 ? loop_select 4 &amp; loop : loop_pad_page 3 ? loop_select 8 &amp; loop : loop_pad_page 4 ? loop_select 16 &amp; loop : loop_pad_page 5 ? loop_select 32 &amp; loop : loop_pad_page 6 ? loop_select 64 &amp; loop" textaction="loop_pad 7" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 4 &amp; loop : loop_pad_page 2 ? loop_select 8 &amp; loop : loop_pad_page 3 ? loop_select 16 &amp; loop : loop_pad_page 4 ? loop_select 32 &amp; loop : loop_pad_page 5 ? loop_select 64 &amp; loop : loop_pad_page 6 ? loop_select 128 &amp; loop" textaction="loop_pad 8" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" textcoloron="needle" textsize="14"/> -->
+    <!-- </group> -->
+    <!-- <group name="day_buttons" condition="var_equal '@$hauntingcolorscheme' 4"> -->
+    <!-- <button class="button_main" x="+10" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.03125 &amp; loop : loop_pad_page 2 ? loop_select 0.0625 &amp; loop : loop_pad_page 3 ? loop_select 0.125 &amp; loop : loop_pad_page 4 ? loop_select 0.25 &amp; loop : loop_pad_page 5 ? loop_select 0.5 &amp; loop : loop_pad_page 6 ? loop_select 1 &amp; loop" textaction="loop_pad 1" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.0625 &amp; loop : loop_pad_page 2 ? loop_select 0.125 &amp; loop : loop_pad_page 3 ? loop_select 0.25 &amp; loop : loop_pad_page 4 ? loop_select 0.5 &amp; loop : loop_pad_page 5 ? loop_select 1 &amp; loop : loop_pad_page 6 ? loop_select 2 &amp; loop" textaction="loop_pad 2" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.125 &amp; loop : loop_pad_page 2 ? loop_select 0.25 &amp; loop : loop_pad_page 3 ? loop_select 0.5 &amp; loop : loop_pad_page 4 ? loop_select 1 &amp; loop : loop_pad_page 5 ? loop_select 2 &amp; loop : loop_pad_page 6 ? loop_select 4 &amp; loop" textaction="loop_pad 3" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.25 &amp; loop : loop_pad_page 2 ? loop_select 0.5 &amp; loop : loop_pad_page 3 ? loop_select 1 &amp; loop : loop_pad_page 4 ? loop_select 2 &amp; loop : loop_pad_page 5 ? loop_select 4 &amp; loop : loop_pad_page 6 ? loop_select 8 &amp; loop" textaction="loop_pad 4" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 0.5 &amp; loop : loop_pad_page 2 ? loop_select 1 &amp; loop : loop_pad_page 3 ? loop_select 2 &amp; loop : loop_pad_page 4 ? loop_select 4 &amp; loop : loop_pad_page 5 ? loop_select 8 &amp; loop : loop_pad_page 6 ? loop_select 16 &amp; loop" textaction="loop_pad 5" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 1 &amp; loop : loop_pad_page 2 ? loop_select 2 &amp; loop : loop_pad_page 3 ? loop_select 4 &amp; loop : loop_pad_page 4 ? loop_select 8 &amp; loop : loop_pad_page 5 ? loop_select 16 &amp; loop : loop_pad_page 6 ? loop_select 32 &amp; loop" textaction="loop_pad 6" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 2 &amp; loop : loop_pad_page 2 ? loop_select 4 &amp; loop : loop_pad_page 3 ? loop_select 8 &amp; loop : loop_pad_page 4 ? loop_select 16 &amp; loop : loop_pad_page 5 ? loop_select 32 &amp; loop : loop_pad_page 6 ? loop_select 64 &amp; loop" textaction="loop_pad 7" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6+28" width="58" height="24" action="loop_pad_page 1 ? loop_select 4 &amp; loop : loop_pad_page 2 ? loop_select 8 &amp; loop : loop_pad_page 3 ? loop_select 16 &amp; loop : loop_pad_page 4 ? loop_select 32 &amp; loop : loop_pad_page 5 ? loop_select 64 &amp; loop : loop_pad_page 6 ? loop_select 128 &amp; loop" textaction="loop_pad 8" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textcoloron="needle" textsize="14"/> -->
+    <!-- </group> -->
+    <!-- LOOP ACTIVE -->
+    <!-- <button class="button_main" x="+10" y="+6" width="58" height="24" action="loop_pad 1" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 1" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6" width="58" height="24" action="loop_pad 2" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 2" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6" width="58" height="24" action="loop_pad 3" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 3" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6" width="58" height="24" action="loop_pad 4" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 4" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10" y="+6+28" width="58" height="24" action="loop_pad 5" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 5" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62" y="+6+28" width="58" height="24" action="loop_pad 6" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 6" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+6+28" width="58" height="24" action="loop_pad 7" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 7" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10+62+62+62" y="+6+28" width="58" height="24" action="loop_pad 8" coloroff="button_background2" brcoloroff="button_background2" textaction="loop_pad 8" textsize="14" visibility="loop ? true : false"/> -->
+    <!-- <button class="button_main" x="+10" y="+62" width="58+4+58" height="16" action="loop_pad_page -1" sysicon="arrowleft" iconsize="20" query="on/off" textcolor="textdarker" textcoloron="needle" coloroff="infos_background" coloron="infos_background" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+10+62+62" y="+62" width="58+4+58" height="16" action="loop_pad_page +1" sysicon="arrowright" iconsize="20" query="on/off" textcolor="textdarker" textcoloron="needle" coloroff="infos_background" coloron="infos_background" bordersize="0"/> -->
+    <!-- <button class="button_main" x="+10" y="+6+88" width="50" height="30" action="loop_half" sysicon="chevronleft" iconsize="22"/> -->
+    <!-- <button class="button_main" x="+10+55" y="+6+88" width="134" height="30" action="reloop_exit" query="loop" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="1" textsize="12" textcoloron="needle" textaction="get_text 'RELOOP/EXIT'" condition="var_not_equal '@$hauntingcolorscheme' 4"/> -->
+    <!-- <button class="button_main" x="+10+55" y="+6+88" width="134" height="30" action="reloop_exit" query="loop" coloroff="button_background2" coloron="button_background2" brcoloroff="button_background2" bordersize="2" textsize="12" textcoloron="needle" textaction="get_text 'RELOOP/EXIT'" condition="var_equal '@$hauntingcolorscheme' 4"/> -->
+    <!-- <button class="button_main" x="+10+55+134+5" y="+6+88" width="50" height="30" action="loop_double" sysicon="chevronright" iconsize="22"/> -->
+  </define>
+  <define class="HOT_CUES" placeholders="*panelname">
+    <panel name="hcuespage1_[PANELNAME]" group="cues_[PANELNAME]" visible="yes">
+      <panel class="hcue_button" x="+10" y="+6" source="1"/>
+      <panel class="hcue_button" x="+10" y="+6+24" source="2"/>
+      <panel class="hcue_button" x="+10+126" y="+6" source="3"/>
+      <panel class="hcue_button" x="+10+126" y="+6+24" source="4"/>
+    </panel>
+    <panel name="hcuespage2_[PANELNAME]" group="cues_[PANELNAME]" visible="no">
+      <panel class="hcue_button" x="+10" y="+6" source="5"/>
+      <panel class="hcue_button" x="+10" y="+6+24" source="6"/>
+      <panel class="hcue_button" x="+10+126" y="+6" source="7"/>
+      <panel class="hcue_button" x="+10+126" y="+6+24" source="8"/>
+    </panel>
+    <button class="button_main" x="+10" y="+6+51" width="61" height="16" action="skin_panel 'hcuespage1_[PANELNAME]' on" iconsize="18" sysicon="arrowleft" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+    <button class="button_main" x="+10+61" y="+6+51" width="122" height="16" action="skin_panelgroup 'cues_[PANELNAME]' +1" textsize="11" textaction="skin_panel 'hcuespage1_[PANELNAME]' on ? get_text 'HOTCUES 1-4' : skin_panel 'hcuespage2_[PANELNAME]' on ? get_text 'HOTCUES 5-8'" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" textcoloron="needle"/>
+    <button class="button_main" x="+10+61+122" y="+6+51" width="61" height="16" action="skin_panel 'hcuespage2_[PANELNAME]' on" iconsize="18" sysicon="arrowright" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+  </define>
+  <define class="saved_loops" placeholders="*panelname">
+    <panel name="svloopspage1_[PANELNAME]" group="svloops_[PANELNAME]" visible="yes">
+      <panel class="saved_loop_button" x="+10" y="+6" source="1"/>
+      <panel class="saved_loop_button" x="+10" y="+6+24" source="2"/>
+      <panel class="saved_loop_button" x="+10+126" y="+6" source="3"/>
+      <panel class="saved_loop_button" x="+10+126" y="+6+24" source="4"/>
+    </panel>
+    <panel name="svloopspage2_[PANELNAME]" group="svloops_[PANELNAME]" visible="no">
+      <panel class="saved_loop_button" x="+10" y="+6" source="5"/>
+      <panel class="saved_loop_button" x="+10" y="+6+24" source="6"/>
+      <panel class="saved_loop_button" x="+10+126" y="+6" source="7"/>
+      <panel class="saved_loop_button" x="+10+126" y="+6+24" source="8"/>
+    </panel>
+    <button class="button_main" x="+10" y="+6+51" width="61" height="16" action="skin_panel 'svloopspage1_[PANELNAME]' on" iconsize="18" sysicon="arrowleft" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+    <button class="button_main" x="+10+61" y="+6+51" width="122" height="16" textsize="11" action="skin_panelgroup 'svloops_[PANELNAME]' +1" textaction="skin_panel 'svloopspage1_[PANELNAME]' on ? get_text 'SAVED LOOPS 1-4' : skin_panel 'svloopspage2_[PANELNAME]' on ? get_text 'SAVED LOOPS 5-8'" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" textcoloron="needle"/>
+    <button class="button_main" x="+10+61+122" y="+6+51" width="61" height="16" action="skin_panel 'svloopspage2_[PANELNAME]' on" iconsize="18" sysicon="arrowright" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+  </define>
+  <define class="saved_loops_stack" placeholders="*panelname">
+    <panel name="svloopspage1_[PANELNAME]" group="svloops_[PANELNAME]" visible="yes">
+      <panel class="saved_loop_button2" x="+0" y="+6" source="1"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29" source="2"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29+29" source="3"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29+29+29" source="4"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6" source="5"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29" source="6"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29+29" source="7"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29+29+29" source="8"/>
+    </panel>
+    <panel name="svloopspage2_[PANELNAME]" group="svloops_[PANELNAME]" visible="no">
+      <panel class="saved_loop_button2" x="+0" y="+6" source="9"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29" source="10"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29+29" source="11"/>
+      <panel class="saved_loop_button2" x="+0" y="+6+29+29+29" source="12"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6" source="13"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29" source="14"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29+29" source="15"/>
+      <panel class="saved_loop_button2" x="+0+154" y="+6+29+29+29" source="16"/>
+    </panel>
+    <button class="button_main" x="+0" y="+6+121" width="61" height="28" action="skin_panel 'svloopspage1_[PANELNAME]' on" iconsize="20" sysicon="arrowleft" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+    <button class="button_main" x="+0+61" y="+6+121" width="177" height="28" textsize="11" action="skin_panelgroup 'svloops_[PANELNAME]' +1" textaction="skin_panel 'svloopspage1_[PANELNAME]' on ? get_text 'SAVED LOOPS 1-8' : skin_panel 'svloopspage2_[PANELNAME]' on ? get_text 'SAVED LOOPS 9-16'" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" textcoloron="needle"/>
+    <button class="button_main" x="+0+61+177" y="+6+121" width="61" height="28" action="skin_panel 'svloopspage2_[PANELNAME]' on" iconsize="20" sysicon="arrowright" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+  </define>
+  <define class="tc_line" placeholders="*panelname">
+    <panel name="timecode_only_[PANELNAME]" visibility="get_hastimecode &amp;&amp; not get_haslinein">
+      <textzone class="text" y="+8" width="264" height="12" fontsize="12" color="textdarker" align="center" weight="" text="TIMECODE"/>
+      <visual type="vumeter" source="get_timecode_quality" x="+132-36" y="+27" width="70" height="6" smooth="true">
+        <led x="+0" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*2" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*3" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*4" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*5" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*6" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*7" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*8" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*9" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*10" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*11" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+      </visual>
+      <button class="button_main" x="+62" y="+42" width="64" height="30" action="timecode_options" iconsize="22" sysicon="settings" localize="true"/>
+      <button class="button_main" x="+62+64+10" y="+42" width="64" height="30" action="timecode_active" text="ON" localize="true"/>
+    </panel>
+    <panel name="linein_only_[PANELNAME]" visibility="not get_hastimecode &amp;&amp; get_haslinein">
+      <textzone class="text" y="+8" width="264" height="12" fontsize="12" color="textdarker" align="center" weight="" text="LINE-IN"/>
+      <visual type="vumeter" source="linein ? get_vu_meter 'linein' : nothing" x="+132-36" y="+27" width="70" height="6" smooth="true">
+        <led x="+0" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*2" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*3" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*4" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*5" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*6" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*7" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*8" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*9" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*10" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+        <led x="+6*11" y="+0" width="4" height="6">
+          <off color="button_background" radius="0" border="contrast" border_size="0"/>
+          <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+        </led>
+      </visual>
+      <button class="button_main" x="+62" y="+42" width="64" height="30" action="get_haslinein ? linein : get_hasmic ? linein 'mic' : linein" text="ON" localize="true"/>
+      <button class="button_main" x="+62+64+10" y="+42" width="64" height="30" action="get_haslinein ? linein_rec : get_hasmic ? mic_rec : linein_rec" text="REC" localize="true"/>
+    </panel>
+    <panel name="linein_timecode_[PANELNAME]" visibility="get_hastimecode &amp;&amp; get_haslinein">
+      <!-- leftdeck -->
+      <group x="+131" y="+0" name="dvs_[PANELNAME]" visibility="leftdeck">
+        <textzone class="text" y="+0" width="134" height="26" fontsize="12" color="textdarker" align="center" weight="" text="TIMECODE"/>
+        <visual type="vumeter" source="get_timecode_quality" x="+67-36" y="+28" width="70" height="6" smooth="true">
+          <led x="+0" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*2" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*3" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*4" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*5" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*7" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*8" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*9" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*10" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*11" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+        </visual>
+        <button class="menu_button" x="+26" y="+48" action="timecode_options"/>
+        <button class="button_main" x="+61" y="+42" width="46" height="30" action="timecode_active" text="ON" localize="true"/>
+      </group>
+      <group x="-8" y="+0" name="aux_[PANELNAME]" visibility="leftdeck">
+        <textzone class="text" y="+0" width="153" height="26" fontsize="12" color="textdarker" align="center" weight="" text="AUX"/>
+        <visual type="vumeter" source="linein ? get_vu_meter 'linein' : nothing" x="+76-36" y="+28" width="70" height="6" smooth="true">
+          <led x="+0" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*2" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*3" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*4" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*5" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*7" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*8" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*9" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*10" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*11" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+        </visual>
+        <button class="button_main" x="+18" y="+42" width="46" height="30" action="get_haslinein ? linein : get_hasmic ? linein 'mic' : linein" text="ON" localize="true"/>
+        <button class="button_main" x="+71" y="+42" width="64" height="30" action="get_haslinein ? linein_rec : get_hasmic ? mic_rec : linein_rec" text="REC" localize="true"/>
+      </group>
+      <!-- rightdeck -->
+      <group x="+0" y="+0" name="dvs_[PANELNAME]" visibility="rightdeck">
+        <textzone class="text" y="+0" width="134" height="26" fontsize="12" color="textdarker" align="center" weight="" text="TIMECODE"/>
+        <visual type="vumeter" source="get_timecode_quality" x="+67-36" y="+28" width="70" height="6" smooth="true">
+          <led x="+0" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*2" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*3" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*4" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*5" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*7" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*8" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*9" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*10" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*11" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+        </visual>
+        <button class="menu_button" x="+26" y="+48" action="timecode_options"/>
+        <button class="button_main" x="+61" y="+42" width="46" height="30" action="timecode_active" text="ON" localize="true"/>
+      </group>
+      <group x="+119" y="+0" name="aux_[PANELNAME]" visibility="rightdeck">
+        <textzone class="text" y="+0" width="153" height="26" fontsize="12" color="textdarker" align="center" weight="" text="AUX"/>
+        <visual type="vumeter" source="linein ? get_vu_meter 'linein' : nothing" x="+76-36" y="+28" width="70" height="6" smooth="true">
+          <led x="+0" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*2" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*3" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*4" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*5" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*6" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*7" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*8" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*9" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*10" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+          <led x="+6*11" y="+0" width="4" height="6">
+            <off color="button_background" radius="0" border="contrast" border_size="0"/>
+            <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+          </led>
+        </visual>
+        <button class="button_main" x="+18" y="+42" width="46" height="30" action="get_haslinein ? linein : get_hasmic ? linein 'mic' : linein" text="ON" localize="true"/>
+        <button class="button_main" x="+71" y="+42" width="64" height="30" action="get_haslinein ? linein_rec : get_hasmic ? mic_rec : linein_rec" text="REC" localize="true"/>
+      </group>
+    </panel>
+    <!-- PRO: PANEL: LINE -->
+    <panel name="no_linein_timecode_[PANELNAME]" visibility="not get_hastimecode &amp;&amp; not get_haslinein">
+      <define class="HASHTAG_BUTTON" placeholders="*tag,text,width=90,height=18,textheight=height,important=true,textaction,accent_color=green,coloroff=transparent,coloron=deckcolor,brcoloroff=#222222,brcoloron=deckcolor,bordersize=1,shape=square,sysicon,iconsize,textsize=10,textcolor=br_textoff,textcoloron=needle,orientation=horizontal">
+        <button action="quick_filter 'User 1 contains [TAG]'" rightclick="quick_filter ''" x="+0" y="+0">
+          <pos x="+0" y="+0"/>
+          <size width="[WIDTH]" height="[HEIGHT]"/>
+          <off color="#000000" border="#444444" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+          <over color="#000000" border="#444444" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+          <down color="black" border="transparent" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+          <selected color="#000000" border="[ACCENT_COLOR]" border_size="1" shape="[SHAPE]" radius="5"/>
+          <text action="param_equal '[TEXT]' '' ? get_text '[TAG]' : get_text '[TEXT]'" dx="+6" fontsize="[TEXTSIZE]" color="#AAAAAA" colorover="#FFFFFF" colorselected="[ACCENT_COLOR]" colordown="[TEXTCOLOR]" align="left" orientation="[ORIENTATION]" localize="true" important="[IMPORTANT]"/>
+          <icon sysicon="[SYSICON]" color="[TEXTCOLOR]" colordown="[TEXTCOLORON]" colorselected="[TEXTCOLORON]" width="[ICONSIZE]" height="[ICONSIZE]"/>
+        </button>
+        <!-- <visual class="gfx_shape" x="+0" y="+0" width="[WIDTH]" height="1" coloroff="#88444444" visibility="quick_filter 'User 1 contains [TAG]'"/> -->
+      </define>
+      <visual width="290" height="70">
+        <off shape="square" color="black"/>
+      </visual>
+      <stack x="+8" y="+4" fadein="100ms" fadeout="100ms" visibility="loaded">
+        <size width="290" height="70"/>
+        <slot x="+0" y="+0"/>
+        <slot x="+92" y="+0"/>
+        <slot x="+184" y="+0"/>
+        <slot x="+0" y="+22"/>
+        <slot x="+92" y="+22"/>
+        <slot x="+184" y="+22"/>
+        <!-- #BassHouse -->
+        <item visibility="get_loaded_song 'User 1' &amp; param_lowercase &amp; param_contains '#basshouse '">
+          <panel class="hashtag_button" accent_color="color_tag_genre" tag="#BassHouse" text="#BASS_HOUSE"/>
+        </item>
+        <!-- #House -->
+        <item visibility="get_loaded_song 'User 1' &amp; param_lowercase &amp; param_contains '#house '">
+          <panel class="hashtag_button" accent_color="color_tag_genre" tag="#House" text="#HOUSE"/>
+        </item>
+        <!-- #Techno -->
+        <item visibility="get_loaded_song 'User 1' &amp; param_lowercase &amp; param_contains '#techno '">
+          <panel class="hashtag_button" x="+0" y="+0" accent_color="color_tag_genre" tag="#Techno" text="#TECHNO"/>
+        </item>
+        <item visibility="get_loaded_song 'User 1' &amp; param_lowercase &amp; param_contains '#psy'">
+          <panel class="hashtag_button" x="+0" y="+0" accent_color="color_tag_genre" tag="#PsyTrance" text="#PSYTRANCE"/>
+        </item>
+        <item visibility="get_loaded_song 'User 1' &amp; param_lowercase &amp; param_contains '#club '">
+          <panel class="hashtag_button" x="+0" y="+0" accent_color="color_tag_mood" tag="#Club" text="#CLUB"/>
+        </item>
+      </stack>
+    </panel>
+  </define>
+  <define class="HASHTAG_BUTTON" placeholders="*tag,text,width=90,height=18,textheight=height,important=true,textaction,accent_color=green,coloroff=transparent,coloron=deckcolor,brcoloroff=#222222,brcoloron=deckcolor,bordersize=1,shape=square,sysicon,iconsize,textsize=10,textcolor=br_textoff,textcoloron=needle,orientation=horizontal">
+    <button action="quick_filter 'User 1 contains [TAG]'" rightclick="quick_filter ''" x="+0" y="+0">
+      <pos x="+0" y="+0"/>
+      <size width="[WIDTH]" height="[HEIGHT]"/>
+      <off color="#000000" border="#444444" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <over color="#000000" border="#444444" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <down color="black" border="transparent" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <selected color="#000000" border="[ACCENT_COLOR]" border_size="1" shape="[SHAPE]" radius="5"/>
+      <text action="param_equal '[TEXT]' '' ? get_text '[TAG]' : get_text '[TEXT]'" dx="+6" fontsize="[TEXTSIZE]" color="#AAAAAA" colorover="#FFFFFF" colorselected="[ACCENT_COLOR]" colordown="[TEXTCOLOR]" align="left" orientation="[ORIENTATION]" localize="true" important="[IMPORTANT]"/>
+      <icon sysicon="[SYSICON]" color="[TEXTCOLOR]" colordown="[TEXTCOLORON]" colorselected="[TEXTCOLORON]" width="[ICONSIZE]" height="[ICONSIZE]"/>
+    </button>
+    <!-- <visual class="gfx_shape" x="+0" y="+0" width="[WIDTH]" height="1" coloroff="#88444444" visibility="quick_filter 'User 1 contains [TAG]'"/> -->
+  </define>
+  <define class="custom_buttons" placeholders="*panelname">
+    <button class="custom_button2" coloroff="button_background2" source="1" x="+88*0+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="2" x="+88*1+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="3" x="+88*2+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="4" x="+88*0+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="5" x="+88*1+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="6" x="+88*2+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="7" x="+88*0+1" y="+27+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="8" x="+88*1+1" y="+27+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="9" x="+88*2+1" y="+27+27" width="86" height="25"/>
+  </define>
+  <define class="custom_buttons_2" placeholders="*panelname">
+    <button class="custom_button2" coloroff="button_background2" source="10" x="+88*0+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="11" x="+88*1+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="12" x="+88*2+1" y="+0" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="13" x="+88*0+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="14" x="+88*1+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="15" x="+88*2+1" y="+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="16" x="+88*0+1" y="+27+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="17" x="+88*1+1" y="+27+27" width="86" height="25"/>
+    <button class="custom_button2" coloroff="button_background2" source="18" x="+88*2+1" y="+27+27" width="86" height="25"/>
+  </define>
+</defs>

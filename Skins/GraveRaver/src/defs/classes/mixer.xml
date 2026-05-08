@@ -1,0 +1,1482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="CHANNEL_EXTENDED" placeholders="deck">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="77" height="432-56-1+216+2" coloroff="xf_background"/>
+      <visual class="gfx_shape" y="+30" width="77" height="432-76-1" coloroff="panel_background" visibility="0.9"/>
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="77" height="30"/>
+        <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+      </textzone>
+      <!-- 3knobs -->
+      <group novisibility="setting 'eqMode' 'STEMS'" y="+30">
+        <button class="dropdown_menu" action="eq_mode" x="+58" y="+6" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+18" y="+14" knobsize="41" knobradius="10" faderradius="9" action="gain" rgclick="match_gain" dblclick="gain 50%" frommiddle="true" fillcolor="knobfillon" textaction="gain_label" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72" knobsize="41" knobradius="10" faderradius="9" action="eq_high" rgclick="eq_high 0% ? eq_high 50% : eq_high 0%" dblclick="eq_high 50%" frommiddle="true" fillcolor="knobfillon" textaction="high_label" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72+65" knobsize="41" knobradius="10" faderradius="9" action="eq_mid" rgclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" dblclick="eq_mid 50%" frommiddle="true" fillcolor="knobfillon" textaction="mid_label 'short'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72+65+65" knobsize="41" knobradius="10" faderradius="9" action="eq_low" rgclick="eq_low 0% ? eq_low 50% : eq_low 0%" dblclick="eq_low 50%" frommiddle="true" fillcolor="knobfillon" textaction="low_label" actiontxt="eq_mode +1"/>
+        <button class="dropdown_menu" action="effect_select colorfx" x="+58" y="+14+81+68+68+56" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <!-- <panel class="knob" x="+18" y="+14+81+68+68+64" knobsize="41" knobradius="10" faderradius="9" action="filter" dblclick="filter 50%" frommiddle="true" fillcolor="knobfillon" textaction="filter_label &amp; param_cast 'text' 9" actiontext="effect_select colorfx"/> -->
+      </group>
+      <!-- 5knobs -->
+      <group visibility="setting 'eqMode' 'STEMS'" y="+30">
+        <button class="dropdown_menu" action="eq_mode" x="+58" y="+6" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+18" y="+14" knobsize="41" knobradius="10" faderradius="9" action="stem 'instru'" rgclick="stem 'instru' 0% ? stem 'instru' 50% : stem 'instru' 0%" dblclick="stem 'instru' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'INSTRU'" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72" knobsize="41" knobradius="10" faderradius="9" action="stem 'hihat'" rgclick="stem 'hihat' 0% ? stem 'hihat' 50% : stem 'hihat' 0%" dblclick="stem 'hihat' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'HIHAT'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72+65" knobsize="41" knobradius="10" faderradius="9" action="stem 'vocal'" rgclick="stem 'vocal' 0% ? stem 'vocal' 50% : stem 'vocal' 0%" dblclick="stem 'vocal' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'VOCAL'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+72+65+65" knobsize="41" knobradius="10" faderradius="9" action="stem 'kick'" rgclick="stem 'kick' 0% ? stem 'kick' 50% : stem 'kick' 0%" dblclick="stem 'kick' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'KICK'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+81+68+68+64" knobsize="41" knobradius="10" faderradius="9" action="stem 'bass'" rgclick="stem 'bass' 0% ? stem 'bass' 50% : stem 'bass' 0%" dblclick="stem 'bass' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'BASS'" actiontxt="eq_mode +1"/>
+      </group>
+      <group name="levels,vu,cue" y="+366">
+        <panel class="vu_meter_LEDs" x="+23" y="+30" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+30" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+        <!-- PRO: 4 DECK AUDIO PANEL CUE BUTTON -->
+        <button class="button_main" x="+2+4+4" y="+195" width="57" height="24" action="pfl" coloroff="button_background4" brcoloroff="button_background4" text="CUE" textcoloron="black"/>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_EQS" placeholders="deck">
+    <deck deck="[DECK]">
+      <!-- <visual class="gfx_shape" width="77" height="432-56-1" coloroff="panel_background"/> -->
+      <!-- 3knobs -->
+      <!-- PRO: MIXER PANEL: EQ KNOBS -->
+      <group novisibility="setting 'eqMode' 'STEMS'">
+        <!-- <visual x="+10" y="+6" width="55" height="432-56-16"> -->
+        <!-- <off shape="square" color="#1C1C1C" radius="6" bordersize="1" border="#444444"/> -->
+        <!-- </visual> -->
+        <button class="dropdown_menu" action="eq_mode" x="+58" y="+8" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+18" y="+14" knobsize="41" knobradius="10" faderradius="9" action="gain" rgclick="match_gain" dblclick="gain 50%" frommiddle="true" fillcolor="knobfillon" textaction="gain_label" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76" knobsize="41" knobradius="10" faderradius="9" action="eq_high" rgclick="eq_high 0% ? eq_high 50% : eq_high 0%" dblclick="eq_high 50%" frommiddle="true" fillcolor="knobfillon" textaction="high_label" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76+67" knobsize="41" knobradius="10" faderradius="9" action="eq_mid" rgclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" dblclick="eq_mid 50%" frommiddle="true" fillcolor="knobfillon" textaction="mid_label 'short'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76+67+67" knobsize="41" knobradius="10" faderradius="9" action="eq_low" rgclick="eq_low 0% ? eq_low 50% : eq_low 0%" dblclick="eq_low 50%" frommiddle="true" fillcolor="knobfillon" textaction="low_label" actiontxt="eq_mode +1"/>
+        <!-- PRO: AUDIO PANEL: COLORFX -->
+        <button class="dropdown_menu" action="effect_select colorfx" x="+58" y="+14+81+68+68+50+6" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <group x="+55" y="+14+81+68+68+50+6">
+          <visual>
+            <size width="16" height="16"/>
+            <off shape="circle" color="#333333" border="#222222" border_size="1"/>
+          </visual>
+          <button action="auto_sync_options" query="auto_match_bpm ? auto_match_key ? auto_sync ? auto_pitch_lock" visibility="loaded" shape="circle">
+            <size width="8" height="8"/>
+            <pos x="+4" y="+4"/>
+            <off shape="circle" color="#AAAAAA" border="#000000" border_size="1"/>
+            <selected shape="circle" color="#00FF00" border="#222222" border_size="1"/>
+            <over shape="circle" color="#DDDDDD" border="#000000" border_size="0"/>
+            <down shape="circle" color="#00FF00" border="#88FFFF00" border_size="0"/>
+          </button>
+        </group>
+        <panel class="knob" x="+18" y="+14+81+68+68+50+13" knobsize="41" knobradius="10" faderradius="9" action="filter" dblclick="filter 50%" frommiddle="true" fillcolor="knobfillon" textaction="filter_label &amp; param_cast 'text' 9" actiontxt="filter_selectcolorfx"/>
+      </group>
+      <!-- 5knobs -->
+      <group visibility="setting 'eqMode' 'STEMS'">
+        <button class="dropdown_menu" action="eq_mode" x="+68" y="+6" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+18" y="+14" knobsize="41" knobradius="10" faderradius="9" action="stem 'instru'" rgclick="stem 'instru' 0% ? stem 'instru' 50% : stem 'instru' 0%" dblclick="stem 'instru' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'INSTRU'" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76" knobsize="41" knobradius="10" faderradius="9" action="stem 'hihat'" rgclick="stem 'hihat' 0% ? stem 'hihat' 50% : stem 'hihat' 0%" dblclick="stem 'hihat' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'HIHAT'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76+67" knobsize="41" knobradius="10" faderradius="9" action="stem 'vocal'" rgclick="stem 'vocal' 0% ? stem 'vocal' 50% : stem 'vocal' 0%" dblclick="stem 'vocal' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'VOCAL'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+76+67+67" knobsize="41" knobradius="10" faderradius="9" action="stem 'kick'" rgclick="stem 'kick' 0% ? stem 'kick' 50% : stem 'kick' 0%" dblclick="stem 'kick' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'KICK'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+18" y="+14+81+68+68+68+13" knobsize="41" knobradius="10" faderradius="9" action="stem 'bass'" rgclick="stem 'bass' 0% ? stem 'bass' 50% : stem 'bass' 0%" dblclick="stem 'bass' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'BASS'" actiontxt="eq_mode +1"/>
+      </group>
+    </deck>
+  </define>
+  <define class="EQ_ZONE_LEFT" placeholders="deck">
+    <deck deck="[DECK]">
+      <!-- 3knobs -->
+      <group x="+30">
+        <visual class="gfx_shape" x="+14+9" y="+86-29" width="400+16+8" height="20" coloroff="xf_background" visibility="0.57"/>
+        <menu class="fake_menu" x="+14+9+18" y="+58"/>
+        <button class="button_main" x="+14+9" y="+16" width="52" height="28" action="pfl" coloroff="button_background" brcoloroff="button_background" text="CUE"/>
+        <button class="dropdown_menu" action="eq_mode" x="+14+90+20-14-8" y="+20" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+14+90+20" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_high" rgclick="eq_high 0% ? eq_high 50% : eq_high 0%" dblclick="eq_high 50%" frommiddle="true" fillcolor="knobfillon" textaction="high_label" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+14+90+20+80" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_mid" rgclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" dblclick="eq_mid 50%" frommiddle="true" fillcolor="knobfillon" textaction="mid_label 'short'" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+14+90+20+80+80" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_low" rgclick="eq_low 0% ? eq_low 50% : eq_low 0%" dblclick="eq_low 50%" frommiddle="true" fillcolor="knobfillon" textaction="low_label" actiontxt="eq_mode +1"/>
+        <button class="button_main" x="+14+90+20+80+80+80+20+41+8-12-58" y="+16" width="5" height="32" action="filter_activate" coloroff="button_background" brcoloroff="button_background"/>
+        <button class="dropdown_menu" action="filter_selectcolorfx" x="+14+90+20+80+80+80+20+41+8" y="+20" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+14+90+20+80+80+80+20" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="filter" dblclick="filter 50%" frommiddle="true" fillcolor="knobfillon" textaction="filter_label" actiontxt="filter_selectcolorfx"/>
+      </group>
+    </deck>
+  </define>
+  <define class="EQ_ZONE_RIGHT" placeholders="deck">
+    <deck deck="[DECK]">
+      <!-- 3knobs -->
+      <group x="+6">
+        <visual class="gfx_shape" x="+6+8+5" y="+86-29" width="400+16+8" height="20" coloroff="xf_background" visibility="0.57"/>
+        <button class="button_main" x="+504-30-52-14-9-41-20-14-8-14-80-80-80-20+58" y="+16" width="5" height="32" action="filter_activate" coloroff="button_background" brcoloroff="button_background"/>
+        <button class="dropdown_menu" action="filter_selectcolorfx" x="+504-30-52-14-9-41-20-14-8-14-80-80-80-20-8-14" y="+20" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+504-30-52-14-9-41-20-14-8-14-80-80-80-20" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="filter" dblclick="filter 50%" frommiddle="true" fillcolor="knobfillon" textaction="filter_label" actiontxt="filter_selectcolorfx"/>
+        <panel class="knob" x="+504-30-52-14-9-41-20-14-8-14-80-80" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_high" rgclick="eq_high 0% ? eq_high 50% : eq_high 0%" dblclick="eq_high 50%" frommiddle="true" fillcolor="knobfillon" textaction="high_label" actiontxt="eq_mode +1"/>
+        <panel class="knob" x="+504-30-52-14-9-41-20-14-8-14-80" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_mid" rgclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" dblclick="eq_mid 50%" frommiddle="true" fillcolor="knobfillon" textaction="mid_label 'short'" actiontxt="eq_mode +1"/>
+        <button class="dropdown_menu" action="eq_mode" x="+504-30-52-14-9-41-20+14" y="+20" visibility="var_equal '@$hauntingdropmenus' 0"/>
+        <panel class="knob" x="+504-30-52-14-9-41-20-14-8-14" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="eq_low" rgclick="eq_low 0% ? eq_low 50% : eq_low 0%" dblclick="eq_low 50%" frommiddle="true" fillcolor="knobfillon" textaction="low_label" actiontxt="eq_mode +1"/>
+        <button class="button_main" x="+504-30-60-14-9" y="+16" width="52" height="28" action="pfl" coloroff="button_background" brcoloroff="button_background" text="CUE"/>
+        <menu class="fake_menu" x="+504-30-60-14-9+19" y="+58"/>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS" placeholders="deck">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="77" height="432-56-1" coloroff="#000000"/>
+      <!-- <textzone> -->
+      <!-- <pos x="+0" y="+0"/> -->
+      <!-- <size width="77" height="30"/> -->
+      <!-- <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/> -->
+      <!-- </textzone> -->
+      <panel class="vu_meter_LEDs" x="+23" y="+5" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+      <panel class="vu_meter_LEDs" x="+23+11+10" y="+5" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+      <!-- CUE BUTTON -->
+      <!-- <button class="button_main" x="+2+4+4" y="+175" width="57" height="24" action="pfl" coloroff="button_background4" brcoloroff="button_background4" textcoloron="black" text="CUE"/> -->
+      <button class="button_main" action="pfl" query="pfl">
+        <pos x="+10" y="+175"/>
+        <size width="60" height="25"/>
+        <!-- OFF / default -->
+        <off color="transparent" border="button_background4" border_size="1" radius="3"/>
+        <over color="transparent" border="button_background4" border_size="1" radius="3"/>
+        <!-- ON when deck is PFL -->
+        <down color="transparent" border="deckcolor" border_size="1" radius="3"/>
+        <selected color="transparent" border="deckcolor" border_size="1" radius="3"/>
+        <text text="CUE" fontsize="10" align="center" valign="center" color="textdarker" colordown="deckcolor" colorselected="deckcolor"/>
+      </button>
+      <panel class="deck_level" x="+11+9" y="+6+10+200"/>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS_EX" placeholders="deck">
+    <deck deck="[DECK]">
+      <group name="ONLY" y="+6">
+        <visual class="gfx_shape" width="61" height="212-50-8" coloroff="xf_background" visibility="0.6"/>
+        <visual class="gfx_shape" width="61" height="36" coloroff="xf_background"/>
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="61" height="36"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs2" x="+23-8" y="+22+24" source="get_level_left" vucoloroff="vu_background" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs2" x="+23+11+10-8" y="+22+24" source="get_level_right" vucoloroff="vu_background" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20-8" y="+16+12+24" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="108-6"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="108-12-6"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS_VERT" placeholders="deck">
+    <deck deck="[DECK]">
+      <group name="ONLY" y="+6">
+        <visual class="gfx_shape" width="61" height="212" coloroff="xf_background" visibility="0.6"/>
+        <visual class="gfx_shape" width="61" height="36" coloroff="xf_background"/>
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="61" height="36"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs" x="+23-8" y="+22+24" source="get_level_left" vucoloroff="vu_background" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10-8" y="+22+24" source="get_level_right" vucoloroff="vu_background" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20-8" y="+16+12+24" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS_MINI" placeholders="deck">
+    <deck deck="[DECK]">
+      <group name="ONLY">
+        <visual class="gfx_shape" width="77" height="98" coloroff="xf_background"/>
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_mini" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_mini" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="62"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="62-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS_STACK" placeholders="deck">
+    <deck deck="[DECK]">
+      <group name="ONLY">
+        <visual class="gfx_shape" width="77" height="164" coloroff="xf_background"/>
+        <!-- gain level -->
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_stack" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_stack" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="128"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="128-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="CHANNEL_LEVELS_COMPACT4_LEFT">
+    <visual class="gfx_shape" width="77" height="216+2+216" coloroff="xf_background"/>
+    <deck deck="1">
+      <group name="deck1">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs" x="+23" y="+36" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+36" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+42" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+    <deck deck="3">
+      <group name="deck3" y="+216+2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs" x="+23" y="+36" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+36" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+42" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="channel_levels_mini4_left">
+    <visual class="gfx_shape" width="77" height="98+2+98" coloroff="xf_background"/>
+    <deck deck="1">
+      <group name="deck1">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_mini" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_mini" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="62"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="62-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+    <deck deck="3">
+      <group name="deck3" y="+98+2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_mini" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_mini" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="62"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="62-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="channel_levels_compact4_right">
+    <visual class="gfx_shape" width="77" height="216+2+216" coloroff="xf_background"/>
+    <deck deck="2">
+      <group name="deck2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs" x="+23" y="+36" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+36" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+42" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+    <deck deck="4">
+      <group name="deck4" y="+216+2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs" x="+23" y="+36" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+36" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+42" condition="var_equal '@$hauntingskinmixerrack' 1">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="channel_levels_mini4_right">
+    <visual class="gfx_shape" width="77" height="98+2+98" coloroff="xf_background"/>
+    <deck deck="2">
+      <group name="deck2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_mini" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_mini" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="62"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="62-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+    <deck deck="4">
+      <group name="deck4" y="+98+2">
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="77" height="30"/>
+          <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+        </textzone>
+        <panel class="vu_meter_LEDs_mini" x="+23" y="+32" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs_mini" x="+23+11+10" y="+32" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36+2">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="62"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="62-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+      </group>
+    </deck>
+  </define>
+  <define class="channel_levels_video_4decks" placeholders="deck">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="77" height="432-56-1-174+30" coloroff="xf_background"/>
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="77" height="30"/>
+        <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+      </textzone>
+      <group name="levels,vu,cue" y="+4">
+        <panel class="vu_meter_LEDs" x="+23" y="+30" source="get_level_left" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <panel class="vu_meter_LEDs" x="+23+11+10" y="+30" source="get_level_right" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+        <group name="level" x="+20" y="+36">
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7"/>
+            <size width="38" height="158"/>
+            <fader color="faderbackground2" width="38" height="14" visibility="0.5"/>
+          </slider>
+          <slider action="level" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+            <pos y="-7+6"/>
+            <size width="38" height="158-12"/>
+            <fader color="faderbackgroundline" width="38" height="2"/>
+          </slider>
+        </group>
+        <button class="button_main" x="+2+4+4" y="+195" width="57" height="24" action="pfl" coloroff="button_background4" brcoloroff="button_background4" text="CUE"/>
+      </group>
+    </deck>
+  </define>
+  <define class="channel_levels_video_left" placeholders="deck">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="77" height="432-56-1-174" coloroff="xf_background"/>
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="77" height="30"/>
+        <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+      </textzone>
+      <panel class="vu_meter_LEDs" x="+8" y="+35" source="get_level" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+      <button class="button_main" x="+2+4+4+18" y="+170" width="57-16" height="20" action="pfl" coloroff="button_background4" brcoloroff="button_background4" text="CUE"/>
+      <panel class="deck_level" x="+11+9+10" y="+6+30"/>
+    </deck>
+  </define>
+  <define class="channel_levels_video_right" placeholders="deck">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="77" height="432-56-1-174" coloroff="xf_background"/>
+      <textzone>
+        <pos x="+0" y="+0"/>
+        <size width="77" height="30"/>
+        <text fontsize="15" weight="" color="deckcolor" align="center" action="get_level 'db'" important="true"/>
+      </textzone>
+      <panel class="vu_meter_LEDs" x="+77-8-11" y="+35" source="get_level" showpeaks="var_equal '@$hauntingshowpeaksmt' 1"/>
+      <button class="button_main" x="+2+4+4-2" y="+170" width="57-16" height="20" action="pfl" coloroff="button_background4" brcoloroff="button_background4" text="CUE"/>
+      <panel class="deck_level" x="+11+9-10" y="+6+30"/>
+    </deck>
+  </define>
+  <define class="MIXER">
+    <!-- MIDDLE PANEL BORDER -->
+    <visual x="+4" width="308" height="375">
+      <off shape="square" color="#000000" radius="6" bordersize="1" border="#222222"/>
+    </visual>
+    <!-- MIDDLE PANEL: MIXER -->
+    <panel name="audiomixer" group="mixer" visible="yes">
+      <visual x="+4" width="307" height="375">
+        <off shape="square" color="dark_3" radius="6" bordersize="1" border="dark_5"/>
+      </visual>
+      <group x="+2" y="+8">
+        <panel class="channel_eqs" deck="1" visibility="not deck 3 leftdeck"/>
+        <panel class="channel_eqs" deck="3" visibility="deck 3 leftdeck"/>
+      </group>
+      <panel class="channel_levels" deck="1" y="+10" x="+77+1" visibility="not deck 3 leftdeck"/>
+      <panel class="channel_levels" deck="3" y="+10" x="+77+1" visibility="deck 3 leftdeck"/>
+      <panel class="channel_levels" deck="2" y="+10" x="+77+1+77+2" visibility="not deck 4 rightdeck"/>
+      <panel class="channel_levels" deck="4" y="+10" x="+77+1+77+2" visibility="deck 4 rightdeck"/>
+      <group x="-2" y="+8">
+        <panel class="channel_eqs" deck="2" x="+77+1+77+2+77+1" visibility="not deck 4 rightdeck"/>
+        <panel class="channel_eqs" deck="4" x="+77+1+77+2+77+1" visibility="deck 4 rightdeck"/>
+      </group>
+      <menu tooltip="MIXER OPTIONS">
+        <pos x="960-10" y="+10"/>
+        <size width="20" height="18"/>
+        <off shape="square" color="xf_background" border="xf_background"/>
+        <icon sysicon="settings" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+        <item text="Frequency" localize="true" action="setting 'eqMode' 'Frequency'" check="setting 'eqMode' 'Frequency'"/>
+        <item text="ModernEQ" localize="true" action="setting 'eqMode' 'modernEQ'" check="setting 'eqMode' 'modernEQ'"/>
+        <item text="EZRemix" localize="true" action="setting 'eqMode' 'EZRemix'" check="setting 'eqMode' 'EZRemix'"/>
+        <item text="Full Stems (5 knobs)" localize="true" action="setting 'eqMode' 'STEMS'" check="setting 'eqMode' 'STEMS'"/>
+        <separator/>
+        <submenu text="EQ Frequency Spread" localize="true">
+          <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+          <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+        </submenu>
+        <submenu text="Vu Meter" localize="true">
+          <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+          <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+          <separator text="Color"/>
+          <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+          <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+          <separator/>
+          <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+        </submenu>
+        <submenu text="Filter Resonance" localize="true">
+          <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+          <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+          <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+        </submenu>
+        <submenu text="Fader Start" localize="true">
+          <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+          <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+        </submenu>
+        <submenu text="Fader StartStop" localize="true">
+          <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+          <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+        </submenu>
+        <separator/>
+        <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+        <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+        <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+        <separator/>
+        <submenu text="Crossfader" localize="true">
+          <item text="Disabled" action="setting 'crossfaderDisable'" check="setting 'crossfaderDisable'"/>
+          <item text="Hamster" action="setting 'crossfaderHamster'" check="setting 'crossfaderHamster'"/>
+          <separator/>
+          <item text="Full" action="setting 'crossfaderCurve' 'full'" check="setting 'crossfaderCurve' 'full'"/>
+          <item text="Smooth" action="setting 'crossfaderCurve' 'smooth'" check="setting 'crossfaderCurve' 'smooth'"/>
+          <item text="Scratch" action="setting 'crossfaderCurve' 'scratch'" check="setting 'crossfaderCurve' 'scratch'"/>
+          <item text="Custom" action="setting 'crossfaderCurve' 'custom'" check="setting 'crossfaderCurve' 'custom'"/>
+          <item text="Cut" action="setting 'crossfaderCurve' 'cut'" check="setting 'crossfaderCurve' 'cut'"/>
+        </submenu>
+      </menu>
+    </panel>
+    <!-- MIXER PANEL: SAMPLER -->
+    <panel name="samplermixer" group="mixer" visible="no">
+      <deck deck="master">
+        <!-- panel bg -->
+        <!-- <visual class="gfx_shape" shape="square" width="312" height="432-56-1" bordercoloroff="red" bordersize="1"/> -->
+        <!-- header -->
+        <group name="sampler_panel" x="+0" y="+0" visibility="true">
+          <visual x="+4" width="307" height="375">
+            <off shape="square" color="dark_3" radius="6" bordersize="1" border="dark_6"/>
+          </visual>
+          <!-- SAMPLER BANK SELECT -->
+          <group x="+0" y="+0">
+            <group x="+10">
+              <!-- bank left -->
+              <button action="sampler_bank -1">
+                <pos x="+0"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowleft" color="#555555" colorover="#999999" dx="-3" width="24" height="24"/>
+              </button>
+              <!-- bank right -->
+              <button action="sampler_bank +1">
+                <pos x="+23"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowright" color="#555555" colorover="#999999" dx="+2" width="24" height="24"/>
+              </button>
+              <!-- bank left -->
+              <button action="sampler_bank -1">
+                <pos x="+0"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowleft" color="#555555" colorover="#999999" dx="-3" width="24" height="24"/>
+              </button>
+              <!-- bank right -->
+              <button action="sampler_bank +1">
+                <pos x="+23"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowright" color="#555555" colorover="#999999" dx="+2" width="24" height="24"/>
+              </button>
+              <!-- bank left -->
+              <button action="sampler_bank -1">
+                <pos x="+0"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowleft" color="#555555" colorover="#999999" dx="-3" width="24" height="24"/>
+              </button>
+              <!-- bank right -->
+              <button action="sampler_bank +1">
+                <pos x="+23"/>
+                <size width="24" height="24"/>
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <on color="transparent" border="#222222" border_size="1"/>
+                <icon sysicon="arrowright" color="#555555" colorover="#999999" dx="+2" width="24" height="24"/>
+              </button>
+              <!-- bank name -->
+              <button class="button_main" x="+0+26+20" width="248" height="24" action="sampler_bank" rightclick="sampler_options" coloron="transparent">
+                <off color="dark_0" border="dark_6" border_size="1"/>
+                <text action="get_sampler_bank" dx="+10" fontsize="12" color="white" weight="bold" align="left"/>
+              </button>
+            </group>
+          </group>
+          <!-- open samples in library -->
+          <button x="+250" y="+0" width="24" height="24" visibility="true" query="browser_gotofolder 'Sampler'" action="browser_gotofolder 'Sampler'">
+            <off color="transparent" border="#000000" border_size="0" shape="square"/>
+            <on color="#444444" border="#111111" border_size="0" shape="square"/>
+            <over color="transparent" border="#000000" border_size="0" shape="square"/>
+            <selected color="#333333" border="#555555" border_size="0" shape="square"/>
+            <icon dx="+0" dy="+0" sysicon="add_favoritefolder" width="20" height="18" color="#888888" colorselected="white" colordown="white" colorover="#FFFFFF"/>
+          </button>
+          <!-- sidebar toggle -->
+          <button x="+275" y="+0" width="24" height="24" visibility="true" action="show_splitpanel 'sideview' toggle &amp; sideview sampler'">
+            <off color="transparent" border="#000000" border_size="0" shape="square"/>
+            <on color="#444444" border="#111111" border_size="0" shape="square"/>
+            <over color="transparent" border="#000000" border_size="0" shape="square"/>
+            <selected color="#333333" border="#555555" border_size="0" shape="square"/>
+            <icon dx="+0" dy="+0" sysicon="sideview 'sampler'" width="20" height="18" color="#888888" colorselected="white" colordown="white" colorover="#FFFFFF"/>
+          </button>
+        </group>
+        <!-- SAMPLE LIST BOX -->
+        <group x="+10" y="+30">
+          <!-- <visual x="+0" y="+0" width="310-20" height="34*8+2"> -->
+          <!-- <off shape="square" color="transparent" border_size="3" border="#222222" radius="6"/> -->
+          <!-- </visual> -->
+          <!-- border -->
+          <visual x="+0" y="+0" width="310-10-6" height="34*8+4">
+            <off shape="square" color="black" border_size="1" border="dark_7" radius="6"/>
+          </visual>
+          <group x="+2" y="+2">
+            <!-- CLASS: SAMPLE PLAYER -->
+            <define class="SAMPLER_ROW" placeholders="*index">
+              <!-- progress -->
+              <visual source="sampler_position [INDEX]" type="linear" orientation="horizontal" direction="up" granularity="23">
+                <pos x="+0" y="+0"/>
+                <size width="290" height="34"/>
+                <off shape="square" color="#000000" radius="0" border_size="1" border="#222222"/>
+                <on shape="square" color="#0000DD" radius="0"/>
+                <over shape="square" color="#111111" radius="0" border_size="1" border="#222222"/>
+              </visual>
+              <!-- color chip -->
+              <visual type="color" source="sampler_loaded [INDEX] ? sampler_color [INDEX] : constant '#333333'" visibility="sampler_play [INDEX] ? blink 1bt : true">
+                <pos x="+6" y="+7"/>
+                <size width="6" height="21"/>
+              </visual>
+              <!-- TEXT: LINE 1 -->
+              <group x="+16" y="+0">
+                <textzone>
+                  <size width="250" height="22"/>
+                  <!-- <text fontsize="12" color="#AAAAAA" align="left" action="sampler_pad [INDEX]"/> -->
+                  <text fontsize="12" color="#AAAAAA" align="left" action="get_text ' `sampler_pad_page &amp; param_add -1 &amp; param_multiply 8 &amp; param_add [INDEX] &amp; get_sample_name`'"/>
+                </textzone>
+                <textzone>
+                  <size width="230" height="22"/>
+                  <!-- <text fontsize="12" color="#FFFFFF" align="left" action="sampler_pad [INDEX]"/> -->
+                  <text fontsize="12" color="#AAAAAA" align="left" action="get_text ' `sampler_pad_page &amp; param_add -1 &amp; param_multiply 8 &amp; param_add [INDEX] &amp; get_sample_name`'"/>
+                </textzone>
+              </group>
+              <!-- TEXT: LINE 2 -->
+              <group x="+16" y="+13">
+                <textzone visibility="not param_equal '`get_sample_info [INDEX] bpm`' '``'">
+                  <pos x="+0" y="+0"/>
+                  <size width="200" height="22"/>
+                  <text fontsize="11" color="#FFFFFF" align="left" action="get_text '`get_sample_info [INDEX] bpm`bpm'"/>
+                </textzone>
+                <textzone>
+                  <pos x="+67" y="+0"/>
+                  <size width="50" height="22"/>
+                  <text fontsize="11" weight="normal" color="#FFFFFF" align="center" action="get_text '`get_sample_info [INDEX] key`'"/>
+                </textzone>
+                <textzone>
+                  <pos x="+90" y="+0"/>
+                  <size width="50" height="22"/>
+                  <text fontsize="11" weight="normal" color="#FFFFFF" align="center" action="get_text '`get_sample_info [INDEX] mode`'"/>
+                </textzone>
+              </group>
+              <!-- play button -->
+              <group x="+258" y="+0">
+                <button action="sampler_pad [INDEX]" rightclick="sampler_edit [INDEX]" query="sampler_play [INDEX]" shape="square" visibility="sampler_play [INDEX] ? blink 1bt : true">
+                  <size width="34" height="34"/>
+                  <icon dx="-1" dy="+0" sysicon="play" width="34" height="34" color="#555555" coloron="white" colorselected="white"/>
+                </button>
+              </group>
+              <!-- click zone + outline overlay -->
+              <button action="sampler_pad [INDEX]" query="sampler_position [INDEX]" deck="master" rightclick="sampler_edit [INDEX]">
+                <pos x="+1" y="+1"/>
+                <size width="288" height="33"/>
+                <off color="transparent" border_size="0"/>
+                <on color="transparent" border="dark_8" border_size="1" radius="5"/>
+              </button>
+            </define>
+            <!-- usage -->
+            <panel class="sampler_row" index="1" y="+34*0" visibility="sampler_loaded 1"/>
+            <panel class="sampler_row" index="2" y="+34*1" visibility="sampler_loaded 2"/>
+            <panel class="sampler_row" index="3" y="+34*2" visibility="sampler_loaded 3"/>
+            <panel class="sampler_row" index="4" y="+34*3" visibility="sampler_loaded 4"/>
+            <panel class="sampler_row" index="5" y="+34*4" visibility="sampler_loaded 5"/>
+            <panel class="sampler_row" index="6" y="+34*5" visibility="sampler_loaded 6"/>
+            <panel class="sampler_row" index="7" y="+34*6" visibility="sampler_loaded 7"/>
+            <panel class="sampler_row" index="8" y="+34*7" visibility="sampler_loaded 8"/>
+          </group>
+          <!-- BOTTOM SECTION -->
+          <group y="+280">
+            <!-- <group name="sampler_mode" x="+10"> -->
+            <!-- label -->
+            <!-- <textzone class="text" x="+0" y="+0" width="45" height="20" fontsize="8" color="textoff" align="left" weight="" text="MODE"/> -->
+            <!-- <button x="+0" y="+16" class="button_main" bordersize="1" width="60" height="26" action="sampler_mode" textsize="10" textcolor="white"> -->
+            <!-- <size height="15"/> -->
+            <!-- <off color="#111111" border="#555555"/> -->
+            <!-- <down color="#111111" border="#555555"/> -->
+            <!-- <selected color="#111111" border="#555555"/> -->
+            <!-- <text align="center" action="sampler_mode &amp; param_uppercase"/> -->
+            <!-- </button> -->
+            <!-- </group> -->
+            <group name="sampler_pad_page_select" x="+188" y="+0">
+              <button x="+0" class="button_main" bordersize="1" action="sampler_pad_page -1" textsize="10" textcolor="white">
+                <size width="24" height="24"/>
+                <off color="#111111"/>
+                <down color="#111111"/>
+                <selected color="#111111"/>
+                <icon sysicon="arrowleft" color="#555555" colorover="#999999" dx="-2" width="18" height="18"/>
+              </button>
+              <button x="+23" class="button_main" bordersize="1" textsize="11" width="60" height="26" action="sampler_pad_page +1" textcolor="white">
+                <size width="60" height="24"/>
+                <off color="#111111"/>
+                <down color="#111111"/>
+                <selected color="#111111"/>
+                <text align="center" weight="" action="sampler_pad_page"/>
+              </button>
+              <button x="+82" class="button_main" bordersize="1" action="sampler_pad_page +1" textsize="10" textcolor="white">
+                <size width="24" height="24"/>
+                <off color="#111111"/>
+                <down color="#111111"/>
+                <selected color="#111111"/>
+                <icon sysicon="arrowright" color="dark_5" colorover="white" dx="+2" width="18" height="18"/>
+              </button>
+              <visual x="+0" y="+0" width="106" height="24" visibility="1.0">
+                <off shape="square" color="transparent" border_size="1" border="dark_7" radius="6"/>
+              </visual>
+            </group>
+            <!-- SAMPLER OUTPUT -->
+            <!-- <group name="sampler_output" x="+204"> -->
+            <!-- label -->
+            <!-- <textzone class="text" x="+0" y="+0" width="50" height="20" fontsize="8" color="textoff" align="left" weight="" text="OUTPUT"/> -->
+            <!-- SAMPLER ROUTING TOGGLE HEADPHONES/MASTER -->
+            <!-- <button x="+0" y="+16" query="false" textsize="11" class="button_main" action="param_equal `setting 'samplerOutputDeck'` 0 ? setting 'samplerOutputDeck' -1 : setting 'samplerOutputDeck' 0" rightclick="sampler_output 'popup'" textaction="param_equal `setting 'samplerOutputDeck'` 0 ? get_text 'MASTER' : param_equal `setting 'samplerOutputDeck'` -1 ? get_text 'HEADPHONES' : param_equal `setting 'samplerOutputDeck'` -2 ? get_text 'TRIGGER' : get_text 'DECK `setting &quot;samplerOutputDeck&quot;`'"> -->
+            <!-- <size width="95" height="17"/> -->
+            <!-- <off color="#111111" border="#555555"/> -->
+            <!-- <down color="#111111" border="#555555"/> -->
+            <!-- <text align="center" color="white"/> -->
+            <!-- </button> -->
+            <!-- </group> -->
+          </group>
+          <!-- SAMPLER VUMETER -->
+          <group x="+0" y="+310">
+            <!-- BORDER BACKGROUND -->
+            <!-- <visual x="+0" y="+0" width="144" height="43-8-8"> -->
+            <!-- <off shape="square" color="transparent" border_size="1" border="#444444" radius="4"/> -->
+            <!-- </visual> -->
+            <visual x="+0" y="+0" width="295" height="43-8-8">
+              <off shape="square" color="black" border_size="1" border="dark_7" radius="4"/>
+            </visual>
+            <!-- LABEL -->
+            <textzone class="text" x="+0" y="+0" width="56" height="27" fontsize="10" color="textdarker" align="right" weight="" text="SAMPLER"/>
+            <!-- L -->
+            <visual type="vumeter" source="get_level_left 'sampler'" x="+58+8" y="+6" width="70" height="6" smooth="no">
+              <led x="+0" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*2" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*3" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*4" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*5" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*6" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*7" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*8" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*9" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*10" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*11" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+            </visual>
+            <!-- R -->
+            <visual type="vumeter" source="get_level_right 'sampler'" x="+58+8" y="+6+7+2" width="70" height="6" smooth="no">
+              <led x="+0" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*2" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*3" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*4" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*5" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*6" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*7" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*8" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*9" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*10" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+              <led x="+6*11" y="+0" width="4" height="6">
+                <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+                <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+              </led>
+            </visual>
+            <!-- Sampler Master Volume (horizontal slider) -->
+            <slider action="sampler_volume_master" dblclick="sampler_volume_master 80%" orientation="horizontal" direction="up" frommiddle="false">
+              <pos x="+58+8" y="+4"/>
+              <size width="70" height="20"/>
+              <fader color="#999999" width="3" height="20"/>
+            </slider>
+            <!-- SAMPLER CUE BUTTON -->
+            <button x="+295-44-42" y="+3" width="40" height="21" shape="square" action="setting 'SamplerHeadphones'" border_size="1" radius="4">
+              <off color="#000000" border="#444444" radius="4"/>
+              <over color="#333333" border="#888888" radius="4"/>
+              <selected color="black" border="color_sampler" radius="4"/>
+              <text align="center" color="#888888" colorselected="color_sampler" text="CUE">CUE</text>
+            </button>
+            <!-- SAMPLER PLAY/STOP BUTTON -->
+            <button x="+295-40-4" y="+3" width="40" height="21" shape="square" action="sampler_play_stop" query="sampler_play" radius="4" color="black">
+              <off color="#000000" border="#444444" radius="4"/>
+              <on color="#222222" border="#888888" radius="4"/>
+              <over color="#222222" border="#888888" radius="4"/>
+              <down color="#222222" border="#888888" radius="4"/>
+              <selected color="color_sampler" border="color_sampler" radius="4"/>
+              <icon dx="-1" sysicon="play" width="28" height="28" colorover="needle" color="#888888" coloron="white" colordown="white" colorselected="black"/>
+            </button>
+          </group>
+        </group>
+        <!-- bottom section, top row buttons -->
+      </deck>
+    </panel>
+    <!-- MIXER PANEL: VIDEO -->
+    <panel name="videomixer" group="mixer" visible="no">
+      <visual class="gfx_shape" width="312" height="432-56-1" coloroff="panel_background"/>
+      <button class="button_main" action="video" rightclick="video_output" width="312-4" height="174-4" x="+2" y="+2" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="MASTER VIDEO"/>
+      <video x="+2" y="+2" source="master">
+        <size width="312-4" height="174-4"/>
+      </video>
+      <panel class="channel_levels_video_left" deck="3" x="+0" y="+174" visibility="deck 3 leftdeck"/>
+      <panel class="channel_levels_video_left" deck="1" x="+0" y="+174" visibility="not deck 3 leftdeck"/>
+      <panel class="channel_levels_video_right" deck="4" x="+77+1+77+2+77+1" y="+174" visibility="deck 4 rightdeck"/>
+      <panel class="channel_levels_video_right" deck="2" x="+77+1+77+2+77+1" y="+174" visibility="not deck 4 rightdeck"/>
+      <panel visibility="not has_video_mix">
+        <textzone class="text" x="+10+76+14" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO SOURCE"/>
+        <button class="button_main" x="+10+76" y="+150+42" width="112" height="28" action="video_source" scroll="video_source_select" textaction="get_text '%videosource' &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+150+42" width="28" height="28" action="video_source_select" sysicon="chevrondown" iconsize="20"/>
+        <textzone class="text" x="+10+76+14" y="+150+8+56" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="TRANSITION FX"/>
+        <button class="button_main" x="+10+76" y="+150+40+56" width="112" height="28" action="video_transition" scroll="video_transition_select" textaction="get_videotrans_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+150+40+56" width="28" height="28" action="video_transition_select" sysicon="chevrondown" iconsize="20"/>
+      </panel>
+      <panel visibility="has_video_mix">
+        <textzone class="text" x="+10+76+14" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO FX"/>
+        <button class="button_main" x="+10+76" y="+150+42" width="112" height="28" action="video_fx" scroll="video_fx_select" textaction="deck master get_videofx_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+150+42" width="28" height="28" action="video_fx_select" sysicon="chevrondown" iconsize="20"/>
+        <textzone class="text" x="+10+76+14" y="+150+8+56" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="TRANSITION FX"/>
+        <button class="button_main" x="+10+76" y="+150+40+56" width="112" height="28" action="video_transition" scroll="video_transition_select" textaction="get_videotrans_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+150+40+56" width="28" height="28" action="video_transition_select" sysicon="chevrondown" iconsize="20"/>
+      </panel>
+      <button class="button_main" x="+10+76+14-14" y="+286" width="38" height="24" action="setting 'videorandomtransition'" tooltip="Random Video Transition" coloroff="button_background2" coloron="br_focus" bordersize="0" text="RND"/>
+      <button class="button_main" x="+10+76+14+38+36+14" y="+286" width="38" height="24" action="video_output" query="on/off" coloroff="button_background" coloron="br_focus" bordersize="0" iconsize="22" sysicon="settings"/>
+      <menu tooltip="VIDEO OPTIONS">
+        <pos x="960-15" y="+286"/>
+        <size width="30" height="20"/>
+        <off shape="square" color="xf_background" border="xf_background"/>
+        <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+        <submenu text="Letter Boxing" localize="true">
+          <item text="Bars" action="setting 'letterBoxing' 'bars'" check="setting 'letterBoxing' 'bars'"/>
+          <item text="Crop" action="setting 'letterBoxing' 'crop'" check="setting 'letterBoxing' 'crop'"/>
+          <item text="Zoom" action="setting 'letterBoxing' 'zoom'" check="setting 'letterBoxing' 'zoom'"/>
+        </submenu>
+        <submenu text="MicroFrames" localize="true">
+          <item text="Never" action="setting 'videoMicroFrames' 'never'" check="setting 'videoMicroFrames' 'never'"/>
+          <item text="Smart" action="setting 'videoMicroFrames' 'smart'" check="setting 'videoMicroFrames' 'smart'"/>
+          <item text="Always" action="setting 'videoMicroFrames' 'always'" check="setting 'videoMicroFrames' 'always'"/>
+        </submenu>
+        <submenu text="Resample Quality" localize="true">
+          <item text="High" action="setting 'videoResampleQuality' 'high'" check="setting 'videoResampleQuality' 'high'"/>
+          <item text="Medium" action="setting 'videoResampleQuality' 'medium'" check="setting 'videoResampleQuality' 'medium'"/>
+        </submenu>
+        <submenu text="Shader Quality" localize="true">
+          <item text="Auto" action="setting 'videoShaderQuality' 'auto'" check="setting 'videoShaderQuality' 'auto'"/>
+          <item text="High" action="setting 'videoShaderQuality' 'full'" check="setting 'videoShaderQuality' 'full'"/>
+          <item text="Medium" action="setting 'videoShaderQuality' 'medium'" check="setting 'videoShaderQuality' 'medium'"/>
+          <item text="Low" action="setting 'videoShaderQuality' 'low'" check="setting 'videoShaderQuality' 'low'"/>
+        </submenu>
+        <submenu text="VDJ Logo" localize="true">
+          <item text="ON" localize="true" action="setting 'videoLogo'" check="setting 'videoLogo'"/>
+          <separator text="Size" localize="true"/>
+          <item text="Large" action="setting 'videoLogoSize' 'large'" check="setting 'videoLogoSize' 'large'"/>
+          <item text="Medium" action="setting 'videoLogoSize' 'medium'" check="setting 'videoLogoSize' 'medium'"/>
+          <item text="Small" action="setting 'videoLogoSize' 'small'" check="setting 'videoLogoSize' 'small'"/>
+          <separator text="Position" localize="true"/>
+          <item text="Left-Top" action="setting 'videoLogoPosition' 'left-top'" check="setting 'videoLogoPosition' 'left-top'"/>
+          <item text="Right-Top" action="setting 'videoLogoPosition' 'right-top'" check="setting 'videoLogoPosition' 'right-top'"/>
+          <item text="Left-Bottom" action="setting 'videoLogoPosition' 'left-bottom'" check="setting 'videoLogoPosition' 'left-bottom'"/>
+          <item text="Right-Bottom" action="setting 'videoLogoPosition' 'right-bottom'" check="setting 'videoLogoPosition' 'right-bottom'"/>
+        </submenu>
+        <submenu text="Fps" localize="true">
+          <item text="30" action="setting 'videoFPS' 30" check="setting 'videoFPS' 30"/>
+          <item text="40" action="setting 'videoFPS' 40" check="setting 'videoFPS' 40"/>
+          <item text="50" action="setting 'videoFPS' 50" check="setting 'videoFPS' 50"/>
+          <item text="60" action="setting 'videoFPS' 60" check="setting 'videoFPS' 60"/>
+          <item text="70" action="setting 'videoFPS' 70" check="setting 'videoFPS' 70"/>
+        </submenu>
+        <separator/>
+        <item text="Video Window Always On Top" action="setting 'videoWindowAlwaysOnTop'" check="setting 'videoWindowAlwaysOnTop'"/>
+        <item text="Start Video On Load" action="setting 'startVideoOnLoad'" check="setting 'startVideoOnLoad'"/>
+        <item text="Create Link On Drop" action="setting 'videoCreateLinkOnDrop'" check="setting 'videoCreateLinkOnDrop'"/>
+        <item text="Use DXVA" action="setting 'videouseDXVA'" check="setting 'videouseDXVA'"/>
+        <item text="Safe Video Decode" action="setting 'safeVideoDecode'" check="setting 'safeVideoDecode'"/>
+      </menu>
+      <panel class="video_crossfader" x="+26" y="+432-56+6+4-52"/>
+    </panel>
+    <!-- PRO: MIXER PANEL: WAVE -->
+    <panel name="scratchmixer" group="mixer" visible="no">
+      <!-- <visual class="gfx_shape" width="312" height="432-56-1" coloroff="wave_background" bordercoloroff="panel_background" bordersize="2" visibility="var_equal '@$hauntinghidecrossfader' 0"/> -->
+      <!-- <visual class="gfx_shape" width="312" height="432-56-1+57" coloroff="wave_background" bordercoloroff="panel_background" bordersize="2" visibility="var_equal '@$hauntinghidecrossfader' 1"/> -->
+      <!-- LEFT -->
+      <panel class="vertical_scratchwave2" deck="1" visibility="not deck 3 leftdeck" x="+40" y="+0" outer_height="350" waveform_height="347" dropzone_height="370"/>
+      <!-- <panel class="vertical_scratchwave" deck="1" visibility="not deck 3 leftdeck" x="+40" y="+0"/> -->
+      <panel class="vertical_scratchwave" deck="3" visibility="deck 3 leftdeck" x="+40" y="+0"/>
+      <!-- RIGHT -->
+      <panel class="vertical_scratchwave" deck="2" visibility="not deck 4 rightdeck" x="+320-98-10-19-19" y="+0"/>
+      <panel class="vertical_scratchwave" deck="4" visibility="deck 4 rightdeck" x="+320-98-10-19-19" y="+0"/>
+      <!-- MIDDLE BUTTONS + VU -->
+      <panel class="scratch_controls" x="960-20" y="+0"/>
+      <!-- NEEDLE -->
+      <!-- <group x="+25" y="+90"> -->
+      <!-- <visual width="260" height="28"> -->
+      <!-- <off shape="square" color="#66000000" border_size="0" border="deckcolor" radius="6"/> -->
+      <!-- </visual> -->
+      <!-- <visual y="+13" width="260" height="2"> -->
+      <!-- <off shape="square" color="white" border_size="0" border="deckcolor" radius="1"/> -->
+      <!-- </visual> -->
+      <!-- </group> -->
+      <!-- left aligned -->
+      <!-- <group visibility="setting 'waveformCenter' 'left'"> -->
+      <!-- shadow -->
+      <!-- <visual x="+1920/2-6" y="+2" width="10" height="[WAVEFORMHEIGHT]-6"> -->
+      <!-- <off shape="square" color="#55000000" border_size="0" border="deckcolor" radius="6"/> -->
+      <!-- </visual> -->
+      <!-- tip -->
+      <!-- <visual x="+1920/2-2" y="+0" width="2" height="[WAVEFORMHEIGHT]" visibility="select"> -->
+      <!-- <off shape="square" color="white" border_size="0" border="deckcolor" radius="6"/> -->
+      <!-- </visual> -->
+      <!-- </group> -->
+      <!-- center aligned -->
+      <group visibility="setting 'waveformCenter' 'centered'">
+        <group x="+25" y="+176">
+          <visual width="260" height="28">
+            <off shape="square" color="#66000000" border_size="0" border="deckcolor" radius="6"/>
+          </visual>
+          <visual y="+13" width="260" height="2">
+            <off shape="square" color="white" border_size="0" border="deckcolor" radius="1"/>
+          </visual>
+        </group>
+      </group>
+    </panel>
+    <panel name="mastermixer" group="mixer" visible="no">
+      <panel class="mic/headphones_controls"/>
+      <panel class="mastercentral_controls" x="+77+1"/>
+      <panel class="master_controls" x="+77+1+77+2+77+1"/>
+    </panel>
+    <!-- XFADER ZONE -->
+    <group visibility="var_equal '@$hauntinghidecrossfader' 1 ? not skin_panel 'scratchmixer' : on">
+      <visual class="gfx_shape" y="+432-56" width="312" height="56" coloroff="xf_background"/>
+      <panel class="crossfader" x="+20" y="+432-56+6+4"/>
+    </group>
+  </define>
+  <define class="SAMPLER_ROW" placeholders="*index">
+    <!-- progress -->
+    <visual source="sampler_position [INDEX]" type="linear" orientation="horizontal" direction="up" granularity="23">
+      <pos x="+0" y="+0"/>
+      <size width="292" height="34"/>
+      <off shape="square" color="#000000" radius="0" border_size="1" border="#222222"/>
+      <on shape="square" color="#0000DD" radius="0"/>
+      <over shape="square" color="#111111" radius="0" border_size="1" border="#222222"/>
+    </visual>
+    <!-- color chip -->
+    <visual type="color" source="sampler_loaded [INDEX] ? sampler_color [INDEX] : constant '#333333'" visibility="sampler_play [INDEX] ? blink 1bt : true">
+      <pos x="+6" y="+7"/>
+      <size width="6" height="21"/>
+    </visual>
+    <!-- TEXT: LINE 1 -->
+    <group x="+16" y="+0">
+      <!-- name -->
+      <textzone visibility="not param_equal `get_sampler_slot` [INDEX] ? true : sampler_play [INDEX]">
+        <size width="250" height="22"/>
+        <text fontsize="12" color="#AAAAAA" align="left" action="sampler_pad [INDEX]"/>
+      </textzone>
+      <textzone visibility="param_equal `get_sampler_slot` [INDEX]">
+        <size width="230" height="22"/>
+        <text fontsize="12" color="#FFFFFF" align="left" action="sampler_pad [INDEX]"/>
+      </textzone>
+    </group>
+    <!-- TEXT: LINE 2 -->
+    <group x="+16" y="+13">
+      <!-- bpm -->
+      <textzone visibility="not param_equal '`get_sample_info [INDEX] bpm`' '``'">
+        <pos x="+0" y="+0"/>
+        <size width="200" height="22"/>
+        <text fontsize="11" color="#FFFFFF" align="left" action="get_text '`get_sample_info [INDEX] bpm`bpm'"/>
+      </textzone>
+      <!-- key -->
+      <textzone>
+        <pos x="+67" y="+0"/>
+        <size width="50" height="22"/>
+        <text fontsize="11" weight="normal" color="#ffffff" align="center" action="get_text '`get_sample_info [INDEX] key`'"/>
+      </textzone>
+      <!-- mode -->
+      <textzone>
+        <pos x="+90" y="+0"/>
+        <size width="50" height="22"/>
+        <text fontsize="11" weight="normal" color="#ffffff" align="center" action="get_text '`get_sample_info [INDEX] mode`'"/>
+      </textzone>
+    </group>
+    <!-- play button -->
+    <group x="+260" y="+0">
+      <!-- color chip -->
+      <!-- <visual x="+0" y="+0" type="color" source="sampler_loaded [INDEX] ? sampler_color [INDEX] : constant '#333333'" visibility="sampler_play [INDEX] ? blink 1bt : false"> -->
+      <!-- <size width="34" height="34"/> -->
+      <!-- </visual> -->
+      <!-- button -->
+      <button action="sampler_pad [INDEX]" rightclick="sampler_edit [INDEX]" query="sampler_play [INDEX]" shape="square">
+        <size width="34" height="34"/>
+        <icon dx="-1" dy="+0" sysicon="play" width="34" height="34" color="#555555" coloron="white" colorselected="white"/>
+      </button>
+    </group>
+    <!-- click zone + outline overlay (only when this slot is the focused/selected slot) -->
+    <!-- <button action="sampler_pad [INDEX]" query="param_equal `get_sampler_slot` [INDEX]" deck="master" rightclick="sampler_edit [INDEX]" visibility="sampler_play [INDEX] ? blink 1bt : true"> -->
+    <!-- <pos x="+0" y="+0"/> -->
+    <!-- <size width="286" height="30"/> -->
+    <!-- <off color="transparent" border_size="0"/> -->
+    <!-- <on color="transparent" border="#666666" border_size="1" radius="5"/> -->
+    <!-- </button> -->
+    <!-- click zone + outline overlay (only when this slot is the focused/selected slot) -->
+    <button action="sampler_pad [INDEX]" query="param_equal `get_sampler_slot` [INDEX]" deck="master" rightclick="sampler_edit [INDEX]">
+      <pos x="+0" y="+0"/>
+      <size width="286" height="30"/>
+      <off color="transparent" border_size="0"/>
+      <on color="transparent" border="#666666" border_size="0" radius="5"/>
+    </button>
+  </define>
+  <define class="levels_mini">
+    <group name="2/4 (decks_swap)" visibility="var_not_equal '@$hauntinglayout' 1">
+      <panel class="channel_levels_mini" deck="3" x="+77+1" visibility="deck 3 leftdeck"/>
+      <panel class="channel_levels_mini" deck="1" x="+77+1" visibility="not deck 3 leftdeck"/>
+      <panel class="channel_levels_mini" deck="2" x="+77+1+77+2" visibility="not deck 4 rightdeck"/>
+      <panel class="channel_levels_mini" deck="4" x="+77+1+77+2" visibility="deck 4 rightdeck"/>
+    </group>
+    <group name="4 (fulldecks)" visibility="var_equal '@$hauntinglayout' 1">
+      <panel class="channel_levels_mini4_left" deck="left" x="+77+1"/>
+      <panel class="channel_levels_mini4_right" deck="right" x="+77+1+77+2"/>
+    </group>
+  </define>
+  <define class="mixer_4decks">
+    <panel name="samplermixer" group="mixer" visible="yes">
+    </panel>
+    <panel name="audiomixer" group="mixer" visible="yes">
+      <group name="3124" visibility="setting 'mixerOrder' '3124'">
+        <panel class="channel_extended" deck="3"/>
+        <panel class="channel_extended" deck="1" x="+77+1"/>
+        <panel class="channel_extended" deck="2" x="+77+1+77+2"/>
+        <panel class="channel_extended" deck="4" x="+77+1+77+2+77+1"/>
+      </group>
+      <group name="1234" visibility="setting 'mixerOrder' '1234'">
+        <panel class="channel_extended" deck="1"/>
+        <panel class="channel_extended" deck="2" x="+77+1"/>
+        <panel class="channel_extended" deck="3" x="+77+1+77+2"/>
+        <panel class="channel_extended" deck="4" x="+77+1+77+2+77+1"/>
+      </group>
+      <group name="1342" visibility="setting 'mixerOrder' '1342'">
+        <panel class="channel_extended" deck="1"/>
+        <panel class="channel_extended" deck="3" x="+77+1"/>
+        <panel class="channel_extended" deck="4" x="+77+1+77+2"/>
+        <panel class="channel_extended" deck="2" x="+77+1+77+2+77+1"/>
+      </group>
+      <menu tooltip="MIXER OPTIONS">
+        <pos x="960-10" y="+0"/>
+        <size width="20" height="18"/>
+        <off shape="square" color="xf_background" border="xf_background"/>
+        <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+        <item text="Frequency" localize="true" action="setting 'eqMode' 'Frequency'" check="setting 'eqMode' 'Frequency'"/>
+        <item text="ModernEQ" localize="true" action="setting 'eqMode' 'modernEQ'" check="setting 'eqMode' 'modernEQ'"/>
+        <item text="EZRemix" localize="true" action="setting 'eqMode' 'EZRemix'" check="setting 'eqMode' 'EZRemix'"/>
+        <item text="Full Stems (5 knobs)" localize="true" action="setting 'eqMode' 'STEMS'" check="setting 'eqMode' 'STEMS'"/>
+        <separator/>
+        <submenu text="EQ Frequency Spread" localize="true">
+          <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+          <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+        </submenu>
+        <submenu text="Vu Meter" localize="true">
+          <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+          <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+          <separator text="Color"/>
+          <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+          <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+          <separator/>
+          <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+        </submenu>
+        <submenu text="Mixer Order" localize="true">
+          <item text="1-2-3-4" action="setting 'mixerOrder' '1234'" check="setting 'mixerOrder' '1234'"/>
+          <item text="3-1-2-4" action="setting 'mixerOrder' '3124'" check="setting 'mixerOrder' '3124'"/>
+          <item text="1-3-4-2" action="setting 'mixerOrder' '1342'" check="setting 'mixerOrder' '1342'"/>
+        </submenu>
+        <submenu text="Filter Resonance" localize="true">
+          <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+          <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+          <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+        </submenu>
+        <submenu text="Fader Start" localize="true">
+          <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+          <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+        </submenu>
+        <submenu text="Fader StartStop" localize="true">
+          <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+          <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+        </submenu>
+        <separator/>
+        <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+        <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+        <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+        <separator/>
+        <submenu text="Crossfader" localize="true">
+          <item text="Disabled" action="setting 'crossfaderDisable'" check="setting 'crossfaderDisable'"/>
+          <item text="Hamster" action="setting 'crossfaderHamster'" check="setting 'crossfaderHamster'"/>
+          <separator/>
+          <item text="Full" action="setting 'crossfaderCurve' 'full'" check="setting 'crossfaderCurve' 'full'"/>
+          <item text="Smooth" action="setting 'crossfaderCurve' 'smooth'" check="setting 'crossfaderCurve' 'smooth'"/>
+          <item text="Scratch" action="setting 'crossfaderCurve' 'scratch'" check="setting 'crossfaderCurve' 'scratch'"/>
+          <item text="Custom" action="setting 'crossfaderCurve' 'custom'" check="setting 'crossfaderCurve' 'custom'"/>
+          <item text="Cut" action="setting 'crossfaderCurve' 'cut'" check="setting 'crossfaderCurve' 'cut'"/>
+        </submenu>
+      </menu>
+    </panel>
+    <panel name="videomixer" group="mixer" visible="no">
+      <visual class="gfx_shape" width="312" height="432-70-1" coloroff="panel_background"/>
+      <button class="button_main" action="video" rightclick="video_output" width="312-4" height="174-4" x="+2" y="+2" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="MASTER VIDEO"/>
+      <video x="+2" y="+2" source="master">
+        <size width="312-4" height="174-4"/>
+      </video>
+      <group name="3124" visibility="setting 'mixerOrder' '3124'">
+        <panel class="channel_levels_video_4decks" deck="3" x="+0" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="1" x="+77+1" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="2" x="+77+1+77+2" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="4" x="+77+1+77+2+77+1" y="+174+186+2"/>
+      </group>
+      <group name="1234" visibility="setting 'mixerOrder' '1234'">
+        <panel class="channel_levels_video_4decks" deck="1" x="+0" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="2" x="+77+1" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="3" x="+77+1+77+2" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="4" x="+77+1+77+2+77+1" y="+174+186+2"/>
+      </group>
+      <group name="1342" visibility="setting 'mixerOrder' '1342'">
+        <panel class="channel_levels_video_4decks" deck="1" x="+0" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="3" x="+77+1" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="4" x="+77+1+77+2" y="+174+186+2"/>
+        <panel class="channel_levels_video_4decks" deck="2" x="+77+1+77+2+77+1" y="+174+186+2"/>
+      </group>
+      <panel visibility="not has_video_mix">
+        <textzone class="text" x="+10+76+14-80" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO SOURCE"/>
+        <button class="button_main" x="+10+76-80" y="+150+42" width="112" height="28" action="video_source" scroll="video_source_select" textaction="get_text '%videosource' &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112-80" y="+150+42" width="28" height="28" action="video_source_select" sysicon="chevrondown" iconsize="20"/>
+        <textzone class="text" x="+10+76+14+80" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="TRANSITION FX"/>
+        <button class="button_main" x="+10+76+80" y="+150+42" width="112" height="28" action="video_transition" scroll="video_transition_select" textaction="get_videotrans_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112+80" y="+150+42" width="28" height="28" action="video_transition_select" sysicon="chevrondown" iconsize="20"/>
+      </panel>
+      <panel visibility="has_video_mix">
+        <textzone class="text" x="+10+76+14-80" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO FX"/>
+        <button class="button_main" x="+10+76-80" y="+150+42" width="112" height="28" action="video_fx" scroll="video_fx_select" textaction="deck master get_videofx_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112-80" y="+150+42" width="28" height="28" action="video_fx_select" sysicon="chevrondown" iconsize="20"/>
+        <textzone class="text" x="+10+76+14+80" y="+150+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="TRANSITION FX"/>
+        <button class="button_main" x="+10+76+80" y="+150+42" width="112" height="28" action="video_transition" scroll="video_transition_select" textaction="get_videotrans_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112+80" y="+150+42" width="28" height="28" action="video_transition_select" sysicon="chevrondown" iconsize="20"/>
+      </panel>
+      <button class="button_main" x="+10+76+14-14" y="+230" width="38" height="24" action="setting 'videorandomtransition'" tooltip="Random Video Transition" coloroff="button_background2" coloron="br_focus" bordersize="0" text="RND"/>
+      <button class="button_main" x="+10+76+14+38+36+14" y="+230" width="38" height="24" action="video_output" query="on/off" coloroff="button_background" coloron="br_focus" bordersize="0" iconsize="22" sysicon="settings"/>
+      <menu tooltip="VIDEO OPTIONS">
+        <pos x="960-15" y="+230"/>
+        <size width="30" height="20"/>
+        <off shape="square" color="xf_background" border="xf_background"/>
+        <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+        <submenu text="Letter Boxing" localize="true">
+          <item text="Bars" action="setting 'letterBoxing' 'bars'" check="setting 'letterBoxing' 'bars'"/>
+          <item text="Crop" action="setting 'letterBoxing' 'crop'" check="setting 'letterBoxing' 'crop'"/>
+          <item text="Zoom" action="setting 'letterBoxing' 'zoom'" check="setting 'letterBoxing' 'zoom'"/>
+        </submenu>
+        <submenu text="MicroFrames" localize="true">
+          <item text="Never" action="setting 'videoMicroFrames' 'never'" check="setting 'videoMicroFrames' 'never'"/>
+          <item text="Smart" action="setting 'videoMicroFrames' 'smart'" check="setting 'videoMicroFrames' 'smart'"/>
+          <item text="Always" action="setting 'videoMicroFrames' 'always'" check="setting 'videoMicroFrames' 'always'"/>
+        </submenu>
+        <submenu text="Resample Quality" localize="true">
+          <item text="High" action="setting 'videoResampleQuality' 'high'" check="setting 'videoResampleQuality' 'high'"/>
+          <item text="Medium" action="setting 'videoResampleQuality' 'medium'" check="setting 'videoResampleQuality' 'medium'"/>
+        </submenu>
+        <submenu text="Shader Quality" localize="true">
+          <item text="Auto" action="setting 'videoShaderQuality' 'auto'" check="setting 'videoShaderQuality' 'auto'"/>
+          <item text="High" action="setting 'videoShaderQuality' 'full'" check="setting 'videoShaderQuality' 'full'"/>
+          <item text="Medium" action="setting 'videoShaderQuality' 'medium'" check="setting 'videoShaderQuality' 'medium'"/>
+          <item text="Low" action="setting 'videoShaderQuality' 'low'" check="setting 'videoShaderQuality' 'low'"/>
+        </submenu>
+        <submenu text="VDJ Logo" localize="true">
+          <item text="ON" localize="true" action="setting 'videoLogo'" check="setting 'videoLogo'"/>
+          <separator text="Size" localize="true"/>
+          <item text="Large" action="setting 'videoLogoSize' 'large'" check="setting 'videoLogoSize' 'large'"/>
+          <item text="Medium" action="setting 'videoLogoSize' 'medium'" check="setting 'videoLogoSize' 'medium'"/>
+          <item text="Small" action="setting 'videoLogoSize' 'small'" check="setting 'videoLogoSize' 'small'"/>
+          <separator text="Position" localize="true"/>
+          <item text="Left-Top" action="setting 'videoLogoPosition' 'left-top'" check="setting 'videoLogoPosition' 'left-top'"/>
+          <item text="Right-Top" action="setting 'videoLogoPosition' 'right-top'" check="setting 'videoLogoPosition' 'right-top'"/>
+          <item text="Left-Bottom" action="setting 'videoLogoPosition' 'left-bottom'" check="setting 'videoLogoPosition' 'left-bottom'"/>
+          <item text="Right-Bottom" action="setting 'videoLogoPosition' 'right-bottom'" check="setting 'videoLogoPosition' 'right-bottom'"/>
+        </submenu>
+        <submenu text="Mixer Order" localize="true">
+          <item text="1-2-3-4" action="setting 'mixerOrder' '1234'" check="setting 'mixerOrder' '1234'"/>
+          <item text="3-1-2-4" action="setting 'mixerOrder' '3124'" check="setting 'mixerOrder' '3124'"/>
+          <item text="1-3-4-2" action="setting 'mixerOrder' '1342'" check="setting 'mixerOrder' '1342'"/>
+        </submenu>
+        <submenu text="Fps" localize="true">
+          <item text="30" action="setting 'videoFPS' 30" check="setting 'videoFPS' 30"/>
+          <item text="40" action="setting 'videoFPS' 40" check="setting 'videoFPS' 40"/>
+          <item text="50" action="setting 'videoFPS' 50" check="setting 'videoFPS' 50"/>
+          <item text="60" action="setting 'videoFPS' 60" check="setting 'videoFPS' 60"/>
+          <item text="70" action="setting 'videoFPS' 70" check="setting 'videoFPS' 70"/>
+        </submenu>
+        <separator/>
+        <item text="Video Window Always On Top" action="setting 'videoWindowAlwaysOnTop'" check="setting 'videoWindowAlwaysOnTop'"/>
+        <item text="Start Video On Load" action="setting 'startVideoOnLoad'" check="setting 'startVideoOnLoad'"/>
+        <item text="Create Link On Drop" action="setting 'videoCreateLinkOnDrop'" check="setting 'videoCreateLinkOnDrop'"/>
+        <item text="Use DXVA" action="setting 'videouseDXVA'" check="setting 'videouseDXVA'"/>
+        <item text="Safe Video Decode" action="setting 'safeVideoDecode'" check="setting 'safeVideoDecode'"/>
+      </menu>
+      <panel class="video_crossfader" x="+26" y="+432-56+6+4-74"/>
+    </panel>
+    <!-- 4 deck scratch mixer -->
+    <panel name="scratchmixer" group="mixer" visible="no">
+      <visual class="gfx_shape" width="312" height="626" coloroff="wave_background" bordercoloroff="panel_background" bordersize="2" visibility="var_equal '@$hauntinghidecrossfader' 0"/>
+      <visual class="gfx_shape" width="312" height="626" coloroff="wave_background" bordercoloroff="panel_background" bordersize="2" visibility="var_equal '@$hauntinghidecrossfader' 1"/>
+      <panel class="vertical_scratchwave" deck="3" visibility="deck 3 leftdeck" x="+40" y="+0"/>
+      <panel class="vertical_scratchwave" deck="1" visibility="deck 1 leftdeck" x="+40" y="+0"/>
+      <panel class="vertical_scratchwave" deck="2" visibility="deck 2 rightdeck" x="+320-98-10-19-19" y="+0"/>
+      <panel class="vertical_scratchwave" deck="4" visibility="deck 4 rightdeck" x="+320-98-10-19-19" y="+0"/>
+      <panel class="scratch_controls" x="960-20" y="+0"/>
+    </panel>
+    <panel name="mastermixer" group="mixer" visible="no">
+      <panel class="mic/headphones_controls"/>
+      <panel class="mastercentral_controls" x="+77+1"/>
+      <panel class="master_controls" x="+77+1+77+2+77+1"/>
+    </panel>
+    <!-- XFADER ZONE -->
+    <group visibility="var_equal '@$hauntinghidecrossfader' 1 ? not skin_panel 'scratchmixer' : on">
+      <visual class="gfx_shape" y="+432-56+216+2" width="312" height="56" coloroff="xf_background"/>
+      <panel class="crossfader" x="+20" y="+432-56+6+4+216+2"/>
+    </group>
+  </define>
+  <define class="XFADER_PANEL">
+    <!-- PLAY SELECT -->
+    <define class="deck_playselect" placeholders="deck,side,width=60,textsize=14,textcolor=#888888,offcolor=#111111,overcolor=#111111">
+      <!-- Deck Select Button -->
+      <deck deck="[DECK]">
+        <button x="+0" y="+0" width="[WIDTH]" height="15" action="[SIDE]" border_size="0">
+          <up color="black"/>
+          <over color="[OVERCOLOR]"/>
+          <selected color="deckcolor"/>
+          <text fontsize="[TEXTSIZE]" color="#222222" colorover="#444444" colorselected="black" align="center" text="[DECK]"/>
+        </button>
+        <!-- Play/Pause Button -->
+        <button x="+0" y="+17" width="[WIDTH]" height="15" action="play_pause" border_size="0">
+          <off color="#111111"/>
+          <over color="[OVERCOLOR]"/>
+          <selected color="deckcolor"/>
+          <icon dx="-2" sysicon="play" width="37" height="33" color="[TEXTCOLOR]" colordown="white" colorselected="black"/>
+        </button>
+      </deck>
+    </define>
+    <define class="deck_select" placeholders="deck,side,width=60,textsize=14,textcolor=#888888,offcolor=#111111,overcolor=#111111">
+      <!-- Deck Select Button -->
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" x="+0" y="+0" width="[WIDTH]" height="29" coloroff="infos_background" bordercoloroff="#333333" bordersize="1"/>
+        <button x="+0" y="+1" width="[WIDTH]" height="26" action="[SIDE]" border_size="0">
+          <up color="black"/>
+          <over color="black"/>
+          <selected color="black"/>
+          <text fontsize="[TEXTSIZE]" color="#222222" colorover="#444444" colorselected="white" align="center" weight="bold" text="[DECK]"/>
+        </button>
+        <!-- VOLUME -->
+        <visual source="get_level" type="linear" orientation="horizontal" direction="right" granularity="23">
+          <pos x="+0" y="-1"/>
+          <size width="[WIDTH]" height="2"/>
+          <off shape="square" color="transparent"/>
+          <on shape="square" color="green"/>
+        </visual>
+        <!-- Play/Pause Button -->
+        <!-- <button x="+0" y="+17" -->
+        <!-- width="[WIDTH]" height="15" -->
+        <!-- action="play_pause" -->
+        <!-- border_size="0"> -->
+        <!-- <off color="#111111"/> -->
+        <!-- <over color="[OVERCOLOR]"/> -->
+        <!-- <selected color="deckcolor"/> -->
+        <!-- <icon dx="-2" sysicon="play" -->
+        <!-- width="37" height="33" -->
+        <!-- color="[TEXTCOLOR]" colordown="white" -->
+        <!-- colorselected="black"/> -->
+        <!-- </button> -->
+        <button x="+0" y="+27" width="[WIDTH]" height="3" action="[SIDE]" border_size="0">
+          <up color="deckcolor"/>
+          <over color="deckcolor"/>
+          <selected color="deckcolor"/>
+          <text fontsize="[TEXTSIZE]" color="#222222" colorover="#444444" colorselected="black" align="center" text=""/>
+        </button>
+      </deck>
+    </define>
+    <panel class="deck_select" deck="3" side="leftdeck" x="+0" y="+1"/>
+    <panel class="deck_select" deck="1" side="leftdeck" x="+61" y="+1"/>
+    <panel class="deck_select" deck="2" side="rightdeck" x="+191" y="+1"/>
+    <panel class="deck_select" deck="4" side="rightdeck" x="+252" y="+1"/>
+    <!-- PLAY ALL BUTTON -->
+    <group name="playpause_global" x="+123" y="+0">
+      <!-- PLAY state (no decks playing) -->
+      <!-- <button width="66" height="34" action="deck left play &amp; deck right play &amp; deck all sync &amp; phrase_sync" sysicon="play_button" iconsize="39"> -->
+      <!-- <off color="#000000" border="#333333" border_size="1" shape="square" radius="4" iconcolor="white"/> -->
+      <!-- <over color="#111111" border="#666666" border_size="1" shape="square" radius="4" iconcolor="#999999"/> -->
+      <!-- <down color="#111111" border="#888888" border_size="1" shape="square" radius="4" iconcolor="#999999"/> -->
+      <!-- <selected color="white" border="white" radius="4" iconcolor="white"/> -->
+      <!-- </button> -->
+      <!-- STOP state (any deck playing) -->
+      <!-- <button textsize="11" width="66" height="34" visibility="deck 1 play or deck 2 play or deck 3 play or deck 4 play" action="deck all pause &amp; sampler stop all" sysicon="play_button" iconsize="39"> -->
+      <!-- <off color="#000000" border="#333333" border_size="1" shape="square" radius="4" iconcolor="#999999"/> -->
+      <!-- <over color="#111111" border="#666666" border_size="1" shape="square" radius="4" iconcolor="#999999"/> -->
+      <!-- <down color="#111111" border="#888888" border_size="1" shape="square" radius="4" iconcolor="#666666"/> -->
+      <!-- <selected color="white" border="white" radius="4" iconcolor="white"/> -->
+      <!-- </button> -->
+      <visual class="gfx_shape" width="66" height="34" coloroff="red">
+        <off color="#000000" border="#555555" border_size="1" shape="square" radius="4" iconcolor="#999999"/>
+      </visual>
+      <!-- BEAT KEEPER -->
+      <group x="+4" y="+3">
+        <panel class="beat_keeper_ex" bgcolor="#222222" width="14" y="+0" deck="3"/>
+        <panel class="beat_keeper_ex" bgcolor="#222222" width="14" y="+7" deck="1"/>
+        <panel class="beat_keeper_ex" bgcolor="#222222" width="14" y="+14" deck="2"/>
+        <panel class="beat_keeper_ex" bgcolor="#222222" width="14" y="+21" deck="4"/>
+      </group>
+    </group>
+    <!-- <button class="button_main" x="+30" y="+20" width="40" height="40" border="deck 1 deckcolor" border_size="3" action="invert_deck left" coloroff="deckcolor" text="" textcolor="white" iconsize="40" sysicon="play" border="0" shape="circle"/> -->
+    <!-- <button class="button_main" x="+5" y="+55" width="30" height="30" action="invert_deck left" coloroff="#222222" text="" textcolor="white" iconsize="30" sysicon="goto_last_folder" border="0" shape="circle"/> -->
+    <!-- <button class="button_main" x="+276" y="+55" width="30" height="30" action="invert_deck right" coloroff="#222222" text="" textcolor="white" iconsize="30" sysicon="goto_last_folder" border="0" shape="circle"/> -->
+    <!-- HAS LINKED TRACKS -->
+    <!-- <button class="button_main" -->
+    <!-- x="+106" y="+68" width="100" height="15" -->
+    <!-- action="browser_sideview 'linked'" -->
+    <!-- query="has_linked_tracks" -->
+    <!-- text="LINK" -->
+    <!-- textcolor="textoff3" -->
+    <!-- textcoloron="green" -->
+    <!-- textsize="10" -->
+    <!-- /> -->
+    <!-- LINK TRACKS BUTTON -->
+    <!-- <button class="button_main" -->
+    <!-- x="+65" y="+64" width="50" height="15" -->
+    <!-- action="mark_linked_tracks" -->
+    <!-- text="LINK" -->
+    <!-- textcolor="#888888" -->
+    <!-- textcoloron="black" -->
+    <!-- coloron="green" -->
+    <!-- textsize="10" /> -->
+    <!-- <button class="button_main" x="+62*3" y="+70" width="63" height="17" action="crossfader_curve 'custom' ? setting 'crossfaderDisable' : crossfader_curve 'custom'" query="crossfader_curve 'custom' ? not setting 'crossfaderDisable' ? true : false" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background" textsize="10" textcolor="textoff3" textcoloron="needle" textaction="get_text 'CUSTOM'"/> -->
+    <!-- <button class="button_main" x="+62*4" y="+70" width="63" height="17" action="crossfader_curve 'cut' ? setting 'crossfaderDisable' : crossfader_curve 'cut'" query="crossfader_curve 'cut' ? not setting 'crossfaderDisable' ? true : false" coloroff="xf_background" coloron="xf_background" brcoloroff="xf_background" brcoloron="xf_background" textsize="10" textcolor="textoff3" textcoloron="needle" textaction="get_text 'CUT'"/> -->
+  </define>
+</defs>

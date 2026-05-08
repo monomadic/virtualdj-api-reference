@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+    <define class="fx_banks">
+      <panel name="fxbanks" visibility="var_equal '@fxrackpanel' 0">
+        <textzone class="text" x="+0" y="+2" width="40+40" height="27" fontsize="10" color="textdarker" align="CENTER" weight="" text="FX BANK"/>
+        <group visibility="var_not_equal '@$hauntingcolorscheme' 4">
+          <button class="button_main" x="+0" y="+28" width="36" height="20" action="effect_bank_load 1" rightclick="effect_bank_save 1" tooltip="Load FX Bank A\nRigth-click: Save FX Bank A" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="1" text="A" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+40" y="+28" width="36" height="20" action="effect_bank_load 2" rightclick="effect_bank_save 2" tooltip="Load FX Bank B\nRigth-click: Save FX Bank B" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="1" text="B" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+0" y="+28+24" width="36" height="20" action="effect_bank_load 3" rightclick="effect_bank_save 3" tooltip="Load FX Bank C\nRigth-click: Save FX Bank C" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="1" text="C" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+40" y="+28+24" width="36" height="20" action="effect_bank_load 4" rightclick="effect_bank_save 4" tooltip="Load FX Bank C\nRigth-click: Save FX Bank D" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="1" text="D" textcolor="textdarker" textcoloron="needle"/>
+        </group>
+        <group visibility="var_equal '@$hauntingcolorscheme' 4">
+          <button class="button_main" x="+0" y="+28" width="36" height="20" action="effect_bank_load 1" rightclick="effect_bank_save 1" tooltip="Load FX Bank A\nRigth-click: Save FX Bank A" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="2" text="A" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+40" y="+28" width="36" height="20" action="effect_bank_load 2" rightclick="effect_bank_save 2" tooltip="Load FX Bank B\nRigth-click: Save FX Bank B" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="2" text="B" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+0" y="+28+24" width="36" height="20" action="effect_bank_load 3" rightclick="effect_bank_save 3" tooltip="Load FX Bank C\nRigth-click: Save FX Bank C" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="2" text="C" textcolor="textdarker" textcoloron="needle"/>
+          <button class="button_main" x="+40" y="+28+24" width="36" height="20" action="effect_bank_load 4" rightclick="effect_bank_save 4" tooltip="Load FX Bank C\nRigth-click: Save FX Bank D" coloroff="button_background3" brcoloroff="button_background3" coloron="button_background3" bordersize="2" text="D" textcolor="textdarker" textcoloron="needle"/>
+        </group>
+      </panel>
+      <panel name="stemfx" visibility="var_not_equal '@fxrackpanel' 0">
+        <button class="button_main" x="+0" y="+14" width="36+36+4" height="16" action="effect_stems 'rhythm'" textsize="11" text="RHYTHM" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+        <button class="button_main" x="+0" y="+14+16+2" width="36+36+4" height="16" action="effect_stems 'melody'" textsize="11" text="MELODY" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+        <button class="button_main" x="+0" y="+14+16+2+16+2" width="36+36+4" height="16" action="effect_stems 'vocal'" textsize="11" text="VOCAL" coloroff="button_background3" coloron="button_background3" bordersize="0" textcolor="textoff3" textcoloron="needle"/>
+      </panel>
+    </define>
+    <define class="fx_layout" placeholders="*panelname">
+      <button class="button_main" x="+0" y="+6" width="44" height="20" action="skin_panel '@1fx_[PANELNAME]' on" coloroff="button_background2" bordersize="0" text="X1"/>
+      <button class="button_main" x="+0" y="+23+6" width="44" height="20" action="skin_panel '@3fx_[PANELNAME]' on" coloroff="button_background2" bordersize="0" text="X3"/>
+      <button class="button_main" x="+0" y="+23*2+6" width="44" height="20" action="skin_panel '@6fx_[PANELNAME]' on" coloroff="button_background2" bordersize="0" text="X6"/>
+    </define>
+    <define class="vfx_slot_ex" placeholders="*deck">
+      <deck deck="[DECK]">
+        <textzone class="text" x="+0" y="+0" width="132+28" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO FX"/>
+        <button class="button_main" x="+0" y="+36" width="132" height="28" action="video_fx" scroll="video_fx_select" textaction="get_videofx_name &amp; param_uppercase" coloroff="button_background3" coloron="deckcolor" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+132" y="+36" width="28" height="28" action="video_fx_select" sysicon="chevrondown" iconsize="20"/>
+        <slider class="hor_slider" x="+0" y="+84" width="132+28" height="10" action="video_fx_slider" rightclick="video_fx_slider 50%" coloron="knobfilloff" disabled="not effect_has_slider 'video' 1" novisibility="video_fx"/>
+        <slider class="hor_slider" x="+0" y="+84" width="132+28" height="10" action="video_fx_slider" rightclick="video_fx_slider 50%" coloron="knobfillon" disabled="not effect_has_slider 'video' 1" visibility="video_fx"/>
+      </deck>
+    </define>
+    <define class="fx_slot" placeholders="*source">
+      <button class="button_main" width="118" height="28" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="get_effect_name [SOURCE] &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+118" width="28" height="28" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/>
+      <button class="button_main" x="+44" y="+38" width="28" height="28" query="on/off" action="effect_beats [SOURCE] -1" sysicon="arrowleft" iconsize="20"/>
+      <button class="button_main" x="+44+28" y="+38" width="46" height="28" action="effect_show_gui [SOURCE]" coloroff="button_background3" brcoloroff="button_background3" textaction="effect_beats [SOURCE]"/>
+      <button class="button_main" x="+44+28+46" y="+38" width="28" height="28" query="on/off" action="effect_beats [SOURCE] +1" sysicon="arrowright" iconsize="20"/>
+    </define>
+    <define class="fx_slot2" placeholders="*source">
+      <button class="button_main" width="148" height="28" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="get_effect_name [SOURCE] &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+148" width="28" height="28" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/>
+      <button class="button_main" x="+44" y="+38" width="28" height="28" query="on/off" action="effect_beats [SOURCE] -1" sysicon="arrowleft" iconsize="20"/>
+      <button class="button_main" x="+44+28" y="+38" width="76" height="28" action="effect_show_gui [SOURCE]" coloroff="button_background3" brcoloroff="button_background3" textaction="effect_beats [SOURCE]"/>
+      <button class="button_main" x="+44+28+76" y="+38" width="28" height="28" query="on/off" action="effect_beats [SOURCE] +1" sysicon="arrowright" iconsize="20"/>
+    </define>
+    <define class="fx_slot3" placeholders="*source">
+      <button class="button_main" width="80" height="30" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="get_effect_name [SOURCE] &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+80" width="28" height="30" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+80+28+5" y="+1" knobsize="32" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/>
+      <panel class="knob" x="+80+28+5" y="+1" knobsize="32" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/>
+    </define>
+    <define class="fx_slot3_ex" placeholders="*source">
+      <button class="button_main" width="108" height="30" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="get_effect_name [SOURCE] &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+108" width="30" height="30" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+108+30+7" y="+0" knobsize="32" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/>
+      <panel class="knob" x="+108+30+7" y="+0" knobsize="32" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/>
+    </define>
+    <define class="fx_slot4" placeholders="*source,width=104">
+      <button class="button_main" width="[WIDTH]-40" height="35" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="get_effect_name [SOURCE] &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2" textcoloron="black" textsize="17"/>
+      <button class="button_main" x="+[WIDTH]-40" width="28" height="35" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <!-- <panel class="knob" x="+104+28+8+15" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+15" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+28+25" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 2" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+28+25" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 2" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/> -->
+      <button class="button_main" x="+28+40+10+150" y="+6" width="30-8" height="30-8" action="effect_show_gui [SOURCE]" sysicon="settings" iconsize="20"/>
+    </define>
+    <define class="fx_colorfx" placeholders="*source,width=104">
+      <!-- <square x="+0" y="+0" width="[WIDTH]+28" height="36" color="black" /> -->
+      <button class="button_main" width="[WIDTH]-40" height="35" action="effect_active [SOURCE]" scroll="effect_select [SOURCE]" textaction="filter_label" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2" textcoloron="black" textsize="15"/>
+      <button class="button_main" x="+[WIDTH]-40" width="28" height="35" action="effect_select [SOURCE]" sysicon="chevrondown" iconsize="20"/>
+      <!-- <panel class="knob" x="+104+28+8+15" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="true" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+15" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+28+25" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 2" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active [SOURCE]"/> -->
+      <!-- <panel class="knob" x="+104+28+8+28+25" y="+10" knobsize="22" knobradius="10" faderradius="5" action="effect_slider [SOURCE] 2" frommiddle="false" fillcolor="knobfillon" visibility="effect_active [SOURCE]"/> -->
+      <button class="button_main" x="+28+40+10+150" y="+6" width="30-8" height="30-8" action="effect_show_gui [SOURCE]" sysicon="settings" iconsize="20"/>
+    </define>
+    <define class="fx_slot_single">
+      <button class="button_main" width="148" height="28" action="effect_active" scroll="effect_select" textaction="get_effect_name &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+148" width="28" height="28" action="effect_select" sysicon="chevrondown" iconsize="20"/>
+      <button class="button_main" x="+216" y="+0" width="28" height="28" action="effect_show_gui [SOURCE]" text="+"/>
+      <textzone class="text" x="+10" y="+34" width="35+20" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname"/>
+      <panel class="knob" x="+20" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+20" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <textzone class="text" x="+105-10" y="+34" width="35+20" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 2"/>
+      <panel class="knob" x="+105" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 2" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+105" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 2" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <textzone class="text" x="+190-10" y="+34" width="35+20" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 3"/>
+      <panel class="knob" x="+190" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 3" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+190" y="+56" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 3" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <button class="button_main" x="+0" y="+96" width="73" height="18" action="effect_button 1" textaction="get_effect_button_shortname &amp; param_uppercase" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+85" y="+96" width="73" height="18" action="effect_button 2" textaction="get_effect_button_shortname 2 &amp; param_uppercase" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+85*2" y="+96" width="73" height="18" action="effect_button 3" textaction="get_effect_button_shortname 3 &amp; param_uppercase" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+0" y="+96" width="73" height="18" action="effect_button 1" textaction="get_effect_button_shortname &amp; param_uppercase" visibility="effect_active"/>
+      <button class="button_main" x="+85" y="+96" width="73" height="18" action="effect_button 2" textaction="get_effect_button_shortname 2 &amp; param_uppercase" visibility="effect_active"/>
+      <button class="button_main" x="+85*2" y="+96" width="73" height="18" action="effect_button 3" textaction="get_effect_button_shortname 3 &amp; param_uppercase" visibility="effect_active"/>
+    </define>
+    <define class="fx_slot_ex">
+      <button class="button_main" width="118" height="28" action="effect_active" scroll="effect_select" textaction="get_effect_name &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+118" width="28" height="28" action="effect_select" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <button class="button_main" x="+44" y="+38" width="28" height="28" query="on/off" action="effect_beats -1" sysicon="arrowleft" iconsize="20"/>
+      <button class="button_main" x="+44+28" y="+38" width="46" height="28" action="effect_show_gui" coloroff="button_background3" brcoloroff="button_background3" textaction="effect_beats"/>
+      <button class="button_main" x="+44+28+46" y="+38" width="28" height="28" query="on/off" action="effect_beats +1" sysicon="arrowright" iconsize="20"/>
+      <textzone class="text" x="+165" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_button_shortname &amp; param_uppercase"/>
+      <textzone class="text" x="+165+71" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 2 &amp; param_uppercase"/>
+      <button class="button_main" x="+165" y="+38" width="73" height="28" action="effect_button 1" text="ON" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+165" y="+38" width="73" height="28" action="effect_button 1" text="ON" visibility="effect_active"/>
+      <panel class="knob" x="+242+12" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 2" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+242+12" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 2" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <textzone class="text" x="+155+155" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_button_shortname 2 &amp; param_uppercase"/>
+      <textzone class="text" x="+155+71+155" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 3 &amp; param_uppercase"/>
+      <button class="button_main" x="+155+155" y="+38" width="73" height="28" action="effect_button 2" text="ON" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+155+155" y="+38" width="73" height="28" action="effect_button 2" text="ON" visibility="effect_active"/>
+      <panel class="knob" x="+232+12+155" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 3" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+232+12+155" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 3" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+    </define>
+    <define class="fx_slot_ex2">
+      <button class="button_main" width="148" height="28" action="effect_active" scroll="effect_select" textaction="get_effect_name &amp; param_uppercase" coloroff="button_background3" brcoloroff="button_background3" textcolor="textoff2"/>
+      <button class="button_main" x="+148" width="28" height="28" action="effect_select" sysicon="chevrondown" iconsize="20"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+0" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <button class="button_main" x="+44" y="+38" width="28" height="28" query="on/off" action="effect_beats -1" sysicon="arrowleft" iconsize="20"/>
+      <button class="button_main" x="+44+28" y="+38" width="76" height="28" action="effect_show_gui" coloroff="button_background3" brcoloroff="button_background3" textaction="effect_beats"/>
+      <button class="button_main" x="+44+28+76" y="+38" width="28" height="28" query="on/off" action="effect_beats +1" sysicon="arrowright" iconsize="20"/>
+      <textzone class="text" x="+195" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_button_shortname"/>
+      <textzone class="text" x="+195+71" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 2"/>
+      <button class="button_main" x="+195" y="+38" width="73" height="28" action="effect_button 1" text="ON" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+195" y="+38" width="73" height="28" action="effect_button 1" text="ON" visibility="effect_active"/>
+      <panel class="knob" x="+272+12" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 2" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+272+12" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 2" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <textzone class="text" x="+185+155" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_button_shortname 2"/>
+      <textzone class="text" x="+185+71+155" y="+12" width="73" height="20" tooltip="" fontsize="13" color="textoff" align="center" weight="" textaction="get_effect_slider_shortname 3"/>
+      <button class="button_main" x="+185+155" y="+38" width="73" height="28" action="effect_button 2" text="ON" coloron="knobfilloff" brcoloron="knobfilloff" novisibility="effect_active"/>
+      <button class="button_main" x="+185+155" y="+38" width="73" height="28" action="effect_button 2" text="ON" visibility="effect_active"/>
+      <panel class="knob" x="+232+12+185" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 3" frommiddle="false" fillcolor="knobfilloff" novisibility="effect_active"/>
+      <panel class="knob" x="+232+12+185" y="+36" knobsize="35" knobradius="11" faderradius="6" action="effect_slider 1 3" frommiddle="false" fillcolor="knobfillon" visibility="effect_active"/>
+      <button class="button_main" x="+499" y="+22" width="28" height="28" action="effect_show_gui [SOURCE]" text="+"/>
+    </define>
+</defs>

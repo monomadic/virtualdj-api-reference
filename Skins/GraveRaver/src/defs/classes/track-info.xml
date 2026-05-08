@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="INFOS">
+    <!-- LEFT DECK -->
+    <!-- background: black glass (behind cover) -->
+    <button class="button_main" action="select" width="532" height="175" coloroff="#000000" coloron="black" brcoloroff="#333333" brcoloron="#444444" bordersize="1"/>
+    <!-- ACAPELLA/INSTRUMENTAL LINE BORDER -->
+    <group visibility="loaded">
+      <!-- left -->
+      <line visibility="stem_pad 'instrumental'" color="color_instrumental" x="+4" y="+0" width="526" height="2"/>
+      <line visibility="stem_pad 'acapella'" color="color_acapella" x="+4" y="+0" width="526" height="2"/>
+    </group>
+    <!-- COVER ART: HIDE -->
+    <group visibility="var_equal '@$haunting_showcover_title' 0 &amp; loaded">
+      <pos x="+15" y="+8"/>
+      <!-- LEFT -->
+      <textzone tooltip="" visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+        <size width="490" height="70-6-6-26"/>
+        <text fontsize="22" weight="bold" color="needle" align="left" scroll="no" action="loaded ? get_text '`get_title_before_remix`' &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+      <textzone tooltip="" visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+        <pos y="+30"/>
+        <size width="490" height="70-6-6-26"/>
+        <text fontsize="17" weight="" color="#888888" align="left" scroll="no" action="loaded ? get_text '`get_loaded_song remix` `get_bpm absolute`bpm' &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+      <!-- RIGHT -->
+      <textzone tooltip="" visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+        <size width="490" height="70-6-6-26"/>
+        <text fontsize="22" weight="bold" color="needle" align="right" scroll="no" action="loaded ? get_text '`get_title_before_remix`' &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+      <textzone tooltip="" visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+        <pos y="+30"/>
+        <size width="490" height="70-6-6-26"/>
+        <text fontsize="17" weight="" color="#888888" align="right" scroll="no" action="loaded ? get_text '`get_loaded_song remix` `get_bpm absolute`bpm' &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+    </group>
+    <!-- CLASS: PRO: TRACK INFO -->
+    <define class="TRACK_INFO" placeholders="DECK">
+      <panel>
+        <group visibility="loaded">
+          <!-- LINE 1: TITLE -->
+          <!-- <textzone tooltip=""> -->
+          <!-- <size width="320" height="20"/> -->
+          <!-- <text fontsize="16" weight="bold" color="white" colorover="black" align="left" scroll="yes" action="deck loaded ? get_title_before_remix &amp; param_uppercase" localize="true" important="true"/> -->
+          <!-- </textzone> -->
+          <button y="+5" class="button_main" action="search `get_title_before_remix`" rightclick="file_info" tooltip="" bordersize="0">
+            <size width="320" height="18"/>
+            <off color="black"/>
+            <down color="black"/>
+            <selected color="black"/>
+            <text action="get_title_before_remix &amp; param_uppercase" color="white" align="left" fontsize="16" weight="bold"/>
+            <textover action="get_text 'SEARCH: &quot;`get_title_before_remix &amp; param_uppercase`&quot;'" fontsize="16" weight="bold"/>
+          </button>
+          <!-- LINE 2: ARTIST -->
+          <button y="+22" class="button_main" action="search `get_loaded_song 'artist'`" rightclick="file_info" tooltip="" bordersize="0">
+            <size width="320" height="16"/>
+            <off color="black"/>
+            <down color="black"/>
+            <selected color="black"/>
+            <text action="get_loaded_song 'artist' &amp; param_uppercase" color="#888888" align="left" fontsize="12" weight="normal"/>
+            <textover action="get_text 'SEARCH: &quot;`get_loaded_song artist &amp; param_uppercase`&quot;'" color="#888888" fontsize="12" weight="normal"/>
+          </button>
+          <!-- <textzone> -->
+          <!-- <pos y="+16"/> -->
+          <!-- <size width="260" height="70-6-6-26"/> -->
+          <!-- <text fontsize="12" color="#888888" align="left" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/> -->
+          <!-- </textzone> -->
+          <!-- SONG FILE INFO -->
+          <group y="+40">
+            <!-- border, outer -->
+            <visual>
+              <pos y="+0"/>
+              <size width="343" height="30"/>
+              <off shape="square" color="transparent" border="#555555" border_size="1"/>
+            </visual>
+            <!-- border, vertical internal -->
+            <visual>
+              <pos x="+58"/>
+              <size width="50" height="30"/>
+              <off shape="square" color="transparent" border="#555555" border_size="1"/>
+            </visual>
+            <!-- BPM -->
+            <textzone>
+              <pos x="+3" y="+3"/>
+              <size width="260"/>
+              <text fontsize="9" color="#888888" align="left" text="BPM" localize="true" important="true"/>
+            </textzone>
+            <textzone tooltip="">
+              <pos x="+2" y="+11"/>
+              <size width="80" height="18"/>
+              <!-- Use format with inline eval: backticks around the expression -->
+              <text fontsize="14" weight="" color="#eeeeee" align="left" scroll="no" format="`get_loaded_song 'bpm'`" localize="true" important="true"/>
+            </textzone>
+            <!-- KEY (toggle Musical/Harmonic) -->
+            <textzone>
+              <pos x="+61" y="+3"/>
+              <size width="260"/>
+              <text fontsize="9" color="#888888" align="left" text="KEY" localize="true" important="true"/>
+            </textzone>
+            <button action="var_equal 'keyDisplayToggle' 1 ? setting 'keyDisplay' 'Musical' &amp; set 'keyDisplayToggle' 0 : setting 'keyDisplay' 'Harmonic' &amp; set 'keyDisplayToggle' 1" query="var_equal 'keyDisplayToggle' 1">
+              <pos x="+61" y="+11"/>
+              <size width="40" height="18"/>
+              <!-- colored when key exists -->
+              <text fontsize="14" weight="bold" align="left" visibility="get_key" color="white" action="get_loaded_song 'key'"/>
+              <!-- fallback when no key/color -->
+              <text fontsize="14" weight="bold" align="left" visibility="not get_key" color="white" action="get_loaded_song 'key'"/>
+            </button>
+            <!-- TIME REMAINING -->
+            <textzone>
+              <pos x="+110" y="+3"/>
+              <size width="260"/>
+              <text fontsize="9" color="#888888" align="left" text="TIME" localize="true" important="true"/>
+            </textzone>
+            <textzone class="text" x="+110" y="+13" width="50" fontsize="15" color="texton2" align="left" weight="" textaction="get_time" visibility="loaded ? var_equal '@$haunting_jog_text' 3"/>
+            <group x="+195" y="+0">
+              <!-- FILETYPE -->
+              <square width="45" border="1" border_color="#555555" height="15" visibility="loaded" color="#111111"/>
+              <textzone>
+                <size width="45" height="16"/>
+                <text fontsize="11" color="#888888" align="center" scroll="no" action="get_loaded_song 'file type' &amp; param_uppercase" localize="true" important="true"/>
+              </textzone>
+            </group>
+            <!-- <button action="mark_linked_tracks &amp; show_splitpanel 'sideview' on &amp; sideview 'remixes' on" query="has_linked_tracks"> -->
+            <!-- <pos x="+296" y="+6"/> -->
+            <!-- <size width="40" height="18"/> -->
+            <!-- <off color="black" radius="3" border="#888888" bordersize="1"/> -->
+            <!-- <over color="green" radius="3" border="blue" bordersize="1"/> -->
+            <!-- <text fontsize="11" weight="normal" align="center" offcolor="green" selectedcolor="red" overcolor="blue" oncolor="yellow" text="LINKS"/> -->
+            <!-- </button> -->
+            <button action="mark_linked_tracks &amp; show_splitpanel 'sideview' on &amp; sideview 'remixes' on" query="has_linked_tracks">
+              <pos x="+296" y="+6"/>
+              <size width="40" height="18"/>
+              <off color="black" radius="3" border="#888888" border_size="1"/>
+              <on color="#220000" radius="3" border="green" border_size="1"/>
+              <over color="#002200" radius="3" border="#00AA00" border_size="1"/>
+              <text fontsize="11" weight="normal" align="center" color="#AAAAAA" colorselected="green" colorover="#00AA00" text="LINKS"/>
+            </button>
+          </group>
+        </group>
+      </panel>
+    </define>
+    <!-- COVER ART: SHOW -->
+    <group visibility="var_equal '@$haunting_showcover_title' 1">
+      <!-- Left decks -->
+      <panel class="track_info" x="+6+170+6" y="+0" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+      <!-- Right decks -->
+      <panel class="track_info" x="+8" y="+0" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+      <!-- PRO: COVER ART -->
+      <define class="COVER_ART_OCCLUDED">
+        <cover action="" rightclick="" dblclick="">
+          <size width="170" height="170"/>
+          <clipmask x="920" y="100" width="100" height="90"/>
+        </cover>
+        <!-- highlight -->
+        <visual>
+          <size width="170" height="65"/>
+          <off shape="square" color="transparent" border="#22FFFFFF" border_size="1"/>
+        </visual>
+      </define>
+      <!-- left -->
+      <group class="cover_art_occluded" x="+8" y="+6" visibility="loaded ? param_equal `get_deck` 1 | param_equal `get_deck` 3"/>
+      <!-- right -->
+      <group class="cover_art_occluded" x="+355" y="+6" visibility="loaded ? param_equal `get_deck` 2 | param_equal `get_deck` 4"/>
+    </group>
+  </define>
+  <define class="TRACK_INFO" placeholders="DECK">
+    <panel>
+      <group visibility="loaded">
+        <!-- LINE 1: TITLE -->
+        <!-- <textzone tooltip=""> -->
+        <!-- <size width="320" height="20"/> -->
+        <!-- <text fontsize="16" weight="bold" color="white" colorover="black" align="left" scroll="yes" action="deck loaded ? get_title_before_remix &amp; param_uppercase" localize="true" important="true"/> -->
+        <!-- </textzone> -->
+        <button y="+5" class="button_main" action="search `get_title_before_remix`" rightclick="file_info" tooltip="" bordersize="0">
+          <size width="320" height="18"/>
+          <off color="black"/>
+          <down color="black"/>
+          <selected color="black"/>
+          <text action="get_title_before_remix &amp; param_uppercase" color="white" align="left" fontsize="16" weight="bold"/>
+          <textover action="get_text 'SEARCH: &quot;`get_title_before_remix &amp; param_uppercase`&quot;'" fontsize="16" weight="bold"/>
+        </button>
+        <!-- LINE 2: ARTIST -->
+        <button y="+22" class="button_main" action="search `get_loaded_song 'artist'`" rightclick="file_info" tooltip="" bordersize="0">
+          <size width="320" height="16"/>
+          <off color="black"/>
+          <down color="black"/>
+          <selected color="black"/>
+          <text action="get_loaded_song 'artist' &amp; param_uppercase" color="#888888" align="left" fontsize="12" weight="normal"/>
+          <textover action="get_text 'SEARCH: &quot;`get_loaded_song artist &amp; param_uppercase`&quot;'" color="#888888" fontsize="12" weight="normal"/>
+        </button>
+        <!-- <textzone> -->
+        <!-- <pos y="+16"/> -->
+        <!-- <size width="260" height="70-6-6-26"/> -->
+        <!-- <text fontsize="12" color="#888888" align="left" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/> -->
+        <!-- </textzone> -->
+        <!-- SONG FILE INFO -->
+        <group y="+40">
+          <!-- border, outer -->
+          <visual>
+            <pos y="+0"/>
+            <size width="343" height="30"/>
+            <off shape="square" color="transparent" border="#555555" border_size="1"/>
+          </visual>
+          <!-- border, vertical internal -->
+          <visual>
+            <pos x="+58"/>
+            <size width="50" height="30"/>
+            <off shape="square" color="transparent" border="#555555" border_size="1"/>
+          </visual>
+          <!-- BPM -->
+          <textzone>
+            <pos x="+3" y="+3"/>
+            <size width="260"/>
+            <text fontsize="9" color="#888888" align="left" text="BPM" localize="true" important="true"/>
+          </textzone>
+          <textzone tooltip="">
+            <pos x="+2" y="+11"/>
+            <size width="80" height="18"/>
+            <!-- Use format with inline eval: backticks around the expression -->
+            <text fontsize="14" weight="" color="#eeeeee" align="left" scroll="no" format="`get_loaded_song 'bpm'`" localize="true" important="true"/>
+          </textzone>
+          <!-- KEY (toggle Musical/Harmonic) -->
+          <textzone>
+            <pos x="+61" y="+3"/>
+            <size width="260"/>
+            <text fontsize="9" color="#888888" align="left" text="KEY" localize="true" important="true"/>
+          </textzone>
+          <button action="var_equal 'keyDisplayToggle' 1 ? setting 'keyDisplay' 'Musical' &amp; set 'keyDisplayToggle' 0 : setting 'keyDisplay' 'Harmonic' &amp; set 'keyDisplayToggle' 1" query="var_equal 'keyDisplayToggle' 1">
+            <pos x="+61" y="+11"/>
+            <size width="40" height="18"/>
+            <!-- colored when key exists -->
+            <text fontsize="14" weight="bold" align="left" visibility="get_key" color="white" action="get_loaded_song 'key'"/>
+            <!-- fallback when no key/color -->
+            <text fontsize="14" weight="bold" align="left" visibility="not get_key" color="white" action="get_loaded_song 'key'"/>
+          </button>
+          <!-- TIME REMAINING -->
+          <textzone>
+            <pos x="+110" y="+3"/>
+            <size width="260"/>
+            <text fontsize="9" color="#888888" align="left" text="TIME" localize="true" important="true"/>
+          </textzone>
+          <textzone class="text" x="+110" y="+13" width="50" fontsize="15" color="texton2" align="left" weight="" textaction="get_time" visibility="loaded ? var_equal '@$haunting_jog_text' 3"/>
+          <group x="+195" y="+0">
+            <!-- FILETYPE -->
+            <square width="45" border="1" border_color="#555555" height="15" visibility="loaded" color="#111111"/>
+            <textzone>
+              <size width="45" height="16"/>
+              <text fontsize="11" color="#888888" align="center" scroll="no" action="get_loaded_song 'file type' &amp; param_uppercase" localize="true" important="true"/>
+            </textzone>
+          </group>
+          <button action="show_splitpanel 'sideview' on &amp; sideview 'remixes' on" query="has_linked_tracks" border_size="1" border="red">
+            <pos x="+296" y="+6"/>
+            <size width="40" height="18"/>
+            <off color="black" radius="3" border="green" bordersize="1"/>
+            <over color="green" radius="3" border="green" bordersize="1"/>
+            <!-- colored when key exists -->
+            <text fontsize="11" weight="normal" align="center" visibility="has_linked_tracks" color="green" text="LINKS"/>
+            <!-- fallback when no key/color -->
+            <text fontsize="11" weight="normal" align="center" visibility="not has_linked_tracks" color="black" coloron="black" text="LINKS"/>
+          </button>
+        </group>
+      </group>
+    </panel>
+  </define>
+  <define class="INFOS_EX" placeholders="*deck,*deckside">
+    <!-- <group visibility="get_deck 1 ? true : get_deck 3 ? true : false"> -->
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="960-35-4" height="70" coloroff="black"/>
+      <!-- black bg spine -->
+      <!-- <visual x="+0" y="+1" width="34" height="320"> -->
+      <!-- <off shape="square" color="black" radius="6"/> -->
+      <!-- </visual> -->
+      <!-- <menu class="menu_maindecks" query="select" x="+5" y="+295" width="28" height="20"/> -->
+      <group x="+190">
+        <!-- LINE 1 (Title) -->
+        <textzone>
+          <size width="500" height="70-6-6-26"/>
+          <text fontsize="18" weight="bold" color="needle" align="left" scroll="yes" action="deck loaded ? get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+        <button class="button_main" action="search `get_title_before_remix`" rightclick="file_info" x="+4+28+6+170+8" y="+1" tooltip="" width="484-2-4-28-6-2-4-210" height="70-6-6-26" coloroff="transparent" coloron="transparent" brcoloroff="transparent" brcoloron="transparent" bordersize="2"/>
+        <!-- LINE 2 (Remix) -->
+        <textzone>
+          <pos y="+18"/>
+          <size width="260" height="70-6-6-26"/>
+          <text fontsize="12" color="#888888" align="left" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+      </group>
+      <!-- cover -->
+      <group x="+10" y="+8" visibility="loaded">
+        <cover action="" rightclick="" dblclick="">
+          <size width="170" height="170"/>
+          <clipmask x="920" y="100" width="100" height="90"/>
+        </cover>
+        <!-- highlight -->
+        <!-- <visual width="62" height="62" x="+0" y="+0"> -->
+        <!-- <off shape="square" color="transparent" border_size="1" border="#44FFFFFF" radius="0"/> -->
+        <!-- </visual> -->
+      </group>
+      <!-- PERFORMANCE: EXTENDED: LEFT DECK: ACTIONS -->
+      <group x="+900/2">
+        <!-- <button class="button_main" x="+0" y="+4" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/> -->
+        <textzone class="text" x="+160" y="+7" width="90" height="34" fontsize="25" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/>
+        <textzone class="text" x="+160" y="+7" width="90" height="34" fontsize="25" color="white" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/>
+        <textzone class="text" x="+160" y="+36" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" text="BPM"/>
+        <!-- <button class="button_main" x="+878-10-90+77+2" y="+38-2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/> -->
+        <!-- <button class="button_main" x="+878-10-90-10-80-10-48+50-28+77+2" y="+15" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/> -->
+        <!-- <button class="button_main" x="+878-10-90-10-80-10-48+50+60+77+2" y="+15" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/> -->
+        <textzone class="text" x="+280" y="+6" width="60" height="34" action="key_match_menu" fontsize="25" color="`get_key_color`" align="center" weight="bold" textaction="get_key"/>
+        <!-- key modifier -->
+        <textzone class="text" x="+280" y="+38" width="60" height="20" fontsize="12" align="center" weight="" color="#999999" textaction="get_key_modifier_text"/>
+        <!-- <button class="button_main" x="+878-10-90-10-80-10-48+50+77+2" y="+38-2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="MT"/> -->
+        <!-- time -->
+        <textzone class="text" x="+380" y="+7" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="25" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/>
+        <!-- label -->
+        <textzone class="text" x="+380" y="+36" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TIME'"/>
+      </group>
+    </deck>
+    <!-- RIGHT DECK -->
+    <!-- <group visibility="get_deck 2 ? true : get_deck 4 ? true : false"> -->
+    <!-- not cover -->
+    <!-- <group x="+77+2" y="-2" visibility="var_equal '@$haunting_showcover_title' 0"> -->
+    <!-- <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478" align="right" scroll="no" titlefontsize="18" artistfontsize="14" visibility="var_equal '@hntnhtxtscroll' 0"/> -->
+    <!-- <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478" align="right" scroll="yes" titlefontsize="18" artistfontsize="14" visibility="var_equal '@hntnhtxtscroll' 1"/> -->
+    <!-- </group> -->
+    <!-- with cover -->
+    <!-- <group x="-5+77+2+5" y="-2" visibility="var_equal '@$haunting_showcover_title' 1"> -->
+    <!-- <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8" align="right" scroll="no" titlefontsize="18" artistfontsize="14" artistcolor="#888888" visibility="var_equal '@hntnhtxtscroll' 0"/> -->
+    <!-- <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8" align="right" scroll="yes" titlefontsize="20" artistfontsize="17" artistcolor="#888888" visibility="var_equal '@hntnhtxtscroll' 1"/> -->
+    <!-- </group> -->
+    <!-- PERFORMANCE: EXTENDED: RIGHT DECK: MODES -->
+    <!-- <button class="button_main" x="+10" y="+4" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/> -->
+    <!-- <textzone class="text" x="+10" y="+4" width="90" height="34" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/> -->
+    <!-- <textzone class="text" x="+10" y="+4" width="90" height="34" fontsize="22" color="deckcolor" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/> -->
+    <!-- <button class="button_main" x="+10" y="+38-2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/> -->
+    <!-- <button class="button_main" x="+10+90+10+80+10-55-22" y="+10" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/> -->
+    <!-- <button class="button_main" x="+10+90+10+80+10-55+54" y="+10" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/> -->
+    <!-- <textzone class="text" x="+10+90+10+80+10-55" y="+4" width="54" height="34" action="key_match_menu" fontsize="22" color="`get_key_color`" align="center" weight="bold" textaction="get_key"/> -->
+    <!-- <button class="button_main" x="+10+90+10+80+10-55" y="+38-2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="LOCK"/> -->
+    <!-- <textzone class="text" x="+10+90+10+80+10+48+10-20" y="+4" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TOTAL'"/> -->
+    <!-- <textzone class="text" x="+10+90+10+80+10+48+10-20" y="+4+24-2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="20" color="needle" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/> -->
+    <!-- <textzone class="text" x="+10+90+10+80-55" y="+30" width="128-26-26" height="20" fontsize="12" align="center" weight="" color="#999999" textaction="get_key_modifier_text"/> -->
+    <!-- <panel class="cover_art_hntg" size="62-6-6" x="+878-2-4-28-56-6+77+2+6" y="+6" visibility="var_equal '@$haunting_showcover_title' 1"/> -->
+    <!-- <button class="button_main" x="+878-2-4-28+77+2" y="+6" width="28" height="62-6-6" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck" coloroff="button_background" textheight="30" textsize="16" textaction="get_deck"/> -->
+    <!-- <menu class="menu_maindecks" query="select" x="+878-2-4-28+77+2" y="+64-8-22" width="28" height="20"/> -->
+    <!-- </group> -->
+  </define>
+  <define class="infos_vert">
+    <button class="button_main" action="toggle '@hntnhtxtscroll'" rightclick="file_info" tooltip="Text Scroll\nRigth-click: Tag Editor" width="800" height="70" coloroff="infos_background" coloron="infos_background" brcoloroff="panel_background" brcoloron="panel_background" bordersize="2"/>
+    <group visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+      <button class="button_main" x="+2+4" y="+6" width="28" height="68-6-6" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck" coloroff="button_background" textheight="30" textsize="16" textaction="get_deck"/>
+      <menu class="menu_maindecks" query="select" x="+2+4" y="+70-8-22" width="28" height="20"/>
+      <!-- not cover -->
+      <group y="+2" visibility="var_equal '@$haunting_showcover_title' 0">
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8" y="+4" width="478-78" align="left" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8" y="+4" width="478-78" align="left" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <!-- with cover -->
+      <group x="+5" y="+2" visibility="var_equal '@$haunting_showcover_title' 1">
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8+50+8" y="+4" width="478-50-8-78" align="left" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8+50+8" y="+4" width="478-50-8-78" align="left" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <panel class="cover_art_hntg" size="68-6-6" x="+2+4+28+6" y="+6" visibility="var_equal '@$haunting_showcover_title' 1"/>
+      <button class="button_main" x="+878-10-90-78" y="+4+2" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/>
+      <textzone class="text" x="+878-10-90-78" y="+4+2" width="90" height="34" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/>
+      <textzone class="text" x="+878-10-90-78" y="+4+2" width="90" height="34" fontsize="22" color="deckcolor" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/>
+      <button class="button_main" x="+878-10-90-78" y="+38+2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50-22-78" y="+10+2" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50+54-78" y="+10+2" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48+50-78" y="+4+2" width="54" height="34" action="key_match_button" fontsize="22" color="`get_key_color`" align="center" weight="" textaction="get_key"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50-78" y="+38+2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="MT"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48-10-80+20-78" y="+4+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TOTAL'"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48-10-80+20-78" y="+4+24+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="20" color="needle" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/>
+    </group>
+    <group visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+      <!-- not cover -->
+      <group y="+2" visibility="var_equal '@$haunting_showcover_title' 0">
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-78" align="right" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-78" align="right" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <!-- with cover -->
+      <group x="-5" y="+2" visibility="var_equal '@$haunting_showcover_title' 1">
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8-78" align="right" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8-78" align="right" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <button class="button_main" x="+10" y="+4+2" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/>
+      <textzone class="text" x="+10" y="+4+2" width="90" height="34" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/>
+      <textzone class="text" x="+10" y="+4+2" width="90" height="34" fontsize="22" color="deckcolor" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/>
+      <button class="button_main" x="+10" y="+38+2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/>
+      <button class="button_main" x="+10+90+10+80+10-55-22" y="+10+2" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/>
+      <button class="button_main" x="+10+90+10+80+10-55+54" y="+10+2" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/>
+      <textzone class="text" x="+10+90+10+80+10-55" y="+4+2" width="54" height="34" action="key_match_button" fontsize="22" color="`get_key_color`" align="center" weight="" textaction="get_key"/>
+      <button class="button_main" x="+10+90+10+80+10-55" y="+38+2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="MT"/>
+      <textzone class="text" x="+10+90+10+80+10+48+10-20" y="+4+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TOTAL'"/>
+      <textzone class="text" x="+10+90+10+80+10+48+10-20" y="+4+24+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="20" color="needle" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/>
+      <panel class="cover_art_hntg" size="68-6-6" x="+878-2-4-28-56-6-78" y="+6" visibility="var_equal '@$haunting_showcover_title' 1"/>
+      <!-- <button class="button_main" x="+878-2-4-28-78" y="+6" width="28" height="68-6-6" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck" coloroff="button_background" textheight="30" textsize="16" textaction="get_deck"/> -->
+      <menu class="menu_maindecks" query="select" x="+878-2-4-28-78" y="+70-8-22" width="28" height="20"/>
+    </group>
+  </define>
+  <define class="infos_center">
+    <button class="button_main" action="toggle '@hntnhtxtscroll'" rightclick="file_info" tooltip="Text Scroll\nRigth-click: Tag Editor" width="800-81" height="70" coloroff="infos_background" coloron="infos_background" brcoloroff="panel_background" brcoloron="panel_background" bordersize="2"/>
+    <group visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+      <button class="button_main" x="+2+4" y="+6" width="28" height="68-6-6" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck" coloroff="button_background" textheight="30" textsize="16" textaction="get_deck"/>
+      <menu class="menu_maindecks" query="select" x="+2+4" y="+70-8-22" width="28" height="20"/>
+      <!-- not cover -->
+      <group y="+2" visibility="var_equal '@$haunting_showcover_title' 0">
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8" y="+4" width="478-78-20" align="left" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8" y="+4" width="478-78-20" align="left" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <!-- with cover -->
+      <group x="+5" y="+2" visibility="var_equal '@$haunting_showcover_title' 1">
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8+50+8" y="+4" width="478-50-8-78-20" align="left" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+4+28+8+50+8" y="+4" width="478-50-8-78-20" align="left" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <panel class="cover_art_hntg" size="68-6-6" x="+2+4+28+6" y="+6" visibility="var_equal '@$haunting_showcover_title' 1"/>
+      <button class="button_main" x="+878-10-90-78-81" y="+4+2" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/>
+      <textzone class="text" x="+878-10-90-78-81" y="+4+2" width="90" height="34" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/>
+      <textzone class="text" x="+878-10-90-78-81" y="+4+2" width="90" height="34" fontsize="22" color="deckcolor" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/>
+      <button class="button_main" x="+878-10-90-78-81" y="+38+2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50-22-78-81+15" y="+10+2" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50+54-78-81+15" y="+10+2" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48+50-78-81+15" y="+4+2" width="54" height="34" action="key_match_button" fontsize="22" color="`get_key_color`" align="center" weight="" textaction="get_key"/>
+      <button class="button_main" x="+878-10-90-10-80-10-48+50-78-81+15" y="+38+2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="MT"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48-10-80+20-78-81+15+15" y="+4+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TOTAL'"/>
+      <textzone class="text" x="+878-10-90-10-80-10-48-10-80+20-78-81+15+15" y="+4+24+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="20" color="needle" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/>
+    </group>
+    <group visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+      <!-- not cover -->
+      <group x="-81+20" y="+2" visibility="var_equal '@$haunting_showcover_title' 0">
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-78-20" align="right" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-78-20" align="right" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <!-- with cover -->
+      <group x="-5-81+20" y="+2" visibility="var_equal '@$haunting_showcover_title' 1">
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8-78-20" align="right" scroll="no" visibility="var_equal '@hntnhtxtscroll' 0"/>
+        <panel class="textzone_title_artist_combo" x="+2+354" y="+4" width="478-50-8-78-20" align="right" scroll="yes" visibility="var_equal '@hntnhtxtscroll' 1"/>
+      </group>
+      <button class="button_main" x="+10" y="+4+2" width="90" height="34" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'" tooltip="Beat Tap \nRigth-click: Edit BPM \nDouble-click: Reanalyze"/>
+      <textzone class="text" x="+10" y="+4+2" width="90" height="34" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'" visibility="var_equal '@$hauntingjogtype' 0"/>
+      <textzone class="text" x="+10" y="+4+2" width="90" height="34" fontsize="22" color="deckcolor" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%bpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%bpmex'" visibility="not var_equal '@$hauntingjogtype' 0"/>
+      <button class="button_main" x="+10" y="+38+2" width="90" height="18" action="masterdeck" coloroff="button_background" textcolor="textoff4" text="MASTER"/>
+      <button class="button_main" x="+10+90+10+80+10-55-22-15" y="+10+2" width="20" height="22" action="key_move -1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowleft"/>
+      <button class="button_main" x="+10+90+10+80+10-55+54-15" y="+10+2" width="20" height="22" action="key_move +1" coloroff="button_background" textcolor="textoff4" iconsize="16" sysicon="arrowright"/>
+      <textzone class="text" x="+10+90+10+80+10-55-15" y="+4+2" width="54" height="34" action="key_match_button" fontsize="22" color="`get_key_color`" align="center" weight="" textaction="get_key"/>
+      <button class="button_main" x="+10+90+10+80+10-55-15" y="+38+2" width="54" height="18" action="master_tempo" coloroff="button_background" textcolor="textoff4" text="MT"/>
+      <textzone class="text" x="+10+90+10+80+10+48+10-20-15-15" y="+4+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="24" fontsize="12" color="textdarker" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_text 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_text 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_text 'TOTAL'"/>
+      <textzone class="text" x="+10+90+10+80+10+48+10-20-15-15" y="+4+24+2" action="cycle '@$hauntinstimesdisplay' 3" tooltip="" width="80" height="34" fontsize="20" color="needle" align="center" weight="" textaction="var_equal '@$hauntinstimesdisplay' 0 ? get_time 'ELAPSED' : var_equal '@$hauntinstimesdisplay' 1 ? get_time 'REMAIN' : var_equal '@$hauntinstimesdisplay' 2 ? get_time 'TOTAL'"/>
+      <panel class="cover_art_hntg" size="68-6-6" x="+878-2-4-28-56-6-78-81" y="+6" visibility="var_equal '@$haunting_showcover_title' 1"/>
+      <button class="button_main" x="+878-2-4-28-78-81" y="+6" width="28" height="68-6-6" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck" coloroff="button_background" textheight="30" textsize="16" textaction="get_deck"/>
+      <menu class="menu_maindecks" query="select" x="+878-2-4-28-78-81" y="+70-8-22" width="28" height="20"/>
+    </group>
+  </define>
+  <define class="INFOS_STACK">
+    <!-- title background -->
+    <button x="+0" class="button_main" action="toggle '@hntnhtxtscroll'" rightclick="file_info" tooltip="Text Scroll\nRigth-click: Tag Editor" width="479" height="124" coloroff="infos_background" coloron="infos_background" brcoloroff="panel_background" brcoloron="panel_background" bordersize="1"/>
+    <group x="+124">
+      <!-- title -->
+      <textzone orientation="vertical" direction="ccw">
+        <pos x="+0" y="+5"/>
+        <size width="20" height="120"/>
+        <text fontsize="16" weight="bold" color="needle" align="right" scroll="yes" action="get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+      <!-- remix -->
+      <textzone orientation="vertical">
+        <pos x="+15" y="+5"/>
+        <size width="20" height="120"/>
+        <text fontsize="12" weight="" color="#888888" align="right" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+      </textzone>
+    </group>
+    <!-- cover -->
+    <cover rotate="no" visibility="1.0">
+      <pos x="+5" y="+5"/>
+      <size width="120" height="120"/>
+    </cover>
+  </define>
+  <define class="INFOS2">
+    <button class="button_main" action="select" rightclick="file_info" tooltip="" width="404" height="72" coloroff="infos_background" coloron="infos_background" brcoloroff="panel_background" brcoloron="panel_background" bordersize="2"/>
+    <menu class="menu_maindecks" query="select" x="+2+4" y="+72-8-22" width="28" height="20" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+    <group visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+      <panel class="textzone_title_artist_combo" x="+2+4+28+6" y="+6" width="404-2-4-28-6-2-4" align="center" scroll="no" titlefontsize="22" artistfontsize="17" titleaction="get_title" artistaction="get_artist" visibility="var_equal '@hntnhtxtscroll' 0"/>
+      <panel class="textzone_title_artist_combo" x="+2+4+28+6" y="+6" width="404-2-4-28-6-2-4" align="center" scroll="yes" titlefontsize="22" artistfontsize="17" titleaction="get_title" artistaction="get_artist" visibility="var_equal '@hntnhtxtscroll' 1"/>
+    </group>
+    <group visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+      <panel class="textzone_title_artist_combo" x="+2+4" y="+6" width="404-2-4-28-6-2-4" align="center" scroll="no" titlefontsize="22" artistfontsize="17" titleaction="get_title" artistaction="get_artist" visibility="var_equal '@hntnhtxtscroll' 0"/>
+      <panel class="textzone_title_artist_combo" x="+2+4" y="+6" width="404-2-4-28-6-2-4" align="center" scroll="yes" titlefontsize="22" artistfontsize="17" titleaction="get_title" artistaction="get_artist" visibility="var_equal '@hntnhtxtscroll' 1"/>
+    </group>
+    <button class="button_main" x="+404-2-4-28" y="+6" width="28" height="72-6-6" action="SELECT" coloroff="button_background" textheight="45" textsize="16" textaction="get_deck" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+    <menu class="menu_maindecks" query="select" x="+404-2-4-28" y="+72-8-22" width="28" height="20" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+  </define>
+  <define class="TRACK_INFO_ACTION_ZONE">
+    <dropzone visibility="var_equal '@$hauntinglayout' 0" x="+0" y="+0">
+      <size width="770" height="434"/>
+      <over color="transparent" border_size="2" border="color_dropzone" shape="square" radius="10"/>
+    </dropzone>
+    <dropzone visibility="var_equal '@$hauntinglayout' 1" x="-2" y="-2">
+      <size width="770" height="436"/>
+      <over color="transparent" border_size="2" border="color_dropzone" shape="square" radius="10"/>
+    </dropzone>
+    <group visibility="loaded" x="+15" y="+10">
+      <!-- CLASS: STEM BUTTONS -->
+      <!-- <define class="_STEM_BUTTON" placeholders="*stem,*label,*color,width=65,height=23,fontsize=13,granularity=23"> -->
+      <!-- TOGGLE -->
+      <!-- <button x="+0" action="stem_pad '[STEM]'" border_size="1"> -->
+      <!-- <size width="[WIDTH]" height="[HEIGHT]"/> -->
+      <!-- <off color="#222222" border="#444444" radius="3"/> -->
+      <!-- <down color="#222222" border="[COLOR]" radius="3"/> -->
+      <!-- <selected color="transparent" border="[COLOR]" radius="3"/> -->
+      <!-- <text fontsize="[FONTSIZE]" color="#555555" colorover="[COLOR]" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="[LABEL]"/> -->
+      <!-- </button> -->
+      <!-- VU METER -->
+      <!-- <visual source="get_level '[STEM]'" type="linear" orientation="horizontal" direction="up" granularity="[GRANULARITY]"> -->
+      <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+      <!-- <size width="[WIDTH]" height="7"/> -->
+      <!-- <off shape="square" border="#2A2A2A" color="black" radius="2"/> -->
+      <!-- <down shape="square" border="[COLOR]" color="[COLOR]" radius="2"/> -->
+      <!-- </visual> -->
+      <!-- GAIN SLIDER -->
+      <!-- <slider action="param_multiply 50% &amp; stem '[STEM]'" dblclick="stem '[STEM]' 50%" orientation="horizontal" direction="up" frommiddle="false"> -->
+      <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+      <!-- <size width="[WIDTH]" height="7"/> -->
+      <!-- <fader color="#AAAAAA" width="2" height="5"/> -->
+      <!-- </slider> -->
+      <!-- STEM FX -->
+      <!-- <button x="+0" y="+[HEIGHT]+12" action="stem_pad '[STEM]'" border_size="1"> -->
+      <!-- <size width="[WIDTH]/3" height="[HEIGHT]*0.8"/> -->
+      <!-- <off color="#222222" border="#444444" radius="3"/> -->
+      <!-- <down color="#222222" border="[COLOR]" radius="3"/> -->
+      <!-- <selected color="transparent" border="[COLOR]" radius="3"/> -->
+      <!-- <text fontsize="[FONTSIZE]" color="#555555" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="FX"/> -->
+      <!-- </button> -->
+      <!-- </define> -->
+      <group visibility="not has_stems" y="+30">
+        <textzone class="text" width="300" height="48" fontsize="10" color="textdarker" align="center" weight="" text="STEMS NOT FOUND"/>
+      </group>
+      <!-- TAGS -->
+      <!-- <group x="+235" y="+64"> -->
+      <!-- <panel class="hashtag_stack" deck="1" x="+0" panelname="tags1" visibility="not deck 3 leftdeck"/> -->
+      <!-- <panel class="hashtag_stack" deck="3" x="+0" panelname="tags3" visibility="deck 3 leftdeck"/> -->
+      <!-- <panel class="hashtag_stack" deck="2" x="+1920-280" panelname="tags2" visibility="not deck 4 leftdeck"/> -->
+      <!-- <panel class="hashtag_stack" deck="4" x="+1920-280" panelname="tags4" visibility="deck 4 leftdeck"/> -->
+      <!-- </group> -->
+      <!-- MID PANEL: STEM AREA -->
+      <group x="+0" y="-10">
+        <!-- STEM BUTTONS -->
+        <group x="+235" y="+50" visibility="has_stems">
+          <panel class="stem_button" x="+0" y="+0" stem="vocal" label="VOCAL" color="colorvocal"/>
+          <panel class="stem_button" x="+70" y="+0" stem="instru" label="INSTR" color="colorinstru"/>
+          <panel class="stem_button" x="+140" y="+0" stem="bass" label="BASS" color="colorbass"/>
+          <panel class="stem_button" x="+210" y="+0" stem="rhythm" label="DRUM" color="colorbeat"/>
+          <group y="+25">
+            <group>
+              <button class="stem_fx_button" stem="vocal"/>
+              <button class="stem_iso_button" stem="vocal" x="+33"/>
+            </group>
+            <group x="+70">
+              <button class="stem_fx_button" stem="instru"/>
+              <button class="stem_iso_button" stem="instru" x="+33"/>
+            </group>
+            <group x="+140">
+              <button class="stem_fx_button" stem="bass"/>
+              <button class="stem_iso_button" stem="bass" x="+33"/>
+            </group>
+            <group x="+210">
+              <button class="stem_fx_button" stem="rhythm"/>
+              <button class="stem_iso_button" stem="rhythm" x="+33"/>
+            </group>
+          </group>
+          <group y="+46">
+            <panel class="stem_volume_slider" x="+0" stem="vocal" label="VOCAL" color="colorvocal"/>
+            <panel class="stem_volume_slider" x="+70" stem="instru" label="INSTR" color="colorinstru"/>
+            <panel class="stem_volume_slider" x="+140" stem="bass" label="BASS" color="colorbass"/>
+            <panel class="stem_volume_slider" x="+210" stem="rhythm" label="DRUM" color="colorbeat"/>
+          </group>
+        </group>
+        <!-- ACAPELLA/INSTRUMENTAL BUTTONS -->
+        <group x="+235" y="+24" visibility="loaded">
+          <pos x="+42" y="+6" condition="param_equal [DECKSIDE] 'left'"/>
+          <pos x="+500" y="+6" condition="param_equal [DECKSIDE] 'right'"/>
+          <!-- acapella -->
+          <button action="stem_pad 'acapella'" border_size="1">
+            <size width="135" height="23"/>
+            <off color="#000000" border="#555555" radius="3"/>
+            <down color="#222222" border="color_acapella" radius="3"/>
+            <selected color="transparent" border="color_acapella" radius="3"/>
+            <text fontsize="12" color="#888888" colorover="color_acapella" colorselected="color_acapella" colordown="color_acapella" align="center" text="ACAPELLA"/>
+          </button>
+          <!-- instrumental -->
+          <button x="+140" action="stem_pad 'instrumental'" border_size="1">
+            <size width="134" height="23"/>
+            <off color="#111111" border="#555555" radius="3"/>
+            <down color="#222222" border="color_instrumental" radius="3"/>
+            <selected color="transparent" border="color_instrumental" radius="3"/>
+            <text fontsize="12" color="#888888" colorover="color_instrumental" colorselected="color_instrumental" colordown="color_instrumental" align="center" text="INSTRUMENTAL"/>
+          </button>
+        </group>
+      </group>
+      <!-- INDICATORS -->
+      <group x="-12" y="+13">
+        <!-- STATUS: COLORFX -->
+        <group>
+          <button width="80" height="19" action="effect_active 'colorfx'" query="effect_active 'colorfx'" border_size="1">
+            <off color="#000000"/>
+            <selected color="color_colorfx"/>
+            <text dx="+10" fontsize="12" color="#AAAAAA" colorselected="black" align="left" text="COLOR FX"/>
+          </button>
+          <button x="+80" width="145" height="19" action="pad_page 3 'COLOR FX' &amp; effect_show_gui 'colorfx'" query="effect_active colorfx" border_size="1">
+            <off color="#000000"/>
+            <selected color="#222222" textcolor="color_colorfx" border="color_colorfx"/>
+            <text dx="+10" fontsize="12" color="#555555" colorselected="color_colorfx" align="left" action="filter_label"/>
+          </button>
+          <!-- <visual class="gfx_shape" source="effect_active colorfx" width="80" height="18" coloroff="#222222" bordercoloroff="transparent" bordersize="1"/> -->
+        </group>
+        <!-- STATUS: PADFX -->
+        <group y="+20">
+          <button width="80" height="19" action="effects_used 'deck' ? effect_disable_all 'padfx' : effect_select" border_size="1" query="effects_used 'deck'" rightclick="effect_select">
+            <off color="#000000"/>
+            <selected color="color_padfx"/>
+            <text dx="+10" fontsize="12" color="#AAAAAA" colorselected="#333333" align="left" text="PAD FX"/>
+          </button>
+          <button x="+80" width="145" height="19" action="pad_page 3 'PAD FX'" query="effects_used 'padfx'" border_size="1">
+            <off color="#000000"/>
+            <selected color="#222222" textcolor="color_padfx" border="#333333"/>
+            <text dx="+10" fontsize="12" color="#555555" colorselected="color_padfx" align="left" action="get_text '`get_effects_used` ACTIVE'"/>
+          </button>
+        </group>
+        <!-- STATUS: SAMPLER -->
+        <group y="+40">
+          <button width="80" height="19" action="sampler_play_stop &amp; pad_page 3 'SAMPLER'" border_size="1" query="sampler_play_stop">
+            <off color="#000000"/>
+            <selected color="color_sampler" textcolor="white"/>
+            <text dx="+10" fontsize="12" color="#AAAAAA" colorselected="black" align="left" text="SAMPLER"/>
+          </button>
+          <button x="+80" width="145" height="19" action="sampler_play_stop" query="sampler_play_stop" border_size="1">
+            <off color="#000000"/>
+            <selected color="#222222" textcolor="color_sampler" border="#333333"/>
+            <text dx="+10" fontsize="12" color="#555555" colorselected="color_sampler" align="left" action="get_sample_name"/>
+          </button>
+        </group>
+        <!-- STATUS: LOOPER -->
+        <group y="+60">
+          <button width="80" height="19" action="sampler_play_stop &amp; pad_page 4 'SAMPLER'" border_size="1" query="sampler_play_stop">
+            <off color="#000000"/>
+            <selected color="color_sampler" textcolor="white"/>
+            <text dx="+10" fontsize="12" color="#AAAAAA" colorselected="black" align="left" text="LOOP"/>
+          </button>
+          <button x="+80" width="145" height="19" action="sampler_play_stop" query="sampler_play_stop" border_size="1">
+            <off color="#000000"/>
+            <selected color="#222222" textcolor="color_sampler" border="color_sampler"/>
+            <text dx="+10" fontsize="12" color="#555555" colorselected="color_sampler" align="left" action="get_sample_name"/>
+          </button>
+        </group>
+        <!-- STATUS: FX1/2/3 -->
+        <!-- <button x="+0" y="+40" width="28" height="18" action="effect_active 1" border_size="1"> -->
+        <!-- <off color="#222222"/> -->
+        <!-- <selected color="magenta"/> -->
+        <!-- <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX1"/> -->
+        <!-- </button> -->
+        <!-- <button x="+30" y="+40" width="28" height="18" action="effect_active 2" border_size="1"> -->
+        <!-- <off color="#222222"/> -->
+        <!-- <selected color="magenta"/> -->
+        <!-- <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX2"/> -->
+        <!-- </button> -->
+        <!-- <button x="+60" y="+40" width="30" height="18" action="effect_active 3" border_size="1"> -->
+        <!-- <off color="#222222"/> -->
+        <!-- <selected color="magenta"/> -->
+        <!-- <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX3"/> -->
+        <!-- </button> -->
+      </group>
+      <!-- <panel class="key_display_left" x="+2+4+220+4+120" y="+14"/> -->
+      <!-- <panel class="bpm_display_left" x="+2+4+200+4+128+4" y="+2"/> -->
+    </group>
+  </define>
+  <!-- <define class="_STEM_BUTTON" placeholders="*stem,*label,*color,width=65,height=23,fontsize=13,granularity=23"> -->
+  <!-- TOGGLE -->
+  <!-- <button x="+0" action="stem_pad '[STEM]'" border_size="1"> -->
+  <!-- <size width="[WIDTH]" height="[HEIGHT]"/> -->
+  <!-- <off color="#222222" border="#444444" radius="3"/> -->
+  <!-- <down color="#222222" border="[COLOR]" radius="3"/> -->
+  <!-- <selected color="transparent" border="[COLOR]" radius="3"/> -->
+  <!-- <text fontsize="[FONTSIZE]" color="#555555" colorover="[COLOR]" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="[LABEL]"/> -->
+  <!-- </button> -->
+  <!-- VU METER -->
+  <!-- <visual source="get_level '[STEM]'" type="linear" orientation="horizontal" direction="up" granularity="[GRANULARITY]"> -->
+  <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+  <!-- <size width="[WIDTH]" height="7"/> -->
+  <!-- <off shape="square" border="#2A2A2A" color="black" radius="2"/> -->
+  <!-- <down shape="square" border="[COLOR]" color="[COLOR]" radius="2"/> -->
+  <!-- </visual> -->
+  <!-- GAIN SLIDER -->
+  <!-- <slider action="param_multiply 50% &amp; stem '[STEM]'" dblclick="stem '[STEM]' 50%" orientation="horizontal" direction="up" frommiddle="false"> -->
+  <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+  <!-- <size width="[WIDTH]" height="7"/> -->
+  <!-- <fader color="#AAAAAA" width="2" height="5"/> -->
+  <!-- </slider> -->
+  <!-- STEM FX -->
+  <!-- <button x="+0" y="+[HEIGHT]+12" action="stem_pad '[STEM]'" border_size="1"> -->
+  <!-- <size width="[WIDTH]/3" height="[HEIGHT]*0.8"/> -->
+  <!-- <off color="#222222" border="#444444" radius="3"/> -->
+  <!-- <down color="#222222" border="[COLOR]" radius="3"/> -->
+  <!-- <selected color="transparent" border="[COLOR]" radius="3"/> -->
+  <!-- <text fontsize="[FONTSIZE]" color="#555555" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="FX"/> -->
+  <!-- </button> -->
+  <!-- </define> -->
+</defs>

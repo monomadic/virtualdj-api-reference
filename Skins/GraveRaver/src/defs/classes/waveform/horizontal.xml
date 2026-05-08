@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="HORIZONTAL_WAVEFORM_TRACK_INFO" placeholders="*deck,*height">
+    <deck deck="[DECK]">
+      <!-- TRACK INFO -->
+      <!-- === LEFT DECK WAVEFORM TRACK INFO === -->
+      <group x="+34" y="+0" visibility="get_deck 1 ? true : get_deck 3 ? true : false">
+        <!-- BG -->
+        <square x="+0" y="+0" height="[HEIGHT]*2" width="[HEIGHT]*2+40" color="#CC000000"/>
+        <!-- black fallback -->
+        <button width="[HEIGHT]*2" height="[HEIGHT]*2" action="play_button" coloroff="#333333" textcolor="white">
+          <off color="black" border="#222222" border_size="4" shape="square"/>
+          <over color="black" border="white" border_size="4" shape="square"/>
+          <icon dx="+3" sysicon="arrowright" color="#777777" colordown="white" colorselected="white" colorover="white" width="40" height="40"/>
+        </button>
+        <!-- cover -->
+        <cover visibility="loaded" action="" rightclick="" dblclick="">
+          <pos x="+0" y="+0"/>
+          <size width="[HEIGHT]*2" height="[HEIGHT]*2"/>
+        </cover>
+        <!-- TRACK INFO -->
+        <!-- TITLE -->
+        <textzone orientation="vertical" direction="ccw">
+          <pos x="+[HEIGHT]*2+5" y="+2"/>
+          <size width="20" height="[HEIGHT]*2-6"/>
+          <text fontsize="16" weight="bold" color="needle" align="right" scroll="yes" action="get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+        <!-- REMIX -->
+        <textzone orientation="vertical">
+          <pos x="+[HEIGHT]*2+20" y="+4"/>
+          <size width="20" height="[HEIGHT]*2-6"/>
+          <text fontsize="12" weight="" color="#888888" align="right" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+        <!-- play button overlay -->
+        <button action="select &amp; play_button" visibility="loaded ? play ? blink 500ms : on : off" query="loaded ? play">
+          <size width="[HEIGHT]*2" height="[HEIGHT]*2"/>
+          <off shape="square" color="transparent" border="#22FFFFFF" border_size="4"/>
+          <over shape="square" color="transparent" border="#88FFFFFF" border_size="4"/>
+          <on shape="square" color="transparent" border="#11FFFFFF" border_size="10"/>
+          <icon sysicon="play" width="[HEIGHT]*0.9" height="[HEIGHT]*0.9" coloroff="#33888888" colorselected="white" colorover="white" coloron="white ? blink 500ms"/>
+        </button>
+      </group>
+      <!--
+              === RIGHT DECK WAVEFORM TRACK INFO ===
+            -->
+      <group x="1920-[HEIGHT]*2-34-40" y="-[HEIGHT]" visibility="get_deck 2 ? true : get_deck 4 ? true : false">
+        <!-- BG -->
+        <square x="+0" y="+0" height="[HEIGHT]*2" width="[HEIGHT]*2+40" color="#CC000000"/>
+        <!-- black fallback -->
+        <button x="+40" width="[HEIGHT]*2" height="[HEIGHT]*2" action="play_button" coloroff="#333333" textcolor="white">
+          <off color="black" border="#222222" border_size="4" shape="square"/>
+          <over color="black" border="white" border_size="4" shape="square"/>
+          <icon dx="+3" sysicon="arrowright" color="#777777" colordown="white" colorselected="white" colorover="white" width="40" height="40"/>
+        </button>
+        <cover x="+40" visibility="loaded ? get_deck 2 ? true : get_deck 4 ? true : false" action="" rightclick="" dblclick="">
+          <size width="[HEIGHT]*2" height="[HEIGHT]*2"/>
+        </cover>
+        <!-- TRACK INFO -->
+        <!-- TITLE -->
+        <textzone orientation="vertical">
+          <pos x="+5" y="+2"/>
+          <size width="20" height="[HEIGHT]*2-6"/>
+          <text fontsize="16" weight="bold" color="needle" align="right" scroll="yes" action="get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+        <!-- REMIX -->
+        <textzone orientation="vertical">
+          <pos x="+20" y="+4"/>
+          <size width="20" height="[HEIGHT]*2-6"/>
+          <text fontsize="12" weight="" color="#888888" align="right" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+        </textzone>
+        <!-- play button overlay -->
+        <button x="+40" action="select &amp; play_button" visibility="loaded ? play ? blink 500ms : on : off" query="loaded ? play">
+          <size width="[HEIGHT]*2" height="[HEIGHT]*2"/>
+          <off shape="square" color="transparent" border="#22FFFFFF" border_size="4"/>
+          <over shape="square" color="transparent" border="#88FFFFFF" border_size="4"/>
+          <on shape="square" color="transparent" border="#11FFFFFF" border_size="10"/>
+          <icon sysicon="play" width="[HEIGHT]*0.9" height="[HEIGHT]*0.9" coloroff="#33888888" colorselected="white" colorover="white" coloron="white ? blink 500ms"/>
+        </button>
+      </group>
+    </deck>
+  </define>
+  <!-- not used?? -->
+  <define class="HORIZONTAL_MAIN_WAVEFORM" placeholders="*deck,*height">
+    <deck deck="[DECK]">
+      <group>
+        <!-- LEFT WAVE -->
+        <visual x="0" y="+20" width="1920" height="[HEIGHT]-40" visibility="leftdeck">
+          <off shape="square" color="transparent" border_size="1" border="#202020" radius="0"/>
+        </visual>
+        <scratchwave orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="leftdeck">
+          <pos x="0" y="+20"/>
+          <size width="1920" height="[HEIGHT]-40"/>
+          <grid height="10" pos="-18" maincolor="#888888" size="1" mainsize="1" phrasecolor="white" phrasesize="1" color="transparent" shapepos="-14"/>
+          <gridlines width="1" color="gridlines" transparency="0.3"/>
+          <cue y="-16">
+            <mask x="123" y="100" width="6" height="13"/>
+            <text dx="+8" dy="-1" fontsize="12" important="true"/>
+          </cue>
+        </scratchwave>
+        <!-- RIGHT WAVE -->
+        <!-- grid border: right -->
+        <visual x="0" y="+20" width="1920" height="[HEIGHT]-40" visibility="rightdeck">
+          <off shape="square" color="transparent" border_size="1" border="#202020" radius="0"/>
+        </visual>
+        <!-- RIGHT: cue markers below -->
+        <scratchwave orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="rightdeck">
+          <pos x="0" y="+20"/>
+          <size width="1920" height="[HEIGHT]-40"/>
+          <grid height="10" pos="-18" maincolor="#888888" size="1" mainsize="1" phrasecolor="white" phrasesize="1" color="transparent" shapepos="-14"/>
+          <gridlines width="1" color="gridlines" transparency="0.3"/>
+          <!-- y = below waveform: [HEIGHT] here is the scratchwave's own height in this context -->
+          <cue y="+[HEIGHT]-38">
+            <mask x="123" y="100" width="6" height="13"/>
+            <text dx="+8" dy="-1" fontsize="12" important="true"/>
+          </cue>
+        </scratchwave>
+      </group>
+      <!-- PRO: HORIZONTAL WAVEFORM: BORDER -->
+      <visual source="select" x="+34" y="+0" visibility="var_equal '@$dd_bordermode' 1">
+        <size width="1920-34-34" height="[HEIGHT]"/>
+        <!-- <size width="[HEIGHT]" height="[HEIGHT]"/> -->
+        <down color="transparent" border_size="2" border="deckcolor" shape="square" radius="10"/>
+      </visual>
+      <dropzone>
+        <pos x="+34" y="+0"/>
+        <size width="1920-34-34" height="[HEIGHT]"/>
+        <over color="transparent" border="color_dropzone" border_size="4" radius="10"/>
+      </dropzone>
+    </deck>
+  </define>
+</defs>

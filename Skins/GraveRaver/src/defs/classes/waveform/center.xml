@@ -1,0 +1,1248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="WAVEFORM_HORIZONTAL_CENTER" placeholders="*waveformwidth,*waveformheight">
+    <visual class="gfx_shape" width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]" coloroff="wave_background"/>
+    <panel name="horizontal_scratch_active2deck" visibility="var_equal '@$4decks' 0 ? true : var_equal '@$4waveforms' 0">
+      <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0 ? deck 3 leftdeck">
+        <pos x="+2" y="+14+6"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1 ? deck 3 leftdeck">
+        <pos x="+2" y="+14+6"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <dropzone deck="3" visibility="deck 3 leftdeck">
+        <pos x="+0" y="+0"/>
+        <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/2+2"/>
+        <over color="transparent" border="deckcolor" border_size="2"/>
+      </dropzone>
+      <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0 ? not deck 3 leftdeck">
+        <pos x="+2" y="+14+6"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1 ? not deck 3 leftdeck">
+        <pos x="+2" y="+14+6"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <dropzone deck="1" visibility="not deck 3 leftdeck">
+        <pos x="+0" y="+0"/>
+        <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/2+2"/>
+        <over color="transparent" border="deckcolor" border_size="2"/>
+      </dropzone>
+      <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0 ? not deck 4 rightdeck">
+        <pos x="+2" y="+106+2+[WAVEFORMHEIGHT]/2-32-6+3"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="up"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1 ? not deck 4 rightdeck">
+        <pos x="+2" y="+106+2+[WAVEFORMHEIGHT]/2-32-6+3"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="up"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <dropzone deck="2" visibility="not deck 4 rightdeck">
+        <pos x="+0" y="+[WAVEFORMHEIGHT]/2-1"/>
+        <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/2+2"/>
+        <over color="transparent" border="deckcolor" border_size="2"/>
+      </dropzone>
+      <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0 ? deck 4 rightdeck">
+        <pos x="+2" y="+106+2+[WAVEFORMHEIGHT]/2-32-6+3"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="up"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="12"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1 ? deck 4 rightdeck">
+        <pos x="+2" y="+106+2+[WAVEFORMHEIGHT]/2-32-6+3"/>
+        <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/2-32-6"/>
+        <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="up"/>
+        <gridlines width="1" color="gridlines" transparency="0.6"/>
+        <cue y="-16" height="[WAVEFORMHEIGHT]">
+          <mask x="0" y="0" width="11" height="15"/>
+          <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+        </cue>
+        <overlay>
+          <pos x="960" y="-16"/>
+          <size width="2" height="[WAVEFORMHEIGHT]/2-6"/>
+          <background color="needle" shape="square"/>
+        </overlay>
+      </scratchwave>
+      <dropzone deck="4" visibility="deck 4 rightdeck">
+        <pos x="+0" y="+[WAVEFORMHEIGHT]/2-1"/>
+        <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/2+2"/>
+        <over color="transparent" border="deckcolor" border_size="2"/>
+      </dropzone>
+      <panel class="beat_counter" deck="left" x="960-2-120-40" y="+18" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+      <panel class="beat_counter" deck="right" x="960-2-120-40" y="+106+2+[WAVEFORMHEIGHT]/2-32-4" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+      <panel class="beat_counter" deck="left" x="960-2-120+40" y="+18" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      <panel class="beat_counter" deck="right" x="960-2-120+40" y="+106+2+[WAVEFORMHEIGHT]/2-32-4" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+    </panel>
+    <panel name="horizontal_scratch_active4deck" visibility="var_equal '@$4waveforms' 1 &amp;&amp; var_not_equal '@$4decks' 0">
+      <group name="1234" visibility="var_equal '@$hauntingwaveorder' 1">
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+2"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+      <group name="3124" visibility="var_equal '@$hauntingwaveorder' 0">
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+2"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+      <group name="1342" visibility="var_equal '@$hauntingwaveorder' 2">
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+12+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+2"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+24"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-24"/>
+          <grid size="1" mainsize="5" height="8" pos="-10" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-10" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-10"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-4"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+12+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2-2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+    </panel>
+    <panel name="wave_options">
+      <menu tooltip="WAVEFORM OPTIONS" visibility="0.8">
+        <pos x="+2+4" y="+[WAVEFORMHEIGHT]/2-15"/>
+        <size width="26" height="30"/>
+        <off shape="square" color="button_background"/>
+        <icon sysicon="settings" height="24" width="24" color="textoff" colorover="needle" colordown="needle"/>
+        <submenu text="Waveform Type" localize="true">
+          <item text="Scratch" localize="true" action="setting 'skinWaveformType' 'colors'" check="setting 'skinWaveformType' 'colors'"/>
+          <item text="Shapes" localize="true" action="setting 'skinWaveformType' 'shapes'" check="setting 'skinWaveformType' 'shapes'"/>
+        </submenu>
+        <submenu text="Colors" localize="true" visibility="setting skinWaveformType 1">
+          <item text="Monochrome" localize="true" action="setting 'coloredWaveforms' 'monochrome'" check="setting 'coloredWaveforms' 'monochrome'"/>
+          <item text="Per Deck" localize="true" action="setting 'coloredWaveforms' 'per-deck'" check="setting 'coloredWaveforms' 'per-deck'"/>
+          <item text="Neutral" localize="true" action="setting 'coloredWaveforms' 'neutral'" check="setting 'coloredWaveforms' 'neutral'"/>
+          <item text="Infra Red" localize="true" action="setting 'coloredWaveforms' 'infra-red'" check="setting 'coloredWaveforms' 'infra-red'"/>
+          <item text="Ultra Blue" localize="true" action="setting 'coloredWaveforms' 'ultra-blue'" check="setting 'coloredWaveforms' 'ultra-blue'"/>
+          <separator/>
+          <item text="Wave Use Frequency" action="setting 'waveUseFrequency'" check="setting 'waveUseFrequency'"/>
+        </submenu>
+        <submenu text="Colors" localize="true" visibility="setting skinWaveformType 2">
+          <item text="Virtual DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 0 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 0"/>
+          <item text="Denon DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 2 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 2"/>
+          <item text="Pioneer DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 1 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 1"/>
+        </submenu>
+        <submenu text="Needle" localize="true">
+          <item text="Left" localize="true" action="setting 'waveformCenter' 'left'" check="setting 'waveformCenter' 'left'"/>
+          <item text="Centered" localize="true" action="setting 'waveformCenter' 'centered'" check="setting 'waveformCenter' 'centered'"/>
+        </submenu>
+        <submenu text="Waveform Order" localize="true" visibility="not setting skinWaveformType 0 ? var_not_equal '@$4decks' 0">
+          <item text="1-2-3-4" localize="true" action="set '@$hauntingwaveorder' 1" check="var_equal '@$hauntingwaveorder' 1"/>
+          <item text="3-1-2-4" localize="true" action="set '@$hauntingwaveorder' 0" check="var_equal '@$hauntingwaveorder' 0"/>
+          <item text="1-3-4-2" localize="true" action="set '@$hauntingwaveorder' 2" check="var_equal '@$hauntingwaveorder' 2"/>
+        </submenu>
+        <separator visibility="var_not_equal '@$4decks' 0"/>
+        <item text="Left / Right Deck" localize="true" action="set '@$4waveforms' 0" check="var_equal '@$4waveforms' 0" visibility="var_not_equal '@$4decks' 0"/>
+        <item text="All 4-Decks" localize="true" action="set '@$4waveforms' 1" check="var_equal '@$4waveforms' 1" visibility="var_not_equal '@$4decks' 0"/>
+        <separator/>
+        <item text="Show Background" localize="true" action="toggle '@$hauntingwavesbkg'" check="var_equal '@$hauntingwavesbkg' 1" visibility="not setting skinWaveformType 0"/>
+        <item text="Show Gridlines" localize="true" action="setting 'showGridlines'" check="setting 'showGridlines'"/>
+        <item text="Bar Counter" localize="true" action="toggle '@$hauntingbarcounter'" check="var_equal '@$hauntingbarcounter' 1"/>
+        <item text="Wave Gray On Kill" action="setting 'waveGrayOnKill'" check="setting 'waveGrayOnKill'" visibility="setting skinWaveformType 2"/>
+      </menu>
+    </panel>
+    <menu tooltip="MIXER OPTIONS" visibility="var_equal '@$hauntingskinmixerrack' 1">
+      <pos x="+2+4+26+4" y="+[WAVEFORMHEIGHT]/2-15"/>
+      <size width="26" height="30"/>
+      <off shape="square" color="xf_background" border="xf_background"/>
+      <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+      <submenu text="Left Panel (Mixer)" localize="true">
+        <item text="Microphone" action="set '@$hauntingleftmixerrack' 0" check="var_equal '@$hauntingleftmixerrack' 0"/>
+        <item text="Headphones" action="set '@$hauntingleftmixerrack' 1" check="var_equal '@$hauntingleftmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Right Panel (Mixer)" localize="true">
+        <item text="Master" action="set '@$hauntingrightmixerrack' 0" check="var_equal '@$hauntingrightmixerrack' 0"/>
+        <item text="Rec/Broadcast" action="set '@$hauntingrightmixerrack' 1" check="var_equal '@$hauntingrightmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Center Panel (FX)" localize="true">
+        <item text="Master FX" action="set '@$hauntingcenterfxrack' 0" check="var_equal '@$hauntingcenterfxrack' 0"/>
+        <item text="Mic FX" action="set '@$hauntingcenterfxrack' 1" check="var_equal '@$hauntingcenterfxrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="EQ Frequency Spread" localize="true">
+        <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+        <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+      </submenu>
+      <submenu text="Vu Meter" localize="true">
+        <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+        <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+        <separator text="Color"/>
+        <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+        <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+        <separator/>
+        <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+      </submenu>
+      <submenu text="Filter Resonance" localize="true">
+        <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+        <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+        <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+      </submenu>
+      <submenu text="Fader Start" localize="true">
+        <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+        <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+      </submenu>
+      <submenu text="Fader StartStop" localize="true">
+        <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+        <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+      </submenu>
+      <separator/>
+      <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+      <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+      <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+    </menu>
+    <button class="button_main" x="+[WAVEFORMWIDTH]-62" y="+[WAVEFORMHEIGHT]/2-15" width="26" height="30" action="repeat 100ms &amp; zoom -0.80%" text="+" weight="bold" textcoloron="needle" coloron="button_background" bordersize="0" textsize="18" visibility="0.7"/>
+    <button class="button_main" x="+[WAVEFORMWIDTH]+26+4-62" y="+[WAVEFORMHEIGHT]/2-15" width="26" height="30" action="repeat 100ms &amp; zoom +0.80%" text="-" weight="bold" textcoloron="needle" coloron="button_background" bordersize="0" textsize="20" visibility="0.7"/>
+  </define>
+  <define class="waveform_horizontal_center4" placeholders="*waveformwidth,*waveformheight">
+    <visual class="gfx_shape" width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]" coloroff="wave_background"/>
+    <panel name="horizontal_scratch_active4deck">
+      <group name="1234" visibility="var_equal '@$hauntingwaveorder' 1">
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+0"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12-3"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12-1"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+      <group name="3124" visibility="var_equal '@$hauntingwaveorder' 0">
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+0"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12-3"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12-1"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+      <group name="1342" visibility="var_equal '@$hauntingwaveorder' 2">
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+14+6"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="1">
+          <pos x="+0" y="+0"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="3" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+29"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="3">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+12-3"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="4" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2-24-2+14+29+4"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="4">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2-24-2+14+12-1"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 0">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <scratchwave deck="2" orientation="horizontal" color="scratch1" color2="scratch2" colorVocal="colorVocal" colorInstru="colorInstru" colorBeat="colorBeat" colornoBeat="colorNoBeat" colornoInstru="colorNoInstru" colornovocal="colorNoVocal" visibility="var_equal '@$hauntingwavesbkg' 1">
+          <pos x="+2" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8"/>
+          <size width="[WAVEFORMWIDTH]-4" height="[WAVEFORMHEIGHT]/4-39"/>
+          <grid size="1" mainsize="4" height="12" pos="-16" background="yes" backgroundcolor="wavesbackgroundcolor" backgroundshaded="no" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-16" shapemirrored="down"/>
+          <gridlines width="1" color="gridlines" transparency="0.6"/>
+          <cue y="-16" height="[WAVEFORMHEIGHT]">
+            <mask x="0" y="0" width="11" height="15"/>
+            <text dx="+16" dy="-2" weight="bold" fontsize="15" color="deckcolor" important="true"/>
+          </cue>
+          <overlay>
+            <pos x="960" y="-16"/>
+            <size width="2" height="[WAVEFORMHEIGHT]/4-7"/>
+            <background color="needle" shape="square"/>
+          </overlay>
+        </scratchwave>
+        <dropzone deck="2">
+          <pos x="+0" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2-12"/>
+          <size width="[WAVEFORMWIDTH]" height="[WAVEFORMHEIGHT]/4+1"/>
+          <over color="transparent" border="deckcolor" border_size="2"/>
+        </dropzone>
+        <panel class="beat_counter" deck="1" x="960-2-120-40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="1" x="960-2-120+40" y="+12+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="3" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/4-24-2+12+3+24+5" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120-40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="4" x="960-2-120+40" y="+77+2+[WAVEFORMHEIGHT]/2-24-2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120-40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'centered'"/>
+        <panel class="beat_counter" deck="2" x="960-2-120+40" y="+[WAVEFORMHEIGHT]/2+18+[WAVEFORMHEIGHT]/2+2+8" visibility="var_equal '@$hauntingbarcounter' 1 ? setting 'waveformCenter' 'left'"/>
+      </group>
+    </panel>
+    <panel name="wave_options">
+      <menu tooltip="WAVEFORM OPTIONS" visibility="0.8">
+        <pos x="+2+4" y="+[WAVEFORMHEIGHT]/2-15"/>
+        <size width="26" height="30"/>
+        <off shape="square" color="button_background"/>
+        <icon sysicon="settings" height="24" width="24" color="textoff" colorover="needle" colordown="needle"/>
+        <submenu text="Waveform Type" localize="true">
+          <item text="Scratch" localize="true" action="setting 'skinWaveformType' 'colors'" check="setting 'skinWaveformType' 'colors'"/>
+          <item text="Shapes" localize="true" action="setting 'skinWaveformType' 'shapes'" check="setting 'skinWaveformType' 'shapes'"/>
+        </submenu>
+        <submenu text="Colors" localize="true" visibility="setting skinWaveformType 1">
+          <item text="Monochrome" localize="true" action="setting 'coloredWaveforms' 'monochrome'" check="setting 'coloredWaveforms' 'monochrome'"/>
+          <item text="Per Deck" localize="true" action="setting 'coloredWaveforms' 'per-deck'" check="setting 'coloredWaveforms' 'per-deck'"/>
+          <item text="Neutral" localize="true" action="setting 'coloredWaveforms' 'neutral'" check="setting 'coloredWaveforms' 'neutral'"/>
+          <item text="Infra Red" localize="true" action="setting 'coloredWaveforms' 'infra-red'" check="setting 'coloredWaveforms' 'infra-red'"/>
+          <item text="Ultra Blue" localize="true" action="setting 'coloredWaveforms' 'ultra-blue'" check="setting 'coloredWaveforms' 'ultra-blue'"/>
+          <separator/>
+          <item text="Wave Use Frequency" action="setting 'waveUseFrequency'" check="setting 'waveUseFrequency'"/>
+        </submenu>
+        <submenu text="Colors" localize="true" visibility="setting skinWaveformType 2">
+          <item text="Virtual DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 0 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 0"/>
+          <item text="Denon DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 2 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 2"/>
+          <item text="Pioneer DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 1 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 1"/>
+        </submenu>
+        <submenu text="Needle" localize="true">
+          <item text="Left" localize="true" action="setting 'waveformCenter' 'left'" check="setting 'waveformCenter' 'left'"/>
+          <item text="Centered" localize="true" action="setting 'waveformCenter' 'centered'" check="setting 'waveformCenter' 'centered'"/>
+        </submenu>
+        <submenu text="Waveform Order" localize="true" visibility="not setting skinWaveformType 0 ? var_not_equal '@$4decks' 0">
+          <item text="1-2-3-4" localize="true" action="set '@$hauntingwaveorder' 1" check="var_equal '@$hauntingwaveorder' 1"/>
+          <item text="3-1-2-4" localize="true" action="set '@$hauntingwaveorder' 0" check="var_equal '@$hauntingwaveorder' 0"/>
+          <item text="1-3-4-2" localize="true" action="set '@$hauntingwaveorder' 2" check="var_equal '@$hauntingwaveorder' 2"/>
+        </submenu>
+        <separator/>
+        <item text="Show Background" localize="true" action="toggle '@$hauntingwavesbkg'" check="var_equal '@$hauntingwavesbkg' 1" visibility="not setting skinWaveformType 0"/>
+        <item text="Show Gridlines" localize="true" action="setting 'showGridlines'" check="setting 'showGridlines'"/>
+        <item text="Bar Counter" localize="true" action="toggle '@$hauntingbarcounter'" check="var_equal '@$hauntingbarcounter' 1"/>
+        <item text="Wave Gray On Kill" action="setting 'waveGrayOnKill'" check="setting 'waveGrayOnKill'" visibility="setting skinWaveformType 2"/>
+      </menu>
+    </panel>
+    <menu tooltip="MIXER OPTIONS" visibility="var_equal '@$hauntingskinmixerrack' 1">
+      <pos x="+2+4+26+4" y="+[WAVEFORMHEIGHT]/2-15"/>
+      <size width="26" height="30"/>
+      <off shape="square" color="xf_background" border="xf_background"/>
+      <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+      <submenu text="Left Panel (Mixer)" localize="true">
+        <item text="Microphone" action="set '@$hauntingleftmixerrack' 0" check="var_equal '@$hauntingleftmixerrack' 0"/>
+        <item text="Headphones" action="set '@$hauntingleftmixerrack' 1" check="var_equal '@$hauntingleftmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Right Panel (Mixer)" localize="true">
+        <item text="Master" action="set '@$hauntingrightmixerrack' 0" check="var_equal '@$hauntingrightmixerrack' 0"/>
+        <item text="Rec/Broadcast" action="set '@$hauntingrightmixerrack' 1" check="var_equal '@$hauntingrightmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Center Panel (FX)" localize="true">
+        <item text="Master FX" action="set '@$hauntingcenterfxrack' 0" check="var_equal '@$hauntingcenterfxrack' 0"/>
+        <item text="Mic FX" action="set '@$hauntingcenterfxrack' 1" check="var_equal '@$hauntingcenterfxrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="EQ Frequency Spread" localize="true">
+        <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+        <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+      </submenu>
+      <submenu text="Vu Meter" localize="true">
+        <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+        <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+        <separator text="Color"/>
+        <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+        <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+        <separator/>
+        <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+      </submenu>
+      <submenu text="Filter Resonance" localize="true">
+        <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+        <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+        <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+      </submenu>
+      <submenu text="Fader Start" localize="true">
+        <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+        <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+      </submenu>
+      <submenu text="Fader StartStop" localize="true">
+        <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+        <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+      </submenu>
+      <separator/>
+      <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+      <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+      <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+    </menu>
+    <button class="button_main" x="+[WAVEFORMWIDTH]-62" y="+[WAVEFORMHEIGHT]/2-15" width="26" height="30" action="repeat 100ms &amp; zoom -0.80%" text="+" weight="bold" textcoloron="needle" coloron="button_background" bordersize="0" textsize="18" visibility="0.7"/>
+    <button class="button_main" x="+[WAVEFORMWIDTH]+26+4-62" y="+[WAVEFORMHEIGHT]/2-15" width="26" height="30" action="repeat 100ms &amp; zoom +0.80%" text="-" weight="bold" textcoloron="needle" coloron="button_background" bordersize="0" textsize="20" visibility="0.7"/>
+  </define>
+</defs>

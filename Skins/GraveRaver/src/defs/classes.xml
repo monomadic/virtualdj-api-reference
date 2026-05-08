@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Foundational shared primitives -->
+  <define class="label_small">
+    <size width="120" height="18"/>
+    <text fontsize="11" color="pro_text_dim" align="left"/>
+  </define>
+
+  <define class="track_text">
+    <size width="260" height="20"/>
+    <text fontsize="13" color="pro_text_main" align="left"/>
+  </define>
+
+  <define class="knob_round" orientation="round">
+    <size width="54" height="54"/>
+    <off width="46" height="46" shape="circle" color="knob_bg" border="knob_border" border_size="2"/>
+    <fader color="knob_indicator" width="3" height="18" anglemin="-140" anglemax="140"/>
+  </define>
+
+  <define class="vu_meter" source="get_vu_meter" type="linear" orientation="vertical">
+    <size width="10" height="90"/>
+    <off color="vu_off"/>
+    <on color="vu_on"/>
+  </define>
+
+  <define class="gfx_shape" placeholders="width,height,coloroff,coloron,bordercoloroff,bordercoloron,bordersize,radius=0,shape">
+    <size width="[WIDTH]" height="[HEIGHT]"/>
+    <off color="[COLOROFF]" border="[BORDERCOLOROFF]" border_size="[BORDERSIZE]" radius="[RADIUS]" shape="[SHAPE]"/>
+    <on color="[COLORON]" border="[BORDERCOLORON]" border_size="[BORDERSIZE]" radius="[RADIUS]" shape="[SHAPE]"/>
+  </define>
+</defs>

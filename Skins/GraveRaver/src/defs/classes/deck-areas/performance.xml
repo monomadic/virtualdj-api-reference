@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Performance layout shells, plus the shared mini deck strip used by Pro and Performance mini modes -->
+  <define class="KNOB_SMALL_THIN" placeholders="*label,knob_color=white">
+    <panel x="+0" y="+16">
+      <slider action="effect_slider 'colorfx'" rightclick="effect_select 'colorfx'" dblclick="effect_slider 'colorfx' 50%" orientation="round" frommiddle="true" resettomiddle="true">
+        <pos x="+15" y="+0"/>
+        <size width="30" height="30"/>
+        <fill width="30" height="30" radius="11" color="knobfillon" backcolor="#22FFFFFF"/>
+        <fader color="[KNOB_COLOR]" width="3" height="12" radius="1" anglemin="-130" anglemax="130"/>
+      </slider>
+      <textzone action="effect_select colorfx">
+        <pos x="+0" y="+29"/>
+        <size width="59"/>
+        <text fontsize="9" weight="" color="knobtextoff" align="center" action="[LABEL]" important="true" localize="true"/>
+      </textzone>
+    </panel>
+  </define>
+
+  <define class="KNOB_XSMALL_THIN" placeholders="*label,knob_color=#EEEEEE,fill_color=yellow,bg_color=#AAAAAA">
+    <visual width="30" height="35">
+      <off shape="square" color="#11FFFFFF" radius="0"/>
+    </visual>
+    <panel x="+5" y="+4">
+      <slider orientation="round" frommiddle="true" resettomiddle="true" action="effect_slider 'colorfx'" rightclick="effect_select 'colorfx'" dblclick="effect_slider 'colorfx' 50%">
+        <size width="20" height="20"/>
+        <fader color="[KNOB_COLOR]" width="2" height="6" radius="1" anglemin="-140" anglemax="140"/>
+        <fill width="15" height="20" radius="6" color="[FILL_COLOR]" backcolor="[BG_COLOR]"/>
+        <clipmask x="984" y="3142"/>
+      </slider>
+      <textzone action="effect_select colorfx">
+        <pos x="+0" y="+20"/>
+        <size width="20"/>
+        <text fontsize="7" weight="" color="knobtextoff" align="center" action="[LABEL]" important="true" localize="true"/>
+      </textzone>
+    </panel>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_SIDE" placeholders="*deck,*panelname,*deckside">
+    <panel class="AREA_DECK_PERFORMANCE_SPINE" deck="[DECK]" panelname="[PANELNAME]" deckside="[DECKSIDE]" visibility="deck [DECK] leftdeck"/>
+    <panel class="AREA_DECK_PERFORMANCE_BODY" x="+35" deck="[DECK]" panelname="[PANELNAME]" deckside="[DECKSIDE]" visibility="deck [DECK] leftdeck"/>
+    <panel class="AREA_DECK_PERFORMANCE_SPINE" x="+960-35" deck="[DECK]" panelname="[PANELNAME]" deckside="[DECKSIDE]" visibility="deck [DECK] rightdeck"/>
+    <panel class="AREA_DECK_PERFORMANCE_BODY" x="+2" deck="[DECK]" panelname="[PANELNAME]" deckside="[DECKSIDE]" visibility="deck [DECK] rightdeck"/>
+    <panel visibility="var '@$debugui'">
+      <visual width="320" height="20">
+        <off shape="square" color="#AA000000" radius="0"/>
+      </visual>
+      <textzone>
+        <size width="320" height="18"/>
+        <text align="center" size="12" color="white" action="get_text 'DECK=`get_deck`([DECK]) SELECTED=`get_deck` GETLEFTDECK=`get_leftdeck` LEFTDECK=`leftdeck` LEFT=`deck [DECK] leftdeck`'"/>
+      </textzone>
+    </panel>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_SPINE" placeholders="*deck,*panelname,*deckside">
+    <deck deck="[DECK]">
+      <visual x="+0" y="+1" width="34" height="320">
+        <off shape="square" color="black" radius="6"/>
+      </visual>
+      <button class="deck_button" deck="left" color="color_masterdeck">
+        <pos x="+0" y="+0" condition="param_equal [DECKSIDE] 'left'"/>
+        <pos x="-6" y="+0" condition="param_equal [DECKSIDE] 'right'"/>
+        <text dx="+8" condition="param_equal [DECKSIDE] 'right'"/>
+      </button>
+      <menu class="menu_maindecks" query="select" x="+3" y="+295" width="28" height="20"/>
+    </deck>
+  </define>
+
+  <!-- Shared performance body used on the left side and mirrored into the two-deck right-side shell -->
+  <define class="AREA_DECK_PERFORMANCE_BODY" placeholders="*deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="922" height="324" coloroff="panel_background" bordersize="1" bordercoloroff="#111111"/>
+      <panel class="infos_ex" deckside="left" visibility="leftdeck"/>
+      <panel class="infos_ex" deckside="right" visibility="rightdeck"/>
+      <visual class="gfx_shape" y="+62" width="922" height="33" coloroff="#111111" bordercoloroff="#222222" bordersize="1"/>
+      <songpos class="songpos" x="+2" y="+65" width="918" height="30"/>
+      <songpos class="cuemap" x="+2" y="+91" width="918" height="2"/>
+      <visual class="gfx_shape" x="+0" y="+0" width="922" height="324" coloroff="transparent" bordercoloroff="#444444" bordersize="1" radius="6"/>
+      <visual class="gfx_shape" x="+9" y="+98" width="520" height="220" coloroff="#050505" bordersize="2" bordercoloroff="#222222" radius="10"/>
+      <panel class="pad_page_selector_panel" x="+19" y="+100" panelname="[PANELNAME]"/>
+      <group x="+620" y="+260">
+        <panel class="KNOB_XSMALL_THIN" label="get_text 'KNOB'"/>
+      </group>
+      <group x="+535" y="+100">
+        <group novisibility="setting 'eqMode' 'STEMS'" y="+4">
+          <button class="dropdown_menu" action="eq_mode" x="+46" y="-4" visibility="var_equal '@$hauntingdropmenus' 0"/>
+          <panel class="knob" x="+21" knobsize="21" knobradius="5" faderradius="0" textwidth="30" textcolor="white" textleft="-5" textbelow="+18" textsize="9" action="gain" rgclick="match_gain" dblclick="gain 50%" frommiddle="true" fillcolor="red" fillcoloroff="color_knob_bg" textaction="gain_label" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+          <panel class="knob" x="+21" y="+50" knobsize="21" knobradius="5" faderradius="0" textwidth="30" textcolor="white" textleft="-5" textbelow="+18" textsize="9" action="eq_high" rgclick="eq_high 0% ? eq_high 50% : eq_high 0%" dblclick="eq_high 50%" frommiddle="true" fillcolor="colorvocal" fillcoloroff="colorvocal" textaction="high_label" actiontxt="eq_mode +1"/>
+          <panel class="knob" x="+21" y="+50+40" knobsize="21" knobradius="5" faderradius="0" textwidth="30" textcolor="white" textleft="-5" textbelow="+18" textsize="9" action="eq_mid" rgclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" dblclick="eq_mid 50%" frommiddle="true" fillcolor="colorinstru" fillcoloroff="colorinstru" textaction="mid_label 'short'" actiontxt="eq_mode +1"/>
+          <panel class="knob" x="+21" y="+50+40+40" knobsize="21" knobradius="5" faderradius="0" textwidth="30" textcolor="white" textleft="-5" textbelow="+18" textsize="9" action="eq_low" rgclick="eq_low 0% ? eq_low 50% : eq_low 0%" dblclick="eq_low 50%" frommiddle="true" fillcolor="colorbeat" fillcoloroff="colorbeat" textaction="low_label" actiontxt="eq_mode +1"/>
+          <group x="+10" y="+50+40+40+50">
+            <panel x="+9" class="knob" knobsize="25" knobradius="6" faderradius="0" textwidth="30" textcolor="white" textleft="-3" textbelow="+21" textsize="10" action="filter" dblclick="filter 50%" frommiddle="true" fillcolor="magenta" fillcoloroff="#884488" textaction="filter_label &amp; param_cast 'text' 9" actiontxt="filter_selectcolorfx"/>
+            <visual type="transparent" source="effect_active colorfx ? blink 500ms">
+              <pos x="+34" width="8" height="8"/>
+              <off color="tab_menu" border="tab_menu" shape="circle"/>
+              <on color="green" border="green" shape="circle"/>
+            </visual>
+          </group>
+        </group>
+        <group visibility="setting 'eqMode' 'STEMS'">
+          <button class="dropdown_menu" action="eq_mode" x="+58" y="+6" visibility="var_equal '@$hauntingdropmenus' 0"/>
+          <panel class="knob" x="+18" y="+14" knobsize="41" knobradius="10" faderradius="9" action="stem 'instru'" rgclick="stem 'instru' 0% ? stem 'instru' 50% : stem 'instru' 0%" dblclick="stem 'instru' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'INSTRU'" actiontxt="var_equal '@$hauntingdropmenus' 1 ? eq_mode : eq_mode +1"/>
+          <panel class="knob" x="+18" y="+14+76" knobsize="41" knobradius="10" faderradius="9" action="stem 'hihat'" rgclick="stem 'hihat' 0% ? stem 'hihat' 50% : stem 'hihat' 0%" dblclick="stem 'hihat' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'HIHAT'" actiontxt="eq_mode +1"/>
+          <panel class="knob" x="+18" y="+14+76+67" knobsize="41" knobradius="10" faderradius="9" action="stem 'vocal'" rgclick="stem 'vocal' 0% ? stem 'vocal' 50% : stem 'vocal' 0%" dblclick="stem 'vocal' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'VOCAL'" actiontxt="eq_mode +1"/>
+          <panel class="knob" x="+18" y="+14+76+67+67" knobsize="41" knobradius="10" faderradius="9" action="stem 'kick'" rgclick="stem 'kick' 0% ? stem 'kick' 50% : stem 'kick' 0%" dblclick="stem 'kick' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'KICK'" actiontxt="eq_mode +1"/>
+          <panel class="knob" x="+18" y="+14+81+68+68+68+13" knobsize="41" knobradius="10" faderradius="9" action="stem 'bass'" rgclick="stem 'bass' 0% ? stem 'bass' 50% : stem 'bass' 0%" dblclick="stem 'bass' 50%" frommiddle="true" fillcolor="knobfillon" textaction="get_text 'BASS'" actiontxt="eq_mode +1"/>
+        </group>
+      </group>
+      <group y="+10" x="-20">
+        <panel class="jogwheel" x="+922-210" y="+2+6+4+103-6-4" name="jogwheel_spinner"/>
+        <panel class="deck_level" deck="[DECK]" x="+922-30" y="+110"/>
+      </group>
+      <group x="+805" y="+290">
+        <button class="button_main" textsize="11" width="110" height="30" action="select &amp; play_pause" query="play" rightclick="goto_first_beat" sysicon="play_button" iconsize="39" textcoloron="black" colorselected="red" bordersize="0">
+          <off color="#000000" border="#333333" border_size="1" shape="square" radius="4" iconcolor="deckcolor"/>
+          <over color="#111111" border="#666666" border_size="1" shape="square" radius="4"/>
+          <down color="#111111" border="#888888" border_size="1" shape="square" radius="4"/>
+          <selected color="deckcolor" border="deckcolor" radius="4" iconcolor="black"/>
+        </button>
+      </group>
+      <visual source="select" x="-3" y="-3" visibility="var_equal '@$dd_bordermode' 1 ? deck [DECK] select">
+        <size width="878+77+2-35+5" height="264+64"/>
+        <down color="transparent" border_size="3" border="deckcolor" shape="square" radius="8"/>
+      </visual>
+      <panel x="+1" y="+1" class="dual_dropzone" width="878+77+2-35-2" height="264+60"/>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_LEFT_VERTICAL" placeholders="*deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="766" height="333" coloroff="panel_background"/>
+      <panel class="infos_vert"/>
+      <visual class="gfx_shape" y="+68-2" width="766" height="44" coloroff="infos_background" bordercoloroff="panel_background" bordersize="2"/>
+      <panel class="beat_divider_area" x="+2+4" y="+68+4" width="766-4-8" height="44-4-8"/>
+      <songpos class="songpos" x="+2+4" y="+68+4" width="766-4-8" height="44-4-8"/>
+      <panel class="transport_horizontal" x="+484+7+80-61" y="+188+108"/>
+      <panel class="pitch_zone_vertical" x="+484+7-61+10" y="+108"/>
+      <panel class="jogwheel_2" x="+800-[JOGSIZE]-2-8-20-14-61" y="+2+6+4+108"/>
+      <line name="divider" color="button_background" width="3" height="171+48-2" x="+557-79-51" y="+108+2"/>
+      <panel class="pads_rack_vert" x="+1" y="+108" panelname="[PANELNAME]"/>
+      <panel class="channel_levels_vert" deck="[DECK]" x="+766-61-10" y="+108"/>
+      <visual source="deck [DECK] leftdeck" visibility="var_equal '@$hauntinglayout' 1 ? loaded ? blink_play on : true">
+        <size width="766" height="333"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </visual>
+      <dropzone visibility="var_equal '@$hauntinglayout' 0">
+        <size width="766" height="333"/>
+        <over color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </dropzone>
+      <dropzone visibility="var_equal '@$hauntinglayout' 1">
+        <size width="766" height="333"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_LEFT_CENTER" placeholders="*deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="800-81" height="333" coloroff="panel_background"/>
+      <panel class="infos_center"/>
+      <visual class="gfx_shape" y="+68-2" width="800-81" height="44" coloroff="infos_background" bordercoloroff="panel_background" bordersize="2"/>
+      <panel class="beat_divider_area" x="+2+4" y="+68+4" width="800-4-8-81" height="44-4-8"/>
+      <songpos class="songpos" x="+2+4" y="+68+4" width="800-4-8-81" height="44-4-8"/>
+      <panel class="transport_center" x="+484+7+80-61-81+30" y="+188+108"/>
+      <panel class="pitch_zone_vertical" x="+484+7-61+10-81+30" y="+108"/>
+      <panel class="jogwheel_2" x="+800-[JOGSIZE]-2-8-20-14-61-81+15" y="+2+6+4+108"/>
+      <line name="divider" color="button_background" width="2" height="171+48-2" x="+557-79-51-81+30+2" y="+108+2+2"/>
+      <panel class="loops_center" x="+0" y="+108" panelname="[PANELNAME]"/>
+      <panel class="pads_rack_center" x="+10" y="+108+72" panelname="[PANELNAME]"/>
+      <panel class="channel_levels_vert" deck="[DECK]" x="+800-61-10-81" y="+108"/>
+      <visual source="deck [DECK] leftdeck" visibility="var_equal '@$hauntinglayout' 1 ? loaded ? blink_play on : true">
+        <size width="800-81" height="333"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </visual>
+      <panel class="dual_dropzone" width="800-81" height="333"/>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_RIGHT" placeholders="deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="878+77+2" height="264" coloroff="#111111" bordersize="1" bordercoloroff="#222222"/>
+      <panel class="infos_ex" x="+0" deck="[DECK]" deckside="right"/>
+      <visual class="gfx_shape" y="+68-2-6" width="878+77+2" height="38" coloroff="infos_background" bordercoloroff="panel_background" bordersize="2"/>
+      <panel class="beat_divider_area" x="+2+4" y="+68+4-6" width="878-4-8+77+2" height="38-4-8"/>
+      <songpos class="songpos" x="+2+4" y="+68+4-6" width="878-4-8+77+2" height="38-4-8"/>
+      <panel class="transport_ex" x="+878-484-60-7-77-2+6+2" y="+103-6"/>
+      <panel class="pitch_zone_ex" x="+878-484-60-7-77-2+77+2+2" y="+103-6"/>
+      <panel class="jogwheel" x="+2+8+58+14+8+2-4" y="+2+6+4+103-6-4" name="jogwheel_spinner"/>
+      <line name="divider" color="button_background" width="3" height="172-12" x="+878-557-3+77+1" y="+103+2-5"/>
+      <panel class="loops_ex" x="+2+8+58+14+238+77+1" y="+103-6" panelname="[PANELNAME]"/>
+      <panel class="channel_levels_ex" deck="[DECK]" x="+2+8" y="+103-6"/>
+      <visual source="deck [DECK] select" visibility="var_equal '@$dd_bordermode' 1 ? deck [DECK] rightdeck ? var_equal '@$hauntinglayout' 1 ? loaded ? blink_play on : true">
+        <size width="878+77+2" height="264"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square" radius="8"/>
+      </visual>
+      <dropzone visibility="var_equal '@$hauntinglayout' 0">
+        <size width="878+77+2" height="264"/>
+        <over color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </dropzone>
+      <dropzone visibility="var_equal '@$hauntinglayout' 1">
+        <size width="878+77+2" height="264"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_RIGHT_VERTICAL" placeholders="deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="800" height="333" coloroff="panel_background"/>
+      <panel class="infos_vert"/>
+      <visual class="gfx_shape" y="+68-2" width="800" height="44" coloroff="infos_background" bordercoloroff="panel_background" bordersize="2"/>
+      <panel class="beat_divider_area" x="+2+4" y="+68+4" width="800-4-8" height="44-4-8"/>
+      <songpos class="songpos" x="+2+4" y="+68+4" width="800-4-8" height="44-4-8"/>
+      <panel class="transport_horizontal" x="+21+61" y="+188+108"/>
+      <panel class="pitch_zone_vertical" x="+800-484-60-7+61-10" y="+108"/>
+      <panel class="jogwheel_2" x="+2+8+20+14+61" y="+2+6+4+108"/>
+      <line name="divider" color="button_background" width="3" height="171+48-2" x="+878-557-3+52" y="+108+2+2"/>
+      <panel class="pads_rack_vert" x="+1" y="+108" panelname="[PANELNAME]"/>
+      <panel class="channel_levels_vert" deck="[DECK]" x="+10" y="+108"/>
+      <visual source="deck [DECK] select" visibility="var_equal '@$dd_bordermode' 1 ? deck [DECK] rightdeck ? var_equal '@$hauntinglayout' 1 ? loaded ? blink_play on : true">
+        <size width="800" height="333"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square" radius="8"/>
+      </visual>
+      <dropzone visibility="var_equal '@$hauntinglayout' 0">
+        <size width="800" height="333"/>
+        <over color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </dropzone>
+      <dropzone visibility="var_equal '@$hauntinglayout' 1">
+        <size width="800" height="333"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_PERFORMANCE_RIGHT_CENTER" placeholders="deck,*panelname">
+    <deck deck="[DECK]">
+      <visual class="gfx_shape" width="800-81" height="333" coloroff="panel_background"/>
+      <panel class="infos_center"/>
+      <visual class="gfx_shape" y="+68-2" width="800-81" height="44" coloroff="infos_background" bordercoloroff="panel_background" bordersize="2"/>
+      <panel class="beat_divider_area" x="+2+4" y="+68+4" width="800-4-8-81" height="44-4-8"/>
+      <songpos class="songpos" x="+2+4" y="+68+4" width="800-4-8-81" height="44-4-8"/>
+      <panel class="transport_center" x="+21+61" y="+188+108"/>
+      <panel class="pitch_zone_vertical" x="+800-484-60-7+61-10-30" y="+108"/>
+      <panel class="jogwheel_2" x="+2+8+20+14+61-15" y="+2+6+4+108"/>
+      <line name="divider" color="button_background" width="2" height="171+48-2" x="+878-557-3+52-30-1" y="+108+2+2"/>
+      <panel class="loops_center" x="+2+8+58+14+238+53-30-3" y="+108" panelname="[PANELNAME]"/>
+      <panel class="pads_rack_center" x="+2+8+58+14+238+53-30-3" y="+108+72" panelname="[PANELNAME]"/>
+      <panel class="channel_levels_vert" deck="[DECK]" x="+10" y="+108"/>
+      <visual source="deck [DECK] rightdeck" visibility="var_equal '@$hauntinglayout' 1 ? loaded ? blink_play on : true">
+        <size width="800-81" height="333"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </visual>
+      <panel class="dual_dropzone" width="800-81" height="333"/>
+    </deck>
+  </define>
+
+  <define class="AREA_DECK_MINI" placeholders="*deck,*panelname">
+    <deck deck="[DECK]">
+      <panel>
+        <button class="button_main" action="select" rightclick="file_info" tooltip="Text Scroll\nRigth-click: Tag Editor" width="878" height="100-4" coloroff="infos_background" coloron="infos_background" brcoloroff="panel_background" brcoloron="panel_background" bordersize="2"/>
+        <group visibility="loaded ? get_deck 1 ? true : get_deck 3 ? true : false">
+          <button class="button_main" x="+0" y="+0" width="36" height="94" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck \n Rigth-click: Next Panel" coloroff="transparent" textcoloron="black" textcolor="deckcolor" textsize="33" textaction="get_deck" textheight="55" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+          <menu class="menu_maindecks" query="select" x="+0" y="+64" width="40" height="20"/>
+          <group x="+4+28+4+100" y="+0">
+            <textzone tooltip="">
+              <size width="478-50-8" height="34"/>
+              <text fontsize="16" weight="bold" color="needle" align="left" scroll="yes" action="get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+            </textzone>
+            <textzone tooltip="">
+              <pos y="+22"/>
+              <size width="478-50-8" height="28"/>
+              <text fontsize="12" weight="" color="#888888" align="left" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+            </textzone>
+          </group>
+          <cover rotate="no" rightclick="" dblclick="">
+            <pos x="+2+4+33" y="+3"/>
+            <size width="100-8-4" height="100-8-4"/>
+          </cover>
+          <button action="select" visibility="loaded">
+            <pos x="+2+4+33" y="+3"/>
+            <size width="100-8-4" height="100-8-4"/>
+            <off shape="square" color="transparent" border="#88FFFFFF" border_size="1"/>
+            <over shape="square" color="transparent" border="#88FFFFFF" border_size="1"/>
+            <on shape="square" color="transparent" border="#88FFFFFF" border_size="1"/>
+          </button>
+          <button class="button_main" x="+878-10-90" y="+4" width="90" height="30" action="beat_tap" dblclick="reanalyze" rightclick="edit_bpm" coloroff="transparent" coloron="transparent" bordersize="0" textcolor="textdarker" textsize="18" textaction="not loaded ? get_text 'TAP'"/>
+          <textzone class="text" x="+878-10-90" y="+4" width="90" height="30" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'"/>
+          <textzone class="text" x="+878-10-90" y="+25" action="pitch_reset" width="90" height="30" fontsize="12" color="textoff2" align="center" weight="" textaction="get_text '%Ppitch%'"/>
+          <group x="+878-10-90-10-90" y="+12">
+            <visual class="gfx_shape" width="128" height="80" coloroff="transparent"/>
+            <textzone class="text" x="+16" y="+0" width="128-26-26" height="20" action="key_match_menu" fontsize="22" color="`get_key_color`" align="center" weight="bold" textaction="get_key"/>
+            <button class="button_main" x="+6" y="+0" width="26" height="15" action="key_move -1" textcoloron="white" coloron="transparent" coloroff="transparent" brcoloron="transparent" brcoloroff="transparent" border="0" iconsize="15" sysicon="minus"/>
+            <button class="button_main" action="key_match_button" width="100-26-26" height="14" x="+32" y="+21" coloroff="black" coloron="black" bordersize="0" textsize="12" textcoloroff="red" textcoloron="green" textaction="param_equal '`get_key_modifier_text`' 'KEY' ? get_text '+0' : get_key_modifier_text" visibility="masterdeck"/>
+            <button class="button_main" action="key_match_button" width="100-26-26" height="14" x="+32" y="+21" coloroff="black" coloron="black" bordersize="0" textsize="12" textcoloroff="orange" textcoloron="orange" textaction="param_equal '`get_key_modifier_text`' 'KEY' ? get_text '+0' : get_key_modifier_text" visibility="not masterdeck"/>
+            <button class="button_main" x="+80" y="+0" width="26" height="16" action="key_move +1" textcoloron="white" coloron="transparent" coloroff="transparent" brcoloron="transparent" brcoloroff="transparent" iconsize="15" sysicon="plus"/>
+            <visual type="square" x="+10" y="+40" width="10" height="10" color="red" visibility="not is_sync ? blink : false"/>
+          </group>
+          <group x="+570" y="+5">
+            <button width="90" height="18" action="effect_active colorfx" query="effect_active colorfx" border_size="1">
+              <off color="#222222"/>
+              <selected color="orange" textcolor="black"/>
+              <text fontsize="12" color="#111111" colorselected="black" align="center" text="COLORFX"/>
+            </button>
+            <button y="+20" width="90" height="18" action="sampler_play_stop" border_size="1" query="sampler_play">
+              <off color="#222222"/>
+              <selected color="#00AAEE" textcolor="white"/>
+              <text fontsize="12" color="#111111" colorselected="black" align="center" text="SAMPLER"/>
+            </button>
+            <button x="+0" y="+40" width="28" height="18" action="effect_active 1" border_size="1">
+              <off color="#222222"/>
+              <selected color="magenta"/>
+              <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX1"/>
+            </button>
+            <button x="+30" y="+40" width="28" height="18" action="effect_active 2" border_size="1">
+              <off color="#222222"/>
+              <selected color="magenta"/>
+              <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX2"/>
+            </button>
+            <button x="+60" y="+40" width="30" height="18" action="effect_active 3" border_size="1">
+              <off color="#222222"/>
+              <selected color="magenta"/>
+              <text fontsize="12" color="#111111" colorselected="black" align="center" text="FX3"/>
+            </button>
+          </group>
+          <songpos class="songpos" x="+4+30+100" y="+62+6" width="734" height="38-4-8-4" colorPlayed="blue"/>
+        </group>
+        <group visibility="loaded ? get_deck 2 ? true : get_deck 4 ? true : false">
+          <group x="+878-478-78" y="+0">
+            <textzone tooltip="">
+              <size width="478-50-8" height="34"/>
+              <text fontsize="16" weight="bold" color="needle" align="right" scroll="yes" action="get_title_before_remix &amp; param_uppercase" localize="true" important="true"/>
+            </textzone>
+            <textzone tooltip="">
+              <pos y="+22"/>
+              <size width="478-50-8" height="28"/>
+              <text fontsize="12" weight="" color="#888888" align="right" scroll="yes" action="get_loaded_song 'artist' &amp; param_uppercase" localize="true" important="true"/>
+            </textzone>
+          </group>
+          <textzone class="text" x="+20" y="+4" width="90" height="30" fontsize="22" color="needle" align="center" weight="bold" textaction="var_equal '@$hauntingjogbpmdgts' 0 ? get_text '%Pbpm' : var_equal '@$hauntingjogbpmdgts' 1 ? get_text '%Pbpmex'"/>
+          <button orientation="vertical" class="button_main" x="+6" y="+6" width="16" height="52" action="masterdeck" coloroff="button_background" textcolor="textoff4" coloron="black" textcoloron="color_masterdeck" text="MASTER" bordersize="1" textsize="10" brcoloron="color_masterdeck"/>
+          <group x="+120" y="+12">
+            <visual class="gfx_shape" width="128" height="80" coloroff="transparent"/>
+            <textzone class="text" x="+10" y="+0" width="128-26-26" height="20" action="key_match_menu" fontsize="22" color="`get_key_color`" align="center" weight="bold" textaction="get_key"/>
+            <button class="button_main" x="+0" y="+0" width="26" height="15" action="key_move -1" textcoloron="white" coloron="transparent" coloroff="transparent" brcoloron="transparent" brcoloroff="transparent" border="0" iconsize="15" sysicon="minus"/>
+            <button class="button_main" action="key_match_button" width="100-26-26" height="14" x="+22" y="+21" coloroff="black" coloron="black" bordersize="0" textsize="12" textcoloroff="red" textcoloron="green" textaction="param_equal '`get_key_modifier_text`' 'KEY' ? get_text '+0' : get_key_modifier_text" visibility="masterdeck"/>
+            <button class="button_main" action="key_match_button" width="100-26-26" height="14" x="+22" y="+21" coloroff="black" coloron="black" bordersize="0" textsize="12" textcoloroff="orange" textcoloron="orange" textaction="param_equal '`get_key_modifier_text`' 'KEY' ? get_text '+0' : get_key_modifier_text" visibility="not masterdeck"/>
+            <button class="button_main" x="+70" y="+0" width="26" height="16" action="key_move +1" textcoloron="white" coloron="transparent" coloroff="transparent" brcoloron="transparent" brcoloroff="transparent" iconsize="15" sysicon="plus"/>
+            <visual type="square" x="+10" y="+40" width="10" height="10" color="red" visibility="not is_sync ? blink : false"/>
+          </group>
+          <button class="button_main" x="+878-2-4-30" y="-2" width="36" height="100-2" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck \n Rigth-click: Next Panel" coloroff="transparent" textcoloron="black" textcolor="deckcolor" textsize="33" textheight="55" textaction="get_deck" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+          <menu class="menu_maindecks" query="select" x="+878-10-28" y="+64" width="40" height="20"/>
+          <cover rotate="no" rightclick="" dblclick="">
+            <pos x="+878-27-100" y="+3"/>
+            <size width="100-8-4" height="100-8-4"/>
+          </cover>
+          <button action="select" visibility="loaded">
+            <pos x="+878-27-100" y="+3"/>
+            <size width="100-8-4" height="100-8-4"/>
+            <off shape="square" color="transparent" border="#22FFFFFF" border_size="1"/>
+            <over shape="square" color="transparent" border="#44FFFFFF" border_size="1"/>
+            <on shape="square" color="transparent" border="#44FFFFFF" border_size="1"/>
+          </button>
+          <songpos class="songpos" x="+10" y="+62+6" width="734" height="38-4-8-4" colorPlayed="blue"/>
+        </group>
+      </panel>
+      <visual source="select" visibility="var_equal '@$dd_bordermode' 1" x="-2" y="-2">
+        <size width="878" height="98"/>
+        <down color="transparent" border_size="2" border="deckcolor" shape="square" radius="10"/>
+      </visual>
+      <dropzone visibility="var_equal '@$hauntinglayout' 0">
+        <size width="878" height="98"/>
+        <over color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </dropzone>
+      <dropzone visibility="var_equal '@$hauntinglayout' 1">
+        <size width="878" height="98"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+    </deck>
+  </define>
+</defs>

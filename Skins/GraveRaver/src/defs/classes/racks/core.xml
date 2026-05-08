@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+    <!-- Reusable rack widgets and pad-surface wrappers shared across layouts -->
+    <define class="editgrid_rack" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="294" height="80" coloroff="panel_background"/>
+        <!-- GRID RACK SPINE -->
+        <panel class="tab_button" action="skin_panelgroup 'grid_[PANELNAME]' +1" action3="skin_panelgroup_available 'grid_[PANELNAME]'" query="on/off" width="30" height="80" orientation="vertical" textheight="60" textaction="skin_panel '@vfx_[PANELNAME]' ? get_text 'STEM 3' : skin_panel '@svloops_[PANELNAME]' ? get_text 'SAVED' : skin_panel '@hcues_[PANELNAME]' ? get_text 'CUES' : skin_panel '@tc_[PANELNAME]' ? get_text 'LINE' : skin_panel '@cuejump_[PANELNAME]' ? 'CUEJUMP' : skin_panel '@custom_[PANELNAME]' ? get_text 'USER' : skin_panel '@custom_2_[PANELNAME]' ? get_text 'USER 2' : get_text 'GRID'" menuvisible="no" visibility="leftdeck"/>
+        <!-- MENU -->
+        <panel class="tab_button" action="skin_panelgroup 'grid_[PANELNAME]' +1" action3="skin_panelgroup_available 'grid_[PANELNAME]'" query="on/off" x="+294-30" width="30" height="80" orientation="vertical-cw" textheight="60" textaction="skin_panel '@vfx_[PANELNAME]' ? get_text 'STEM 3' : skin_panel '@svloops_[PANELNAME]' ? get_text 'SAVED' : skin_panel '@hcues_[PANELNAME]' ? get_text 'CUES' : skin_panel '@tc_[PANELNAME]' ? get_text 'LINE' : skin_panel '@custom_[PANELNAME]' ? get_text 'USER 1' : get_text 'GRID'" menuvisible="no" visibility="rightdeck"/>
+        <panel class="grids" x="+32-2" panelname="[PANELNAME]" visibility="leftdeck"/>
+        <panel class="grids" x="+0" panelname="[PANELNAME]" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="loops_rack" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="294" height="132" coloroff="panel_background"/>
+        <panel class="tab_button" action="skin_panelgroup 'loops_[PANELNAME]' +1" action3="skin_panelgroup_available 'loops_[PANELNAME]'" query="on/off" width="30" height="132" orientation="vertical" textheight="120" textaction="skin_panel '@fxx1_[PANELNAME]' ? get_text 'FX' : skin_panel '@fxx3_[PANELNAME]' ? get_text 'FX' : skin_panel '@fxx6_[PANELNAME]' ? get_text 'FX' : get_text 'LOOP'" menuvisible="no" visibility="leftdeck"/>
+        <panel class="tab_button" action="skin_panelgroup 'loops_[PANELNAME]' +1" action3="skin_panelgroup_available 'loops_[PANELNAME]'" query="on/off" x="+294-30" width="30" height="132" orientation="vertical-cw" textheight="120" textaction="skin_panel '@fxx1_[PANELNAME]' ? get_text 'FX' : skin_panel '@fxx3_[PANELNAME]' ? get_text 'FX' : skin_panel '@fxx6_[PANELNAME]' ? get_text 'FX' : get_text 'LOOP'" menuvisible="no" visibility="rightdeck"/>
+        <panel class="loops" x="+32-2" panelname="[PANELNAME]" visibility="leftdeck"/>
+        <panel class="loops" x="+0" panelname="[PANELNAME]" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="EFX_RACK" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <!-- background (second case: if 16 pads enabled show 2px more at the bottom) -->
+        <!-- <visual class="gfx_shape" width="504" height="80" coloroff="panel_background" visibility="not skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- <visual class="gfx_shape" width="504" height="80+2" coloroff="panel_background" visibility="skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- left deck fx panel tab button -->
+        <!-- <panel class="tab_button" action="skin_panelgroup 'efx_[PANELNAME]' +1" action3="skin_panelgroup_available 'efx_[PANELNAME]'" query="on/off" width="30" height="80" orientation="vertical" posrec="+27" heightrec="30" textaction="skin_panel '@pads16_[PANELNAME]' ? get_text 'PADS' : get_text 'FX'" visibility="leftdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- right deck fx panel tab button -->
+        <!-- <panel class="tab_button" action="skin_panelgroup 'efx_[PANELNAME]' +1" action3="skin_panelgroup_available 'efx_[PANELNAME]'" query="on/off" x="+504-30" width="30" height="80" orientation="vertical-cw" posrec="+27" heightrec="30" textaction="skin_panel '@pads16_[PANELNAME]' ? get_text 'PADS' : get_text 'FX'" visibility="rightdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- left deck 16-pad panel tab button -->
+        <!-- <panel class="tab_button" action="skin_panelgroup 'efx_[PANELNAME]' +1" action3="skin_panelgroup_available 'efx_[PANELNAME]'" query="on/off" width="30" height="80+2+132" orientation="vertical" posrec="+27" heightrec="160" textaction="skin_panel '@pads16_[PANELNAME]' ? get_text 'PADS' : get_text 'FX'" visibility="leftdeck ? skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- right deck 16-pad panel tab button -->
+        <!-- <panel class="tab_button" action="skin_panelgroup 'efx_[PANELNAME]' +1" action3="skin_panelgroup_available 'efx_[PANELNAME]'" query="on/off" x="+504-30" width="30" height="80+2+132" orientation="vertical-cw" posrec="+27" heightrec="160" textaction="skin_panel '@pads16_[PANELNAME]' ? get_text 'PADS' : get_text 'FX'" visibility="rightdeck ? skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- left deck fx panel menu button -->
+        <!-- <menu class="menu_button_fx" tooltip="FX OPTIONS" query="on/off" x="+6" y="+6" width="18" height="18" visibility="leftdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- left deck 16-pad panel menu button -->
+        <!-- <button class="menu_button" action="pad_menu" query="on/off" x="+6" y="+6" width="18" height="18" visibility="leftdeck ? skin_panel '@pads16_[PANELNAME]' ? pad_has_menu"/> -->
+        <!-- right deck fx panel menu button -->
+        <!-- <menu class="menu_button_fx" tooltip="FX OPTIONS" query="on/off" x="+504-30+6" y="+6" width="18" height="18" visibility="rightdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+        <!-- right deck 16-pad panel menu button -->
+        <!-- <button class="menu_button" action="pad_menu" query="on/off" x="+504-30+6" y="+6" width="18" height="18" visibility="rightdeck ? pad_has_menu ? skin_panel '@pads16_[PANELNAME]'"/> -->
+        <panel class="effects" panelname="[PANELNAME]" visibility="leftdeck"/>
+        <panel class="effects" panelname="[PANELNAME]" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="efx_rack_ex" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="800" height="80" coloroff="panel_background"/>
+        <button class="button_main" action="toggle '@fxrackpanel'" query="on/off" tooltip="Next panel" width="30" height="80" text="FX" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcolor="texton2" textcoloron="deckcolor" bordersize="1" brcoloroff="tab_buttons" brcoloron="deckcolor" visibility="leftdeck"/>
+        <button class="button_main" action="toggle '@fxrackpanel'" query="on/off" tooltip="Next panel" x="+800-30" width="30" height="80" text="FX" orientation="vertical-cw" coloroff="tab_buttons" coloron="tab_buttons" textcolor="texton2" textcoloron="deckcolor" bordersize="1" brcoloroff="tab_buttons" brcoloron="deckcolor" visibility="rightdeck"/>
+        <panel class="effects_zone" x="-4" panelname="[PANELNAME]" visibility="leftdeck"/>
+        <panel class="effects_zone" x="+6" panelname="[PANELNAME]" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="efx_rack_ex_master" placeholders="*panelname">
+      <visual class="gfx_shape" width="312" height="80" coloroff="panel_background"/>
+      <button class="button_main" action="toggle '@$hauntingcenterfxrack'" query="on/off" tooltip="SWAP MASTER FX/MIC FX" width="30" height="80" textaction="var_equal '@$hauntingcenterfxrack' 0 ? get_text 'MASTER' : var_equal '@$hauntingcenterfxrack' 1 ? get_text 'MIC'" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcolor="texton2" textcoloron="br_focus" bordersize="1" brcoloroff="tab_buttons" brcoloron="br_focus"/>
+      <group name="masterfx" visibility="var_equal '@$hauntingcenterfxrack' 0">
+        <deck deck="master">
+          <button class="button_main" x="+42+16" y="+12" width="148" height="28" action="effect_active" scroll="effect_select" textaction="get_effect_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+          <button class="button_main" x="+42+16+148" y="+12" width="28" height="28" action="effect_select" sysicon="chevrondown" iconsize="20" coloron="br_focus" bordersize="0"/>
+          <slider class="hor_slider" x="+42+16" y="+58" width="148+28" height="10" action="effect_slider 1" coloron="knobfilloff" novisibility="effect_active"/>
+          <slider class="hor_slider" x="+42+16" y="+58" width="148+28" height="10" action="effect_slider 1" visibility="effect_active"/>
+          <button class="button_main" x="+246" y="+24" width="39" height="28" action="effect_show_gui" coloron="br_focus" bordersize="0" text="+"/>
+        </deck>
+      </group>
+      <group name="micfx" visibility="var_equal '@$hauntingcenterfxrack' 1">
+        <deck deck="mic">
+          <button class="button_main" x="+42+16" y="+12" width="148" height="28" action="effect_active 'mic'" scroll="effect_select 'mic'" textaction="get_effect_name 'mic' &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+          <button class="button_main" x="+42+16+148" y="+12" width="28" height="28" action="effect_select 'mic'" sysicon="chevrondown" iconsize="20" coloron="br_focus" bordersize="0"/>
+          <slider class="hor_slider" x="+42+16" y="+58" width="148+28" height="10" action="effect_slider 'mic' 1" coloron="knobfilloff" novisibility="effect_active 'mic'"/>
+          <slider class="hor_slider" x="+42+16" y="+58" width="148+28" height="10" action="effect_slider 'mic' 1" visibility="effect_active 'mic'"/>
+          <button class="button_main" x="+246" y="+24" width="39" height="28" action="effect_show_gui 'mic'" coloron="br_focus" bordersize="0" text="+"/>
+        </deck>
+      </group>
+    </define>
+    <define class="eq_rack_ex" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="504" height="86" coloroff="panel_background"/>
+        <button class="button_main" query="on" width="30" height="86" textaction="get_text 'DECK `get_deck`'" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcoloron="texton2" bordersize="0" visibility="leftdeck"/>
+        <button class="button_main" x="+504-30" query="on" width="30" height="86" textaction="get_text 'DECK `get_deck`'" orientation="vertical-cw" coloroff="tab_buttons" coloron="tab_buttons" textcoloron="texton2" bordersize="0" visibility="rightdeck"/>
+        <panel class="eq_zone_left" panelname="[PANELNAME]" visibility="leftdeck"/>
+        <panel class="eq_zone_right" panelname="[PANELNAME]" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="video_rack_ex" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="561" height="140" coloroff="panel_background"/>
+        <button class="button_main" query="on" width="30" height="140" textaction="get_text 'PREVIEW `get_deck`'" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcoloron="texton2" bordersize="0" visibility="leftdeck"/>
+        <button class="button_main" x="+561-30" query="on" width="30" height="140" textaction="get_text 'PREVIEW `get_deck`'" orientation="vertical-cw" coloroff="tab_buttons" coloron="tab_buttons" textcoloron="texton2" bordersize="0" visibility="rightdeck"/>
+        <panel class="video_preview_ex" x="+561-208-2-6" y="+2+6" visibility="leftdeck"/>
+        <panel class="video_preview_ex" x="+2+6" y="+2+6" visibility="rightdeck"/>
+        <slider class="deck_level_video" x="+300" y="+8" visibility="leftdeck"/>
+        <slider class="deck_level_video" x="+220" y="+8" visibility="rightdeck"/>
+        <button class="button_main" x="+71" y="+44" width="41" height="28" action="effect_show_gui 'video'" text="+" visibility="leftdeck"/>
+        <panel class="vfx_slot_ex" x="+126" y="+2+6" visibility="leftdeck"/>
+        <panel class="vfx_slot_ex" x="+276" y="+2+6" visibility="rightdeck"/>
+        <button class="button_main" x="+450" y="+44" width="41" height="28" action="effect_show_gui 'video'" text="+" visibility="rightdeck"/>
+      </deck>
+    </define>
+    <define class="master_video_rack_ex" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="790" height="140" coloroff="panel_background"/>
+        <button class="button_main" query="on" width="30" height="140" text="MASTER" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcoloron="texton2" bordersize="0"/>
+        <button class="button_main" action="video" rightclick="video_output" width="220" height="124" x="+2+273+10" y="+2+6" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="MASTER VIDEO"/>
+        <video x="+2+273+10" y="+2+6" source="master">
+          <size width="220" height="124"/>
+        </video>
+      </deck>
+      <group x="-4" y="-16">
+        <textzone class="text" x="+10+76+14" y="+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="VIDEO FX"/>
+        <button class="button_main" x="+10+76" y="+42" width="112" height="28" action="video_fx" scroll="video_fx_select" textaction="deck master get_videofx_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+42" width="28" height="28" action="video_fx_select" sysicon="chevrondown" iconsize="20" coloron="br_focus" bordersize="0"/>
+      </group>
+      <group x="-4" y="-16+66">
+        <textzone class="text" x="+10+76+14" y="+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="SOURCE"/>
+        <button class="button_main" x="+10+76" y="+42" width="112" height="28" action="video_source" scroll="video_source_select" textaction="get_text '%videosource' &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+42" width="28" height="28" action="video_source_select" sysicon="chevrondown" iconsize="20" coloron="br_focus" bordersize="0"/>
+      </group>
+      <menu tooltip="VIDEO OPTIONS">
+        <pos x="960-15-240-4+100" y="+44"/>
+        <size width="30" height="20"/>
+        <off shape="square" color="xf_background" border="xf_background"/>
+        <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+        <submenu text="Letter Boxing" localize="true">
+          <item text="Bars" action="setting 'letterBoxing' 'bars'" check="setting 'letterBoxing' 'bars'"/>
+          <item text="Crop" action="setting 'letterBoxing' 'crop'" check="setting 'letterBoxing' 'crop'"/>
+          <item text="Zoom" action="setting 'letterBoxing' 'zoom'" check="setting 'letterBoxing' 'zoom'"/>
+        </submenu>
+        <submenu text="MicroFrames" localize="true">
+          <item text="Never" action="setting 'videoMicroFrames' 'never'" check="setting 'videoMicroFrames' 'never'"/>
+          <item text="Smart" action="setting 'videoMicroFrames' 'smart'" check="setting 'videoMicroFrames' 'smart'"/>
+          <item text="Always" action="setting 'videoMicroFrames' 'always'" check="setting 'videoMicroFrames' 'always'"/>
+        </submenu>
+        <submenu text="Resample Quality" localize="true">
+          <item text="High" action="setting 'videoResampleQuality' 'high'" check="setting 'videoResampleQuality' 'high'"/>
+          <item text="Medium" action="setting 'videoResampleQuality' 'medium'" check="setting 'videoResampleQuality' 'medium'"/>
+        </submenu>
+        <submenu text="Shader Quality" localize="true">
+          <item text="Auto" action="setting 'videoShaderQuality' 'auto'" check="setting 'videoShaderQuality' 'auto'"/>
+          <item text="High" action="setting 'videoShaderQuality' 'full'" check="setting 'videoShaderQuality' 'full'"/>
+          <item text="Medium" action="setting 'videoShaderQuality' 'medium'" check="setting 'videoShaderQuality' 'medium'"/>
+          <item text="Low" action="setting 'videoShaderQuality' 'low'" check="setting 'videoShaderQuality' 'low'"/>
+        </submenu>
+        <submenu text="VDJ Logo" localize="true">
+          <item text="ON" localize="true" action="setting 'videoLogo'" check="setting 'videoLogo'"/>
+          <separator text="Size" localize="true"/>
+          <item text="Large" action="setting 'videoLogoSize' 'large'" check="setting 'videoLogoSize' 'large'"/>
+          <item text="Medium" action="setting 'videoLogoSize' 'medium'" check="setting 'videoLogoSize' 'medium'"/>
+          <item text="Small" action="setting 'videoLogoSize' 'small'" check="setting 'videoLogoSize' 'small'"/>
+          <separator text="Position" localize="true"/>
+          <item text="Left-Top" action="setting 'videoLogoPosition' 'left-top'" check="setting 'videoLogoPosition' 'left-top'"/>
+          <item text="Right-Top" action="setting 'videoLogoPosition' 'right-top'" check="setting 'videoLogoPosition' 'right-top'"/>
+          <item text="Left-Bottom" action="setting 'videoLogoPosition' 'left-bottom'" check="setting 'videoLogoPosition' 'left-bottom'"/>
+          <item text="Right-Bottom" action="setting 'videoLogoPosition' 'right-bottom'" check="setting 'videoLogoPosition' 'right-bottom'"/>
+        </submenu>
+        <submenu text="Fps" localize="true">
+          <item text="30" action="setting 'videoFPS' 30" check="setting 'videoFPS' 30"/>
+          <item text="40" action="setting 'videoFPS' 40" check="setting 'videoFPS' 40"/>
+          <item text="50" action="setting 'videoFPS' 50" check="setting 'videoFPS' 50"/>
+          <item text="60" action="setting 'videoFPS' 60" check="setting 'videoFPS' 60"/>
+          <item text="70" action="setting 'videoFPS' 70" check="setting 'videoFPS' 70"/>
+        </submenu>
+        <separator/>
+        <item text="Video Window Always On Top" action="setting 'videoWindowAlwaysOnTop'" check="setting 'videoWindowAlwaysOnTop'"/>
+        <item text="Start Video On Load" action="setting 'startVideoOnLoad'" check="setting 'startVideoOnLoad'"/>
+        <item text="Create Link On Drop" action="setting 'videoCreateLinkOnDrop'" check="setting 'videoCreateLinkOnDrop'"/>
+        <item text="Use DXVA" action="setting 'videouseDXVA'" check="setting 'videouseDXVA'"/>
+        <item text="Safe Video Decode" action="setting 'safeVideoDecode'" check="setting 'safeVideoDecode'"/>
+      </menu>
+      <button class="button_main" x="960-15-240-4+100" y="+44+30" width="30" height="24" action="video_output" query="on/off" coloroff="button_background" coloron="br_focus" bordersize="0" iconsize="22" sysicon="settings"/>
+      <button class="button_main" x="+10+76+14-14+544" y="+63" width="42" height="20" action="setting 'videorandomtransition'" tooltip="Random Video Transition" coloroff="button_background2" coloron="br_focus" bordersize="0" text="RND"/>
+      <group x="+496" y="-16">
+        <textzone class="text" x="+10+76+14" y="+8" width="112" height="48" fontsize="10" color="textdarker" align="center" weight="" text="TRANSITION FX"/>
+        <button class="button_main" x="+10+76" y="+42" width="112" height="28" action="video_transition" scroll="video_transition_select" textaction="get_videotrans_name &amp; param_uppercase" coloroff="button_background3" coloron="br_focus" bordersize="0" textcolor="textoff2"/>
+        <button class="button_main" x="+10+76+112" y="+42" width="28" height="28" action="video_transition_select" sysicon="chevrondown" iconsize="20" coloron="br_focus" bordersize="0"/>
+      </group>
+      <panel class="video_crossfader_ex" x="+523" y="+90"/>
+    </define>
+    <define class="mic_rack_ex" placeholders="deck,*panelname">
+      <visual class="gfx_shape" width="294" height="86" coloroff="panel_background"/>
+      <button class="button_main" query="on/off" width="30" height="86" action="toggle '@$hauntingleftmixerrack'" tooltip="SWAP MIC/HEADPHONES" textaction="var_equal '@$hauntingleftmixerrack' 0 ? get_text 'MIC' : var_equal '@$hauntingleftmixerrack' 1 ? get_text 'HP'" orientation="vertical" coloroff="tab_buttons" coloron="tab_buttons" textcolor="texton2" textcoloron="br_focus" bordersize="1" brcoloroff="tab_buttons" brcoloron="br_focus"/>
+      <group name="microphone" visibility="var_equal '@$hauntingleftmixerrack' 0">
+        <deck deck="[DECK]">
+          <visual class="gfx_shape" x="+14+9+30" y="+86-29" width="220" height="20" coloroff="xf_background" visibility="0.57"/>
+          <visual type="vumeter" source="get_level 'mic'" x="+6+180" y="+64" width="70" height="6" smooth="true">
+            <led x="+0" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*2" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*3" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*4" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*5" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*6" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*7" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*8" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*9" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*10" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+            <led x="+6*11" y="+0" width="4" height="6">
+              <off color="vu_background" radius="0" border="contrast" border_size="0"/>
+              <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+            </led>
+          </visual>
+          <panel class="knob" x="+30+70" y="+14" knobsize="41" knobradius="10" faderradius="9" action="mic_volume" rgclick="mic_volume 62% while_pressed" dblclick="mic_volume 62%" frommiddle="false" fillcolor="br_focus" textleft="-23" textbelow="+30" text="MIC LEVEL" visibility="mic"/>
+          <panel class="knob" x="+30+70" y="+14" knobsize="41" knobradius="10" faderradius="9" action="mic_volume" rgclick="mic_volume 62% while_pressed" dblclick="mic_volume 62%" frommiddle="false" fillcolor="knobfilloff" textleft="-23" textbelow="+30" text="MIC LEVEL" novisibility="mic"/>
+          <button class="button_main" x="+30+14+23+8+68+18" y="+14" width="55" height="36" action="sampler_rec 'mic'" textsize="11" textaction="get_text 'REC'" coloron="br_focus" bordersize="0"/>
+          <button class="button_main" x="+30+14+23+8+68+55+20" y="+14" width="55" height="36" radius="4" action="mic_talkover while_pressed" rightclick="mic_talkover" tooltip="Mic Talk-Over (while pressed)\nRight-click: Mic Talk-Over (ON-OFF)" textsize="11" textaction="get_text 'TALK\nOVER'" coloroff="button_background2" coloron="#ff1467" bordersize="0"/>
+          <button class="button_main" x="+30+14+9" y="+18" width="40" height="30" action="mic" textsize="11" text="ON" coloron="br_focus" bordersize="0"/>
+        </deck>
+      </group>
+      <group name="headphones" visibility="var_equal '@$hauntingleftmixerrack' 1">
+        <deck deck="headphones">
+          <panel class="knob" x="+53" y="+18" knobsize="41" knobradius="10" faderradius="9" action="headphone_volume" rgclick="temporary" dblclick="headphone_volume 40%" frommiddle="false" fillcolor="br_focus" text="LEVEL"/>
+          <panel class="knob" x="+53+60" y="+18" knobsize="41" knobradius="10" faderradius="9" action="headphone_mix" rgclick="temporary" dblclick="headphone_mix 50%" frommiddle="true" fillcolor="br_focus" text="MIXING"/>
+          <panel class="knob" x="+53+60+60" y="+18" knobsize="41" knobradius="10" faderradius="9" action="headphone_gain" rgclick="headphone_gain 62% while_pressed" dblclick="headphone_gain 50%" frommiddle="false" fillcolor="br_focus" text="GAIN"/>
+          <button class="button_main" x="+30+14+20+8+68+55+33" y="+26" width="45" height="28" action="setting 'splitHeadphones'" tooltip="Split Headphones" textsize="11" text="SPLIT" coloron="br_focus" bordersize="0"/>
+        </deck>
+      </group>
+    </define>
+    <define class="master_rack_ex" placeholders="deck,*panelname">
+      <visual class="gfx_shape" width="294" height="86" coloroff="panel_background"/>
+      <button class="button_main" x="+294-30" action="toggle '@$hauntingrightmixerrack'" tooltip="SWAP MASTER/REC" query="on/off" width="30" height="86" textaction="var_equal '@$hauntingrightmixerrack' 0 ? get_text 'MASTER' : var_equal '@$hauntingrightmixerrack' 1 ? get_text 'REC'" orientation="vertical-cw" coloroff="tab_buttons" coloron="tab_buttons" textcolor="texton2" textcoloron="br_focus" bordersize="1" brcoloroff="tab_buttons" brcoloron="br_focus"/>
+      <group name="master" visibility="var_equal '@$hauntingrightmixerrack' 0">
+        <deck deck="[DECK]">
+          <visual class="gfx_shape" x="+14+9" y="+86-29" width="152" height="20" coloroff="xf_background" visibility="0.57"/>
+          <button class="button_main" x="+185" y="+8" width="56" height="21" action="mono_mix" textsize="11" text="MONO" coloron="br_focus" bordersize="0"/>
+          <button class="button_main" x="+185" y="+8+20+4" width="56" height="21" action="sampler_rec 'master'" textsize="11" text="REC" coloron="br_focus" bordersize="0"/>
+          <button class="button_main" x="+185" y="+8+20+4+20+4" width="56" height="21" action="setting 'exclusiveAudioAccess'" tooltip="Exclusive Audio Access To Virtual DJ" textsize="11" text="ONLY" coloron="br_focus" bordersize="0"/>
+          <panel class="knob" x="+44" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="master_volume" rgclick="master_volume 62% while_pressed" dblclick="master_volume 62%" frommiddle="false" fillcolor="br_focus" textaction="setting 'zeroDB' '-12db' ? get_text '-12dB' : setting 'zeroDB' '-9db' ? get_text '-9dB' : setting 'zeroDB' '-6db' ? get_text '-6dB' : setting 'zeroDB' '-3db' ? get_text '-3dB' : setting 'zeroDB' '-1db' ? get_text '-1dB' : setting 'zeroDB' 'default' ? get_text 'MASTER'"/>
+          <panel class="knob" x="+44+70" y="+14" textbelow="+45" knobsize="41" knobradius="10" faderradius="9" action="master_balance" rgclick="temporary" dblclick="master_balance 50%" frommiddle="true" fillcolor="br_focus" text="BALANCE"/>
+          <menu class="dropdown_menu" tooltip="Zero dB">
+            <pos x="+14+9" y="+20"/>
+            <separator text="Headroom"/>
+            <item text="OFF" action="setting 'zeroDB' 'default'" check="setting 'zeroDB' 'default'"/>
+            <item text="-1dB" action="setting 'zeroDB' '-1db'" check="setting 'zeroDB' '-1db'"/>
+            <item text="-3dB" action="setting 'zeroDB' '-3db'" check="setting 'zeroDB' '-3db'"/>
+            <item text="-6dB" action="setting 'zeroDB' '-6db'" check="setting 'zeroDB' '-6db'"/>
+            <item text="-9dB" action="setting 'zeroDB' '-9db'" check="setting 'zeroDB' '-9db'"/>
+            <item text="-12dB" action="setting 'zeroDB' '-12db'" check="setting 'zeroDB' '-12db'"/>
+          </menu>
+        </deck>
+      </group>
+      <group name="rec" visibility="var_equal '@$hauntingrightmixerrack' 1">
+        <deck deck="[DECK]">
+          <button class="button_main" tooltip="" x="+10" y="+6" width="244" height="50" query="off" textsize="11" textcolor="texton2" textcoloron="needle" textaction="broadcast_message 'full'" coloroff="xf_background" coloron="xf_background" bordersize="0"/>
+          <button class="button_main" x="+10" y="+60" width="60" height="20" action="record" textsize="11" text="REC" coloroff="button_background2" coloron="br_focus" bordersize="0"/>
+          <button class="button_main" x="+10+60+6" y="+60" width="60" height="20" action="record_config" textsize="11" text="FILE" coloron="br_focus" bordersize="0"/>
+          <button class="button_main" x="+10+60+6+60+6" y="+60" width="60" height="20" action="broadcast" textsize="11" coloroff="button_background2" text="BCAST" coloron="br_focus" bordersize="0"/>
+          <menu class="button_main" x="+10+60+6+60+6+60+6" y="+60" width="46" height="20" iconsize="22" sysicon="settings" coloron="br_focus" bordersize="0">
+            <submenu text="Video Stream To">
+              <item text="Facebook" action="setting 'broadcastVideoProvider' 0" check="setting 'broadcastVideoProvider' 0"/>
+              <item text="Youtube" action="setting 'broadcastVideoProvider' 1" check="setting 'broadcastVideoProvider' 1"/>
+              <item text="Periscope" action="setting 'broadcastVideoProvider' 2" check="setting 'broadcastVideoProvider' 2"/>
+              <item text="Twitch" action="setting 'broadcastVideoProvider' 3" check="setting 'broadcastVideoProvider' 3"/>
+              <item text="Vimeo" action="setting 'broadcastVideoProvider' 4" check="setting 'broadcastVideoProvider' 4"/>
+              <item text="PlayDJ.tv" action="setting 'broadcastVideoProvider' 6" check="setting 'broadcastVideoProvider' 6"/>
+              <item text="MixCloud" action="setting 'broadcastVideoProvider' 7" check="setting 'broadcastVideoProvider' 7"/>
+              <item text="Other" action="setting 'broadcastVideoProvider' 5" check="setting 'broadcastVideoProvider' 5"/>
+            </submenu>
+            <submenu text="Direct Format">
+              <item text="OGG" action="setting 'broadcastDirectFormat' ogg" check="setting 'broadcastDirectFormat' ogg"/>
+              <item text="MP3" action="setting 'broadcastDirectFormat' mp3" check="setting 'broadcastDirectFormat' mp3"/>
+            </submenu>
+            <submenu text="Direct Quality">
+              <item text="High" action="setting 'broadcastDirectQuality' high" check="setting 'broadcastDirectQuality' high"/>
+              <item text="Mid" action="setting 'broadcastDirectQuality' medium" check="setting 'broadcastDirectQuality' medium"/>
+              <item text="Low" action="setting 'broadcastDirectQuality' low" check="setting 'broadcastDirectQuality' low"/>
+            </submenu>
+            <submenu text="Video Quality">
+              <item text="High" action="setting 'broadcastVideoQuality' high" check="setting 'broadcastVideoQuality' high"/>
+              <item text="Mid" action="setting 'broadcastVideoQuality' mid" check="setting 'broadcastVideoQuality' mid"/>
+              <item text="Low" action="setting 'broadcastVideoQuality' low" check="setting 'broadcastVideoQuality' low"/>
+            </submenu>
+            <separator/>
+            <item text="Broadcast Song Info" action="setting 'broadcastSongInfo'" check="setting 'broadcastSongInfo'"/>
+            <item text="Show Advanced Settings" action="settings 'broadcast'"/>
+          </menu>
+        </deck>
+      </group>
+    </define>
+    <!-- <define class="pads_rack" placeholders="deck,*panelname"> -->
+    <!-- <deck deck="[DECK]"> -->
+    <!-- background -->
+    <!-- <visual class="gfx_shape" width="504" height="132" coloroff="panel_background"/> -->
+    <!-- <panel class="tab_button" action="skin_panelgroup 'pads16_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16_[PANELNAME]'" query="on/off" width="30" height="132" orientation="vertical" text="PADS" visibility="leftdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+    <!-- <button class="menu_button" action="pad_menu" query="on/off" x="+6" y="+6" width="18" height="18" visibility="leftdeck ? pad_has_menu"/> -->
+    <!-- <panel class="tab_button" action="skin_panelgroup 'pads16_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16_[PANELNAME]'" query="on/off" x="+504-30" width="30" height="132" orientation="vertical-cw" text="PADS" menuvisible="pad_has_menu" visibility="rightdeck ? not skin_panel '@pads16_[PANELNAME]'"/> -->
+    <!-- <button class="menu_button" action="pad_menu" query="on/off" x="+504-30+6" y="+6" width="18" height="18" visibility="rightdeck ? pad_has_menu"/> -->
+    <!-- <panel class="pads" x="+32-2" panelname="[PANELNAME]" visibility="leftdeck"/> -->
+    <!-- <panel class="pads" panelname="[PANELNAME]" visibility="rightdeck"/> -->
+    <!-- </deck> -->
+    <!-- </define> -->
+    <!-- Wrapper for the vertical performance pad surface -->
+    <define class="pads_rack_vert" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <!-- SIDE BUTTON LEFT -->
+        <panel class="tab_button" height="225" heightrec="225" action="skin_panelgroup 'pads16++_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16++_[PANELNAME]'" query="on/off" width="30" y="+0" orientation="vertical" textaction="not skin_panel '@hotcuesx8_[PANELNAME]' ? get_text 'PADS' : get_text 'HOTCUE'" visibility="get_deck 1 ? true : get_deck 3 ? true"/>
+        <button class="menu_button" action="pad_menu" query="on/off" x="+6" y="+12" width="18" height="18" visibility="get_deck 1 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu : get_deck 3 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu"/>
+        <button class="menu_button" action="cues_options" query="on/off" x="+6" y="+12" width="18" height="18" visibility="get_deck 1 ? skin_panel '@hotcuesx8_[PANELNAME]' : get_deck 3 ? skin_panel '@hotcuesx8_[PANELNAME]'"/>
+        <!-- SIDE BUTTON RIGHT -->
+        <panel class="tab_button" height="225" heightrec="225" action="skin_panelgroup 'pads16++_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16++_[PANELNAME]'" query="on/off" x="+396" width="30" y="+0" orientation="vertical-cw" textaction="not skin_panel '@hotcuesx8_[PANELNAME]' ? get_text 'PADS' : get_text 'HOTCUE'" menuvisible="pad_has_menu" visibility="get_deck 2 ? true : get_deck 4 ? true"/>
+        <button class="menu_button" action="pad_menu" query="on/off" x="+549-30+6-78-54" y="+12" width="18" height="18" visibility="get_deck 2 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu : get_deck 4 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu"/>
+        <button class="menu_button" action="cues_options" query="on/off" x="+549-30+6-78-54" y="+12" width="18" height="18" visibility="get_deck 2 ? skin_panel '@hotcuesx8_[PANELNAME]' : get_deck 4 ? skin_panel '@hotcuesx8_[PANELNAME]'"/>
+        <!-- PADS LEFT -->
+        <panel class="pads_vert" x="+33" y="+10" panelname="[PANELNAME]" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+        <!-- PADS RIGHT -->
+        <panel class="pads_vert" y="+10" panelname="[PANELNAME]" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+      </deck>
+    </define>
+    <!-- Wrapper for the center-wave performance pad surface -->
+    <define class="pads_rack_center" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <panel class="tab_button" action="skin_panelgroup 'pads16++_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16++_[PANELNAME]'" query="on/off" width="30" height="132+7" y="+6" orientation="vertical" textaction="not skin_panel '@hotcuesx8_[PANELNAME]' ? get_text 'PADS' : get_text 'HOTCUE'" visibility="get_deck 1 ? true : get_deck 3 ? true"/>
+        <button class="menu_button" action="pad_menu" query="on/off" x="+6" y="+12" width="18" height="18" visibility="get_deck 1 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu : get_deck 3 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu"/>
+        <button class="menu_button" action="cues_options" query="on/off" x="+6" y="+12" width="18" height="18" visibility="get_deck 1 ? skin_panel '@hotcuesx8_[PANELNAME]' : get_deck 3 ? skin_panel '@hotcuesx8_[PANELNAME]'"/>
+        <panel class="tab_button" action="skin_panelgroup 'pads16++_[PANELNAME]' +1" action2="pad_menu" action3="skin_panelgroup_available 'pads16++_[PANELNAME]'" query="on/off" x="+549-30-78-54-48" width="30" height="132+7" y="+6" orientation="vertical-cw" textaction="not skin_panel '@hotcuesx8_[PANELNAME]' ? get_text 'PADS' : get_text 'HOTCUE'" menuvisible="pad_has_menu" visibility="get_deck 2 ? true : get_deck 4 ? true"/>
+        <button class="menu_button" action="pad_menu" query="on/off" x="+549-30+6-78-54-48" y="+12" width="18" height="18" visibility="get_deck 2 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu : get_deck 4 ? not skin_panel '@hotcuesx8_[PANELNAME]' ? pad_has_menu"/>
+        <button class="menu_button" action="cues_options" query="on/off" x="+549-30+6-78-54-48" y="+12" width="18" height="18" visibility="get_deck 2 ? skin_panel '@hotcuesx8_[PANELNAME]' : get_deck 4 ? skin_panel '@hotcuesx8_[PANELNAME]'"/>
+        <panel class="pads_center" x="+32-2" panelname="[PANELNAME]" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+        <panel class="pads_center" panelname="[PANELNAME]" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+      </deck>
+    </define>
+    <!-- Wrapper for the stack-mode pad surface -->
+    <define class="pads_rack_stack" placeholders="deck,*panelname">
+      <deck deck="[DECK]">
+        <visual width="310" height="161">
+          <off shape="square" color="#222222"/>
+        </visual>
+        <panel class="pads_stack" x="+0" panelname="[PANELNAME]"/>
+      </deck>
+    </define>
+</defs>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Shared quick-filter button used by panel helpers -->
+  <define class="FILTER_TAG_BUTTON" placeholders="*tag,text,width=90,height=20,textheight=height,important=true,textaction,accent_color=green,coloroff=transparent,coloron=deckcolor,brcoloroff=#222222,brcoloron=deckcolor,bordersize=1,shape=square,sysicon,iconsize,textsize=11,textcolor=br_textoff,textcoloron=needle,orientation=horizontal">
+    <button action="quick_filter 'User 1 contains [TAG]'" rightclick="quick_filter ''" x="+0" y="+0">
+      <pos x="+0" y="+0"/>
+      <size width="[WIDTH]" height="[HEIGHT]"/>
+      <off color="#111111" border="#333333" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <over color="transparent" border="#333333" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <down color="transparent" border="#333333" border_size="[BORDERSIZE]" shape="[SHAPE]" radius="5"/>
+      <selected color="#000000" border="[ACCENT_COLOR]" border_size="1" shape="[SHAPE]" radius="5"/>
+      <text weight="normal" action="param_equal '[TEXT]' '' ? get_text '[TAG]' : get_text '[TEXT]'" dx="-2" dy="-1" fontsize="[TEXTSIZE]" color="#AAAAAA" colorover="#FFFFFF" colorselected="[ACCENT_COLOR]" colordown="[TEXTCOLOR]" align="center" orientation="[ORIENTATION]" localize="true" important="[IMPORTANT]"/>
+    </button>
+  </define>
+</defs>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Stack mode uses a single repeated deck strip shell -->
+  <define class="AREA_DECK_STACK" placeholders="*deck,*panelname">
+    <deck deck="[DECK]">
+      <group>
+        <button textsize="16" class="button_main" action="select" rightclick="cycle '@infospannelmode' 5" tooltip="Select Deck \n Right-click: Next Panel" coloroff="button_background" textheight="40" textcoloron="black">
+          <size width="30" height="40"/>
+          <pos x="+8" y="+6"/>
+          <text align="center" weight="bold" action="get_deck" width="25"/>
+        </button>
+        <menu class="menu_maindecks" x="+0" y="+160-30" width="35" height="20"/>
+      </group>
+      <group x="+35">
+        <panel class="infos_stack"/>
+        <panel class="times_bpm_key_stack2" y="+38-2" visibility="not var_equal '@$hauntingdeckstack' 1"/>
+        <group name="deck_control" visibility="var_equal '@$hauntingdeckstack' 1">
+          <panel visibility="var_equal '@hauntingdeckmode' 0">
+            <panel class="transport_stack" x="+484+7"/>
+            <panel class="pitch_zone_stack" x="+800-58-2-8"/>
+            <panel class="jogwheel" x="+800-[JOGSIZE]-2-8-58-16" y="+3" name="jogwheel_spinner"/>
+          </panel>
+          <panel visibility="var_equal '@hauntingdeckmode' 1">
+            <panel class="pads_rack_stack" x="+484+7"/>
+          </panel>
+          <panel visibility="var_equal '@hauntingdeckmode' 2">
+            <panel class="saved_loops_stack" panelname="[PANELNAME]" x="+484+7"/>
+          </panel>
+        </group>
+        <visual class="gfx_shape" x="+0" y="+164-38" width="482" height="38" coloroff="infos_background" bordercoloroff="panel_background" bordersize="1"/>
+        <songpos class="songpos" x="+2+4" y="+164-38+2+4" width="484-4-8" height="38-4-8"/>
+        <panel class="wave_stack" x="+800+2" visibility="var_equal '@$hauntingdeckstack' 1"/>
+        <panel class="wave_stack" x="+484+2" width="1114+316" visibility="var_equal '@$hauntingdeckstack' 0"/>
+      </group>
+      <visual source="deck [DECK] select" visibility="var_equal '@$dd_bordermode' 1">
+        <pos x="+35"/>
+        <size width="1920-37" height="164"/>
+        <down color="transparent" border_size="3" border="deckcolor" shape="square" radius="6"/>
+      </visual>
+    </deck>
+  </define>
+</defs>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Cue and saved-loop widgets -->
+  <define class="HCUE_BUTTON_VERT" placeholders="*source">
+    <button class="button_main" width="26" height="26" action="hot_cue [SOURCE]" rightclick="cue_name [SOURCE]" coloron="button_background" brcoloron="button_background"/>
+    <visual type="color" source="cue_color [SOURCE]" visibility="cue_color [SOURCE] ? constant 0.7">
+      <tooltip/>
+      <pos x="+0" y="+0"/>
+      <size width="26" height="26"/>
+    </visual>
+    <button class="button_main" x="+31" width="145" height="26" action="hot_cue [SOURCE]" rightclick="cue_name [SOURCE]" query="on/off" coloroff="button_background3" coloron="button_background3" brcoloroff="button_background3" brcoloron="button_background3">
+      <text align="left" dx="8" width="183" action="cue_display [SOURCE] &amp; param_uppercase" color="textoff2" colorselected="needle"/>
+    </button>
+    <button x="+0" y="+0" width="26" height="26" action="hot_cue [SOURCE]" coloroff="cue_color [SOURCE]" textcolor="white">
+      <off color="cue_color [SOURCE]"/>
+      <over color="cue_color [SOURCE] ? constant 0.4"/>
+      <icon dx="+2" sysicon="arrowright" color="white" colordown="white" colorselected="white" width="25" height="25"/>
+    </button>
+  </define>
+
+  <define class="HCUE_BUTTON_CENTER" placeholders="*source">
+    <button class="button_main" width="28" height="28" action="hot_cue [SOURCE]" rightclick="cue_name [SOURCE]" coloron="button_background" brcoloron="button_background"/>
+    <visual type="color" source="cue_color [SOURCE]" visibility="cue_color [SOURCE] ? constant 0.28">
+      <tooltip/>
+      <pos x="+0" y="+0"/>
+      <size width="28" height="28"/>
+    </visual>
+    <button class="button_main" width="28" height="28" action="hot_cue [SOURCE]" rightclick="cue_name [SOURCE]" text="[SOURCE]" textcoloron="needle" textsize="13" coloroff="transparent" coloron="transparent" brcoloroff="transparent" brcoloron="transparent"/>
+    <button class="button_main" x="+28" width="101" height="28" action="hot_cue [SOURCE]" rightclick="cue_name [SOURCE]" query="on/off" textaction="cue_display [SOURCE] &amp; param_uppercase" coloroff="button_background3" coloron="button_background3" brcoloroff="button_background3" brcoloron="button_background3" textcolor="textoff2" textcoloron="needle"/>
+    <button class="button_main" x="+28+101" width="28" height="28" action="delete_cue [SOURCE]" query="on/off" text="X" textsize="12"/>
+    <visual type="color" source="cue_color [SOURCE]" visibility="cue_color [SOURCE]">
+      <tooltip/>
+      <pos x="+0" y="+0"/>
+      <size width="3" height="28"/>
+    </visual>
+  </define>
+
+  <define class="SAVED_LOOP_BUTTON" placeholders="*source">
+    <button class="button_main" width="24" height="22" action="loop_load [SOURCE]" icondx="+2" sysicon="arrowright" iconsize="20" coloron="button_background" brcoloron="button_background"/>
+    <visual type="color" source="loop_color [SOURCE]" visibility="saved_loop [SOURCE] ? constant 0.28">
+      <tooltip/>
+      <pos x="+0" y="+0"/>
+      <size width="24" height="22"/>
+    </visual>
+    <button class="button_main" width="24" height="22" action="not saved_loop [SOURCE] ? saved_loop [SOURCE] : loop_load [SOURCE]" query="saved_loop [SOURCE]" icondx="+2" sysicon="arrowright" iconsize="20" textcolor="textoff" textcoloron="needle" coloroff="transparent" coloron="transparent" brcoloroff="transparent" brcoloron="transparent"/>
+    <button class="button_main" x="+24" width="70" height="22" action="not saved_loop [SOURCE] ? saved_loop [SOURCE] : loop_load_prepare [SOURCE]" query="loop_load_prepare [SOURCE] ? blink 400ms" textaction="get_saved_loop [SOURCE] &amp; param_uppercase" coloroff="button_background3" coloron="button_background3" brcoloroff="button_background3" brcoloron="button_background3" textcolor="textoff" textcoloron="needle"/>
+    <button class="button_main" x="+24+70" width="24" height="22" action="loop_delete [SOURCE]" query="on/off" text="X" textsize="12"/>
+    <visual type="color" source="loop_color [SOURCE]" visibility="saved_loop [SOURCE]">
+      <tooltip/>
+      <pos x="+0" y="+0"/>
+      <size width="3" height="22"/>
+    </visual>
+  </define>
+</defs>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- FX rack content paired with the shared pad areas -->
+  <define class="effects_zone" placeholders="*panelname">
+    <panel name="@1fx_[PANELNAME]" group="efx_[PANELNAME]" visible="no" available="yes" forceshow="1fx">
+      <panel class="fx_slot_ex2" x="+10+112" y="+6" source="1"/>
+    </panel>
+    <panel name="@3fx_[PANELNAME]" group="efx_[PANELNAME]" visible="yes" available="yes" forceshow="3fx">
+      <panel class="fx_slot2" x="+10+112" y="+6" source="1"/>
+      <panel class="fx_slot2" x="+10+112+189" y="+6" source="2"/>
+      <panel class="fx_slot2" x="+10+112+189+189" y="+6" source="3"/>
+    </panel>
+    <panel name="@6fx_[PANELNAME]" group="efx_[PANELNAME]" visible="no" available="yes" forceshow="6fx">
+      <panel class="fx_slot3_ex" x="+10+112" y="+6" source="1"/>
+      <panel class="fx_slot3_ex" x="+10+112+189" y="+6" source="2"/>
+      <panel class="fx_slot3_ex" x="+10+112+189+189" y="+6" source="3"/>
+      <panel class="fx_slot3_ex" x="+10+112" y="+6+36" source="4"/>
+      <panel class="fx_slot3_ex" x="+10+112+189" y="+6+36" source="5"/>
+      <panel class="fx_slot3_ex" x="+10+112+189+189" y="+6+36" source="6"/>
+    </panel>
+    <panel class="fx_layout" x="+32+21" y="+0" panelname="[PANELNAME]" visibility="leftdeck"/>
+    <panel class="fx_layout" x="+800-30-6-44-18" y="+0" panelname="[PANELNAME]" visibility="rightdeck"/>
+    <panel class="fx_banks" x="+701" y="+0" visibility="leftdeck"/>
+    <panel class="fx_banks" x="+20" y="+0" visibility="rightdeck"/>
+  </define>
+</defs>

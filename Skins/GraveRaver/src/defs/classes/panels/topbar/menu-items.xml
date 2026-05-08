@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menuitems>
+  <submenu text="Top Bar">
+    <submenu text="Beat Counter" localize="true">
+      <item text="Phrase Bars" localize="true" action="set '@$phrasecircle' 0" check="var_equal '@$phrasecircle' 0"/>
+      <item text="Phrase Circle" localize="true" action="set '@$phrasecircle' 1" check="var_equal '@$phrasecircle' 1"/>
+      <separator/>
+      <submenu text="Range (Phrase Circle)">
+        <item text="1 Phrase" action="setting 'beatCounterRange' 16" check="setting 'beatCounterRange' 16"/>
+        <item text="2 Phrases" action="setting 'beatCounterRange' 32" check="setting 'beatCounterRange' 32"/>
+      </submenu>
+    </submenu>
+    <submenu text="CPU Meter">
+      <item text="System" action="setting 'cpuMeter' system" check="setting 'cpuMeter' system"/>
+      <item text="Audio" action="setting 'cpuMeter' audio" check="setting 'cpuMeter' audio"/>
+      <item text="Peak" action="setting 'cpuMeter' peakaudio" check="setting 'cpuMeter' peakaudio"/>
+    </submenu>
+    <submenu text="Clock Display">
+      <item text="12h" action="setting 'clockDisplay' '12h'" check="setting 'clockDisplay' '12h'"/>
+      <item text="24h" action="setting 'clockDisplay' '24h'" check="setting 'clockDisplay' '24h'"/>
+    </submenu>
+    <separator/>
+    <item text="Show Battery Status" localize="true" action="toggle '@$hauntinggetbattery'" check="var_equal '@$hauntinggetbattery' 1"/>
+  </submenu>
+  <submenu text="Color Scheme" localize="true">
+    <item text="Default" localize="true" action="set '@$hauntingcolorscheme' 0 &amp; load_skin" check="var_equal '@$hauntingcolorscheme' 0"/>
+    <item text="Dark" localize="true" action="set '@$hauntingcolorscheme' 1 &amp; load_skin" check="var_equal '@$hauntingcolorscheme' 1"/>
+    <item text="Darker" localize="true" action="set '@$hauntingcolorscheme' 2 &amp; load_skin" check="var_equal '@$hauntingcolorscheme' 2"/>
+    <item text="Night" localize="true" action="set '@$hauntingcolorscheme' 3 &amp; load_skin" check="var_equal '@$hauntingcolorscheme' 3"/>
+    <item text="Day" localize="true" action="set '@$hauntingcolorscheme' 4 &amp; load_skin" check="var_equal '@$hauntingcolorscheme' 4"/>
+    <separator text="Decks"/>
+    <item text="Per-Decks" localize="true" action="set '@$hauntingcolorsdecks' 0 &amp; load_skin" check="var_equal '@$hauntingcolorsdecks' 0"/>
+    <item text="Neutral" localize="true" action="set '@$hauntingcolorsdecks' 1 &amp; load_skin" check="var_equal '@$hauntingcolorsdecks' 1"/>
+  </submenu>
+  <submenu text="Dialogs Color Theme" localize="true">
+    <item text="Auto" localize="true" action="setting 'dialogsColorTheme' 'automatic'" check="setting 'dialogsColorTheme' 'automatic'"/>
+    <item text="Dark" localize="true" action="setting 'dialogsColorTheme' 'dark'" check="setting 'dialogsColorTheme' 'dark'"/>
+    <item text="Light" localize="true" action="setting 'dialogsColorTheme' 'light'" check="setting 'dialogsColorTheme' 'light'"/>
+  </submenu>
+  <submenu text="RACK View" visibility="not var_equal '@$hauntingproskinmode' 0 &amp;&amp; not var_equal '@$hauntingproskinmode' 4">
+    <item text="Single Rack" action="set '@$hauntingrackmode' 1 &amp; set '@$hauntingskinpadsrack' 0 &amp; set '@$hauntingskinfxrack' 0 &amp; set '@$hauntingskinmixerrack' 0 &amp; set '@$hauntingskinvideorack' 0 &amp;&amp; load_skin" check="var_equal '@$hauntingrackmode' 1"/>
+    <item text="Multi Rack" action="set '@$hauntingrackmode' 0" check="var_equal '@$hauntingrackmode' 0"/>
+    <separator localize="true"/>
+    <item text="Show In Browser Zoom" localize="true" action="toggle '@$show_zoom_racks' &amp; load_skin" check="var_equal '@$show_zoom_racks' 1"/>
+  </submenu>
+  <submenu text="Jogwheel Display" localize="true" visibility="not var_equal '@$hauntingproskinmode' 2 &amp;&amp; not var_equal '@$hauntingproskinmode' 5">
+    <item text="Needle" localize="true" action="set '@$hauntingjogtype' 0" check="var_equal '@$hauntingjogtype' 0"/>
+    <item text="Text" localize="true" action="set '@$hauntingjogtype' 1" check="var_equal '@$hauntingjogtype' 1"/>
+    <item text="Sync Status" localize="true" action="set '@$hauntingjogtype' 2" check="var_equal '@$hauntingjogtype' 2"/>
+    <item text="Cover Art" localize="true" action="set '@$hauntingjogtype' 3" check="var_equal '@$hauntingjogtype' 3"/>
+    <separator localize="true"/>
+    <submenu text="Text" localize="true">
+      <item text="Jog Mode" localize="true" action="set '@$haunting_jog_text' 0" check="var_equal '@$haunting_jog_text' 0"/>
+      <item text="Loop Size" localize="true" action="set '@$haunting_jog_text' 1" check="var_equal '@$haunting_jog_text' 1"/>
+      <item text="Elapsed" localize="true" action="set '@$haunting_jog_text' 2" check="var_equal '@$haunting_jog_text' 2"/>
+      <item text="Remain" localize="true" action="set '@$haunting_jog_text' 3" check="var_equal '@$haunting_jog_text' 3"/>
+    </submenu>
+    <submenu text="RPM" localize="true">
+      <item text="25" localize="true" action="setting 'RPM' 25" check="setting 'RPM' 25"/>
+      <item text="33" localize="true" action="setting 'RPM' 33" check="setting 'RPM' 33"/>
+      <item text="45" localize="true" action="setting 'RPM' 45" check="setting 'RPM' 45"/>
+      <item text="4 Beats" localize="true" action="setting 'RPM' '4 beats'" check="setting 'RPM' '4 beats'"/>
+    </submenu>
+    <separator localize="true"/>
+    <item text="Auto Disc Marker" action="setting 'autoDiscMarker'" check="setting 'autoDiscMarker'"/>
+  </submenu>
+  <submenu text="Show Waveform On">
+    <item text="Main Decks" action="toggle '@$hide_main_waveforms' &amp; load_skin" check="var_equal '@$hide_main_waveforms' 0" visibility="not var_equal '@$hauntingproskinmode' 3 &amp;&amp; not var_equal '@$hauntingproskinmode' 2 &amp;&amp; var_equal '@$hauntingproskinmode' 1 ? not var_equal '@$hauntingperformancelayout' 1 &amp;&amp; not var_equal '@$hauntingperformancelayout' 2"/>
+    <item text="Browser Zoom" action="toggle '@$hide_zoom_waveforms' &amp; load_skin" check="var_equal '@$hide_zoom_waveforms' 0"/>
+  </submenu>
+  <submenu text="BPM Digits" localize="true">
+    <item text="000.0" localize="true" action="set '@$hauntingjogbpmdgts' 0 &amp; setting 'browserBPMDigits' 1 &amp; load_skin" check="var_equal '@$hauntingjogbpmdgts' 0"/>
+    <item text="000.00" localize="true" action="set '@$hauntingjogbpmdgts' 1 &amp; setting 'browserBPMDigits' 2 &amp; load_skin" check="var_equal '@$hauntingjogbpmdgts' 1"/>
+    <separator/>
+    <item text="Hide BPM" localize="true" action="toggle '@$hauntingbpmhideopt'" check="var_equal '@$hauntingbpmhideopt' 1"/>
+  </submenu>
+  <submenu text="Key Display Format">
+    <item text="Musical" action="setting 'keyDisplay' musical" check="setting 'keyDisplay' musical"/>
+    <item text="Harmonic" action="setting 'keyDisplay' harmonic" check="setting 'keyDisplay' harmonic"/>
+  </submenu>
+  <submenu text="Skin Fps">
+    <item text="30" action="setting 'skinFPS' 30" check="setting 'skinFPS' 30"/>
+    <item text="45" action="setting 'skinFPS' 45" check="setting 'skinFPS' 45"/>
+    <item text="60" action="setting 'skinFPS' 60" check="setting 'skinFPS' 60"/>
+    <item text="100" action="setting 'skinFPS' 100" check="setting 'skinFPS' 100"/>
+    <item text="120" action="setting 'skinFPS' 120" check="setting 'skinFPS' 120"/>
+  </submenu>
+  <submenu text="Quantize Beat">
+    <item text="1/8" action="setting 'globalQuantize' 0.125" check="setting 'globalQuantize' 0.125"/>
+    <item text="1/4" action="setting 'globalQuantize' 0.250000" check="setting 'globalQuantize' 0.25"/>
+    <item text="1/2" action="setting 'globalQuantize' 0.500000" check="setting 'globalQuantize' 0.500000"/>
+    <item text="1" action="setting 'globalQuantize' 1.000000" check="setting 'globalQuantize' 1.000000"/>
+    <item text="2" action="setting 'globalQuantize' 2.000000" check="setting 'globalQuantize' 2.000000"/>
+    <item text="4" action="setting 'globalQuantize' 4.000000" check="setting 'globalQuantize' 4.000000"/>
+    <item text="16" action="setting 'globalQuantize' 16.000000" check="setting 'globalQuantize' 16.000000"/>
+  </submenu>
+  <submenu text="Scratch Filter Quality">
+    <item text="8" action="setting 'scratchFilterQuality' 8" check="setting 'scratchFilterQuality' 8"/>
+    <item text="10" action="setting 'scratchFilterQuality' 10" check="setting 'scratchFilterQuality' 10"/>
+    <item text="12" action="setting 'scratchFilterQuality' 12" check="setting 'scratchFilterQuality' 12"/>
+    <item text="14" action="setting 'scratchFilterQuality' 14" check="setting 'scratchFilterQuality' 14"/>
+    <item text="16" action="setting 'scratchFilterQuality' 16" check="setting 'scratchFilterQuality' 16"/>
+  </submenu>
+  <submenu text="Pitch Quality">
+    <item text="0 - Low" action="setting 'pitchquality' 0" check="setting 'pitchquality' 0"/>
+    <item text="1 - Fastest" action="setting 'pitchquality' 1" check="setting 'pitchquality' 1"/>
+    <item text="2 - Good" action="setting 'pitchquality' 2" check="setting 'pitchquality' 2"/>
+    <item text="3 - Excellent" action="setting 'pitchquality' 3" check="setting 'pitchquality' 3"/>
+    <item text="4 - Best +" action="setting 'pitchquality' 4" check="setting 'pitchquality' 4"/>
+  </submenu>
+  <submenu text="Math Engine">
+    <item text="Disabled" action="setting 'mathEngine' 'disabled'" check="setting 'mathEngine' 'disabled'"/>
+    <item text="CPU" action="setting 'mathEngine' 'CPU'" check="setting 'mathEngine' 'CPU'"/>
+    <item text="GPU" action="setting 'mathEngine' 'GPU'" check="setting 'mathEngine' 'GPU'"/>
+    <item text="AUTO" action="setting 'mathEngine' 'automatic'" check="setting 'mathEngine' 'automatic'"/>
+    <separator/>
+    <submenu text="Priority">
+      <item text="Automátic" action="setting 'mathEnginePriority' 'automatic'" check="setting 'mathEnginePriority' 'automatic'"/>
+      <item text="Normal" action="setting 'mathEnginePriority' 'normal'" check="setting 'mathEnginePriority' 'normal'"/>
+      <item text="Low" action="setting 'mathEnginePriority' 'low'" check="setting 'mathEnginePriority' 'low'"/>
+      <item text="Idle" action="setting 'mathEnginePriority' 'idle'" check="setting 'mathEnginePriority' 'idle'"/>
+    </submenu>
+  </submenu>
+  <submenu text="Precompute Stems">
+    <item text="Create Manually" action="setting 'precomputeStems' 'Create Manually'" check="setting 'precomputeStems' 'Create Manually'"/>
+    <item text="Always Create" action="setting 'precomputeStems' 'Always Create'" check="setting 'precomputeStems' 'Always Create'"/>
+    <item text="Only Use Precomputed" action="setting 'precomputeStems' 'Only Use Precomputed'" check="setting 'precomputeStems' 'Only Use Precomputed'"/>
+  </submenu>
+  <submenu text="Use Low Power GPU">
+    <item text="Default" action="setting 'useLowPowerGPU' 'default'" check="setting 'useLowPowerGPU' 'default'"/>
+    <item text="Low Power" action="setting 'useLowPowerGPU' 'low power'" check="setting 'useLowPowerGPU' 'low power'"/>
+    <item text="High Power" action="setting 'useLowPowerGPU' 'high power'" check="setting 'useLowPowerGPU' 'high power'"/>
+  </submenu>
+  <submenu text="Song Load Priority">
+    <item text="Normal" action="setting 'songLoadPriority' 'normal'" check="setting 'songLoadPriority' 'normal'"/>
+    <item text="Low" action="setting 'songLoadPriority' 'low'" check="setting 'songLoadPriority' 'low'"/>
+    <item text="Idle" action="setting 'songLoadPriority' 'idle'" check="setting 'songLoadPriority' 'idle'"/>
+  </submenu>
+  <submenu text="Song Load Security">
+    <item text="OFF" action="setting 'loadSecurity' 'off'" check="setting 'loadSecurity' 'off'"/>
+    <item text="ON" action="setting 'loadSecurity' 'on'" check="setting 'loadSecurity' 'on'"/>
+    <item text="Silent" action="setting 'loadSecurity' 'silent'" check="setting 'loadSecurity' 'silent'"/>
+  </submenu>
+  <submenu text="Brake Time">
+    <item text="0.00" action="setting 'rampStopTime' 0.0" check="setting 'rampStopTime' 0.0"/>
+    <item text="0.20" action="setting 'rampStopTime' 0.2" check="setting 'rampStopTime' 0.2"/>
+    <item text="0.40" action="setting 'rampStopTime' 0.4" check="setting 'rampStopTime' 0.4"/>
+    <item text="0.80" action="setting 'rampStopTime' 0.8" check="setting 'rampStopTime' 0.8"/>
+    <item text="1.00" action="setting 'rampStopTime' 1.0" check="setting 'rampStopTime' 1.0"/>
+  </submenu>
+  <separator/>
+  <submenu text="Browser" localize="true">
+    <!-- <item text="Auto Zoom (with controllers)" localize="true" action="toggle '@$hauntingbrowserzoom'" check="var_equal '@$hauntingbrowserzoom' 1"/> -->
+    <item text="Browser Window" action="show_window 'haunting_browser_window' &amp; save_config &amp; load_skin" check="show_window 'haunting_browser_window' on"/>
+    <item text="Set Tags (Auto)" action="setting 'setTagsAuto'" check="setting 'setTagsAuto'"/>
+    <item text="Read Only" action="setting 'readOnly'" check="setting 'readOnly'"/>
+    <item text="Lock Folder Order" action="setting 'lockFolderOrder'" check="setting 'lockFolderOrder'"/>
+    <item text="Analyze Songs On View" localize="true" action="setting 'analyzeSongsOnView'" check="setting 'analyzeSongsOnView'"/>
+    <item text="Keep BPM On Analyzer Update" localize="true" action="setting 'keepBPMOnAnalyzerUpdate'" check="setting 'keepBPMonAnalyzerUpdate'"/>
+    <separator/>
+    <item text="Show Font Size Buttons" action="setting 'browserFontSizeButtons'" check="setting 'browserFontSizeButtons'"/>
+    <item text="Show Horizontal Sidelist" action="setting 'showHorizontalSideList' &amp; load_skin" check="setting 'showHorizontalSideList'"/>
+    <separator/>
+    <submenu text="Cover Flow">
+      <item text="Disabled" action="setting 'coverFlow' 'no'" check="setting 'coverFlow' 'no'"/>
+      <item text="Smart" action="setting 'coverFlow' 'smart'" check="setting 'coverFlow' 'smart'"/>
+      <item text="3D" action="setting 'coverFlow' '3d'" check="setting 'coverFlow' '3d'"/>
+      <item text="2D" action="setting 'coverFlow' '2d'" check="setting 'coverFlow' '2d'"/>
+    </submenu>
+    <submenu text="Text Fit">
+      <item text="Smart" action="setting 'browserTextFit' 'smart' &amp; load_skin" check="setting 'browserTextFit' 'smart'"/>
+      <item text="Fixed" action="setting 'browserTextFit' 'fixed' &amp; load_skin" check="setting 'browserTextFit' 'fixed'"/>
+      <item text="Scroll" action="setting 'browserTextFit' 'scroll' &amp; load_skin" check="setting 'browserTextFit' 'scroll'"/>
+      <item text="Shrink" action="setting 'browserTextFit' 'Shrink' &amp; load_skin" check="setting 'browserTextFit' 'Shrink'"/>
+    </submenu>
+  </submenu>
+  <submenu text="Utility Bar">
+    <item text="Show On Main Browser" localize="true" action="toggle '@$hauntingutilitybar' &amp; load_skin" check="var_equal '@$hauntingutilitybar' 1"/>
+    <item text="Show On Browser Window" localize="true" action="toggle '@$hauntingutilitybar2' &amp; load_skin" check="var_equal '@$hauntingutilitybar2' 1"/>
+    <separator/>
+    <item text="Show Browser Tools" action="set '@$h_utility_barmode' 0" check="var_equal '@$h_utility_barmode' 0"/>
+    <item text="Show Custom Buttons" action="set '@$h_utility_barmode' 1" check="var_equal '@$h_utility_barmode' 1"/>
+  </submenu>
+  <separator/>
+  <submenu text="Experimental">
+    <submenu text="Skin Engine">
+      <item text="Auto" action="setting 'experimentalSkinEngine' 'auto'" check="setting 'experimentalSkinEngine' 'auto'"/>
+      <item text="ON" action="setting 'experimentalSkinEngine' 'yes'" check="setting 'experimentalSkinEngine' 'yes'"/>
+      <item text="OFF" action="setting 'experimentalSkinEngine' 'no'" check="setting 'experimentalSkinEngine' 'no'"/>
+    </submenu>
+    <separator/>
+    <item text="Beat Analyzer" action="setting 'experimentalBeatAnalyzer'" check="setting 'experimentalBeatAnalyzer'"/>
+    <item text="Wave Colors" action="setting 'experimentalWaveColors'" check="setting 'experimentalWaveColors'"/>
+  </submenu>
+  <separator/>
+  <item text="Ultra Latency" localize="true" action="setting 'ultraLatency'" check="setting 'ultraLatency'"/>
+  <item text="Keep Playing Past End" localize="true" action="setting 'keepPlayingPastEnd'" check="setting 'keepPlayingPastEnd'"/>
+  <item text="Keep Play Status On Load Song" localize="true" action="setting 'keepPlayStatusOnLoadSong'" check="setting 'keepPlayStatusOnLoadSong'"/>
+  <item text="Show Tooltips" localize="true" action="setting 'tooltip' no ? setting 'tooltip' yes : setting 'tooltip' yes ? setting 'tooltip' no" check="setting 'tooltip' 'yes'"/>
+</menuitems>

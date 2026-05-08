@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!-- STACK
+    For multi-deck mixing, waveforms are given priority.
+  -->
+  <group name="STACK" condition="var_equal '@$hauntingproskinmode' 2">
+    <!-- Main decks -->
+    <panel class="stack_decks" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? false : browser_isactive ? false : true : browser_zoom ? false : true"/>
+    <!-- browser zoom & auto-switch -->
+    <panel class="performancemini_decks_above" condition="var_equal '@$hide_zoom_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 0" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+    <panel class="performancemini_decks_below" condition="var_equal '@$hide_zoom_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+    <panel class="performancemini_decks_no_waves" condition="var_equal '@$hide_zoom_waveforms' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+  </group>
+</module>

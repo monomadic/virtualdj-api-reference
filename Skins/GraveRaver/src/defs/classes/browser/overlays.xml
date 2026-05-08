@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Shared browser wrappers used by layout-level browser overlays.
+       Layout classes pass only the slot geometry and rack visibility. -->
+  <define class="BROWSER_OVERLAY_PLAIN" placeholders="*x,*y,*width,*height">
+    <browser class="browser_ui_base">
+      <pos y="[Y]" width="[WIDTH]" height="[HEIGHT]"/>
+    </browser>
+  </define>
+  <define class="BROWSER_OVERLAY_WITH_RACKS" placeholders="*x,*y,*width,*height">
+    <browser class="browser_ui_base">
+      <pos y="+[Y]+80+2+86+2+140+2" width="[WIDTH]" height="[HEIGHT]-80-2-86-2-140-2" condition="var_equal '@$hauntingskinfxrack' 1 ? var_equal '@$hauntingskinmixerrack' 1 ? var_equal '@$hauntingskinvideorack' 1"/>
+      <pos y="+[Y]+86+2+140+2" width="[WIDTH]" height="[HEIGHT]-86-2-140-2" condition="var_equal '@$hauntingskinmixerrack' 1 ? var_equal '@$hauntingskinvideorack' 1"/>
+      <pos y="+[Y]+80+2+140+2" width="[WIDTH]" height="[HEIGHT]-80-2-140-2" condition="var_equal '@$hauntingskinfxrack' 1 ? var_equal '@$hauntingskinvideorack' 1"/>
+      <pos y="+[Y]+80+2+86+2" width="[WIDTH]" height="[HEIGHT]-80-2-86-2" condition="var_equal '@$hauntingskinfxrack' 1 ? var_equal '@$hauntingskinmixerrack' 1"/>
+      <pos y="+[Y]+140+2" width="[WIDTH]" height="[HEIGHT]-140-2" condition="var_equal '@$hauntingskinvideorack' 1"/>
+      <pos y="+[Y]+86+2" width="[WIDTH]" height="[HEIGHT]-86-2" condition="var_equal '@$hauntingskinmixerrack' 1"/>
+      <pos y="+[Y]+80+2" width="[WIDTH]" height="[HEIGHT]-80-2" condition="var_equal '@$hauntingskinfxrack' 1"/>
+      <pos y="[Y]" width="[WIDTH]" height="[HEIGHT]"/>
+    </browser>
+  </define>
+  <define class="BROWSER_OVERLAY_PLAIN_WAVES" placeholders="*base_y,*width,*height">
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+381+3" width="[WIDTH]" height="[HEIGHT]-381-3" condition="var_equal '@$infntywavesize' 13"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+361+3" width="[WIDTH]" height="[HEIGHT]-361-3" condition="var_equal '@$infntywavesize' 12"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+341+3" width="[WIDTH]" height="[HEIGHT]-341-3" condition="var_equal '@$infntywavesize' 11"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+321+3" width="[WIDTH]" height="[HEIGHT]-321-3" condition="var_equal '@$infntywavesize' 10"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+301+3" width="[WIDTH]" height="[HEIGHT]-301-3" condition="var_equal '@$infntywavesize' 9"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+281+3" width="[WIDTH]" height="[HEIGHT]-281-3" condition="var_equal '@$infntywavesize' 8"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+261+3" width="[WIDTH]" height="[HEIGHT]-261-3" condition="var_equal '@$infntywavesize' 7"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+241+3" width="[WIDTH]" height="[HEIGHT]-241-3" condition="var_equal '@$infntywavesize' 6"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+221+3" width="[WIDTH]" height="[HEIGHT]-221-3" condition="var_equal '@$infntywavesize' 5"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+201+3" width="[WIDTH]" height="[HEIGHT]-201-3" condition="var_equal '@$infntywavesize' 4"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+181+3" width="[WIDTH]" height="[HEIGHT]-181-3" condition="var_equal '@$infntywavesize' 3"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+161+3" width="[WIDTH]" height="[HEIGHT]-161-3" condition="var_equal '@$infntywavesize' 2"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+141+3" width="[WIDTH]" height="[HEIGHT]-141-3" condition="var_equal '@$infntywavesize' 1"/>
+    <panel class="browser_overlay_plain" y="+[BASE_Y]+121+3" width="[WIDTH]" height="[HEIGHT]-121-3" condition="var_equal '@$infntywavesize' 0"/>
+  </define>
+  <define class="BROWSER_OVERLAY_WITH_RACKS_WAVES" placeholders="*base_y,*width,*height">
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+381+3" width="[WIDTH]" height="[HEIGHT]-381-3" condition="var_equal '@$infntywavesize' 13"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+361+3" width="[WIDTH]" height="[HEIGHT]-361-3" condition="var_equal '@$infntywavesize' 12"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+341+3" width="[WIDTH]" height="[HEIGHT]-341-3" condition="var_equal '@$infntywavesize' 11"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+321+3" width="[WIDTH]" height="[HEIGHT]-321-3" condition="var_equal '@$infntywavesize' 10"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+301+3" width="[WIDTH]" height="[HEIGHT]-301-3" condition="var_equal '@$infntywavesize' 9"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+281+3" width="[WIDTH]" height="[HEIGHT]-281-3" condition="var_equal '@$infntywavesize' 8"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+261+3" width="[WIDTH]" height="[HEIGHT]-261-3" condition="var_equal '@$infntywavesize' 7"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+241+3" width="[WIDTH]" height="[HEIGHT]-241-3" condition="var_equal '@$infntywavesize' 6"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+221+3" width="[WIDTH]" height="[HEIGHT]-221-3" condition="var_equal '@$infntywavesize' 5"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+201+3" width="[WIDTH]" height="[HEIGHT]-201-3" condition="var_equal '@$infntywavesize' 4"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+181+3" width="[WIDTH]" height="[HEIGHT]-181-3" condition="var_equal '@$infntywavesize' 3"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+161+3" width="[WIDTH]" height="[HEIGHT]-161-3" condition="var_equal '@$infntywavesize' 2"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+141+3" width="[WIDTH]" height="[HEIGHT]-141-3" condition="var_equal '@$infntywavesize' 1"/>
+    <panel class="browser_overlay_with_racks" y="+[BASE_Y]+121+3" width="[WIDTH]" height="[HEIGHT]-121-3" condition="var_equal '@$infntywavesize' 0"/>
+  </define>
+</defs>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+    <define class="COVER_ART_HNTG" placeholders="deck,*size">
+      <deck deck="[DECK]">
+        <!-- bg -->
+        <visual>
+          <pos x="+0" y="+0"/>
+          <size width="[SIZE]" height="[SIZE]"/>
+          <off shape="square" color="button_background" border="#222222" border_size="1"/>
+        </visual>
+        <visual type="circle" novisibility="? has_cover ?">
+          <pos x="+3" y="+3"/>
+          <size width="[SIZE]-6" height="[SIZE]-6"/>
+          <off shape="circle" color="infos_background" border="black" border_size="0"/>
+        </visual>
+        <visual type="circle" novisibility="loaded ? has_cover ?">
+          <pos x="+10" y="+10"/>
+          <size width="[SIZE]-20" height="[SIZE]-20"/>
+          <off shape="circle" color="button_background" border="infos_background" border_size="+12"/>
+        </visual>
+        <cover visibility="loaded" action="" rightclick="" dblclick="">
+          <pos x="+0" y="+0"/>
+          <size width="[SIZE]" height="[SIZE]"/>
+        </cover>
+        <!-- INSTRUMENTAL LABEL -->
+        <!-- <group visibility="stem_pad 'instrumental'"> -->
+        <!-- <pos x="+0" y="+36"/> -->
+        <!-- <visual visibility="0.8"> -->
+        <!-- <size width="175" height="30"/> -->
+        <!-- <off shape="square" color="black"/> -->
+        <!-- </visual> -->
+        <!-- <visual visibility="0.2"> -->
+        <!-- <pos x="+8" y="+6"/> -->
+        <!-- <size width="155" height="20"/> -->
+        <!-- <off shape="square" color="color_instrumental"/> -->
+        <!-- </visual> -->
+        <!-- <button action="stem_pad 'instrumental'" border_size="1"> -->
+        <!-- <pos x="+8" y="+6"/> -->
+        <!-- <size width="155" height="20"/> -->
+        <!-- <off color="#222222" border="#444444" radius="3"/> -->
+        <!-- <down color="#222222" border="color_instrumental" radius="3"/> -->
+        <!-- <selected color="transparent" border="color_instrumental" radius="3"/> -->
+        <!-- <text fontsize="12" color="#555555" colorselected="color_instrumental" colordown="color_instrumental" align="center" text="INSTRUMENTAL"/> -->
+        <!-- </button> -->
+        <!-- </group> -->
+        <button action="select" visibility="loaded">
+          <pos x="+3" y="+3"/>
+          <size width="[SIZE]-4" height="[SIZE]-4"/>
+          <over shape="square" color="transparent" border="#22FFFFFF" border_size="1"/>
+          <off shape="square" color="transparent" border="#22FFFFFF" border_size="1"/>
+          <on shape="square" color="transparent" border="#33FFFFFF" border_size="1"/>
+        </button>
+      </deck>
+    </define>
+    <define class="phrase_circle" placeholders="deck">
+      <deck deck="[DECK]">
+        <visual source="get_beat_counter" type="circle">
+          <pos x="+0" y="+0"/>
+          <size width="30" height="30"/>
+          <off shape="circle" color="button_background" border="button_background"/>
+          <on shape="circle" color="deckcolor"/>
+        </visual>
+        <visual>
+          <pos x="+5" y="+5"/>
+          <size width="20" height="20"/>
+          <off shape="circle" color="jogwheelbackground2" border="jogwheelbackground2"/>
+        </visual>
+        <textzone>
+          <pos x="+0" y="+0"/>
+          <size width="30" height="30"/>
+          <text fontsize="12" color="needle" align="center" weight="bold" action="get_beat_counter" important="true"/>
+        </textzone>
+        <button action="phrase_sync 'auto'">
+          <pos x="+0" y="+0"/>
+          <size width="30" height="30"/>
+        </button>
+      </deck>
+    </define>
+    <define class="beat_keeper" placeholders="deck">
+      <deck deck="[DECK]">
+        <group name="phrase_bars" visibility="var_equal '@$phrasecircle' 0">
+          <!-- Bar 1 -->
+          <button action="goto_bar 1" query="param_equal `get_phrase_num` 1">
+            <pos x="+0" y="+0"/>
+            <size width="19" height="19"/>
+            <off shape="circle" color="#111111" border="#222222" border_size="5"/>
+            <selected shape="circle" color="#111111" border="deckcolor" border_size="5"/>
+          </button>
+          <!-- Bar 2 -->
+          <button action="goto_bar 2" query="param_equal `get_phrase_num` 2">
+            <pos x="+34" y="+0"/>
+            <size width="19" height="19"/>
+            <off shape="circle" color="#111111" border="#222222" border_size="5"/>
+            <selected shape="circle" color="#111111" border="deckcolor" border_size="5"/>
+          </button>
+          <!-- Bar 3 -->
+          <button action="goto_bar 3" query="param_equal `get_phrase_num` 3">
+            <pos x="+34*2" y="+0"/>
+            <size width="19" height="19"/>
+            <off shape="circle" color="#111111" border="#222222" border_size="5"/>
+            <selected shape="circle" color="#111111" border="deckcolor" border_size="5"/>
+          </button>
+          <!-- Bar 4 -->
+          <button action="goto_bar 4" query="param_equal `get_phrase_num` 4">
+            <pos x="+34*3" y="+0"/>
+            <size width="19" height="19"/>
+            <off shape="circle" color="#111111" border="#222222" border_size="5"/>
+            <selected shape="circle" color="#111111" border="deckcolor" border_size="5"/>
+          </button>
+        </group>
+        <group name="phrase_circle" x="+0" visibility="leftdeck ? var_equal '@$phrasecircle' 1">
+          <panel class="phrase_circle" deck="1" x="+94" y="-4"/>
+          <panel class="phrase_circle" deck="3" x="+54" y="-4" visibility="var_not_equal '@$4decks' 0"/>
+        </group>
+        <group name="phrase_circle" x="-24" visibility="rightdeck ? var_equal '@$phrasecircle' 1">
+          <panel class="phrase_circle" deck="2" x="+20" y="-4"/>
+          <panel class="phrase_circle" deck="4" x="+20+40" y="-4" visibility="var_not_equal '@$4decks' 0"/>
+        </group>
+      </deck>
+    </define>
+    <define class="BEAT_KEEPER_EX" placeholders="deck,bgcolor=transparent,width=10">
+      <deck deck="[DECK]">
+        <visual class="gfx_shape" width="[WIDTH]*4" height="27" coloroff="red"/>
+        <!-- <group name="phrase_bars"> -->
+        <!-- <button class="button_main" x="+0" y="+0" width="34" height="7" shape="square" query="get_phrase_num 1" coloroff="#222222" brcoloron="infos_background" brcoloroff="infos_background" bordersize="3"/> -->
+        <!-- <button class="button_main" x="+38" y="+0" width="34" height="7" shape="square" query="get_phrase_num 2" coloroff="#222222" brcoloron="infos_background" brcoloroff="infos_background" bordersize="3"/> -->
+        <!-- <button class="button_main" x="+38*2" y="+0" width="34" height="7" shape="square" query="get_phrase_num 3" coloroff="#222222" brcoloron="infos_background" brcoloroff="infos_background" bordersize="3"/> -->
+        <!-- <button class="button_main" x="+38*3" y="+0" width="34" height="7" shape="square" query="get_phrase_num 4" coloroff="#222222" brcoloron="infos_background" brcoloroff="infos_background" bordersize="3"/> -->
+        <!-- <button class="button_main" x="+0" y="+0" width="34" height="7" shape="square" query="goto_bar 1" coloroff="transparent" brcoloroff="transparent"/> -->
+        <!-- <button class="button_main" x="+38" y="+0" width="34" height="7" shape="square" query="goto_bar 2" coloroff="transparent" brcoloroff="transparent"/> -->
+        <!-- <button class="button_main" x="+38*2" y="+0" width="34" height="7" shape="square" query="goto_bar 3" coloroff="transparent" brcoloroff="transparent"/> -->
+        <!-- <button class="button_main" x="+38*3" y="+0" width="34" height="7" shape="square" query="goto_bar 4" coloroff="transparent" brcoloroff="transparent"/> -->
+        <!-- </group> -->
+        <!-- WATCHOS STYLE PHRASE TIMER -->
+        <!-- <group name="phrase_bars"> -->
+        <!-- <button class="button_main" x="+0" y="+0" width="34" height="10" shape="square" query="goto_bar 1" coloroff="infos_background" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/> -->
+        <!-- <button class="button_main" x="+38" y="+0" width="34" height="10" shape="square" query="goto_bar 2" coloroff="infos_background" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/> -->
+        <!-- <button class="button_main" x="+38*2" y="+0" width="34" height="10" shape="square" query="goto_bar 3" coloroff="infos_background" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/> -->
+        <!-- <button class="button_main" x="+38*3" y="+0" width="34" height="10" shape="square" query="goto_bar 4" coloroff="infos_background" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/> -->
+        <!-- <panel class="phrase_circle" x="-48" y="-2" visibility="leftdeck"/> -->
+        <!-- <panel class="phrase_circle" x="+126+41" y="-16-2" visibility="rightdeck"/> -->
+        <!-- </group> -->
+        <group name="phrase_bars">
+          <button class="button_main" x="+0" y="+0" width="[WIDTH]" height="6" shape="square" query="get_phrase_num 1" coloroff="[BGCOLOR]" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/>
+          <button class="button_main" x="+15" y="+0" width="[WIDTH]" height="6" shape="square" query="get_phrase_num 2" coloroff="[BGCOLOR]" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/>
+          <button class="button_main" x="+30" y="+0" width="[WIDTH]" height="6" shape="square" query="get_phrase_num 3" coloroff="[BGCOLOR]" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/>
+          <button class="button_main" x="+45" y="+0" width="[WIDTH]" height="6" shape="square" query="get_phrase_num 4" coloroff="[BGCOLOR]" brcoloron="infos_background" brcoloroff="infos_background" bordersize="0"/>
+        </group>
+      </deck>
+    </define>
+    <define class="beat_counter" placeholders="deck">
+      <deck deck="[DECK]">
+        <!-- <visual class="gfx_shape" width="120" height="20" coloroff="xf_progressbackground" bordersize="0" visibility="loaded ? constant 0.8"/> -->
+        <!-- <textzone visibility="loaded"> -->
+        <!-- <pos x="+10" y="-10"/> -->
+        <!-- <size width="120-20" height="20*2"/> -->
+        <!-- <text fontsize="16" weight="" color="needle" align="right" format="`get_bar`.`get_beat_num` bars"/> -->
+        <!-- </textzone> -->
+      </deck>
+    </define>
+    <define class="beat_counter2" placeholders="deck">
+      <deck deck="[DECK]">
+        <!-- <visual class="gfx_shape" width="120" height="20" coloroff="xf_progressbackground" bordersize="0" visibility="loaded ? constant 0.8"/> -->
+        <!-- <textzone visibility="loaded"> -->
+        <!-- <pos x="+10" y="-10"/> -->
+        <!-- <size width="120-20" height="20*2"/> -->
+        <!-- <text fontsize="16" weight="" color="needle" align="center" format="`get_bar`.`get_beat_num` bars"/> -->
+        <!-- </textzone> -->
+      </deck>
+    </define>
+    <define class="beat_divider_area" placeholders="width,height">
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 32 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 32 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 64 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 64 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 96 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 96 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 128 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 128 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 160 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 160 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 192 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 192 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 224 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 224 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 256 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 256 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 288 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 288 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 320 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 320 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 352 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 352 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 384 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 384 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 416 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 416 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 448 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 448 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 480 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 480 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 512 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 512 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 544 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 544 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 576 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 576 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 608 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 608 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 640 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 640 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 672 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 672 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 704 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 704 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 736 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 736 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 768 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 768 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 800 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 800 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 832 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 832 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 864 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 864 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 896 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 896 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 928 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 928 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 960 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 960 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 992 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 992 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1024 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1024 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1056 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1056 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1088 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1088 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1120 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1120 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1152 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1152 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1184 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1184 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1216 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1216 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1248 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1248 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1280 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1280 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1312 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1312 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1344 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1344 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1376 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1376 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1408 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1408 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1440 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1440 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1472 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1472 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1504 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1504 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? off : var_equal '@$Beat_Marker' 3 ? off : off : off : off"/>
+      <slider class="beat_divider" width="[WIDTH]" height="[HEIGHT]" action="get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1536 &amp; param_multiply 0.00001" visibility="loaded ? get_time 'total' 1000 &amp; param_multiply get_bpm &amp; param_multiply 0.000000001 &amp; param_1_x &amp; param_multiply 6 &amp; param_multiply 1536 &amp; param_multiply 0.00001 &amp; param_smaller 1 ? var_equal '@$Beat_Marker' 1 ? constant 1 : var_equal '@$Beat_Marker' 2 ? constant 1 : var_equal '@$Beat_Marker' 3 ? constant 1 : off : off : off"/>
+    </define>
+</defs>

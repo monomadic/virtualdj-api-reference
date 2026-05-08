@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!-- PRO
+    A layout that accounts for laptop control as well as controllers.
+    More functionality is included in the virtualdj interface UI itself.
+  -->
+  <group name="PRO" condition="var_equal '@$hauntingproskinmode' 0">
+    <!-- @$hauntinglayout selects deck density within Pro: 0 = two-deck / swap, 1 = full four-deck -->
+    <!-- PRO: decks above -->
+    <panel class="pro_decks_above" condition="var_equal '@$hide_main_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 0" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? false : browser_isactive ? false : true : browser_zoom ? false : true"/>
+    <!-- PRO: decks below -->
+    <panel class="pro_decks_below" condition="var_equal '@$hide_main_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? false : browser_isactive ? false : true : browser_zoom ? false : true"/>
+    <!-- PRO: no waveforms -->
+    <panel class="pro_decks_no_waves" condition="var_equal '@$hide_main_waveforms' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? false : browser_isactive ? false : true : browser_zoom ? false : true"/>
+    <!-- browser zoom & auto-switch -->
+    <panel class="promini_decks_above" condition="var_equal '@$hide_zoom_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 0" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+    <panel class="promini_decks_below" condition="var_equal '@$hide_zoom_waveforms' 0 ? var_equal '@$hauntingwaveformpos' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+    <panel class="promini_decks_no_waves" condition="var_equal '@$hide_zoom_waveforms' 1" visibility="var '@$hauntingbrowserzoom' 1 ? browser_zoom ? true : browser_isactive ? true : false : browser_zoom ? true : false"/>
+  </group>
+</module>

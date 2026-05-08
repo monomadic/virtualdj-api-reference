@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Shared compact deck building blocks used by src/panels/decks.xml -->
+  <define class="compact_deck_track_summary" placeholders="*side,width=300,height=56">
+    <visual class="gfx_shape" width="[WIDTH]" height="[HEIGHT]" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="4"/>
+    <visual condition="param_equal [SIDE] 'left'">
+      <pos x="+8" y="+8"/>
+      <size width="40" height="40"/>
+      <off shape="square" color="button_bg" border="pro_panel_border" border_size="1" radius="3"/>
+    </visual>
+    <visual type="circle" novisibility="loaded ? has_cover ?" condition="param_equal [SIDE] 'left'">
+      <pos x="+10" y="+10"/>
+      <size width="36" height="36"/>
+      <off shape="circle" color="pro_panel_bg" border="pro_panel_border" border_size="2"/>
+    </visual>
+    <cover visibility="loaded" condition="param_equal [SIDE] 'left'">
+      <pos x="+8" y="+8"/>
+      <size width="40" height="40"/>
+    </cover>
+    <panel class="textzone_title_artist_combo" x="+58" y="+8" width="234" align="left" scroll="yes" titlefontsize="20" artistfontsize="14" titlecolor="pro_text_main" artistcolor="pro_text_dim" condition="param_equal [SIDE] 'left'"/>
+    <songpos class="songpos" x="+58" y="+44" width="234" height="6" colorPlayed="deckcolor" condition="param_equal [SIDE] 'left'"/>
+    <visual condition="param_equal [SIDE] 'right'">
+      <pos x="+252" y="+8"/>
+      <size width="40" height="40"/>
+      <off shape="square" color="button_bg" border="pro_panel_border" border_size="1" radius="3"/>
+    </visual>
+    <visual type="circle" novisibility="loaded ? has_cover ?" condition="param_equal [SIDE] 'right'">
+      <pos x="+254" y="+10"/>
+      <size width="36" height="36"/>
+      <off shape="circle" color="pro_panel_bg" border="pro_panel_border" border_size="2"/>
+    </visual>
+    <cover visibility="loaded" condition="param_equal [SIDE] 'right'">
+      <pos x="+252" y="+8"/>
+      <size width="40" height="40"/>
+    </cover>
+    <panel class="textzone_title_artist_combo" x="+8" y="+8" width="234" align="right" scroll="yes" titlefontsize="20" artistfontsize="14" titlecolor="pro_text_main" artistcolor="pro_text_dim" condition="param_equal [SIDE] 'right'"/>
+    <songpos class="songpos" x="+8" y="+44" width="234" height="6" colorPlayed="deckcolor" condition="param_equal [SIDE] 'right'"/>
+  </define>
+  <define class="compact_deck_hotcue_strip" placeholders="activeoutline=no">
+    <visual class="gfx_shape" width="232" height="33" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="4"/>
+    <visual x="-12" y="-52" width="256" height="204" visibility="select" condition="param_equal [ACTIVEOUTLINE] 'yes'">
+      <off shape="square" color="transparent" border="deckcolor" border_size="2" radius="7"/>
+    </visual>
+    <panel class="hotcue_button_stack_progress" x="+4" y="+4" source="1"/>
+    <panel class="hotcue_button_stack_progress" x="+33" y="+4" source="2"/>
+    <panel class="hotcue_button_stack_progress" x="+62" y="+4" source="3"/>
+    <panel class="hotcue_button_stack_progress" x="+91" y="+4" source="4"/>
+    <panel class="hotcue_button_stack_progress" x="+120" y="+4" source="5"/>
+    <panel class="hotcue_button_stack_progress" x="+149" y="+4" source="6"/>
+    <panel class="hotcue_button_stack_progress" x="+178" y="+4" source="7"/>
+    <panel class="hotcue_button_stack_progress" x="+207" y="+4" source="8"/>
+  </define>
+  <define class="compact_deck" placeholders="*deck,*side">
+    <square color="red" canstretch="false">
+      <pos x="0" y="50"/>
+      <size width="800" height="400"/>
+    </square>
+    <button class="deck_button" x="-40" y="+0" visibility="masterdeck" color="color_masterdeck" condition="param_equal [SIDE] 'right'"/>
+    <button class="deck_button" x="-40" y="+0" visibility="not masterdeck" color="deckcolor" condition="param_equal [SIDE] 'right'"/>
+    <panel class="compact_deck_track_summary" x="+0" y="-56" side="left" condition="param_equal [SIDE] 'left'"/>
+    <panel class="compact_deck_track_summary" x="-300" y="-56" side="right" condition="param_equal [SIDE] 'right'"/>
+    <visual class="gfx_shape" x="+45" y="+0" width="300" height="36" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="4" condition="param_equal [SIDE] 'left'"/>
+    <visual class="gfx_shape" x="+460" y="+0" width="300" height="36" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="4" condition="param_equal [SIDE] 'right'"/>
+    <panel class="transport_bar" deck="[DECK]" deckside="[SIDE]"/>
+    <panel class="key_display_left" x="+0" y="+40" condition="param_equal [SIDE] 'left'"/>
+    <panel class="key_display_right" x="-128" y="+40" condition="param_equal [SIDE] 'right'"/>
+    <panel class="jogwheel" x="+220" y="-20" name="jogwheel_left" condition="param_equal [SIDE] 'left'"/>
+    <panel class="jogwheel" x="-240" y="-20" name="jogwheel_right" condition="param_equal [SIDE] 'right'"/>
+    <panel class="pitch" x="+400" y="+0" condition="param_equal [SIDE] 'left'"/>
+    <panel class="pitch" x="-420" y="+0" condition="param_equal [SIDE] 'right'"/>
+    <visual class="vu_meter" x="+470" y="+0" condition="param_equal [SIDE] 'left'"/>
+    <visual class="vu_meter" x="-490" y="+0" condition="param_equal [SIDE] 'right'"/>
+    <visual class="gfx_shape" x="-10" y="-50" width="252" height="200" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="6" condition="param_equal [SIDE] 'left'"/>
+    <visual class="gfx_shape" x="-242" y="-50" width="252" height="200" coloroff="pro_panel_bg" bordercoloroff="pro_panel_border" bordersize="1" radius="6" condition="param_equal [SIDE] 'right'"/>
+    <panel class="compact_deck_hotcue_strip" x="+0" y="+90" condition="param_equal [SIDE] 'left'"/>
+    <panel class="compact_deck_hotcue_strip" x="-232" y="+90" activeoutline="yes" condition="param_equal [SIDE] 'right'"/>
+  </define>
+</defs>

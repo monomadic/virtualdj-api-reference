@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <define class="waveform_vertical">
+    <panel name="2/4decks_swap" visibility="var_equal '@$4decks' 0 ? true : var_equal '@$4waveforms' 0">
+      <visual class="gfx_shape" width="312" height="333" coloroff="wave_background"/>
+      <group>
+        <panel class="vertical_scratchwave_prf" deck="3" width="114" height="333-4" visibility="deck 3 leftdeck" x="+20" y="+0"/>
+        <panel class="vertical_scratchwave_prf" deck="1" width="114" height="333-4" visibility="not deck 3 leftdeck" x="+20" y="+0"/>
+        <panel class="vertical_scratchwave_prf" deck="2" width="114" height="333-4" visibility="not deck 4 rightdeck" x="+312-114-19" y="+0"/>
+        <panel class="vertical_scratchwave_prf" deck="4" width="114" height="333-4" visibility="deck 4 rightdeck" x="+312-114-19" y="+0"/>
+      </group>
+    </panel>
+    <panel name="4decks" visibility="var_equal '@$4waveforms' 1 &amp;&amp; var_not_equal '@$4decks' 0">
+      <visual class="gfx_shape" width="312" height="333" coloroff="wave_background"/>
+      <group>
+        <group name="1234" visibility="setting 'mixerOrder' '1234'">
+          <panel class="vertical_scratchwave_prf" deck="1" width="39" height="333-4" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39" height="333-4" x="+20+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="3" width="39" height="333-4" x="+20+57+19+2+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39" height="333-4" x="+20+57+19+2+57+19+2+57+19+2" y="+0"/>
+        </group>
+        <group name="3124" visibility="setting 'mixerOrder' '3124'">
+          <panel class="vertical_scratchwave_prf" deck="3" width="39" height="333-4" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="1" width="39" height="333-4" x="+20+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39" height="333-4" x="+20+57+19+2+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39" height="333-4" x="+20+57+19+2+57+19+2+57+19+2" y="+0"/>
+        </group>
+        <group name="1342" visibility="setting 'mixerOrder' '1342'">
+          <panel class="vertical_scratchwave_prf" deck="1" width="39" height="333-4" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="3" width="39" height="333-4" x="+20+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39" height="333-4" x="+20+57+19+2+57+19+2" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39" height="333-4" x="+20+57+19+2+57+19+2+57+19+2" y="+0"/>
+        </group>
+      </group>
+    </panel>
+    <menu tooltip="WAVEFORM OPTIONS" visibility="0.8">
+      <pos x="960-13" y="+2"/>
+      <size width="26" height="30"/>
+      <off shape="square" color="button_background"/>
+      <icon sysicon="settings" height="24" width="24" color="textoff" colorover="needle" colordown="needle"/>
+      <submenu text="Waveform Type" localize="true">
+        <item text="Scratch" localize="true" action="setting 'skinwaveformScratchType' 'colors'" check="setting 'skinwaveformScratchType' 'colors'"/>
+        <item text="Shapes" localize="true" action="setting 'skinwaveformScratchType' 'shapes'" check="setting 'skinwaveformScratchType' 'shapes'"/>
+      </submenu>
+      <submenu text="Colors" localize="true" visibility="setting 'skinwaveformScratchType' 'colors'">
+        <item text="Monochrome" localize="true" action="setting 'coloredWaveforms' 'monochrome'" check="setting 'coloredWaveforms' 'monochrome'"/>
+        <item text="Per Deck" localize="true" action="setting 'coloredWaveforms' 'per-deck'" check="setting 'coloredWaveforms' 'per-deck'"/>
+        <item text="Neutral" localize="true" action="setting 'coloredWaveforms' 'neutral'" check="setting 'coloredWaveforms' 'neutral'"/>
+        <item text="Infra Red" localize="true" action="setting 'coloredWaveforms' 'infra-red'" check="setting 'coloredWaveforms' 'infra-red'"/>
+        <item text="Ultra Blue" localize="true" action="setting 'coloredWaveforms' 'ultra-blue'" check="setting 'coloredWaveforms' 'ultra-blue'"/>
+        <separator/>
+        <item text="Wave Use Frequency" action="setting 'waveUseFrequency'" check="setting 'waveUseFrequency'"/>
+      </submenu>
+      <submenu text="Colors" localize="true" visibility="setting 'skinwaveformScratchType' 'shapes'">
+        <item text="Virtual DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 0 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 0"/>
+        <item text="Denon DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 2 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 2"/>
+        <item text="Pioneer DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 1 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 1"/>
+      </submenu>
+      <submenu text="Needle" localize="true">
+        <item text="Above" localize="true" action="setting 'waveformCenter' 'left'" check="setting 'waveformCenter' 'left'"/>
+        <item text="Centered" localize="true" action="setting 'waveformCenter' 'centered'" check="setting 'waveformCenter' 'centered'"/>
+      </submenu>
+      <submenu text="Waveform Order" localize="true" visibility="var_not_equal '@$4decks' 0">
+        <item text="1-2-3-4" localize="true" action="setting 'mixerOrder' '1234'" check="setting 'mixerOrder' '1234'"/>
+        <item text="3-1-2-4" localize="true" action="setting 'mixerOrder' '3124'" check="setting 'mixerOrder' '3124'"/>
+        <item text="1-3-4-2" localize="true" action="setting 'mixerOrder' '1342'" check="setting 'mixerOrder' '1342'"/>
+      </submenu>
+      <separator visibility="var_not_equal '@$4decks' 0"/>
+      <item text="Left / Right Deck" localize="true" action="set '@$4waveforms' 0" check="var_equal '@$4waveforms' 0" visibility="var_not_equal '@$4decks' 0"/>
+      <item text="All 4-Decks" localize="true" action="set '@$4waveforms' 1" check="var_equal '@$4waveforms' 1" visibility="var_not_equal '@$4decks' 0"/>
+      <separator/>
+      <item text="Show Background" localize="true" action="toggle '@$hauntingwavesbkg'" check="var_equal '@$hauntingwavesbkg' 1"/>
+      <item text="Show Gridlines" localize="true" action="setting 'showGridlines'" check="setting 'showGridlines'"/>
+      <item text="Bar Counter" localize="true" action="toggle '@$hauntingbarcounter'" check="var_equal '@$hauntingbarcounter' 1"/>
+      <item text="Wave Gray On Kill" action="setting 'waveGrayOnKill'" check="setting 'waveGrayOnKill'" visibility="setting skinWaveformType 2"/>
+    </menu>
+    <menu tooltip="MIXER OPTIONS" visibility="var_equal '@$hauntingskinmixerrack' 1">
+      <pos x="960-13" y="+40"/>
+      <size width="26" height="18"/>
+      <off shape="square" color="xf_background" border="xf_background"/>
+      <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+      <submenu text="Left Panel (Mixer)" localize="true">
+        <item text="Microphone" action="set '@$hauntingleftmixerrack' 0" check="var_equal '@$hauntingleftmixerrack' 0"/>
+        <item text="Headphones" action="set '@$hauntingleftmixerrack' 1" check="var_equal '@$hauntingleftmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Right Panel (Mixer)" localize="true">
+        <item text="Master" action="set '@$hauntingrightmixerrack' 0" check="var_equal '@$hauntingrightmixerrack' 0"/>
+        <item text="Rec/Broadcast" action="set '@$hauntingrightmixerrack' 1" check="var_equal '@$hauntingrightmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Center Panel (FX)" localize="true">
+        <item text="Master FX" action="set '@$hauntingcenterfxrack' 0" check="var_equal '@$hauntingcenterfxrack' 0"/>
+        <item text="Mic FX" action="set '@$hauntingcenterfxrack' 1" check="var_equal '@$hauntingcenterfxrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="EQ Frequency Spread" localize="true">
+        <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+        <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+      </submenu>
+      <submenu text="Vu Meter" localize="true">
+        <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+        <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+        <separator text="Color"/>
+        <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+        <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+        <separator/>
+        <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+      </submenu>
+      <submenu text="Filter Resonance" localize="true">
+        <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+        <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+        <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+      </submenu>
+      <submenu text="Fader Start" localize="true">
+        <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+        <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+      </submenu>
+      <submenu text="Fader StartStop" localize="true">
+        <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+        <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+      </submenu>
+      <separator/>
+      <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+      <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+      <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+    </menu>
+  </define>
+  <define class="waveform_vertical4">
+    <panel name="4decks">
+      <visual class="gfx_shape" width="312+77+2+77+2" height="333+333+2" coloroff="wave_background"/>
+      <group>
+        <group name="1234" visibility="setting 'mixerOrder' '1234'">
+          <panel class="vertical_scratchwave_prf" deck="1" width="39+39" height="333-4+333+2" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39+39" height="333-4+333+2" x="+20+57+19+2+39" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="3" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+39+39+1" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+57+19+2+39+39+39+1" y="+0"/>
+        </group>
+        <group name="3124" visibility="setting 'mixerOrder' '3124'">
+          <panel class="vertical_scratchwave_prf" deck="3" width="39+39" height="333-4+333+2" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="1" width="39+39" height="333-4+333+2" x="+20+57+19+2+39" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+39+39+1" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+57+19+2+39+39+39+1" y="+0"/>
+        </group>
+        <group name="1342" visibility="setting 'mixerOrder' '1342'">
+          <panel class="vertical_scratchwave_prf" deck="1" width="39+39" height="333-4+333+2" x="+20" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="3" width="39+39" height="333-4+333+2" x="+20+57+19+2+39" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="4" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+39+39+1" y="+0"/>
+          <panel class="vertical_scratchwave_prf" deck="2" width="39+39" height="333-4+333+2" x="+20+57+19+2+57+19+2+57+19+2+39+39+39+1" y="+0"/>
+        </group>
+      </group>
+    </panel>
+    <menu tooltip="WAVEFORM OPTIONS" visibility="0.8">
+      <pos x="960-13" y="+2"/>
+      <size width="26" height="30"/>
+      <off shape="square" color="button_background"/>
+      <icon sysicon="settings" height="24" width="24" color="textoff" colorover="needle" colordown="needle"/>
+      <submenu text="Waveform Type" localize="true">
+        <item text="Scratch" localize="true" action="setting 'skinwaveformScratchType' 'colors'" check="setting 'skinwaveformScratchType' 'colors'"/>
+        <item text="Shapes" localize="true" action="setting 'skinwaveformScratchType' 'shapes'" check="setting 'skinwaveformScratchType' 'shapes'"/>
+      </submenu>
+      <submenu text="Colors" localize="true" visibility="setting 'skinwaveformScratchType' 'colors'">
+        <item text="Monochrome" localize="true" action="setting 'coloredWaveforms' 'monochrome'" check="setting 'coloredWaveforms' 'monochrome'"/>
+        <item text="Per Deck" localize="true" action="setting 'coloredWaveforms' 'per-deck'" check="setting 'coloredWaveforms' 'per-deck'"/>
+        <item text="Neutral" localize="true" action="setting 'coloredWaveforms' 'neutral'" check="setting 'coloredWaveforms' 'neutral'"/>
+        <item text="Infra Red" localize="true" action="setting 'coloredWaveforms' 'infra-red'" check="setting 'coloredWaveforms' 'infra-red'"/>
+        <item text="Ultra Blue" localize="true" action="setting 'coloredWaveforms' 'ultra-blue'" check="setting 'coloredWaveforms' 'ultra-blue'"/>
+        <separator/>
+        <item text="Wave Use Frequency" action="setting 'waveUseFrequency'" check="setting 'waveUseFrequency'"/>
+      </submenu>
+      <submenu text="Colors" localize="true" visibility="setting 'skinwaveformScratchType' 'shapes'">
+        <item text="Virtual DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 0 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 0"/>
+        <item text="Denon DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 2 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 2"/>
+        <item text="Pioneer DJ (ish)" localize="true" action="set '@$hauntingcolorshapescolors' 1 &amp; load_skin" check="var_equal '@$hauntingcolorshapescolors' 1"/>
+      </submenu>
+      <submenu text="Needle" localize="true">
+        <item text="Above" localize="true" action="setting 'waveformCenter' 'left'" check="setting 'waveformCenter' 'left'"/>
+        <item text="Centered" localize="true" action="setting 'waveformCenter' 'centered'" check="setting 'waveformCenter' 'centered'"/>
+      </submenu>
+      <submenu text="Waveform Order" localize="true" visibility="var_not_equal '@$4decks' 0">
+        <item text="1-2-3-4" localize="true" action="setting 'mixerOrder' '1234'" check="setting 'mixerOrder' '1234'"/>
+        <item text="3-1-2-4" localize="true" action="setting 'mixerOrder' '3124'" check="setting 'mixerOrder' '3124'"/>
+        <item text="1-3-4-2" localize="true" action="setting 'mixerOrder' '1342'" check="setting 'mixerOrder' '1342'"/>
+      </submenu>
+      <separator/>
+      <item text="Show Background" localize="true" action="toggle '@$hauntingwavesbkg'" check="var_equal '@$hauntingwavesbkg' 1"/>
+      <item text="Show Gridlines" localize="true" action="setting 'showGridlines'" check="setting 'showGridlines'"/>
+      <item text="Bar Counter" localize="true" action="toggle '@$hauntingbarcounter'" check="var_equal '@$hauntingbarcounter' 1"/>
+      <item text="Wave Gray On Kill" action="setting 'waveGrayOnKill'" check="setting 'waveGrayOnKill'" visibility="setting skinWaveformType 2"/>
+    </menu>
+    <menu tooltip="MIXER OPTIONS" visibility="var_equal '@$hauntingskinmixerrack' 1">
+      <pos x="960-13" y="+40"/>
+      <size width="26" height="18"/>
+      <off shape="square" color="xf_background" border="xf_background"/>
+      <icon sysicon="chevrondown" height="20" width="20" color="textdarker" colorover="needle" colordown="needle"/>
+      <submenu text="Left Panel (Mixer)" localize="true">
+        <item text="Microphone" action="set '@$hauntingleftmixerrack' 0" check="var_equal '@$hauntingleftmixerrack' 0"/>
+        <item text="Headphones" action="set '@$hauntingleftmixerrack' 1" check="var_equal '@$hauntingleftmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Right Panel (Mixer)" localize="true">
+        <item text="Master" action="set '@$hauntingrightmixerrack' 0" check="var_equal '@$hauntingrightmixerrack' 0"/>
+        <item text="Rec/Broadcast" action="set '@$hauntingrightmixerrack' 1" check="var_equal '@$hauntingrightmixerrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="Center Panel (FX)" localize="true">
+        <item text="Master FX" action="set '@$hauntingcenterfxrack' 0" check="var_equal '@$hauntingcenterfxrack' 0"/>
+        <item text="Mic FX" action="set '@$hauntingcenterfxrack' 1" check="var_equal '@$hauntingcenterfxrack' 1"/>
+      </submenu>
+      <separator/>
+      <submenu text="EQ Frequency Spread" localize="true">
+        <item text="Default" action="setting 'equalizerFrequencySpread' 'default'" check="setting 'equalizerFrequencySpread' 'default'"/>
+        <item text="Full Kill" action="setting 'equalizerFrequencySpread' 'full kill'" check="setting 'equalizerFrequencySpread' 'full kill'"/>
+      </submenu>
+      <submenu text="Vu Meter" localize="true">
+        <item text="Peak Mode" action="setting 'vuMeter' 'peak'" check="setting 'vuMeter' 'peak'"/>
+        <item text="Power Mode" action="setting 'vuMeter' 'power'" check="setting 'vuMeter' 'power'"/>
+        <separator text="Color"/>
+        <item text="Per Deck" action="set '@$hntnhvumetercolors' 0" check="var_equal '@$hntnhvumetercolors' 0"/>
+        <item text="Natural" action="set '@$hntnhvumetercolors' 1" check="var_equal '@$hntnhvumetercolors' 1"/>
+        <separator/>
+        <item text="Show Extra Peak Meter" localize="true" action="toggle '@$hauntingshowpeaksmt'" check="var_equal '@$hauntingshowpeaksmt' 1"/>
+      </submenu>
+      <submenu text="Filter Resonance" localize="true">
+        <item text="Default" action="setting 'filterDefaultResonance' 'default'" check="setting 'filterDefaultResonance' 'default'"/>
+        <item text="Strong" action="setting 'filterDefaultResonance' 'strong'" check="setting 'filterDefaultResonance' 'strong'"/>
+        <item text="Subtle" action="setting 'filterDefaultResonance' 'subtle'" check="setting 'filterDefaultResonance' 'subtle'"/>
+      </submenu>
+      <submenu text="Fader Start" localize="true">
+        <item text="ON" action="deck all setting 'faderStart' on" check="setting 'faderStart' on"/>
+        <item text="OFF" action="deck all setting 'faderStart' off" check="setting 'faderStart' off"/>
+      </submenu>
+      <submenu text="Fader StartStop" localize="true">
+        <item text="ON" action="deck all setting 'faderStartStop' on" check="setting 'faderStartStop' on"/>
+        <item text="OFF" action="deck all setting 'faderStartStop' off" check="setting 'faderStartStop' off"/>
+      </submenu>
+      <separator/>
+      <item text="Reset EQ On Load" localize="true" action="setting 'resetEqOnLoad'" check="setting 'resetEqOnLoad'"/>
+      <item text="Use Auto Gain" localize="true" action="setting 'autoGain' 'auto' ? setting 'autoGain' 'no' : setting 'autoGain' 'auto'" check="setting 'autoGain' 'auto'"/>
+      <item text="Show Drop Down Menus" localize="true" action="toggle '@$hauntingdropmenus'" check="var_equal '@$hauntingdropmenus' 0"/>
+    </menu>
+  </define>
+</defs>

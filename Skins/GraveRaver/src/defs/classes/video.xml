@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+    <define class="video_preview" placeholders="*vpwidth=249,*vpheight=174-12">
+      <deck deck="deck">
+        <button class="button_main" action="deck leftvideo video_transition" width="[VPWIDTH]" height="[VPHEIGHT]" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="PREVIEW" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+        <button class="button_main" action="deck rightvideo video_transition" width="[VPWIDTH]" height="[VPHEIGHT]" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="PREVIEW" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+        <video source="deck" linkdrop="true" visibility="100%">
+          <size width="[VPWIDTH]" height="[VPHEIGHT]"/>
+        </video>
+      </deck>
+    </define>
+    <define class="video_preview_ex" placeholders="*vpwidth=208,*vpheight=124">
+      <button class="button_main" action="deck leftvideo video_transition" width="[VPWIDTH]" height="[VPHEIGHT]" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="PREVIEW" visibility="get_deck 1 ? true : get_deck 3 ? true : false"/>
+      <button class="button_main" action="deck rightvideo video_transition" width="[VPWIDTH]" height="[VPHEIGHT]" coloroff="infos_background" coloron="infos_background" bordersize="0" textcolor="textdarker" text="PREVIEW" visibility="get_deck 2 ? true : get_deck 4 ? true : false"/>
+      <video source="deck" linkdrop="true" visibility="leftdeck">
+        <size width="[VPWIDTH]" height="[VPHEIGHT]"/>
+      </video>
+      <video source="deck" linkdrop="true" visibility="rightdeck">
+        <size width="[VPWIDTH]" height="[VPHEIGHT]"/>
+      </video>
+    </define>
+    <define class="4_stem_controls">
+      <panel class="stem_control" stem="vocal" label="VOCAL" color="colorvocal" x="+20" y="+10"/>
+      <panel class="stem_control" stem="instru" label="INSTR" color="colorinstru" x="+80" y="+10"/>
+      <panel class="stem_control" stem="bass" label="BASS" color="colorbass" x="+139" y="+10"/>
+      <panel class="stem_control" stem="rhythm" label="DRUM" color="colorbeat" x="+196" y="+10"/>
+    </define>
+    <define class="5_stem_controls">
+      <!-- background -->
+      <visual class="gfx_shape" x="+0" y="+0" width="260" height="213" coloroff="panel_background"/>
+      <panel class="stem_control" stem="vocal" label="VOCAL" color="colorvocal" x="+10" y="+10"/>
+      <panel class="stem_control" stem="instru" label="INSTR" color="colorinstru" x="+70" y="+10"/>
+      <panel class="stem_control" stem="bass" label="BASS" color="colorbass" x="+130" y="+10"/>
+      <panel class="stem_control" stem="kick" label="KICK" color="colorkick" x="+185" y="+10"/>
+      <!-- <panel class="stem_control" stem="hihat" label="HI-HAT" color="colorhihat" x="+240" y="+10"/> -->
+    </define>
+  <define class="STEM_CONTROL" placeholders="*stem,*label,*color">
+    <panel x="+0" y="+20">
+      <!-- on state -->
+      <slider action="stem '[STEM]'" rightclick="stem '[STEM]' 50%" dblclick="stem '[STEM]' 50%" orientation="round" frommiddle="true" resettomiddle="true">
+        <pos x="+10" y="+0"/>
+        <size width="31" height="31"/>
+        <fader color="needle" width="2" height="10" radius="1" anglemin="-140" anglemax="140"/>
+        <fill width="31" height="31" radius="12" color="[COLOR]" backcolor="#333333" visibility="not mute_stem '[STEM]'"/>
+        <fill width="31" height="31" radius="12" color="#555555" backcolor="#333333" visibility="mute_stem '[STEM]'"/>
+      </slider>
+      <!-- <textzone action="filter_selectcolorfx"> -->
+      <!-- <pos x="+0" y="+34"/> -->
+      <!-- <size width="51"/> -->
+      <!-- <text fontsize="10" weight="" color="knobtextoff" align="center" action="filter_label 'colorfx' &amp; param_cast 'text'" text="" important="true" localize="true"/> -->
+      <!-- </textzone> -->
+    </panel>
+    <!-- KNOB: STEM -->
+    <group>
+      <!-- Stem Toggle Button -->
+      <!-- <button class="button_main" -->
+      <!-- x="+0" y="+42" width="45" height="12" -->
+      <!-- action="stem_pad '[STEM]'" -->
+      <!-- coloroff="#111111" brcoloroff="#111111" -->
+      <!-- coloron="[COLOR]" brcoloron="[COLOR]" -->
+      <!-- textcoloroff="[COLOR]" textcoloron="black" -->
+      <!-- text="[LABEL]" textsize="10" /> -->
+      <!-- Knob (muted state visible) -->
+      <!-- <panel class="knob" x="+10" y="+0" textwidth="40" textsize="12" textbelow="+37" textleft="-2" knobsize="34" knobradius="7" faderradius="6" action="stem '[STEM]'" rgclick="stem_pad '[STEM]'" dblclick="stem '[STEM]' 50%" frommiddle="false" fillcolor="#333333" fillcoloroff="#000000" text="" visibility="mute_stem '[STEM]' on"/> -->
+      <!-- Knob (unmuted state visible) -->
+      <!-- <panel class="knob" x="+10" y="+0" textwidth="40" textsize="12" textbelow="+37" textleft="-2" knobsize="34" knobradius="8" faderradius="6" action="stem '[STEM]'" rgclick="stem_pad '[STEM]'" dblclick="stem '[STEM]' 50%" frommiddle="false" fillcolor="[COLOR]" fillcoloroff="#000000" text="" visibility="mute_stem '[STEM]' off"/> -->
+      <!-- SIMPLE VECTOR VU METER -->
+      <!-- <visual source="get_level '[STEM]'" type="linear" orientation="horizontal" direction="up" granularity="23"> -->
+      <!-- <pos x="+0" y="+55"/> -->
+      <!-- <size width="40" height="4"/> -->
+      <!-- <off shape="square" color="#333333" radius="0"/> -->
+      <!-- <on  shape="square" color="[COLOR]" radius="0"/> -->
+      <!-- </visual> -->
+      <!-- BUTTON -->
+      <button x="+0" y="+0" action="stem_pad '[STEM]'" border_size="1">
+        <size width="50" height="15"/>
+        <off color="#222222" border="transparent" radius="3"/>
+        <down color="#222222" border="transparent" radius="3"/>
+        <selected color="#111111" border="transparent" radius="3"/>
+        <text fontsize="10" color="#555555" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="[LABEL]"/>
+      </button>
+      <!-- SIMPLE VECTOR VU METER -->
+      <visual source="get_level '[STEM]'" type="linear" orientation="horizontal" direction="up" granularity="[GRANULARITY]">
+        <pos x="+11" y="+40+15"/>
+        <size width="30" height="3"/>
+        <off shape="square" color="#333333" radius="1"/>
+        <on shape="square" border="[COLOR]" color="[COLOR]" radius="1"/>
+      </visual>
+    </group>
+  </define>
+      <define class="STEM_VU" placeholders="*deck,*stem,*label,*color,width=65,height=23,fontsize=13,granularity=23">
+        <deck deck="[DECK]">
+          <!-- TOGGLE -->
+          <button x="+0" y="+135" action="stem_pad '[STEM]'" border_size="1">
+            <size width="[WIDTH]" height="[HEIGHT]"/>
+            <off color="transparent" border="transparent" radius="3"/>
+            <down color="transparent" border="transparent" radius="3"/>
+            <selected color="transparent" border="transparent" radius="3"/>
+            <text fontsize="[FONTSIZE]" color="#555555" colorselected="[COLOR]" colordown="[COLOR]" align="center" text="[LABEL]"/>
+          </button>
+          <!-- VU METER -->
+          <!-- <visual source="get_level '[STEM]'" type="linear" orientation="horizontal" direction="up" granularity="[GRANULARITY]"> -->
+          <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+          <!-- <size width="[WIDTH]" height="7"/> -->
+          <!-- <off shape="square" border="#2A2A2A" color="black" radius="2"/> -->
+          <!-- <down shape="square" border="[COLOR]" color="[COLOR]" radius="2"/> -->
+          <!-- </visual> -->
+          <!-- GAIN SLIDER -->
+          <!-- <slider action="param_multiply 50% &amp; stem '[STEM]'" dblclick="stem '[STEM]' 50%" orientation="horizontal" direction="up" frommiddle="false"> -->
+          <!-- <pos x="+0" y="+[HEIGHT]+2"/> -->
+          <!-- <size width="[WIDTH]" height="7"/> -->
+          <!-- <fader color="#AAAAAA" width="2" height="5"/> -->
+          <!-- </slider> -->
+          <!-- <visual source="get_level '[STEM]'" type="linear" orientation="vertical" direction="up" granularity="23"> -->
+          <!-- <pos x="+0" y="+55"/> -->
+          <!-- <size width="40" height="4"/> -->
+          <!-- <off shape="square" color="#333333" radius="0"/> -->
+          <!-- <on shape="square" color="[COLOR]" radius="0"/> -->
+          <!-- </visual> -->
+          <group x="+12">
+            <!-- FADER LINES -->
+            <group x="+0" y="+7">
+              <!-- <line color="faderlines" x="+0" y="+0" width="38" height="1"/> -->
+              <line color="faderlines" x="+3" y="+12" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*2" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*3" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*4" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*5" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*6" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*7" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*8" width="32" height="1"/>
+              <line color="faderlines" x="+3" y="+12*9" width="32" height="1"/>
+              <!-- <line color="faderlines" x="+0" y="+12*10" width="38" height="1"/> -->
+            </group>
+            <group x="+14" y="+0">
+              <!-- BLACK STRIP -->
+              <!-- <visual width="10" height="123"> -->
+              <!-- <pos x="+0" y="+0"/> -->
+              <!-- <off shape="square" color="black" radius="3"/> -->
+              <!-- </visual> -->
+              <!-- LEVEL -->
+              <visual source="get_level '[STEM]'" type="linear" orientation="vertical" direction="up" granularity="23">
+                <pos x="+0" y="+5"/>
+                <size width="10" height="123"/>
+                <off shape="square" color="black" radius="2"/>
+                <on shape="square" color="[COLOR]" radius="2"/>
+              </visual>
+            </group>
+            <!-- SLIDER -->
+            <slider action="level '[STEM]'" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+              <pos x="+0" y="+0"/>
+              <size width="38" height="135"/>
+              <off width="-27" height="-8" color="transparent" border="#333333" border_size="1" radius="3" shape="square"/>
+              <on width="-27" height="-8" color="transparent" border="#333333" border_size="1" radius="3" shape="square"/>
+              <fader color="#333333" width="38" height="14" border="#555555"/>
+            </slider>
+            <!-- SLIDER PIECE -->
+            <slider action="level '[STEM]'" dblclick="level 80%" orientation="vertical" direction="up" frommiddle="false">
+              <pos x="+0" y="+0+6"/>
+              <size width="38" height="135-12"/>
+              <fader color="faderbackgroundline" width="38" height="2"/>
+            </slider>
+          </group>
+        </deck>
+      </define>
+</defs>

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- LED-style VU meter variants -->
+  <define class="vu_meter_LEDs" placeholders="*source,peak,showpeaks,width=11,height=4,vucoloroff=vu_background">
+    <visual type="vumeter" width="11" height="154" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 0">
+      <led x="+0" y="+6*25" width="11" height="[HEIGHT]">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*24" width="11" height="[HEIGHT]">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*23" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*22" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*21" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*20" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*19" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*18" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*17" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*16" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*15" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <visual type="vumeter" width="11" height="154" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 1">
+      <led x="+0" y="+6*25" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*24" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*23" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*22" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*21" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*20" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*19" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*18" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*17" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*16" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*15" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <slider action="[SOURCE]_peak" orientation="vertical" direction="up" smooth="no" visibility="[SHOWPEAKS] ? [SOURCE]_peak &amp; param_bigger 0">
+      <pos x="+0" y="+0" width="11" height="154"/>
+      <fader>
+        <size width="11" height="4"/>
+        <off shape="square" color="needle" radius="0" border="black" border_size="0"/>
+      </fader>
+    </slider>
+  </define>
+
+  <define class="vu_meter_LEDs_mini" placeholders="*source,peak,showpeaks,width=11,height=4,vucoloroff=vu_background">
+    <visual type="vumeter" width="11" height="58" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 0">
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <visual type="vumeter" width="11" height="58" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 1">
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <slider action="[SOURCE]_peak" orientation="vertical" direction="up" smooth="no" visibility="[SHOWPEAKS] ? [SOURCE]_peak &amp; param_bigger 0">
+      <pos x="+0" y="+0" width="11" height="58"/>
+      <fader>
+        <size width="11" height="4"/>
+        <off shape="square" color="needle" radius="0" border="black" border_size="0"/>
+      </fader>
+    </slider>
+  </define>
+
+  <define class="vu_meter_LEDs_mini2" placeholders="*source,peak,showpeaks,width=11,height=4,vucoloroff=vu_background">
+    <visual type="vumeter" width="11" height="88" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 0">
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <visual type="vumeter" width="11" height="88" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 1">
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <slider action="[SOURCE]_peak" orientation="vertical" direction="up" smooth="no" visibility="[SHOWPEAKS] ? [SOURCE]_peak &amp; param_bigger 0">
+      <pos x="+0" y="+0" width="11" height="88"/>
+      <fader>
+        <size width="11" height="4"/>
+        <off shape="square" color="needle" radius="0" border="black" border_size="0"/>
+      </fader>
+    </slider>
+  </define>
+
+  <define class="vu_meter_LEDs_stack" placeholders="*source,peak,showpeaks,width=11,height=4,vucoloroff=vu_background">
+    <visual type="vumeter" width="11" height="124" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 0">
+      <led x="+0" y="+6*20" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*19" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*18" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*17" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*16" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*15" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="deckcolor" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="needle" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <visual type="vumeter" width="11" height="124" source="[SOURCE]" smooth="no" visibility="var_equal '@$hntnhvumetercolors' 1">
+      <led x="+0" y="+6*20" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*19" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*18" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*17" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*16" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*15" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*14" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*13" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*12" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*11" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*10" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*9" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*8" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*7" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*5" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="green_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*4" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*3" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6*2" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="orange_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+6" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+      <led x="+0" y="+0" width="11" height="4">
+        <off color="[VUCOLOROFF]" radius="0" border="contrast" border_size="0"/>
+        <on color="red_vu" radius="0" border="contrast" border_size="0"/>
+      </led>
+    </visual>
+    <slider action="[SOURCE]_peak" orientation="vertical" direction="up" smooth="no" visibility="[SHOWPEAKS] ? [SOURCE]_peak &amp; param_bigger 0">
+      <pos x="+0" y="+0" width="11" height="124"/>
+      <fader>
+        <size width="11" height="4"/>
+        <off shape="square" color="needle" radius="0" border="black" border_size="0"/>
+      </fader>
+    </slider>
+  </define>
+</defs>

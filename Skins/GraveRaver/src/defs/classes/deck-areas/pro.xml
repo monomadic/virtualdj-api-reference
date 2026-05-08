@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <!-- Pro layout deck shells mirrored left/right plus the two-deck overlay treatment -->
+  <define class="AREA_DECK_PRO_LEFT" placeholders="*deck,*panelname,height=465">
+    <deck deck="[DECK]">
+      <!-- PRO: LEFT DECK: SPINE BG -->
+      <visual x="+0" y="+0" width="34" height="[HEIGHT]-10-10">
+        <off shape="square" color="black"/>
+      </visual>
+      <!-- LEFT: ACAPELLA SPINE LABEL -->
+      <!-- <group visibility="loaded ? stem_pad 'acapella'"> -->
+      <!-- <visual x="+0" y="+0" width="34" height="425" visibility="0.2"> -->
+      <!-- <off shape="square" color="color_acapella"/> -->
+      <!-- </visual> -->
+      <!-- <visual x="+0" y="+0" width="34" height="450" visibility="0.1"> -->
+      <!-- <off shape="square" color="color_acapella"/> -->
+      <!-- </visual> -->
+      <!-- <visual x="+5" y="+150" width="24" height="125"> -->
+      <!-- <off shape="square" color="black" bordersize="1" border="color_acapella" radius="2"/> -->
+      <!-- </visual> -->
+      <!-- <textzone orientation="vertical" direction="ccw"> -->
+      <!-- <pos x="+0" y="+0"/> -->
+      <!-- <size width="34" height="425"/> -->
+      <!-- <text fontsize="12" color="color_acapella" scroll="yes" align="center" text="ACAPELLA" important="true"/> -->
+      <!-- </textzone> -->
+      <!-- </group> -->
+      <!-- LEFT: MASTERDECK SPINE LABEL -->
+      <group visibility="loaded ? masterdeck">
+        <!-- <visual x="+0" y="+0" width="34" height="[HEIGHT]-4" visibility="0.2"> -->
+        <!-- <off shape="square" color="color_masterdeck"/> -->
+        <!-- </visual> -->
+        <visual x="+10" y="+300" width="34-10-10" height="70">
+          <off shape="square" color="black" bordersize="1" border="color_masterdeck" radius="3"/>
+        </visual>
+        <textzone orientation="vertical" direction="ccw">
+          <pos x="+0" y="+300"/>
+          <size width="34" height="70"/>
+          <text fontsize="12" color="color_masterdeck" scroll="no" align="center" text="MASTER" important="true"/>
+        </textzone>
+        <!-- LEFT: INSTRUMENTAL SPINE LABEL -->
+        <!-- <group visibility="loaded ? stem_pad 'instrumental'"> -->
+        <!-- <visual x="+0" y="+0" width="34" height="425" visibility="0.2"> -->
+        <!-- <off shape="square" color="color_instrumental"/> -->
+        <!-- </visual> -->
+        <!-- <visual x="+5" y="+150" width="24" height="125"> -->
+        <!-- <off shape="square" color="black" bordersize="1" border="color_instrumental" radius="2"/> -->
+        <!-- </visual> -->
+        <!-- <textzone orientation="vertical" direction="ccw" visibility="play ? false : loaded"> -->
+        <!-- <pos x="+0" y="+0"/> -->
+        <!-- <size width="34" height="425"/> -->
+        <!-- <text fontsize="12" color="color_instrumental" scroll="yes" align="center" text="INSTRUMENTAL" important="true"/> -->
+        <!-- </textzone> -->
+      </group>
+      <!-- PRO: LEFT DECK: PANEL BG (behind jog) -->
+      <visual width="765" height="[HEIGHT]" x="+35">
+        <off shape="square" color="panel_background" radius="6"/>
+      </visual>
+      <!-- PRO: LEFT: DECK BUTTON -->
+      <group y="+5">
+        <group visibility="masterdeck">
+          <!-- <line visibility="select" x="+34" y="+0" width="1" height="433" color="color_masterdeck"/> -->
+          <button class="deck_button" visibility="masterdeck" color="color_masterdeck">
+            <pos x="+0" y="+0"/>
+          </button>
+        </group>
+        <group visibility="not masterdeck">
+          <button class="deck_button" visibility="not masterdeck" color="deckcolor">
+            <pos x="+0" y="+0"/>
+          </button>
+        </group>
+        <menu class="menu_maindecks" query="select" x="+0" y="+386" width="34" height="34"/>
+      </group>
+      <group x="+35">
+        <!-- PRO: LEFT: TRACK INFO -->
+        <panel class="infos"/>
+        <!-- LEFT: action zone -->
+        <panel class="track_info_action_zone" y="+55" visibility="not has_video_mix 'active' ? yes : not skin_panel 'videomixer'"/>
+        <panel class="times_bpm_key2" y="+72-2" visibility="has_video_mix 'active' &amp;&amp; skin_panel 'videomixer'"/>
+        <!-- PRO: LEFT JOGWHEEL -->
+        <panel class="jogwheel" x="+730-[JOGSIZE]-30" y="+2+6+2" name="jogwheel_spinner"/>
+        <!-- PRO: LEFT VOLUME -->
+        <panel class="pitch" x="+760-45" y="+30"/>
+        <!-- PRO: LEFT DECK BORDER -->
+        <visual width="765" height="[HEIGHT]" y="+0">
+          <off shape="square" color="transparent" border_size="1" border="#333333" radius="6"/>
+        </visual>
+        <!-- <line color="#333333" x="+0" y="+400-2" width="765" height="1"/> -->
+      </group>
+    </deck>
+  </define>
+  <define class="PRO_2DECKS_OVERLAYS" placeholders="*deck,height=466,width=766">
+    <visual source="deck [DECK] select" deck="[DECK]" visibility="var_equal '@$dd_bordermode' 1">
+      <size width="[WIDTH]" height="[HEIGHT]"/>
+      <down color="transparent" border_size="2" border="deckcolor" shape="square" radius="8"/>
+    </visual>
+  </define>
+  <define class="AREA_DECK_PRO_RIGHT" placeholders="deck,*panelname,height=450">
+    <deck deck="[DECK]">
+      <!-- bg: spine -->
+      <visual x="+768" y="+0" width="34" height="[HEIGHT]-10-10">
+        <off shape="square" color="black"/>
+      </visual>
+      <!-- RIGHT: ACAPELLA SPINE LABEL -->
+      <group x="+768" visibility="loaded ? stem_pad 'acapella'">
+        <visual x="+0" y="+0" width="34" height="[HEIGHT]-10" visibility="0.1">
+          <off shape="square" color="color_acapella"/>
+        </visual>
+        <visual x="+5" y="+150" width="24" height="125">
+          <off shape="square" color="black" bordersize="1" border="color_acapella" radius="2"/>
+        </visual>
+        <textzone orientation="vertical" direction="cw">
+          <pos x="+0" y="+0"/>
+          <size width="34" height="425"/>
+          <text fontsize="12" color="color_acapella" scroll="yes" align="center" text="ACAPELLA" important="true"/>
+        </textzone>
+      </group>
+      <!-- RIGHT: INSTRUMENTAL SPINE LABEL -->
+      <group x="+768" visibility="loaded ? stem_pad 'instrumental'">
+        <visual x="+0" y="+0" width="34" height="[HEIGHT]" visibility="0.2">
+          <off shape="square" color="color_instrumental"/>
+        </visual>
+        <visual x="+5" y="+150" width="24" height="125">
+          <off shape="square" color="black" bordersize="1" border="color_instrumental" radius="2"/>
+        </visual>
+        <textzone orientation="vertical" direction="cw" visibility="play ? false : loaded">
+          <pos x="+0" y="+0"/>
+          <size width="34" height="425"/>
+          <text fontsize="12" color="color_instrumental" scroll="yes" align="center" text="INSTRUMENTAL" important="true"/>
+        </textzone>
+      </group>
+      <!-- bg: panel -->
+      <visual width="765" height="[HEIGHT]">
+        <off shape="square" color="panel_background" radius="6"/>
+      </visual>
+      <!-- PRO: RIGHT: DECK BUTTON -->
+      <group x="+768" y="+3">
+        <group visibility="masterdeck">
+          <line visibility="select" x="+0" y="+0" width="1" height="[HEIGHT]" color="color_masterdeck"/>
+          <button class="deck_button" visibility="masterdeck" color="color_masterdeck">
+            <pos x="+0" y="+0"/>
+          </button>
+        </group>
+        <group visibility="not masterdeck">
+          <button class="deck_button" visibility="not masterdeck" color="deckcolor">
+            <pos x="+0" y="+0"/>
+          </button>
+        </group>
+        <menu class="menu_maindecks" query="select" x="+0" y="+386" width="34" height="34"/>
+      </group>
+      <!-- cover, title etc -->
+      <panel class="infos" x="+800-567" visibility="not has_video_mix 'active' ? yes : not skin_panel 'videomixer'"/>
+      <!-- <panel class="infos2" x="+800-567" visibility="has_video_mix 'active' &amp;&amp; skin_panel 'videomixer'"/> -->
+      <cues dy="0" shade="0">
+        <size width="200" height="10"/>
+        <clipmask x="27" y="140"/>
+      </cues>
+      <panel class="track_info_action_zone" x="+800-565" y="+60" visibility="not has_video_mix 'active' ? yes : not skin_panel 'videomixer'"/>
+      <panel class="jogwheel" x="+65" y="+2+6+2" name="jogwheel_spinner" visibility="not has_video_mix 'active' ? yes : not skin_panel 'videomixer'"/>
+      <panel class="pitch" x="+15" y="+30"/>
+      <group>
+        <visual width="765" height="[HEIGHT]+15" y="+0">
+          <off shape="square" color="transparent" border_size="1" border="#333333" radius="6"/>
+        </visual>
+        <!-- <line color="#333333" x="+0" y="+[HEIGHT]+15" width="765" height="1"/> -->
+      </group>
+      <dropzone visibility="var_equal '@$hauntinglayout' 0">
+        <size width="800" height="[HEIGHT]"/>
+        <over color="transparent" border_size="2" border="deckcolor" shape="square"/>
+      </dropzone>
+      <dropzone visibility="var_equal '@$hauntinglayout' 1">
+        <size width="800" height="[HEIGHT]"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+      <panel class="video_preview" x="+2+60+11+1" y="+6" visibility="has_video_mix 'active' &amp;&amp; skin_panel 'videomixer'"/>
+    </deck>
+  </define>
+</defs>

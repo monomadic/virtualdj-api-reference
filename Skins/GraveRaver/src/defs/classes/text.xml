@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defs>
+  <group name="textzone_components">
+    <!-- Reusable text and drop targets -->
+    <define class="textzone_title_artist_combo" placeholders="*x,*y,*width,*align,scroll=no,titlefontsize=20,artistfontsize=17,titleweight=,artistweight=,titlecolor=needle,artistcolor=deckcolor,titleaction=get_text '`get_title_before_remix` `get_remix_after_title`',artistaction=get_artist,titleheight=34,artistheight=28">
+      <textzone tooltip="">
+        <pos x="[X]" y="[Y]"/>
+        <size width="[WIDTH]" height="[TITLEHEIGHT]"/>
+        <text fontsize="[TITLEFONTSIZE]" weight="[TITLEWEIGHT]" color="[TITLECOLOR]" align="[ALIGN]" scroll="[SCROLL]" action="[TITLEACTION]" localize="true" important="true"/>
+      </textzone>
+      <textzone tooltip="">
+        <pos x="[X]" y="[Y]+[TITLEHEIGHT]-6"/>
+        <size width="[WIDTH]" height="[ARTISTHEIGHT]"/>
+        <text fontsize="[ARTISTFONTSIZE]" weight="[ARTISTWEIGHT]" color="[ARTISTCOLOR]" align="[ALIGN]" scroll="[SCROLL]" action="[ARTISTACTION]" localize="true" important="true"/>
+      </textzone>
+    </define>
+
+    <define class="DUAL_DROPZONE" placeholders="*width,*height,x=0,y=0">
+      <dropzone visibility="blink 1bt" x="[X]" y="[Y]" radius="6">
+        <size width="[WIDTH]" height="[HEIGHT]"/>
+        <over color="transparent" border_size="2" border="needle" shape="square"/>
+      </dropzone>
+    </define>
+  </group>
+</defs>
