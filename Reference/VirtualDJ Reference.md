@@ -112,16 +112,20 @@ Recommended runnable examples:
 
 Existing repo examples worth studying:
 
-- [Current project FX page](../Pads/2.%20EFFECTS.xml)
+- [EFFECTS.xml](../Pads/EFFECTS.xml)
   Name-based FX toggle page with stems routing pads and a KILL ALL pad.
 
-- [Current project ColorFX page](../Pads/2.%20COLOR%20FX.xml)
+- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
   ColorFX selection with stems context; demonstrates the same `filter_selectcolorfx` pattern as Reference - ColorFX.
+
+- [GraveRaver source skin](../Skins/GraveRaver/src/skin.xml)
+  Full working modular skin; the best real-world example of `<define class>` composition and panel layout.
+
+- [GraveRaver build file](../Skins/GraveRaver/justfile)
+  Build system for flattening the modular GraveRaver source into a single installable skin.xml.
 
 - [Haunting Pro Edit skin](../Skins/Haunting%20Pro%20Edit/Pro.xml)
   Published full-size skin; useful for reading real-world skin element composition.
-
-Note: GraveRaver skin source is referenced in some docs but is not included in this repo.
 
 ## Skin SDK
 
@@ -677,7 +681,7 @@ Use build-time modularity:
 - compose with XInclude or another XML preprocessor locally
 - build one flattened `skin.xml` before install
 
-This is the pattern demonstrated by [ModularSkeleton](../Skins/ModularSkeleton/README.md).
+This is the pattern demonstrated by [ModularSkeleton](../Skins/ModularSkeleton/README.md) and [GraveRaver](../Skins/GraveRaver/justfile).
 
 Why:
 
@@ -732,5 +736,8 @@ Repo examples:
 - [Reference - Page Aware Sampler](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
 - [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
 - [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
-- [Current project FX page](../Pads/2.%20EFFECTS.xml)
+- [GraveRaver source skin](../Skins/GraveRaver/src/skin.xml)
+- [GraveRaver build file](../Skins/GraveRaver/justfile)
+- [EFFECTS.xml](../Pads/EFFECTS.xml)
+- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
 - [Haunting Pro Edit skin](../Skins/Haunting%20Pro%20Edit/Pro.xml)
