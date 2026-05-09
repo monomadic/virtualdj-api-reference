@@ -19,6 +19,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Check official verb coverage | [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md) |
 | Build a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Skins/ModularSkeleton/](Skins/ModularSkeleton/) |
 | Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
+| Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |
 | Understand macOS paths and databases | [Reference/Application Internals.md](Reference/Application%20Internals.md) |
 
 ## Reliability
@@ -38,8 +39,8 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- VDJScript verb reference covers ~618 of 989 official verbs (~63%)
-- Skin SDK coverage is broad but some element types are still being documented
-- Controller mapper XML format is not yet documented
+- VDJScript verb reference covers ~618 of 989 official verbs (~63%); EQ, `get_browsed_*`, and `cue_*` clusters added in recent pass
+- Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
+- Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 
 Contributions and corrections welcome.

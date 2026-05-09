@@ -3507,6 +3507,176 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### EQ
+
+VirtualDJ's three-band EQ. Each band operates on the full deck signal.
+The numeric scale for `eq_high`, `eq_mid`, `eq_low` runs from `0%` (cut) to `100%` (unity) to `200%` (boost).
+EQ values are center-off: `100%` is unity, below cuts, above boosts.
+
+| Canonical | Aliases | Surfaces | Description |
+| --- | --- | --- | --- |
+| `eq_high` | — | `Map`, `SkinAction`, `SkinQuery` | High-frequency EQ band. Read returns current value; write sets it. | `Official` |
+| `eq_mid` | `eq_med` | `Map`, `SkinAction`, `SkinQuery` | Mid-frequency EQ band. | `Official` |
+| `eq_low` | — | `Map`, `SkinAction`, `SkinQuery` | Low-frequency EQ band. | `Official` |
+| `eq_kill_high` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle high-band kill (cut to zero). Query returns `on` when killed. | `Official` |
+| `eq_kill_mid` | `eq_kill_med` | `Map`, `SkinAction`, `SkinQuery` | Toggle mid-band kill. | `Official` |
+| `eq_kill_low` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle low-band kill. | `Official` |
+| `eq_reset` | — | `Map`, `SkinAction` | Reset all three EQ bands to unity (100%). | `Official` |
+| `eq_high_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the high band. | `Official` |
+| `eq_mid_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the mid band. | `Official` |
+| `eq_low_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the low band. | `Official` |
+| `eq_high_slider` | — | `Map`, `SkinAction` | Center-off slider form of `eq_high` (50% = unity). Use on physical sliders. | `Official` |
+| `eq_mid_slider` | `eq_med_slider` | `Map`, `SkinAction` | Center-off slider form of `eq_mid`. | `Official` |
+| `eq_low_slider` | — | `Map`, `SkinAction` | Center-off slider form of `eq_low`. | `Official` |
+| `eq_mode` | — | `Map`, `SkinAction` | Cycle or set EQ mode. Values: `standard`, `stem`. | `Official` |
+| `fake_eq` | — | `Map`, `SkinAction` | EQ that only affects the preview/headphone signal, not master output. | `Official` |
+
+Examples:
+
+```vdjscript
+eq_high 75%
+eq_low 0%
+eq_kill_high
+eq_reset
+```
+
+Kill button pattern for a skin button:
+
+```xml
+<button action="eq_kill_high" query="eq_kill_high">
+  <off color="#1C1F24" border="#444"/>
+  <on  color="#FF4444" border="#FF4444"/>
+  <text text="HI KILL" color="white"/>
+</button>
+```
+
+Source: `Official`
+
+---
+
+### `get_browsed_*` — Browsed Track Metadata
+
+These verbs return metadata for the track currently highlighted in the browser,
+not for the loaded deck. Use them in `<textzone>` format strings or skin `query=` color expressions
+to build an info panel that updates as the user browses.
+
+All are Text-surface verbs (read-only). None take a deck scope — they always reflect the browser selection.
+
+| Verb | Returns | Source |
+| --- | --- | --- |
+| `get_browsed_title` | Track title | `Official` |
+| `get_browsed_artist` | Artist name | `Official` |
+| `get_browsed_artist_title` | `Artist - Title` combined | `Official` |
+| `get_browsed_title_artist` | `Title - Artist` combined | `Official` |
+| `get_browsed_album` | Album name | `Official` |
+| `get_browsed_bpm` | BPM as a string | `Official` |
+| `get_browsed_key` | Musical key | `Official` |
+| `get_browsed_genre` | Genre tag | `Official` |
+| `get_browsed_comment` | Comment tag | `Official` |
+| `get_browsed_composer` | Composer tag | `Official` |
+| `get_browsed_filepath` | Full file path | `Official` |
+| `get_browsed_color` | Track color (returns a color value) | `Official` |
+| `get_browsed_header` | Column header label for sorting context | `Official` |
+| `get_browsed_scrollpos` | Current browser scroll position (numeric) | `Official` |
+| `get_browsed_scrollsize` | Total browser scroll range (numeric) | `Official` |
+| `get_browsed_selection_index` | Index of the selected row | `Official` |
+| `get_browsed_folder` | Name of the currently open folder | `Official` |
+| `get_browsed_folder_path` | Full path of the currently open folder | `Official` |
+| `get_browsed_folder_icon` | Icon identifier for the current folder | `Official` |
+| `get_browsed_folder_tab` | Active browser tab | `Official` |
+| `get_browsed_folder_scrollpos` | Folder list scroll position | `Official` |
+| `get_browsed_folder_scrollsize` | Folder list scroll range | `Official` |
+| `get_browsed_folder_selection_index` | Selected row in the folder list | `Official` |
+
+Contrast with deck metadata verbs (loaded track, not browsed):
+`get_artist`, `get_title`, `get_bpm`, `get_key`, `get_genre`, `get_comment`.
+
+Browser info panel example (skin XML):
+
+```xml
+<group x="0" y="0">
+  <textzone>
+    <pos x="0" y="0"/><size width="400" height="20"/>
+    <text fontsize="13" weight="bold" color="white" action="get_browsed_artist_title"/>
+  </textzone>
+  <textzone>
+    <pos x="0" y="22"/><size width="200" height="18"/>
+    <text fontsize="11" color="#93A1B1" format="`get_browsed_bpm` BPM  `get_browsed_key`"/>
+  </textzone>
+  <textzone>
+    <pos x="0" y="42"/><size width="400" height="18"/>
+    <text fontsize="11" color="#93A1B1" action="get_browsed_genre"/>
+  </textzone>
+  <visual type="color" source="get_browsed_color">
+    <pos x="0" y="60"/><size width="400" height="3"/>
+  </visual>
+</group>
+```
+
+Source: `Official`
+
+---
+
+### Cue Points
+
+#### Core cue verbs
+
+| Canonical | Aliases | Surfaces | Description | Source |
+| --- | --- | --- | --- | --- |
+| `cue` | — | `Map`, `SkinAction` | Set or jump to the main cue point. Hold to set while stopped; press during play to jump. | `Official` |
+| `cue_stop` | — | `Map`, `SkinAction`, `SkinQuery` | Jump to cue and stop. Query: returns `on` when at cue position. | `Official` |
+| `cue_play` | — | `Map`, `SkinAction` | Jump to cue and play. Releases to cue position on up if held. | `Official` |
+| `cue_button` | — | `Map`, `SkinAction` | Hold-to-preview cue behavior: plays from cue while held, returns on release. | `Official` |
+| `cue_cup` | — | `Map`, `SkinAction` | CUP (Cue Up and Play): jump to cue and immediately start playing. | `Official` |
+| `cue_3button` | — | `Map`, `SkinAction` | Three-button cue mode (Cue / Play / Stop). | `Official` |
+| `cue_select` | — | `Map`, `SkinAction` | Select the active cue point by number. | `Official` |
+| `cue_color` | — | `Text`, `SkinQuery` | Returns the color of the specified cue point. | `Official` |
+| `cue_name` | — | `Text` | Returns the name of the specified cue point. | `Official` |
+| `cue_pos` | — | `Text`, `SkinQuery` | Returns the position of the specified cue point. | `Official` |
+| `cue_action` | — | `Map`, `SkinAction` | Perform a cue-specific action (context-dependent). | `Official` |
+| `cue_loop` | — | `Map`, `SkinAction` | Set a loop at the cue point. | `Official` |
+| `cue_loop_hold` | — | `Map`, `SkinAction` | Hold-triggered cue loop. | `Official` |
+| `cue_loop_autosync` | — | `Map`, `SkinAction` | Auto-sync cue loop to beat grid. | `Official` |
+| `cue_display` | — | `SkinQuery`, `Text` | Returns display state of the cue panel or cue overlay. | `Official` |
+| `cue_countdown` | — | `Text` | Returns countdown to the next cue point. | `Official` |
+| `cue_countup` | — | `Text` | Returns time elapsed since the last cue point. | `Official` |
+| `cue_counter` | — | `Text` | Returns the total number of cue points set on the loaded track. | `Official` |
+| `cues_options` | — | `SkinAction` | Open the cue options menu. | `Official` |
+| `goto_cue` | — | `Map`, `SkinAction` | Jump to a cue point by number: `goto_cue 1`, `goto_cue +1` (next). | `Official` |
+| `auto_cue` | — | `Map`, `SkinAction` | Toggle auto-cue (jump to first beat on load). | `Official` |
+
+#### Cue point numbering
+
+Cue points are numbered from `1`. Most verbs accept a literal slot number or `+1`/`-1` to step through them.
+
+#### `cue_pos` and position format
+
+`cue_pos` returns position in the unit determined by the current `display_time` setting.
+When used in a `query=""` or condition, it returns `on` if that cue slot is set, `off` if empty.
+
+```vdjscript
+cue_pos 1
+cue_pos 1 ? on : off
+```
+
+#### Pad page pattern: 8 hot cues with color
+
+```xml
+<pad1 name="`cue_name 1`" color="cue_pos 1 ? cue_color 1 : dim"
+      query="cue_pos 1 ? on : off">
+  cue_pos 1 ? goto_cue 1 : cue_select 1 &amp; cue
+</pad1>
+```
+
+Breakdown:
+- `color=` uses `cue_color 1` when the cue is set, falls back to `dim`
+- `query=` lights the pad only when the cue is set
+- action: if set, jump to it; if not, select slot 1 and set a cue there
+
+Source: `Official`
+
+---
+
 ## Broad Verb Index
 
 The sections below remain useful as a wide local inventory. They are still being normalized to the same API standard used above, especially around aliases, surface notes, and source-status markers.

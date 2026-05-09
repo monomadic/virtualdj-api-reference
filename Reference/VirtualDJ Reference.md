@@ -270,6 +270,65 @@ Avoid:
 
 Source: `Official`, `Official forum`
 
+### `<visual type="...">` — Full Type Reference
+
+The `type=""` attribute on `<visual>` determines what the element renders and how its `source=""` is interpreted.
+
+| Type | What it renders | `source=` expects | Notes | Source |
+| --- | --- | --- | --- | --- |
+| `linear` | Progressively reveals `<on>` over `<off>` graphic | Numeric action (`volume`, `position`, `get_level`, etc.) | Use `orientation="vertical"` / `"horizontal"` and `direction="up"` / `"down"` / `"left"` / `"right"`. Add `granularity="N"` for a segmented VU meter. | `Official` |
+| `onoff` | Shows `<on>` or `<off>` graphic based on a threshold | Numeric action; `≥ 2048` triggers `<on>` | Use for beat flash, status indicators. | `Official` |
+| `color` | Solid filled rectangle in the color returned by source | Action returning a color value (`cue_color 1`, `pad_color 1`, `get_key_color`, etc.) | No `<on>` / `<off>` children needed. Width/height set the fill area. | `Official` |
+| `waveform` | Deck waveform display | Implicit (always the current deck's waveform) | Must be inside a `<deck>` container. `source=""` is not used. | `Official` |
+| `spectrum` | Frequency spectrum analyzer | Implicit (current deck's audio) | Displays frequency bands as a bar graph. | `Official` |
+| `cover` | Album art for the loaded track | Implicit (loaded track cover art) | Scales to `<size>`. Use `<off>` to show a placeholder when no art is available. | `Official` |
+| `custom` | Raw graphic tile from skin image | Numeric action | Low-level; use when none of the above types fit. | `Official` |
+
+#### `type="linear"` — level meter
+
+```xml
+<visual source="get_level" type="linear" orientation="vertical" direction="up">
+  <pos x="680" y="220"/>
+  <size width="16" height="560"/>
+  <off color="#23303C"/>
+  <on  color="accent_1"/>
+</visual>
+```
+
+When using named colors (`<define color="...">`) instead of a skin image, omit `x=""` / `y=""` from `<off>` and `<on>` and use the `color=""` attribute instead.
+
+#### `type="color"` — cue point color stripe
+
+```xml
+<visual type="color" source="cue_color 1">
+  <pos x="0" y="0"/>
+  <size width="4" height="48"/>
+</visual>
+```
+
+#### `type="waveform"` — deck waveform
+
+```xml
+<deck deck="1">
+  <visual type="waveform">
+    <pos x="0" y="0"/>
+    <size width="800" height="80"/>
+  </visual>
+</deck>
+```
+
+#### `type="cover"` — album art
+
+```xml
+<visual type="cover">
+  <pos x="24" y="24"/>
+  <size width="128" height="128"/>
+  <off color="#1A2129"/>
+</visual>
+```
+
+Source: `Official`
+
 ### Positioning
 
 The positioning SDK page allows both nested `<pos>` and inline `x="" y="" width="" height=""` forms.

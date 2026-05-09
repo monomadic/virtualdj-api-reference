@@ -654,6 +654,7 @@ The visual progressively reveals the `<on>` graphic as the source value increase
 - `type="linear"` provides smooth transitions proportional to the source value
 - `granularity` creates stepped/segmented displays instead of smooth
 - Can use clipmasks for complex shaped meters
+- Additional types not listed here (`waveform`, `spectrum`, `cover`) are documented with examples in [VirtualDJ Reference.md — visual type reference](VirtualDJ%20Reference.md#visual-type----full-type-reference)
 
 ---
 
