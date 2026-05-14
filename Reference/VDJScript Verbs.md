@@ -749,6 +749,212 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### Time Component Queries
+
+Use these when a skin needs separate time fields instead of the formatted string from `get_time`.
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_time_sign` | `Text`, `SkinQuery` | Return `-1` or `+1` for elapsed/remain/total time according to `display_time`. | `get_time_sign 'remain'` |
+| `get_time_hour` | `Text`, `SkinQuery` | Hour component of elapsed/remain/total time. | `get_time_hour 'elapsed'` |
+| `get_time_min` | `Text`, `SkinQuery` | Minute component of elapsed/remain/total time. | `get_time_min 'remain'` |
+| `get_time_sec` | `Text`, `SkinQuery` | Second component of elapsed/remain/total time. | `get_time_sec 'remain'` |
+| `get_time_ms` | `Text`, `SkinQuery` | Hundredth-second component of elapsed/remain/total time. | `get_time_ms 'elapsed'` |
+| `get_time_msf` | `Text`, `SkinQuery` | Frame component of elapsed/remain/total time. | `get_time_msf 'elapsed'` |
+| `get_totaltime_min` | `Text`, `SkinQuery` | Minute component of total track length. | `get_totaltime_min` |
+| `get_totaltime_sec` | `Text`, `SkinQuery` | Second component of total track length. | `get_totaltime_sec` |
+| `get_totaltime_ms` | `Text`, `SkinQuery` | Hundredth-second component of total track length. | `get_totaltime_ms` |
+| `get_totaltime_msf` | `Text`, `SkinQuery` | Frame component of total track length. | `get_totaltime_msf` |
+| `get_songlength` | `Text`, `SkinQuery` | Total track length in seconds. | `get_songlength` |
+
+Notes:
+
+- Most `get_time_*` verbs follow `display_time`; pass `elapsed`, `remain`, or `total` to bypass the current display mode.
+- Use the broader `get_time` entry for formatted text and arbitrary unit conversion.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Loaded Track Metadata Queries
+
+These query the track loaded on the current deck, unlike `get_browsed_*`, which follows the browser selection.
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_filepath` | `Text`, `SkinQuery` | Full file path of the loaded song. | `get_filepath` |
+| `get_filename` | `Text`, `SkinQuery` | File name of the loaded song. | `get_filename` |
+| `get_filesize` | `Text`, `SkinQuery` | File size of the loaded song. | `get_filesize` |
+| `get_composer` | `Text`, `SkinQuery` | Composer tag of the loaded song. | `get_composer` |
+| `get_year` | `Text`, `SkinQuery` | Year tag of the loaded song. | `get_year` |
+| `get_artist_title` | `Text`, `SkinQuery` | Combined artist-title text for the loaded song. | `get_artist_title` |
+| `get_title_artist` | `Text`, `SkinQuery` | Combined title-artist text for the loaded song. | `get_title_artist` |
+| `get_title_remix` | `Text`, `SkinQuery` | Title plus remix in parentheses. | `get_title_remix` |
+| `get_artist_before_feat` | `Text`, `SkinQuery` | Artist text before a featuring separator. | `get_artist_before_feat` |
+| `get_featuring_after_artist` | `Text`, `SkinQuery` | Featuring text after the artist. | `get_featuring_after_artist` |
+| `get_artist_title_separator` | `Text`, `SkinQuery` | Separator used in combined artist/title display. | `get_artist_title_separator` |
+| `get_loaded_song_color` | `Text`, `SkinQuery` | Color of the loaded track, including color filters. | `get_loaded_song_color 'white'` |
+| `has_cover` | `SkinQuery`, `Button` | True when cover art is available. | `has_cover` |
+| `has_linked_tracks` | `SkinQuery`, `Button` | True when the track has links to other tracks. | `has_linked_tracks` |
+
+Notes:
+
+- `get_loaded_song_color` includes color filters; use `get_loaded_song color` when you specifically want the manually selected track color.
+- `has_linked_tracks browsed` checks the browsed track; it can also take a script that returns a full file path.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Beatgrid And Position Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_firstbeat` | `Text`, `SkinQuery` | Position of the first beat in milliseconds. | `get_firstbeat` |
+| `get_firstbeat_local` | `Text`, `SkinQuery` | First beat of the current 16-beat phrase, in milliseconds. | `get_firstbeat_local` |
+| `get_beatgrid` | `Text`, `SkinQuery` | Beat intensity from the beatgrid. | `get_beatgrid` |
+| `get_beatdiff` | `Text`, `SkinQuery` | Beat distance between this deck and the active deck. | `get_beatdiff` |
+| `get_beat2` | `Text`, `SkinQuery` | Beat helper variant from the official beat query family. | `get_beat2` |
+| `get_beat_counter` | `Text`, `SkinQuery` | Current beat-counter position. | `get_beat_counter` |
+| `get_beat_num` | `Text`, `SkinQuery` | Current beat number in the measure, or phrase-position query with parameters. | `get_beat_num 1` |
+| `get_phrase_num` | `Text`, `SkinQuery` | Current measure number inside the phrase. | `get_phrase_num` |
+| `get_bar` | `Text`, `SkinQuery` | Current bar number. | `get_bar` |
+| `get_beat_bar` | `Text`, `SkinQuery` | Percentage position inside the bar. | `get_beat_bar 16` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Deck And Environment Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_activedeck` | `Text`, `SkinQuery` | Number of the active deck. | `get_activedeck` |
+| `get_deck_letter` | `Text`, `SkinQuery` | Letter of the current deck. | `get_deck_letter` |
+| `get_decks` | `Text`, `SkinQuery` | Number of visible/available decks. | `get_decks` |
+| `get_defaultdeck` | `Text`, `SkinQuery` | Number of the default deck. | `get_defaultdeck` |
+| `get_leftdeck` | `Text`, `SkinQuery` | Number of the deck assigned to the left side. | `get_leftdeck` |
+| `get_rightdeck` | `Text`, `SkinQuery` | Number of the deck assigned to the right side. | `get_rightdeck` |
+| `get_plugindeck` | `Text`, `SkinQuery` | Plugin context deck number, with special values for master/sampler/mic. | `get_plugindeck` |
+| `get_display` | `Text`, `SkinQuery` | Display identifier for the current skin or screen context. | `get_display` |
+| `get_version` | `Text`, `SkinQuery` | VirtualDJ version text. | `get_version` |
+| `get_build` | `Text`, `SkinQuery` | VirtualDJ build number. | `get_build` |
+| `get_vdj_folder` | `Text`, `SkinQuery` | VirtualDJ home folder. | `get_vdj_folder` |
+| `get_username` | `Text`, `SkinQuery` | Current VirtualDJ account username. | `get_username` |
+| `get_membership` | `Text`, `SkinQuery` | Current VirtualDJ membership text. | `get_membership` |
+| `get_license` | `Text`, `SkinQuery` | Current VirtualDJ license text. | `get_license` |
+| `get_lemode` | `SkinQuery`, `Text` | True when VirtualDJ is running in Limited Edition mode. | `get_lemode` |
+| `get_hwnd` | `Text`, `SkinQuery` | Windows handle for the VirtualDJ window. | `get_hwnd` |
+| `get_skin_color` | `Text`, `SkinQuery` | Skin theme/default color helper. | `get_skin_color` |
+| `skin_width` | `Text`, `SkinQuery` | Current skin width. | `skin_width` |
+| `skin_height` | `Text`, `SkinQuery` | Current skin height. | `skin_height` |
+| `skin_starter_tip` | `Text`, `SkinQuery` | Starter-skin tip helper. | `skin_starter_tip` |
+| `has_logo` | `SkinQuery`, `Button` | True when the current skin/logo context exposes a logo. | `has_logo` |
+| `getfood` | `Action` | Official joke/helper entry; do not build serious workflow logic around it. | `getfood` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Input And Output Availability Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_hasheadphone` | `SkinQuery`, `Text` | Headphone-output availability helper. | `get_hasheadphone` |
+| `get_hasheadphones` | `SkinQuery`, `Text` | Headphone-output availability helper. | `get_hasheadphones` |
+| `get_hasinput` | `SkinQuery`, `Text` | Input availability helper. | `get_hasinput` |
+| `get_haslinein` | `SkinQuery`, `Text` | Line-input availability helper. | `get_haslinein` |
+| `get_hasmaster` | `SkinQuery`, `Text` | Master-output availability helper. | `get_hasmaster` |
+| `get_hasmic` | `SkinQuery`, `Text` | Microphone availability helper. | `get_hasmic` |
+| `has_aux` | `SkinQuery`, `Button` | True when an aux input/path is available. | `has_aux` |
+| `has_video_mix` | `SkinQuery`, `Button` | True when video mixing is available or active. | `has_video_mix` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Recording Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_record_message` | `Text`, `SkinQuery` | Message displayed on the record page. | `get_record_message` |
+| `get_record_size` | `Text`, `SkinQuery` | Current size of the recording file. | `get_record_size` |
+| `get_record_min` | `Text`, `SkinQuery` | Minute component of recording time. | `get_record_min` |
+| `get_record_sec` | `Text`, `SkinQuery` | Second component of recording time. | `get_record_sec` |
+| `get_record_ms` | `Text`, `SkinQuery` | Millisecond/hundredth component of recording time. | `get_record_ms` |
+| `get_record_msf` | `Text`, `SkinQuery` | Frame component of recording time. | `get_record_msf` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Audio Analysis And Visualization Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_arm` | `Text`, `SkinQuery` | Position of the turntable arm. | `get_arm` |
+| `get_peak_audio` | `Text`, `SkinQuery` | Peak audio helper for skin/system displays. | `get_peak_audio` |
+| `get_spectrum_band` | `Text`, `SkinQuery` | Level of a single spectrum band. | `get_spectrum_band 1 32 vocals` |
+| `get_volume` | `Text`, `SkinQuery` | Effective volume after volume sliders and crossfader. | `get_volume` |
+| `get_deck_analysis` | `Text`, `SkinQuery` | Analysis helper for current or upcoming song events. | `get_deck_analysis` |
+| `get_song_event` | `Text`, `SkinQuery` | Current or next song-event data for visualization plugins. | `get_song_event current volume` |
+| `get_custom_text` | `Text`, `SkinQuery` | Custom text helper. | `get_custom_text` |
+
+Notes:
+
+- `get_spectrum_band` defaults to 32 bands; pass a second parameter for a different band count.
+- The third `get_spectrum_band` parameter can request a stem-aware spectrum such as `vocals`.
+- `get_song_event` accepts `current` or `next`, then an event field such as `hasbeats`, `volume`, `volume_end`, or `remaining`.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Controller Display And Platter Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_controller_screen` | `Text`, `SkinQuery` | Controller-screen helper for mappings and controller display scripts. | `get_controller_screen` |
+| `get_ns7_platter` | `Text`, `SkinQuery` | NS7 platter display/helper query. | `get_ns7_platter` |
+| `ns7_platter` | `Action` | NS7 platter helper for controller mappings. | `ns7_platter` |
+| `get_nb_multicam` | `Text`, `SkinQuery` | Number of multicam sources/helper value. | `get_nb_multicam` |
+| `get_scratch_direction` | `Text`, `SkinQuery` | Current scratch direction helper. | `get_scratch_direction` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### AskTheDJ And Karaoke Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_askthedj` | `Text`, `SkinQuery` | Latest Ask The DJ request, or an indexed older request. | `get_askthedj 2` |
+| `get_askthedj_unread` | `Text`, `SkinQuery` | Count of unread Ask The DJ requests. | `get_askthedj_unread` |
+| `get_karaoke_background_song` | `Text`, `SkinQuery` | Karaoke background song helper. | `get_karaoke_background_song` |
+| `has_karaoke_next` | `SkinQuery`, `Button` | True when there is another karaoke song queued. | `has_karaoke_next` |
+
+Notes:
+
+- AskTheDJ queries require the Ask The DJ monitoring setting to be active.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Key And Cue Helper Queries
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `get_key_modifier` | `Text`, `SkinQuery` | Semitone shift currently applied to the song. | `get_key_modifier` |
+| `get_key_modifier_text` | `Text`, `SkinQuery` | Text display of the current semitone shift. | `get_key_modifier_text` |
+| `get_cue` | `Text`, `SkinQuery` | Current cue helper value. | `get_cue` |
+| `get_saved_loop` | `Text`, `SkinQuery` | Saved-loop helper value. | `get_saved_loop` |
+| `get_timecode_quality` | `Text`, `SkinQuery` | Timecode signal quality helper. | `get_timecode_quality` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
 ### `get_browsed_song`
 
 Aliases: none
