@@ -27,6 +27,7 @@ Current curated coverage includes:
 - browser, search, and sideview actions
 - transport, cue, loop, and sync controls
 - filter and FX selection
+- FX stems routing, release controls, and controller-oriented armed FX helpers
 - sampler page-aware helpers
 - deck assignment and crossfader routing
 
@@ -1451,6 +1452,318 @@ effect_colorslider 1
 Preferred usage:
 
 - pair it with `effect_colorfx` for custom ColorFX-style controls
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `colorfx_slider`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `Pad`, `SkinAction`
+
+Official summary:
+
+- Adjust the ColorFX parameter
+
+Typical forms:
+
+```vdjscript
+colorfx_slider
+colorfx_slider 50%
+```
+
+Preferred usage:
+
+- use `filter` for the normal deck filter / selected ColorFX amount path
+- use `colorfx_slider` when mapping a dedicated ColorFX parameter control exposed by a controller or skin
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_releaseslider`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `SkinAction`
+
+Official summary:
+
+- Control the effect release-specific slider
+
+Typical forms:
+
+```vdjscript
+effect_releaseslider
+effect_releaseslider 50%
+```
+
+Preferred usage:
+
+- treat this as a release-FX-specific control path, separate from normal slot sliders
+- use `is_releasefx` when the UI needs to know whether the current effect is in the release-FX slot
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_releaseslider_active`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `SkinAction`
+
+Official summary:
+
+- Control the effect release-specific slider and automatically activate the effect
+
+Typical forms:
+
+```vdjscript
+effect_releaseslider_active
+effect_releaseslider_active 50%
+```
+
+Preferred usage:
+
+- use for momentary-style release-FX controls that should activate while the slider is being moved
+- keep normal effect-slot controls on `effect_slider` / `effect_slider_active`
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_stems`
+
+Aliases: none
+
+Kind: `Dual`
+
+Typical surfaces: `Map`, `Button`, `Pad`, `SkinAction`, `SkinQuery`, `Text`
+
+Official summary:
+
+- Apply effects only to selected stems
+
+Typical forms:
+
+```vdjscript
+effect_stems vocal on
+effect_stems 'melody'
+effect_stems off
+effect_stems ? on : off
+```
+
+Preferred usage:
+
+- use when a pad page or skin intentionally routes audio FX to part of the track instead of the full deck signal
+- use `effect_stems off` to return FX routing to the full track
+- in skin and pad state, query `effect_stems '<stem>'` when you need a specific route and query bare `effect_stems` when any stem-FX route should count as active
+
+Notes:
+
+- Official stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`.
+- Existing local pad pages use lowercase names such as `vocal`, `melody`, and `rhythm`; keep that style when matching nearby pad XML.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Local test`: existing pad pages in this repo use `effect_stems` for ColorFX / push-FX routing
+
+### `effect_stems_color`
+
+Aliases: none
+
+Kind: `Query`
+
+Typical surfaces: `SkinQuery`, `Text`, `Pad`
+
+Official summary:
+
+- Return the color for the `effect_stems` button
+
+Typical forms:
+
+```vdjscript
+effect_stems_color
+```
+
+Preferred usage:
+
+- use for a generic "FX to stems" indicator when the UI should follow VirtualDJ's own stems-FX color
+- use `stem_color '<stem>'` instead when a control is explicitly tied to one stem
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `stem_color`
+
+Aliases: none
+
+Kind: `Query`
+
+Typical surfaces: `SkinQuery`, `Text`, `Pad`
+
+Official summary:
+
+- Return the default color of a specific stem
+
+Typical forms:
+
+```vdjscript
+stem_color 'Vocal'
+stem_color 'Melody'
+stem_color 'Rhythm'
+```
+
+Preferred usage:
+
+- use for per-stem pad colors and skin indicators
+- use `effect_stems_color` for a generic effect-stems button color that should follow VirtualDJ's own `effect_stems` state
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_arm_stem`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `SkinAction`
+
+Official summary:
+
+- Select or unselect a stem to be used with `stems` as the slot for `effect_*` actions
+
+Typical forms:
+
+```vdjscript
+effect_arm_stem Vocal
+effect_arm_stem Vocal+Bass
+```
+
+Preferred usage:
+
+- use for controller mappings that expose a stem-selection layer before operating on effect actions
+- use `effect_stems` for ordinary pad-page or skin controls that directly route current deck effects to stems
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_bpm_deck`
+
+Aliases: none
+
+Kind: `Dual`
+
+Typical surfaces: `Map`, `Button`, `SkinAction`, `SkinQuery`, `Text`
+
+Official summary:
+
+- Set or get a custom BPM for plugins activated on this deck
+
+Typical forms:
+
+```vdjscript
+effect_bpm_deck 120
+effect_bpm_deck off
+effect_bpm_deck
+```
+
+Preferred usage:
+
+- use only when an effect plugin should run against a custom BPM that differs from the loaded song
+- reset with `effect_bpm_deck off` to return plugins to the song BPM
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### `effect_bpm_deck_tap`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `SkinAction`
+
+Official summary:
+
+- Tap a custom BPM for plugins activated on this deck
+
+Typical forms:
+
+```vdjscript
+effect_bpm_deck_tap
+effect_bpm_deck off
+```
+
+Preferred usage:
+
+- use for hardware or skin tap controls that set effect-plugin BPM independently of the song BPM
+- pair with `effect_bpm_deck off` as the reset affordance
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Armed FX Helpers
+
+These verbs are primarily for controllers with deck/effect selection switches. They build an intermediate "armed" target, then `effect_arm_active` activates the selected effect on the selected deck.
+
+| Verb | Kind | Summary | Example |
+| --- | --- | --- | --- |
+| `effect_arm_deck` | `Action` | Select the deck, master, sampler, mic, or aux target for armed FX. | `effect_arm_deck master` |
+| `effect_arm_select` | `Action` | Select the effect that `effect_arm_active` will activate. | `effect_arm_select 'echo'` |
+| `effect_arm_select_popup` | `Action` | Open/select from the armed-effect selection popup. | `effect_arm_select_popup` |
+| `effect_arm_slot` | `Action` | Toggle whether a slot is activated by `effect_arm_active`. | `effect_arm_slot 1` |
+| `effect_arm_active` | `Dual` | Activate the armed effect on the armed deck. | `effect_arm_active` |
+| `effect_arm_slider` | `Action` | Move a parameter for the armed effect/deck selection. | `effect_arm_slider 1 2` |
+| `effect_arm_slider_name` | `Text` | Return a parameter name for the armed effect/deck selection. | `effect_arm_slider_name 1 short` |
+| `effect_arm_slider_text` | `Text` | Return parameter value text for the armed effect/deck selection. | `effect_arm_slider_text 1` |
+| `effect_arm_slider_label` | `Text` | Return a parameter label for the armed effect/deck selection. | `effect_arm_slider_label 1 short` |
+| `effect_arm_beats` | `Action` | Change the speed of the armed effect/deck selection. | `effect_arm_beats 1` |
+| `effect_arm_bpm` | `Text` | Return the BPM of the deck selected by `effect_arm_deck`. | `effect_arm_bpm` |
+
+Notes:
+
+- `effect_arm_deck single` limits arming to one deck at a time.
+- `effect_arm_deck master`, `effect_arm_deck sampler`, `effect_arm_deck mic`, and `effect_arm_deck aux` target non-deck effect paths.
+- Prefer direct slot verbs such as `effect_select`, `effect_slider`, and `effect_active` in skins and pad pages unless you are intentionally modeling a hardware armed-FX workflow.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### FX Send/Return Helpers
+
+These verbs are for hardware-style FX send/return routing. The official appendix currently gives detailed examples for the multi-source selector and lists the other two names with minimal description.
+
+| Verb | Kind | Summary | Example |
+| --- | --- | --- | --- |
+| `effect_fxsendreturndeck` | `Action` | Select the source deck for an FX send/return path. | `deck 1 effect_fxsendreturndeck` |
+| `effect_fxsendreturndeck_multi` | `Action` | Select which source to apply FX to for a specific send/return channel when multiple channels exist. | `deck 2 effect_fxsendreturndeck_multi mic` |
+| `effect_fxsendreturnenable` | `Dual` | Enable or query the FX send/return path. | `effect_fxsendreturnenable` |
+
+Examples:
+
+```vdjscript
+deck 1 effect_fxsendreturndeck_multi master
+deck 2 effect_fxsendreturndeck_multi mic
+deck 2 effect_fxsendreturndeck_multi 4
+```
 
 Sources:
 
@@ -3926,6 +4239,7 @@ The sections below remain useful as a wide local inventory. They are still being
 | `mic_eq_mid`          | Microphone mid EQ         | `mic_eq_mid`              |
 | `mic_eq_high`         | Microphone high EQ        | `mic_eq_high`             |
 | `mic_volume`          | Set mic volume            | `mic_volume`              |
+| `aux_volume`          | Set aux input volume      | `aux_volume`              |
 | `linein`              | Activate line input       | `deck 1 linein 2 on`      |
 | `linein_rec`          | Record line input         | `linein_rec`              |
 | `mic_rec`             | Record microphone         | `mic_rec`                 |
@@ -3960,14 +4274,15 @@ The sections below remain useful as a wide local inventory. They are still being
 
 | Verb               | Description       | Example                      |
 | ------------------ | ----------------- | ---------------------------- |
-| `crossfader`       | Move crossfader   | `crossfader 50%`             |
-| `auto_crossfade`   | Auto crossfade    | `auto_crossfade 2000ms`      |
-| `level` / `volume` | Set deck volume   | `level`                      |
+| `crossfader` / `crossfader_slider` | Move crossfader | `crossfader 50%` |
+| `auto_crossfade` / `auto_crossfader` | Auto crossfade | `auto_crossfade 2000ms` |
+| `level` / `level_slider` / `volume` / `volume_slider` | Set deck volume | `level` |
 | `mute`             | Mute deck         | `mute`                       |
-| `gain`             | Set gain          | `gain`                       |
+| `gain` / `gain_slider` / `power_gain` | Set gain | `gain`          |
 | `gain_label`       | Gain label text   | `gain_label`                 |
 | `gain_relative`    | Move gain relative to software position | `gain_relative +1%` |
 | `set_gain`         | Set gain to dBA   | `set_gain 0`                 |
+| `colorfx_prefader` | Make ColorFX prefader for controller compatibility | `colorfx_prefader` |
 | `master_volume`    | Master volume     | `master_volume`              |
 | `booth_volume`     | Booth volume      | `booth_volume 70%`           |
 | `headphone_volume` | Headphone volume  | `headphone_volume`           |
@@ -3976,9 +4291,18 @@ The sections below remain useful as a wide local inventory. They are still being
 | `headphone_gain`   | PFL output gain   | `headphone_gain +1dB`        |
 | `master_balance`   | Master left/right balance | `master_balance 50%`    |
 | `mono_mix`         | Mix left/right channels together | `mono_mix`             |
+| `fake_mixer`       | Tell VirtualDJ not to apply mixer volumes to sound output | `fake_mixer` |
+| `fake_eq`          | Tell VirtualDJ not to apply EQ to sound output | `fake_eq` |
+| `fake_gain`        | Tell VirtualDJ not to apply gain to sound output | `fake_gain` |
+| `fake_filter`      | Tell VirtualDJ not to apply filter to sound output | `fake_filter` |
+| `fake_hp`          | Tell VirtualDJ not to apply headphone volume to headphone output | `fake_hp` |
+| `fake_hpmix`       | Tell VirtualDJ not to apply headphone mix to headphone output | `fake_hpmix` |
+| `fake_pfl`         | Disable skin PFL switching when PFL is controlled elsewhere | `fake_pfl` |
+| `fake_master`      | Tell VirtualDJ not to apply master volume to master output | `fake_master` |
 | `crossfader_curve` | Crossfader curve  | `crossfader_curve "scratch"` |
 | `crossfader_hamster` | Invert crossfader | `crossfader_hamster`       |
 | `crossfader_disable` | Disable crossfader | `crossfader_disable`       |
+| `levelfader_curve` / `fader_curve` | Level fader curve | `levelfader_curve 50%` |
 | `get_limiter`      | Check compression | `get_limiter`                |
 | `get_level`        | Signal level      | `get_level`                  |
 | `get_level_log`    | Log-scaled signal level | `get_level_log`          |
@@ -4140,6 +4464,7 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `eq_mode`              | Select EQ behavior    | `eq_mode +1`, `eq_mode frequency` |
 | `mute_stem`            | Mute stem             | `mute_stem vocal`                 |
 | `only_stem`            | Isolate stem          | `only_stem vocal`                 |
+| `stem_color`           | Get default stem color | `stem_color 'Vocal'`             |
 | `stem_pad`             | Mute/isolate stem pad | `stem_pad vocal`                  |
 | `has_stems`            | Check if has stems    | `has_stems "ready"`               |
 | `eq_high`              | High EQ/HiHat/Vocal   | `eq_high`                         |
@@ -4297,9 +4622,33 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `effect_slider_active` / `effect_slider_activate` | Move slider while activating effect | `effect_slider_active 1` |
 | `effect_slider_reset` | Reset effect slider to default      | `effect_slider_reset 1 2`         |
 | `effect_button`       | Press effect button                 | `effect_button 1 2`               |
+| `effect_colorfx`      | Select effect for a custom ColorFX slot | `effect_colorfx 1 "echo"`     |
+| `colorfx_slider`      | Adjust ColorFX parameter            | `colorfx_slider 50%`              |
+| `effect_colorslider`  | Center-off custom ColorFX-style control | `effect_colorslider 1`        |
+| `effect_releaseslider` | Control release-FX slider          | `effect_releaseslider`            |
+| `effect_releaseslider_active` | Control release-FX slider and activate | `effect_releaseslider_active` |
 | `effect_mixfx`        | Associate effect with crossfader    | `effect_mixfx`                    |
 | `effect_mixfx_select` | Select Mix FX                       | `effect_mixfx_select "filter"`    |
 | `effect_mixfx_activate` | Toggle Mix FX                     | `effect_mixfx_activate`           |
+| `effect_stems`        | Route effects to selected stems     | `effect_stems 'vocal'`            |
+| `effect_stems_color`  | Get color for the `effect_stems` button | `effect_stems_color`          |
+| `effect_arm_stem`     | Arm stems for `stems` slot effect actions | `effect_arm_stem Vocal+Bass` |
+| `effect_bpm_deck`     | Set/get custom plugin BPM for this deck | `effect_bpm_deck 120`        |
+| `effect_bpm_deck_tap` | Tap custom plugin BPM for this deck | `effect_bpm_deck_tap`             |
+| `effect_arm_deck`     | Select target deck/path for armed FX | `effect_arm_deck master`         |
+| `effect_arm_select`   | Select effect for armed FX          | `effect_arm_select "echo"`        |
+| `effect_arm_select_popup` | Popup selector for armed FX     | `effect_arm_select_popup`         |
+| `effect_arm_slot`     | Toggle armed FX slot participation  | `effect_arm_slot 1`               |
+| `effect_arm_active`   | Activate selected armed effect      | `effect_arm_active`               |
+| `effect_arm_slider`   | Move armed effect parameter         | `effect_arm_slider 1 2`           |
+| `effect_arm_slider_name` | Get armed effect parameter name  | `effect_arm_slider_name 1 short`  |
+| `effect_arm_slider_text` | Get armed effect parameter text  | `effect_arm_slider_text 1`        |
+| `effect_arm_slider_label` | Get armed effect parameter label | `effect_arm_slider_label 1 short` |
+| `effect_arm_beats`    | Change armed effect speed           | `effect_arm_beats 1`              |
+| `effect_arm_bpm`      | Get BPM of armed deck target        | `effect_arm_bpm`                  |
+| `effect_fxsendreturndeck` | Select FX send/return source deck | `effect_fxsendreturndeck`     |
+| `effect_fxsendreturndeck_multi` | Select source for multi send/return | `effect_fxsendreturndeck_multi mic` |
+| `effect_fxsendreturnenable` | Enable/query FX send/return path | `effect_fxsendreturnenable` |
 | `effect_bank_save`    | Save deck FX slots 1-6 to bank      | `effect_bank_save 1`              |
 | `effect_bank_load`    | Load deck FX slots 1-6 from bank    | `effect_bank_load 1`              |
 | `effect_clone`        | Clone all three FX slots from another deck | `effect_clone`            |
