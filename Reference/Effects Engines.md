@@ -299,7 +299,7 @@ effect_active 1 ? action_if_true : action_if_false
 </led>
 ```
 
-### Effect by Name (Bypass Slots)
+### Effect by Name (Convenience Shortcut)
 
 You can reference effects **by name** instead of slot number:
 
@@ -309,16 +309,54 @@ effect_slider 'echo' 1 75%      # Control Echo param 1 directly
 effect_active 'reverb' on       # Turn on Reverb effect
 ```
 
-This allows **multiple instances** of effects and **effect chaining**.
+This is valid VDJScript and can be the right choice for quick personal mappings or a deliberate "toggle Echo wherever Echo is" shortcut.
+
+For reference pad pages and controller-style examples, prefer slot addressing when the pad needs reliable state. A pad page usually wants to answer "what did this pad put in this slot?" rather than "is there any Echo active somewhere?" Slot addressing also gives the pad a known place to set sliders and buttons.
+
+Two reliable pad designs:
+
+- Dedicated slot pads:
+  Each pad owns one slot, such as Echo on slot 1 and Reverb on slot 2. Use this when several effects should be able to stay active together.
+
+- Shared slot preset pads:
+  Many pads program one slot, often slot 1. Pressing a pad replaces the slot's current effect, applies a known parameter preset, and activates the slot. Use this when pads are an effect picker.
+
+For LED/query state, avoid checking only `effect_active 1` on a pad labeled with an effect name. If slot 1 is active with Reverb, a pad labeled Echo should not blink. Check `get_effect_name <slot>` first, then nest the slot active check:
+
+```
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ? blink 500ms : off :
+  off
+```
+
+For a dedicated off control, call the slot activation verb with `off`:
+
+```
+effect_active 1 off
+```
+
+For same-pad toggles, check that the slot already contains the named effect, then nest the active check:
+
+```
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ?
+    effect_active 1 off :
+    effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on :
+  effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on
+```
+
+Do not use bare `effect_select 1` for a state check. In pad actions, it can open the effect selector. Use `effect_select 1 'Echo'` only when deliberately loading Echo into slot 1.
+
+Official VDJScript documents `&&` for query chains, where the query should return true only when both commands are true. That does not make it a good fit for complex pad action branches that also load effects, set sliders, and toggle state. Use nested conditionals for same-pad toggle actions, and keep `&&` to simple query expressions you have verified in the target surface.
 
 ### Effect Chaining
 
 Effects process in the order they were activated:
 
 ```
-effect_active 'filter' on       # First in chain
-effect_active 'echo' on         # Processes after filter
-effect_active 'reverb' on       # Processes last
+effect_select 1 'filter' & effect_active 1 on       # First in chain
+effect_select 2 'echo' & effect_active 2 on         # Processes after filter
+effect_select 3 'reverb' & effect_active 3 on       # Processes last
 ```
 
 Result: Signal → Filter → Echo → Reverb → Output
@@ -770,7 +808,9 @@ effect_active 1 ? blink : off
 **Is specific effect active:**
 
 ```
-effect_active 'echo' ? action : action
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ? action_if_echo_active : action_if_echo_loaded_off :
+  action_if_other_effect_loaded
 ```
 
 **Are stems FX active:**
@@ -871,23 +911,26 @@ Chain effects for a build-up:
 
 ```
 # Start with light flanger
-effect_active 'flanger' on & 
-effect_slider 'flanger' 1 25% & 
+effect_select 1 'flanger' &
+effect_slider 1 1 25% &
+effect_active 1 on &
 
 # Add echo
-wait 8bt & 
-effect_active 'echo' on & 
-effect_slider 'echo' 1 50% & 
+wait 8bt &
+effect_select 2 'echo' &
+effect_slider 2 1 50% &
+effect_active 2 on &
 
 # Add reverb
-wait 8bt & 
-effect_active 'reverb' on & 
+wait 8bt &
+effect_select 3 'reverb' &
+effect_active 3 on &
 
 # Drop - remove all
-wait 8bt & 
-effect_active 'flanger' off & 
-effect_active 'echo' off & 
-effect_active 'reverb' off
+wait 8bt &
+effect_active 1 off &
+effect_active 2 off &
+effect_active 3 off
 ```
 
 ### Workflow 5: Acapella Out with Reverb
@@ -1095,14 +1138,14 @@ effect_mixfx_select 'echo'          # Select Mix FX
 # ACTIVATION
 effect_active 1                     # Toggle slot 1
 effect_active 1 on                  # Turn on slot 1
-effect_active 'echo'                # Toggle Echo by name
+effect_active 'echo'                # Shortcut: toggle Echo by name
 effect_active 'colorfx'             # Toggle ColorFX
 effect_mixfx_activate               # Toggle Mix FX
 
 # PARAMETERS
 effect_slider 1 1 50%               # Slot 1, param 1 = 50%
 effect_slider 1 2 1bt               # Slot 1, param 2 = 1 beat
-effect_slider 'echo' 1 75%          # Echo param 1 = 75%
+effect_slider 'echo' 1 75%          # Shortcut: Echo param 1 by name
 filter 50%                          # ColorFX/filter = 50%
 
 # BUTTONS

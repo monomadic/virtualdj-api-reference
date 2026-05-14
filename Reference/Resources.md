@@ -80,6 +80,6 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Published Skin Findings](Published%20Skin%20Findings.md) - Provenance log for commands and patterns mined from working public skins.
 - [Filter Syntax](Filter%20Syntax.md) - Browser filter notes.
 - [Example Skin XML Objects](Example%20Skin%20XML%20Objects.md) - Local skin XML examples.
-- [GraveRaver source skin](../Skins/GraveRaver/src/skin.xml) - Active modular skin source in this repo.
+- [GraveRaver build demo](../Skins/GraveRaver/README.md) - Minimal XInclude source tree for the build workflow; not a polished skin reference.
 - [GraveRaver build file](../Skins/GraveRaver/justfile) - Build-time XInclude workflow.
 - [ModularSkeleton build skin](../Skins/ModularSkeleton/build/skin.xml) - Minimal modular skin scaffold output.

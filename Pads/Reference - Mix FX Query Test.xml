@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Mix FX Query Test.xml
+  Minimal local test page for current VirtualDJ Mix FX selection queries.
+
+  Test flow:
+    1. Load this pad page.
+    2. Press pad 5 to select FILTER, then compare pads 1 and 2.
+    3. Press pad 6 to select ECHO, then compare pads 3 and 4.
+
+  Expected in VirtualDJ 8.5.9307 / build 850.9336:
+    - Direct query: effect_mixfx_select 'NAME' ? on : off
+    - Indirect query: param_equal "`effect_mixfx_select`" "NAME" ? on : off
+    - Both forms track the selected Mix FX in pad XML.
+-->
+<page name="MIX FX QUERY TEST">
+
+  <pad1 name="DIRECT FILTER"
+        color="effect_mixfx_select 'FILTER' ? color '#31D67B' : color '#7A3038'"
+        query="effect_mixfx_select 'FILTER' ? on : off">
+    effect_mixfx_select 'FILTER'
+  </pad1>
+
+  <pad2 name="INDIRECT FILTER"
+        color="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? color '#31D67B' : color '#7A3038'"
+        query="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? on : off">
+    effect_mixfx_select 'FILTER'
+  </pad2>
+
+  <pad3 name="DIRECT ECHO"
+        color="effect_mixfx_select 'ECHO' ? color '#43A8FF' : color '#7A3038'"
+        query="effect_mixfx_select 'ECHO' ? on : off">
+    effect_mixfx_select 'ECHO'
+  </pad3>
+
+  <pad4 name="INDIRECT ECHO"
+        color="param_equal &quot;`effect_mixfx_select`&quot; &quot;ECHO&quot; ? color '#43A8FF' : color '#7A3038'"
+        query="param_equal &quot;`effect_mixfx_select`&quot; &quot;ECHO&quot; ? on : off">
+    effect_mixfx_select 'ECHO'
+  </pad4>
+
+  <pad5 name="SELECT FILTER" color="color '#31D67B'" query="effect_mixfx_select 'FILTER' ? on : off">
+    effect_mixfx_select 'FILTER'
+  </pad5>
+
+  <pad6 name="SELECT ECHO" color="color '#43A8FF'" query="effect_mixfx_select 'ECHO' ? on : off">
+    effect_mixfx_select 'ECHO'
+  </pad6>
+
+  <pad7 name="MIX FX ON/OFF" color="color '#FFB84A'" query="effect_mixfx_activate ? on : off">
+    effect_mixfx_activate
+  </pad7>
+
+  <pad8 name="`get_text 'MIX FX: `effect_mixfx_select``" color="color '#E8EEF5'" query="on">
+    nothing
+  </pad8>
+
+</page>

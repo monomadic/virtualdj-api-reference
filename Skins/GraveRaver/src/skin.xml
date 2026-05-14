@@ -1,51 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Standard Sizes
-  ==============
-               w      h
-  Document     1920   1080
-  Top Bar      1920   43
-  Pro
-    Deck       800    450
-       TBar    800    38
--->
-<skin xmlns:xi="http://www.w3.org/2001/XInclude" name="DeathDisco Grave Raver v1" version="8" width="1920" height="1080" author="Rob" image="skin.png" preview="preview.png" breakline="1000" breakline2="1000">
-  <!-- Theme tokens and runtime globals -->
-  <xi:include href="defs/colors.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/icons.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/globals.xml" xpointer="xpointer(/globals/*)"/>
-  <!-- Shared class library -->
-  <xi:include href="defs/classes.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/text.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/meters.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/cues.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/buttons.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/sliders.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/pitch.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/display.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/browser.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/deck-info.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/fx.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/track-info.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/transport.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/jogwheel.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/pads.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/performance.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/waveform.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/mixer.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/controls.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/decks.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/panels.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/racks.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/video.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/deck-areas.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/layout-wave-positions.xml" xpointer="xpointer(/defs/*)"/>
-  <xi:include href="defs/classes/layout.xml" xpointer="xpointer(/defs/*)"/>
-  <!-- Composition order matters for layering -->
-  <xi:include href="panels/decks.xml" xpointer="xpointer(/module/*)"/>
-  <xi:include href="panels/mixer.xml" xpointer="xpointer(/module/*)"/>
-  <xi:include href="panels/wave.xml" xpointer="xpointer(/module/*)"/>
-  <xi:include href="panels/layout.xml" xpointer="xpointer(/module/*)"/>
-  <xi:include href="panels/topbar.xml" xpointer="xpointer(/module/*)"/>
-  <xi:include href="panels/bottombar.xml" xpointer="xpointer(/module/*)"/>
+<skin xmlns:xi="http://www.w3.org/2001/XInclude"
+      name="GraveRaver Build Demo"
+      version="8"
+      width="1280"
+      height="720"
+      author="VirtualDJ API Reference"
+      image="skin.png"
+      preview="preview.png"
+      breakline="700"
+      breakline2="700">
+  <!-- This source tree is intentionally tiny. It exists to demonstrate
+       build-time XInclude, not to model a polished production skin. -->
+  <xi:include href="partials/defs.xml" xpointer="xpointer(/defs/*)"/>
+  <xi:include href="partials/background.xml" xpointer="xpointer(/module/*)"/>
+  <xi:include href="partials/header.xml" xpointer="xpointer(/module/*)"/>
+  <xi:include href="partials/decks.xml" xpointer="xpointer(/module/*)"/>
+  <xi:include href="partials/footer.xml" xpointer="xpointer(/module/*)"/>
 </skin>

@@ -48,32 +48,32 @@ Observed at lines 1149-1153 for `FILTER`, `ECHO`, `LOOP ROLL`, `REVERB`, and `NO
 
 | Command | Current understanding | Sources | Test status |
 | ------- | --------------------- | ------- | ----------- |
-| `effect_mixfx` | Associates an effect with the crossfader / opens or selects Mix FX depending on context. | `Official`; `Official forum`; `Published skin` in `Skins/Haunting Pro Edit/Touch.xml` | Needs local behavior matrix |
-| `effect_mixfx_activate` | Toggles Mix FX globally on/off. Current official docs say to use `effect_mixfx_select` to choose the effect. Forum testing from 2019 says specific effect names are not parameters to this command. | `Official`; `Community`; `Published skin` | Needs local behavior matrix |
-| `effect_mixfx_select` | Selects the Mix FX used while moving the crossfader. When used without a parameter, forum examples use it as a value-returning query for the selected Mix FX name. | `Official`; `Community`; `Published skin` | Needs local behavior matrix |
+| `effect_mixfx` | Associates an effect with the crossfader / opens or selects Mix FX depending on context. | `Official`; `Official forum`; `Published skin` from the former local `Haunting Pro Edit/Touch.xml` capture | Needs local behavior matrix |
+| `effect_mixfx_activate` | Toggles Mix FX globally on/off. Current official docs say to use `effect_mixfx_select` to choose the effect. Forum testing from 2019 says specific effect names are not parameters to this command. | `Official`; `Community`; `Published skin`; `Local test` | Local test confirmed global on/off query; named-parameter behavior still needs retest |
+| `effect_mixfx_select` | Selects the Mix FX used while moving the crossfader. Used without a parameter, it returns the selected Mix FX name for display/comparison. Direct boolean queries and indirect `param_equal` queries both tracked the selected Mix FX in current pad XML and skin-query contexts. | `Official`; `Community`; `Published skin`; `Local test` | Local test passed for direct/indirect pad XML query/color and skin button query/visibility on VirtualDJ 8.5.9307 / 850.9336.mac.2224 |
 
 Notes:
 
 - The current official VDJScript verbs appendix contains `effect_mixfx`, `effect_mixfx_activate`, and `effect_mixfx_select`.
 - A VirtualDJ hardware manual for the AlphaTheta DDJ-FLX2 says Mix FX can be selected from Starter/Essentials skins and suggests assigning `effect_mixfx_select` to a custom button when another skin lacks Mix FX controls.
-- A 2019 forum thread reports that direct boolean queries like `effect_mixfx_select 'echo' ? ...` did not work reliably in that user's testing, and recommends `param_equal "\`effect_mixfx_select\`" "echo" ? ...` for pad LED/color logic.
-- The Denon skin uses the direct query form `effect_mixfx_select 'FILTER' ? effect_mixfx_activate`, so current VirtualDJ should be tested before deciding which form to recommend for skin buttons.
+- A 2019 forum thread reports that direct boolean queries like `effect_mixfx_select 'echo' ? ...` did not work reliably in that user's testing, and recommends `param_equal "\`effect_mixfx_select\`" "echo" ? ...` for pad LED/color logic. Local testing on May 12, 2026 did not reproduce that limitation in current VirtualDJ.
+- The Denon skin uses the direct query form `effect_mixfx_select 'FILTER' ? effect_mixfx_activate`. Current local testing confirms the direct selected-state query is valid in skin XML; the Denon action order remains a published-skin pattern, not a preferred order.
 
-Suggested local tests:
+Local test, May 12, 2026:
 
-```vdjscript
-effect_mixfx_select
-effect_mixfx_select 'filter'
-effect_mixfx_select 'filter' ? on : off
-param_equal "`effect_mixfx_select`" "filter" ? on : off
-effect_mixfx_activate
-effect_mixfx_activate 'filter'
-effect_mixfx_activate ? on : off
-effect_mixfx_activate & effect_mixfx_select 'filter'
-effect_mixfx_select 'echo' & effect_mixfx_activate
-```
+- Build: VirtualDJ 8.5.9307 / `850.9336.mac.2224`.
+- Runnable pad page: [Pads/Reference - Mix FX Query Test.xml](../Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml).
+- Runnable skin: [Skins/MixFxQueryTest/skin.xml](../Skins/MixFxQueryTest/skin.xml).
+- Setup: installed the pad page into the local VirtualDJ Pads folder, loaded the test skin, switched between `FILTER` and `ECHO`, and read the pad XML state through `pad_button_color`.
 
-Record separate results for custom buttons, pad XML `query`, skin `query`, skin `visibility`, and text display contexts.
+| Context | Direct pattern | Indirect pattern | Result |
+| ------- | -------------- | ---------------- | ------ |
+| Pad XML color/query, selected `FILTER` | `effect_mixfx_select 'FILTER' ? ...` | `param_equal "\`effect_mixfx_select\`" "FILTER" ? ...` | Pad 1 and pad 2 both on/green |
+| Pad XML color/query, selected `ECHO` | `effect_mixfx_select 'ECHO' ? ...` | `param_equal "\`effect_mixfx_select\`" "ECHO" ? ...` | Pad 3 and pad 4 both on/blue |
+| Skin button `query` | Direct selected effect on; other effect off | Indirect selected effect on; other effect off | Matched |
+| Skin `visibility` | Direct selected panel visible; other panel hidden | Indirect selected panel visible; other panel hidden | Matched |
+
+Recommendation: prefer direct `effect_mixfx_select '<name>' ? ...` for selected-state tests in current skins and pad pages. Keep the indirect `param_equal "\`effect_mixfx_select\`" "<name>" ? ...` form for older-build compatibility notes or when the returned name needs to be compared as a value.
 
 ### Other Commands To Reconcile
 

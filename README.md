@@ -6,8 +6,8 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 ## What is here
 
 - **`Reference/`** — Markdown documentation: VDJScript verb reference, skin SDK, effects, options, filter syntax, application internals
-- **`Pads/`** — working pad page XML files covering FX, ColorFX, samplers, cues, and transport
-- **`Skins/`** — skin source trees including a modular skeleton and published reference skins
+- **`Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, and reference patterns
+- **`Skins/`** — skin examples and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
 
 ## Where to start
 
@@ -21,6 +21,12 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
 | Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |
 | Understand macOS paths and databases | [Reference/Application Internals.md](Reference/Application%20Internals.md) |
+
+## Agent Entry Point
+
+`AGENTS.md` is intentionally retained for Claude, Codex, and other coding
+agents that look for that filename. This `README.md` is the human-facing
+overview; `AGENTS.md` keeps the operational shortcuts and repo-specific guardrails.
 
 ## Reliability
 

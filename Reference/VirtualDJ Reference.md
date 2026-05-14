@@ -3,6 +3,7 @@
 Merged reference for this repo's VirtualDJ notes, examples, and preferred implementation patterns.
 
 Last reviewed against live VirtualDJ documentation and forum sources on 2026-04-22.
+Local repo links and example inventory audited on 2026-05-09.
 
 For verb-by-verb API details, use [VDJScript Verbs](VDJScript%20Verbs.md).
 
@@ -38,7 +39,7 @@ Source labels used below:
 
 - Deterministic deck FX pads and buttons:
   Prefer `effect_select <slot>`, `effect_active <slot>`, and `effect_slider <slot> ...`.
-  Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles.
+  Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
   Source: `Official`
 
 - Page-aware sampler pads:
@@ -93,16 +94,53 @@ Source labels used below:
 
 ## Real Examples In This Repo
 
-Recommended runnable examples:
+Recommended runnable pad-page examples:
 
-- [Reference - Slot FX](../Pads/Reference%20-%20Slot%20FX.xml)
+- [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml)
   Canonical slot-based audio FX pads.
 
-- [Reference - ColorFX](../Pads/Reference%20-%20ColorFX.xml)
+- [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml)
   Canonical filter and ColorFX selection patterns using the current verbs.
 
-- [Reference - Page Aware Sampler](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
   Page-aware sampler labels, colors, and actions.
+
+Additional pad pages currently present in `Pads/`:
+
+- [32 Samples.xml](../Pads/32%20Samples.xml)
+  Four-page 32-slot sampler layout using an internal `sam_page` variable.
+
+- [AUTO CUES.xml](../Pads/AUTO%20CUES.xml)
+  Remix cue page with cue-name-driven pad labels and colors.
+
+- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
+  ColorFX selection with stems context; demonstrates the same `filter_selectcolorfx` pattern as Reference - ColorFX.
+
+- [CUE.xml](../Pads/CUE.xml)
+  Hotcue page using `cue_display`, `has_cue`, and cue-color feedback.
+
+- [CUE 16.xml](../Pads/CUE%2016.xml)
+  Sixteen-pad hotcue page using `cue_display` and `cue_color`.
+
+- [CUE SCAN.xml](../Pads/CUE%20SCAN.xml)
+  Cue-name scanner for sections such as intro, build, cut, and drop.
+
+- [PLAY 16.xml](../Pads/PLAY%2016.xml)
+  Sixteen-pad performance transport/stems page.
+
+- [PUSH FX.xml](../Pads/PUSH%20FX.xml)
+  Momentary `padfx` performance page with explicit stem-targeted variants.
+
+- [SAMPLER.xml](../Pads/SAMPLER.xml)
+  Sixteen-pad page-aware sampler page with explicit drop-slot mapping across sampler pages.
+
+- [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml)
+  Simple fixed-slot sampler page demonstrating `drop="sampler_assign <slot>"`.
+
+- [TRANSPORT.xml](../Pads/TRANSPORT.xml)
+  Beat/bar navigation and transport utility pad page.
+
+Skin examples:
 
 - [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
   Build-time XInclude workflow, `<define class>` system, and named color patterns.
@@ -110,22 +148,8 @@ Recommended runnable examples:
 - [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
   Flat installed output showing real `<define>`, `<panel>`, `<deck>`, and `<visual>` usage.
 
-Existing repo examples worth studying:
-
-- [EFFECTS.xml](../Pads/EFFECTS.xml)
-  Name-based FX toggle page with stems routing pads and a KILL ALL pad.
-
-- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
-  ColorFX selection with stems context; demonstrates the same `filter_selectcolorfx` pattern as Reference - ColorFX.
-
-- [GraveRaver source skin](../Skins/GraveRaver/src/skin.xml)
-  Full working modular skin; the best real-world example of `<define class>` composition and panel layout.
-
-- [GraveRaver build file](../Skins/GraveRaver/justfile)
-  Build system for flattening the modular GraveRaver source into a single installable skin.xml.
-
-- [Haunting Pro Edit skin](../Skins/Haunting%20Pro%20Edit/Pro.xml)
-  Published full-size skin; useful for reading real-world skin element composition.
+- [GraveRaver Build Demo](../Skins/GraveRaver/README.md)
+  Minimal XInclude source tree that exists only to demonstrate the build system. Do not treat it as a polished skin reference.
 
 ## Skin SDK
 
@@ -370,6 +394,9 @@ Source: `Official`
 - `condition ? when_true : when_false`
   Branching
 
+- `query1 && query2`
+  Query-only conjunction. Official VDJScript docs describe this as the way to make a chained query return true only when both commands are true.
+
 - Backticks around action-returning values
   Use when a value consumer needs the result of another action
 
@@ -478,10 +505,47 @@ Why this is the safest reference pattern:
 - it mirrors the actual deck FX rack model
 - it behaves predictably across skins and controllers
 - it avoids name-based ambiguity when several effects are loaded
+- it lets a pad own both the effect choice and the parameter preset
 
-Use [Reference - Slot FX](../Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
+Use [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
 
 Source: `Official`
+
+#### Slot Pads vs Name-Based Pads
+
+`effect_active 'Echo'` is legal and useful for quick personal mappings. It asks VirtualDJ to toggle an effect by name, wherever that effect is currently represented.
+
+For documented pad pages, prefer one of these slot-based designs:
+
+- Dedicated slot pads:
+  A pad owns a specific slot, for example Echo on slot 1 and Reverb on slot 2. This works well when the page should allow several effects to remain active at once.
+
+- Shared slot preset pads:
+  Many pads program the same slot, usually slot 1. Pressing Echo Out replaces whatever is in that slot with Echo Out, sets known parameters, and activates it. This works well for performance pages where the pad row is an effect picker rather than a multi-effect rack.
+
+Avoid mixing the two designs without documenting it. A pad labeled `ECHO` with only `query="effect_active 1"` can blink when slot 1 is active with a different effect. If the pad state is meant to mean "slot 1 contains Echo and is active," query `get_effect_name <slot>` first, then nest the slot active check:
+
+```vdjscript
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ? blink 500ms : off :
+  off
+```
+
+To turn the effect off, use the slot activation verb: `effect_active 1 off`. Reference pages can expose that as a dedicated `S1 OFF`/`KILL` pad, or make the preset pad itself toggle only when the same effect is already loaded and active:
+
+```vdjscript
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ?
+    effect_active 1 off :
+    effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on :
+  effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on
+```
+
+Do not use bare `effect_select 1` as that state check. In pad actions, it can open the selector popup. Use `effect_select 1 'Echo'` only when you are deliberately loading a named effect into the slot.
+
+Official VDJScript documents `&&` for query chains, for example "true only when both commands are true." That is different from using `&&` inside a complex pad action body that also branches and performs load/set/on actions. Use nested conditionals for same-pad toggle actions, and reserve `&&` for simple query expressions you have verified in the target surface.
+
+Source: `Official`, `Inference`
 
 ### Filter and ColorFX
 
@@ -520,7 +584,7 @@ Notes:
 - `effect_colorfx` exposes up to four extra custom ColorFX slots.
 - CTO guidance says that the dedicated `colorfx` slot only exposes approved ColorFX-compatible effects, while extra slots are more flexible.
 
-Use [Reference - ColorFX](../Pads/Reference%20-%20ColorFX.xml) for a working repo example.
+Use [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml) for a working repo example.
 
 Source: `Official`, `Official forum`
 
@@ -608,7 +672,7 @@ Practical rule:
 - visible pad UI: page-aware
 - fixed utility controls: absolute
 
-Use [Reference - Page Aware Sampler](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) for a working repo example.
+Use [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) for a working repo example.
 
 Source: `Official`
 
@@ -740,7 +804,7 @@ Use build-time modularity:
 - compose with XInclude or another XML preprocessor locally
 - build one flattened `skin.xml` before install
 
-This is the pattern demonstrated by [ModularSkeleton](../Skins/ModularSkeleton/README.md) and [GraveRaver](../Skins/GraveRaver/justfile).
+This is the pattern demonstrated by [ModularSkeleton](../Skins/ModularSkeleton/README.md). Its flattened `build/skin.xml` output is the installed-form reference.
 
 Why:
 
@@ -790,13 +854,20 @@ Official forum guidance cited for method choices:
 
 Repo examples:
 
-- [Reference - Slot FX](../Pads/Reference%20-%20Slot%20FX.xml)
-- [Reference - ColorFX](../Pads/Reference%20-%20ColorFX.xml)
-- [Reference - Page Aware Sampler](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [32 Samples.xml](../Pads/32%20Samples.xml)
+- [AUTO CUES.xml](../Pads/AUTO%20CUES.xml)
+- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
+- [CUE.xml](../Pads/CUE.xml)
+- [CUE 16.xml](../Pads/CUE%2016.xml)
+- [CUE SCAN.xml](../Pads/CUE%20SCAN.xml)
+- [PLAY 16.xml](../Pads/PLAY%2016.xml)
+- [PUSH FX.xml](../Pads/PUSH%20FX.xml)
+- [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml)
+- [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml)
+- [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [SAMPLER.xml](../Pads/SAMPLER.xml)
+- [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml)
+- [TRANSPORT.xml](../Pads/TRANSPORT.xml)
 - [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
 - [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
-- [GraveRaver source skin](../Skins/GraveRaver/src/skin.xml)
-- [GraveRaver build file](../Skins/GraveRaver/justfile)
-- [EFFECTS.xml](../Pads/EFFECTS.xml)
-- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
-- [Haunting Pro Edit skin](../Skins/Haunting%20Pro%20Edit/Pro.xml)
+- [GraveRaver Build Demo](../Skins/GraveRaver/README.md)

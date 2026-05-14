@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <deck deck="1">
+    <square color="panel" border="panel_border" radius="8">
+      <pos x="32" y="104"/>
+      <size width="588" height="520"/>
+    </square>
+    <textzone class="label" x="64" y="136">
+      <text text="DECK 1"/>
+    </textzone>
+    <textzone class="value" x="64" y="164">
+      <text action="get_title"/>
+    </textzone>
+    <button class="transport" x="64" y="228" action="play_pause" query="play" accent="deck_left" text="PLAY"/>
+    <button class="transport" x="190" y="228" action="cue_stop" query="cue_stop" accent="deck_left" text="CUE"/>
+    <visual source="get_level" type="linear" orientation="vertical" direction="up">
+      <pos x="560" y="152"/>
+      <size width="16" height="420"/>
+      <off color="#26313C"/>
+      <on color="deck_left"/>
+    </visual>
+  </deck>
+
+  <deck deck="2">
+    <square color="panel" border="panel_border" radius="8">
+      <pos x="660" y="104"/>
+      <size width="588" height="520"/>
+    </square>
+    <textzone class="label" x="692" y="136">
+      <text text="DECK 2"/>
+    </textzone>
+    <textzone class="value" x="692" y="164">
+      <text action="get_title"/>
+    </textzone>
+    <button class="transport" x="692" y="228" action="play_pause" query="play" accent="deck_right" text="PLAY"/>
+    <button class="transport" x="818" y="228" action="cue_stop" query="cue_stop" accent="deck_right" text="CUE"/>
+    <visual source="get_level" type="linear" orientation="vertical" direction="up">
+      <pos x="1188" y="152"/>
+      <size width="16" height="420"/>
+      <off color="#26313C"/>
+      <on color="deck_right"/>
+    </visual>
+  </deck>
+</module>

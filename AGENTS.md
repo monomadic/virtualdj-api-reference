@@ -6,6 +6,7 @@ VirtualDJ does not publish comprehensive developer documentation; this repo fill
 ## Where to start
 
 ```
+README.md                     — human-facing project overview
 Reference/README.md          — index of all reference docs, source label policy, current status
 Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
@@ -27,6 +28,7 @@ Reference/                   — Markdown documentation
 - `&` chains actions in XML attributes and must be written `&amp;` inside XML.
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Pad pages live in `Pads/*.xml`. Skins live in `Skins/*/`.
+- `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript verb appendix has 989 entries. This repo documents ~618 of them.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 
@@ -48,10 +50,9 @@ Reference/                   — Markdown documentation
 | [Pads/Reference - Slot FX.xml](Pads/Reference%20-%20Slot%20FX.xml) | Canonical slot-based audio FX pads |
 | [Pads/Reference - ColorFX.xml](Pads/Reference%20-%20ColorFX.xml) | Canonical filter + ColorFX selection |
 | [Pads/Reference - Page Aware Sampler.xml](Pads/Reference%20-%20Page%20Aware%20Sampler.xml) | Page-aware sampler labels, colors, actions |
-| [Pads/EFFECTS.xml](Pads/EFFECTS.xml) | Name-based FX toggle page with stems routing |
 | [Pads/COLOR FX.xml](Pads/COLOR%20FX.xml) | ColorFX selection with stems context |
 | [Skins/ModularSkeleton/build/skin.xml](Skins/ModularSkeleton/build/skin.xml) | Minimal modular skin scaffold |
-| [Skins/Haunting Pro Edit/Pro.xml](Skins/Haunting%20Pro%20Edit/Pro.xml) | Published full-size skin for reference |
+| [Skins/GraveRaver/src/skin.xml](Skins/GraveRaver/src/skin.xml) | Minimal XInclude build-system demo, not a skin design reference |
 
 ## macOS paths
 

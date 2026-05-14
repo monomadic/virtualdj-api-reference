@@ -32,6 +32,8 @@ Most “why doesn’t this work?” moments happen when you use **deck FX slot v
 
 You control **a slot**, not “an effect name globally”.
 
+Name-based shortcuts such as `effect_active 'Echo'` are valid, but they are ambiguous as reference examples: they do not say which FX slot owns the effect, which sliders the pad is preparing, or whether the pad LED is reporting the visible rack state. Use them for quick personal shortcuts; use slots for copyable pad pages and controller mappings.
+
 **Typical pattern**
 - choose effect in slot
 - activate slot
@@ -59,40 +61,79 @@ effect_active 1 ? ...
 
 Slot numbers and exact variants can differ across contexts (deck vs master), but the concept is always “slot owns activation + params”.
 
+For pad pages there are two clean slot designs:
+
+- Dedicated slot pads: each pad owns a different slot, so several effects can stay active together.
+- Shared slot preset pads: many pads program the same slot, so the pads act as an effect picker with known parameter presets.
+
+When a pad label names a specific effect, its query should check `get_effect_name <slot>` first, then nest the slot active check:
+
+```vdjscript
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ? blink 500ms : off :
+  off
+```
+
+Do not use bare `effect_select 1` for this check; in pad actions it can open the selector popup. Use `effect_select 1 'Echo'` only when loading Echo into the slot.
+
+Turn a slot effect off with the slot activation verb:
+
+```vdjscript
+effect_active 1 off
+```
+
+For a same-pad toggle, use nested conditionals:
+
+```vdjscript
+get_effect_name 1 & param_lowercase & param_equal 'echo' ?
+  effect_active 1 ?
+    effect_active 1 off :
+    effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on :
+  effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50% & effect_active 1 on
+```
+
+Official VDJScript documents `&&` for query chains, where the query should return true only when both commands are true. That is narrower than using `&&` inside complex pad action branches. Use nested conditionals for same-pad toggle actions, and keep `&&` to simple query expressions you have verified in the target surface.
+
 ⸻
 
 ### B) ColorFX (Filter engine)
 
-ColorFX is controlled by filter_select/colorfx + filter amount.
+ColorFX is controlled by `filter_selectcolorfx` plus the deck `filter` amount.
+Official VDJScript documents `filter_selectcolorfx` as the selector and `filter`
+as center-off at `50%`.
 
 Select which ColorFX
 
 ```vdjscript
-filter_select 'Echo'
+filter_selectcolorfx 'Echo'
 ```
 
-Turn on (set amount) / off (0%)
+Set amount / reset to neutral
 
 ```vdjscript
-filter 50%     // “on” at a sane default
-filter 0%      // off
+filter 75%     // apply effect above center
+filter 25%     // apply effect below center
+filter 50%     // neutral, no effect
 ```
 
-Toggle (with a default-on value)
+Activate/deactivate the ColorFX slot when you need an explicit on/off state
 
 ```vdjscript
-param_equal filter 0% ? filter 50% : filter 0%
+effect_active 'colorfx' on
+effect_active 'colorfx' off
 ```
 
-Select + toggle
+Select + apply a deterministic amount
 
 ```vdjscript
-filter_select 'Echo' & param_equal filter 0% ? filter 50% : filter 0%
+filter_selectcolorfx 'Echo' & effect_active 'colorfx' on & filter 75%
 ```
 
-Query: is ColorFX effectively on?
+Query: is this ColorFX selected and active?
 
-param_greater filter 0% ? ...
+```vdjscript
+filter_selectcolorfx 'Echo' & effect_active 'colorfx' ? blink 500ms : off
+```
 
 Don’t use effect_active with a ColorFX name. Treat ColorFX as “selected preset + amount”.
 
@@ -100,9 +141,9 @@ Don’t use effect_active with a ColorFX name. Treat ColorFX as “selected pres
 
 C) “Filter” vs “ColorFX” naming confusion
 	•	filter is the amount control for the ColorFX engine.
-	•	filter_select (alias colorfx) chooses which ColorFX preset the filter amount is driving.
+	•	filter_selectcolorfx chooses which ColorFX preset the filter amount is driving.
 
-So “turning ColorFX on” usually means “set filter to non-zero”, not “activate an effect by name”.
+So “turning ColorFX on” usually means selecting the preset, enabling the ColorFX slot if needed, and moving `filter` away from `50%`, not activating an effect by name.
 
 ⸻
 
@@ -122,14 +163,14 @@ Common gotchas:
 
 B) Canonical pad patterns
 
-1) “Select Echo ColorFX and toggle it”
+1) “Select Echo ColorFX and apply it”
 
 ```
 <pad1
   name="Echo"
-  query="param_greater filter 0% ? blink 500ms : off"
+  query="filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' ? blink 500ms : off"
 >
-  filter_select 'Echo' & param_equal filter 0% ? filter 50% : filter 0%
+  filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' on &amp; filter 75%
 </pad1>
 
 2) “Momentary ColorFX (hold = on, release = off)”
@@ -137,9 +178,9 @@ Use the down ? ... : ... pattern:
 
 <pad1
   name="Echo (hold)"
-  query="param_greater filter 0% ? on : off"
+  query="filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' ? on : off"
 >
-  down ? filter_select 'Echo' & filter 50% : filter 0%
+  down ? filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' on &amp; filter 75% : filter 50% &amp; effect_active 'colorfx' off
 </pad1>
 
 3) “Deck FX slot: Echo toggle on slot 1”
@@ -148,7 +189,7 @@ Use the down ? ... : ... pattern:
   name="Echo FX1"
   query="effect_active 1 ? blink 500ms : off"
 >
-  effect_select 1 'Echo' & effect_active 1
+  effect_select 1 'Echo' &amp; effect_active 1
 </pad1>
 ```
 
@@ -252,15 +293,16 @@ effect_select 1 'Echo'
 & effect_slider 1 3 35%
 
 B) Make the UI reflect state reliably
-	•	FX slot: query effect_active <slot>
-	•	ColorFX: query param_greater filter 0%
-	•	If you care about “which one is selected”, query label/name (when available) but avoid brittle string compares unless you’ve verified the exact returned label.
+		•	FX slot: query effect_active <slot>
+		•	ColorFX: query `filter_selectcolorfx '<name>' & effect_active 'colorfx'`
+		•	If you care about “which one is selected”, query label/name (when available) but avoid brittle string compares unless you’ve verified the exact returned label.
 
 C) Avoid “half-on” UX
 
 If you toggle ColorFX by amount, decide what “on” means:
-	•	filter 50% is a common neutral default
-	•	you can store/restore a previous amount using vars, but keep it deterministic for pads
+		•	filter 50% is neutral
+		•	filter 75% or 25% are deterministic on-values in opposite directions
+		•	you can store/restore a previous amount using vars, but keep it deterministic for pads
 
 ⸻
 

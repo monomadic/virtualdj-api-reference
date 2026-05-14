@@ -186,9 +186,10 @@ Most effects support multiple parameters that can be adjusted:
 Effects can be controlled via VDJScript:
 
 ```
-effect_active 'Echo' on
-effect_slider 'Echo' 1 50%
-effect_slider 'Echo' 2 1bt
+effect_select 1 'Echo'
+effect_slider 1 1 50%
+effect_slider 1 2 1bt
+effect_active 1 on
 ```
 
 ### Mix FX Routing

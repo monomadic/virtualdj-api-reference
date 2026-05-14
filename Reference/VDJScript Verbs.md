@@ -1328,6 +1328,8 @@ Preferred usage:
 
 - use slot-based effect selection for deterministic pad pages and skins
 - prefer this over name-only global assumptions when you care which slot owns the effect
+- for pad presets, pair `effect_select <slot> '<name>'` with explicit `effect_slider <slot> ...` values before activating the slot
+- do not use bare `effect_select <slot>` as a harmless selected-name query in pad actions; it can open the effect selector. Use `get_effect_name <slot>` for labels and state checks.
 
 Sources:
 
@@ -1358,6 +1360,11 @@ Preferred usage:
 
 - keep docs slot-centric when describing normal deck FX behavior
 - mention the alias, but keep `effect_active` as canonical
+- name-based forms such as `effect_active 'echo'` are valid shortcuts, but reference pad pages should use slots when they need predictable LED state and parameter ownership
+- if a pad label names a specific effect, query both `get_effect_name <slot>` and `effect_active <slot>` so a different active effect in the same slot does not light the wrong pad
+- turn a slot effect off with `effect_active <slot> off`
+- for same-pad preset toggles, query `get_effect_name <slot>` first, then nest `effect_active <slot>` so pressing the same active effect turns the slot off while pressing a different effect loads/sets/activates it
+- `&&` is documented for query chains, but use nested conditionals for action branches that combine effect-name checks, `? :`, and load/set/on side effects
 
 Sources:
 
@@ -1386,6 +1393,7 @@ Preferred usage:
 
 - use explicit slot and slider numbers in docs and examples
 - pair with `effect_select` and `effect_active` for deterministic FX presets
+- avoid setting sliders by effect name in reference examples unless the example intentionally targets any active instance of that named effect
 
 Sources:
 
@@ -1481,7 +1489,7 @@ Sources:
 - `Official`: current VDJScript verbs appendix
 - `Official forum`: "Mix Assist in other skins", staff context for crossfader-linked behavior
 - `Community`: Mix FX examples from forum users and moderators
-- `Published skin`: `Skins/Haunting Pro Edit/Touch.xml` uses `effect_mixfx`
+- `Published skin`: the former local `Haunting Pro Edit/Touch.xml` capture used `effect_mixfx`
 
 ### `effect_mixfx_activate`
 
@@ -1511,13 +1519,14 @@ Preferred usage:
 Quirks:
 
 - A 2019 forum test reports that `effect_mixfx_activate '<name>'` behaves as a global on/off query rather than selecting or querying that named Mix FX. Keep that form out of examples until locally retested.
-- The Denon Prime 4 Deluxe skin uses `effect_mixfx_activate & effect_mixfx_select 'FILTER'` for named buttons. Test order-dependent behavior in the current VirtualDJ build before turning this into a preferred pattern.
+- The Denon Prime 4 Deluxe skin uses `effect_mixfx_activate & effect_mixfx_select 'FILTER'` for named buttons. A local 2026 test confirmed direct selected-state queries for `effect_mixfx_select`, but did not retest order-dependent activation behavior, so keep `effect_mixfx_select '<name>' & effect_mixfx_activate` as the clearer example order.
 
 Sources:
 
 - `Official`: current VDJScript verbs appendix
 - `Community`: Mix FX forum examples and behavior notes
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
+- `Local test`: `Pads/Reference - Mix FX Query Test.xml` and `Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_mixfx_select`
 
@@ -1536,6 +1545,7 @@ Typical forms:
 ```vdjscript
 effect_mixfx_select
 effect_mixfx_select 'filter'
+effect_mixfx_select 'filter' ? on : off
 param_equal "`effect_mixfx_select`" "filter" ? on : off
 ```
 
@@ -1543,12 +1553,48 @@ Preferred usage:
 
 - use the parameter form to select a named Mix FX
 - use the no-parameter form as a display/query value for the currently selected Mix FX
-- for pad LED/color logic, prefer the `param_equal "\`effect_mixfx_select\`" "<name>" ? ...` form until direct boolean queries are locally verified
+- use direct `effect_mixfx_select '<name>' ? ...` for named selected-state tests in current VirtualDJ pad pages and skins
+- keep the indirect `param_equal "\`effect_mixfx_select\`" "<name>" ? ...` form when comparing the returned display value or documenting older-build-compatible examples
+
+Runnable pad XML example:
+
+```xml
+<pad1 name="DIRECT FILTER"
+      color="effect_mixfx_select 'FILTER' ? color '#31D67B' : color '#7A3038'"
+      query="effect_mixfx_select 'FILTER' ? on : off">
+  effect_mixfx_select 'FILTER'
+</pad1>
+<pad2 name="INDIRECT FILTER"
+      color="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? color '#31D67B' : color '#7A3038'"
+      query="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? on : off">
+  effect_mixfx_select 'FILTER'
+</pad2>
+```
+
+Minimal skin query fragment:
+
+```xml
+<button x="0" y="0"
+        action="effect_mixfx_select 'FILTER'"
+        query="effect_mixfx_select 'FILTER' ? on : off">
+  <size width="120" height="32"/>
+  <off shape="square" color="#6E2F35"/>
+  <on shape="square" color="#1E8E5A"/>
+  <text text="FILTER" color="#FFFFFF" align="center"/>
+</button>
+<panel visibility="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? true : false">
+  <square color="#1E8E5A">
+    <pos x="0" y="40"/>
+    <size width="120" height="32"/>
+  </square>
+</panel>
+```
 
 Quirks:
 
-- Older forum testing reported that direct queries such as `effect_mixfx_select 'echo' ? ...` did not return reliable boolean results in pad-page logic.
-- The Denon Prime 4 Deluxe skin does use direct skin queries such as `effect_mixfx_select 'FILTER' ? effect_mixfx_activate`; verify whether this now works in current skin XML, or whether it is skin-context-specific.
+- Older forum testing reported that direct queries such as `effect_mixfx_select 'echo' ? ...` did not return reliable boolean results in pad-page logic. A local test on VirtualDJ 8.5.9307 / 850.9336.mac.2224 confirmed direct and indirect queries both work in pad XML `query`/`color`, skin button `query`, and skin `visibility` contexts.
+- The no-parameter display form returned lowercase names such as `filter` and `echo` in the local test, while `param_equal` still matched uppercase comparison strings such as `FILTER` and `ECHO`.
+- The Denon Prime 4 Deluxe skin uses direct skin queries such as `effect_mixfx_select 'FILTER' ? effect_mixfx_activate`; current local skin testing is consistent with that selected-state query pattern.
 
 Sources:
 
@@ -1556,6 +1602,7 @@ Sources:
 - `Official`: DDJ-FLX2 hardware manual recommends assigning `effect_mixfx_select` to custom buttons when a skin lacks Mix FX controls
 - `Community`: Mix FX scripting examples and indirect query guidance
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
+- `Local test`: `Pads/Reference - Mix FX Query Test.xml` and `Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_show_gui`
 

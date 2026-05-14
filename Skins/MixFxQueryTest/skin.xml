@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin name="Reference Mix FX Query Test" version="8" width="1000" height="620" nbdecks="2" image="skin.png" preview="preview.png" author="Codex" breakline="620">
+  <font name="Arial"/>
+  <define color="bg" value="#101820"/>
+  <define color="panel" value="#18232E"/>
+  <define color="off_red" value="#6E2F35"/>
+  <define color="on_green" value="#1E8E5A"/>
+  <define color="text" value="#F3F7FA"/>
+  <define color="muted" value="#A8B4BF"/>
+
+  <define class="TEST_BUTTON" placeholders="*text,*action,*query">
+    <button action="[ACTION]" query="[QUERY]">
+      <size width="210" height="46"/>
+      <off shape="square" color="off_red" border="#9A4851" border_size="2" radius="4"/>
+      <on shape="square" color="on_green" border="#35D07F" border_size="2" radius="4"/>
+      <over shape="square" color="#294357" border="#5D8FB2" border_size="2" radius="4"/>
+      <down shape="square" color="#2B6F91" border="#7CC5EA" border_size="2" radius="4"/>
+      <text text="[TEXT]" color="text" colorselected="text" fontsize="14" weight="bold" align="center"/>
+    </button>
+  </define>
+
+  <panel name="background" visible="yes">
+    <square color="bg">
+      <pos x="0" y="0"/>
+      <size width="1000" height="620"/>
+    </square>
+    <grabzone x="0" y="0" width="1000" height="40"/>
+  </panel>
+
+  <textzone>
+    <pos x="36" y="28"/>
+    <size width="580" height="28"/>
+    <text text="Mix FX Query Test" color="text" fontsize="24" weight="bold" align="left"/>
+  </textzone>
+
+  <textzone>
+    <pos x="36" y="64"/>
+    <size width="580" height="22"/>
+    <text text="Selected Mix FX:" color="muted" fontsize="14" align="left"/>
+  </textzone>
+  <textzone>
+    <pos x="160" y="64"/>
+    <size width="260" height="22"/>
+    <text action="effect_mixfx_select" color="text" fontsize="14" weight="bold" align="left"/>
+  </textzone>
+
+  <button x="36" y="110" action="effect_mixfx_select 'FILTER' &amp; pad_page 'MIX FX QUERY TEST'">
+    <size width="210" height="46"/>
+    <off shape="square" color="#243444" border="#5B728A" border_size="2" radius="4"/>
+    <down shape="square" color="#2B6F91" border="#7CC5EA" border_size="2" radius="4"/>
+    <text text="SET FILTER + PAGE" color="text" fontsize="14" weight="bold" align="center"/>
+  </button>
+
+  <button x="260" y="110" action="effect_mixfx_select 'ECHO' &amp; pad_page 'MIX FX QUERY TEST'">
+    <size width="210" height="46"/>
+    <off shape="square" color="#243444" border="#5B728A" border_size="2" radius="4"/>
+    <down shape="square" color="#2B6F91" border="#7CC5EA" border_size="2" radius="4"/>
+    <text text="SET ECHO + PAGE" color="text" fontsize="14" weight="bold" align="center"/>
+  </button>
+
+  <button x="484" y="110" action="effect_mixfx_activate" query="effect_mixfx_activate ? on : off">
+    <size width="160" height="46"/>
+    <off shape="square" color="off_red" border="#9A4851" border_size="2" radius="4"/>
+    <on shape="square" color="on_green" border="#35D07F" border_size="2" radius="4"/>
+    <text text="ACTIVE" color="text" colorselected="text" fontsize="14" weight="bold" align="center"/>
+  </button>
+
+  <square color="panel" border="#2E4052" border_size="1" radius="4">
+    <pos x="36" y="186"/>
+    <size width="452" height="222"/>
+  </square>
+  <textzone>
+    <pos x="56" y="204"/>
+    <size width="400" height="22"/>
+    <text text="Skin button query" color="text" fontsize="16" weight="bold" align="left"/>
+  </textzone>
+
+  <panel class="TEST_BUTTON" x="56" y="242"
+         text="DIRECT FILTER"
+         action="nothing"
+         query="effect_mixfx_select 'FILTER' ? on : off"/>
+  <panel class="TEST_BUTTON" x="264" y="242"
+         text="INDIRECT FILTER"
+         action="nothing"
+         query="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? on : off"/>
+  <panel class="TEST_BUTTON" x="56" y="308"
+         text="DIRECT ECHO"
+         action="nothing"
+         query="effect_mixfx_select 'ECHO' ? on : off"/>
+  <panel class="TEST_BUTTON" x="264" y="308"
+         text="INDIRECT ECHO"
+         action="nothing"
+         query="param_equal &quot;`effect_mixfx_select`&quot; &quot;ECHO&quot; ? on : off"/>
+
+  <square color="panel" border="#2E4052" border_size="1" radius="4">
+    <pos x="516" y="186"/>
+    <size width="448" height="222"/>
+  </square>
+  <textzone>
+    <pos x="536" y="204"/>
+    <size width="390" height="22"/>
+    <text text="Skin visibility query" color="text" fontsize="16" weight="bold" align="left"/>
+  </textzone>
+
+  <panel visibility="effect_mixfx_select 'FILTER' ? true : false">
+    <square color="on_green" border="#35D07F" border_size="2" radius="4">
+      <pos x="536" y="242"/>
+      <size width="188" height="46"/>
+    </square>
+    <textzone>
+      <pos x="536" y="257"/>
+      <size width="188" height="20"/>
+      <text text="DIRECT FILTER VISIBLE" color="text" fontsize="12" weight="bold" align="center"/>
+    </textzone>
+  </panel>
+
+  <panel visibility="param_equal &quot;`effect_mixfx_select`&quot; &quot;FILTER&quot; ? true : false">
+    <square color="on_green" border="#35D07F" border_size="2" radius="4">
+      <pos x="744" y="242"/>
+      <size width="188" height="46"/>
+    </square>
+    <textzone>
+      <pos x="744" y="257"/>
+      <size width="188" height="20"/>
+      <text text="INDIRECT FILTER VISIBLE" color="text" fontsize="12" weight="bold" align="center"/>
+    </textzone>
+  </panel>
+
+  <panel visibility="effect_mixfx_select 'ECHO' ? true : false">
+    <square color="on_green" border="#35D07F" border_size="2" radius="4">
+      <pos x="536" y="308"/>
+      <size width="188" height="46"/>
+    </square>
+    <textzone>
+      <pos x="536" y="323"/>
+      <size width="188" height="20"/>
+      <text text="DIRECT ECHO VISIBLE" color="text" fontsize="12" weight="bold" align="center"/>
+    </textzone>
+  </panel>
+
+  <panel visibility="param_equal &quot;`effect_mixfx_select`&quot; &quot;ECHO&quot; ? true : false">
+    <square color="on_green" border="#35D07F" border_size="2" radius="4">
+      <pos x="744" y="308"/>
+      <size width="188" height="46"/>
+    </square>
+    <textzone>
+      <pos x="744" y="323"/>
+      <size width="188" height="20"/>
+      <text text="INDIRECT ECHO VISIBLE" color="text" fontsize="12" weight="bold" align="center"/>
+    </textzone>
+  </panel>
+
+  <square color="panel" border="#2E4052" border_size="1" radius="4">
+    <pos x="36" y="436"/>
+    <size width="928" height="142"/>
+  </square>
+  <textzone>
+    <pos x="56" y="454"/>
+    <size width="860" height="20"/>
+    <text text="Pad XML query via pad 1-8" color="text" fontsize="16" weight="bold" align="left"/>
+  </textzone>
+  <textzone>
+    <pos x="236" y="455"/>
+    <size width="380" height="18"/>
+    <text action="pad_page" color="muted" fontsize="12" align="left"/>
+  </textzone>
+
+  <visual type="color" source="pad_button_color 1"><pos x="70" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 2"><pos x="188" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 3"><pos x="306" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 4"><pos x="424" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 5"><pos x="542" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 6"><pos x="660" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 7"><pos x="778" y="498"/><size width="104" height="52"/></visual>
+  <visual type="color" source="pad_button_color 8"><pos x="896" y="498"/><size width="104" height="52"/></visual>
+
+  <textzone><pos x="70" y="515"/><size width="104" height="18"/><text text="PAD 1" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="188" y="515"/><size width="104" height="18"/><text text="PAD 2" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="306" y="515"/><size width="104" height="18"/><text text="PAD 3" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="424" y="515"/><size width="104" height="18"/><text text="PAD 4" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="542" y="515"/><size width="104" height="18"/><text text="PAD 5" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="660" y="515"/><size width="104" height="18"/><text text="PAD 6" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="778" y="515"/><size width="104" height="18"/><text text="PAD 7" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+  <textzone><pos x="896" y="515"/><size width="104" height="18"/><text text="PAD 8" color="text" fontsize="11" weight="bold" align="center"/></textzone>
+</skin>
