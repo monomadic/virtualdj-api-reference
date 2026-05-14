@@ -3801,6 +3801,144 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### Browser Folder And List Helpers
+
+These actions create or modify browser folders, lists, and list shortcuts. Most are useful in skin buttons and controller mappings, but several are destructive enough to avoid wiring to accidental gestures.
+
+| Verb | Aliases | Surfaces | Summary | Example |
+| --- | --- | --- | --- | --- |
+| `add_favoritefolder` | — | `Button`, `SkinAction` | Make the selected folder a favorite / monitored folder. | `add_favoritefolder` |
+| `add_filterfolder` | — | `Button`, `SkinAction` | Create a new filter folder. | `add_filterfolder` |
+| `add_to_list` | `virtualfolder_add` | `Button`, `SkinAction` | Add selected browser songs to the specified list. | `add_to_list 'Warmup'` |
+| `create_list_from_playlist` | `create_virtualfolder_from_playlist` | `Button`, `SkinAction` | Save the automix playlist as a MyLists entry. | `create_list_from_playlist` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Browser File Actions
+
+These actions operate on the currently selected browser file or files, not necessarily the loaded deck.
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `browsed_file_info` | `Button`, `SkinAction` | Open the Tag Editor for the browsed song. | `browsed_file_info` |
+| `browsed_file_reveal` | `Button`, `SkinAction` | Reveal the browsed song in the OS file manager. | `browsed_file_reveal` |
+| `browsed_file_reload_tag` | `Button`, `SkinAction` | Reload the selected file's tag from the source file. | `browsed_file_reload_tag` |
+| `browsed_file_rename` | `Button`, `SkinAction` | Rename the selected browser file. | `browsed_file_rename` |
+| `set_browsed_file_bpm` | `Button`, `SkinAction` | Set the BPM of selected browser songs. | `set_browsed_file_bpm 129.3` |
+| `browsed_song_hashtag` | `Button`, `SkinAction` | Add or remove a hashtag from a browsed-song field. | `browsed_song_hashtag 'user 1' '#high_energy'` |
+| `loaded_song_hashtag` | `Button`, `SkinAction` | Add or remove a hashtag from a loaded-song field. | `loaded_song_hashtag 'user 1' '#warmup'` |
+| `edit_comment` | `Button`, `SkinAction` | Open a window to edit the selected track's comment. | `edit_comment` |
+
+Important notes:
+
+- `browsed_file_reload_tag` overwrites VirtualDJ database changes with values saved in the file tag.
+- `set_browsed_file_bpm` follows the same value style as `set_bpm`, including absolute and relative values.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Browser Search And View Helpers
+
+| Verb | Kind | Surfaces | Summary | Example |
+| --- | --- | --- | --- | --- |
+| `log_search` | `Action` | `Button`, `SkinAction` | Log the current search to `SearchLog.txt`. | `log_search` |
+| `search_playlists` | `Action` | `Button`, `SkinAction` | Open a dialog to find lists containing a song. | `search_playlists deck` |
+| `search_folder` | `Action` | `Button`, `SkinAction` | Show/hide folder/list search, or open it as a dialog. | `search_folder dialog` |
+| `search_options` | `Action` | `Button`, `SkinAction` | Open or set search field options. | `search_options 'composer'` |
+| `search_folder_options` | `Action` | `Button`, `SkinAction` | Open folder-search options. | `search_folder_options` |
+| `view_options` | `Action` | `Button`, `SkinAction` | Open or set browser view options. | `view_options 'showkaraoke' on` |
+| `browser_isactive` | `Query` | `SkinQuery`, `Button` | True when the browser was recently used by a controller. | `browser_isactive` |
+| `browser_geniusdj` | `Action` | `Button`, `SkinAction` | Lookup recommendations from the selected or playing track. | `browser_geniusdj playing` |
+| `browser_shortcut` | `Action` | `Button`, `SkinAction` | Assign current folder as shortcut, or jump to shortcut by index. | `browser_shortcut 1` |
+| `recurse_folder` | `Action` | `Button`, `SkinAction` | Show selected folder and subfolders in the browser list. | `recurse_folder` |
+| `font_size` | `Action` | `Button`, `SkinAction` | Change browser font size. | `font_size +1` |
+| `has_quick_filter` | `Query` | `SkinQuery`, `Button` | Return true if a quick filter exists at the given index. | `has_quick_filter 1` |
+| `sideview_options` | `Action` | `Button`, `SkinAction` | Show sideview shortcut options. | `sideview_options` |
+| `sideview_triggerpad` | `Action` | `Button`, `SkinAction` | Toggle sideview sampler between triggerpad and list modes. | `sideview_triggerpad` |
+| `sideview_sort` | `Action` | `Button`, `SkinAction` | Sort the sideview by a column. | `sideview_sort 'artist'` |
+| `sidereco_options` | `Action` | `Button`, `SkinAction` | Show options for the sideview recommendation panel. | `sidereco_options` |
+| `sidereco_song` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel song helper. | `sidereco_song` |
+| `sidereco_source` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel source helper. | `sidereco_source` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Automix, Playlist, And Sidelist Helpers
+
+| Verb | Aliases | Surfaces | Summary | Example |
+| --- | --- | --- | --- | --- |
+| `automix_dualdeck` | — | `Button`, `SkinAction`, `SkinQuery` | Enable/disable automix using both decks. | `automix_dualdeck` |
+| `automix_add_next` | — | `Button`, `SkinAction` | Add selected browser songs right after the currently playing automix song. | `automix_add_next` |
+| `automix_editor` | — | `Button`, `SkinAction` | Open the Automix Editor. | `automix_editor` |
+| `automix_editor_movetrack` | — | `Map`, `Button`, `SkinAction` | Move the selected Automix Editor track. | `automix_editor_movetrack 'current' +10` |
+| `get_automix` | — | `Text`, `SkinQuery` | Return the automix crossfader position. | `get_automix` |
+| `get_automix_song` | — | `Text`, `SkinQuery` | Return a property from the next automix song or a later queued song. | `get_automix_song 'title' 2` |
+| `get_automix_position` | — | `Text`, `SkinQuery` | Return the position of the currently playing song in the automix list. | `get_automix_position` |
+| `get_playlist_time` | — | `Text`, `SkinQuery` | Return time left before the end of the automix playlist. | `get_playlist_time` |
+| `playlist_options` | — | `Button`, `SkinAction` | Show playlist options. | `playlist_options` |
+| `playlist_add` | — | `Button`, `SkinAction` | Add selected browser songs to the automix list. | `playlist_add` |
+| `playlist_load` | — | `Button`, `SkinAction` | Load selected folder/playlist into the automix playlist. | `playlist_load 'append'` |
+| `playlist_load_and_remove` | — | `Button`, `SkinAction` | Load first automix-list song and remove it from the list. | `playlist_load_and_remove` |
+| `playlist_load_and_keep` | — | `Button`, `SkinAction` | Load first automix-list song without removing it. | `playlist_load_and_keep` |
+| `playlist_randomize_once` | — | `Button`, `SkinAction` | Shuffle playlist order once. | `playlist_randomize_once` |
+| `playlist_save` | — | `Button`, `SkinAction` | Save the playlist to a file. | `playlist_save` |
+| `playlist_remove_played` | — | `Button`, `SkinAction` | Remove already-played songs from the playlist. | `playlist_remove_played` |
+| `playlist_remove_duplicates` | — | `Button`, `SkinAction` | Remove duplicate songs from the playlist. | `playlist_remove_duplicates` |
+| `switch_sidelist_playlist` | — | `Button`, `SkinAction` | Exchange automix-list and sidelist contents. | `switch_sidelist_playlist` |
+| `mix_next_sidelist` | — | `Button`, `SkinAction` | Mix to the next deck using a new song from the sidelist if needed. | `mix_next_sidelist` |
+| `relay_play` | — | `Button`, `SkinAction`, `SkinQuery` | Auto-start the opposite deck when the current deck reaches the end. | `relay_play` |
+| `sidelist_options` | — | `Button`, `SkinAction` | Show sidelist options. | `sidelist_options` |
+| `sidelist_clear` | — | `Button`, `SkinAction` | Clear the sidelist. | `sidelist_clear` |
+| `sidelist_add` | — | `Button`, `SkinAction` | Add selected browser songs to the sidelist. | `sidelist_add` |
+| `sidelist_load` | — | `Button`, `SkinAction` | Load selected folder/playlist into the sidelist. | `sidelist_load 'append'` |
+| `sidelist_load_and_remove` | — | `Button`, `SkinAction` | Load first sidelist song and remove it from the sidelist. | `sidelist_load_and_remove` |
+| `sidelist_load_and_keep` | — | `Button`, `SkinAction` | Load first sidelist song without removing it. | `sidelist_load_and_keep` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Karaoke Browser Helpers
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `karaoke_load` | `Button`, `SkinAction` | Load selected folder/playlist into the karaoke list. | `karaoke_load 'append'` |
+| `karaoke_add` | `Button`, `SkinAction` | Add selected browser songs to the karaoke list. | `karaoke_add` |
+| `edit_singer` | `Button`, `SkinAction` | Edit the singer for the selected karaoke-list song. | `edit_singer` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Deck Set Helpers
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `save_deck_set` | `Button`, `SkinAction` | Save the current loaded-deck configuration to a file. | `save_deck_set` |
+| `load_deck_set` | `Button`, `SkinAction` | Reload a previously saved deck-set file. | `load_deck_set` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
+### Prelisten Helpers
+
+| Verb | Kind | Surfaces | Summary | Example |
+| --- | --- | --- | --- | --- |
+| `prelisten_info` | `Text` | `Text`, `SkinQuery` | Prelisten-player information helper. | `prelisten_info` |
+| `prelisten_options` | `Action` | `Button`, `SkinAction` | Show prelisten-player options. | `prelisten_options` |
+| `prelisten_output` | `Action` | `Map`, `Button`, `SkinAction` | Assign a deck as the prelisten player or reset to auto. | `deck 1 prelisten_output` |
+| `prelisten_pos` | `Action` | `Map`, `Button`, `SkinAction` | Move the prelisten-player position. | `prelisten_pos 50%` |
+| `prelisten_stop` | `Action` | `Button`, `SkinAction` | Stop the prelisten player. | `prelisten_stop` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+
 ### `info_options`
 
 Aliases: `infos_options`
@@ -4325,16 +4463,41 @@ The sections below remain useful as a wide local inventory. They are still being
 | Verb                   | Description            | Example                |
 | ---------------------- | ---------------------- | ---------------------- |
 | `automix`              | Start/stop automix     | `automix`              |
-| `automix_dualdeckmode` | Use both decks         | `automix_dualdeckmode` |
+| `automix_dualdeck`     | Use both decks         | `automix_dualdeck`     |
 | `automix_skip`         | Skip current song      | `automix_skip`         |
+| `automix_add_next`     | Add selected songs after current automix song | `automix_add_next` |
+| `automix_editor`       | Open Automix Editor    | `automix_editor`       |
+| `automix_editor_movetrack` | Move selected Automix Editor track | `automix_editor_movetrack 'current' +10` |
+| `get_automix`          | Automix crossfader position | `get_automix`      |
+| `get_automix_song`     | Next automix song property | `get_automix_song 'title'` |
+| `get_automix_position` | Current automix song position | `get_automix_position` |
+| `get_playlist_time`    | Time left in automix playlist | `get_playlist_time` |
 | `mix_now`              | Crossfade with sync    | `mix_now 4000ms`       |
 | `mix_now_nosync`       | Crossfade without sync | `mix_now_nosync`       |
 | `mix_selected`         | Mix to selected        | `mix_selected`         |
 | `mix_next`             | Mix to next            | `mix_next`             |
+| `mix_next_sidelist`    | Mix next using sidelist source | `mix_next_sidelist` |
 | `mix_and_load_next`    | Mix and load next      | `mix_and_load_next`    |
+| `playlist_options`     | Show playlist options  | `playlist_options`     |
+| `playlist_add`         | Add selected songs to automix list | `playlist_add` |
+| `playlist_load`        | Load folder/list into automix playlist | `playlist_load 'append'` |
+| `playlist_load_and_remove` | Load first automix song and remove it | `playlist_load_and_remove` |
+| `playlist_load_and_keep` | Load first automix song and keep it | `playlist_load_and_keep` |
 | `playlist_randomize`   | Shuffle playlist       | `playlist_randomize`   |
+| `playlist_randomize_once` | Shuffle playlist once | `playlist_randomize_once` |
 | `playlist_repeat`      | Repeat playlist        | `playlist_repeat`      |
 | `playlist_clear`       | Empty playlist         | `playlist_clear`       |
+| `playlist_save`        | Save playlist to file  | `playlist_save`        |
+| `playlist_remove_played` | Remove played songs from playlist | `playlist_remove_played` |
+| `playlist_remove_duplicates` | Remove duplicate playlist songs | `playlist_remove_duplicates` |
+| `switch_sidelist_playlist` | Exchange playlist and sidelist contents | `switch_sidelist_playlist` |
+| `relay_play`           | Auto-start opposite deck at track end | `relay_play` |
+| `sidelist_options`     | Show sidelist options  | `sidelist_options`     |
+| `sidelist_clear`       | Clear sidelist         | `sidelist_clear`       |
+| `sidelist_add`         | Add selected songs to sidelist | `sidelist_add` |
+| `sidelist_load`        | Load folder/list into sidelist | `sidelist_load 'append'` |
+| `sidelist_load_and_remove` | Load first sidelist song and remove it | `sidelist_load_and_remove` |
+| `sidelist_load_and_keep` | Load first sidelist song and keep it | `sidelist_load_and_keep` |
 
 ## Browser
 
@@ -4347,17 +4510,50 @@ The sections below remain useful as a wide local inventory. They are still being
 | `browser_open_folder`  | Expand/collapse folder      | `browser_open_folder`        |
 | `browser_remove`       | Remove from playlist        | `browser_remove`             |
 | `browser_window`       | Change browser zone         | `browser_window 'folders'`   |
+| `browser_isactive`     | Recently used by controller | `browser_isactive`           |
+| `browser_geniusdj`     | Lookup recommendations      | `browser_geniusdj playing`   |
+| `browser_shortcut`     | Assign/jump browser shortcut | `browser_shortcut 1`        |
 | `search`               | Focus search or search text | `search "text"`              |
+| `search_add`           | Append to search query      | `search_add "house"`         |
+| `search_delete`        | Remove last search character | `search_delete`             |
 | `clear_search`         | Clear search                | `clear_search`               |
+| `edit_search`          | Focus search without clearing | `edit_search`              |
+| `log_search`           | Log current search          | `log_search`                 |
+| `search_playlists`     | Find playlists containing song | `search_playlists deck`   |
+| `search_folder`        | Search folders/lists        | `search_folder dialog`       |
+| `search_options`       | Search field options        | `search_options 'composer'`  |
+| `search_folder_options` | Folder-search options      | `search_folder_options`      |
 | `browser_gotofolder`   | Go to folder                | `browser_gotofolder "/path"` |
+| `recurse_folder`       | Include selected folder subfolders | `recurse_folder`       |
 | `browser_sort`         | Sort browser                | `browser_sort "artist"`      |
+| `sideview_sort`        | Sort sideview               | `sideview_sort "artist"`     |
 | `grid_view`            | Grid view mode              | `grid_view`                  |
+| `view_options`         | Browser view options        | `view_options`               |
+| `sideview_options`     | Sideview shortcut options   | `sideview_options`           |
+| `sideview_triggerpad`  | Toggle sideview sampler mode | `sideview_triggerpad`       |
 | `file_info`            | Open tag editor             | `file_info`                  |
+| `browsed_file_info`    | Open browsed-song Tag Editor | `browsed_file_info`         |
 | `browsed_file_color`   | Set file color              | `browsed_file_color "red"`   |
+| `browsed_file_reveal`  | Reveal browsed song in OS file manager | `browsed_file_reveal` |
 | `browsed_file_analyze` | Reanalyze file              | `browsed_file_analyze`       |
 | `browsed_file_prepare_stems` | Prepare stems for selected browser file(s) | `browsed_file_prepare_stems` |
+| `browsed_file_reload_tag` | Reload browsed file tag from source file | `browsed_file_reload_tag` |
+| `browsed_file_rename` | Rename browsed file          | `browsed_file_rename`        |
+| `set_browsed_file_bpm` | Set BPM for selected browser songs | `set_browsed_file_bpm 129.3` |
+| `browsed_song_hashtag` | Add/remove hashtag on browsed song | `browsed_song_hashtag 'user 1' '#tag'` |
+| `loaded_song_hashtag` | Add/remove hashtag on loaded song | `loaded_song_hashtag 'user 1' '#tag'` |
+| `edit_comment`        | Edit selected track comment | `edit_comment`               |
+| `add_favoritefolder`  | Make folder a favorite/monitored folder | `add_favoritefolder` |
+| `add_filterfolder`    | Create filter folder        | `add_filterfolder`           |
+| `add_to_list` / `virtualfolder_add` | Add selected songs to list | `add_to_list 'Warmup'` |
+| `create_list_from_playlist` / `create_virtualfolder_from_playlist` | Save automix list in MyLists | `create_list_from_playlist` |
 | `quick_filter`         | Toggle browser quick filter | `quick_filter 'Has Lyrics is not ""'` |
+| `has_quick_filter`     | Check if quick filter exists | `has_quick_filter 1`        |
 | `browser_padding`      | Change browser line padding | `browser_padding 50%`        |
+| `font_size`            | Change browser font size    | `font_size +1`               |
+| `sidereco_options`     | Sideview recommendation panel options | `sidereco_options`    |
+| `sidereco_song`        | Recommendation-panel song helper | `sidereco_song`          |
+| `sidereco_source`      | Recommendation-panel source helper | `sidereco_source`      |
 
 ## Loading
 
@@ -4365,11 +4561,15 @@ The sections below remain useful as a wide local inventory. They are still being
 | --------------- | ------------------- | --------------------- |
 | `load`          | Load song           | `load`, `load "path"` |
 | `load_pulse`    | Brief pulse on load | `load_pulse`          |
+| `load_pulse_active` | Pulse when a new song becomes audible | `load_pulse_active 1000ms 5000ms` |
 | `loaded`        | Check if loaded     | `loaded`              |
+| `not_played`    | Do not mark this deck's song as played | `not_played` |
 | `undo_load`     | Reload previous     | `undo_load`           |
 | `unload`        | Unload song         | `unload`              |
 | `load_next`     | Load next track     | `load_next`           |
 | `load_previous` | Load previous track | `load_previous`       |
+| `save_deck_set` | Save current loaded-deck configuration | `save_deck_set` |
+| `load_deck_set` | Load a saved deck-set file | `load_deck_set` |
 
 ## Cue Points
 

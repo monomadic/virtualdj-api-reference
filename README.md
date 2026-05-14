@@ -45,7 +45,7 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- VDJScript verb reference covers ~704 of 989 official verbs (~71%); EQ, `get_browsed_*`, `cue_*`, FX routing, and mixer-bypass clusters added in recent passes
+- VDJScript verb reference covers ~773 of 989 official verbs (~78%); EQ, `get_browsed_*`, `cue_*`, FX routing, mixer-bypass, browser, and automix clusters added in recent passes
 - Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
 - Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 

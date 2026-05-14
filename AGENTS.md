@@ -29,7 +29,7 @@ Reference/                   — Markdown documentation
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Pad pages live in `Pads/*.xml`. Skins live in `Skins/*/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
-- The official VDJScript verb appendix has 989 entries. This repo documents ~704 of them.
+- The official VDJScript verb appendix has 989 entries. This repo documents ~773 of them.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 
 ## Preferred patterns (quick version)
