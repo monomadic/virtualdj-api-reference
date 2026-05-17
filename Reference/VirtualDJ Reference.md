@@ -184,7 +184,16 @@ Minimal root pattern:
 </skin>
 ```
 
-Source: `Official`
+Conditional deck-count pattern:
+
+```xml
+<nbdecks value="2" condition="var_equal '@$4decks' 0"/>
+<nbdecks value="4" condition="var_not_equal '@$4decks' 0"/>
+```
+
+This is useful when a skin has a user-facing two-deck/four-deck mode. If the controlling variable changes from a button or menu, pair that state change with `load_skin` so VirtualDJ reparses the structural XML.
+
+Source: `Official`, `Local test`, `Inference`
 
 ### Containers
 
@@ -207,6 +216,36 @@ Why:
 - The common element properties page says nesting is preferred over repeating `panel=""`.
 
 Source: `Official`
+
+### Defines and Placeholders
+
+Reusable class defines can use named placeholders:
+
+```xml
+<define class="LABELED_BUTTON" placeholders="*label,width=160,color=textoff">
+  <size width="[WIDTH]" height="24"/>
+  <text text="[LABEL]" color="[COLOR]"/>
+</define>
+
+<button class="labeled_button" label="SYNC" width="220" action="sync"/>
+```
+
+Practical conventions:
+
+- use uppercase class names in `<define>` and lower-case class calls for readability
+- keep placeholder tokens uppercase inside brackets
+- use `*name` for required placeholders and `name=value` for defaults
+- use conditional defines when one class needs different implementations per skin mode or color scheme
+
+Example conditional define:
+
+```xml
+<define class="PADBUTTON" placeholders="*source" condition="var_equal '@$color_scheme' 4">
+  ...
+</define>
+```
+
+Source: `Local test`, `Inference`
 
 ### Panels
 
@@ -240,6 +279,25 @@ Use query-driven panels when state should follow live deck conditions.
 Use named groups when the user is choosing a mode and you want it remembered.
 
 Source: `Official`
+
+### Conditional Structure
+
+Use `visibility=""` for live display state and `condition=""` for structural selection.
+
+```xml
+<panel class="main_decks" visibility="not browser_zoom"/>
+<panel class="browser_zoom_decks" visibility="browser_zoom"/>
+
+<panel class="pro_2decks" condition="var_equal '@$layout_4deck' 0"/>
+<panel class="pro_4decks" condition="var_equal '@$layout_4deck' 1"/>
+```
+
+Useful rule of thumb:
+
+- `visibility=""` can follow frequently changing state without a skin reload.
+- `condition=""` is better for mutually exclusive layout branches, conditional define/color variants, and conditional `<nbdecks>` entries. When user actions change those controlling variables, reload the skin.
+
+Source: `Local test`, `Inference`
 
 ### Buttons, State, and Query
 
@@ -382,7 +440,16 @@ When composing these pieces inside `<split>` panels, use `attachX`, `attachY`, `
 
 If the skin docks effect GUIs, put `<pluginzone>` in a split named `effects` so VirtualDJ can resize that area automatically when a plugin GUI appears.
 
-Source: `Official`
+Browser zoom / "mini" layouts are usually not separate VirtualDJ layout types. They are skin branches driven by the `browser_zoom` state, sometimes combined with `browser_isactive` for automatic browser-focused behavior:
+
+```xml
+<panel class="main_decks" visibility="not browser_zoom"/>
+<panel class="browser_zoom_decks" visibility="browser_zoom ? true : browser_isactive ? true : false"/>
+```
+
+The `<browser showzoom="yes">` attribute shows VirtualDJ's built-in zoom control in the browser toolbar; custom buttons can also use `action="browser_zoom"` and `query="browser_zoom"`.
+
+Source: `Official`, `Local test`, `Inference`
 
 ## VDJScript Patterns
 
@@ -439,6 +506,19 @@ Reason:
 - behavior lines up better with controllers and the default UI
 
 Source: `Official`, `Official forum`
+
+### Skin Vars For Structural State
+
+Prefer built-in state when VirtualDJ already has it. When the skin truly needs its own layout state, use custom variables such as `@$layout_4deck`, `@$skin_mode`, or `@$show_zoom_racks` and keep their purpose narrow.
+
+```vdjscript
+set '@$layout_4deck' 1 & load_skin
+var_equal '@$layout_4deck' 1 ? action1 : action2
+```
+
+Use `load_skin` when the variable controls structural XML, such as conditional `<nbdecks>`, conditional defines, or mutually exclusive layout branches. Avoid reloading for simple live visibility toggles unless the skin actually needs to rebuild.
+
+Source: `Local test`, `Inference`
 
 ### Write Queries With an Explicit Else
 

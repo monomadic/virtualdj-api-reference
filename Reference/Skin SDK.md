@@ -27,6 +27,21 @@ The root element of every skin with these attributes:
 | `image` | Graphics filename | filename (optional if matches XML name) |
 | `preview` | Preview screenshot | filename (optional) |
 
+### Runtime Deck Count
+
+In addition to the root `nbdecks` attribute, working skins can set the exposed deck count with child `<nbdecks>` elements. These can be conditional, which lets a skin switch between two-deck and four-deck structures from stored skin state:
+
+```xml
+<nbdecks value="2" condition="var_equal '@$4decks' 0"/>
+<nbdecks value="4" condition="var_not_equal '@$4decks' 0"/>
+```
+
+When a button or menu changes a variable that controls structural XML like this, pair the state change with `load_skin` so VirtualDJ reparses the skin:
+
+```vdjscript
+set '@$4decks' 1 & load_skin
+```
+
 ### Breaklines
 
 Optional `<breakline>` elements define y-coordinates for browser stretching:
@@ -180,6 +195,25 @@ User manually switches between panels using buttons or shortcuts. Current state 
 
 **Performance Tip:** If multiple elements share the same visibility condition, nest them in a single `<panel>` instead of adding `visibility=""` to each element individually.
 
+### Conditional Structure vs Visibility
+
+`visibility=""` and `condition=""` are both VDJScript-driven gates, but they are useful for different jobs:
+
+- `visibility=""` controls whether an existing element is displayed. Use it for live UI state that can change without rebuilding the skin, such as loop state, deck assignment, browser focus, or a panel that should appear and disappear.
+- `condition=""` selects whether an element, group, browser, or define variant participates in the loaded skin structure. Use it for mutually exclusive layout branches, conditional color/class definitions, conditional `<nbdecks>` entries, and other choices that are normally refreshed with `load_skin`.
+
+Examples:
+
+```xml
+<group condition="var_equal '@$skin_mode' 0">
+    <panel class="pro_decks_above" visibility="not browser_zoom"/>
+    <panel class="browser_zoom_decks_above" visibility="browser_zoom"/>
+</group>
+
+<panel class="pro_2decks" condition="var_equal '@$layout_4deck' 0"/>
+<panel class="pro_4decks" condition="var_equal '@$layout_4deck' 1"/>
+```
+
 ---
 
 ### `<stack>`
@@ -241,11 +275,13 @@ Container that displays multiple items with smooth fade transitions. Shows only 
 
 Define reusable element templates to avoid repetition.
 
-**Syntax:** `<define class="" classdeck="" [element attributes]>`
+**Syntax:** `<define class="" classdeck="" placeholders="" condition="" [element attributes]>`
 
 **Attributes:**
 - `class` - Template name (e.g., `"small_button"`)
 - `classdeck` - Optional deck specification
+- `placeholders` - Optional named placeholder contract for attributes passed by the call site
+- `condition` - Optional VDJScript query controlling whether this definition variant is available
 - Plus any attributes of the element being defined
 
 **Children:** Children of the element being defined
@@ -278,7 +314,23 @@ Define reusable element templates to avoid repetition.
 <define color="deckcolorbright" value="#b73841" deck="2"/>
 ```
 
-**Placeholders:** Use `$1`, `$2`, etc. in defines and pass values when using:
+**Named Placeholders:** Modern working skins commonly declare named placeholders with `placeholders=""`, then use bracketed uppercase tokens inside the define body.
+
+- `*name` marks a required call-site attribute.
+- `name=value` supplies a default.
+- Tokens are referenced as `[NAME]` in the template body.
+- Call sites pass values as normal XML attributes, usually lower-case.
+
+```xml
+<define class="LABELED_BUTTON" placeholders="*label,width=160,color=textoff">
+    <size width="[WIDTH]" height="24"/>
+    <text text="[LABEL]" color="[COLOR]"/>
+</define>
+
+<button class="labeled_button" label="SYNC" width="220" action="sync"/>
+```
+
+**Legacy Positional Placeholders:** Some SDK/forum examples use `$1`, `$2`, etc. and pass values as `$1=""`, `$2=""` attributes:
 ```xml
 <define class="mytext">
     <text text="$1 - $2" color="$3"/>
@@ -287,6 +339,22 @@ Define reusable element templates to avoid repetition.
 <textzone class="mytext" $1="Artist" $2="Title" $3="white">
     <pos x="100" y="50"/>
 </textzone>
+```
+
+**Conditional Define Variants:** Multiple definitions can share the same class name when their `condition=""` expressions are mutually exclusive. This is useful when a theme or layout mode needs a different internal implementation while keeping the call sites stable.
+
+```xml
+<define class="PADBUTTON" placeholders="*source" condition="var_not_equal '@$color_scheme' 4">
+    <off color="button_background"/>
+    <text action="pad_param [SOURCE]"/>
+</define>
+
+<define class="PADBUTTON" placeholders="*source" condition="var_equal '@$color_scheme' 4">
+    <off color="black"/>
+    <text action="pad_param [SOURCE]"/>
+</define>
+
+<button class="padbutton" source="1" action="pad 1"/>
 ```
 
 ---
@@ -307,6 +375,8 @@ Clickable button with multiple states and support for image graphics or vector s
 
 **Confirmed Behavior Notes:**
 - `query=""` drives the button's `<on>` graphics, not `<selected>`. If a button should change appearance when a VDJScript condition is true, use `<off>`/`<on>` for the graphics state. Official reference: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html)
+- `rightclick=""` can run any VDJScript action, including built-in menu/popup actions such as `key_match_menu`, `deck_options`, `loop_options`, `browser_options`, `search_options`, `pad_page_select 1`, `effect_select 1`, `effect_select_popup 1`, and `sampler_options`. This is the normal pattern for making a right-click open an existing VirtualDJ menu.
+- Custom skin `<menu>` elements are different: they open when their own menu hit area is clicked. The official `<menu>` element has no documented name/id trigger that lets another button open that exact custom menu from `rightclick=""`. If you need a custom right-click panel, use `rightclick="skin_panel 'my_context_panel' on"` and build the panel with normal buttons, or place a `<menu>` object where the user clicks. Placing a `<menu>` object there makes that area a normal menu click target, not a right-click-only target.
 - Dynamic button border colors are not currently supported. Even though `border=""` is documented as a color field, official clarification from VirtualDJ CTO Adion says dynamic colors are not supported for border color. Use `visual type="color"` overlays or underlays when a border needs to follow `cue_color`, `sampler_color`, etc. Official reference: [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)
 - For dynamic text colors, the most reliable documented pattern is to use a single `<text>` element with a dynamic `color="`...`"` expression, rather than relying on `colorselected=""` or other state-specific color attributes to evaluate VDJScript. Official references: [Skin Default Colors](https://www.virtualdj.com/wiki/Skin%20Default%20Colors.html), [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
 - The current documented `<button>` API is click-oriented: `action`, `leftclick`, `middleclick`, `rightclick`, `dblclick`, and `query`. No generic drag/drop callback is documented for `<button>`. If you need a drag target in a skin, use `<dropzone>` instead of inventing a button "dragged" state. For sampler slot assignment inside custom pad pages, current working XML uses pad `drop="sampler_assign <slot>"` rather than a skin button callback; see [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml). Official references: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html), [Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html), [Sampler manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html)
@@ -410,6 +480,29 @@ Omitting `<up>` makes the button invisible at rest. It appears only when hovered
 ```
 
 > **Note:** The hit area defined by `<size>` is always active regardless of visual transparency, so clicks still register even when the button is invisible. If you need to restrict interactivity to a specific shape, use `<mousemask>`.
+
+**Example 5: Right-click to Open a Menu/Popup**
+
+Use `rightclick=""` when the menu is exposed by a VDJScript action.
+
+```xml
+<button action="key_match_button" rightclick="key_match_menu">
+    <pos x="100" y="100"/>
+    <size width="80" height="24"/>
+    <text action="get_key" align="center"/>
+</button>
+
+<button action="pad_page btn1" rightclick="pad_page_select 1">
+    <pos x="100" y="130"/>
+    <size width="100" height="24"/>
+    <text action="pad_page btn1"/>
+</button>
+
+<button action="select" rightclick="select &amp; deck_options">
+    <pos x="10" y="10"/>
+    <size width="34" height="465"/>
+</button>
+```
 
 ---
 
@@ -981,6 +1074,25 @@ File browser interface element displaying VirtualDJ's folder tree, song list, si
 - `lineheight=""` - Height multiplier between browser lines (default: 1.0). Example: `lineheight="2.0"` for double height
 - `showzoom=""` - Show zoom toggle button in folder toolbar: `"yes"` or `"no"`
 
+**Browser Zoom / Mini Layouts:**
+
+`showzoom="yes"` exposes VirtualDJ's built-in browser zoom control in the browser toolbar. Skin XML can also react to that zoom state with the `browser_zoom` query/action. A common "mini" layout is simply a normal deck layout hidden while a browser-zoom layout is shown:
+
+```xml
+<button action="browser_zoom" query="browser_zoom">
+    <size width="32" height="32"/>
+</button>
+
+<panel class="main_decks" visibility="not browser_zoom"/>
+<panel class="browser_zoom_decks" visibility="browser_zoom"/>
+```
+
+Some skins also combine `browser_zoom` with `browser_isactive` for an automatic browser-focused mode:
+
+```xml
+<panel class="browser_zoom_decks" visibility="browser_zoom ? true : browser_isactive ? true : false"/>
+```
+
 **Children:**
 - `<pos x="" y=""/>` - Position on screen
 - `<size width="" height=""/>` - Browser dimensions
@@ -1151,6 +1263,68 @@ When using browser in skins, define breaklines in the `<skin>` element to specif
 - Use `visibility=""` attribute or nest in `<panel>` for conditional display
 - Transparent backgrounds require careful breakline setup
 - Custom browser colors rarely needed - VirtualDJ defaults work well
+
+---
+
+### `<menu>`
+
+Clickable skin object that opens a custom menu at its own hit area.
+
+**Syntax:** `<menu>`
+
+The official syntax has no menu-specific attributes. In normal skin code, position and size are defined with child elements, and shared skin attributes such as `visibility`, `deck`, `panel`, and `class` can be used in the same style as other skin objects.
+
+**Children:**
+- `<pos x="" y=""/>` - Position of the menu hit area
+- `<size width="" height=""/>` - Width and height of the menu hit area
+- `<item text="" action="" check="" hascheck="" visibility=""/>` - Menu item
+- `<separator/>` - Separator line
+- `<submenu text="">` - Nested menu containing `<item>`, `<separator>`, or more `<submenu>` elements
+
+**Menu Item Attributes:**
+- `text=""` - Displayed item label. `text="-"` is also accepted by the official docs as a separator-style item, though `<separator/>` is clearer.
+- `action=""` - VDJScript action executed when the item is clicked
+- `check=""` - VDJScript query that controls the check mark
+- `hascheck=""` - Set to `"false"` to suppress check marks
+- `visibility=""` - VDJScript query that shows/hides the item
+
+**Graphics States:**
+- `<up>` / `<off>` - Normal state graphic
+- `<over>` - Mouse hover graphic
+- `<down>` / `<selected>` - Graphic while the menu is open
+- `<icon>` and `<text>` can be used for simple overlays, following the same general button/text conventions used elsewhere in skins.
+
+**Confirmed Behavior Notes:**
+- `<menu>` opens when its own area is clicked. It is not opened by a separate VDJScript action by name, and it is not a right-click-only object.
+- To open a built-in VirtualDJ menu from right-click, use a button or slider with `rightclick=""` and the relevant built-in action, for example `deck_options`, `browser_options`, `info_options`, `loop_options`, `pad_menu`, `pad_page_select 1`, `effect_select 1`, or `sampler_options`.
+- To make a custom right-click UI, use `rightclick="skin_panel 'panel_name' on"` and implement the custom popup as a panel with buttons. This is a skin-level workaround, not the same as the native menu object.
+
+**Example: Custom Menu Object**
+```xml
+<menu tooltip="Waveform Options">
+    <pos x="140" y="4"/>
+    <size width="22" height="24"/>
+    <icon sysicon="settings" height="24" width="24" color="textoff" colorover="needle" colordown="needle"/>
+
+    <submenu text="Waveform Type" localize="true">
+        <item text="Colors" localize="true" action="setting 'skinwaveformScratchType' 'colors'" check="setting 'skinwaveformScratchType' 'colors'"/>
+        <item text="Shapes" localize="true" action="setting 'skinwaveformScratchType' 'shapes'" check="setting 'skinwaveformScratchType' 'shapes'"/>
+    </submenu>
+    <separator/>
+    <item text="Show Gridlines" localize="true" action="setting 'showGridlines'" check="setting 'showGridlines'"/>
+</menu>
+```
+
+**Example: Right-click to Built-in Menu**
+```xml
+<button action="search" rightclick="search_options">
+    <pos x="350" y="2"/>
+    <size width="30" height="28"/>
+    <icon sysicon="search" width="24" height="24"/>
+</button>
+```
+
+Official reference: [Skin menu](https://www.virtualdj.com/wiki/Skin%20menu.html)
 
 ---
 

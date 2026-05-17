@@ -2545,9 +2545,9 @@ Sources:
 
 Aliases: none
 
-Kind: `Action`
+Kind: `Dual`
 
-Typical surfaces: `Map`, `Button`, `SkinAction`
+Typical surfaces: `Map`, `Button`, `SkinAction`, `SkinQuery`
 
 Official summary:
 
@@ -2560,21 +2560,30 @@ deck 3 leftdeck
 leftdeck +1
 ```
 
+Skin query form:
+
+```vdjscript
+deck 3 leftdeck
+not deck 3 leftdeck
+```
+
 Preferred usage:
 
 - most useful in skins and mappings that expose more than two decks at once
+- in skin `visibility=""` and `condition=""` expressions, `deck N leftdeck` can be used as a predicate to choose which physical deck occupies the left-side UI
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Local test`: working skin XML uses `deck N leftdeck` as a visibility predicate
 
 ### `rightdeck`
 
 Aliases: none
 
-Kind: `Action`
+Kind: `Dual`
 
-Typical surfaces: `Map`, `Button`, `SkinAction`
+Typical surfaces: `Map`, `Button`, `SkinAction`, `SkinQuery`
 
 Official summary:
 
@@ -2587,13 +2596,22 @@ deck 3 rightdeck
 rightdeck +1
 ```
 
+Skin query form:
+
+```vdjscript
+deck 4 rightdeck
+not deck 4 rightdeck
+```
+
 Preferred usage:
 
 - most useful in skins and mappings that expose more than two decks at once
+- in skin `visibility=""` and `condition=""` expressions, `deck N rightdeck` can be used as a predicate to choose which physical deck occupies the right-side UI
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Local test`: working skin XML uses `deck N rightdeck` as a visibility predicate
 
 ### `invert_deck`
 
@@ -4057,6 +4075,7 @@ Sources:
 | `search_folder_options` | `Action` | `Button`, `SkinAction` | Open folder-search options. | `search_folder_options` |
 | `view_options` | `Action` | `Button`, `SkinAction` | Open or set browser view options. | `view_options 'showkaraoke' on` |
 | `browser_isactive` | `Query` | `SkinQuery`, `Button` | True when the browser was recently used by a controller. | `browser_isactive` |
+| `browser_zoom` | `Dual` | `Button`, `SkinAction`, `SkinQuery` | Toggle/query browser zoom state, commonly used by mini-deck or browser-focused skin layouts. | `browser_zoom` |
 | `browser_geniusdj` | `Action` | `Button`, `SkinAction` | Lookup recommendations from the selected or playing track. | `browser_geniusdj playing` |
 | `browser_shortcut` | `Action` | `Button`, `SkinAction` | Assign current folder as shortcut, or jump to shortcut by index. | `browser_shortcut 1` |
 | `recurse_folder` | `Action` | `Button`, `SkinAction` | Show selected folder and subfolders in the browser list. | `recurse_folder` |
@@ -4069,9 +4088,19 @@ Sources:
 | `sidereco_song` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel song helper. | `sidereco_song` |
 | `sidereco_source` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel source helper. | `sidereco_source` |
 
+Skin pattern:
+
+```vdjscript
+browser_zoom ? true : browser_isactive ? true : false
+```
+
+This is useful when a skin has a browser-zoom or "mini deck" layout that should appear either when the browser is explicitly zoomed or when controller/browser focus is active.
+
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Local test`: working skin XML uses `browser_zoom` and `browser_isactive` in layout visibility queries
+- `Inference`: the combined query pattern is a skin-layout convention built from those queries
 
 ### Automix, Playlist, And Sidelist Helpers
 
@@ -4517,6 +4546,22 @@ The sections below remain useful as a wide local inventory. They are still being
 | `var_list`       | Show variables window         | `var_list`                                  |
 | `controllervar`  | Controller-unique variable    | `controllervar`                             |
 
+### Skin Variables and Reloading
+
+Working skins commonly use custom variable names like `@$layout_4deck`, `@$skin_mode`, or `@$show_zoom_racks` for skin-local layout state:
+
+```vdjscript
+toggle '@$show_zoom_racks'
+set '@$layout_4deck' 1
+var_equal '@$layout_4deck' 1 ? action1 : action2
+```
+
+If a variable only drives live `visibility=""`, a reload is usually unnecessary. If it drives structural XML such as conditional `<nbdecks>`, mutually exclusive layout branches, or conditional define/color variants, pair the state change with `load_skin` so VirtualDJ reparses the skin:
+
+```vdjscript
+set '@$layout_4deck' 1 & load_skin
+```
+
 ## Window Control
 
 | Verb          | Description                  | Example                 |
@@ -4935,6 +4980,8 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `key_move`             | Move key by semitones  | `key_move +1`               |
 | `set_key`              | Match exact key        | `set_key "A#m"`             |
 | `match_key`            | Match compatible key   | `match_key`                 |
+| `key_match_button`     | Match the other deck's key on first press, or reset key on second press | `key_match_button` |
+| `key_match_menu`       | Open key-match menu    | `key_match_menu`            |
 | `key_lock` / `keylock` | Lock key               | `key_lock`                  |
 | `pitch`                | Set pitch              | `pitch 112%`, `pitch +0.1%` |
 | `pitch_zero`           | Reset to 0%            | `pitch_zero`                |
@@ -5310,7 +5357,7 @@ sampler_volume 9 75%
 | `open_help`                | Open user guide        | `open_help`                           |
 | `play_options`             | Menu for play/cue/smart behavior | `play_options`              |
 | `auto_sync_options`        | Menu for auto-sync behavior | `auto_sync_options`                 |
-| `deck_options`             | Menu for deck behavior options | `deck_options`                    |
+| `deck_options`             | Open the built-in deck behavior/options popup; useful from skin `rightclick=""` when a right-click-only deck menu is needed | `deck_options`                    |
 | `eventscheduler`           | Open Event Scheduler   | `eventscheduler`                      |
 | `eventscheduler_start`     | Start Event Scheduler  | `eventscheduler_start 'summer_wedding'` |
 | `apply_audio_config`       | Apply current audio config | `apply_audio_config`              |
