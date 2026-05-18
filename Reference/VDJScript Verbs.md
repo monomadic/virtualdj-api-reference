@@ -68,9 +68,15 @@ These are practical surfaces, not hard type-check guarantees. When a surface is 
 
 ## Official Appendix Coverage
 
-The local curated layer is not yet a complete copy of the live official appendix. Use [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) as the names-only parity tracker before removing or dismissing any unfamiliar command.
+The local reference now has names-only coverage for all official names tracked in [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md). Use that audit before removing or dismissing any unfamiliar command.
 
-The broad catalog below should be expanded whenever a command is confirmed official or appears in a working public skin. Curated entries should then be added for commands that affect common skin, pad, mapping, or effect workflows.
+Coverage depth is tiered:
+
+- Curated entries near the top are the highest-confidence API notes.
+- Broad catalog sections below cover common usage in a compact form.
+- The [Official Appendix Remainder](#official-appendix-remainder) section keeps lower-frequency official names searchable until they earn fuller treatment.
+
+Promote compact official entries into curated sections when they become relevant to skins, pads, mappings, published-skin findings, or local tests.
 
 ## High-Frequency Alias Index
 
@@ -4759,6 +4765,11 @@ set '@$layout_4deck' 1 & load_skin
 | `scratch_dna`                 | Execute DNA scratch    | `scratch_dna`            |
 | `scratch_dna_option`          | Configure Scratch DNA behavior | `scratch_dna_option "quantized"` |
 | `scratch_dna_editor`          | Open DNA editor        | `scratch_dna_editor`     |
+| `jog_wheel`                   | Official alias of `jogwheel` | `jog_wheel +1.0`    |
+| `scratch_wheel`               | Official alias of `touchwheel` / `scratchwheel` | `scratch_wheel +1.0` |
+| `scratch_wheel_touch` / `scratchwheel_touch` / `speedwheel_touch` | Official aliases of `touchwheel_touch` | `scratch_wheel_touch on` |
+| `motor_switch`                | Assign deck to motorized wheel | `motor_switch`       |
+| `motorwheel_instant_play`     | Start instantly on motorized-wheel decks | `motorwheel_instant_play on` |
 | `scratchbank_assign`          | Assign dropped file to scratchbank slot | `scratchbank_assign 1` |
 | `scratchbank_load`            | Scratchbank page load/helper | `scratchbank_load`     |
 | `scratchbank_load_to_deck`    | Load scratchbank slot to deck, or return its label/color in pad contexts | `scratchbank_load_to_deck 1` |
@@ -5015,8 +5026,15 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `invert_deck`     | Swap left/right deck       | `invert_deck`        |
 | `leftcross`       | Assign to left crossfader  | `leftcross`          |
 | `rightcross`      | Assign to right crossfader | `rightcross`         |
+| `cross_assign`    | Assign deck to crossfader side or through state | `deck 3 cross_assign 'left'` |
 | `pfl`             | Send to headphones         | `pfl`, `pfl 75%`     |
 | `get_deck_color`  | Get deck color             | `get_deck_color 50%` |
+
+### Crossfader Assignment Notes
+
+- `leftcross` and `rightcross` assign a deck to the left or right side of the audio crossfader.
+- `cross_assign` is the more explicit side selector and supports values such as `left`, `right`, and `thru`.
+- Use deck scoping when assigning a specific deck: `deck 3 cross_assign 'left'`.
 
 ## Equalizer & Stems
 
@@ -5032,6 +5050,12 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `eq_high`              | High EQ/HiHat/Vocal   | `eq_high`                         |
 | `eq_mid`               | Mid EQ/Melody/Vocals  | `eq_mid`                          |
 | `eq_low`               | Low EQ/Kick           | `eq_low`                          |
+| `high_label`           | High EQ band label    | `` `high_label` ``                |
+| `mid_label`            | Mid EQ band label     | `` `mid_label` ``                 |
+| `low_label`            | Low EQ band label     | `` `low_label` ``                 |
+| `eq_crossfader_high`   | Crossfade treble between decks | `eq_crossfader_high 50%` |
+| `eq_crossfader_mid` / `eq_crossfader_med` | Crossfade mids between decks | `eq_crossfader_mid 50%` |
+| `eq_crossfader_low`    | Crossfade bass between decks | `eq_crossfader_low 50%` |
 | `stem`                 | Control stem amount   | `stem "vocal" 50%`                |
 | `eq_kill_high/mid/low` | Kill EQ band          | `eq_kill_high`                    |
 | `filter`               | Apply color FX        | `filter`                          |
@@ -5055,6 +5079,18 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 - `only_stem 'vocal' on`: if vocal is already on, this turns the non-vocal stems off. If vocal is off, the first press turns vocal on and leaves the other stems untouched; a second press then isolates vocal.
 - `only_stem 'vocal' off`: mirror behavior for the non-vocal side. If vocal is already off, this turns the non-vocal stems on. If vocal is on, the first press turns vocal off and leaves the other stems untouched; a second press then isolates the non-vocal stems.
 - For arbitrary deterministic combinations beyond the aggregate stem-pad states, use `mute_stem <stem> on/off` and explicitly set the stems you want muted or unmuted.
+
+### EQ Crossfader Notes
+
+- `eq_crossfader_high`, `eq_crossfader_mid` / `eq_crossfader_med`, and `eq_crossfader_low` crossfade EQ bands between decks instead of changing one deck's EQ amount.
+- Use the label helpers when a skin should display the active EQ mode's band names instead of hard-coded `HIGH`, `MID`, and `LOW`.
+
+```text
+eq_crossfader_high 50%
+eq_crossfader_mid 50%
+eq_crossfader_low 50%
+`high_label`
+```
 
 ## Get (Query Actions)
 
@@ -5108,14 +5144,38 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `keycue_pad_jump`      | Key-cue jump option    | `keycue_pad_jump`           |
 | `key_lock` / `keylock` | Lock key               | `key_lock`                  |
 | `pitch`                | Set pitch              | `pitch 112%`, `pitch +0.1%` |
+| `pitch2` / `pitch2_slider` | Official aliases of `pitch` / `pitch_slider` | `pitch2 112%` |
+| `pitch_relative`       | Relative pitch helper for controllers | `pitch_relative +0.1%` |
+| `pitch_motorized`      | Motorized pitch helper | `pitch_motorized`           |
 | `pitch_zero`           | Reset to 0%            | `pitch_zero`                |
 | `pitch_reset`          | Slowly return to 0%    | `pitch_reset 5%`            |
 | `pitch_range`          | Set pitch range        | `pitch_range 12%`           |
 | `pitch_bend`           | Temporary bend         | `pitch_bend +3%`            |
+| `pitch_lock` / `pitchlock` | Link pitch sliders between matched decks | `pitch_lock on` |
+| `startupspeed`         | Vinyl-style start ramp | `startupspeed 2000ms`       |
+| `brakespeed`           | Vinyl-style brake ramp | `brakespeed 2000ms`         |
+| `backspin`             | Trigger backspin       | `backspin 4bt`              |
 | `master_tempo`         | Toggle master tempo    | `master_tempo`              |
 | `get_pitch`            | Get pitch value        | `get_pitch`                 |
 | `get_pitch_value`      | Get pitch on 0-200 scale centered on 100 | `get_pitch_value` |
 | `get_pitch_zero`       | Check whether pitch is zero/original | `get_pitch_zero 'absolute' 0.1%` |
+
+### Pitch And Motor Notes
+
+- `pitch <number>` treats the value as pitch-slider position within the current `pitch_range`; `pitch <percent>` sets absolute playback speed, so `pitch 112%` means +12%.
+- `pitch_relative` is for hardware controls that should move relative to the software pitch position instead of replacing it with an absolute hardware value.
+- `pitch_lock` links matched deck pitch sliders so moving one keeps the match by moving the other.
+- `startupspeed` and `brakespeed` control vinyl-style ramp behavior; larger values mean longer ramp times.
+- `backspin` accepts explicit durations such as `5000ms` or beat lengths such as `4bt`.
+
+```text
+pitch 130 bpm
+pitch_relative +0.1%
+pitch_lock on
+startupspeed 1500ms
+brakespeed 2bt
+backspin 4bt
+```
 
 ## Loops
 
@@ -5134,7 +5194,9 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `loop_save`   | Save loop            | `loop_save 1`, `loop_save "name"`  |
 | `loop_load`   | Load saved loop      | `loop_load 1`                      |
 | `saved_loop`  | Load or set loop     | `saved_loop 1`                     |
+| `saved_loop_prepare` | Prepare/load saved loop or set it if missing | `saved_loop_prepare 1` |
 | `saved_loop_display` | Saved-loop pad label/display mode | `` `saved_loop_display 1` `` |
+| `saved_loop_autotrigger` | Auto-trigger saved loop when playhead reaches it | `saved_loop_autotrigger 1` |
 | `loop_color`  | Saved-loop color     | `loop_color 1`                     |
 | `loop_delete` | Delete saved loop    | `loop_delete 1`                    |
 | `loop_load_prepare` | Prepare/load saved loop and query prepared state | `loop_load_prepare 1` |
@@ -5158,6 +5220,34 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `loop_options` | Show loop options menu | `loop_options`                 |
 | `loop_back` | Toggle loop-back mode | `loop_back`                      |
 | `loop_roll_mode` | Toggle loop roll release behavior | `loop_roll_mode`     |
+
+### Saved Loop Notes
+
+- `loop_load <n>` jumps to and activates an existing saved loop.
+- `loop_load_prepare <n>` activates/deactivates the saved loop without jumping to its start point.
+- `saved_loop <n>` loads an existing saved loop, or stores the current loop in that slot if it does not exist.
+- `saved_loop_prepare <n>` is the prepare-style equivalent: activate/deactivate an existing saved loop without jumping, or set it if missing.
+- `saved_loop_display <n>` follows the `savedLoopDisplay` option and is suitable for pad labels. Use `saved_loop_display +1` or named menu entries to change the display mode.
+- `loop_color <n>` can query or set the color of a saved loop, making it the right color source for saved-loop pads.
+- `saved_loop_autotrigger <n>` toggles whether the saved loop should trigger automatically when playback reaches it.
+
+### Saved Loop Examples
+
+```text
+loop_load 1
+loop_load_prepare 1
+saved_loop_prepare 1
+saved_loop_autotrigger 1
+saved_loop_display 'length'
+loop_color 1 'yellow'
+```
+
+```xml
+<pad1 name="`saved_loop_display 1`" color="loop_color 1"
+      query="loop_load 1 ? loop_load_prepare 1 ? blink : on : off">
+  holding ? loop_delete 1 : loop_load 1 ? loop_load_prepare 1 : loop_save 1
+</pad1>
+```
 
 ## Pads
 
@@ -5289,8 +5379,17 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `edit_lyrics`   | Open Lyrics Editor | `edit_lyrics`                 |
 | `set_bpm`       | Set BPM          | `set_bpm 129.3`, `set_bpm 50%` |
 | `adjust_cbg`    | Adjust beat grid | `adjust_cbg +2`                |
+| `goto_mixpoint` | Jump to automix/mix point | `goto_mixpoint "StartCut"` |
+| `set_mixpoint`  | Move automix/mix point to current position | `set_mixpoint "StartTempo"` |
+| `set_loadpoint` | Set where the track starts when loaded | `set_loadpoint` |
 | `set_firstbeat` | Set first beat   | `set_firstbeat`                |
 | `reanalyze`     | Reanalyze file   | `reanalyze multi`              |
+
+### Mix Point Notes
+
+- Mix point names include `StartTempo`, `EndTempo`, `StartCut`, `EndCut`, `StartFade`, `EndFade`, `StartSound`, and `EndSound`.
+- `goto_mixpoint` moves playback to a named mix point; `set_mixpoint` writes that named point at the current position.
+- `set_loadpoint` controls the position where the track starts when loaded.
 
 ## Sampler
 
@@ -5321,6 +5420,11 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `sampler_pad_volume`         | Set sample volume by visible sampler pad position                | `sampler_pad_volume 1 75%`                                |
 | `sampler_volume_nogroup`     | Adjust one sample without also changing other samples in its group | `sampler_volume_nogroup 9 75%`                          |
 | `sampler_group_volume`       | Adjust all samples in a sampler group                            | `sampler_group_volume "horns" 75%`                        |
+| `sampler_group_color`        | Get the color of a sampler group                                 | `sampler_group_color "horns"`                             |
+| `sampler_group_name`         | Get the name of a sampler group                                  | `sampler_group_name 1`                                    |
+| `sampler_group_mute`         | Mute/unmute a sampler group                                      | `sampler_group_mute "horns"`                              |
+| `sampler_has_group`          | Check whether a group exists in the current bank                 | `sampler_has_group "horns"`                               |
+| `sampler_load_to_deck`       | Load the selected sampler slot to a deck                         | `sampler_load_to_deck`                                    |
 | `sampler_loop`               | Change the loop length of a sample or set it explicitly          | `sampler_loop 1 1`, `sampler_loop +1`                     |
 | `sampler_rec`                | Record a sample from the deck, mic, or master                    | `sampler_rec`, `sampler_rec "mic"`, `sampler_rec 1`       |
 | `sampler_start_rec`          | Start recording a new sample                                     | `sampler_start_rec "master"`                              |
@@ -5371,6 +5475,14 @@ deck 1 masterdeck ? deck 1 sampler_pad 1 : deck 2 masterdeck ? deck 2 sampler_pa
 
 - If you want the traditional left-deck `1-8` and right-deck `9-16` behavior, either page the second deck manually with `sampler_pad_page +1` or enable the `samplerSpanAcrossDecks` option.
 
+### Sampler Group Notes
+
+- Sampler group helpers accept a group name or group index where the official appendix says either form is valid.
+- Use `sampler_group_mute` when the UI should mute a logical group instead of a single sample slot.
+- Use `sampler_volume_nogroup` when one sample must change without also changing other samples in the same group.
+- `sampler_has_group` is useful before showing group controls for banks that may not define that group.
+- `sampler_load_to_deck` loads the selected sampler slot to a deck; for scratchbank-style workflows, prefer the dedicated `scratchbank_load_to_deck`.
+
 ### Working Sampler Examples
 
 ```text
@@ -5381,6 +5493,9 @@ sampler_bank +1
 sampler_options "locked"
 sampler_pad_volume 1 75%
 sampler_volume 9 75%
+sampler_has_group "horns" ? sampler_group_mute "horns" : nothing
+sampler_group_volume "horns" 75%
+sampler_load_to_deck
 ```
 
 ```xml
@@ -5427,11 +5542,39 @@ sampler_volume 9 75%
 | ------------------ | ----------------------- | ------------------------- |
 | `leftvideo`        | Assign left video       | `leftvideo +1`            |
 | `rightvideo`       | Assign right video      | `rightvideo +1`           |
+| `leftvideo_button` | Button helper for left video source | `deck 3 leftvideo_button` |
+| `rightvideo_button` | Button helper for right video source | `deck 3 rightvideo_button` |
 | `video`            | Open/close video window | `video`                   |
 | `video_output`     | Select monitor          | `video_output 1`          |
 | `video_crossfader` | Video crossfader        | `video_crossfader`        |
+| `video_crossfader_link` | Link video crossfader to audio crossfader | `video_crossfader_link on` |
+| `video_crossfader_auto` | Automatically move video crossfader based on deck activity | `video_crossfader_auto on` |
+| `video_fadetoblack` | Fade video to black from volume sliders | `video_fadetoblack on` |
+| `video_delay`      | Offset video/audio sync delay | `video_delay +100ms`     |
+| `video_level`      | Independent fade-to-black video level | `video_level 50%`        |
 | `video_transition` | Launch transition       | `video_transition 1000ms` |
 | `is_video`         | Check if has video      | `is_video`                |
+| `is_audioonlyvisualisation` | Check whether audio-only visualisation is running | `is_audioonlyvisualisation` |
+| `over_video` / `overvideo` | Force this deck's video output to video master | `over_video on` |
+
+### Video Notes
+
+- `leftvideo` and `rightvideo` assign decks to the video crossfader sides; the `_button` variants are simple source-button helpers for skins or mappings.
+- `video_crossfader_link` ties the video crossfader to the audio crossfader. Use `video_crossfader_auto` when VirtualDJ should move the video crossfader based on which side is playing, cueing, or scratching.
+- `video_delay` accepts millisecond-style relative and reset values such as `+100ms`, `-100ms`, and `0ms`.
+- `video_level` is separate from the main video crossfader and is used for fade-to-black style level control.
+- `over_video` is forceful: it puts this deck's video output on the video master regardless of normal assignment logic.
+
+### Video Examples
+
+```text
+deck 3 leftvideo
+deck 4 rightvideo
+video_crossfader_link on
+video_crossfader_auto on
+video_delay 0ms
+is_video ? video_transition 1000ms : nothing
+```
 
 ## Recording & Broadcasting
 
@@ -5450,10 +5593,16 @@ sampler_volume 9 75%
 | `set_deck`          | Affect which deck         | `set_deck \`get_var varname\` & play`    |
 | `device_side`       | Left/right device action  | `device_side 'left' ? action1 : action2` |
 | `assign_controller` | Assign controller to deck | `deck 1 assign_controller "CDJ400" 2`    |
+| `controller_mapping` | Assign a mapping to a controller | `controller_mapping "CDJ400" "My Mapping" 2` |
+| `mixer_order`       | Four-deck controller mixer order | `mixer_order 3124`          |
+| `controllerscreen_deck` | Controller-screen deck helper | `controllerscreen_deck` |
+| `controller_battery` | Controller battery-state helper | `controller_battery` |
 | `shift`             | Built-in shift variable   | `shift`                                  |
 | `menu_button`       | Changeable button         | `menu_button 1 "hotcue,sampler"`         |
+| `menu`              | Controller-screen menu for `menu_button` controls | `menu`             |
 | `get_controller_name` | Controller name(s) assigned to deck | `get_controller_name`          |
 | `get_controller_image` | Cover art for controller screens | `get_controller_image`          |
+| `get_controller_screen` | Controller-screen helper | `get_controller_screen`          |
 | `get_rotation_cue` | Cue point angle on jog display | `get_rotation_cue`                  |
 | `get_pioneer_loop_display` | Pioneer-style loop display helper | `get_pioneer_loop_display` |
 | `get_pioneer_display` | Pioneer-style display helper | `get_pioneer_display`              |
@@ -5461,19 +5610,57 @@ sampler_volume 9 75%
 | `get_numark_waveform` | Numark waveform data helper | `get_numark_waveform`              |
 | `get_numark_beatgrid` | Numark beatgrid display helper | `get_numark_beatgrid`          |
 | `get_numark_songpos` | Numark song position display helper | `get_numark_songpos`          |
+| `denon_platter` | Denon platter action/helper | `denon_platter`                    |
 | `get_denon_platter` | Denon platter display helper | `get_denon_platter`                |
 | `get_denon_cuepoints` | Denon cue point LED helper | `get_denon_cuepoints 100`         |
 | `get_gemini_display` | Gemini display helper | `get_gemini_display`                  |
 | `get_gemini_waveform` | Gemini waveform helper | `get_gemini_waveform`                |
+| `gemini_waveform_zoomlevel` | Gemini waveform zoom helper | `gemini_waveform_zoomlevel` |
 | `menu_cycledisplay` | Cycle single-line controller display | `menu_cycledisplay`          |
 | `show_text` | Show temporary controller display text | `show_text 'Line 1|Line 2' 3000ms` |
 | `invert_controllers` | Invert controller decks | `invert_controllers`                 |
 | `rescan_controllers` | Rescan connected controllers | `rescan_controllers`             |
 | `reinit_controller` | Reinitialize controller | `reinit_controller`                  |
 | `refresh_controller` | Refresh controller displays | `refresh_controller`               |
+| `midiclock_active` | Toggle MIDI clock output to a controller | `midiclock_active`       |
+| `miditovst_active` | Toggle MIDI routing to deck VST instruments/effects | `miditovst_active` |
+| `phase_movement` | Phase controller movement helper | `phase_movement`              |
+| `phase_position` | Phase controller position helper | `phase_position`              |
+| `phase_active` | Phase controller active-state helper | `phase_active`                    |
+| `v7_status` | Numark V7 status helper | `v7_status`                              |
+| `rzx_touch` | Pioneer RZX touch helper | `rzx_touch`                              |
+| `rzx_touch_x` | Pioneer RZX touch X-position helper | `rzx_touch_x`                    |
+| `rzx_touch_y` | Pioneer RZX touch Y-position helper | `rzx_touch_y`                    |
+| `djc_shift` | DJC controller shift helper | `djc_shift`                            |
+| `djc_button` | DJC controller button helper | `djc_button`                         |
+| `djc_button_popup` | DJC controller popup-button helper | `djc_button_popup`          |
+| `djc_button_slider` | DJC controller slider-button helper | `djc_button_slider`       |
+| `djc_button_select` | DJC controller selection-button helper | `djc_button_select`    |
+| `djc_panel` | DJC controller panel helper | `djc_panel`                            |
 | `os2l_button` | Trigger named OS2L lighting button | `os2l_button 'blackout'`         |
 | `os2l_cmd` | Trigger numbered OS2L command | `os2l_cmd 1 on while_pressed`         |
 | `os2l_info` | Show/read OS2L lighting connection info | `os2l_info`                    |
+
+### Controller Notes
+
+- `assign_controller` assigns a physical controller to a deck. In a controller mapping, `deck 1 assign_controller` assigns the controller that sent the action.
+- `controller_mapping` changes the mapping used by a controller. With one argument it targets the controller that ran the action; with controller name and optional instance number it can target a specific device family or unit.
+- `mixer_order` is for 4-deck controller layouts; `mixer_order 3124` means the mixer strips appear left-to-right as decks 3, 1, 2, 4.
+- `menu_button <n> "page,page,page"` defines controller buttons whose behavior can be changed by `menu`. Use `browser_scroll` to navigate the controller-screen menu.
+- `show_text 'Line 1|Line 2' 3000ms` sends temporary text to controller displays that use `get_display`; `|` separates display lines.
+- `reinit_controller` can target a specific controller and optional delay between exit/init. Use broad `reinit_controller` only when a full controller reinitialization is intended.
+- `midiclock_active`, `miditovst_active`, `phase_*`, `rzx_*`, `v7_status`, `djc_*`, `controllerscreen_deck`, and `controller_battery` are official but hardware-specific or sparsely documented; keep them in mappings that can be tested on the target device.
+
+### Controller Examples
+
+```text
+deck 1 assign_controller "CDJ400" 2
+controller_mapping "CDJ400" "My Mapping" 2
+mixer_order 3124
+menu_button 1 "hotcue,sampler,effect,loop"
+show_text 'Line 1|Line 2' 3000ms
+reinit_controller "My Controller" 200ms
+```
 
 OS2L source note:
 
@@ -5504,9 +5691,35 @@ OS2L source note:
 | Verb              | Description             | Example                 |
 | ----------------- | ----------------------- | ----------------------- |
 | `timecode_active` | Enable timecode control | `timecode_active 1 on`  |
+| `invert_timecode` | Switch/invert timecode control across available decks | `invert_timecode` |
 | `timecode_mode`   | Set mode                | `timecode_mode 'smart'` |
+| `timecode_config` | Open timecode configuration | `timecode_config` |
 | `timecode_bypass` | Use as line input       | `timecode_bypass`       |
+| `timecode_reset_pitch` | Reset software pitch so deck pitch matches turntable pitch | `timecode_reset_pitch` |
+| `timecode_pitch`  | Tell timecode engine a controller pitch-slider position | `timecode_pitch 100%` |
+| `timecode_cd_mode` | Force timecode to CD mode | `timecode_cd_mode on` |
+| `timecode_motor_enable` | Hybrid turntable motor-state helper | `timecode_motor_enable on` |
+| `timecode_options` | Show timecode options  | `timecode_options`      |
 | `get_hastimecode` | Check if has timecode   | `get_hastimecode`       |
+| `get_timecode_quality` | Timecode signal quality | `get_timecode_quality` |
+
+### Timecode Notes
+
+- `timecode_active <source> on` can assign the same timecode source to multiple decks, for example `deck 1 timecode_active 1 on & deck 2 timecode_active 1 on`.
+- `timecode_mode` accepts the official modes `smart`, `absolute`, and `relative`.
+- Use `timecode_reset_pitch` when you need software pitch to match the turntable pitch exactly before absolute needle-drop work.
+- `timecode_pitch` is for controllers that send pitch separately over MIDI while timecode controls position.
+- `timecode_cd_mode` is for CD or digital devices using a vinyl-style timecode signal.
+
+### Timecode Examples
+
+```text
+deck 1 timecode_active 1 on
+timecode_mode 'relative'
+timecode_reset_pitch
+timecode_pitch 100%
+get_hastimecode ? timecode_options : timecode_config
+```
 
 ## Macros
 
@@ -5583,71 +5796,10 @@ These entries close the names-only official appendix audit. They are intentional
 | `mixermode` | Query mixer mode; can check explicit `internal` or `external`. | `mixermode 'internal'` |
 | `beat_juggle` | Alternate jumping forward and backward by a beat amount. | `beat_juggle 0.5` |
 | `dualdeckmode_decks` | Deck-pair helper used by `dualdeckmode` for deck pairs 1/3 or 2/4. | `dualdeckmode_decks` |
-| `goto_mixpoint` | Jump to a named automix/mix point. | `goto_mixpoint 'StartCut'` |
-| `set_mixpoint` | Move a named automix/mix point to the current position. | `set_mixpoint 'StartTempo'` |
-| `set_loadpoint` | Set the point where the track starts when loaded. | `set_loadpoint` |
 | `shift_all_cues` | Shift all cue points by a time offset. | `shift_all_cues -10ms` |
 | `sort_cues` | Sort cue points chronologically. | `sort_cues` |
 | `repeat_song` | Restart the current song from the beginning when it ends. | `repeat_song on` |
-| `saved_loop_prepare` | Prepare/load a saved loop without jumping, or set it if missing. | `saved_loop_prepare 1` |
-| `saved_loop_autotrigger` | Auto-trigger a saved loop when play position reaches it. | `saved_loop_autotrigger 1` |
 | `get_beat` | Return beat intensity at the current position. | `get_beat` |
-
-### Pitch, Motor, Scratch, And Jog Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `pitch2` / `pitch2_slider` | Official aliases of `pitch` / `pitch_slider`. | `pitch2 112%` |
-| `pitch_relative` | Relative pitch helper for hardware controllers. | `pitch_relative +0.1%` |
-| `pitch_motorized` | Motorized-pitch helper for supported controllers. | `pitch_motorized` |
-| `pitch_lock` / `pitchlock` | Link pitch sliders so matched decks stay matched when one pitch moves. | `pitch_lock on` |
-| `startupspeed` | Vinyl-style ramp-up time from stopped to playing. | `startupspeed 2000ms` |
-| `brakespeed` | Vinyl-style brake time from playing to stopped. | `brakespeed 2000ms` |
-| `backspin` | Trigger a backspin; accepts time or beat length. | `backspin 4bt` |
-| `jog_wheel` | Official alias of `jogwheel`. | `jog_wheel +1.0` |
-| `scratch_wheel` | Official alias of `touchwheel` / `scratchwheel`. | `scratch_wheel +1.0` |
-| `scratch_wheel_touch` / `scratchwheel_touch` / `speedwheel_touch` | Official aliases of `touchwheel_touch` for touch-sensitive wheels. | `scratch_wheel_touch on` |
-| `motor_switch` | Assign the deck to the motorized wheel on supported hardware. | `motor_switch` |
-| `motorwheel_instant_play` | Start instantly on motorized-wheel decks, bypassing motor ramp-up. | `motorwheel_instant_play on` |
-| `phase_movement` | Phase controller movement helper. | `phase_movement` |
-| `phase_position` | Phase controller position helper. | `phase_position` |
-| `phase_active` | Phase controller active-state helper. | `phase_active` |
-| `v7_status` | Numark V7 status helper. | `v7_status` |
-| `rzx_touch` | Pioneer RZX touch helper. | `rzx_touch` |
-| `rzx_touch_x` | Pioneer RZX touch X-position helper. | `rzx_touch_x` |
-| `rzx_touch_y` | Pioneer RZX touch Y-position helper. | `rzx_touch_y` |
-
-### Mixer, EQ, And Crossfader Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `cross_assign` | Assign the deck to a crossfader side or through state. | `deck 3 cross_assign 'left'` |
-| `eq_crossfader_high` | Crossfade treble between decks. | `eq_crossfader_high 50%` |
-| `eq_crossfader_mid` / `eq_crossfader_med` | Crossfade mid frequencies between decks. | `eq_crossfader_mid 50%` |
-| `eq_crossfader_low` | Crossfade bass between decks. | `eq_crossfader_low 50%` |
-| `high_label` | Label helper for the high EQ band. | `` `high_label` `` |
-| `mid_label` | Label helper for the mid EQ band. | `` `mid_label` `` |
-| `low_label` | Label helper for the low EQ band. | `` `low_label` `` |
-| `mixer_order` | Set 4-deck controller mixer order from left to right. | `mixer_order 3124` |
-
-### Controller And Display Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `controller_mapping` | Assign a mapping to the current controller, a named controller, or a numbered instance. | `controller_mapping 'CDJ400' 'My Mapping' 2` |
-| `controllerscreen_deck` | Controller-screen deck helper. | `controllerscreen_deck` |
-| `controller_battery` | Controller battery-state helper. | `controller_battery` |
-| `gemini_waveform_zoomlevel` | Gemini waveform zoom helper. | `gemini_waveform_zoomlevel` |
-| `midiclock_active` | Toggle sending MIDI clock to the specified controller. | `midiclock_active` |
-| `miditovst_active` | Toggle MIDI routing from a controller to the deck's VST instruments/effects. | `miditovst_active` |
-| `djc_shift` | DJC controller shift helper. | `djc_shift` |
-| `djc_button` | DJC controller button helper. | `djc_button` |
-| `djc_button_popup` | DJC controller popup-button helper. | `djc_button_popup` |
-| `djc_button_slider` | DJC controller slider-button helper. | `djc_button_slider` |
-| `djc_button_select` | DJC controller selection-button helper. | `djc_button_select` |
-| `djc_panel` | DJC controller panel helper. | `djc_panel` |
-| `menu` | Display a controller-screen menu for changing `menu_button` behavior. | `menu` |
-| `denon_platter` | Denon platter action/helper. | `denon_platter` |
 
 ### Key, Sampler, And OS2L Helpers
 
@@ -5657,33 +5809,7 @@ These entries close the names-only official appendix audit. They are intentional
 | `key_match_menu` | Open a menu to select a different key for the current song. | `key_match_menu` |
 | `sampler_default` | Official alias of `sampler_select`. | `sampler_default 5` |
 | `sampler_rapidfire` | Official alias of `sampler_mode`. | `sampler_rapidfire 'stutter'` |
-| `sampler_group_color` | Return the color of a sampler group by name or index. | `sampler_group_color 'drums'` |
-| `sampler_group_name` | Return the name of a sampler group by index. | `sampler_group_name 1` |
-| `sampler_group_mute` | Mute or unmute a sampler group by name or index. | `sampler_group_mute 'drums'` |
-| `sampler_has_group` | Query whether a sampler group exists in the current bank. | `sampler_has_group 'drums'` |
-| `sampler_load_to_deck` | Load the selected sampler slot to a deck. | `sampler_load_to_deck` |
 | `os2l_scene` | OS2L scene command; can queue scenes until the deck is audible. | `os2l_scene 'scene1'` |
-
-### Timecode And Video Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `invert_timecode` | Switch/invert timecode control across available decks. | `invert_timecode` |
-| `timecode_config` | Open the timecode configuration window. | `timecode_config` |
-| `timecode_reset_pitch` | Reset software pitch to 100% so deck pitch matches turntable pitch. | `timecode_reset_pitch` |
-| `timecode_pitch` | Report a controller pitch slider position to the timecode engine. | `timecode_pitch 100%` |
-| `timecode_cd_mode` | Force timecode to CD mode. | `timecode_cd_mode on` |
-| `timecode_motor_enable` | Motor-enabled helper for hybrid turntables that report motor state over MIDI. | `timecode_motor_enable on` |
-| `timecode_options` | Show timecode options. | `timecode_options` |
-| `leftvideo_button` | Simple button helper for the left video source. | `deck 3 leftvideo_button` |
-| `rightvideo_button` | Simple button helper for the right video source. | `deck 3 rightvideo_button` |
-| `is_audioonlyvisualisation` | Query whether the deck is using the audio-only visualisation. | `is_audioonlyvisualisation` |
-| `over_video` / `overvideo` | Force the deck's video output to the video master. | `over_video on` |
-| `video_crossfader_link` | Link/unlink video crossfader to audio crossfader. | `video_crossfader_link on` |
-| `video_crossfader_auto` | Move video crossfader automatically based on deck activity. | `video_crossfader_auto on` |
-| `video_fadetoblack` | Enable/disable fade-to-black on volume sliders. | `video_fadetoblack on` |
-| `video_delay` | Set or adjust video/audio sync delay. | `video_delay +100ms` |
-| `video_level` | Fade-to-black independent level for the left or right video deck. | `video_level 50%` |
 
 Sources:
 

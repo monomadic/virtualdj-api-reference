@@ -13,8 +13,37 @@ Names not yet present in local VDJScript reference: 0
 ## Immediate Rule
 
 - Do not delete a VDJScript command only because it appears unfamiliar. Check this audit and the official appendix first.
-- Promote names from the missing list into curated sections as they become relevant to skins, pads, mappings, or local tests.
+- Promote compact official entries into curated sections as they become relevant to skins, pads, mappings, or local tests.
 - Keep discovered published-skin usage in `Published Skin Findings.md` even after the command is confirmed official.
+
+## Coverage Tiers
+
+- **Curated**: documented in dedicated sections of `VDJScript Verbs.md` with surfaces, examples, notes, and source labels.
+- **Broad catalog**: documented in compact tables by functional area.
+- **Compact official remainder**: present in `VDJScript Verbs.md` under `Official Appendix Remainder`; searchable and official, but not yet deeply explained.
+- **Needs local test**: official names whose behavior is sparse, hardware-specific, or environment-dependent.
+
+## Next Promotion Targets
+
+- Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
+- Remaining compact helpers: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`
+
+## Recently Promoted
+
+- Saved loops: `saved_loop_prepare`, `saved_loop_autotrigger`, `loop_load_prepare`, `saved_loop_display`, `loop_color`
+- Sampler groups and sampler-to-deck: `sampler_group_color`, `sampler_group_name`, `sampler_group_mute`, `sampler_has_group`, `sampler_load_to_deck`
+- Mix points: `goto_mixpoint`, `set_mixpoint`, `set_loadpoint`
+- Timecode and video: `timecode_config`, `timecode_pitch`, `timecode_cd_mode`, `timecode_options`, `video_crossfader_link`, `video_crossfader_auto`, `video_delay`, `video_level`
+- Pitch, jog, and motor behavior: `pitch_relative`, `pitch_motorized`, `pitch_lock`, `startupspeed`, `brakespeed`, `backspin`, `scratch_wheel`, `motor_switch`, `motorwheel_instant_play`
+- Controller display and hardware helpers: `controller_mapping`, `controllerscreen_deck`, `controller_battery`, `menu`, `menu_button`, `denon_platter`, `phase_*`, `djc_*`
+- Mixer/EQ helpers: `cross_assign`, `eq_crossfader_high`, `eq_crossfader_mid`, `eq_crossfader_low`, `high_label`, `mid_label`, `low_label`, `mixer_order`
+
+## Needs Local Test
+
+- `connect`, `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
+- `phase_movement`, `phase_position`, `phase_active`, `v7_status`, `rzx_touch`, `rzx_touch_x`, `rzx_touch_y`
+- `djc_shift`, `djc_button`, `djc_button_popup`, `djc_button_slider`, `djc_button_select`, `djc_panel`
+- `denon_platter`, `dualdeckmode_decks`, `open_stem_creator`, `karaoke_venue_name`
 
 ## Missing Official Names
 

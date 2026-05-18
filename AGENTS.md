@@ -10,7 +10,7 @@ README.md                     — human-facing project overview
 Reference/README.md          — index of all reference docs, source label policy, current status
 Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
-Reference/Official VDJScript Coverage Audit.md — which of the 989 official verbs are still undocumented here
+Reference/Official VDJScript Coverage Audit.md — names-only parity audit for the 989 official verb/alias names, plus promotion targets
 ```
 
 ## What is here
@@ -29,7 +29,7 @@ Reference/                   — Markdown documentation
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Pad pages live in `Pads/*.xml`. Skins live in `Skins/*/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
-- The official VDJScript verb appendix has 989 entries. This repo documents ~865 of them.
+- The official VDJScript verb appendix currently parses to 989 verb/alias names. The local VDJScript reference has 989/989 names present, but some are compact catalog entries rather than fully curated sections.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 
 ## Preferred patterns (quick version)
