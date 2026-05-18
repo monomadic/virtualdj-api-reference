@@ -7,8 +7,8 @@ Purpose: keep this repo honest about official verb coverage. This is a names-onl
 Source: https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html
 
 Official verb/alias names parsed: 989
-Names already present in local VDJScript reference: 865
-Names not yet present in local VDJScript reference: 124
+Names already present in local VDJScript reference: 989
+Names not yet present in local VDJScript reference: 0
 
 ## Immediate Rule
 
@@ -18,29 +18,30 @@ Names not yet present in local VDJScript reference: 124
 
 ## Missing Official Names
 
+None currently. All official verb/alias names parsed in this audit are present in the local VDJScript reference.
+
+## Covered Official Names
+
+Former missing names closed in the latest coverage pass:
+
 - `auto_pitch_lock`, `auto_sync_settings`, `backspin`, `beat_juggle`, `brakespeed`, `broadcast_message`
 - `controller_battery`, `controller_mapping`, `controllerscreen_deck`, `cross_assign`, `djc_button`, `djc_button_popup`
 - `djc_button_select`, `djc_button_slider`, `djc_panel`, `djc_shift`, `dualdeckmode_decks`, `eq_crossfader_high`
 - `eq_crossfader_low`, `eq_crossfader_med`, `eq_crossfader_mid`, `fader_start`, `gemini_waveform_zoomlevel`, `goto_mixpoint`
 - `handshake`, `high_label`, `invert_timecode`, `is_audioonlyvisualisation`, `jog_wheel`, `karaoke_options`
-- `karaoke_venue_name`, `key_match_button`, `key_match_menu`, `keyboard_shortcuts`, `keycue_pad`, `keycue_pad_color`
-- `keycue_pad_jump`, `keycue_pad_page`, `leftvideo_button`, `loop_color`, `loop_delete`, `loop_load_prepare`
-- `low_label`, `mark_linked_tracks`, `mark_related_tracks`, `mid_label`, `midiclock_active`, `miditovst_active`
-- `mixer_order`, `mixermode`, `motor_switch`, `motorwheel_instant_play`, `open_stem_creator`, `os2l_button`
-- `os2l_cmd`, `os2l_info`, `os2l_scene`, `over_video`, `overvideo`, `phase_active`
-- `phase_movement`, `phase_position`, `pitch2`, `pitch2_slider`, `pitch_lock`, `pitch_motorized`
-- `pitch_relative`, `pitchlock`, `quantize_loop`, `quantize_setcue`, `record_config`, `record_vu`
+- `karaoke_venue_name`, `key_match_button`, `key_match_menu`, `keyboard_shortcuts`, `leftvideo_button`, `low_label`
+- `mark_linked_tracks`, `mark_related_tracks`, `mid_label`, `midiclock_active`, `miditovst_active`, `mixer_order`
+- `mixermode`, `motor_switch`, `motorwheel_instant_play`, `open_stem_creator`, `os2l_scene`, `over_video`
+- `overvideo`, `phase_active`, `phase_movement`, `phase_position`, `pitch2`, `pitch2_slider`
+- `pitch_lock`, `pitch_motorized`, `pitch_relative`, `pitchlock`, `record_config`, `record_vu`
 - `repeat_song`, `rightvideo_button`, `rzx_touch`, `rzx_touch_x`, `rzx_touch_y`, `sampler_default`
 - `sampler_group_color`, `sampler_group_mute`, `sampler_group_name`, `sampler_has_group`, `sampler_load_to_deck`, `sampler_rapidfire`
-- `sampler_velocity`, `saved_loop_autotrigger`, `saved_loop_display`, `saved_loop_prepare`, `saveregistryconfig`, `scratch_wheel`
-- `scratch_wheel_touch`, `scratchbank_assign`, `scratchbank_edit`, `scratchbank_load`, `scratchbank_load_to_deck`, `scratchwheel_touch`
+- `saved_loop_autotrigger`, `saved_loop_prepare`, `saveregistryconfig`, `scratch_wheel`, `scratch_wheel_touch`, `scratchwheel_touch`
 - `select_master_output`, `set_loadpoint`, `set_mixpoint`, `setting_ismodified`, `setting_reset`, `setting_setdefault`
 - `setting_setsession`, `setting_setsession_deck`, `shift_all_cues`, `smart_scratch`, `sort_cues`, `speedwheel_touch`
-- `startupspeed`, `stems_bleed`, `stopwatch_reset`, `switch_skin_variation`, `timecode_cd_mode`, `timecode_config`
-- `timecode_motor_enable`, `timecode_options`, `timecode_pitch`, `timecode_reset_pitch`, `v7_status`, `video_crossfader_auto`
-- `video_crossfader_link`, `video_delay`, `video_fadetoblack`, `video_level`
-
-## Covered Official Names
+- `startupspeed`, `stopwatch_reset`, `switch_skin_variation`, `timecode_cd_mode`, `timecode_config`, `timecode_motor_enable`
+- `timecode_options`, `timecode_pitch`, `timecode_reset_pitch`, `v7_status`, `video_crossfader_auto`, `video_crossfader_link`
+- `video_delay`, `video_fadetoblack`, `video_level`
 
 - `action_deck`, `add_favoritefolder`, `add_filterfolder`, `add_list`, `add_to_list`, `add_virtualfolder`
 - `adjust_cbg`, `apply_audio_config`, `assign_controller`, `auto_bpm_transition`, `auto_bpm_transition_options`, `auto_crossfade`
@@ -124,11 +125,13 @@ Names not yet present in local VDJScript reference: 124
 - `is_macos`, `is_pc`, `is_releasefx`, `is_sync`, `is_using`, `is_video`
 - `is_windows`, `isrepeat`, `jog`, `jogwheel`, `karaoke`, `karaoke_add`
 - `karaoke_load`, `karaoke_show`, `key`, `key_lock`, `key_move`, `key_smooth`
+- `keycue_pad`, `keycue_pad_color`, `keycue_pad_jump`, `keycue_pad_page`
 - `keylock`, `leftcross`, `leftdeck`, `leftvideo`, `level`, `level_slider`
 - `levelfader_curve`, `linein`, `linein_rec`, `load`, `load_deck_set`, `load_next`
 - `load_previous`, `load_pulse`, `load_pulse_active`, `load_skin`, `loaded`, `loaded_song`
 - `loaded_song_hashtag`, `lock_cues`, `lock_panel`, `lock_pannel`, `log_search`, `loop`
 - `loop_adjust`, `loop_back`, `loop_button`, `loop_double`, `loop_exit`, `loop_half`
+- `loop_color`, `loop_delete`, `loop_load_prepare`
 - `loop_in`, `loop_length`, `loop_load`, `loop_move`, `loop_options`, `loop_out`
 - `loop_pad`, `loop_pad_mode`, `loop_pad_page`, `loop_position`, `loop_roll`, `loop_roll_mode`
 - `loop_save`, `loop_select`, `macro_play`, `macro_record`, `master_balance`, `master_tempo`
@@ -140,6 +143,7 @@ Names not yet present in local VDJScript reference: 124
 - `multibutton_select`, `mute`, `mute_stem`, `no`, `not_played`, `nothing`
 - `ns7_platter`, `nudge`, `numark_waveform_zoom`, `off`, `on`, `only_stem`
 - `open_help`, `pad`, `pad_bank2`, `pad_button_color`, `pad_color`, `pad_edit`
+- `os2l_button`, `os2l_cmd`, `os2l_info`
 - `pad_has_16pads`, `pad_has_action`, `pad_has_color`, `pad_has_menu`, `pad_has_param`, `pad_has_pressure`
 - `pad_menu`, `pad_page`, `pad_page_favorite_select`, `pad_page_select`, `pad_pages`, `pad_param`
 - `pad_param2`, `pad_param_visible`, `pad_pressure`, `pad_pushed`, `padfx`, `padfx_single`
@@ -155,6 +159,7 @@ Names not yet present in local VDJScript reference: 124
 - `playlist_randomize_once`, `playlist_remove_duplicates`, `playlist_remove_played`, `playlist_repeat`, `playlist_save`, `pluginsongpos`
 - `power_gain`, `prelisten`, `prelisten_info`, `prelisten_options`, `prelisten_output`, `prelisten_pos`
 - `prelisten_stop`, `preview`, `pulse`, `quantize_all`, `quick_filter`, `rack`
+- `quantize_loop`, `quantize_setcue`
 - `rack_prioritize`, `rack_solo`, `rating`, `reanalyze`, `record`, `record_cut`
 - `recurse_folder`, `refresh_controller`, `reinit_controller`, `relay_play`, `reloop`, `reloop_exit`
 - `repeat`, `repeat_start`, `repeat_start_instant`, `repeat_stop`, `rescan_controllers`, `reverse`
@@ -164,8 +169,11 @@ Names not yet present in local VDJScript reference: 124
 - `sampler_pad_volume`, `sampler_pfl`, `sampler_play`, `sampler_play_stop`, `sampler_play_stutter`, `sampler_position`
 - `sampler_rec`, `sampler_rec_delete`, `sampler_select`, `sampler_start_rec`, `sampler_stop`, `sampler_stop_rec`
 - `sampler_unload_from_deck`, `sampler_used`, `sampler_volume`, `sampler_volume_master`, `sampler_volume_nogroup`, `sandbox`
+- `sampler_velocity`
 - `save_config`, `save_deck_set`, `saved_loop`, `scratch`, `scratch_dna`, `scratch_dna_editor`
+- `saved_loop_display`
 - `scratch_dna_option`, `scratch_hold`, `scratchbank_unload`, `scratchwheel`, `search`, `search_add`
+- `scratchbank_assign`, `scratchbank_edit`, `scratchbank_load`, `scratchbank_load_to_deck`
 - `search_delete`, `search_folder`, `search_folder_options`, `search_options`, `search_playlists`, `seek`
 - `select`, `set`, `set_bpm`, `set_browsed_file_bpm`, `set_cue`, `set_deck`
 - `set_firstbeat`, `set_fluid`, `set_gain`, `set_key`, `set_var`, `set_var_dialog`
@@ -177,6 +185,7 @@ Names not yet present in local VDJScript reference: 124
 - `skin_pannelgroup`, `skin_starter_tip`, `skin_width`, `slicer`, `slip`, `slip_mode`
 - `smart_cue`, `smart_fader`, `smart_loop`, `smart_play`, `song_pos`, `songpos_remain`
 - `songpos_warning`, `speedwheel`, `stem`, `stem_color`, `stem_pad`, `stems_split`
+- `stems_bleed`
 - `stems_split_unlink`, `stop`, `stop_3button`, `stop_button`, `stopwatch`, `swap_decks`
 - `switch_sidelist_playlist`, `sync`, `sync_hint`, `sync_nocbg`, `system`, `system_volume`
 - `timecode_active`, `timecode_bypass`, `timecode_mode`, `toggle`, `touchwheel`, `touchwheel_touch`

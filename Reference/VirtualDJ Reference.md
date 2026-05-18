@@ -42,6 +42,11 @@ Source labels used below:
   Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
   Source: `Official`
 
+- Vocal/instrumental stem isolation:
+  Prefer `stem_pad 'acapella' on` and `stem_pad 'instrumental' on` for button-style isolate pads.
+  Why: official docs describe `stem_pad` as the stem-pad helper and local testing confirms the `on` argument forces these aggregate stem-pad states on in isolation. `only_stem <stem> on/off` also works, but it follows state-dependent button semantics and can require a second press from some starting states.
+  Source: `Official`, `Local test`
+
 - Page-aware sampler pads:
   Prefer `sampler_pad`, `sampler_color`, and `sampler_pad_page`.
   Why: `sampler_color` explicitly follows the visible sampler page, and the pads manual documents page cycling when a bank has more than eight samples.

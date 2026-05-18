@@ -949,11 +949,20 @@ Sources:
 | `get_key_modifier_text` | `Text`, `SkinQuery` | Text display of the current semitone shift. | `get_key_modifier_text` |
 | `get_cue` | `Text`, `SkinQuery` | Current cue helper value. | `get_cue` |
 | `get_saved_loop` | `Text`, `SkinQuery` | Saved-loop helper value. | `get_saved_loop` |
+| `keycue_pad` | `Pad`, `SkinAction`, `Text` | Key-cue pad action/display helper. | `keycue_pad 1`, `` `keycue_pad 1` `` |
+| `keycue_pad_color` | `Pad`, `SkinQuery` | Color for a key-cue pad slot. | `keycue_pad_color 1` |
+| `keycue_pad_page` | `Pad`, `Text` | Change or query the key-cue pad page/window. | `keycue_pad_page` |
+| `keycue_pad_jump` | `Pad`, `SkinAction` | Key-cue option for jumping to the cue while applying the key cue. | `keycue_pad_jump` |
 | `get_timecode_quality` | `Text`, `SkinQuery` | Timecode signal quality helper. | `get_timecode_quality` |
+
+Notes:
+
+- The official Keycue pad page uses `keycue_pad <n>` as both pad action and backtick label, `keycue_pad_color <n>` for pad color, `keycue_pad_page` as Parameter 1, and `keycue_pad_jump` in the page menu.
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official`: `examples/pads/official/pads_keycue.xml`
 
 ### `get_browsed_song`
 
@@ -1840,6 +1849,35 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### `stems_bleed`
+
+Aliases: none
+
+Kind: `Dual`
+
+Typical surfaces: `Pad`, `Button`, `SkinAction`, `SkinQuery`, `Text`
+
+Official summary:
+
+- Adjust or query the stems bleed control when the loaded track has compatible stems
+
+Typical forms:
+
+```vdjscript
+stems_bleed
+has_stems '1.0' ? stems_bleed : nothing
+`has_stems '1.0' ? stems_bleed : has_stems 'ready'`
+```
+
+Preferred usage:
+
+- expose it behind a guarded stem-control parameter so decks without 1.0 stems can fall back to `has_stems 'ready'`
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Official`: `examples/pads/official/pads_stems.xml`
+
 ### `effect_arm_stem`
 
 Aliases: none
@@ -2266,6 +2304,37 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: pads manual
+
+### `sampler_velocity`
+
+Aliases: none
+
+Kind: `Query`
+
+Typical surfaces: `Pad`, `SkinQuery`
+
+Official summary:
+
+- Return the velocity/pressure value for a sampler pad slot
+
+Typical forms:
+
+```vdjscript
+sampler_velocity 1
+```
+
+Preferred usage:
+
+- use in pad XML `pressure=""` on velocity-sensitive sampler pages, paired with the matching `sampler_pad <n> "auto"` trigger
+
+```xml
+<pad1 pressure="sampler_velocity 1">sampler_pad 1 "auto"</pad1>
+```
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Official`: `examples/pads/official/pads_sampler_velocity.xml`
 
 ### `sampler_assign`
 
@@ -3259,6 +3328,24 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### Saved Loop Pad Helpers
+
+| Verb | Kind | Surfaces | Summary | Example |
+| --- | --- | --- | --- | --- |
+| `saved_loop_display` | `Dual` | `Pad`, `Text`, `SkinQuery` | Display a saved-loop slot label or choose the saved-loop display mode. | `` `saved_loop_display 1` ``, `saved_loop_display 'length'` |
+| `loop_color` | `Query` | `Pad`, `SkinQuery`, `Text` | Return the color for a saved-loop slot. | `loop_color 1` |
+| `loop_delete` | `Action` | `Pad`, `SkinAction` | Delete a saved-loop slot. | `loop_delete 1` |
+| `loop_load_prepare` | `Dual` | `Pad`, `SkinAction`, `SkinQuery` | Prepare/load a saved-loop slot and query whether that slot is prepared. | `loop_load 1 ? loop_load_prepare 1 : loop_save 1` |
+
+Notes:
+
+- The official Saved Loops pad page uses `loop_load_prepare <n>` as a query for blink state and as the action after an existing `loop_load <n>` test; holding a populated pad runs `loop_delete <n>`.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Official`: `examples/pads/official/pads_saved_loops.xml`
+
 ### `pad_page_select`
 
 Aliases: `pad_page_favorite_select`
@@ -3500,6 +3587,20 @@ quantize_all
 Sources:
 
 - `Official`: VDJScript verbs appendix
+
+### Quantize Pad Helpers
+
+| Verb | Surfaces | Summary | Example |
+| --- | --- | --- | --- |
+| `quantize_loop` | `Pad`, `Button`, `SkinAction`, `SkinQuery` | Toggle/query loop and loop-roll quantization. | `quantize_loop on`, `quantize_loop ? on : off` |
+| `quantize_setcue` | `Pad`, `Button`, `SkinAction`, `SkinQuery` | Toggle/query quantization when setting cues. | `quantize_setcue` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Official`: `examples/pads/official/pads_manual_loop.xml`
+- `Official`: `examples/pads/official/pads_loop_roll.xml`
+- `Official`: `examples/pads/official/pads_hotcues.xml`
 
 ### `is_fluid`
 
@@ -4658,6 +4759,14 @@ set '@$layout_4deck' 1 & load_skin
 | `scratch_dna`                 | Execute DNA scratch    | `scratch_dna`            |
 | `scratch_dna_option`          | Configure Scratch DNA behavior | `scratch_dna_option "quantized"` |
 | `scratch_dna_editor`          | Open DNA editor        | `scratch_dna_editor`     |
+| `scratchbank_assign`          | Assign dropped file to scratchbank slot | `scratchbank_assign 1` |
+| `scratchbank_load`            | Scratchbank page load/helper | `scratchbank_load`     |
+| `scratchbank_load_to_deck`    | Load scratchbank slot to deck, or return its label/color in pad contexts | `scratchbank_load_to_deck 1` |
+| `scratchbank_edit`            | Open scratchbank editor/menu | `scratchbank_edit`       |
+
+Scratchbank source note:
+
+- The official Scratchbank pad page uses `drop="scratchbank_assign <n>"`, `scratchbank_load_to_deck <n>` for pad action/color/label, `scratchbank_load` as Parameter 1, and `scratchbank_edit` in the menu.
 
 ## Volume & Mixing
 
@@ -4841,6 +4950,7 @@ set '@$layout_4deck' 1 & load_skin
 | `cue_color`          | Get/set cue color        | `cue_color 1 'yellow'`   |
 | `cue_loop`           | Jump and loop            | `cue_loop`               |
 | `lock_cues`          | Lock/unlock cues         | `lock_cues`              |
+| `quantize_setcue`    | Quantize newly set cues  | `quantize_setcue`        |
 
 ### Cue Point Notes
 
@@ -4916,8 +5026,9 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `mute_stem`            | Mute stem             | `mute_stem vocal`                 |
 | `only_stem`            | Isolate stem          | `only_stem vocal`                 |
 | `stem_color`           | Get default stem color | `stem_color 'Vocal'`             |
-| `stem_pad`             | Mute/isolate stem pad | `stem_pad vocal`                  |
+| `stem_pad`             | Mute/isolate stem pad | `stem_pad 'acapella' on`          |
 | `has_stems`            | Check if has stems    | `has_stems "ready"`               |
+| `stems_bleed`          | Stem bleed control/query | `stems_bleed`                   |
 | `eq_high`              | High EQ/HiHat/Vocal   | `eq_high`                         |
 | `eq_mid`               | Mid EQ/Melody/Vocals  | `eq_mid`                          |
 | `eq_low`               | Low EQ/Kick           | `eq_low`                          |
@@ -4935,6 +5046,15 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 
 - Individual: `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`
 - Aggregate: `Melody` (Instru+Bass), `Rhythm` (HiHat+Kick), `MeloRhythm`, `Acapella`, `Instrumental`
+
+### Stem Isolation Notes
+
+- **Official**: `only_stem <stem>` isolates the named stem. `mute_stem <stem>` mutes the named stem.
+- **Local test**: for common vocal/instrumental isolation, prefer the aggregate stem-pad states: `stem_pad 'acapella' on` and `stem_pad 'instrumental' on`. These force the selected aggregate state on in isolation, so they are cleaner than `only_stem <stem> on/off` for those two cases.
+- **Local test**: `only_stem <stem> on` and `only_stem <stem> off` are accepted, but they are state-dependent rather than simple absolute setters.
+- `only_stem 'vocal' on`: if vocal is already on, this turns the non-vocal stems off. If vocal is off, the first press turns vocal on and leaves the other stems untouched; a second press then isolates vocal.
+- `only_stem 'vocal' off`: mirror behavior for the non-vocal side. If vocal is already off, this turns the non-vocal stems on. If vocal is on, the first press turns vocal off and leaves the other stems untouched; a second press then isolates the non-vocal stems.
+- For arbitrary deterministic combinations beyond the aggregate stem-pad states, use `mute_stem <stem> on/off` and explicitly set the stems you want muted or unmuted.
 
 ## Get (Query Actions)
 
@@ -4982,6 +5102,10 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `match_key`            | Match compatible key   | `match_key`                 |
 | `key_match_button`     | Match the other deck's key on first press, or reset key on second press | `key_match_button` |
 | `key_match_menu`       | Open key-match menu    | `key_match_menu`            |
+| `keycue_pad`           | Key-cue pad helper     | `keycue_pad 1`              |
+| `keycue_pad_color`     | Key-cue pad color      | `keycue_pad_color 1`        |
+| `keycue_pad_page`      | Key-cue pad page/window | `keycue_pad_page`          |
+| `keycue_pad_jump`      | Key-cue jump option    | `keycue_pad_jump`           |
 | `key_lock` / `keylock` | Lock key               | `key_lock`                  |
 | `pitch`                | Set pitch              | `pitch 112%`, `pitch +0.1%` |
 | `pitch_zero`           | Reset to 0%            | `pitch_zero`                |
@@ -5010,7 +5134,12 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `loop_save`   | Save loop            | `loop_save 1`, `loop_save "name"`  |
 | `loop_load`   | Load saved loop      | `loop_load 1`                      |
 | `saved_loop`  | Load or set loop     | `saved_loop 1`                     |
+| `saved_loop_display` | Saved-loop pad label/display mode | `` `saved_loop_display 1` `` |
+| `loop_color`  | Saved-loop color     | `loop_color 1`                     |
+| `loop_delete` | Delete saved loop    | `loop_delete 1`                    |
+| `loop_load_prepare` | Prepare/load saved loop and query prepared state | `loop_load_prepare 1` |
 | `loop_roll`   | Loop roll            | `loop_roll 0.25`                   |
+| `quantize_loop` | Quantize loops/rolls | `quantize_loop`                   |
 | `slicer`      | Slicer effect        | `slicer 1`                         |
 | `loop_adjust` | Adjust loop with jog | `loop_adjust 'move'`               |
 | `loop_button` | Smart one-button loop control | `loop_button`              |
@@ -5174,6 +5303,7 @@ Here the slider range becomes a simple placement track, and the `fader` sits at 
 | `sampler_pad`                | Trigger the currently exposed sampler pad slot; in display/name contexts it can also return the visible pad label | `sampler_pad 1`, `` `sampler_pad 1` `` |
 | `sampler_pad_shift`          | Stop a sample if playing, delete it otherwise                    | `sampler_pad_shift 1`                                     |
 | `sampler_pad_page`           | Change/query the current 8-pad sampler window                    | `sampler_pad_page +1`, `sampler_pad_page -1`              |
+| `sampler_velocity`           | Velocity/pressure value for a sampler pad                        | `sampler_velocity 1`                                      |
 | `sampler_assign`             | Assign a `.vdjsample` file to a slot                             | `sampler_assign 1 "/Samples/horn.vdjsample"`              |
 | `sampler_loaded`             | Check whether the visible sampler pad slot currently has a sample loaded | `sampler_loaded 1`, `sampler_loaded 1 "auto"`     |
 | `sampler_color`              | Get the color of the visible sampler pad slot                    | `sampler_color 1`                                         |
@@ -5341,6 +5471,13 @@ sampler_volume 9 75%
 | `rescan_controllers` | Rescan connected controllers | `rescan_controllers`             |
 | `reinit_controller` | Reinitialize controller | `reinit_controller`                  |
 | `refresh_controller` | Refresh controller displays | `refresh_controller`               |
+| `os2l_button` | Trigger named OS2L lighting button | `os2l_button 'blackout'`         |
+| `os2l_cmd` | Trigger numbered OS2L command | `os2l_cmd 1 on while_pressed`         |
+| `os2l_info` | Show/read OS2L lighting connection info | `os2l_info`                    |
+
+OS2L source note:
+
+- The official DMX pad page uses `os2l_button` for named lighting buttons, `os2l_cmd <n> on while_pressed` for numbered commands, and `os2l_info` in the page menu.
 
 ## Configuration
 
@@ -5392,6 +5529,165 @@ sampler_volume 9 75%
 | `get_text`  | Get formatted text      | `get_text 'You are listening to \`get loaded_song "title"\`'` |
 | `stopwatch` | Stopwatch               | `stopwatch`                                                   |
 | `countdown` | Count down to date/time | `countdown '2025/01/01 00:00'`                                |
+
+## Official Appendix Remainder
+
+These entries close the names-only official appendix audit. They are intentionally compact: many are lower-frequency, hardware-specific, skin-variation, or configuration helpers. Entries with sparse official prose are documented conservatively and should be locally tested before being used in a polished skin, pad page, or controller mapping.
+
+### Config, System, And Workflow
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `auto_pitch_lock` | Toggle/query automatic pitch lock; when enabled, pitch lock engages when BPMs are matched. | `auto_pitch_lock` |
+| `auto_sync_settings` | Apply a preset set of automatic sync options for the current skin/category. | `auto_sync_settings` |
+| `fader_start` | Enable or disable fader start behavior. | `fader_start on` |
+| `smart_scratch` | Mute backward scratching so only forward scratches are heard. | `smart_scratch` |
+| `keyboard_shortcuts` | Show or control the browser keyboard-shortcuts overlay; accepts an optional delay or state. | `keyboard_shortcuts 500ms` |
+| `select_master_output` | Select whether audio plays through computer speakers or controller audio output. | `select_master_output` |
+| `switch_skin_variation` | Switch the current skin variation. | `switch_skin_variation` |
+| `open_stem_creator` | Open the Stem Creator workflow. | `open_stem_creator` |
+| `handshake` | Plugin/developer helper for VirtualDJ environment authentication. | `handshake 'nonce'` |
+| `is_using` | Query whether a feature such as filter, equalizer, loop, cue, sample, pads, effect, or load is in use. | `is_using 'effect'` |
+| `system` | System helper from the official appendix. | `system` |
+| `debug` | Display the value of a parameter, commonly while developing controller mappings. | `debug` |
+| `connect` | Connection helper from the official config/controller appendix area. | `connect` |
+| `play_mode` | Set the play/stop/cue button behavior family. | `play_mode 'pioneer'` |
+| `setting_setsession` | Force a setting value for the current session. | `setting_setsession 'videoRandomTransition' on` |
+| `setting_setsession_deck` | Force a deck-specific setting value for the current session. | `deck 1 setting_setsession_deck 'pitchRange' 12%` |
+| `setting_setdefault` | Change a setting default for the current session. | `setting_setdefault 'jogSensitivityScratch' 80%` |
+| `setting_reset` | Reset a setting to its default value. | `setting_reset 'jogSensitivityScratch'` |
+| `setting_ismodified` | Query whether a setting differs from its default. | `setting_ismodified 'jogSensitivityScratch'` |
+| `saveregistryconfig` | Official alias of `save_config`; saves config immediately. | `saveregistryconfig` |
+| `record_config` | Open the recording configuration panel. | `record_config` |
+| `record_vu` | Return/show the level of the recording signal. | `record_vu` |
+| `broadcast_message` | Set or query the broadcast message. | `broadcast_message 'Live now'` |
+| `karaoke_options` | Open the karaoke options menu. | `karaoke_options` |
+| `karaoke_venue_name` | Karaoke venue-name helper. | `` `karaoke_venue_name` `` |
+| `stopwatch_reset` | Reset the stopwatch text helper. | `stopwatch_reset` |
+
+### Browser And Track Relationship Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `mark_linked_tracks` / `mark_related_tracks` | Mark the tracks on decks 1 and 2 as linked/related for remix-style browsing. | `mark_linked_tracks` |
+| `has_linked_tracks` | Covered query that can be paired with linked-track workflows. | `has_linked_tracks browsed` |
+| `browsed_song` | Set a property on the currently browsed file. | `browsed_song 'rating' 5` |
+| `loaded_song` | Set a property on the track loaded on the deck. | `loaded_song 'rating' 5` |
+| `page` | Browser/page helper from the official appendix. | `page` |
+| `prelisten` / `preview` | Pre-listen the selected track. | `prelisten` |
+
+### Deck, Position, Cue, And Loop Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `mixermode` | Query mixer mode; can check explicit `internal` or `external`. | `mixermode 'internal'` |
+| `beat_juggle` | Alternate jumping forward and backward by a beat amount. | `beat_juggle 0.5` |
+| `dualdeckmode_decks` | Deck-pair helper used by `dualdeckmode` for deck pairs 1/3 or 2/4. | `dualdeckmode_decks` |
+| `goto_mixpoint` | Jump to a named automix/mix point. | `goto_mixpoint 'StartCut'` |
+| `set_mixpoint` | Move a named automix/mix point to the current position. | `set_mixpoint 'StartTempo'` |
+| `set_loadpoint` | Set the point where the track starts when loaded. | `set_loadpoint` |
+| `shift_all_cues` | Shift all cue points by a time offset. | `shift_all_cues -10ms` |
+| `sort_cues` | Sort cue points chronologically. | `sort_cues` |
+| `repeat_song` | Restart the current song from the beginning when it ends. | `repeat_song on` |
+| `saved_loop_prepare` | Prepare/load a saved loop without jumping, or set it if missing. | `saved_loop_prepare 1` |
+| `saved_loop_autotrigger` | Auto-trigger a saved loop when play position reaches it. | `saved_loop_autotrigger 1` |
+| `get_beat` | Return beat intensity at the current position. | `get_beat` |
+
+### Pitch, Motor, Scratch, And Jog Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `pitch2` / `pitch2_slider` | Official aliases of `pitch` / `pitch_slider`. | `pitch2 112%` |
+| `pitch_relative` | Relative pitch helper for hardware controllers. | `pitch_relative +0.1%` |
+| `pitch_motorized` | Motorized-pitch helper for supported controllers. | `pitch_motorized` |
+| `pitch_lock` / `pitchlock` | Link pitch sliders so matched decks stay matched when one pitch moves. | `pitch_lock on` |
+| `startupspeed` | Vinyl-style ramp-up time from stopped to playing. | `startupspeed 2000ms` |
+| `brakespeed` | Vinyl-style brake time from playing to stopped. | `brakespeed 2000ms` |
+| `backspin` | Trigger a backspin; accepts time or beat length. | `backspin 4bt` |
+| `jog_wheel` | Official alias of `jogwheel`. | `jog_wheel +1.0` |
+| `scratch_wheel` | Official alias of `touchwheel` / `scratchwheel`. | `scratch_wheel +1.0` |
+| `scratch_wheel_touch` / `scratchwheel_touch` / `speedwheel_touch` | Official aliases of `touchwheel_touch` for touch-sensitive wheels. | `scratch_wheel_touch on` |
+| `motor_switch` | Assign the deck to the motorized wheel on supported hardware. | `motor_switch` |
+| `motorwheel_instant_play` | Start instantly on motorized-wheel decks, bypassing motor ramp-up. | `motorwheel_instant_play on` |
+| `phase_movement` | Phase controller movement helper. | `phase_movement` |
+| `phase_position` | Phase controller position helper. | `phase_position` |
+| `phase_active` | Phase controller active-state helper. | `phase_active` |
+| `v7_status` | Numark V7 status helper. | `v7_status` |
+| `rzx_touch` | Pioneer RZX touch helper. | `rzx_touch` |
+| `rzx_touch_x` | Pioneer RZX touch X-position helper. | `rzx_touch_x` |
+| `rzx_touch_y` | Pioneer RZX touch Y-position helper. | `rzx_touch_y` |
+
+### Mixer, EQ, And Crossfader Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `cross_assign` | Assign the deck to a crossfader side or through state. | `deck 3 cross_assign 'left'` |
+| `eq_crossfader_high` | Crossfade treble between decks. | `eq_crossfader_high 50%` |
+| `eq_crossfader_mid` / `eq_crossfader_med` | Crossfade mid frequencies between decks. | `eq_crossfader_mid 50%` |
+| `eq_crossfader_low` | Crossfade bass between decks. | `eq_crossfader_low 50%` |
+| `high_label` | Label helper for the high EQ band. | `` `high_label` `` |
+| `mid_label` | Label helper for the mid EQ band. | `` `mid_label` `` |
+| `low_label` | Label helper for the low EQ band. | `` `low_label` `` |
+| `mixer_order` | Set 4-deck controller mixer order from left to right. | `mixer_order 3124` |
+
+### Controller And Display Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `controller_mapping` | Assign a mapping to the current controller, a named controller, or a numbered instance. | `controller_mapping 'CDJ400' 'My Mapping' 2` |
+| `controllerscreen_deck` | Controller-screen deck helper. | `controllerscreen_deck` |
+| `controller_battery` | Controller battery-state helper. | `controller_battery` |
+| `gemini_waveform_zoomlevel` | Gemini waveform zoom helper. | `gemini_waveform_zoomlevel` |
+| `midiclock_active` | Toggle sending MIDI clock to the specified controller. | `midiclock_active` |
+| `miditovst_active` | Toggle MIDI routing from a controller to the deck's VST instruments/effects. | `miditovst_active` |
+| `djc_shift` | DJC controller shift helper. | `djc_shift` |
+| `djc_button` | DJC controller button helper. | `djc_button` |
+| `djc_button_popup` | DJC controller popup-button helper. | `djc_button_popup` |
+| `djc_button_slider` | DJC controller slider-button helper. | `djc_button_slider` |
+| `djc_button_select` | DJC controller selection-button helper. | `djc_button_select` |
+| `djc_panel` | DJC controller panel helper. | `djc_panel` |
+| `menu` | Display a controller-screen menu for changing `menu_button` behavior. | `menu` |
+| `denon_platter` | Denon platter action/helper. | `denon_platter` |
+
+### Key, Sampler, And OS2L Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `key_match_button` | Match the other deck's key on first press; reset on second press. | `key_match_button` |
+| `key_match_menu` | Open a menu to select a different key for the current song. | `key_match_menu` |
+| `sampler_default` | Official alias of `sampler_select`. | `sampler_default 5` |
+| `sampler_rapidfire` | Official alias of `sampler_mode`. | `sampler_rapidfire 'stutter'` |
+| `sampler_group_color` | Return the color of a sampler group by name or index. | `sampler_group_color 'drums'` |
+| `sampler_group_name` | Return the name of a sampler group by index. | `sampler_group_name 1` |
+| `sampler_group_mute` | Mute or unmute a sampler group by name or index. | `sampler_group_mute 'drums'` |
+| `sampler_has_group` | Query whether a sampler group exists in the current bank. | `sampler_has_group 'drums'` |
+| `sampler_load_to_deck` | Load the selected sampler slot to a deck. | `sampler_load_to_deck` |
+| `os2l_scene` | OS2L scene command; can queue scenes until the deck is audible. | `os2l_scene 'scene1'` |
+
+### Timecode And Video Helpers
+
+| Verb | Description | Example |
+| --- | --- | --- |
+| `invert_timecode` | Switch/invert timecode control across available decks. | `invert_timecode` |
+| `timecode_config` | Open the timecode configuration window. | `timecode_config` |
+| `timecode_reset_pitch` | Reset software pitch to 100% so deck pitch matches turntable pitch. | `timecode_reset_pitch` |
+| `timecode_pitch` | Report a controller pitch slider position to the timecode engine. | `timecode_pitch 100%` |
+| `timecode_cd_mode` | Force timecode to CD mode. | `timecode_cd_mode on` |
+| `timecode_motor_enable` | Motor-enabled helper for hybrid turntables that report motor state over MIDI. | `timecode_motor_enable on` |
+| `timecode_options` | Show timecode options. | `timecode_options` |
+| `leftvideo_button` | Simple button helper for the left video source. | `deck 3 leftvideo_button` |
+| `rightvideo_button` | Simple button helper for the right video source. | `deck 3 rightvideo_button` |
+| `is_audioonlyvisualisation` | Query whether the deck is using the audio-only visualisation. | `is_audioonlyvisualisation` |
+| `over_video` / `overvideo` | Force the deck's video output to the video master. | `over_video on` |
+| `video_crossfader_link` | Link/unlink video crossfader to audio crossfader. | `video_crossfader_link on` |
+| `video_crossfader_auto` | Move video crossfader automatically based on deck activity. | `video_crossfader_auto on` |
+| `video_fadetoblack` | Enable/disable fade-to-black on volume sliders. | `video_fadetoblack on` |
+| `video_delay` | Set or adjust video/audio sync delay. | `video_delay +100ms` |
+| `video_level` | Fade-to-black independent level for the left or right video deck. | `video_level 50%` |
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
 
 ## Common Patterns
 
