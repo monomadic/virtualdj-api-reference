@@ -28,6 +28,7 @@ Names not yet present in local VDJScript reference: 0
 - No compact-remainder names currently remain.
 - Next depth pass: locally test sparse system/developer helpers such as `connect`, `system`, `open_stem_creator`, and `dualdeckmode_decks`.
 - Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.
+- Promotion rule: do not remove a verb from **Needs Local Test** until [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) has a build, context/hardware, observed result, and notes.
 
 ## Recently Promoted
 

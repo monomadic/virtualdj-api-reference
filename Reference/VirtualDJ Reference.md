@@ -775,6 +775,22 @@ This is labeled separately because the current manual is explicit about page-awa
 
 Source: `Official`, `Inference`
 
+### Empty Sampler Pads and Shifted Colors
+
+When a sampler pad slot is empty, nullify the action with an explicit false branch instead of leaving the conditional incomplete:
+
+```xml
+<pad10 name="`sampler_loaded 10 ? sampler_pad 10 : ''`" color="sampler_loaded 10 ? sampler_color 10 : dim" query="sampler_loaded 10 ? sampler_play 10 ? blink 1bt : on : off">sampler_loaded 10 ? sampler_pad 10 : nothing</pad10>
+```
+
+If the page defines `shift_pad<n>` entries, give the shifted pads their own `color=""` expression. Skin frameworks that render shifted pad state may read the shifted pad color separately; without a shifted color, empty or shifted sampler pads can fall back to the skin/default button color instead of matching the normal pad.
+
+```xml
+<shift_pad10 name="`sampler_loaded 10 ? sampler_pad 10 : ''`" color="sampler_loaded 10 ? sampler_color 10 : dim">sampler_loaded 10 ? sampler_edit 10 : nothing</shift_pad10>
+```
+
+Source: `Local test`, `Inference`
+
 ### Sampler Options That Matter
 
 Current official options worth knowing:

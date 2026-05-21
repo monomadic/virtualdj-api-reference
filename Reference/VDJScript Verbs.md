@@ -4761,6 +4761,10 @@ set '@$layout_4deck' 1 & load_skin
 | `show_window` | Show/hide window             | `show_window`           |
 | `open_stem_creator` | Open the Stem Creator workflow | `open_stem_creator` |
 
+Window/workflow note:
+
+- `open_stem_creator` is official but sparse in public prose. Track observed build/license/selection behavior in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before treating it as a polished skin workflow control.
+
 ## Audio Playback
 
 | Verb              | Description                 | Example                             |
@@ -4800,6 +4804,7 @@ set '@$layout_4deck' 1 & load_skin
 - `mixermode` returns true for internal mixer mode and false for external mixer mode; pass `internal` or `external` to test explicitly.
 - `beat_juggle` alternates direction each time it runs. Pass a beat amount such as `0.5` for half-beat juggling.
 - `dualdeckmode_decks` is official but sparsely documented; official prose ties it to dual-deck mode applying to deck pairs 1/3 or 2/4, so test controller mappings that depend on it.
+- Record build/context results for `dualdeckmode_decks` in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
 ## Play Controls
 
@@ -5567,6 +5572,8 @@ loop_color 1 'yellow'
 - `sampler_pad`, `sampler_loaded`, `sampler_color`, and `sampler_pad_volume` are the safest page-aware helpers when building sampler pad pages.
 - In display contexts such as pad `name=` fields and skin/text `format=` fields, `sampler_pad 1` through `sampler_pad 8` are the safest way to show the current visible sample names on the active sampler page.
 - For visibility and empty-slot checks in paged sampler UIs, `sampler_loaded 1` through `sampler_loaded 8` already follow the visible sampler page, so you usually do not need to infer emptiness from a blank `sampler_pad` label.
+- To nullify an empty sampler pad, use an explicit false branch in each relevant field: empty text in `name`, dim/off visual state in `color`/`query`, and `: nothing` in the action body.
+- When defining `shift_pad<n>` entries for sampler pages, also define shifted `color=""` values such as `sampler_loaded 1 ? sampler_color 1 : dim`; skin pad frameworks may render shifted pad colors separately, and missing shifted colors can fall back to the skin/default button color. Source: `Local test`, `Inference`
 - `sampler_play`, `sampler_stop`, `sampler_volume`, `get_sample_name`, `get_sample_info`, and `get_sample_color` are best treated as absolute-slot helpers.
 - `sampler_default` is the official alias of `sampler_select`; prefer `sampler_select` in new docs unless documenting older mappings.
 - `sampler_rapidfire` is the official alias of `sampler_mode`; prefer `sampler_mode` for clarity.
@@ -5767,6 +5774,7 @@ is_video ? video_transition 1000ms : nothing
 - `show_text 'Line 1|Line 2' 3000ms` sends temporary text to controller displays that use `get_display`; `|` separates display lines.
 - `reinit_controller` can target a specific controller and optional delay between exit/init. Use broad `reinit_controller` only when a full controller reinitialization is intended.
 - `midiclock_active`, `miditovst_active`, `phase_*`, `rzx_*`, `v7_status`, `djc_*`, `controllerscreen_deck`, and `controller_battery` are official but hardware-specific or sparsely documented; keep them in mappings that can be tested on the target device.
+- Use [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) for build/hardware results before promoting `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`, `phase_*`, `v7_status`, `rzx_*`, `djc_*`, or `denon_platter` beyond compact controller notes.
 
 ### Controller Examples
 
@@ -5826,6 +5834,7 @@ OS2L source note:
 - `play_mode` controls play/stop/cue behavior families such as `numark` and `pioneer`.
 - `saveregistryconfig` is the official alias of `save_config`.
 - Official skins use `connect` as an account/connect button; published skins also query `connect` to show account connection state. Behavior is sparse enough to keep in local-test notes.
+- Record logged-in/logged-out `connect` behavior in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before relying on it as a stable boolean in new skins.
 
 ## Timecode
 
