@@ -43,6 +43,8 @@ Names not yet present in local VDJScript reference: 0
 
 ## Needs Local Test
 
+Manual verification lives in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
+
 - `connect`, `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
 - `phase_movement`, `phase_position`, `phase_active`, `v7_status`, `rzx_touch`, `rzx_touch_x`, `rzx_touch_y`
 - `djc_shift`, `djc_button`, `djc_button_popup`, `djc_button_slider`, `djc_button_select`, `djc_panel`

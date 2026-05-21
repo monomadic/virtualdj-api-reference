@@ -13,6 +13,9 @@ Start here:
 - [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md)
   Names-only audit comparing the live official VDJScript appendix against this repo's local verb reference.
 
+- [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md)
+  Manual verification matrix for sparse, hardware-specific, and environment-dependent official verbs.
+
 - [Published Skin Findings](Published%20Skin%20Findings.md)
   Source-backed notes from working public skins, including undocumented-looking commands, provenance, and local test plans.
 
@@ -33,6 +36,7 @@ Current status:
 - `VirtualDJ Reference.md` is the policy and architecture layer.
 - `VDJScript Verbs.md` is the first API-focused pass.
 - `Official VDJScript Coverage Audit.md` tracks official verb names that still need local curated documentation.
+- `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
