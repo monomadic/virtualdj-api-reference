@@ -74,7 +74,7 @@ Coverage depth is tiered:
 
 - Curated entries near the top are the highest-confidence API notes.
 - Broad catalog sections below cover common usage in a compact form.
-- The [Official Appendix Remainder](#official-appendix-remainder) section keeps lower-frequency official names searchable until they earn fuller treatment.
+- The [Official Appendix Remainder](#official-appendix-remainder) section is kept as an audit marker; all tracked official names are currently searchable in functional sections.
 
 Promote compact official entries into curated sections when they become relevant to skins, pads, mappings, published-skin findings, or local tests.
 
@@ -818,6 +818,7 @@ Sources:
 | --- | --- | --- | --- |
 | `get_firstbeat` | `Text`, `SkinQuery` | Position of the first beat in milliseconds. | `get_firstbeat` |
 | `get_firstbeat_local` | `Text`, `SkinQuery` | First beat of the current 16-beat phrase, in milliseconds. | `get_firstbeat_local` |
+| `get_beat` | `Text`, `SkinQuery` | Beat intensity at the current playback position, from `0%` to `100%`. | `get_beat` |
 | `get_beatgrid` | `Text`, `SkinQuery` | Beat intensity from the beatgrid. | `get_beatgrid` |
 | `get_beatdiff` | `Text`, `SkinQuery` | Beat distance between this deck and the active deck. | `get_beatdiff` |
 | `get_beat2` | `Text`, `SkinQuery` | Beat helper variant from the official beat query family. | `get_beat2` |
@@ -830,6 +831,11 @@ Sources:
 Sources:
 
 - `Official`: VDJScript verbs appendix
+
+Notes:
+
+- Use `get_beat` for a live beat-intensity value at the current position.
+- Use `get_beatgrid` when the value should be tied to the beatgrid position: `100%` on beat, `0%` halfway between beats.
 
 ### Deck And Environment Queries
 
@@ -1341,6 +1347,51 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Local test`: 16-pad reset-pitch pad XML
+
+### `get_pitch`
+
+Aliases: none
+
+Kind: `Query`
+
+Typical surfaces: `Map`, `Button`, `Pad`, `SkinQuery`, `Text`
+
+Official summary:
+
+- Return the current deck pitch value
+
+Typical forms:
+
+```vdjscript
+get_pitch
+get_pitch & param_multiply -1
+```
+
+Full pad-page reset pattern with inverse-pitch label:
+
+```xml
+<pad13 name="`get_pitch_zero ? get_text 'RESET BPM (0%)' : get_pitch &amp; param_smaller 0 ? get_text 'RESET BPM (+`get_pitch &amp; param_multiply -1`%)' : get_text 'RESET BPM (-`get_pitch`%)'`" autodim="false" color="loaded ? get_pitch_value &amp; param_bigger 125 ? color 'red' : get_pitch_value &amp; param_smaller 75 ? color 'red' : get_pitch_value &amp; param_bigger 105 ? color 'yellow' : get_pitch_value &amp; param_smaller 95 ? color 'yellow' : color 'green' : color 'black'" query="loaded ? get_pitch_value &amp; param_bigger 125 ? blink 500ms : get_pitch_value &amp; param_smaller 75 ? blink 500ms : on : off">pitch_reset 4bt</pad13>
+```
+
+This displays the inverse pitch with an explicit positive sign when needed:
+
+```text
+get_pitch = +18   -> RESET BPM (-18%)
+get_pitch = -15.7 -> RESET BPM (+15.7%)
+get_pitch = 0     -> RESET BPM (0%)
+```
+
+Notes:
+
+- `get_pitch` returns pitch points suitable for display/math such as `18` or `15.7`; it is not a normalized decimal ratio.
+- Do not run `get_pitch & param_cast "percentage"` when you only want a pitch label. Local pad-label testing showed it scales the value again, producing outputs such as `2146%` or `-2018.45%`.
+- `get_pitch & param_multiply -1` flips the numeric sign, but it will not add a visible `+` for positive results and can display `-0`; use a separate sign expression and `get_pitch_zero` when the label must be polished.
+- In pad page XML and skin XML attributes, write chain separators as `&amp;`; raw `&` is only for plain VDJScript outside XML.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Local test`: pad-label output samples for inverse reset-BPM text
 
 ### `get_pitch_value`
 
@@ -4158,6 +4209,8 @@ These actions operate on the currently selected browser file or files, not neces
 | `browsed_file_reload_tag` | `Button`, `SkinAction` | Reload the selected file's tag from the source file. | `browsed_file_reload_tag` |
 | `browsed_file_rename` | `Button`, `SkinAction` | Rename the selected browser file. | `browsed_file_rename` |
 | `set_browsed_file_bpm` | `Button`, `SkinAction` | Set the BPM of selected browser songs. | `set_browsed_file_bpm 129.3` |
+| `browsed_song` | `Button`, `SkinAction` | Set a property on the currently browsed file. | `browsed_song 'rating' 5` |
+| `loaded_song` | `Button`, `SkinAction` | Set a property on the track loaded on the deck. | `loaded_song 'rating' 5` |
 | `browsed_song_hashtag` | `Button`, `SkinAction` | Add or remove a hashtag from a browsed-song field. | `browsed_song_hashtag 'user 1' '#high_energy'` |
 | `loaded_song_hashtag` | `Button`, `SkinAction` | Add or remove a hashtag from a loaded-song field. | `loaded_song_hashtag 'user 1' '#warmup'` |
 | `edit_comment` | `Button`, `SkinAction` | Open a window to edit the selected track's comment. | `edit_comment` |
@@ -4166,6 +4219,7 @@ Important notes:
 
 - `browsed_file_reload_tag` overwrites VirtualDJ database changes with values saved in the file tag.
 - `set_browsed_file_bpm` follows the same value style as `set_bpm`, including absolute and relative values.
+- Prefer `get_browsed_song` / `get_loaded_song` for read-only display; use `browsed_song` / `loaded_song` only when a control should write metadata.
 
 Sources:
 
@@ -4194,6 +4248,10 @@ Sources:
 | `sidereco_options` | `Action` | `Button`, `SkinAction` | Show options for the sideview recommendation panel. | `sidereco_options` |
 | `sidereco_song` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel song helper. | `sidereco_song` |
 | `sidereco_source` | `Dual` | `Button`, `SkinAction`, `Text` | Recommendation-panel source helper. | `sidereco_source` |
+| `mark_linked_tracks` | `Action` | `Button`, `SkinAction` | Mark the tracks on decks 1 and 2 as linked/related. | `mark_linked_tracks` |
+| `mark_related_tracks` | `Action` | `Button`, `SkinAction` | Official alias of `mark_linked_tracks`. | `mark_related_tracks` |
+| `has_linked_tracks` | `Query` | `SkinQuery`, `Button` | Check whether a track has linked/related tracks. | `has_linked_tracks browsed` |
+| `page` | `Dual` | `Button`, `SkinAction`, `Text` | Browser/page helper from the official appendix. | `page` |
 
 Skin pattern:
 
@@ -4202,6 +4260,13 @@ browser_zoom ? true : browser_isactive ? true : false
 ```
 
 This is useful when a skin has a browser-zoom or "mini deck" layout that should appear either when the browser is explicitly zoomed or when controller/browser focus is active.
+
+Track relationship pattern:
+
+```vdjscript
+deck 1 loaded ? deck 2 loaded ? mark_linked_tracks : nothing
+has_linked_tracks browsed ? sideview 'remixes' : nothing
+```
 
 Sources:
 
@@ -4271,6 +4336,8 @@ Sources:
 
 | Verb | Kind | Surfaces | Summary | Example |
 | --- | --- | --- | --- | --- |
+| `prelisten` | `Action` | `Button`, `SkinAction` | Pre-listen the selected track. | `prelisten` |
+| `preview` | `Action` | `Button`, `SkinAction` | Official alias of `prelisten`. | `preview` |
 | `prelisten_info` | `Text` | `Text`, `SkinQuery` | Prelisten-player information helper. | `prelisten_info` |
 | `prelisten_options` | `Action` | `Button`, `SkinAction` | Show prelisten-player options. | `prelisten_options` |
 | `prelisten_output` | `Action` | `Map`, `Button`, `SkinAction` | Assign a deck as the prelisten player or reset to auto. | `deck 1 prelisten_output` |
@@ -4606,6 +4673,12 @@ The sections below remain useful as a wide local inventory. They are still being
 | `zoom_vertical`             | Zoom vertical           | `zoom_vertical`                           |
 | `load_skin`                 | Load new skin/variation | `load_skin ':newvariation'`               |
 | `skin_empty_buttons`        | Query/toggle empty custom button space | `skin_empty_buttons`          |
+| `is_using`                  | Query whether a feature was recently used | `is_using 'filter' 1000ms`   |
+
+### Skin Context Notes
+
+- `is_using` is built for temporary context panels and stacked feedback. Official feature names include `filter`, `equalizer`, `loop`, `cue`, `sample`, `pads`, `effect`, and `load`.
+- Optional timing parameters keep the state true long enough for UI feedback, for example `is_using 'sample' 1000ms 8000ms`.
 
 ## Custom Buttons & Multi-buttons
 
@@ -4631,9 +4704,18 @@ The sections below remain useful as a wide local inventory. They are still being
 | `get_battery`          | Battery level            | `get_battery`                       |
 | `is_battery`           | Running on battery       | `is_battery`                        |
 | `has_battery`          | Has batteries            | `has_battery`                       |
+| `system`               | Sparse official system helper | `system`                       |
+| `debug`                | Display the incoming parameter value | `debug`                    |
 | `show_keyboard`        | Show onscreen keyboard   | `show_keyboard`                     |
 | `system_volume`        | Change system volume     | `system_volume`                     |
 | `has_system_volume`    | Can modify system volume | `has_system_volume`                 |
+| `handshake`            | Developer plugin environment handshake | `handshake 'nonce'`        |
+
+### System Notes
+
+- `debug` is mainly useful while developing mappings because it displays the parameter value a controller or script path is sending.
+- `handshake` is for plugin developers. Pass a string, then verify the encrypted response using VirtualDJ's public key before trusting that the caller is a real VirtualDJ environment.
+- `system` is official but currently has sparse public prose; keep usage behind local testing.
 
 ## Variables
 
@@ -4677,6 +4759,7 @@ set '@$layout_4deck' 1 & load_skin
 | `minimize`    | Minimize to taskbar          | `minimize`              |
 | `maximize`    | Maximize/fullscreen/windowed | `maximize 'fullscreen'` |
 | `show_window` | Show/hide window             | `show_window`           |
+| `open_stem_creator` | Open the Stem Creator workflow | `open_stem_creator` |
 
 ## Audio Playback
 
@@ -4704,10 +4787,19 @@ set '@$layout_4deck' 1 & load_skin
 | `stems_split`        | Split stems to decks    | `stems_split vocal target` |
 | `stems_split_unlink` | Unlink split stems      | `stems_split_unlink`       |
 | `dualdeckmode`       | Toggle dual deck mode   | `dualdeckmode`             |
+| `dualdeckmode_decks` | Dual-deck pair helper for decks 1/3 or 2/4 | `dualdeckmode_decks` |
+| `mixermode`          | Query internal vs external mixer mode | `mixermode 'internal'` |
+| `beat_juggle`        | Alternate beat jumps forward and backward | `beat_juggle 0.5` |
 | `beatjump`           | Jump beats              | `beatjump +1`              |
 | `beatjump_select`    | Set jump size           | `beatjump_select 4`        |
 | `beatjump_page`      | Change jump offset      | `beatjump_page`            |
 | `beatjump_pad`       | Execute jump            | `beatjump_pad`             |
+
+### Deck Management Notes
+
+- `mixermode` returns true for internal mixer mode and false for external mixer mode; pass `internal` or `external` to test explicitly.
+- `beat_juggle` alternates direction each time it runs. Pass a beat amount such as `0.5` for half-beat juggling.
+- `dualdeckmode_decks` is official but sparsely documented; official prose ties it to dual-deck mode applying to deck pairs 1/3 or 2/4, so test controller mappings that depend on it.
 
 ## Play Controls
 
@@ -4911,6 +5003,8 @@ Scratchbank source note:
 | `browsed_file_reload_tag` | Reload browsed file tag from source file | `browsed_file_reload_tag` |
 | `browsed_file_rename` | Rename browsed file          | `browsed_file_rename`        |
 | `set_browsed_file_bpm` | Set BPM for selected browser songs | `set_browsed_file_bpm 129.3` |
+| `browsed_song`       | Set browsed file property | `browsed_song 'rating' 5` |
+| `loaded_song`        | Set loaded track property | `loaded_song 'rating' 5` |
 | `browsed_song_hashtag` | Add/remove hashtag on browsed song | `browsed_song_hashtag 'user 1' '#tag'` |
 | `loaded_song_hashtag` | Add/remove hashtag on loaded song | `loaded_song_hashtag 'user 1' '#tag'` |
 | `edit_comment`        | Edit selected track comment | `edit_comment`               |
@@ -4925,6 +5019,9 @@ Scratchbank source note:
 | `sidereco_options`     | Sideview recommendation panel options | `sidereco_options`    |
 | `sidereco_song`        | Recommendation-panel song helper | `sidereco_song`          |
 | `sidereco_source`      | Recommendation-panel source helper | `sidereco_source`      |
+| `mark_linked_tracks` / `mark_related_tracks` | Link decks 1 and 2 as related tracks | `mark_linked_tracks` |
+| `has_linked_tracks`    | Check linked/related tracks | `has_linked_tracks browsed` |
+| `page`                 | Browser/page helper | `page`                     |
 
 ## Loading
 
@@ -4961,6 +5058,8 @@ Scratchbank source note:
 | `cue_color`          | Get/set cue color        | `cue_color 1 'yellow'`   |
 | `cue_loop`           | Jump and loop            | `cue_loop`               |
 | `lock_cues`          | Lock/unlock cues         | `lock_cues`              |
+| `shift_all_cues`     | Shift all cue points by a time offset | `shift_all_cues -10ms` |
+| `sort_cues`          | Sort cue points chronologically | `sort_cues`        |
 | `quantize_setcue`    | Quantize newly set cues  | `quantize_setcue`        |
 
 ### Cue Point Notes
@@ -4968,6 +5067,8 @@ Scratchbank source note:
 - `cue_pos <n>` returns the position of cue point `<n>` as a percentage of the track, which makes it especially useful anywhere a skin element expects a progress-style value.
 - `cue_pos` also supports alternate outputs such as `msec`, `sec`, `min`, `mseconly`, and `beats`.
 - In skin XML, pair `cue_pos` with `has_cue <n>` when you want a marker or fill to appear only after that cue exists.
+- `shift_all_cues <offset>` is a repair tool for tracks whose cue points are globally early or late, such as old imports that need `shift_all_cues -10ms`.
+- `sort_cues` rewrites cue ordering chronologically; avoid putting it on an accidental one-tap control.
 
 ### Working `cue_pos` Examples
 
@@ -5097,6 +5198,7 @@ eq_crossfader_low 50%
 | Verb               | Description           | Example                       |
 | ------------------ | --------------------- | ----------------------------- |
 | `get_beatpos`      | Beat position         | `get_beatpos`                 |
+| `get_beat`         | Beat intensity at current position | `get_beat`          |
 | `get_bpm`          | Song BPM              | `get_bpm`, `get_bpm absolute` |
 | `get_time`         | Elapsed time          | `get_time "remain" "short"`   |
 | `get_rotation`     | Disc angle            | `get_rotation`                |
@@ -5123,6 +5225,8 @@ eq_crossfader_low 50%
 | ----------------------- | ----------------------- | ----------------------------------- |
 | `karaoke`               | Start/stop karaoke      | `karaoke`                           |
 | `karaoke_show`          | Show singer list        | `karaoke_show`                      |
+| `karaoke_options`       | Open karaoke options    | `karaoke_options`                   |
+| `karaoke_venue_name`    | Karaoke venue-name helper | `` `karaoke_venue_name` ``        |
 | `get_next_karaoke_song` | Get upcoming track info | `get_next_karaoke_song "singer" +1` |
 | `is_karaoke_idle`       | Karaoke idle check      | `is_karaoke_idle`                   |
 | `is_karaoke_playing`    | Karaoke playing check   | `is_karaoke_playing`                |
@@ -5160,8 +5264,10 @@ eq_crossfader_low 50%
 | `get_pitch_value`      | Get pitch on 0-200 scale centered on 100 | `get_pitch_value` |
 | `get_pitch_zero`       | Check whether pitch is zero/original | `get_pitch_zero 'absolute' 0.1%` |
 
-### Pitch And Motor Notes
+### Key, Pitch And Motor Notes
 
+- `key_match_button` matches the other deck's key on first press, then resets the key on second press.
+- `key_match_menu` is the popup/menu partner and is a natural `rightclick=""` action for key displays.
 - `pitch <number>` treats the value as pitch-slider position within the current `pitch_range`; `pitch <percent>` sets absolute playback speed, so `pitch 112%` means +12%.
 - `pitch_relative` is for hardware controls that should move relative to the software pitch position instead of replacing it with an absolute hardware value.
 - `pitch_lock` links matched deck pitch sliders so moving one keeps the match by moving the other.
@@ -5220,6 +5326,11 @@ backspin 4bt
 | `loop_options` | Show loop options menu | `loop_options`                 |
 | `loop_back` | Toggle loop-back mode | `loop_back`                      |
 | `loop_roll_mode` | Toggle loop roll release behavior | `loop_roll_mode`     |
+| `repeat_song` | Restart the current song when it reaches the end | `repeat_song on` |
+
+### Loop Behavior Notes
+
+- `repeat_song` restarts the whole loaded track at the end. It is separate from active loop state and saved-loop slots.
 
 ### Saved Loop Notes
 
@@ -5406,12 +5517,12 @@ loop_color 1 'yellow'
 | `sampler_assign`             | Assign a `.vdjsample` file to a slot                             | `sampler_assign 1 "/Samples/horn.vdjsample"`              |
 | `sampler_loaded`             | Check whether the visible sampler pad slot currently has a sample loaded | `sampler_loaded 1`, `sampler_loaded 1 "auto"`     |
 | `sampler_color`              | Get the color of the visible sampler pad slot                    | `sampler_color 1`                                         |
-| `sampler_select`             | Select the default sampler slot for the deck                     | `sampler_select 5`, `sampler_select +1`                   |
+| `sampler_select` / `sampler_default` | Select the default sampler slot for the deck             | `sampler_select 5`, `sampler_default +1`                  |
 | `sampler_position`           | Get the current playback position of the selected sample         | `sampler_position`                                        |
 | `sampler_bank`               | Select or cycle sampler banks                                    | `sampler_bank "birthday"`, `sampler_bank +1`              |
 | `sampler_mute`               | Mute or unmute a sample                                          | `sampler_mute 4`                                          |
 | `sampler_edit`               | Open the Sample Editor for a sample                              | `sampler_edit 4`                                          |
-| `sampler_mode`               | Set global or per-sample trigger mode                            | `sampler_mode 1 'stutter'`, `sampler_mode +1`             |
+| `sampler_mode` / `sampler_rapidfire` | Set global or per-sample trigger mode                    | `sampler_mode 1 'stutter'`, `sampler_rapidfire +1`        |
 | `sampler_output`             | Route sampler output to master, trigger deck, headphones, etc.   | `sampler_output "headphones"`, `deck master sampler_output` |
 | `sampler_options`            | Open or toggle sampler bank options                              | `sampler_options`, `sampler_options "locked"`             |
 | `sampler_volume_master`      | Set the sampler master volume                                    | `sampler_volume_master +5%`                               |
@@ -5457,6 +5568,8 @@ loop_color 1 'yellow'
 - In display contexts such as pad `name=` fields and skin/text `format=` fields, `sampler_pad 1` through `sampler_pad 8` are the safest way to show the current visible sample names on the active sampler page.
 - For visibility and empty-slot checks in paged sampler UIs, `sampler_loaded 1` through `sampler_loaded 8` already follow the visible sampler page, so you usually do not need to infer emptiness from a blank `sampler_pad` label.
 - `sampler_play`, `sampler_stop`, `sampler_volume`, `get_sample_name`, `get_sample_info`, and `get_sample_color` are best treated as absolute-slot helpers.
+- `sampler_default` is the official alias of `sampler_select`; prefer `sampler_select` in new docs unless documenting older mappings.
+- `sampler_rapidfire` is the official alias of `sampler_mode`; prefer `sampler_mode` for clarity.
 - Use `sampler_color` when you want the color of the currently visible sampler pad. Use `get_sample_color` when you want the actual stored color of a specific bank slot.
 - In skins, do not assume a normal `<button>` exposes a drag callback that mirrors pad `drop=`. The current skin docs describe click handlers on `<button>` and separate `<dropzone>` elements for drag targets.
 - Samples triggered from a deck sync to that deck. If you want a pad page to follow a predictable sync source, trigger through an explicit deck:
@@ -5582,7 +5695,10 @@ is_video ? video_transition 1000ms : nothing
 | ----------------- | -------------------- | ------------------- |
 | `record`          | Start recording      | `record`            |
 | `record_cut`      | Cut to new file      | `record_cut`        |
+| `record_config`   | Open record configuration | `record_config` |
+| `record_vu`       | Recording signal level | `record_vu`       |
 | `broadcast`       | Start/stop broadcast | `broadcast "video"` |
+| `broadcast_message` | Set/query broadcast message | `broadcast_message 'Live now'` |
 | `get_record_time` | Recording time       | `get_record_time`   |
 
 ## Controllers
@@ -5638,6 +5754,7 @@ is_video ? video_transition 1000ms : nothing
 | `djc_button_select` | DJC controller selection-button helper | `djc_button_select`    |
 | `djc_panel` | DJC controller panel helper | `djc_panel`                            |
 | `os2l_button` | Trigger named OS2L lighting button | `os2l_button 'blackout'`         |
+| `os2l_scene` | Trigger or queue an OS2L scene when the deck is audible | `os2l_scene 'scene1'` |
 | `os2l_cmd` | Trigger numbered OS2L command | `os2l_cmd 1 on while_pressed`         |
 | `os2l_info` | Show/read OS2L lighting connection info | `os2l_info`                    |
 
@@ -5665,6 +5782,7 @@ reinit_controller "My Controller" 200ms
 OS2L source note:
 
 - The official DMX pad page uses `os2l_button` for named lighting buttons, `os2l_cmd <n> on while_pressed` for numbered commands, and `os2l_info` in the page menu.
+- `os2l_scene` is similar to `os2l_button`, but the scene is only sent when the deck is audible; when the deck is not audible, it queues until the deck becomes audible.
 
 ## Configuration
 
@@ -5674,17 +5792,40 @@ OS2L source note:
 | `smart_loop`               | Auto-adjust loops      | `smart_loop`                          |
 | `smart_play` / `auto_sync` | Auto-sync on play      | `smart_play`                          |
 | `smart_cue`                | Auto-sync on cue       | `smart_cue`                           |
+| `smart_scratch`            | Mute backward scratching | `smart_scratch`                    |
 | `auto_match_bpm`           | Auto-match BPM on load | `auto_match_bpm`                      |
 | `auto_match_key`           | Auto-match key on load | `auto_match_key`                      |
+| `auto_pitch_lock`          | Engage pitch lock when BPMs are matched | `auto_pitch_lock`        |
+| `auto_sync_settings`       | Apply automatic sync settings preset | `auto_sync_settings`      |
+| `fader_start`              | Enable/disable fader start | `fader_start on`                 |
 | `setting`                  | Read/write setting     | `setting "jogSensitivityScratch" 80%` |
-| `save_config`              | Save config now        | `save_config`                         |
+| `setting_setsession`       | Force setting value for this session | `setting_setsession 'videoRandomTransition' on` |
+| `setting_setsession_deck`  | Force deck-specific setting value for this session | `deck 1 setting_setsession_deck 'pitchRange' 12%` |
+| `setting_setdefault`       | Change setting default for this session | `setting_setdefault 'jogSensitivityScratch' 80%` |
+| `setting_reset`            | Reset setting to default | `setting_reset 'jogSensitivityScratch'` |
+| `setting_ismodified`       | Query whether setting differs from default | `setting_ismodified 'jogSensitivityScratch'` |
+| `save_config` / `saveregistryconfig` | Save config now | `save_config`                         |
 | `open_help`                | Open user guide        | `open_help`                           |
+| `keyboard_shortcuts`       | Show/control keyboard shortcuts overlay | `keyboard_shortcuts 500ms` |
+| `select_master_output`     | Select computer/controller master output | `select_master_output` |
+| `switch_skin_variation`    | Switch current skin variation | `switch_skin_variation`           |
 | `play_options`             | Menu for play/cue/smart behavior | `play_options`              |
+| `play_mode`                | Set play/stop/cue behavior family | `play_mode 'pioneer'`        |
 | `auto_sync_options`        | Menu for auto-sync behavior | `auto_sync_options`                 |
 | `deck_options`             | Open the built-in deck behavior/options popup; useful from skin `rightclick=""` when a right-click-only deck menu is needed | `deck_options`                    |
+| `connect`                  | VirtualDJ account/connect action or query | `connect`                    |
 | `eventscheduler`           | Open Event Scheduler   | `eventscheduler`                      |
 | `eventscheduler_start`     | Start Event Scheduler  | `eventscheduler_start 'summer_wedding'` |
 | `apply_audio_config`       | Apply current audio config | `apply_audio_config`              |
+
+### Configuration Notes
+
+- `setting_setsession` and `setting_setsession_deck` force temporary values for the current VirtualDJ session without treating them as ordinary persisted preferences.
+- `setting_setdefault` and `setting_reset` are stronger controls than ordinary `setting`; avoid putting them on casual one-tap skin buttons unless the UI makes that intent clear.
+- `auto_pitch_lock` ties into matched-BPM workflows: when enabled, pitch lock engages when BPMs are matched so moving one pitch slider moves the other to keep the match.
+- `play_mode` controls play/stop/cue behavior families such as `numark` and `pioneer`.
+- `saveregistryconfig` is the official alias of `save_config`.
+- Official skins use `connect` as an account/connect button; published skins also query `connect` to show account connection state. Behavior is sparse enough to keep in local-test notes.
 
 ## Timecode
 
@@ -5741,75 +5882,12 @@ get_hastimecode ? timecode_options : timecode_config
 | ----------- | ----------------------- | ------------------------------------------------------------- |
 | `get_text`  | Get formatted text      | `get_text 'You are listening to \`get loaded_song "title"\`'` |
 | `stopwatch` | Stopwatch               | `stopwatch`                                                   |
+| `stopwatch_reset` | Reset stopwatch     | `stopwatch_reset`                                             |
 | `countdown` | Count down to date/time | `countdown '2025/01/01 00:00'`                                |
 
 ## Official Appendix Remainder
 
-These entries close the names-only official appendix audit. They are intentionally compact: many are lower-frequency, hardware-specific, skin-variation, or configuration helpers. Entries with sparse official prose are documented conservatively and should be locally tested before being used in a polished skin, pad page, or controller mapping.
-
-### Config, System, And Workflow
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `auto_pitch_lock` | Toggle/query automatic pitch lock; when enabled, pitch lock engages when BPMs are matched. | `auto_pitch_lock` |
-| `auto_sync_settings` | Apply a preset set of automatic sync options for the current skin/category. | `auto_sync_settings` |
-| `fader_start` | Enable or disable fader start behavior. | `fader_start on` |
-| `smart_scratch` | Mute backward scratching so only forward scratches are heard. | `smart_scratch` |
-| `keyboard_shortcuts` | Show or control the browser keyboard-shortcuts overlay; accepts an optional delay or state. | `keyboard_shortcuts 500ms` |
-| `select_master_output` | Select whether audio plays through computer speakers or controller audio output. | `select_master_output` |
-| `switch_skin_variation` | Switch the current skin variation. | `switch_skin_variation` |
-| `open_stem_creator` | Open the Stem Creator workflow. | `open_stem_creator` |
-| `handshake` | Plugin/developer helper for VirtualDJ environment authentication. | `handshake 'nonce'` |
-| `is_using` | Query whether a feature such as filter, equalizer, loop, cue, sample, pads, effect, or load is in use. | `is_using 'effect'` |
-| `system` | System helper from the official appendix. | `system` |
-| `debug` | Display the value of a parameter, commonly while developing controller mappings. | `debug` |
-| `connect` | Connection helper from the official config/controller appendix area. | `connect` |
-| `play_mode` | Set the play/stop/cue button behavior family. | `play_mode 'pioneer'` |
-| `setting_setsession` | Force a setting value for the current session. | `setting_setsession 'videoRandomTransition' on` |
-| `setting_setsession_deck` | Force a deck-specific setting value for the current session. | `deck 1 setting_setsession_deck 'pitchRange' 12%` |
-| `setting_setdefault` | Change a setting default for the current session. | `setting_setdefault 'jogSensitivityScratch' 80%` |
-| `setting_reset` | Reset a setting to its default value. | `setting_reset 'jogSensitivityScratch'` |
-| `setting_ismodified` | Query whether a setting differs from its default. | `setting_ismodified 'jogSensitivityScratch'` |
-| `saveregistryconfig` | Official alias of `save_config`; saves config immediately. | `saveregistryconfig` |
-| `record_config` | Open the recording configuration panel. | `record_config` |
-| `record_vu` | Return/show the level of the recording signal. | `record_vu` |
-| `broadcast_message` | Set or query the broadcast message. | `broadcast_message 'Live now'` |
-| `karaoke_options` | Open the karaoke options menu. | `karaoke_options` |
-| `karaoke_venue_name` | Karaoke venue-name helper. | `` `karaoke_venue_name` `` |
-| `stopwatch_reset` | Reset the stopwatch text helper. | `stopwatch_reset` |
-
-### Browser And Track Relationship Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `mark_linked_tracks` / `mark_related_tracks` | Mark the tracks on decks 1 and 2 as linked/related for remix-style browsing. | `mark_linked_tracks` |
-| `has_linked_tracks` | Covered query that can be paired with linked-track workflows. | `has_linked_tracks browsed` |
-| `browsed_song` | Set a property on the currently browsed file. | `browsed_song 'rating' 5` |
-| `loaded_song` | Set a property on the track loaded on the deck. | `loaded_song 'rating' 5` |
-| `page` | Browser/page helper from the official appendix. | `page` |
-| `prelisten` / `preview` | Pre-listen the selected track. | `prelisten` |
-
-### Deck, Position, Cue, And Loop Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `mixermode` | Query mixer mode; can check explicit `internal` or `external`. | `mixermode 'internal'` |
-| `beat_juggle` | Alternate jumping forward and backward by a beat amount. | `beat_juggle 0.5` |
-| `dualdeckmode_decks` | Deck-pair helper used by `dualdeckmode` for deck pairs 1/3 or 2/4. | `dualdeckmode_decks` |
-| `shift_all_cues` | Shift all cue points by a time offset. | `shift_all_cues -10ms` |
-| `sort_cues` | Sort cue points chronologically. | `sort_cues` |
-| `repeat_song` | Restart the current song from the beginning when it ends. | `repeat_song on` |
-| `get_beat` | Return beat intensity at the current position. | `get_beat` |
-
-### Key, Sampler, And OS2L Helpers
-
-| Verb | Description | Example |
-| --- | --- | --- |
-| `key_match_button` | Match the other deck's key on first press; reset on second press. | `key_match_button` |
-| `key_match_menu` | Open a menu to select a different key for the current song. | `key_match_menu` |
-| `sampler_default` | Official alias of `sampler_select`. | `sampler_default 5` |
-| `sampler_rapidfire` | Official alias of `sampler_mode`. | `sampler_rapidfire 'stutter'` |
-| `os2l_scene` | OS2L scene command; can queue scenes until the deck is audible. | `os2l_scene 'scene1'` |
+No compact entries currently remain. All official names tracked by the audit are present in functional sections above; sparse or hardware-specific entries remain marked for local testing in the audit.
 
 Sources:
 

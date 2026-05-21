@@ -20,13 +20,14 @@ Names not yet present in local VDJScript reference: 0
 
 - **Curated**: documented in dedicated sections of `VDJScript Verbs.md` with surfaces, examples, notes, and source labels.
 - **Broad catalog**: documented in compact tables by functional area.
-- **Compact official remainder**: present in `VDJScript Verbs.md` under `Official Appendix Remainder`; searchable and official, but not yet deeply explained.
+- **Compact official remainder**: currently empty; the section remains in `VDJScript Verbs.md` only as an audit marker.
 - **Needs local test**: official names whose behavior is sparse, hardware-specific, or environment-dependent.
 
 ## Next Promotion Targets
 
-- Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
-- Remaining compact helpers: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`
+- No compact-remainder names currently remain.
+- Next depth pass: locally test sparse system/developer helpers such as `connect`, `system`, `open_stem_creator`, and `dualdeckmode_decks`.
+- Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.
 
 ## Recently Promoted
 
@@ -37,6 +38,8 @@ Names not yet present in local VDJScript reference: 0
 - Pitch, jog, and motor behavior: `pitch_relative`, `pitch_motorized`, `pitch_lock`, `startupspeed`, `brakespeed`, `backspin`, `scratch_wheel`, `motor_switch`, `motorwheel_instant_play`
 - Controller display and hardware helpers: `controller_mapping`, `controllerscreen_deck`, `controller_battery`, `menu`, `menu_button`, `denon_platter`, `phase_*`, `djc_*`
 - Mixer/EQ helpers: `cross_assign`, `eq_crossfader_high`, `eq_crossfader_mid`, `eq_crossfader_low`, `high_label`, `mid_label`, `low_label`, `mixer_order`
+- Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
+- Final compact remainder sweep: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `get_beat`, `key_match_button`, `key_match_menu`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`, `open_stem_creator`, `handshake`, `is_using`, `system`, `debug`, `connect`
 
 ## Needs Local Test
 
