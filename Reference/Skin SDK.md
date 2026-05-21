@@ -1460,15 +1460,97 @@ This example is based on local verification in this workspace, not on an officia
 
 ## Default Icons
 
-VirtualDJ provides built-in icons for common functions. Reference them without graphics coordinates:
+VirtualDJ provides built-in icons for common functions. Some are available through an explicit `sysicon` name on an `<icon>` element or on a skin class that forwards a `sysicon` placeholder. Others are only reachable indirectly: VirtualDJ chooses the icon from the button's action name. Do not assume every icon shown on the official default-icons sprite has a usable `sysicon` string.
 
 ```xml
 <button action="play_pause">
     <pos x="100" y="100"/>
     <size width="40" height="40"/>
-    <!-- No graphics coordinates needed for default icon -->
+    <!-- VirtualDJ can infer the default play/pause icon from the action. -->
+</button>
+
+<button action="settings">
+    <pos x="150" y="100"/>
+    <size width="40" height="40"/>
+    <icon sysicon="settings" width="24" height="24"/>
 </button>
 ```
+
+Source: [VirtualDJ Skin Default Icons](https://www.virtualdj.com/wiki/Skin%20Default%20Icons.html), plus local skin examples.
+
+### Explicit `sysicon` Names
+
+The official default-icons page lists these names as explicit `sysicon` values:
+
+| `sysicon` | Icon |
+| --- | --- |
+| `search` | Browser search |
+| `headphones` | Browser prelisten / headphones |
+| `settings` | Settings |
+| `arrowleft` | Left arrow |
+| `arrowright` | Right arrow |
+| `add_favoritefolder` | Add favorite folder |
+| `add_virtualfolder` | Add virtual folder |
+| `add_filterfolder` | Add filter folder |
+| `sampler_drop` | Sampler drop sample |
+| `sampler_loop` | Sampler loop sample |
+| `sampler_mic` | Sampler mic record sample |
+| `chevronup` | Chevron up |
+| `chevrondown` | Chevron down |
+| `chevronleft` | Chevron left |
+| `chevronright` | Chevron right |
+| `minimize` | Minimize |
+| `maximize` | Maximize / fullscreen / windowed maximize |
+| `close` | Close |
+| `stop` | Stop |
+| `stop_button` | Stop button |
+| `play_pause` | Play / pause |
+| `play` | Play / stutter |
+
+Local official-skin examples also use `play_button`, which is not listed as a separate `sysicon` on the wiki but appears in bundled skin XML.
+
+### Action-Name Icons
+
+Some default icons are reached by using the action itself, either as the button `action` or, in tested skins, as the `sysicon` value. The official page lists these as action-backed icons:
+
+| Action | Icon |
+| --- | --- |
+| `browser_options 'le'` | Info / question |
+| `sampler_bank -1` | Left arrow |
+| `sampler_bank +1` | Right arrow |
+| `sampler_mode -1` | Left arrow |
+| `sampler_mode +1` | Right arrow |
+| `goto_last_folder` | Previous folder / back |
+| `grid_view` | Browser grid view |
+| `show_splitpanel 'sideview'` | Show sideview |
+| `show_splitpanel 'info'` | Show info browser |
+| `show_splitpanel 'effects'` | Show FX browser |
+| `view_options 'showmusic'` | Show / hide audio files |
+| `view_options 'showvideo'` | Show / hide video files |
+| `view_options 'showkaraoke'` | Show / hide karaoke files |
+| `font_size -` | Browser font smaller |
+| `font_size +` | Browser font larger |
+| `effect_dock_gui` | Pin FX GUI |
+| `effect_show_gui` | Close / show FX GUI |
+| `browser_zoom` | Browser zoom |
+| `sideview 'automix'` | Sideview automix |
+| `sideview 'sidelist'` | Sideview sidelist |
+| `sideview 'sampler'` | Sideview sampler |
+| `sideview 'karaoke'` | Sideview karaoke |
+| `sideview 'clone'` | Sideview clone |
+| `sideview 'remixes'` | Sideview remixes |
+| `quick_filter` | Quick filter |
+| `automix` | Automix on/off |
+| `karaoke` | Karaoke on/off |
+| `sampler_bank` | Sampler bank |
+| `sideview_triggerpad` | Sampler trigger pad view |
+| `sampler_mode` | Sampler trigger mode |
+| `sampler_mode 'on/off'` | Sampler trigger mode on/off |
+| `sampler_mode 'hold'` | Sampler trigger mode hold |
+| `sampler_mode 'stutter'` | Sampler trigger mode stutter |
+| `sampler_mode 'unmute'` | Sampler trigger mode unmute |
+
+Many rows in the default-icons table are browser file/folder state icons or overlays and are marked `N/A`; those should be treated as internal browser icons, not reachable skin `sysicon` names.
 
 ---
 
