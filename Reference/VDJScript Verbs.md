@@ -2356,11 +2356,13 @@ sampler_pad_page
 Preferred usage:
 
 - treat this as the official pager behind sampler `1-8`, `9-16`, `17-24`, and later windows
+- local pad/skin tests observed query output as text ranges such as `"1 to 8"` and `"9 to 16"`, so branch with `param_equal "9 to 16"` rather than numeric page indexes unless the target build has been verified
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: pads manual
+- `Local test`: read-only multi-page sampler pad page
 
 ### `sampler_velocity`
 
@@ -2447,18 +2449,21 @@ Typical forms:
 
 ```vdjscript
 sampler_loaded 1
-sampler_loaded 1 "auto"
 ```
 
 Quirk:
 
 - The manual explicitly documents fixed-slot behavior.
-- The page-aware `sampler_loaded <n> "auto"` pattern is widely used in practice and works with current custom sampler pad patterns, but it should still be labeled as build-sensitive rather than silently promoted to timeless official behavior.
+- Forum examples use quoted `sampler_loaded <n> "auto"`, and the installed/public `Loop Recorder.xml` pad page uses unquoted `sampler_loaded <n> auto`, but neither form is documented in the official verbs appendix.
+- Local testing on VirtualDJ 8.5.9307 / 18.0.9336 showed both `sampler_loaded 8 "auto"` and `sampler_loaded 8 auto` still checking absolute slot 8 while visible pad 8 on sampler page 2 mapped to slot 16. In other words: do not rely on `auto`, quoted or unquoted, for page-aware empty-slot checks.
+- For paged sampler UI, guard visible pads with the calculated absolute slot for the current `sampler_pad_page` (`sampler_loaded 16` for page 2 pad 8), while still using `sampler_pad 8` for the visible pad action/label.
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Inference`: repo usage plus current custom-page practice
+- `Community`: VirtualDJ forum examples using `"auto"`
+- `Published pad page`: installed `Loop Recorder.xml` uses unquoted `auto`
+- `Local test`: [Reference - Sampler Loaded Test.xml](../Pads/Reference%20-%20Sampler%20Loaded%20Test.xml), VirtualDJ 8.5.9307 / 18.0.9336, 2026-05-21
 
 ### `sampler_color`
 
@@ -5520,7 +5525,7 @@ loop_color 1 'yellow'
 | `sampler_pad_page`           | Change/query the current 8-pad sampler window                    | `sampler_pad_page +1`, `sampler_pad_page -1`              |
 | `sampler_velocity`           | Velocity/pressure value for a sampler pad                        | `sampler_velocity 1`                                      |
 | `sampler_assign`             | Assign a `.vdjsample` file to a slot                             | `sampler_assign 1 "/Samples/horn.vdjsample"`              |
-| `sampler_loaded`             | Check whether the visible sampler pad slot currently has a sample loaded | `sampler_loaded 1`, `sampler_loaded 1 "auto"`     |
+| `sampler_loaded`             | Check whether an absolute sampler slot has a sample loaded; do not rely on `"auto"` for paged empty-slot checks | `sampler_loaded 1`, `sampler_loaded 16`     |
 | `sampler_color`              | Get the color of the visible sampler pad slot                    | `sampler_color 1`                                         |
 | `sampler_select` / `sampler_default` | Select the default sampler slot for the deck             | `sampler_select 5`, `sampler_default +1`                  |
 | `sampler_position`           | Get the current playback position of the selected sample         | `sampler_position`                                        |
@@ -5567,12 +5572,16 @@ loop_color 1 'yellow'
 ### Sampler Notes
 
 - `sampler_pad_page` is the pager behind Parameter 2 on the default Sampler pad page and is the main way to reach `9-16`, `17-24`, and later sub-pages in banks with more than 8 samples.
+- In tested pad/skin contexts, `sampler_pad_page` returns display ranges such as `"1 to 8"` and `"9 to 16"`, not simple numeric page indexes.
 - For drag-and-drop assignment on custom pad pages, use pad `drop="sampler_assign <absolute-slot>"`.
 - Treat `sampler_assign` as an absolute-slot helper unless you have verified a build-specific page-aware variant; the current official docs do not show an `"auto"` form for it.
-- `sampler_pad`, `sampler_loaded`, `sampler_color`, and `sampler_pad_volume` are the safest page-aware helpers when building sampler pad pages.
+- `sampler_pad`, `sampler_color`, and `sampler_pad_volume` are the safest page-aware helpers when building sampler pad pages.
 - In display contexts such as pad `name=` fields and skin/text `format=` fields, `sampler_pad 1` through `sampler_pad 8` are the safest way to show the current visible sample names on the active sampler page.
-- For visibility and empty-slot checks in paged sampler UIs, `sampler_loaded 1` through `sampler_loaded 8` already follow the visible sampler page, so you usually do not need to infer emptiness from a blank `sampler_pad` label.
-- To nullify an empty sampler pad, use an explicit false branch in each relevant field: empty text in `name`, dim/off visual state in `color`/`query`, and `: nothing` in the action body.
+- For visibility and empty-slot checks in paged sampler UIs, use `sampler_loaded` with the absolute slot behind the visible pad. Example: page 2 pad 8 should be guarded by `sampler_loaded 16`, not `sampler_loaded 8` or `sampler_loaded 8 "auto"`.
+- For 16-pad pad pages, pads `9-16` are the next eight visible sampler positions. Example: on page `"9 to 16"`, pad 16 is backed by absolute slot 24.
+- To nullify an empty sampler pad, use an explicit false branch in each relevant field: blank text in `name`, dim/off visual state in `color`/`query`, and `: nothing` in the action body.
+- For intentionally blank sampler pad labels, prefer `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later sampler pages.
+- For a confirmed read-only implementation, see [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml).
 - When defining `shift_pad<n>` entries for sampler pages, also define shifted `color=""` values such as `sampler_loaded 1 ? sampler_color 1 : dim`; skin pad frameworks may render shifted pad colors separately, and missing shifted colors can fall back to the skin/default button color. Source: `Local test`, `Inference`
 - `sampler_play`, `sampler_stop`, `sampler_volume`, `get_sample_name`, `get_sample_info`, and `get_sample_color` are best treated as absolute-slot helpers.
 - `sampler_default` is the official alias of `sampler_select`; prefer `sampler_select` in new docs unless documenting older mappings.
@@ -5607,7 +5616,7 @@ deck 1 masterdeck ? deck 1 sampler_pad 1 : deck 2 masterdeck ? deck 2 sampler_pa
 
 ```text
 sampler_pad 1
-sampler_loaded 1 "auto" ? sampler_pad 1 "auto" : sampler_rec 1 "auto"
+sampler_loaded 1 ? sampler_pad 1 : sampler_rec 1
 sampler_pad_page +1
 sampler_bank +1
 sampler_options "locked"

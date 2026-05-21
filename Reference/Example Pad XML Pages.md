@@ -2,36 +2,31 @@
 
 Sampler-focused pad page examples for files stored in `Documents/VirtualDJ/Pads`.
 
-These examples were checked against the current VirtualDJ manual plus recent forum guidance for sampler sub-pages, deck sync behavior, and custom sampler layouts.
+These examples were checked against the current VirtualDJ manual, recent forum guidance, and local sampler-page tests.
 
-## Page-Aware 8-Pad Sampler
+## Read-Only Multi-Page Sampler
 
-Use this pattern when pads `1-8` should follow the current sampler sub-page (`1 to 8`, `9 to 16`, `17 to 24`, etc). For the visible pad label, use `sampler_pad <n>` in the `name=` field instead of `get_sample_name <n>`, otherwise the name can drift back to the absolute slot instead of following the current page.
+Use [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml) when a pad page should only play existing samples and must never record into empty slots. This is the current safest pattern for banks with more than eight samples.
+
+The important discovery is that `sampler_pad_page` evaluates as text ranges such as `"1 to 8"` and `"9 to 16"` in the tested pad/skin contexts. `sampler_loaded` should still be treated as an absolute-slot query, so each page branch checks the real slot behind the visible pad.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<page name="SAMPLER PAGE-AWARE">
-  <pad1 name="`sampler_loaded 1 'auto' ? sampler_pad 1 : '(empty 1)'`" color="sampler_loaded 1 'auto' ? sampler_color 1 'auto' : dim" query="sampler_play 1 'auto' ? blink 1bt : on">sampler_loaded 1 'auto' ? sampler_pad 1 'auto' : sampler_rec 1 'auto'</pad1>
-  <pad2 name="`sampler_loaded 2 'auto' ? sampler_pad 2 : '(empty 2)'`" color="sampler_loaded 2 'auto' ? sampler_color 2 'auto' : dim" query="sampler_play 2 'auto' ? blink 1bt : on">sampler_loaded 2 'auto' ? sampler_pad 2 'auto' : sampler_rec 2 'auto'</pad2>
-  <pad3 name="`sampler_loaded 3 'auto' ? sampler_pad 3 : '(empty 3)'`" color="sampler_loaded 3 'auto' ? sampler_color 3 'auto' : dim" query="sampler_play 3 'auto' ? blink 1bt : on">sampler_loaded 3 'auto' ? sampler_pad 3 'auto' : sampler_rec 3 'auto'</pad3>
-  <pad4 name="`sampler_loaded 4 'auto' ? sampler_pad 4 : '(empty 4)'`" color="sampler_loaded 4 'auto' ? sampler_color 4 'auto' : dim" query="sampler_play 4 'auto' ? blink 1bt : on">sampler_loaded 4 'auto' ? sampler_pad 4 'auto' : sampler_rec 4 'auto'</pad4>
-  <pad5 name="`sampler_loaded 5 'auto' ? sampler_pad 5 : '(empty 5)'`" color="sampler_loaded 5 'auto' ? sampler_color 5 'auto' : dim" query="sampler_play 5 'auto' ? blink 1bt : on">sampler_loaded 5 'auto' ? sampler_pad 5 'auto' : sampler_rec 5 'auto'</pad5>
-  <pad6 name="`sampler_loaded 6 'auto' ? sampler_pad 6 : '(empty 6)'`" color="sampler_loaded 6 'auto' ? sampler_color 6 'auto' : dim" query="sampler_play 6 'auto' ? blink 1bt : on">sampler_loaded 6 'auto' ? sampler_pad 6 'auto' : sampler_rec 6 'auto'</pad6>
-  <pad7 name="`sampler_loaded 7 'auto' ? sampler_pad 7 : '(empty 7)'`" color="sampler_loaded 7 'auto' ? sampler_color 7 'auto' : dim" query="sampler_play 7 'auto' ? blink 1bt : on">sampler_loaded 7 'auto' ? sampler_pad 7 'auto' : sampler_rec 7 'auto'</pad7>
-  <pad8 name="`sampler_loaded 8 'auto' ? sampler_pad 8 : '(empty 8)'`" color="sampler_loaded 8 'auto' ? sampler_color 8 'auto' : dim" query="sampler_play 8 'auto' ? blink 1bt : on">sampler_loaded 8 'auto' ? sampler_pad 8 'auto' : sampler_rec 8 'auto'</pad8>
-
-  <param1 name="BANK `get_sampler_bank`">sampler_bank +1</param1>
-  <param2 name="PAGE `sampler_pad_page`">sampler_pad_page +1</param2>
-  <menu>`sampler_options`</menu>
-</page>
+<!-- Pad 8: page "1 to 8" checks slot 8; page "9 to 16" checks slot 16. -->
+<pad8 name="`sampler_pad_page &amp; param_equal &quot;1 to 8&quot; ? sampler_loaded 8 ? sampler_pad 8 : get_text ' ' : sampler_pad_page &amp; param_equal &quot;9 to 16&quot; ? sampler_loaded 16 ? sampler_pad 8 : get_text ' ' : get_text ' '`"
+      color="sampler_pad_page &amp; param_equal &quot;1 to 8&quot; ? sampler_loaded 8 ? sampler_color 8 : dim : sampler_pad_page &amp; param_equal &quot;9 to 16&quot; ? sampler_loaded 16 ? sampler_color 8 : dim : dim"
+      query="sampler_pad_page &amp; param_equal &quot;1 to 8&quot; ? sampler_loaded 8 ? sampler_play 8 'auto' ? blink 1bt : on : off : sampler_pad_page &amp; param_equal &quot;9 to 16&quot; ? sampler_loaded 16 ? sampler_play 8 'auto' ? blink 1bt : on : off : off">
+  sampler_pad_page &amp; param_equal &quot;1 to 8&quot; ? sampler_loaded 8 ? sampler_pad 8 : nothing : sampler_pad_page &amp; param_equal &quot;9 to 16&quot; ? sampler_loaded 16 ? sampler_pad 8 : nothing : nothing
+</pad8>
 ```
+
+For 16-pad layouts, pads `9-16` address the next eight visible sampler positions. On sampler page `"9 to 16"`, `pad16` is therefore backed by absolute slot `24`, not slot `16`.
 
 ### What This Example Does
 
-- Empty pads record into the currently visible sampler page.
 - Loaded pads trigger through `sampler_pad`, so the sample's own trigger mode still applies.
-- The visible pad labels come from `sampler_pad <n>`, which tracks the active sampler page more reliably than `get_sample_name <n>`.
-- The pad colors follow the visible sampler page through `sampler_color`.
+- Empty pads resolve to `nothing`, with no `sampler_rec`, `sampler_assign`, `drop=`, or shift edit action.
+- Empty labels return `get_text ' '` instead of an empty string. In local testing, an empty string could make VirtualDJ fall back to displaying slot numbers on later pages.
+- Empty-slot checks use absolute slot numbers for the visible page. Do not rely on `sampler_loaded <n> 'auto'` for this guard.
 - `param1` cycles banks and `param2` cycles sampler sub-pages.
 
 ### Drag-and-Drop Assignment
@@ -132,7 +127,11 @@ sampler_pad 1 "4x4x1"
 
 - If you want deck 1 to expose `1-8` and deck 2 to expose `9-16` automatically, enable `samplerSpanAcrossDecks`.
 - If you want both decks to start on `1-8`, leave `samplerSpanAcrossDecks` off and page manually with `sampler_pad_page`.
+- In tested pad/skin contexts, compare `sampler_pad_page` to text ranges such as `"1 to 8"` and `"9 to 16"`, not numeric page indexes.
 - `sampler_pad`, `sampler_color`, and `sampler_pad_volume` are the safest page-aware helpers.
+- `sampler_loaded` should be treated as an absolute-slot query for empty-slot checks; page 2 pad 8 needs `sampler_loaded 16`.
+- In 16-pad pad pages, pads `9-16` are the next eight visible sampler positions; on page `"9 to 16"`, pad 16 should be guarded by `sampler_loaded 24`.
+- Use `get_text ' '` for intentionally blank sampler pad labels; an empty-string branch can fall back to visible slot numbers.
 - Use pad `drop="sampler_assign <slot>"` when you want a custom sampler pad page to accept dragged files.
 - Treat `drop="sampler_assign <slot>"` as an absolute-slot mapping unless you have verified a different build-specific behavior.
 - In pad `name=` fields, `sampler_pad <n>` is the safest way to show the current visible sample name on the active page.
@@ -151,3 +150,4 @@ sampler_pad 1 "4x4x1"
 - Master-deck sampler quirks in newer builds: [Virtual Dj 2025 Sampler Sync](https://virtualdj.com/forums/265522/VirtualDJ_Technical_Support/Virtual_Dj_2025_Sampler_Sync.html)
 - Paging and `9-16` workflow: [No longer possible to access 16 samples from controllers with 8 x 2 pads?](https://virtualdj.com/forums/261416/VirtualDJ_Technical_Support/No_longer_possible_to_access_16_samples_from_controllers_with_8_x_2_pads_.html)
 - Matrix/layout hint: [Using Xone K2 to control the sampler](https://www.virtualdj.com/forums/261102/VirtualDJ_Technical_Support/Using_Xone_K2_to_control_the_sampler.html)
+- Local read-only multi-page sampler test: [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md#sampler)

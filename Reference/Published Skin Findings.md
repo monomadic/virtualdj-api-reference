@@ -7,6 +7,7 @@ This file is the holding area for commands and patterns mined from published ski
 ## Source Labels
 
 - `Published skin`: observed in a working skin distributed through VirtualDJ's skin ecosystem or installed from such a package.
+- `Published pad page`: observed in a working pad page distributed through VirtualDJ's pad ecosystem or installed from such a package.
 - `Official`: current VirtualDJ manual, VDJPedia, hardware manual, or other Atomix-authored documentation.
 - `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff giving scripting guidance.
 - `Community`: forum moderators or non-staff users giving examples that still need verification.
@@ -20,7 +21,7 @@ This file is the holding area for commands and patterns mined from published ski
 2. Extract all command-like tokens from `action`, `query`, `visibility`, `source`, `textaction`, `rightclick`, `scroll`, `dblclick`, and similar script-bearing attributes.
 3. Compare against `Reference/VDJScript Verbs.md` and the current official VDJScript verbs appendix.
 4. Search exact terms on virtualdj.com first, then broader web/code search if needed.
-5. Add a row here with the status: `Official`, `Official forum`, `Community`, `Published skin`, `Local test`, `Needs test`, or a combination.
+5. Add a row here with the status: `Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Local test`, `Needs test`, or a combination.
 6. Promote stable, user-facing entries into `VDJScript Verbs.md`, keeping this file as provenance and test notes.
 
 ## Denon Prime 4 Deluxe Skin
@@ -74,6 +75,29 @@ Local test, May 12, 2026:
 | Skin `visibility` | Direct selected panel visible; other panel hidden | Indirect selected panel visible; other panel hidden | Matched |
 
 Recommendation: prefer direct `effect_mixfx_select '<name>' ? ...` for selected-state tests in current skins and pad pages. Keep the indirect `param_equal "\`effect_mixfx_select\`" "<name>" ? ...` form for older-build compatibility notes or when the returned name needs to be compared as a value.
+
+## Published Pad Pages
+
+### Loop Recorder
+
+Local source:
+
+- `/Users/nom/Library/Application Support/VirtualDJ/Pads/Loop Recorder.xml`
+
+Observed pattern:
+
+```vdjscript
+sampler_loaded 1 auto
+sampler_play 1 auto
+sampler_stop 1 auto
+sampler_select 1 auto
+```
+
+The installed `Loop Recorder.xml` pad page uses unquoted `auto` with `sampler_loaded` across pads 1-8 and shifted clear buttons. This is evidence that the form exists in a published/installed pad page, but local diagnostic testing showed it does not make `sampler_loaded 8` page-aware on sampler page `9-16`.
+
+| Pattern | Current understanding | Sources | Test status |
+| ------- | --------------------- | ------- | ----------- |
+| `sampler_loaded <n> auto` | Used by the published/installed Loop Recorder pad page for the first eight recording pads. Official docs still only document fixed-slot `sampler_loaded <n>`. | `Published pad page`; `Local test` | Unquoted `auto` matched quoted behavior: `sampler_loaded 8 auto` returned true on page `9-16` while slot 16 was empty |
 
 ### Other Commands To Reconcile
 

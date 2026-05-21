@@ -49,5 +49,6 @@ Source labels used in the curated docs:
 - `Official forum`
 - `Community`
 - `Published skin`
+- `Published pad page`
 - `Local test`
 - `Inference`

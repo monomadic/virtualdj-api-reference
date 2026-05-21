@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Sampler Loaded Test.xml
+
+  Diagnostic page for checking whether sampler_loaded <n> 'auto' follows the
+  current sampler_pad_page in the installed VirtualDJ build.
+
+  Test setup:
+    1. Select a sampler bank with more than 8 slots.
+    2. Put a sample in slot 8.
+    3. Leave slot 16 empty.
+    4. Load this pad page and use PAGE + to move to sampler page 2.
+
+  Expected on page 2, visible pad 8:
+    - ABS8 should still show YES because absolute slot 8 is loaded.
+    - AUTO8 should show NO if 'auto' is truly page-aware.
+    - SLOT16 should show NO because it checks absolute slot 16.
+
+  If AUTO8 shows YES on page 2 while SLOT16 shows NO, then sampler_loaded
+  'auto' is not safe for empty-slot checks in this build/context.
+
+  Pads 9-10 compare quoted and unquoted auto forms. If AUTO8RAW matches AUTO8,
+  then omitting quotes does not change the page-awareness result.
+-->
+<page name="REF: SAMPLER LOADED TEST">
+  <pad1 name="PAGE `sampler_pad_page`" color="color 'white'">nothing</pad1>
+  <pad2 name="`sampler_pad 8`" color="sampler_color 8">sampler_pad 8</pad2>
+
+  <pad3 name="`sampler_loaded 8 ? get_text 'ABS8\nYES' : get_text 'ABS8\nNO'`"
+        color="sampler_loaded 8 ? color 'red' : dim"
+        query="sampler_loaded 8">
+    nothing
+  </pad3>
+
+  <pad4 name="`sampler_loaded 8 'auto' ? get_text 'AUTO8\nYES' : get_text 'AUTO8\nNO'`"
+        color="sampler_loaded 8 'auto' ? color 'yellow' : dim"
+        query="sampler_loaded 8 'auto'">
+    nothing
+  </pad4>
+
+  <pad5 name="`sampler_loaded 16 ? get_text 'SLOT16\nYES' : get_text 'SLOT16\nNO'`"
+        color="sampler_loaded 16 ? color 'green' : dim"
+        query="sampler_loaded 16">
+    nothing
+  </pad5>
+
+  <pad6 name="`get_text 'PLAY\nAUTO8'`"
+        color="sampler_loaded 8 'auto' ? sampler_color 8 'auto' : dim"
+        query="sampler_play 8 'auto' ? blink 1bt : sampler_loaded 8 'auto'">
+    sampler_loaded 8 'auto' ? sampler_pad 8 'auto' : nothing
+  </pad6>
+
+  <pad7 name="`get_text 'PLAY\nP2SAFE'`"
+        color="param_equal `sampler_pad_page` 2 ? sampler_loaded 16 ? sampler_color 8 : dim : dim"
+        query="param_equal `sampler_pad_page` 2 ? sampler_loaded 16 ? sampler_pad 8 ? blink 1bt : on : off : off">
+    param_equal `sampler_pad_page` 2 ? sampler_loaded 16 ? sampler_pad 8 : nothing : nothing
+  </pad7>
+
+  <pad8 name="PAGE +">sampler_pad_page +1</pad8>
+  <shift_pad8 name="PAGE -">sampler_pad_page -1</shift_pad8>
+
+  <pad9 name="`sampler_loaded 8 auto ? get_text 'AUTO8RAW\nYES' : get_text 'AUTO8RAW\nNO'`"
+        color="sampler_loaded 8 auto ? color 'yellow' : dim"
+        query="sampler_loaded 8 auto">
+    nothing
+  </pad9>
+
+  <pad10 name="`sampler_loaded 16 auto ? get_text 'AUTO16RAW\nYES' : get_text 'AUTO16RAW\nNO'`"
+         color="sampler_loaded 16 auto ? color 'green' : dim"
+         query="sampler_loaded 16 auto">
+    nothing
+  </pad10>
+
+  <param1 name="BANK `get_sampler_bank`">sampler_bank</param1>
+  <param2 name="PAGE `sampler_pad_page`">sampler_pad_page +1</param2>
+</page>

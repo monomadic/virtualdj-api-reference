@@ -38,6 +38,7 @@ Every fact in the reference docs is labeled by source:
 | `Official forum` | Post by VirtualDJ staff, CTO, or support |
 | `Community` | Non-staff forum guidance |
 | `Published skin` | Observed in a working public skin |
+| `Published pad page` | Observed in a working public pad page |
 | `Local test` | Reproduced in VirtualDJ locally |
 | `Inference` | Conclusion drawn from the above sources |
 

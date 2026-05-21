@@ -220,7 +220,7 @@ Why:
 - The SDK explicitly supports nested containers.
 - The common element properties page says nesting is preferred over repeating `panel=""`.
 
-Source: `Official`
+Source: `Official`, `Local test`, `Inference`
 
 ### Defines and Placeholders
 
@@ -748,6 +748,7 @@ Use absolute-slot methods when the UI should always target the same underlying s
 
 - `sampler_play`
 - `sampler_stop`
+- `sampler_loaded`
 - `get_sample_name`
 - `get_sample_color`
 - `sampler_volume`
@@ -757,23 +758,40 @@ Practical rule:
 - visible pad UI: page-aware
 - fixed utility controls: absolute
 
-Use [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) for a working repo example.
+Use [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
 
-Source: `Official`
+Source: `Official`, `Local test`, `Inference`
 
 ### `sampler_loaded` and `auto`
 
 The current verbs page documents `sampler_loaded <n>` as a fixed slot query.
-In practice, repo examples and modern custom pad pages often use `sampler_loaded <n> 'auto'` beside `sampler_pad <n> 'auto'`.
+VirtualDJ forum examples and older local examples use `sampler_loaded <n> 'auto'` beside `sampler_pad <n> 'auto'`. The installed/public `Loop Recorder.xml` pad page uses the unquoted form `sampler_loaded <n> auto`. Neither form is documented as official behavior.
 
-Treat that pattern as:
+Local diagnostic testing showed this pattern is not reliable for page-aware empty-slot checks:
 
-- useful and widely used in practice
-- worth testing on the current build if you depend on page-awareness for empty-slot detection
+- Test page: [Reference - Sampler Loaded Test.xml](../Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
+- Build: VirtualDJ 8.5.9307 / 18.0.9336
+- Date: 2026-05-21
+- Setup: sampler bank page 2 (`9-16`), slot 8 loaded, slot 16 empty
+- Result: `sampler_loaded 8 'auto'` and `sampler_loaded 8 auto` returned true while `sampler_loaded 16` and `sampler_loaded 16 auto` returned false
 
-This is labeled separately because the current manual is explicit about page-awareness for `sampler_color`, but not equally explicit for every `sampler_* ... 'auto'` helper.
+Use `sampler_loaded` with the absolute slot behind the visible pad. Page 2 pad 8 should be guarded by `sampler_loaded 16`; keep `sampler_pad 8` for the visible page-aware action/label. Quoting `auto` does not change this behavior in the tested build.
 
-Source: `Official`, `Inference`
+Source: `Official`, `Community`, `Published pad page`, `Local test`
+
+### Read-Only Multi-Page Sampler Pages
+
+For sampler pages that must never record into empty slots, use `sampler_pad_page` to branch by the visible text range and then guard with the absolute slot behind the pad:
+
+- `sampler_pad_page & param_equal "1 to 8"` with pad 8 checks `sampler_loaded 8`
+- `sampler_pad_page & param_equal "9 to 16"` with pad 8 checks `sampler_loaded 16`
+- in a 16-pad layout, pad 16 on `"9 to 16"` checks `sampler_loaded 24`
+
+Use `sampler_pad <pad>` for loaded actions and `nothing` for empty actions. Do not include `sampler_rec`, `sampler_assign`, or `drop=` on a read-only page. For intentionally blank names, return `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later pages.
+
+Working example: [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml)
+
+Source: `Local test`, `Inference`
 
 ### Empty Sampler Pads and Shifted Colors
 

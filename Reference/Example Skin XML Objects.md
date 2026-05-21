@@ -18,6 +18,8 @@ Use this when you want a skin-native sampler panel instead of relying on the Sid
 
 For the visible sample labels, this chunk uses `sampler_pad <n>` inside the text `format=` fields instead of `get_sample_name <n>`, so the text follows the current sampler page.
 
+Empty-slot guards need separate care: local testing showed `sampler_loaded <n> 'auto'` can still check the first-page absolute slot. For production skin panels that must hide empty pads on pages `9-16` and later, branch on `sampler_pad_page` and guard with the absolute slot behind each visible pad.
+
 ```xml
 <deck deck="left">
   <panel name="sampler_panel_left" visible="yes">
@@ -229,6 +231,7 @@ For the visible sample labels, this chunk uses `sampler_pad <n>` inside the text
 - Empty pads call `sampler_rec n 'auto'` so unlocked banks can record directly from the skin panel, matching the stock sampler workflow.
 - The visible pad labels come from `sampler_pad <n>` in text `format=` fields, so the labels follow the current sampler page.
 - `query="sampler_play n 'auto'"` lights the pad while that visible sample is playing.
+- Do not treat `sampler_loaded n 'auto'` as a reliable page-aware loaded check; use absolute-slot guards such as `sampler_loaded 16` for page 2 pad 8.
 
 ## Variations
 
@@ -287,10 +290,10 @@ If you want the classic two-panel workflow:
 
 ## Practical Notes
 
-- `sampler_pad`, `sampler_loaded`, and `sampler_color` are the safest page-aware helpers for skin-based sampler panels.
+- `sampler_pad` and `sampler_color` are the safest page-aware helpers for skin-based sampler panels.
 - In skin text `format=` fields, `sampler_pad <n>` is the safest way to show the currently visible sample name on the active sampler page.
 - `deck master` means the current master deck, not a separate global sampler scope. In some sampler title/query paths, an explicit `deck 1 masterdeck ? ... : deck 2 masterdeck ? ...` resolver is more reliable than raw `deck master`.
-- `sampler_loaded <n>` is the cleanest way to drive row visibility or empty-slot logic around that page-aware display pattern, while `sampler_rec <n> 'auto'` is still useful for direct recording into the visible slot.
+- `sampler_loaded <n>` should be used as an absolute-slot query for row visibility or empty-slot logic. Map the visible page/pad to the real slot first.
 - If you need fixed absolute slots regardless of the current page, swap `sampler_pad` for `sampler_play`, and swap page-aware name/color helpers for absolute ones such as `get_sample_name 9` and `get_sample_color 9`.
 - Duplicate this chunk under `<deck deck="right">` if you want a second, independently positioned sampler panel.
 - Class names are matched case-insensitively in practice. A good convention is `class="SAMPLER_ROW"` in `<define>` and `class="sampler_row"` at the call site, while keeping placeholder tokens uppercase, e.g. `[INDEX]`.

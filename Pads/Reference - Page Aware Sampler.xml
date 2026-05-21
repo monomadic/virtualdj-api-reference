@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Reference - Page Aware Sampler.xml
-  Canonical page-aware sampler pad page.
+  Legacy page-aware sampler pad page.
+
+  Warning: local testing on 2026-05-21 showed sampler_loaded <n> 'auto'
+  is not reliable for page-aware empty-slot checks in VirtualDJ 8.5.9307 /
+  18.0.9336. On sampler page 2, sampler_loaded 8 'auto' still returned true
+  for absolute slot 8 while visible pad 8 mapped to empty slot 16.
+  Use explicit sampler_pad_page -> absolute-slot guards for production pages;
+  see Reference - Sampler Loaded Test.xml and Reference/VirtualDJ Reference.md.
 
   Page-aware verbs follow the visible sampler sub-page (1-8, 9-16, 17-24, …):
     sampler_pad <n>           — action/name for pad n on the current page
     sampler_color <n> 'auto'  — color of pad n on the current page
-    sampler_loaded <n> 'auto' — whether pad n on the current page has a sample loaded
-    sampler_pad_page          — current page number (1, 2, 3, …)
+    sampler_pad_page          — current page range text ("1 to 8", "9 to 16", …)
     sampler_pad_page +1       — advance to the next page
 
   Absolute-slot verbs always target the same underlying sample regardless of page:
+    sampler_loaded <n>        — whether absolute slot n has a sample loaded
     sampler_play <n>          — trigger/stop sample in absolute slot n
     get_sample_name <n>       — name of absolute slot n
     get_sample_color <n>      — color of absolute slot n
@@ -24,7 +31,7 @@
   Note: sampler_assign slot numbers are absolute, not page-relative.
   The target bank must be unlocked for drag-and-drop assignment to work.
 
-  Source: Official, Inference
+  Source: Official, Local test, Inference
   See: Reference/VirtualDJ Reference.md — Sampler and Pads section
 -->
 <page name="REF: SAMPLER">
