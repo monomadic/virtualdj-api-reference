@@ -17,7 +17,7 @@ Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs a
 
 Suggested test order:
 
-1. No dedicated hardware: `connect`, `system`, `open_stem_creator`, `karaoke_venue_name`
+1. No dedicated hardware: `connect`, `system`, `open_stem_creator`, `karaoke_venue_name` using [Reference - Sparse Helper Tests.xml](../Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
 2. Optional controller/deck setup: `dualdeckmode_decks`
 3. Hardware-only batches: controller displays, Phase, RZX, DJC, V7, Gemini, Denon
 

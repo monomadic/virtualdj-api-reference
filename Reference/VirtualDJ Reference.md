@@ -110,6 +110,9 @@ Recommended runnable pad-page examples:
 - [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
   Page-aware sampler labels, colors, and actions.
 
+- [Reference - Sparse Helper Tests.xml](../Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
+  Manual-test harness for sparse official helpers such as `connect`, `system`, `open_stem_creator`, `karaoke_venue_name`, and `dualdeckmode_decks`.
+
 Additional pad pages currently present in `Pads/`:
 
 - [32 Samples.xml](../Pads/32%20Samples.xml)
