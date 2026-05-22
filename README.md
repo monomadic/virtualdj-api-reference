@@ -6,8 +6,9 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 ## What is here
 
 - **`Reference/`** — Markdown documentation: VDJScript verb reference, skin SDK, effects, options, filter syntax, application internals
-- **`Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, and reference patterns
+- **`Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, and reference patterns; see [Pads/README.md](Pads/README.md)
 - **`Skins/`** — skin examples and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
+- **`Test/`** — reproducible documentation test harnesses, including pad-page XML fixtures
 
 ## Where to start
 
@@ -17,6 +18,8 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Pick the right VDJScript verb or pattern | [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) |
 | Look up a specific verb | [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md) |
 | Check official verb coverage | [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md) |
+| Choose or maintain a pad page | [Pads/README.md](Pads/README.md) |
+| Run or update a test harness | [Test/README.md](Test/README.md) |
 | Build a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Skins/ModularSkeleton/](Skins/ModularSkeleton/) |
 | Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
 | Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |

@@ -1507,6 +1507,7 @@ Preferred usage:
 
 - use this as the main documented way to choose the deck's ColorFX
 - prefer it over ad-hoc `effect_show_gui 'colorfx'` workflows when the goal is simply to set the selected ColorFX
+- do not use this inside pad XML `query=""` for selected-state checks; use `filter_label 'name'` and `param_equal` so the query stays read-only
 
 Quirk:
 
@@ -1540,6 +1541,7 @@ filter_label 'name'
 Preferred usage:
 
 - use `filter_label 'name'` when you specifically want the ColorFX name rather than the value-style label
+- pair with `param_equal` in pad XML `query=""` when you need to test which ColorFX is currently selected
 
 Sources:
 
@@ -2140,7 +2142,7 @@ Sources:
 - `Official`: current VDJScript verbs appendix
 - `Community`: Mix FX forum examples and behavior notes
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
-- `Local test`: `Pads/Reference - Mix FX Query Test.xml` and `Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
+- `Local test`: `Test/Pads/Reference - Mix FX Query Test.xml` and `Test/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_mixfx_select`
 
@@ -2216,7 +2218,7 @@ Sources:
 - `Official`: DDJ-FLX2 hardware manual recommends assigning `effect_mixfx_select` to custom buttons when a skin lacks Mix FX controls
 - `Community`: Mix FX scripting examples and indirect query guidance
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
-- `Local test`: `Pads/Reference - Mix FX Query Test.xml` and `Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
+- `Local test`: `Test/Pads/Reference - Mix FX Query Test.xml` and `Test/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_show_gui`
 
@@ -2463,7 +2465,7 @@ Sources:
 - `Official`: VDJScript verbs appendix
 - `Community`: VirtualDJ forum examples using `"auto"`
 - `Published pad page`: installed `Loop Recorder.xml` uses unquoted `auto`
-- `Local test`: [Reference - Sampler Loaded Test.xml](../Pads/Reference%20-%20Sampler%20Loaded%20Test.xml), VirtualDJ 8.5.9307 / 18.0.9336, 2026-05-21
+- `Local test`: [Reference - Sampler Loaded Test.xml](../Test/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml), VirtualDJ 8.5.9307 / 18.0.9336, 2026-05-21
 
 ### `sampler_color`
 

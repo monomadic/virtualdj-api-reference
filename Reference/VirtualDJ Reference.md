@@ -99,6 +99,8 @@ Source labels used below:
 
 ## Real Examples In This Repo
 
+For the current pad-page inventory, status labels, and maintenance checklist, see [Pads/README.md](../Pads/README.md). For reproducible documentation fixtures, see [Test/README.md](../Test/README.md).
+
 Recommended runnable pad-page examples:
 
 - [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml)
@@ -108,45 +110,13 @@ Recommended runnable pad-page examples:
   Canonical filter and ColorFX selection patterns using the current verbs.
 
 - [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
-  Page-aware sampler labels, colors, and actions.
+  Legacy page-aware sampler labels, colors, and actions retained for comparison with newer sampler findings.
 
-- [Reference - Sparse Helper Tests.xml](../Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
+- [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml)
+  Confirmed read-only multi-page sampler with absolute empty-slot guards.
+
+- [Reference - Sparse Helper Tests.xml](../Test/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
   Manual-test harness for sparse official helpers such as `connect`, `system`, `open_stem_creator`, `karaoke_venue_name`, and `dualdeckmode_decks`.
-
-Additional pad pages currently present in `Pads/`:
-
-- [32 Samples.xml](../Pads/32%20Samples.xml)
-  Four-page 32-slot sampler layout using an internal `sam_page` variable.
-
-- [AUTO CUES.xml](../Pads/AUTO%20CUES.xml)
-  Remix cue page with cue-name-driven pad labels and colors.
-
-- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
-  ColorFX selection with stems context; demonstrates the same `filter_selectcolorfx` pattern as Reference - ColorFX.
-
-- [CUE.xml](../Pads/CUE.xml)
-  Hotcue page using `cue_display`, `has_cue`, and cue-color feedback.
-
-- [CUE 16.xml](../Pads/CUE%2016.xml)
-  Sixteen-pad hotcue page using `cue_display` and `cue_color`.
-
-- [CUE SCAN.xml](../Pads/CUE%20SCAN.xml)
-  Cue-name scanner for sections such as intro, build, cut, and drop.
-
-- [PLAY 16.xml](../Pads/PLAY%2016.xml)
-  Sixteen-pad performance transport/stems page.
-
-- [PUSH FX.xml](../Pads/PUSH%20FX.xml)
-  Momentary `padfx` performance page with explicit stem-targeted variants.
-
-- [SAMPLER.xml](../Pads/SAMPLER.xml)
-  Sixteen-pad page-aware sampler page with explicit drop-slot mapping across sampler pages.
-
-- [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml)
-  Simple fixed-slot sampler page demonstrating `drop="sampler_assign <slot>"`.
-
-- [TRANSPORT.xml](../Pads/TRANSPORT.xml)
-  Beat/bar navigation and transport utility pad page.
 
 Skin examples:
 
@@ -659,6 +629,12 @@ Preferred method for a dedicated select-only button:
 filter_selectcolorfx 'Flanger'
 ```
 
+Preferred method for a ColorFX selected-state query:
+
+```vdjscript
+param_equal `filter_label 'name'` 'Flanger' ? (effect_active 'colorfx' ? on : off) : off
+```
+
 Preferred method for an extra custom ColorFX control:
 
 ```vdjscript
@@ -670,6 +646,7 @@ Notes:
 
 - `effect_colorslider` is the center-off ColorFX-style slider action.
 - `effect_colorfx` exposes up to four extra custom ColorFX slots.
+- In pad XML `query=""` attributes, use `filter_label 'name'` for selected-state checks instead of running selector actions such as `filter_selectcolorfx 'Name'`.
 - CTO guidance says that the dedicated `colorfx` slot only exposes approved ColorFX-compatible effects, while extra slots are more flexible.
 
 Use [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml) for a working repo example.
@@ -772,7 +749,7 @@ VirtualDJ forum examples and older local examples use `sampler_loaded <n> 'auto'
 
 Local diagnostic testing showed this pattern is not reliable for page-aware empty-slot checks:
 
-- Test page: [Reference - Sampler Loaded Test.xml](../Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
+- Test page: [Reference - Sampler Loaded Test.xml](../Test/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
 - Build: VirtualDJ 8.5.9307 / 18.0.9336
 - Date: 2026-05-21
 - Setup: sampler bank page 2 (`9-16`), slot 8 loaded, slot 16 empty

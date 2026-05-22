@@ -29,41 +29,42 @@
 
   <!-- PATTERN 1: Main filter knob ColorFX selection
        Select the effect AND activate colorfx in one tap.
-       query blinks when this effect is selected AND colorfx is active.
+       query uses filter_label 'name' so selector actions never run while
+       VirtualDJ is only asking for pad state.
        Use filter action or the filter knob to actually drive the amount. -->
 
   <pad1 name="FILTER" color="color 'magenta'"
-        query="filter_selectcolorfx 'Filter' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Filter' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Filter' &amp; effect_active 'colorfx' on
   </pad1>
 
   <pad2 name="ECHO OUT" color="color 'magenta'"
-        query="filter_selectcolorfx 'Echo Out' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Echo Out' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Echo Out' &amp; effect_active 'colorfx' on
   </pad2>
 
   <pad3 name="REVERB" color="color 'magenta'"
-        query="filter_selectcolorfx 'Reverb' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Reverb' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Reverb' &amp; effect_active 'colorfx' on
   </pad3>
 
   <pad4 name="FLANGER" color="color 'magenta'"
-        query="filter_selectcolorfx 'Flanger' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Flanger' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Flanger' &amp; effect_active 'colorfx' on
   </pad4>
 
   <pad5 name="LOOP ROLL" color="color 'magenta'"
-        query="filter_selectcolorfx 'Loop Roll' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Loop Roll' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Loop Roll' &amp; effect_active 'colorfx' on
   </pad5>
 
   <pad6 name="SLIP ROLL" color="color 'magenta'"
-        query="filter_selectcolorfx 'Slip Roll' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Slip Roll' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Slip Roll' &amp; effect_active 'colorfx' on
   </pad6>
 
   <pad7 name="CUT" color="color 'magenta'"
-        query="filter_selectcolorfx 'Cut' &amp; effect_active 'colorfx' ? blink 500ms : off">
+        query="param_equal `filter_label 'name'` 'Cut' ? (effect_active 'colorfx' ? blink 500ms : off) : off">
     filter_selectcolorfx 'Cut' &amp; effect_active 'colorfx' on
   </pad7>
 

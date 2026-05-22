@@ -25,6 +25,12 @@ Start here:
 - [Mapper XML](Mapper%20XML.md)
   Controller and keyboard mapper file format: `<button>`, `<slider>`, `<knob>`, shift layers, LED feedback, and the relationship to pad pages.
 
+- [Pad Page Inventory](../Pads/README.md)
+  Current `Pads/*.xml` status labels, canonical examples, and maintenance checklist.
+
+- [Documentation Tests](../Test/README.md)
+  Reproducible local test harnesses used to support reference claims.
+
 - [Application Internals](Application%20Internals.md)
   Low-level macOS-first notes on VirtualDJ paths, databases, caches, stem sidecars, linked tracks, and shell tooling.
 

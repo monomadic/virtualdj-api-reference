@@ -63,8 +63,8 @@ Notes:
 Local test, May 12, 2026:
 
 - Build: VirtualDJ 8.5.9307 / `850.9336.mac.2224`.
-- Runnable pad page: [Pads/Reference - Mix FX Query Test.xml](../Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml).
-- Runnable skin: [Skins/MixFxQueryTest/skin.xml](../Skins/MixFxQueryTest/skin.xml).
+- Runnable pad page: [Test/Pads/Reference - Mix FX Query Test.xml](../Test/Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml).
+- Runnable skin: [Test/Skins/MixFxQueryTest/skin.xml](../Test/Skins/MixFxQueryTest/skin.xml).
 - Setup: installed the pad page into the local VirtualDJ Pads folder, loaded the test skin, switched between `FILTER` and `ECHO`, and read the pad XML state through `pad_button_color`.
 
 | Context | Direct pattern | Indirect pattern | Result |

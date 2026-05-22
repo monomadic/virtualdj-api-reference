@@ -11,12 +11,15 @@ Reference/README.md          — index of all reference docs, source label polic
 Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
 Reference/Official VDJScript Coverage Audit.md — names-only parity audit for the 989 official verb/alias names, plus promotion targets
+Pads/README.md                — pad page inventory, status labels, and maintenance checklist
+Test/README.md                — documentation test harnesses and reproducible fixtures
 ```
 
 ## What is here
 
 ```
-Pads/                        — working pad page XML files installed from ~/Library/Application Support/VirtualDJ/Pads
+Pads/                        — working and reference pad page XML files
+Test/                        — documentation test harnesses, including pad XML fixtures
 Skins/                       — skin source trees and reference skins
 Reference/                   — Markdown documentation
 ```
@@ -27,7 +30,7 @@ Reference/                   — Markdown documentation
 - `action=""` attributes take VDJScript actions. `query=""` takes a boolean/value expression.
 - `&` chains actions in XML attributes and must be written `&amp;` inside XML.
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
-- Pad pages live in `Pads/*.xml`. Skins live in `Skins/*/`.
+- Working/reference pad pages live in `Pads/*.xml`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript verb appendix currently parses to 989 verb/alias names. The local VDJScript reference has 989/989 names present, but some are compact catalog entries rather than fully curated sections.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.

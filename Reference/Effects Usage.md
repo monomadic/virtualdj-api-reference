@@ -132,7 +132,7 @@ filter_selectcolorfx 'Echo' & effect_active 'colorfx' on & filter 75%
 Query: is this ColorFX selected and active?
 
 ```vdjscript
-filter_selectcolorfx 'Echo' & effect_active 'colorfx' ? blink 500ms : off
+param_equal `filter_label 'name'` 'Echo' ? (effect_active 'colorfx' ? blink 500ms : off) : off
 ```
 
 Don’t use effect_active with a ColorFX name. Treat ColorFX as “selected preset + amount”.
@@ -168,7 +168,7 @@ B) Canonical pad patterns
 ```
 <pad1
   name="Echo"
-  query="filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' ? blink 500ms : off"
+  query="param_equal `filter_label 'name'` 'Echo' ? (effect_active 'colorfx' ? blink 500ms : off) : off"
 >
   filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' on &amp; filter 75%
 </pad1>
@@ -178,7 +178,7 @@ Use the down ? ... : ... pattern:
 
 <pad1
   name="Echo (hold)"
-  query="filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' ? on : off"
+  query="param_equal `filter_label 'name'` 'Echo' ? (effect_active 'colorfx' ? on : off) : off"
 >
   down ? filter_selectcolorfx 'Echo' &amp; effect_active 'colorfx' on &amp; filter 75% : filter 50% &amp; effect_active 'colorfx' off
 </pad1>
@@ -294,7 +294,7 @@ effect_select 1 'Echo'
 
 B) Make the UI reflect state reliably
 		•	FX slot: query effect_active <slot>
-		•	ColorFX: query `filter_selectcolorfx '<name>' & effect_active 'colorfx'`
+		•	ColorFX: query ``param_equal `filter_label 'name'` '<name>' ? (effect_active 'colorfx' ? on : off) : off``
 		•	If you care about “which one is selected”, query label/name (when available) but avoid brittle string compares unless you’ve verified the exact returned label.
 
 C) Avoid “half-on” UX
