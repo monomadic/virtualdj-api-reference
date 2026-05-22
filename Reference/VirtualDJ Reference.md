@@ -212,7 +212,8 @@ Practical conventions:
 
 - use uppercase class names in `<define>` and lower-case class calls for readability
 - keep placeholder tokens uppercase inside brackets
-- use `*name` for required placeholders and `name=value` for defaults
+- use `*name` when a placeholder must be substituted in math, VDJScript/`condition` expressions, or text strings; official docs describe `*` as enabling simple math, and local tests showed unstarred placeholders can remain literal in script/text contexts
+- use `name=value` to provide a default value
 - use conditional defines when one class needs different implementations per skin mode or color scheme
 
 Example conditional define:

@@ -316,7 +316,7 @@ Define reusable element templates to avoid repetition.
 
 **Named Placeholders:** Modern working skins commonly declare named placeholders with `placeholders=""`, then use bracketed uppercase tokens inside the define body.
 
-- `*name` marks a required call-site attribute.
+- `*name` marks a placeholder for substitution in expression-like contexts. Local VirtualDJ runtime tests showed this is important beyond math: placeholders used inside `condition=""`, VDJScript expressions, and text strings should be starred, or the bracket token may remain literal.
 - `name=value` supplies a default.
 - Tokens are referenced as `[NAME]` in the template body.
 - Call sites pass values as normal XML attributes, usually lower-case.
@@ -328,6 +328,54 @@ Define reusable element templates to avoid repetition.
 </define>
 
 <button class="labeled_button" label="SYNC" width="220" action="sync"/>
+```
+
+**Starred placeholders in conditions:** The official SDK describes starred placeholders primarily around math, but working skins and local tests indicate a broader rule: star placeholders that must be substituted inside script/text contexts.
+
+Unstarred string placeholder values may not substitute in text or conditions:
+
+```xml
+<!-- Observed fragile/non-working in local runtime tests: [SIDE] stayed literal -->
+<define class="STRING_CONDITION_CANARY" placeholders="side=false">
+    <text text="[SIDE]"/>
+    <group condition="param_equal '[SIDE]' 'true'"/>
+</define>
+```
+
+The starred form substituted correctly:
+
+```xml
+<define class="STRING_CONDITION_CANARY" placeholders="*side=false">
+    <text text="[SIDE]"/>
+    <group condition="param_equal '[SIDE]' 'true'"/>
+</define>
+```
+
+For boolean-like placeholders, direct boolean conditions worked when the placeholder was starred and values were exactly `true` / `false`:
+
+```xml
+<define class="TRACK_MODIFIERS_PANEL" placeholders="*mirror=false">
+    <group x="+0" y="+5" condition="not [MIRROR]"/>
+    <group x="+265" y="+5" condition="[MIRROR]"/>
+</define>
+
+<panel class="track_modifiers_panel" mirror="false"/>
+<panel class="track_modifiers_panel" mirror="true"/>
+```
+
+String comparisons also worked when the substituted placeholder was quoted:
+
+```xml
+condition="param_equal '[MIRROR]' 'true'"
+```
+
+Numeric starred placeholders work in the usual expression style:
+
+```xml
+<define class="EXAMPLE" placeholders="*flip=0">
+    <group condition="param_equal [FLIP] 0"/>
+    <group condition="param_equal [FLIP] 1"/>
+</define>
 ```
 
 **Legacy Positional Placeholders:** Some SDK/forum examples use `$1`, `$2`, etc. and pass values as `$1=""`, `$2=""` attributes:
@@ -840,6 +888,30 @@ Generic container for organizing elements.
 **Attributes:**
 - `name` - Group identifier
 - `x`, `y` - Position offset for all children
+
+**Conditional positioning note:** For conditional group placement, prefer putting `x` / `y` and `condition` directly on separate `<group>` branches:
+
+```xml
+<group x="+0" y="+5" condition="not [MIRROR]">
+    ...
+</group>
+<group x="+265" y="+5" condition="[MIRROR]">
+    ...
+</group>
+```
+
+Avoid relying on conditional child `<pos>` elements to move a `<group>`:
+
+```xml
+<!-- Observed fragile/non-working in local runtime tests -->
+<group>
+    <pos x="+0" y="+5" condition="not [MIRROR]"/>
+    <pos x="+265" y="+5" condition="[MIRROR]"/>
+    ...
+</group>
+```
+
+In local tests, the child-`<pos>` group rendered but did not move horizontally, while equivalent conditional branches with direct group `x` / `y` behaved correctly.
 
 **Children:** Any skin element
 

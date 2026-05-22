@@ -47,7 +47,7 @@ It was produced from a source tree using `xmllint --xinclude`.
 ```
 
 Rules:
-- `placeholders="*text,*accent"` names the placeholders (the `*` prefix marks them required).
+- `placeholders="*text,*accent"` names placeholders intended for substitution in text/expression contexts. Official docs describe `*` as enabling simple math; local tests also showed starred placeholders substitute reliably in script/text contexts, while unstarred placeholders can remain literal.
 - In the template body, placeholders appear as `[TEXT]` and `[ACCENT]` (uppercased, no asterisk).
 - Usage attributes (`text=`, `accent=`) supply the values at instantiation.
 - `<define color="name" value="#hex">` declares a named color usable as a value anywhere colors are accepted.
