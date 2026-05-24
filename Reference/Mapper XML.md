@@ -6,7 +6,7 @@ Mappers live in `~/Library/Application Support/VirtualDJ/Mappers/` on macOS.
 Each mapper is an XML file targeting a specific controller, MIDI device, or keyboard.
 
 Source labels used below match the rest of this repo:
-`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Local test`, `Inference`.
+`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`.
 
 ---
 
@@ -17,6 +17,7 @@ A mapper file is a single XML document with a root `<mapper>` element.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <mapper>
+  <map .../>
   <button .../>
   <slider .../>
   <knob .../>
@@ -30,7 +31,31 @@ VirtualDJ ships built-in mappers for supported controllers inside the applicatio
 
 User mappers override or extend built-in ones.
 
+For controller devices with a separate device definition, mapper files commonly use `<map value="CONTROL_NAME" action="..."/>` entries that target the named controls declared by the definition. In that split, the device definition declares the hardware I/O and the mapper supplies the VDJScript.
+
 Source: `Official`, `Local observation`
+
+---
+
+## Mapper XML vs Device Definition XML
+
+Mapper actions are VDJScript. Device definitions are not.
+
+Use the device definition XML to declare how VirtualDJ talks to the hardware: input buttons, sliders, MIDI notes, CC numbers, LED outputs, bars, channels, and static value ranges. Do not expect VDJScript variables, conditionals, backticks, or actions to be evaluated inside device definition elements such as `<button>`, `<led>`, `cc=""`, `value=""`, `ccoff=""`, or `zero=""`.
+
+Put dynamic behavior in the mapper instead:
+
+```xml
+<!-- Device definition: static hardware output declarations -->
+<led name="LED_CC_000" cc="0x00" channel="0"/>
+<led name="LED_CC_001" cc="0x01" channel="0"/>
+
+<!-- Mapper: VDJScript decides which output is active -->
+<map value="LED_CC_000" action="var_equal 'CCOut' 0"/>
+<map value="LED_CC_001" action="var_equal 'CCOut' 1"/>
+```
+
+Source: `Official forum`
 
 ---
 

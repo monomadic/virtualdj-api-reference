@@ -94,6 +94,26 @@ get_effect_name 1 & param_lowercase & param_equal 'echo' ?
 
 Official VDJScript documents `&&` for query chains, where the query should return true only when both commands are true. That is narrower than using `&&` inside complex pad action branches. Use nested conditionals for same-pad toggle actions, and keep `&&` to simple query expressions you have verified in the target surface.
 
+### A.1) Stem FX Slots
+
+Stems FX has three control paths that are easy to mix up:
+
+- `effect_stems 'vocal'` routes the normal FX rack to a stem or stem group.
+- `padfx 'reverb' 'stemfx:vocal'` triggers a pad effect on a stem.
+- Named stem FX slots such as `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick` can be used as the slot target for `effect_*` actions.
+
+Example named vocal slot:
+
+```vdjscript
+effect_select 'vocals' 'Reverb'
+effect_active 'vocals'
+effect_slider 'vocals' 1 50%
+effect_slider 'vocals' 'echo' 1 50%
+effect_show_gui 'vocals' 'Reverb'
+```
+
+Use `vocals` for the separate vocal effect slot, but `stemfx:vocal` for the `padfx` stem target. `melovocal` and `melorhythm` may exist but still need local testing. Source: `Official`, `Official forum`, `Community`, `Local test`.
+
 ⸻
 
 ### B) ColorFX (Filter engine)

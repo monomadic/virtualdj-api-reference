@@ -6,7 +6,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 ## What is here
 
 - **`Reference/`** — Markdown documentation: VDJScript verb reference, skin SDK, effects, options, filter syntax, application internals
-- **`Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, and reference patterns; see [Pads/README.md](Pads/README.md)
+- **`Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, reference patterns, and copied built-in pad pages; see [Pads/README.md](Pads/README.md)
 - **`Skins/`** — skin examples and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
 - **`Test/`** — reproducible documentation test harnesses, including pad-page XML fixtures
 
@@ -42,6 +42,7 @@ Every fact in the reference docs is labeled by source:
 | `Community` | Non-staff forum guidance |
 | `Published skin` | Observed in a working public skin |
 | `Published pad page` | Observed in a working public pad page |
+| `Built-in pad page` | Observed in pad-page XML shipped inside the VirtualDJ app bundle |
 | `Local test` | Reproduced in VirtualDJ locally |
 | `Inference` | Conclusion drawn from the above sources |
 

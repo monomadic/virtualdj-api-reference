@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<pad1 name="Vocal" color="color &apos;green&apos;" autodim="query">stem_pad &apos;vocal&apos;</pad1>
+	<pad2 name="Melody" color="color &apos;orange&apos;" autodim="query">stem_pad &apos;instru&apos;</pad2>
+	<pad3 name="Bass" color="color &apos;red&apos;" autodim="query">stem_pad &apos;bass&apos;</pad3>
+	<pad4 name="Drums" color="color &apos;#3D619C&apos;" autodim="query">stem_pad &apos;Rhythm&apos;</pad4>
+	<pad5 name="Voc Echo" color="color &apos;magenta&apos;">padfx &quot;echo out&quot; 80% 1bt &quot;stemfx:vocal&quot;</pad5>
+	<pad6 name="Voc Reverb" color="color &apos;magenta&apos;">padfx &quot;Reverb&quot; 80% &quot;stemfx:vocal&quot;</pad6>
+	<pad7 name="Instr BtGrid" color="color &apos;magenta&apos;">padfx &quot;Beat Grid&quot; &quot;stemfx:MeloRhythm&quot;</pad7>
+	<pad8 name="Instr Echo" color="color &apos;magenta&apos;">padfx &quot;echo out&quot; 80% 1bt &quot;stemfx:MeloRhythm&quot;</pad8>
+	<shift_pad1 name="Vocal" color="color &apos;green&apos;" autodim="query">stem_pad isolate &apos;vocal&apos;</shift_pad1>
+	<shift_pad2 name="Melody" color="color &apos;orange&apos;" autodim="query">stem_pad isolate &apos;instru&apos;</shift_pad2>
+	<shift_pad3 name="Bass" color="color &apos;red&apos;" autodim="query">stem_pad isolate &apos;bass&apos;</shift_pad3>
+	<shift_pad4 name="Drums" color="color &apos;#3D619C&apos;" autodim="query">stem_pad isolate &apos;Rhythm&apos;</shift_pad4>
+	<param1 name="`stem_pad &apos;instrumental&apos; ? constant &apos;INSTRUMENTAL&apos; : stem_pad &apos;acapella&apos; ? constant &apos;ACAPELLA&apos; : has_stems &apos;ready&apos;`">param_bigger 0 ? stem_pad &apos;instrumental&apos; : stem_pad &apos;acapella&apos;</param1>
+	<menu>Beat Grid Pattern Instrumental +[effect_show_gui instrumental &apos;Beat Grid&apos;]</menu>
+	<custompadsmode nb="4">
+		<pad1 name="Vocal" color="color &apos;green&apos;" autodim="query">stem_pad &apos;vocal&apos;</pad1>
+		<pad2 name="Instru" color="color &apos;orange&apos;" autodim="query">stem_pad &apos;instru&apos;</pad2>
+		<pad3 name="Bass" color="color &apos;red&apos;" autodim="query">stem_pad &apos;bass&apos;</pad3>
+		<pad4 name="Drums" color="color &apos;#3D619C&apos;" autodim="query">stem_pad &apos;Rhythm&apos;</pad4>
+		<shift_pad1 name="Vocal" color="color &apos;green&apos;" autodim="query">stem_pad isolate &apos;vocal&apos;</shift_pad1>
+		<shift_pad2 name="Melody" color="color &apos;orange&apos;" autodim="query">stem_pad isolate &apos;instru&apos;</shift_pad2>
+		<shift_pad3 name="Bass" color="color &apos;red&apos;" autodim="query">stem_pad isolate &apos;bass&apos;</shift_pad3>
+		<shift_pad4 name="Drums" color="color &apos;#3D619C&apos;" autodim="query">stem_pad isolate &apos;Rhythm&apos;</shift_pad4>
+	</custompadsmode>
+</page>

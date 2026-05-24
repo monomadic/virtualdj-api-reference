@@ -34,9 +34,11 @@ Current curated coverage includes:
 ## Reliability Labels
 
 - `Official`: current VirtualDJ manual or VDJPedia
-- `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff forum guidance
+- `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff forum guidance. Adion/CTO replies should be treated as high-authority implementation notes for scripting, audio-engine, and feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's press archive confirms the 2011 AdionSoft acquisition.
 - `Community`: forum guidance from non-staff users
 - `Published skin`: observed in a working public skin; use as provenance and a prompt for testing, not as sole semantic authority
+- `Published pad page`: observed in a working public pad page; use as provenance and a prompt for testing, not as sole semantic authority
+- `Built-in pad page`: observed in pad-page XML shipped inside the VirtualDJ app bundle; treat as semi-official executable evidence, then curate before recommending
 - `Local test`: behavior reproduced in VirtualDJ locally
 - `Inference`: a conclusion drawn from official behavior plus repo usage
 
@@ -454,12 +456,15 @@ Typical forms:
 
 ```vdjscript
 var "my_var" ? action1 : action2
+var '$global_shift' ? action1 : action2
+var '@$skin_mode' ? action1 : action2
 ```
 
 Notes:
 
 - Use vars when you truly need stored state across events.
 - Do not reach for vars when a built-in query verb already answers the question directly.
+- Variable names control scope. Plain names such as `my_var` are deck-local; `$my_var` is global; `@` variants are saved across sessions. See "Variable Scope" below before using vars for skin-wide layout or controller-wide modes.
 
 Sources:
 
@@ -484,11 +489,14 @@ Typical forms:
 set 'varname' 5
 set 'page_fx_active' 1
 set 'remembered_filter' `filter`
+set '$global_mode' 1
+set '@$layout_4deck' 1
 ```
 
 Notes:
 
 - Use for stored state, not as a substitute for native UI or deck state queries.
+- Match the variable prefix to the intended scope. A plain `set 'mode' 1` stores a deck-local value, which can differ on another deck.
 
 Sources:
 
@@ -509,17 +517,22 @@ Official summary:
 Typical forms:
 
 ```vdjscript
-toggle "my_var"
+toggle 'MyVar'
+toggle '$MyVar'
+toggle '@$show_zoom_racks'
 ```
 
 Preferred usage:
 
 - good for explicit user modes
 - avoid using it when the target should mirror a built-in state such as `play`, `loop`, or `masterdeck`
+- the variable prefix is part of the variable identity. `toggle 'MyVar'` and `toggle '$MyVar'` change two different variables.
+- query a global variable with the same global name, for example `var_equal '$MyVar' 1 ? action1 : action2`
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "XML Variables in Skin and Database", PhantomDeejay, 2019-07-30
 
 ### `get_var`
 
@@ -537,11 +550,41 @@ Typical forms:
 
 ```vdjscript
 get_var 'varname'
+get_var '$global_mode'
 ```
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+
+### Variable Scope
+
+VDJScript variable scope is encoded in the variable name prefix.
+
+| Form | Scope | Saved Across Sessions | Example |
+| --- | --- | --- | --- |
+| `name` | local to the current deck | no | `set 'pad_mode' 1` |
+| `#name` | local to the current deck | no | `set '#pad_mode' 1` |
+| `%name` | local to a logical deck reference | no | `deck left set '%pad_mode' 1` |
+| `$name` | global to both/all decks | no | `set '$shift' 1 while_pressed` |
+| `@name` | persistent local deck variable | yes | `set '@skin_view' 1` |
+| `@%name` | persistent local logical-deck variable | yes | `set '@%skin_view' 1` |
+| `@$name` | persistent global variable | yes | `set '@$layout_4deck' 1` |
+
+Notes:
+
+- Plain variables are deck-local. `deck 1 set 'mode' 1` and `deck 2 var 'mode'` are different variable slots.
+- `$` variables are global and are the right choice for a mode that should be shared by both decks during the current VirtualDJ session. The `$` is part of the variable name: `MyVar` and `$MyVar` are different variables, so a global variable must be queried as global too.
+- `@` variables are saved across sessions. Use `@$...` for skin-wide persistent layout state.
+- `%` variables are also deck-local, but tied to the logical deck reference. The official wiki notes that `deck 1 '%myvar'` and `deck left '%myvar'` can have different values even when deck 1 is currently the left deck.
+- In init/controller setup paths, prefer explicit numbered deck targets when setting local variables, for example `deck 1 set 'var1' 0.5`. Community forum testing found `deck left set '%varx' 0.5` unreliable in an init context, and a moderator noted that `left` is a current role rather than a real numbered deck.
+- Variables persist while VirtualDJ is running; they are not scoped to a particular controller or skin. Use distinctive names for skin/controller variables to avoid collisions.
+
+Sources:
+
+- `Official`: VDJPedia VDJScript variable scope section
+- `Official forum`: "XML Variables in Skin and Database", PhantomDeejay, 2019-07-30
+- `Community`: "set local variable on init", 2024 forum thread
 
 ### `set_deck`
 
@@ -1312,6 +1355,43 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 
+### `pitch`
+
+Aliases: `pitch2`
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `Pad`, `SkinAction`
+
+Official summary:
+
+- Set deck pitch
+
+Typical forms:
+
+```vdjscript
+pitch +0.1%
+pitch 112%
+pitch 128bt
+get_bpm & param_cast 'beats' & deck 2 pitch
+param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch
+```
+
+Notes:
+
+- `pitch <percent>` sets absolute playback speed, so `pitch 112%` means +12%.
+- `pitch <number>` treats the value as pitch-slider position within the current `pitch_range`.
+- `pitch <beats>` sets pitch so the deck matches the given BPM-like beats value. Adion's forum example is `pitch 128bt`.
+- Use `param_cast 'beats'` when a math chain produces a numeric BPM value that should be consumed by `pitch` as a target BPM rather than as a pitch-slider value.
+- This is useful for scripted tempo relationships: half/double logic, 3:4 transitions, and setting the opposite deck to a multiplier of the current deck's BPM.
+- Example 3:4-up target: `param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch`.
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Official forum`: "Script/Param/Variable Maths", Adion, 2023-03-21
+- `Community`: "Script/Param/Variable Maths", moderator example for `param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch`
+
 ### `pitch_reset`
 
 Aliases: none
@@ -1599,6 +1679,8 @@ effect_select 1 "echo"
 effect_select 1 -1
 effect_select +1
 effect_select 1 0.2
+effect_select 'vocals' 'reverb'
+effect_select 'bass' 'echo'
 ```
 
 Preferred usage:
@@ -1607,10 +1689,17 @@ Preferred usage:
 - prefer this over name-only global assumptions when you care which slot owns the effect
 - for pad presets, pair `effect_select <slot> '<name>'` with explicit `effect_slider <slot> ...` values before activating the slot
 - do not use bare `effect_select <slot>` as a harmless selected-name query in pad actions; it can open the effect selector. Use `get_effect_name <slot>` for labels and state checks.
+- `<slot>` can be a normal numeric deck FX slot or a supported special/named slot. Official forum guidance documents stem FX slot names such as `rhythm` and `vocals`; use these when the effect instance should live on a stem-specific slot rather than on numeric slots 1/2/3.
+- current known named stem FX slots are `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`
+- the vocal stem FX slot is `vocals` in the forum examples, while `padfx` stem targets use `stemfx:vocal`
+- `melovocal` and `melorhythm` may exist as named stem FX slots, but need local testing before being treated as confirmed
+- a local stem-slot pad pattern uses `effect_select 'vocals' 'reverb' ? effect_active 'vocals' : off` as the selected-and-active query; keep the numeric-slot `get_effect_name <slot>` guidance for ordinary rack slots
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
+- `Local test`: vocal Reverb stem-slot pad query/action pattern; current named slot list in local notes is `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`
 
 ### `effect_active`
 
@@ -1631,6 +1720,8 @@ effect_active 1
 effect_active 1 on
 effect_active 1 off
 effect_active 1 'flanger' on
+effect_active 'vocals'
+effect_active 'vocals' 'echo' on
 ```
 
 Preferred usage:
@@ -1642,10 +1733,13 @@ Preferred usage:
 - turn a slot effect off with `effect_active <slot> off`
 - for same-pad preset toggles, query `get_effect_name <slot>` first, then nest `effect_active <slot>` so pressing the same active effect turns the slot off while pressing a different effect loads/sets/activates it
 - `&&` is documented for query chains, but use nested conditionals for action branches that combine effect-name checks, `? :`, and load/set/on side effects
+- named stem FX slots can be activated with the same verb family, for example `effect_active 'vocals'` after loading a vocal-only Reverb into the `vocals` slot
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
+- `Community`: "ONE EFFECT ON ONE STEM ON A CONTROLLER", moderator example for `effect_active vocals echo`
 
 ### `effect_slider`
 
@@ -1664,6 +1758,9 @@ Typical forms:
 ```vdjscript
 effect_slider 1 2 50%
 effect_slider 1 0%
+effect_slider 'vocals' 1 50%
+effect_slider 'vocals' 'echo' 1
+effect_slider 'vocals' 'echo' 1 50%
 ```
 
 Preferred usage:
@@ -1671,10 +1768,15 @@ Preferred usage:
 - use explicit slot and slider numbers in docs and examples
 - pair with `effect_select` and `effect_active` for deterministic FX presets
 - avoid setting sliders by effect name in reference examples unless the example intentionally targets any active instance of that named effect
+- for a named stem FX slot, the first parameter is the stem slot instead of a numeric slot. Community examples also show an effect-name parameter between the stem slot and slider number, for example `effect_slider 'Vocals' 'Echo' 1 50%`.
+- at least one forum follow-up reported that only the GUI form worked in that user's setup; test stem-slot slider forms on the target build before treating them as canonical for a controller or skin
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
+- `Community`: "ONE EFFECT ON ONE STEM ON A CONTROLLER", moderator example for `effect_slider vocals echo 1`
+- `Community`: "Legacy Echo's Name?", examples for `effect_slider 'Vocals' 'Echo' <param> <value>`
 
 ### `effect_colorfx`
 
@@ -1843,6 +1945,8 @@ Preferred usage:
 - use when a pad page or skin intentionally routes audio FX to part of the track instead of the full deck signal
 - use `effect_stems off` to return FX routing to the full track
 - in skin and pad state, query `effect_stems '<stem>'` when you need a specific route and query bare `effect_stems` when any stem-FX route should count as active
+- this is shared FX routing, not the same thing as a separate named stem FX slot such as `vocals`
+- when you need an independent effect instance for a stem, use a stem FX slot with the `effect_*` verbs or `padfx ... 'stemfx:<stem>'`
 
 Notes:
 
@@ -1852,6 +1956,7 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
 - `Local test`: existing pad pages in this repo use `effect_stems` for ColorFX / push-FX routing
 
 ### `effect_stems_color`
@@ -1956,12 +2061,15 @@ Typical forms:
 ```vdjscript
 effect_arm_stem Vocal
 effect_arm_stem Vocal+Bass
+effect_arm_stem Vocal & effect_select 'stems' 'Echo' & effect_active 'stems'
 ```
 
 Preferred usage:
 
 - use for controller mappings that expose a stem-selection layer before operating on effect actions
 - use `effect_stems` for ordinary pad-page or skin controls that directly route current deck effects to stems
+- the official appendix describes `effect_arm_stem` as selecting stems for the special `stems` slot used by `effect_*` actions
+- do not confuse this `stems` aggregate slot with named stem FX slots such as `vocals`; both are slot-like effect targets, but they are selected differently
 
 Sources:
 
@@ -2239,15 +2347,21 @@ Typical forms:
 ```vdjscript
 effect_show_gui 1
 effect_show_gui 'colorfx'
+effect_show_gui 'rhythm' 'Beat Grid'
+effect_show_gui 'vocals' 'echo'
 ```
 
 Notes:
 
 - Treat GUI access as separate from canonical selection logic. Opening a GUI does not make it the preferred API path for selection or activation.
+- Adion documented `effect_show_gui "rhythm" "Beat Grid"` for showing a padfx GUI for a specific stem set, and said the same syntax can be used with other `effect_*` actions.
+- Community examples also use `effect_show_gui vocals echo` as a diagnostic helper for checking whether a vocal stem effect instance is actually opening/activating.
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
+- `Community`: "How to map specific Fx?", moderator example for `effect_show_gui vocals echo`
 
 ### `sampler_play`
 
@@ -4645,6 +4759,14 @@ The sections below remain useful as a wide local inventory. They are still being
 - `frac` - decimal part
 - `relative`, `absolute` - change parameter type
 
+Use `param_cast 'beats'` when a computed BPM should be passed to `pitch` as a target BPM:
+
+```vdjscript
+param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch
+```
+
+Source: `Official forum`, `Community`
+
 ## Timing & Animation
 
 | Verb                  | Description                              | Example                               |
@@ -4732,13 +4854,13 @@ The sections below remain useful as a wide local inventory. They are still being
 | Verb             | Description                   | Example                                     |
 | ---------------- | ----------------------------- | ------------------------------------------- |
 | `var`            | Conditional based on variable | `var "my_var" ? action1 : action2`          |
-| `var_equal`      | Check equality                | `var_equal "my_var" 42 ? action1 : action2` |
+| `var_equal`      | Check equality                | `var_equal '$MyVar' 1 ? action1 : action2`  |
 | `var_not_equal`  | Check inequality              | `var_not_equal "my_var" 42`                 |
 | `var_smaller`    | Check less than               | `var_smaller "my_var" 42`                   |
 | `var_greater`    | Check greater than            | `var_greater "my_var" 42`                   |
 | `set_var_dialog` | Dialog to set var             | `set_var_dialog 'varname'`                  |
 | `set`            | Set variable value            | `set 'varname' 5`                           |
-| `toggle`         | Toggle true/false             | `toggle "my_var"`                           |
+| `toggle`         | Toggle true/false             | `toggle '$MyVar'`                           |
 | `cycle`          | Increment with wrap           | `cycle "my_var" 42`                         |
 | `get_var`        | Get variable value            | `get_var "varname"`                         |
 | `set_var`        | Set variable value            | `set_var`                                   |
@@ -5267,7 +5389,7 @@ eq_crossfader_low 50%
 | `keycue_pad_page`      | Key-cue pad page/window | `keycue_pad_page`          |
 | `keycue_pad_jump`      | Key-cue jump option    | `keycue_pad_jump`           |
 | `key_lock` / `keylock` | Lock key               | `key_lock`                  |
-| `pitch`                | Set pitch              | `pitch 112%`, `pitch +0.1%` |
+| `pitch`                | Set pitch              | `pitch 112%`, `pitch 128bt` |
 | `pitch2` / `pitch2_slider` | Official aliases of `pitch` / `pitch_slider` | `pitch2 112%` |
 | `pitch_relative`       | Relative pitch helper for controllers | `pitch_relative +0.1%` |
 | `pitch_motorized`      | Motorized pitch helper | `pitch_motorized`           |
@@ -5289,13 +5411,16 @@ eq_crossfader_low 50%
 - `key_match_button` matches the other deck's key on first press, then resets the key on second press.
 - `key_match_menu` is the popup/menu partner and is a natural `rightclick=""` action for key displays.
 - `pitch <number>` treats the value as pitch-slider position within the current `pitch_range`; `pitch <percent>` sets absolute playback speed, so `pitch 112%` means +12%.
+- `pitch <beats>` sets pitch to match a target BPM-style value, for example `pitch 128bt`.
+- For calculated tempo relationships, compute the target with parameter math, cast it to `beats`, then feed it to the destination deck's `pitch`.
 - `pitch_relative` is for hardware controls that should move relative to the software pitch position instead of replacing it with an absolute hardware value.
 - `pitch_lock` links matched deck pitch sliders so moving one keeps the match by moving the other.
 - `startupspeed` and `brakespeed` control vinyl-style ramp behavior; larger values mean longer ramp times.
 - `backspin` accepts explicit durations such as `5000ms` or beat lengths such as `4bt`.
 
 ```text
-pitch 130 bpm
+pitch 128bt
+param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch
 pitch_relative +0.1%
 pitch_lock on
 startupspeed 1500ms
@@ -5407,6 +5532,28 @@ loop_color 1 'yellow'
 | `pad_bank2`        | Switch skin display between pads 1-8 and 9-16 | `pad_bank2` |
 | `padfx`            | Activate named effect   | `padfx "echo" 40% 90%`             |
 | `padfx_single`     | Activate single padfx   | `padfx_single "reverb"`            |
+
+### Pad FX Notes
+
+- Official `padfx` behavior is temporary: parameters are applied when the pad effect starts and return when it stops.
+- After slider values, `padfx` can also accept switch strings such as `"TRAIL:on"` and stem modifiers such as `stemfx:<stem>`, `solostem:<stem>`, or `mutestem:<stem>`.
+- Use `stemfx:<stem>` when the effect should apply only to that stem while other stems continue playing normally.
+- Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`; local pad pages normally use lowercase strings.
+- Stem echo-out forum examples often use a fuller argument list rather than only strength and beat length; keep effect-specific parameter order close to the source example or local test.
+
+```vdjscript
+padfx 'echo out' 80% 'solostem:vocal'
+padfx 'echo out' 'mutestem:rhythm'
+padfx 'reverb' 'stemfx:vocal'
+padfx 'echo out' 85% 70% 62.5% 20% 'stemfx:vocal'
+padfx 'echo out' 80% 1bt 25% 75% 'stemfx:vocal'
+effect_show_gui 'vocals' 'echo' & padfx 'echo' 'stemfx:vocal'
+```
+
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Community`: "How to map specific Fx?", moderator example for `effect_show_gui vocals echo & padfx echo 'stemfx:vocal'`
 
 ## Effects
 

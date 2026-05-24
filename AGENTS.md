@@ -18,7 +18,7 @@ Test/README.md                — documentation test harnesses and reproducible 
 ## What is here
 
 ```
-Pads/                        — working and reference pad page XML files
+Pads/                        — working/reference pad page XML files plus copied built-in pad pages
 Test/                        — documentation test harnesses, including pad XML fixtures
 Skins/                       — skin source trees and reference skins
 Reference/                   — Markdown documentation
@@ -30,10 +30,10 @@ Reference/                   — Markdown documentation
 - `action=""` attributes take VDJScript actions. `query=""` takes a boolean/value expression.
 - `&` chains actions in XML attributes and must be written `&amp;` inside XML.
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
-- Working/reference pad pages live in `Pads/*.xml`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`.
+- Working/reference pad pages live in `Pads/*.xml`; copied built-in app-bundle pages live in `Pads/Built-In/`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript verb appendix currently parses to 989 verb/alias names. The local VDJScript reference has 989/989 names present, but some are compact catalog entries rather than fully curated sections.
-- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
+- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 
 ## Preferred patterns (quick version)
 
@@ -54,6 +54,7 @@ Reference/                   — Markdown documentation
 | [Pads/Reference - ColorFX.xml](Pads/Reference%20-%20ColorFX.xml) | Canonical filter + ColorFX selection |
 | [Pads/Reference - Page Aware Sampler.xml](Pads/Reference%20-%20Page%20Aware%20Sampler.xml) | Page-aware sampler labels, colors, actions |
 | [Pads/SAMPLER READ ONLY.xml](Pads/SAMPLER%20READ%20ONLY.xml) | Confirmed read-only multi-page sampler with absolute empty-slot guards |
+| [Pads/Built-In/README.md](Pads/Built-In/README.md) | Copied VirtualDJ app-bundle pad pages; semi-official executable examples |
 | [Pads/COLOR FX.xml](Pads/COLOR%20FX.xml) | ColorFX selection with stems context |
 | [Skins/ModularSkeleton/build/skin.xml](Skins/ModularSkeleton/build/skin.xml) | Minimal modular skin scaffold |
 | [Skins/GraveRaver/src/skin.xml](Skins/GraveRaver/src/skin.xml) | Minimal XInclude build-system demo, not a skin design reference |

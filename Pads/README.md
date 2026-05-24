@@ -1,8 +1,8 @@
 # VirtualDJ Pad Pages
 
-This folder contains local working pad pages and focused reference pages for VirtualDJ.
+This folder contains local working pad pages, focused reference pages, and copied built-in VirtualDJ pad pages.
 
-Use root-level `Reference - *.xml` files when copying a pattern into documentation. Documentation test harnesses live outside this folder in [Test/Pads/](../Test/Pads/).
+Use root-level `Reference - *.xml` files when copying a pattern into documentation. Built-in pages live under [Built-In/](Built-In/) as provenance examples. Documentation test harnesses live outside this folder in [Test/Pads/](../Test/Pads/).
 
 ## Status Labels
 
@@ -10,6 +10,7 @@ Use root-level `Reference - *.xml` files when copying a pattern into documentati
 | --- | --- |
 | Canonical | Preferred copyable reference pattern for docs and new examples. |
 | Working | Installed/local page with useful behavior, but not the first reference source. |
+| Built-in | Copied as-is from VirtualDJ's application bundle; treat as semi-official executable examples, not curated copy/paste patterns. |
 | Legacy | Kept for comparison or migration; do not copy into new examples without retesting. |
 
 ## Reference And Working Pages
@@ -34,6 +35,12 @@ Use root-level `Reference - *.xml` files when copying a pattern into documentati
 | [PLAY 16.xml](PLAY%2016.xml) | `PLAY 16` | Working | Sixteen-pad performance transport and stems page. |
 | [TRANSPORT.xml](TRANSPORT.xml) | `TRANSPORT` | Working | Beat/bar navigation and transport utility page. |
 
+## Built-In Pad Pages
+
+[Built-In/](Built-In/) contains 17 `pads_*.xml` files copied from `/Applications/VirtualDJ.app/Contents/Resources/` on VirtualDJ `8.5.9307` / bundle `18.0.9336`.
+
+Use these as `Built-in pad page` evidence when a shipped page demonstrates a VDJScript idiom, helper verb, pad color/query pattern, or XML surface. They are intentionally kept separate from root-level working/reference pages so Atomix-shipped examples do not get mistaken for curated local recommendations.
+
 ## Maintenance Checklist
 
 - Run `python3 tools/lint_pads.py` after editing pad XML.
@@ -41,4 +48,5 @@ Use root-level `Reference - *.xml` files when copying a pattern into documentati
 - Keep literal `pad_page "..."` targets pointed at page names that exist in this folder.
 - Keep `query=""` attributes read-only where possible. For ColorFX selected-state checks, prefer `filter_label 'name'` instead of selector actions such as `filter_selectcolorfx`.
 - Promote a page to `Canonical` only after it has matching reference notes and either official/source-backed rationale or local VirtualDJ verification.
+- Do not hand-edit files in [Built-In/](Built-In/); refresh them from the app bundle and review diffs when VirtualDJ is updated.
 - Keep test harnesses in [Test/Pads/](../Test/Pads/) unless the page is meant to remain installed as a normal working/reference pad page.

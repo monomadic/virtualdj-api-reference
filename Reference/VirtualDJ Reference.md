@@ -5,6 +5,9 @@ Merged reference for this repo's VirtualDJ notes, examples, and preferred implem
 Last reviewed against live VirtualDJ documentation and forum sources on 2026-04-22.
 Local repo links and example inventory audited on 2026-05-09.
 Remote skin local deployment notes updated on 2026-05-24.
+Stem FX slot forum sources updated on 2026-05-24.
+Variable-scope and device-definition forum sources updated on 2026-05-24.
+Pitch beats-parameter forum source updated on 2026-05-24.
 
 For verb-by-verb API details, use [VDJScript Verbs](VDJScript%20Verbs.md).
 
@@ -20,9 +23,11 @@ This document is the source-backed overview and policy layer above the older spl
 Source labels used below:
 
 - `Official`: current VirtualDJ manual or VDJPedia
-- `Official forum`: post by VirtualDJ staff, Development Manager, CTO, or Support staff
+- `Official forum`: post by VirtualDJ staff, Development Manager, CTO, or Support staff. Treat Adion/CTO posts as high-authority implementation notes for scripting, audio-engine, and feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's press archive confirms Atomix Productions acquired AdionSoft in 2011.
 - `Community`: forum moderators, non-staff forum users, Reddit posts, or other community examples
 - `Published skin`: command or pattern observed in a working public skin
+- `Published pad page`: command or pattern observed in a working public pad page
+- `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle
 - `Local test`: behavior reproduced in VirtualDJ locally
 - `Inference`: conclusion drawn from official docs plus this repo's build setup
 
@@ -42,6 +47,11 @@ Source labels used below:
   Prefer `effect_select <slot>`, `effect_active <slot>`, and `effect_slider <slot> ...`.
   Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
   Source: `Official`
+
+- Stem-specific FX instances:
+  Use named stem FX slots such as `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, or `kick` with the normal `effect_*` verbs when an effect instance should belong to a stem-specific slot. Use `padfx ... 'stemfx:<stem>'` for quick pad effects, and use `effect_stems <stem>` when the normal FX rack should follow a shared stem-routing mode.
+  Why: CTO forum guidance says stem targets can be treated as separate slots for `effect_*` actions, and the official `padfx` docs expose `stemfx:stemname` for pad effects.
+  Source: `Official`, `Official forum`, `Community`, `Local test`
 
 - Vocal/instrumental stem isolation:
   Prefer `stem_pad 'acapella' on` and `stem_pad 'instrumental' on` for button-style isolate pads.
@@ -78,6 +88,16 @@ Source labels used below:
   Why: there is a dedicated verb for the job, and current forum guidance explicitly recommends using it instead of toggling your own skin vars for remain versus elapsed displays.
   Source: `Official`, `Official forum`
 
+- Scripted tempo relationships:
+  Use `pitch <beats>` or compute a BPM-like value, `param_cast 'beats'`, then pass it to the target deck's `pitch`.
+  Why: Adion notes that `pitch` accepts beats parameters to set pitch so it matches a given BPM, and forum examples show `param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch`.
+  Source: `Official forum`, `Community`
+
+- Mapper vs device definition logic:
+  Put VDJScript in mapper `action=""` / `query=""` or `<map action="...">` entries, not in device definition XML.
+  Why: staff guidance says device definitions are only the hardware I/O declaration layer; the mapper defines what VirtualDJ says to the device.
+  Source: `Official forum`
+
 - Pitch reset pad status:
   For pad-page XML that colors a reset-pitch pad by distance from original BPM, use `get_pitch_value & param_bigger 125` / `param_smaller 75` with bare numeric thresholds, not `125%` / `75%`. Put the color thresholds in `color=""` and the blink/on/off state in `query=""`.
   Why: local testing showed percent literals made the red branch match incorrectly, while bare values match the `get_pitch_value` scale where original pitch is `100`.
@@ -108,9 +128,14 @@ Source labels used below:
   Why: local docs can lag behind VirtualDJ's live manual, and users need searchable explanations for aliases and skin idioms they encounter in real skins.
   Source: `Published skin`, `Official`, `Community`, `Inference`
 
+- Built-in pad pages:
+  Use [Pads/Built-In](../Pads/Built-In/) as semi-official executable examples of pad-page XML shipped with VirtualDJ.
+  Why: app-bundle pad pages are stronger evidence than community examples for how Atomix exercises pad helpers, but they still need curation before becoming preferred local patterns.
+  Source: `Built-in pad page`, `Inference`
+
 ## Real Examples In This Repo
 
-For the current pad-page inventory, status labels, and maintenance checklist, see [Pads/README.md](../Pads/README.md). For reproducible documentation fixtures, see [Test/README.md](../Test/README.md).
+For the current pad-page inventory, status labels, built-in page copies, and maintenance checklist, see [Pads/README.md](../Pads/README.md). For reproducible documentation fixtures, see [Test/README.md](../Test/README.md).
 
 Recommended runnable pad-page examples:
 
@@ -128,6 +153,11 @@ Recommended runnable pad-page examples:
 
 - [Reference - Sparse Helper Tests.xml](../Test/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
   Manual-test harness for sparse official helpers such as `connect`, `system`, `open_stem_creator`, `karaoke_venue_name`, and `dualdeckmode_decks`.
+
+Built-in pad-page examples:
+
+- [Built-In/README.md](../Pads/Built-In/README.md)
+  Copied app-bundle `pads_*.xml` pages from VirtualDJ `8.5.9307` / `18.0.9336`; use as `Built-in pad page` evidence rather than curated recommendations.
 
 Skin examples:
 
@@ -497,9 +527,42 @@ Reason:
 
 Source: `Official`, `Official forum`
 
+### VDJScript Variable Scope
+
+Variable prefixes decide scope. Plain variables are deck-local; `$` variables are global; adding `@` makes the variable persistent across VirtualDJ restarts.
+
+```vdjscript
+deck 1 set 'mode' 1
+deck 2 var 'mode' ? action1 : action2
+
+toggle 'MyVar'
+toggle '$MyVar'
+var_equal '$MyVar' 1 ? action1 : action2
+
+set '$controller_shift' 1 while_pressed
+set '@$layout_4deck' 1 & load_skin
+```
+
+Quick guide:
+
+- `name` / `#name`: local to the current deck
+- `%name`: local to a logical deck reference such as `deck left`
+- `$name`: global during the current VirtualDJ session
+- `@name`, `@%name`, `@$name`: persistent variants saved across sessions
+
+For skin-wide or controller-wide state, use `$...` or `@$...`. A plain `set 'mode' 1` can read differently when the script later runs in another deck context. The prefix is part of the variable identity: `MyVar` and `$MyVar` are two different variables, so a global variable must be set, toggled, and queried with the `$` prefix every time.
+
+For init/setup actions that need local deck state, prefer explicit numbered decks:
+
+```vdjscript
+deck 1 set 'var1' 0.5
+```
+
+Source: `Official`, `Official forum`, `Community`
+
 ### Skin Vars For Structural State
 
-Prefer built-in state when VirtualDJ already has it. When the skin truly needs its own layout state, use custom variables such as `@$layout_4deck`, `@$skin_mode`, or `@$show_zoom_racks` and keep their purpose narrow.
+Prefer built-in state when VirtualDJ already has it. When the skin truly needs its own layout state, use persistent global variables such as `@$layout_4deck`, `@$skin_mode`, or `@$show_zoom_racks` and keep their purpose narrow. Plain variables are deck-local and can produce different state depending on the current deck context.
 
 ```vdjscript
 set '@$layout_4deck' 1 & load_skin
@@ -530,6 +593,24 @@ Why:
 - it is easier to debug later
 
 Source: `Inference`
+
+### Pitch Target BPM / Beats Parameters
+
+`pitch` can accept a beats-typed value such as `128bt` to set the deck pitch so it matches that BPM-like target.
+
+```vdjscript
+pitch 128bt
+```
+
+For calculated relationships, compute the target BPM, cast it to `beats`, then feed it to the destination deck's `pitch`:
+
+```vdjscript
+param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch
+```
+
+This is the useful pattern for half/double tempo helpers, 3:4 transitions, and other scripted tempo-ratio moves. Without `param_cast 'beats'`, a computed plain number can be interpreted as a pitch-slider value instead of a target BPM.
+
+Source: `Official forum`, `Community`
 
 ### Pitch Reset Pad With Color and Blink
 
@@ -682,16 +763,49 @@ Source: `Official`, `Official forum`
 
 The official verbs list includes `effect_stems`, `effect_arm_stem`, and `effect_stems_color`.
 
-Use `effect_stems` when you intentionally want FX targeting to follow selected stems.
+There are three related but distinct Stems FX control paths:
+
+- Shared FX-rack stem routing:
+  Use `effect_stems <stem>` when the normal deck FX rack should route to one stem or stem group.
+
+- Named stem FX slots:
+  Use a stem slot name as the first parameter to normal `effect_*` verbs when the effect instance should live in a separate stem-specific slot. Adion's forum guidance gives `rhythm` examples and says `vocals` is separate from numeric slots 1/2/3. Current known named stem FX slots are `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`.
+
+- Pad FX stem targets:
+  Use `padfx ... 'stemfx:<stem>'` for a quick pad effect that applies only to that stem while the other stems continue playing.
+
+Examples:
+
+```vdjscript
+effect_stems 'vocal' & effect_active 1
+
+effect_select 'vocals' 'Reverb'
+effect_active 'vocals'
+effect_slider 'vocals' 1 50%
+effect_slider 'vocals' 'echo' 1 50%
+effect_show_gui 'vocals' 'Reverb'
+
+padfx 'reverb' 75% 'stemfx:vocal'
+```
+
+The naming is easy to trip over: `padfx` uses the singular target string `stemfx:vocal`, while the separate vocal effect slot is documented in forum examples as `vocals`.
+`melovocal` and `melorhythm` may exist as named stem FX slots, but they need local testing before being treated as confirmed.
+
+Observed pad XML selected-state pattern:
+
+```vdjscript
+effect_select 'vocals' 'reverb' ? effect_active 'vocals' : off
+```
 
 Caution:
 
 - Older official forum posts from 2021 reported inconsistencies between regular slot FX and special slots such as `colorfx`.
 - Treat any ColorFX-plus-stems behavior as build-sensitive and test it on the exact VirtualDJ build you use.
+- The full list of named stem FX slot strings is not published in the official appendix. Do not assume aggregate names such as `instrumental` or `acapella` are valid named stem FX slots unless they are tested in the target build.
 
-That caution is intentionally dated because the forum guidance is older than the current manual.
+That first caution is intentionally dated because the forum guidance is older than the current manual.
 
-Source: `Official`, `Official forum`
+Source: `Official`, `Official forum`, `Community`, `Local test`
 
 ### Native Effects
 
@@ -948,20 +1062,33 @@ Official docs:
 - [Skin Default Colors](https://virtualdj.com/wiki/Skin%20Default%20Colors.html)
 - [Skin SDK Visual](https://virtualdj.com/wiki/skinsdkvisual.html)
 - [List of VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html)
+- [VDJScript language overview](https://www.virtualdj.com/wiki/vdjscript.html)
 - [List of Options](https://www.virtualdj.com/manuals/virtualdj/appendix/optionslist/)
 - [List of Native Effects](https://www.virtualdj.com/manuals/virtualdj/appendix/nativeeffects/)
 - [Pads manual](https://www.virtualdj.com/manuals/virtualdj/interface/decks/decksadvanced/pads.html)
 - [Sampler manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html)
+- [Atomix Productions acquires AdionSoft](https://www.virtualdj.com/press/adionsoft.html)
 
 Official forum guidance cited for method choices:
 
 - [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)
 - [effect_colorfx & effect_stems_color ?](https://www.virtualdj.com/forums/241078/VirtualDJ_Technical_Support/effect_colorfx___effect_stems_color__.html)
+- [BUILD 7403 - Multiple stems fx can be used at the same time?](https://virtualdj.com/forums/250499/VirtualDJ_Technical_Support/BUILD_7403_____-Multiple_stems_fx_can_be_used_at_the_same_time__.html)
 - [Default filter and color fx filter](https://virtualdj.com/forums/252675/VirtualDJ_Technical_Support/Default_filter_and_color_fx_filter.html)
 - [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
 - [Virtual Dj 2025 Sampler Sync](https://www.virtualdj.com/forums/265522/VirtualDJ_Technical_Support/Virtual_Dj_2025_Sampler_Sync.html)
 - [No longer possible to access 16 samples from controllers with 8 x 2 pads?](https://www.virtualdj.com/forums/261416/VirtualDJ_Technical_Support/No_longer_possible_to_access_16_samples_from_controllers_with_8_x_2_pads_.html)
 - [Aditional xml for Skins](https://virtualdj.com/forums/248589/Wishes_and_new_features/Aditional_xml_for_Skins.html)
+- [XML Variables in Skin and Database](https://virtualdj.com/forums/230097/VirtualDJ_Technical_Support/XML_Variables_in_Skin_and_Database.html)
+- [Sending MIDI CC Commands](https://virtualdj.com/forums/249829/VirtualDJ_Technical_Support/Sending_MIDI_CC_Commands.html)
+- [Script/Param/Variable Maths](https://virtualdj.com/forums/251658/General_Discussion/Script_Param_Variable_Maths.html)
+
+Community forum examples cited for method choices:
+
+- [How to map specific Fx?](https://virtualdj.com/forums/259342/VirtualDJ_Technical_Support/How_to_map_specific_Fx%3F.html)
+- [ONE EFFECT ON ONE STEM ON A CONTROLLER](https://virtualdj.com/forums/261226/VirtualDJ_Skins/ONE_EFFECT_ON_ONE_STEM_ON_A_CONTROLLER.html)
+- [Legacy Echo's Name?](https://virtualdj.com/forums/266350/VirtualDJ_Technical_Support/Legacy_Echo%27s_Name%3F.html)
+- [set local variable on init](https://www.virtualdj.com/forums/258819/General_Discussion/set_local_variable_on_init.html)
 
 Repo examples:
 

@@ -15,7 +15,7 @@ VirtualDJ provides multiple independent effect engines that serve different purp
 | **Deck FX**   | Standard deck effects               | FX panel per deck         | 3-6 slots per deck        |
 | **Master FX** | Global effects on master output     | Master panel              | 3-6 slots                 |
 | **Video FX**  | Video effects and transitions       | Video panel               | Multiple slots            |
-| **Stems FX**  | Effects applied to individual stems | Via Stems pads or FX menu | Uses deck FX slots        |
+| **Stems FX**  | Effects applied to individual stems | Stems pads, Pad FX, named stem slots | Shared routing plus stem-specific slots |
 | **Pad FX**    | Quick-trigger effects with presets  | Pads pages                | Temporary effect triggers |
 
 ---
@@ -500,9 +500,13 @@ Effects applied to **individual stems** (Vocal, Melody, Bass, Drums, etc.) rathe
 
 ### How Stems FX Works
 
-1. **Enable Stems FX mode** - Tells VirtualDJ which stem(s) to apply effects to
-2. **Activate effects** - Normal deck effects will now only affect selected stems
-3. **Result** - Effect processes only the selected stem(s), rest plays clean
+VirtualDJ exposes three related Stems FX patterns:
+
+1. **Shared FX-rack routing** - `effect_stems <stem>` tells the normal deck FX rack which stem(s) to process.
+2. **Named stem FX slots** - stem names such as `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick` can be used as slot targets for `effect_*` actions, separate from numeric slots 1/2/3.
+3. **Pad FX stem targets** - `padfx ... 'stemfx:<stem>'` triggers a pad effect on a stem without changing the normal rack routing.
+
+The named slot model is easy to miss. In official forum guidance, Adion described `vocals` as its own slot, separate from slots 1/2/3, and usable with the broader `effect_*` action family.
 
 ### Stem Selection Options
 
@@ -516,7 +520,7 @@ Effects applied to **individual stems** (Vocal, Melody, Bass, Drums, etc.) rathe
 
 ### VDJScript Commands
 
-**Enable Stems FX mode:**
+**Shared FX-rack routing:**
 
 ```
 effect_stems 'vocal'            # Apply effects to vocals only
@@ -537,6 +541,34 @@ effect_stems ? action_if_active : action_if_not_active
 ```
 effect_stems 'vocal' & effect_active 1 'echo'
 ```
+
+**Named stem FX slots:**
+
+```
+effect_select 'vocals' 'Reverb'     # Load Reverb into the vocal stem FX slot
+effect_active 'vocals'              # Toggle the vocal stem FX slot
+effect_slider 'vocals' 1 50%        # Move parameter 1 for the vocal stem FX slot
+effect_slider 'vocals' 'echo' 1 50% # Move Echo param 1 in the vocal slot
+effect_show_gui 'vocals' 'Reverb'   # Show the vocal Reverb GUI
+effect_show_gui 'rhythm' 'Beat Grid'
+```
+
+`vocals` is plural in the stem-slot examples. This differs from the `effect_stems 'vocal'` and `padfx ... 'stemfx:vocal'` target strings.
+Current known named stem FX slots are `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`. `melovocal` and `melorhythm` may exist, but need local testing before they are treated as confirmed. Do not assume aggregate names such as `instrumental` or `acapella` are valid named stem FX slots unless tested.
+
+Pad XML selected-state pattern:
+
+```xml
+<pad name="REVERB - Vocals"
+     color="stem_color 'vocal'"
+     query="effect_select 'vocals' 'reverb' ? effect_active 'vocals' : off">
+  effect_select 'vocals' 'Reverb' &amp; effect_active 'vocals'
+</pad>
+```
+
+Unlike the normal numeric-slot reference examples, this uses `effect_select <stem-slot> <effect-name>` as the selected-effect check because that is the observed working stem-slot pad pattern.
+
+The full list of accepted named stem FX slots is not published in the official appendix, so keep new target strings tied to local tests or forum evidence.
 
 ### Stems FX from GUI
 
@@ -588,8 +620,17 @@ effect_active 'beatgrid'
 
 - **Pre-fader recommended**: Stems FX works best with `fxProcessing` set to `pre-fader`
 - **Some hardware incompatible**: Controllers with hardware FX sends may not support Stems FX properly
-- **ColorFX limitation**: ColorFX does not support Stems FX (applies to full track)
+- **ColorFX/stems behavior**: Older forum guidance and local findings have been build-sensitive; test exact ColorFX-plus-stems behavior before relying on it
 - **Reset options**: Use `resetStemsOnLoad` and `resetFXOnLoad` options to auto-reset
+- **Slot spelling**: The vocal named stem FX slot is `vocals`, while the official `padfx` target is `stemfx:vocal`
+- **Aggregate names**: `melovocal` and `melorhythm` may exist as named stem FX slots, but need testing; `instrumental` and `acapella` are useful stem concepts but are not confirmed as named stem FX slots
+
+### Source Status
+
+- `Official`: VDJScript appendix documents `effect_stems`, `effect_arm_stem`, and `padfx ... 'stemfx:stemname'`.
+- `Official forum`: Adion documented `effect_show_gui "rhythm" "Beat Grid"` and said the same syntax can be used with other `effect_*` actions; he also described `vocals` as a separate effect slot.
+- `Community`: moderator examples use `effect_show_gui vocals echo & padfx echo 'stemfx:vocal'` to inspect a vocal padfx mapping.
+- `Local test`: vocal Reverb pad pattern with `effect_select 'vocals' 'reverb' ? effect_active 'vocals'`; current named slot list in local notes is `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`.
 
 ---
 
@@ -627,7 +668,19 @@ padfx_single 'echo out' 80% 1bt
 ```
 padfx 'echo' 50% 1bt 'stemfx:vocal'
 padfx 'reverb' 75% 'stemfx:melorhythm'
+padfx 'echo out' 85% 70% 62.5% 20% 'stemfx:vocal'
+padfx 'echo out' 80% 1bt 25% 75% 'stemfx:vocal'
 ```
+
+Official `padfx` stem modifiers:
+
+```
+padfx 'echo out' 80% 'solostem:vocal'   # Only let vocal be audible during the effect
+padfx 'echo out' 'mutestem:rhythm'      # Mute rhythm during the effect
+padfx 'reverb' 'stemfx:vocal'           # Apply effect only to vocal
+```
+
+Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`. Existing local pad pages normally use lowercase strings.
 
 **Full Pad FX syntax:**
 
@@ -682,9 +735,11 @@ var 'padfx_active' ? visual_feedback_on : visual_feedback_off
 
 ```
 effect_show_gui 'stemname' 'effectname'
-effect_show_gui 'vocal' 'echo'
+effect_show_gui 'vocals' 'echo'
 effect_show_gui 'rhythm' 'beatgrid'
 ```
+
+For GUI calls, source examples use the stem-slot style (`vocals`) rather than the `padfx` modifier style (`stemfx:vocal`).
 
 ### Practical Usage
 
@@ -1131,6 +1186,7 @@ repeat_stop 'auto_filter'
 ```
 # SELECTION
 effect_select 1 'echo'              # Select effect for slot 1
+effect_select 'vocals' 'reverb'     # Select effect for vocal stem FX slot
 effect_select 'colorfx' 'filter'    # Select ColorFX
 filter_selectcolorfx 'echo'         # Select ColorFX (alternative)
 effect_mixfx_select 'echo'          # Select Mix FX
@@ -1139,12 +1195,14 @@ effect_mixfx_select 'echo'          # Select Mix FX
 effect_active 1                     # Toggle slot 1
 effect_active 1 on                  # Turn on slot 1
 effect_active 'echo'                # Shortcut: toggle Echo by name
+effect_active 'vocals'              # Toggle vocal stem FX slot
 effect_active 'colorfx'             # Toggle ColorFX
 effect_mixfx_activate               # Toggle Mix FX
 
 # PARAMETERS
 effect_slider 1 1 50%               # Slot 1, param 1 = 50%
 effect_slider 1 2 1bt               # Slot 1, param 2 = 1 beat
+effect_slider 'vocals' 1 50%        # Vocal stem FX slot, param 1 = 50%
 effect_slider 'echo' 1 75%          # Shortcut: Echo param 1 by name
 filter 50%                          # ColorFX/filter = 50%
 
@@ -1155,12 +1213,13 @@ effect_button 'echo' 2              # Press button 2 on Echo
 # GUI
 effect_show_gui 1                   # Show GUI for slot 1
 effect_show_gui 'colorfx'           # Show ColorFX GUI
-effect_show_gui 'vocal' 'echo'      # Show stems FX GUI
+effect_show_gui 'vocals' 'echo'     # Show stems FX GUI
 
 # STEMS FX
 effect_stems 'vocal'                # Apply to vocals
 effect_stems 'melorhythm'           # Apply to instruments
 effect_stems off                    # Disable stems FX
+effect_select 'vocals' 'reverb'     # Load Reverb in the vocal stem FX slot
 
 # PAD FX
 padfx 'echo' 50% 1bt                # Trigger echo

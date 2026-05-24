@@ -23,10 +23,10 @@ Start here:
   Focused notes on VirtualDJ 2026 AI lyric detection, skin styling limits, lyric queries, filters, and forum-observed quirks.
 
 - [Mapper XML](Mapper%20XML.md)
-  Controller and keyboard mapper file format: `<button>`, `<slider>`, `<knob>`, shift layers, LED feedback, and the relationship to pad pages.
+  Controller and keyboard mapper file format: `<map>`, `<button>`, `<slider>`, `<knob>`, shift layers, LED feedback, device-definition boundaries, and the relationship to pad pages.
 
 - [Pad Page Inventory](../Pads/README.md)
-  Current `Pads/*.xml` status labels, canonical examples, and maintenance checklist.
+  Current `Pads/*.xml` status labels, canonical examples, built-in pad-page copies, and maintenance checklist.
 
 - [Documentation Tests](../Test/README.md)
   Reproducible local test harnesses used to support reference claims.
@@ -51,10 +51,11 @@ Current status:
 
 Source labels used in the curated docs:
 
-- `Official`
-- `Official forum`
-- `Community`
-- `Published skin`
-- `Published pad page`
-- `Local test`
-- `Inference`
+- `Official`: current VirtualDJ manual or VDJPedia.
+- `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff forum guidance. Treat Adion/CTO replies as high-authority implementation notes when they answer scripting, audio-engine, or feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's own press archive confirms Atomix Productions acquired AdionSoft in 2011.
+- `Community`: forum moderators, non-staff forum users, Reddit posts, or other community examples.
+- `Published skin`: command or pattern observed in a working public skin.
+- `Published pad page`: command or pattern observed in a working public pad page.
+- `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle.
+- `Local test`: behavior reproduced in VirtualDJ locally.
+- `Inference`: conclusion drawn from official docs plus repo testing or architecture.
