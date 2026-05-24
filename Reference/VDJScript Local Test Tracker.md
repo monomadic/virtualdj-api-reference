@@ -10,16 +10,68 @@ Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs a
 
 - `Untested` means behavior has not been observed in VirtualDJ locally, even if the verb is official.
 - `Pass` means a specific VirtualDJ build, hardware/context, action, and observed result were recorded.
-- `connect` has local skin evidence: [official Lite](../examples/skins/official/Lite.xml) uses `<button action="connect">`. Published-skin query evidence should be recaptured before treating `connect` as a stable boolean; keep the tracker row open until logged-in/logged-out behavior is recorded.
-- `system` and `open_stem_creator` are official names, but the current public appendix gives no useful behavior prose for them. Do not infer `system` behavior from unrelated parameter values such as `get_vu_meter 'system'` or from `system_volume`.
+- `connect` has local skin evidence: [official Lite](../examples/skins/official/Lite.xml) uses `<button action="connect">`. Local testing on VirtualDJ `v2026-m b9336` confirmed action/query behavior for logged-in and logged-out states.
+- `karaoke_venue_name` was locally tested on VirtualDJ `v2026-m b9336`; it returns blank when the karaoke venue name is empty and updates to the configured venue name from the Karaoke > Venue Name dialog.
+- `system` was locally tested on VirtualDJ `v2026-m b9336`; in the sparse helper pad context it returned blank text and pressing it produced no visible UI or log result. This is still too sparse to promote beyond a conservative note. Do not infer `system` behavior from unrelated parameter values such as `get_vu_meter 'system'` or from `system_volume`.
+- `open_stem_creator` was locally tested on VirtualDJ `v2026-m b9336`; pressing it opened the Stem Creator dialog. Treat it as a workflow opener, not a selected-track automation helper.
 - `dualdeckmode_decks` is tied to `dualdeckmode` official prose for deck pairs 1/3 and 2/4, but the helper itself still needs an observed deck-context result.
 - Controller-display, Phase, RZX, DJC, V7, Gemini, and Denon rows are hardware-dependent; keep them `Untested` unless the named target device or an equivalent controller mapping environment was used.
 
 Suggested test order:
 
-1. No dedicated hardware: `connect`, `system`, `open_stem_creator`, `karaoke_venue_name` using [Reference - Sparse Helper Tests.xml](../Test/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
+1. Optional no-hardware follow-up: revisit `system` only if official examples or harmless parameters are found.
 2. Optional controller/deck setup: `dualdeckmode_decks`
 3. Hardware-only batches: controller displays, Phase, RZX, DJC, V7, Gemini, Denon
+
+## Test Run Template
+
+Before changing a row result from `Untested`, capture enough context to reproduce it:
+
+```text
+Date:
+VirtualDJ build:
+Test asset:
+Account/deck/hardware state:
+Steps:
+Observed result:
+Tracker rows updated:
+Follow-up:
+```
+
+## Test Run Log
+
+```text
+Date: 2026-05-23
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Sparse Helper Tests.xml; shown in VirtualDJ as "Reference - Sparse Helper Tests"
+Account/deck/hardware state: tested logged in and logged out; no dedicated hardware
+Steps: load the sparse helper pad page, observe Pad 1, press Pad 1 while logged in, log out, observe Pad 1 again, press Pad 1 while logged out
+Observed result: logged in shows green "CONNECT: on"; pressing opens a small menu with "Log out". Logged out shows red "CONNECT: off"; pressing opens the VirtualDJ CONNECT login dialog.
+Tracker rows updated: connect
+Follow-up: none for basic action/query behavior
+```
+
+```text
+Date: 2026-05-23
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Sparse Helper Tests.xml; shown in VirtualDJ as "Reference - Sparse Helper Tests"
+Account/deck/hardware state: no dedicated hardware
+Steps: observe the purple KARAOKE pad with no venue set, press it to open the Karaoke menu, choose Venue Name, set a venue value, observe the pad label, clear the venue value, observe the pad label again
+Observed result: empty venue shows "KARAOKE:" with no value. Pressing the pad opens the Karaoke menu with Venue Name. Setting the venue updates the pad label to include the configured venue name. Clearing the venue returns the label to "KARAOKE:".
+Tracker rows updated: karaoke_venue_name
+Follow-up: none for venue-name query and empty-state behavior
+```
+
+```text
+Date: 2026-05-24
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Sparse Helper Tests.xml; shown in VirtualDJ as "Reference - Sparse Helper Tests"
+Account/deck/hardware state: logged in; no dedicated hardware; tested with a browser track selected and with an empty browser result set
+Steps: load the sparse helper pad page, observe Pad 3, press Pad 3, press Pad 4 with a browser track selected, close the opened dialog, filter the browser to 0 files, press Pad 4 again, close the dialog, then clear the browser filter
+Observed result: Pad 3 showed "SYSTEM:" with no returned value from `system`; pressing it produced no visible UI change and no new Log Report entry. Pad 4 `open_stem_creator` opened the Stem Creator dialog with Bass, Kick (Drums), HiHat (Optional), Vocals (Optional), Instruments, Instru2 (Optional), Output, Headroom set to 6dB, and Create controls. The selected browser track was not auto-filled into the dialog. With 0 browser results, the same blank dialog opened. No export/create action was attempted.
+Tracker rows updated: system, open_stem_creator
+Follow-up: `system` remains too sparse to promote beyond the blank/no-visible-effect observation; `open_stem_creator` still needs separate testing for full stem-file creation, file-picker behavior, and license/build gating.
+```
 
 ## Sampler
 
@@ -60,9 +112,9 @@ Suggested test order:
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `connect` | Official skins use it, but action/query behavior varies by account connection state. | Skin button, custom button, config/account UI. | Test logged out and logged in: run `connect`, then display/query `` `connect` `` if accepted; record opened UI and returned state. | TBD | None required | Untested | Official Lite action evidence; published-skin query evidence needs recapture. |
-| `system` | Sparse official system helper; parameters and return behavior are unclear. | Custom button, skin query/text, possible system integration context. | Run `system` with no parameter in a custom button; then try a harmless known/obvious parameter only if official examples are found; record UI/log output. | TBD | None required | Untested | Official name only; do not infer from `system_volume` or system VU labels. |
-| `open_stem_creator` | Opens a workflow that may depend on license/build/stem features. | Skin/custom button, config/workflow action. | Run `open_stem_creator` with a track selected and with no track selected; note opened window, gating, and any error/status message. | TBD | None required | Untested | Official name only; likely build/license/selection dependent. |
+| `connect` | Official skins use it, but action/query behavior varies by account connection state. | Skin button, custom button, config/account UI. | Test logged out and logged in: run `connect`, then display/query `` `connect` `` if accepted; record opened UI and returned state. | v2026-m b9336 | None required | Pass | Logged in: green `CONNECT: on`; pressing opens menu with `Log out`. Logged out: red `CONNECT: off`; pressing opens CONNECT login dialog. |
+| `system` | Sparse official system helper; parameters and return behavior are unclear. | Custom button, skin query/text, possible system integration context. | Run `system` with no parameter in a custom button; then try a harmless known/obvious parameter only if official examples are found; record UI/log output. | v2026-m b9336 | None required | Partial | In the sparse helper pad context, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Still too sparse to promote beyond a conservative note; do not infer from `system_volume` or system VU labels. |
+| `open_stem_creator` | Opens a workflow that may depend on license/build/stem features. | Skin/custom button, config/workflow action. | Run `open_stem_creator` with a track selected and with no track selected; note opened window, gating, and any error/status message. | v2026-m b9336 | None required | Pass | Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested. |
 
 ## Deck And Mode Helpers
 
@@ -74,4 +126,4 @@ Suggested test order:
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `karaoke_venue_name` | Sparse karaoke helper; source of value and empty-state behavior need confirmation. | Karaoke skin text/query, karaoke options/config. | Set/clear the venue name in karaoke options, display `` `karaoke_venue_name` ``, and record value, fallback text, and whether changes update live. | TBD | None required | Untested | Official name only; needs karaoke option/value observation. |
+| `karaoke_venue_name` | Sparse karaoke helper; source of value and empty-state behavior need confirmation. | Karaoke skin text/query, karaoke options/config. | Set/clear the venue name in karaoke options, display `` `karaoke_venue_name` ``, and record value, fallback text, and whether changes update live. | v2026-m b9336 | None required | Pass | Empty venue returns blank after `KARAOKE:`. Pressing the pad opens the Karaoke menu; Venue Name dialog sets the value; clearing the venue returns to blank. |

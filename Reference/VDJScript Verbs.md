@@ -622,12 +622,14 @@ skin_panelgroup 'rack' 0.75
 Preferred usage:
 
 - use when the user is deliberately switching between remembered panel modes
+- for tab/view buttons, pair the action with `query="skin_panel '<panel-name>' on"` so the active tab can render selected
 - use `skin_panelgroup_available` to keep unavailable panels out of cycles
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: Skin SDK panel documentation
+- `Local test`: Remote skin main-view buttons used `skin_panelgroup` with `skin_panel ... on` queries for selected state
 
 ### `lock_panel`
 
@@ -4722,7 +4724,8 @@ The sections below remain useful as a wide local inventory. They are still being
 
 - `debug` is mainly useful while developing mappings because it displays the parameter value a controller or script path is sending.
 - `handshake` is for plugin developers. Pass a string, then verify the encrypted response using VirtualDJ's public key before trusting that the caller is a real VirtualDJ environment.
-- `system` is official but currently has sparse public prose; keep usage behind local testing.
+- `system` is official but remains sparse. Local test on VirtualDJ `v2026-m b9336`: in the sparse-helper pad page, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Keep it as a conservative catalog entry unless an official example or harmless parameter is found.
+- Do not infer `system` semantics from unrelated helpers such as `system_volume`, `has_system_volume`, or system-labeled meter values.
 
 ## Variables
 
@@ -4770,7 +4773,8 @@ set '@$layout_4deck' 1 & load_skin
 
 Window/workflow note:
 
-- `open_stem_creator` is official but sparse in public prose. Track observed build/license/selection behavior in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before treating it as a polished skin workflow control.
+- `open_stem_creator` opens VirtualDJ's Stem Creator dialog. Local test on VirtualDJ `v2026-m b9336`: pressing it from the sparse-helper pad page opened a dialog with Bass, Kick (Drums), HiHat (Optional), Vocals (Optional), Instruments, Instru2 (Optional), Output, Headroom, and Create controls.
+- A selected browser track was not auto-filled into that dialog during the local test, and filtering the browser to 0 files opened the same blank dialog. Treat `open_stem_creator` as a workflow opener, not selected-track automation; full stem-file creation/export and license/build gating still need separate testing.
 
 ## Audio Playback
 
@@ -5242,6 +5246,10 @@ eq_crossfader_low 50%
 | `get_next_karaoke_song` | Get upcoming track info | `get_next_karaoke_song "singer" +1` |
 | `is_karaoke_idle`       | Karaoke idle check      | `is_karaoke_idle`                   |
 | `is_karaoke_playing`    | Karaoke playing check   | `is_karaoke_playing`                |
+
+### Karaoke Notes
+
+- `karaoke_venue_name` returns the venue name configured from Karaoke > Venue Name. Local test on VirtualDJ `v2026-m b9336`: empty venue returns blank; setting a venue updates the label/value; clearing it returns to blank.
 
 ## Key & Pitch
 
@@ -5844,8 +5852,8 @@ OS2L source note:
 - `auto_pitch_lock` ties into matched-BPM workflows: when enabled, pitch lock engages when BPMs are matched so moving one pitch slider moves the other to keep the match.
 - `play_mode` controls play/stop/cue behavior families such as `numark` and `pioneer`.
 - `saveregistryconfig` is the official alias of `save_config`.
-- Official skins use `connect` as an account/connect button; published skins also query `connect` to show account connection state. Behavior is sparse enough to keep in local-test notes.
-- Record logged-in/logged-out `connect` behavior in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before relying on it as a stable boolean in new skins.
+- `connect` works as both an account/connect action and a login-state query. Local test on VirtualDJ `v2026-m b9336`: logged in returns on/green and opens a small menu with `Log out`; logged out returns off/red and opens the CONNECT login dialog.
+- Official skins use `connect` as an account/connect button; keep skin usage account-state aware so logged-in and logged-out users get sensible behavior.
 
 ## Timecode
 

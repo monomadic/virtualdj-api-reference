@@ -49,7 +49,7 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- VDJScript reference has names-only parity with the official appendix: 989/989 official verb/alias names are present. Some entries remain compact catalog coverage awaiting curated examples, notes, and local tests.
+- VDJScript reference has official-name parity with the appendix: 989/989 official verb/alias names are present, missing names are 0, and the compact official remainder is empty. The remaining formal gap is local verification for 19 sparse or hardware-specific official names; the no-hardware sparse-helper pass is recorded, with `system` still intentionally conservative.
 - Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
 - Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 

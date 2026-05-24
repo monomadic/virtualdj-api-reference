@@ -4,6 +4,7 @@ Merged reference for this repo's VirtualDJ notes, examples, and preferred implem
 
 Last reviewed against live VirtualDJ documentation and forum sources on 2026-04-22.
 Local repo links and example inventory audited on 2026-05-09.
+Remote skin local deployment notes updated on 2026-05-24.
 
 For verb-by-verb API details, use [VDJScript Verbs](VDJScript%20Verbs.md).
 
@@ -91,6 +92,16 @@ Source labels used below:
   Prefer build-time includes that flatten to one installed `skin.xml`.
   Why: the official SDK still describes skins as a flat package, while extra XML includes remain a forum wish rather than an official runtime feature. This repo already uses `xmllint --xinclude` to flatten modules before install.
   Source: `Official`, `Inference`
+
+- Remote skin development:
+  Install custom Remote skins under `~/Library/Application Support/VirtualDJ/RemoteSkins`, and select them from Settings -> Interface -> Phone/tablet remote.
+  Why: local testing confirmed the Interface tab is the local Remote skin selector; Settings -> Extensions is the online add-on catalog and can make a correctly deployed local skin look "missing."
+  Source: `Official forum`, `Local test`, `Inference`
+
+- Skin view tabs:
+  Use a named panel group plus `skin_panelgroup` for manually selected skin views; drive selected button state with `query="skin_panel '<panel-name>' on"`.
+  Why: this uses the SDK's persistent panel mechanism directly and worked locally for Remote views such as decks, browser, pads, and waveforms.
+  Source: `Official`, `Local test`
 
 - Published skin findings:
   Preserve unfamiliar commands from working public skins in [Published Skin Findings](Published%20Skin%20Findings.md), then reconcile them against live official docs, forum context, and local tests.

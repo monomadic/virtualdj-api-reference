@@ -2,7 +2,8 @@
 
 Low-level reference for VirtualDJ's macOS application layout, user data, database files, stem sidecars, and practical open-source tooling.
 
-Last reviewed against local files and live VirtualDJ sources on 2026-05-01 (Asia/Manila).
+Last reviewed against local files and live VirtualDJ sources on 2026-05-23 (Asia/Manila).
+Remote skin deployment and selector behavior updated from local testing on 2026-05-24 (Asia/Manila).
 
 ## Scope
 
@@ -41,6 +42,8 @@ macOS paths to know first:
 | `~/Library/Application Support/VirtualDJ/Pads` | User pad pages. | `Local observation` |
 | `~/Library/Application Support/VirtualDJ/Mappers` | User controller and keyboard mappings. | `Local observation` |
 | `~/Library/Application Support/VirtualDJ/Skins` | Installed user skins. | `Local observation` |
+| `~/Library/Application Support/VirtualDJ/RemoteSkins` | Installed VirtualDJ Remote skins. | `Official forum`, `Local observation` |
+| `~/Library/Application Support/VirtualDJ/VideoSkins` | Installed video skins. | `Local observation` |
 | `~/Library/Application Support/VirtualDJ/Plugins64` | Intel/x86_64 plugin files and settings. | `Local observation` |
 | `~/Library/Application Support/VirtualDJ/PluginsMacArm` | Apple Silicon plugin files and settings. | `Local observation` |
 | `~/Library/Application Support/VirtualDJ/MyLists` | VirtualDJ 2024+ XML lists. | `Official`, `Local observation` |
@@ -88,6 +91,176 @@ Typical results include:
 - default sampler banks such as `AUDIO FX.xml`, `FAMOUS.xml`, and `INSTRUMENTS.xml`
 
 Do not edit these bundled files in place. Put overrides or custom work under the VirtualDJ home folder.
+
+## Skin Deployment
+
+VirtualDJ interface packages are user data. Keep custom and installed skins under the VirtualDJ home folder, not inside the signed application bundle.
+
+Observed deployment folders on this macOS install:
+
+| Package type | Folder | Observed package forms | Notes |
+| --- | --- | --- | --- |
+| Desktop skin | `~/Library/Application Support/VirtualDJ/Skins` | `.zip` packages and uncompressed folders | Official extension installs can be done from Settings -> Extensions. Local development can use an uncompressed folder for faster edit/test cycles. |
+| Remote skin | `~/Library/Application Support/VirtualDJ/RemoteSkins` | `.zip` packages and uncompressed folders | Staff forum guidance says to place the skin as a zip file inside `RemoteSkins`; uncompressed folders were also observed locally. |
+| Video skin | `~/Library/Application Support/VirtualDJ/VideoSkins` | Not mapped yet | Folder observed locally; package details still need a focused pass. |
+
+The app bundle also contains default packages that are useful for inspection:
+
+```sh
+ls -1 /Applications/VirtualDJ.app/Contents/Resources/*skin*.zip
+```
+
+Typical bundled packages include:
+
+- `skin.zip`
+- `remoteskin.zip`
+- `videoskinbroadcast.zip`
+- `videoskinkaraoke.zip`
+- `videoskinlive.zip`
+
+Treat those as read-only references. Copy them out before inspecting or modifying:
+
+```sh
+work="$HOME/Desktop/vdj-skin-inspect"
+mkdir -p "$work"
+cp /Applications/VirtualDJ.app/Contents/Resources/remoteskin.zip "$work/"
+(cd "$work" && unzip remoteskin.zip -d remoteskin)
+```
+
+### Desktop Skins
+
+For normal desktop skins, this repo prefers a source/build split:
+
+- keep editable source under the repo, often split into modules
+- flatten includes at build time
+- install only the flat `skin.xml` plus required image/assets
+
+Example install shape:
+
+```sh
+VDJ_HOME="$HOME/Library/Application Support/VirtualDJ"
+skin_name="ModularSkeleton"
+
+xmllint --xinclude --output build/skin.xml src/skin.xml
+mkdir -p "$VDJ_HOME/Skins/$skin_name"
+rsync -a --delete build/ "$VDJ_HOME/Skins/$skin_name/"
+```
+
+Zip-package variant:
+
+```sh
+VDJ_HOME="$HOME/Library/Application Support/VirtualDJ"
+skin_name="My Skin"
+
+(cd build && zip -r "../$skin_name.zip" .)
+cp "$skin_name.zip" "$VDJ_HOME/Skins/"
+```
+
+After installation, select the skin from Settings -> Interface. Official add-on installs use Settings -> Extensions, then the relevant software section; for skins, that is the Interface tab.
+
+Development tip: when a skin variable controls structural XML such as conditional layout branches, conditional defines, or `<nbdecks>` choices, pair the state change with `load_skin` so VirtualDJ reparses the skin. For simple live `visibility=""` changes, a reload is usually unnecessary.
+
+Source: `Official`, `Local observation`, `Inference`
+
+### Remote Skins
+
+VirtualDJ Remote is the iOS/Android companion app. Official product text describes the Remote as skinnable and using the same skin format as VirtualDJ. Staff forum notes add the practical caveats:
+
+- There is no separate hidden Remote skin SDK.
+- The default Remote skin and forum examples are the main references.
+- Remote skins share the same general structure and elements as desktop skins.
+- Desktop skins usually cannot be dropped in unchanged; expect to recode the layout and device-specific behavior.
+- Remote 8 can load v7 Remote skins, but older skins may need updates for the Remote browser.
+- Use `action="browser"` to open the Remote browser.
+- Remote skins are scaled proportionally to the device screen, with side bars as needed.
+- Avoid video preview windows in Remote skins.
+- Staff guidance says to place custom Remote skins as zip files inside `RemoteSkins`.
+- Locally installed Remote skins are selected from Settings -> Interface -> Phone/tablet remote. Settings -> Extensions is the online add-on catalog and does not list every local Remote skin folder/zip.
+
+Remote skin packages can contain multiple XML variants for different device classes, aspect ratios, and orientations. This is not just a third-party habit: the bundled VirtualDJ Remote skin package in `/Applications/VirtualDJ.app/Contents/Resources/remoteskin.zip` contains root-level files such as:
+
+```text
+16x10T.xml
+16x9P.xml
+16x9T.xml
+19x9P.xml
+3x4T.xml
+4x3T.xml
+9x16P.xml
+9x16T.xml
+9x19P.xml
+```
+
+The XML roots identify the intended layout, for example:
+
+```xml
+<skin name="Remote Landscape (Phone 16:9)" version="8" width="1920" height="1080" nbdecks="2" image="tablet.png" preview="landscape.png">
+<skin name="Remote Portrait (Tablet 9:16)" version="8" width="830" height="1476" nbdecks="2" image="tablet.png" preview="portrait.png">
+```
+
+Observed naming convention:
+
+- `P` means phone-targeted layout.
+- `T` means tablet-targeted layout.
+- The numeric part names the target aspect/orientation class, not necessarily a literal canvas size.
+- Older Remote 8 Default packages used names such as `skinP169.xml`, `skinP32.xml`, `skinT1610.xml`, and `skinT43.xml`.
+
+This suggests two valid packaging styles:
+
+- A simple package with one `skin.xml`, letting Remote scale it proportionally and add black bars if needed.
+- A multi-variant package with several root-level XML layouts and shared assets, letting VirtualDJ/Remote choose or expose the better layout for the connected device class.
+
+Some downloaded Remote add-ons also act as containers for multiple nested Remote-skin zips. In that case, extract the inner zip files into `RemoteSkins` before selecting them in VirtualDJ.
+
+For local development, this machine successfully used both installed forms at once: an expanded folder at `RemoteSkins/<Remote Name>/` for fast inspection and a sibling `RemoteSkins/<Remote Name>.zip` for the staff-recommended package form. A compatibility-oriented package can include root-level files such as `skin.xml`/`skin.png` plus tablet aliases such as `skinT1610.xml`, `16x10T.xml`, and `4x3T.xml`. Some locally observed tooling also creates a wrapped top-level folder in the zip, so checking `unzip -l` matters before assuming one package shape.
+
+Basic Remote skin deployment:
+
+```sh
+VDJ_HOME="$HOME/Library/Application Support/VirtualDJ"
+remote_name="My Remote Skin"
+
+xmllint --noout build/skin.xml
+(cd build && zip -r "../$remote_name.zip" .)
+mkdir -p "$VDJ_HOME/RemoteSkins"
+cp "$remote_name.zip" "$VDJ_HOME/RemoteSkins/"
+mkdir -p "$VDJ_HOME/RemoteSkins/$remote_name"
+rsync -a --delete build/ "$VDJ_HOME/RemoteSkins/$remote_name/"
+```
+
+Connection setup is separate from skin deployment. The official manual flow is:
+
+1. Put the mobile device on the same Wi-Fi network as the VirtualDJ computer.
+2. Open the VirtualDJ Remote app.
+3. In VirtualDJ, open Settings -> Controllers -> Phone/Tablet.
+4. Select and connect/authorize the Remote device.
+
+Source: `Official`, `Official forum`, `Local observation`, `Inference`
+
+### Deployment Checks
+
+Before trying a new skin in VirtualDJ:
+
+```sh
+xmllint --noout build/skin.xml
+find build -maxdepth 1 -type f -print | sort
+```
+
+For zip packages, verify that the XML and assets are at the package root expected by the skin:
+
+```sh
+unzip -l "My Skin.zip" | sed -n '1,80p'
+```
+
+Common failure points:
+
+- installing source modules instead of the flattened build output
+- putting a Remote skin under `Skins` or a desktop skin under `RemoteSkins`
+- looking under Settings -> Extensions instead of Settings -> Interface -> Phone/tablet remote for local Remote skins
+- missing image files referenced by the XML
+- zipping a parent folder when the skin expects files at the zip root
+- packaging only one Remote layout when the target devices need different phone/tablet, portrait/landscape, or aspect-ratio layouts
+- relying on desktop-only features such as video previews in Remote skins
 
 ## Home Folder Rules
 
@@ -950,6 +1123,8 @@ Known unknown:
 | `Mappers/*.xml` | XML | Controller and keyboard mappings. |
 | `Pads/*.xml` | XML | Pad pages. |
 | `Skins/*/*.xml` | XML | Installed skin files. |
+| `RemoteSkins/*.zip` | ZIP | Installed Remote skin packages. |
+| `RemoteSkins/*/*.xml` | XML | Uncompressed Remote skin folders observed locally. |
 | `extra.db` | SQLite | Related tracks, track_data, lyrics. |
 | `Cache/cache.db` | SQLite | Waveform cache. |
 | `History/*.m3u` | M3U-like playlist text | Daily history. |
@@ -971,6 +1146,14 @@ Known unknown:
 
 - [VirtualDJ forum: macOS `database.xml` location](https://www.virtualdj.com/forums/261193/VirtualDJ_Technical_Support/Where_can_I_find_the_database_xml_file_on_MacOS_.html) - `Official forum`
 - [VirtualDJ forum: home folder, master database, and per-drive local databases](https://www.virtualdj.com/forums/223863/VirtualDJ_Technical_Support/Machine_specific_settings_xml_and_licence_dat_.html) - `Official forum`
+- [VirtualDJ manual: Extensions](https://virtualdj.com/manuals/virtualdj/settings/extensions.html) - `Official`
+- [VirtualDJ manual: VirtualDJ Remote](https://www.virtualdj.com/manuals/virtualdj/vdjremote/) - `Official`
+- [VirtualDJ manual: Remote Setup](https://www.virtualdj.com/manuals/virtualdj/vdjremote/remotesetup.html) - `Official`
+- [VirtualDJ product page: VirtualDJ Remote](https://www.virtualdj.com/products/vdjremote.html) - `Official`
+- [VirtualDJ forum: v8 Remote skins](https://www.virtualdj.com/forums/201357/VirtualDJ_Skins/v8_Remote_skins.html) - `Official forum`
+- [VirtualDJ forum: Remote skin creating/editing issue](https://virtualdj.com/forums/266839/VirtualDJ_Skins/Remote_skin_creating%2Fediting_issue.html) - `Official forum`
+- [VirtualDJ forum: Android Skins?](https://www.virtualdj.com/forums/222055/VirtualDJ_Skins/Android_Skins_.html) - `Official forum`
+- [VirtualDJ forum: Remote Screen](https://www.virtualdj.com/forums/210828/Addons/Remote_Screen.html) - `Official forum`
 - [VirtualDJ stems help](https://de.virtualdj.com/help/stems.html) - `Official`
 - [VDJPedia: Lists](https://de.virtualdj.com/wiki/Lists.html) - `Official`
 - [Matroska stem files Internet-Draft](https://www.ietf.org/archive/id/draft-swhited-mka-stems-06.html) - `External`
