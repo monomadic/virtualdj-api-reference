@@ -28,6 +28,9 @@ Start here:
 - [Pad Page Inventory](../Pads/README.md)
   Current `Pads/*.xml` status labels, canonical examples, built-in pad-page copies, and maintenance checklist.
 
+- [Skin Inventory](../Skins/README.md)
+  Local skin examples, copied built-in skins, and build-system demos.
+
 - [Documentation Tests](../Test/README.md)
   Reproducible local test harnesses used to support reference claims.
 
@@ -55,6 +58,7 @@ Source labels used in the curated docs:
 - `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff forum guidance. Treat Adion/CTO replies as high-authority implementation notes when they answer scripting, audio-engine, or feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's own press archive confirms Atomix Productions acquired AdionSoft in 2011.
 - `Community`: forum moderators, non-staff forum users, Reddit posts, or other community examples.
 - `Published skin`: command or pattern observed in a working public skin.
+- `Built-in skin`: command or pattern observed in skin XML shipped inside the VirtualDJ app bundle.
 - `Published pad page`: command or pattern observed in a working public pad page.
 - `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle.
 - `Local test`: behavior reproduced in VirtualDJ locally.

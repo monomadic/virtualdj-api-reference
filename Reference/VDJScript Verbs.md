@@ -37,6 +37,7 @@ Current curated coverage includes:
 - `Official forum`: VirtualDJ staff, Development Manager, CTO, or Support staff forum guidance. Adion/CTO replies should be treated as high-authority implementation notes for scripting, audio-engine, and feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's press archive confirms the 2011 AdionSoft acquisition.
 - `Community`: forum guidance from non-staff users
 - `Published skin`: observed in a working public skin; use as provenance and a prompt for testing, not as sole semantic authority
+- `Built-in skin`: observed in skin XML shipped inside the VirtualDJ app bundle; treat as semi-official executable evidence, then curate before recommending
 - `Published pad page`: observed in a working public pad page; use as provenance and a prompt for testing, not as sole semantic authority
 - `Built-in pad page`: observed in pad-page XML shipped inside the VirtualDJ app bundle; treat as semi-official executable evidence, then curate before recommending
 - `Local test`: behavior reproduced in VirtualDJ locally
@@ -140,6 +141,40 @@ Sources:
 - `Official forum`: sampler sync/build-specific discussion around master-deck sampler routing
 
 ## Curated High-Frequency Entries
+
+### `nothing`
+
+Aliases: none
+
+Kind: `Action`
+
+Typical surfaces: `Map`, `Button`, `Pad`, `SkinAction`
+
+Official summary:
+
+- Do nothing
+
+Typical forms:
+
+```vdjscript
+nothing
+has_cue 1 ? nothing : goto_first_beat & set_cue 1
+```
+
+Important behavior:
+
+- `nothing` is a no-op action, not a control-flow exit.
+- It does not stop the rest of an action chain from running.
+- Use it as the empty branch of a conditional; put the whole guarded routine inside the opposite branch when you want to skip that routine.
+
+```vdjscript
+has_cue 1 ? nothing : goto_first_beat & set_cue 1 & goto +32bt & set_cue 2
+```
+
+Sources:
+
+- `Official`: VDJScript verbs appendix, `nothing` action
+- `Inference`: no-op/branching implication from VDJScript action-chain behavior
 
 ### `up`
 
@@ -4715,7 +4750,7 @@ The sections below remain useful as a wide local inventory. They are still being
 
 | Verb       | Description                         | Example                         |
 | ---------- | ----------------------------------- | ------------------------------- |
-| `nothing`  | Do nothing                          | `nothing`                       |
+| `nothing`  | Do nothing; no-op, not an early return | `nothing`                    |
 | `up`       | Execute action on key press/release | `up ? action1 : action2`        |
 | `down`     | Execute action on key press/release | `down ? action1 : action2`      |
 | `isrepeat` | Check if key is auto-repeating      | `isrepeat ? nothing : goto_cue` |

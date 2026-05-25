@@ -7,6 +7,7 @@ This file is the holding area for commands and patterns mined from published ski
 ## Source Labels
 
 - `Published skin`: observed in a working skin distributed through VirtualDJ's skin ecosystem or installed from such a package.
+- `Built-in skin`: observed in skin XML shipped inside the VirtualDJ app bundle.
 - `Published pad page`: observed in a working pad page distributed through VirtualDJ's pad ecosystem or installed from such a package.
 - `Built-in pad page`: observed in pad-page XML shipped inside the VirtualDJ app bundle.
 - `Official`: current VirtualDJ manual, VDJPedia, hardware manual, or other Atomix-authored documentation.
@@ -22,7 +23,7 @@ This file is the holding area for commands and patterns mined from published ski
 2. Extract all command-like tokens from `action`, `query`, `visibility`, `source`, `textaction`, `rightclick`, `scroll`, `dblclick`, and similar script-bearing attributes.
 3. Compare against `Reference/VDJScript Verbs.md` and the current official VDJScript verbs appendix.
 4. Search exact terms on virtualdj.com first, then broader web/code search if needed.
-5. Add a row here with the status: `Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Needs test`, or a combination.
+5. Add a row here with the status: `Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Needs test`, or a combination.
 6. Promote stable, user-facing entries into `VDJScript Verbs.md`, keeping this file as provenance and test notes.
 
 ## Denon Prime 4 Deluxe Skin

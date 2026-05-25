@@ -26,6 +26,7 @@ Source labels used below:
 - `Official forum`: post by VirtualDJ staff, Development Manager, CTO, or Support staff. Treat Adion/CTO posts as high-authority implementation notes for scripting, audio-engine, and feature-behavior questions; VirtualDJ forum badges identify Adion as CTO, and Atomix's press archive confirms Atomix Productions acquired AdionSoft in 2011.
 - `Community`: forum moderators, non-staff forum users, Reddit posts, or other community examples
 - `Published skin`: command or pattern observed in a working public skin
+- `Built-in skin`: command or pattern observed in skin XML shipped inside the VirtualDJ app bundle
 - `Published pad page`: command or pattern observed in a working public pad page
 - `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle
 - `Local test`: behavior reproduced in VirtualDJ locally
@@ -128,6 +129,11 @@ Source labels used below:
   Why: local docs can lag behind VirtualDJ's live manual, and users need searchable explanations for aliases and skin idioms they encounter in real skins.
   Source: `Published skin`, `Official`, `Community`, `Inference`
 
+- Built-in skins:
+  Use [Skins/Built-In](../Skins/Built-In/) as semi-official executable examples of skin XML shipped with VirtualDJ.
+  Why: app-bundle skins are stronger evidence than community skins for how Atomix exercises the skin engine, but they still need curation before becoming preferred local patterns.
+  Source: `Built-in skin`, `Inference`
+
 - Built-in pad pages:
   Use [Pads/Built-In](../Pads/Built-In/) as semi-official executable examples of pad-page XML shipped with VirtualDJ.
   Why: app-bundle pad pages are stronger evidence than community examples for how Atomix exercises pad helpers, but they still need curation before becoming preferred local patterns.
@@ -160,6 +166,9 @@ Built-in pad-page examples:
   Copied app-bundle `pads_*.xml` pages from VirtualDJ `8.5.9307` / `18.0.9336`; use as `Built-in pad page` evidence rather than curated recommendations.
 
 Skin examples:
+
+- [Built-In/README.md](../Skins/Built-In/README.md)
+  Copied app-bundle desktop, Lite, Remote, and plugin UI skins from VirtualDJ `8.5.9307` / `18.0.9336`; use as `Built-in skin` evidence rather than curated recommendations.
 
 - [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
   Build-time XInclude workflow, `<define class>` system, and named color patterns.
@@ -1106,6 +1115,7 @@ Repo examples:
 - [SAMPLER.xml](../Pads/SAMPLER.xml)
 - [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml)
 - [TRANSPORT.xml](../Pads/TRANSPORT.xml)
+- [Built-in skins](../Skins/Built-In/README.md)
 - [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
 - [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
 - [GraveRaver Build Demo](../Skins/GraveRaver/README.md)

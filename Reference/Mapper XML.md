@@ -6,7 +6,7 @@ Mappers live in `~/Library/Application Support/VirtualDJ/Mappers/` on macOS.
 Each mapper is an XML file targeting a specific controller, MIDI device, or keyboard.
 
 Source labels used below match the rest of this repo:
-`Official`, `Official forum`, `Community`, `Published skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`.
+`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`.
 
 ---
 

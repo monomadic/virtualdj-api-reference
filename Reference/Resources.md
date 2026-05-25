@@ -84,6 +84,7 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Lyrics AI and Skins](Lyrics%20AI%20and%20Skins.md) - AI lyrics, skin styling surface, filters, and useful script quirks.
 - [Application Internals](Application%20Internals.md) - Low-level macOS paths, file formats, databases, stem sidecars, and shell examples.
 - [Skin SDK](Skin%20SDK.md) - Local skin SDK reference.
+- [Built-in skins](../Skins/Built-In/README.md) - App-bundle skin XML and assets used as semi-official executable examples.
 - [VDJScript Verbs](VDJScript%20Verbs.md) - Curated verb notes.
 - [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) - Names-only comparison against the live official VDJScript appendix.
 - [Built-in pad pages](../Pads/Built-In/README.md) - App-bundle `pads_*.xml` copies used as semi-official executable examples.
