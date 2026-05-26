@@ -51,7 +51,7 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- VDJScript reference has official-name parity with the appendix: 989/989 official verb/alias names are present, missing names are 0, and the compact official remainder is empty. The remaining formal gap is local verification for 19 sparse or hardware-specific official names; the no-hardware sparse-helper pass is recorded, with `system` still intentionally conservative.
+- VDJScript reference has official-name parity with the appendix: 991/991 official verb/alias names are present, missing names are 0, and the compact official remainder is empty. The remaining formal gap is 21 official names still marked `Needs local test`: sparse helpers such as `deck_has_error`, `get_mixfx_active`, and `system`; optional deck/controller setup for `dualdeckmode_decks`; and hardware-specific controller helpers.
 - Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
 - Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 

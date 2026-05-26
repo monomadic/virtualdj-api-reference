@@ -50,6 +50,7 @@ Current status:
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
 - `Resources.md` is the source index.
+- Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 21 official names remain in the formal `Needs local test` gap.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.
 
 Source labels used in the curated docs:

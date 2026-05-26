@@ -8,6 +8,7 @@ Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
 Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) and local official/published skin examples.
 
+- Current coverage cross-check: the 2026-05-26 official appendix refresh parses to 991 official verb/alias names; `VDJScript Verbs.md` contains all 991, missing names are 0, and the compact official remainder is empty. The formal `Needs local test` gap is 21 official names: `deck_has_error`, `get_mixfx_active`, `system`, `dualdeckmode_decks`, and the 17 hardware-specific controller helpers below.
 - `Untested` means behavior has not been observed in VirtualDJ locally, even if the verb is official.
 - `Pass` means a specific VirtualDJ build, hardware/context, action, and observed result were recorded.
 - `connect` has local skin evidence: [official Lite](../examples/skins/official/Lite.xml) uses `<button action="connect">`. Local testing on VirtualDJ `v2026-m b9336` confirmed action/query behavior for logged-in and logged-out states.
@@ -19,7 +20,7 @@ Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs a
 
 Suggested test order:
 
-1. Optional no-hardware follow-up: revisit `system` only if official examples or harmless parameters are found.
+1. No-hardware sparse helpers: `deck_has_error`, `get_mixfx_active`; revisit `system` only if official examples or harmless parameters are found.
 2. Optional controller/deck setup: `dualdeckmode_decks`
 3. Hardware-only batches: controller displays, Phase, RZX, DJC, V7, Gemini, Denon
 
@@ -116,10 +117,17 @@ Follow-up: `system` remains too sparse to promote beyond the blank/no-visible-ef
 | `system` | Sparse official system helper; parameters and return behavior are unclear. | Custom button, skin query/text, possible system integration context. | Run `system` with no parameter in a custom button; then try a harmless known/obvious parameter only if official examples are found; record UI/log output. | v2026-m b9336 | None required | Partial | In the sparse helper pad context, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Still too sparse to promote beyond a conservative note; do not infer from `system_volume` or system VU labels. |
 | `open_stem_creator` | Opens a workflow that may depend on license/build/stem features. | Skin/custom button, config/workflow action. | Run `open_stem_creator` with a track selected and with no track selected; note opened window, gating, and any error/status message. | v2026-m b9336 | None required | Pass | Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested. |
 
+## FX Helpers
+
+| Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `get_mixfx_active` | Official sparse Mix FX helper; return value and relationship to `effect_mixfx_activate` need confirmation. | Skin text/query, pad query/color, custom button display. | Select a Mix FX, toggle `effect_mixfx_activate` off/on, display `` `get_mixfx_active` ``, and compare it to `effect_mixfx_activate ? on : off` in the same context. | TBD | None required | Untested | Official name only as of the 2026-05-26 appendix refresh. |
+
 ## Deck And Mode Helpers
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| `deck_has_error` | Official sparse loading/deck helper; error states and reset behavior are undocumented locally. | Deck skin query/text, load workflow, custom button display. | Try loading an invalid/missing file and a valid file, display/query `` `deck_has_error` `` before and after each load, and record whether the state clears on successful load/unload. | TBD | None required | Untested | Official name only as of the 2026-05-26 appendix refresh. |
 | `dualdeckmode_decks` | Official prose ties it to dual-deck pairs 1/3 or 2/4, but mapping behavior is sparse. | Controller mapping, deck assignment logic, dual-deck mode. | Enable `dualdeckmode`, load decks 1/3 and 2/4, then display/log `` `dualdeckmode_decks` `` from each deck context; record pair selection and false states. | TBD | Optional controller | Untested | Official pair relationship documented; helper return/action behavior unobserved. |
 
 ## Karaoke

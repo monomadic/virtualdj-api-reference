@@ -1,13 +1,13 @@
 # Official VDJScript Coverage Audit
 
-Fetched from the current VirtualDJ VDJScript verbs appendix on 2026-05-01.
+Fetched from the current VirtualDJ VDJScript verbs appendix on 2026-05-26.
 
 Purpose: keep this repo honest about official verb coverage. This is a names-only audit, not a copy of the official manual. Use it to decide what still needs curated local documentation in `VDJScript Verbs.md`.
 
 Source: https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html
 
-Official verb/alias names parsed: 989
-Names already present in local VDJScript reference: 989
+Official verb/alias names parsed: 991
+Names already present in local VDJScript reference: 991
 Names not yet present in local VDJScript reference: 0
 
 ## Immediate Rule
@@ -25,14 +25,15 @@ Names not yet present in local VDJScript reference: 0
 
 ## Current Readiness Snapshot
 
-- **Official-name coverage is complete**: 989/989 official verb and alias names are present in `VDJScript Verbs.md`; missing official names are at 0.
+- **Official-name coverage is complete**: 991/991 official verb and alias names are present in `VDJScript Verbs.md`; missing official names are at 0.
 - **Searchability is complete**: the compact official remainder is empty, so every tracked official name now lives in a functional section rather than only in a holding table.
 - **Behavior confidence is not uniform**: high-frequency skin, pad, sampler, browser, loop, cue, FX, stems, timecode, video, config, and mixer helpers now have useful local notes or examples, while low-frequency hardware/developer helpers remain compact and conservative.
-- **The formal local-test gap is 19 official names**, about 1.9% of the official list. One no-dedicated-hardware helper (`system`) remains inconclusive after local testing, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
-- **Reasonably complete for everyday documentation** means the no-hardware sparse-helper pass has been run and recorded. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
+- **The formal local-test gap is 21 official names**, about 2.1% of the official list. Three no-dedicated-hardware sparse helpers (`deck_has_error`, `get_mixfx_active`, and `system`) still need better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
+- **Reasonably complete for everyday documentation** means official-name coverage and searchability are complete. The earlier no-hardware sparse-helper pass is recorded for prior sparse names, but `deck_has_error` and `get_mixfx_active` still need lightweight local checks. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
 
 What still sticks out:
 
+- `deck_has_error` and `get_mixfx_active` are official sparse helpers added in the 2026-05-26 appendix refresh; they are present in functional sections but still need local behavior checks.
 - `system` is official but still too sparse to promote: local testing only showed blank text return and no visible action result in the sparse-helper pad context.
 - `dualdeckmode_decks` has official context through `dualdeckmode`, but its direct helper behavior still needs observation.
 - Hardware-specific helpers are the largest remaining blind spot; they are probably fine as compact official entries unless this repo gains access to the matching devices.
@@ -40,9 +41,9 @@ What still sticks out:
 ## Next Promotion Targets
 
 - No compact-remainder names currently remain.
-- Next depth pass: revisit `system` only if official examples or harmless parameters are found, then locally test `dualdeckmode_decks` in an appropriate deck/controller context.
+- Next depth pass: locally test `deck_has_error` and `get_mixfx_active`, revisit `system` only if official examples or harmless parameters are found, then test `dualdeckmode_decks` in an appropriate deck/controller context.
 - Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.
-- Promotion rule: do not remove a verb from **Needs Local Test** until [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) has a build, context/hardware, observed result, and notes.
+- Promotion rule: do not remove a verb from **Needs local test** until [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) has a build, context/hardware, observed result, and notes.
 
 ## Recently Promoted
 
@@ -55,13 +56,14 @@ What still sticks out:
 - Mixer/EQ helpers: `cross_assign`, `eq_crossfader_high`, `eq_crossfader_mid`, `eq_crossfader_low`, `high_label`, `mid_label`, `low_label`, `mixer_order`
 - Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
 - Final compact remainder sweep: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `get_beat`, `key_match_button`, `key_match_menu`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`, `open_stem_creator`, `handshake`, `is_using`, `system`, `debug`, `connect`
+- 2026-05-26 appendix refresh: `deck_has_error`, `get_mixfx_active`
 - Local-tested sparse helpers: `connect`, `karaoke_venue_name`, `open_stem_creator`
 
 ## Needs Local Test
 
 Manual verification lives in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
-- `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
+- `deck_has_error`, `get_mixfx_active`, `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
 - `phase_movement`, `phase_position`, `phase_active`, `v7_status`, `rzx_touch`, `rzx_touch_x`, `rzx_touch_y`
 - `djc_shift`, `djc_button`, `djc_button_popup`, `djc_button_slider`, `djc_button_select`, `djc_panel`
 - `denon_platter`, `dualdeckmode_decks`
@@ -110,7 +112,7 @@ Former missing names closed in the latest coverage pass:
 - `cue_3button`, `cue_action`, `cue_button`, `cue_color`, `cue_countdown`, `cue_counter`
 - `cue_countup`, `cue_cup`, `cue_display`, `cue_loop`, `cue_loop_autosync`, `cue_loop_hold`
 - `cue_name`, `cue_play`, `cue_pos`, `cue_select`, `cue_stop`, `cues_options`
-- `custom_button`, `custom_button_edit`, `custom_button_name`, `cycle`, `debug`, `deck_options`
+- `custom_button`, `custom_button_edit`, `custom_button_name`, `cycle`, `debug`, `deck_has_error`, `deck_options`
 - `delete_cue`, `denon_platter`, `device_side`, `dim`, `display_time`, `djc_mic`
 - `doubleclick`, `down`, `dualdeckmode`, `dump`, `edit_bpm`, `edit_comment`
 - `edit_lyrics`, `edit_poi`, `edit_search`, `edit_singer`, `effect_3slots_layout`, `effect_activate`
@@ -152,7 +154,7 @@ Former missing names closed in the latest coverage pass:
 - `get_leftdeck`, `get_lemode`, `get_level`, `get_level_left`, `get_level_left_peak`, `get_level_log`
 - `get_level_peak`, `get_level_right`, `get_level_right_peak`, `get_license`, `get_limiter`, `get_loaded_song`
 - `get_loaded_song_color`, `get_loop`, `get_loop_in_time`, `get_loop_out_time`, `get_lyrics_language`, `get_membership`
-- `get_nb_multicam`, `get_next_karaoke_song`, `get_ns7_platter`, `get_numark_beatgrid`, `get_numark_songpos`, `get_numark_waveform`
+- `get_mixfx_active`, `get_nb_multicam`, `get_next_karaoke_song`, `get_ns7_platter`, `get_numark_beatgrid`, `get_numark_songpos`, `get_numark_waveform`
 - `get_peak_audio`, `get_phrase_num`, `get_pioneer_display`, `get_pioneer_loop_display`, `get_pitch`, `get_pitch_value`
 - `get_pitch_zero`, `get_playlist_time`, `get_plugindeck`, `get_position`, `get_record_message`, `get_record_min`
 - `get_record_ms`, `get_record_msf`, `get_record_sec`, `get_record_size`, `get_record_time`, `get_remix_after_title`

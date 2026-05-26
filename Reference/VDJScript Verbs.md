@@ -71,13 +71,15 @@ These are practical surfaces, not hard type-check guarantees. When a surface is 
 
 ## Official Appendix Coverage
 
-The local reference now has names-only coverage for all official names tracked in [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md). Use that audit before removing or dismissing any unfamiliar command.
+The local reference now has names-only coverage for all 991 official names tracked in [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md). Use that audit before removing or dismissing any unfamiliar command.
 
 Coverage depth is tiered:
 
 - Curated entries near the top are the highest-confidence API notes.
 - Broad catalog sections below cover common usage in a compact form.
-- The [Official Appendix Remainder](#official-appendix-remainder) section is kept as an audit marker; all tracked official names are currently searchable in functional sections.
+- Current official-name coverage is 991/991 with 0 missing names.
+- The [Official Appendix Remainder](#official-appendix-remainder) section is kept as an audit marker; all tracked official names are currently searchable in functional sections, so the compact official remainder is empty.
+- The remaining formal `Needs local test` gap is 21 sparse or hardware-specific official names; build/context results belong in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
 Promote compact official entries into curated sections when they become relevant to skins, pads, mappings, published-skin findings, or local tests.
 
@@ -5204,6 +5206,7 @@ Scratchbank source note:
 | `load_pulse`    | Brief pulse on load | `load_pulse`          |
 | `load_pulse_active` | Pulse when a new song becomes audible | `load_pulse_active 1000ms 5000ms` |
 | `loaded`        | Check if loaded     | `loaded`              |
+| `deck_has_error` | Sparse deck load-error helper; needs local behavior check | `deck_has_error` |
 | `not_played`    | Do not mark this deck's song as played | `not_played` |
 | `undo_load`     | Reload previous     | `undo_load`           |
 | `unload`        | Unload song         | `unload`              |
@@ -5211,6 +5214,10 @@ Scratchbank source note:
 | `load_previous` | Load previous track | `load_previous`       |
 | `save_deck_set` | Save current loaded-deck configuration | `save_deck_set` |
 | `load_deck_set` | Load a saved deck-set file | `load_deck_set` |
+
+Loading note:
+
+- `deck_has_error` appears in the official appendix but remains sparse; record build/context results in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before relying on its exact error-state semantics.
 
 ## Cue Points
 
@@ -5615,6 +5622,7 @@ Sources:
 | `effect_mixfx`        | Associate effect with crossfader    | `effect_mixfx`                    |
 | `effect_mixfx_select` | Select Mix FX                       | `effect_mixfx_select "filter"`    |
 | `effect_mixfx_activate` | Toggle Mix FX                     | `effect_mixfx_activate`           |
+| `get_mixfx_active`    | Sparse Mix FX active-state helper; needs local behavior check | `get_mixfx_active` |
 | `effect_stems`        | Route effects to selected stems     | `effect_stems 'vocal'`            |
 | `effect_stems_color`  | Get color for the `effect_stems` button | `effect_stems_color`          |
 | `effect_arm_stem`     | Arm stems for `stems` slot effect actions | `effect_arm_stem Vocal+Bass` |
@@ -5681,6 +5689,10 @@ Sources:
 | `get_videofx_name`    | Get selected video effect name      | `get_videofx_name`                |
 | `get_videotrans_name` | Get selected video transition name  | `get_videotrans_name`             |
 | `get_video_fx_slider_label` | Get video FX slider label     | `get_video_fx_slider_label 1`     |
+
+FX catalog note:
+
+- `get_mixfx_active` appears in the official appendix but remains sparse; compare it against `effect_mixfx_activate` in skin, pad, and custom-button contexts before treating it as a preferred Mix FX state query.
 
 ## POI & BPM
 
@@ -6097,7 +6109,7 @@ get_hastimecode ? timecode_options : timecode_config
 
 ## Official Appendix Remainder
 
-No compact entries currently remain. All official names tracked by the audit are present in functional sections above; sparse or hardware-specific entries remain marked for local testing in the audit.
+No compact entries currently remain. All 991 official names tracked by the audit are present in functional sections above; the remaining 21 sparse or hardware-specific official names are marked `Needs local test` in the audit and tracker.
 
 Sources:
 
