@@ -74,6 +74,28 @@ Tracker rows updated: system, open_stem_creator
 Follow-up: `system` remains too sparse to promote beyond the blank/no-visible-effect observation; `open_stem_creator` still needs separate testing for full stem-file creation, file-picker behavior, and license/build gating.
 ```
 
+```text
+Date: 2026-05-26
+VirtualDJ build: user-provided local result, build not recorded
+Test asset: User-provided pad XML fragment with two `FX-VOCALS` pads
+Account/deck/hardware state: vocal stem FX slot available; exact deck/hardware state not recorded
+Steps: create two pads that both call `effect_select_multi 'vocals'`, one for `echo out` and one for `reverb`; use `effect_active 'vocals' '<effect>'` as each pad query and action target
+Observed result: Echo Out and Reverb light independently according to their selected/active effect state, while both play through the same `vocals` stem FX slot.
+Tracker rows updated: effect_select_multi, effect_active
+Follow-up: repeat on a recorded VirtualDJ build and add a minimal test pad page if this pattern becomes a canonical fixture.
+```
+
+```text
+Date: 2026-05-26
+VirtualDJ build: user-provided local result, build not recorded
+Test asset: User-provided pad XML fragments for a vocal `padfx` chain
+Account/deck/hardware state: vocal stem pad FX available; exact deck/hardware state not recorded
+Steps: compare a pad that starts with `effect_disable_all 'padfx'` followed by `padfx 'echo out' ... 'stemfx:vocal'` and `padfx 'reverb' ... 'stemfx:vocal'` against the same pad without the inline `effect_disable_all`; then compare with other pads that use the same effect/stem targets with different parameter values.
+Observed result: The inline `effect_disable_all 'padfx'` version did nothing visible and did not light; removing the inline clear made the chained pad FX work. Separate pads using the same effect/stem target can alter or "steal" one or more effects from another pad-FX chain by changing the active parameters.
+Tracker rows updated: padfx, effect_disable_all
+Follow-up: repeat on a recorded VirtualDJ build with a minimal fixture that logs visible pad state, `effects_used 'padfx'`, and audible behavior for same-event cleanup versus separate cleanup.
+```
+
 ## Sampler
 
 | Verb / Pattern | Why local test | Likely surface/context | Repro | VirtualDJ build | Hardware | Result | Notes |
@@ -121,7 +143,16 @@ Follow-up: `system` remains too sparse to promote beyond the blank/no-visible-ef
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| `effect_has_slider` / `effect_has_button` and `get_effect_slider_*` / `get_effect_button_*` | Built-in skins use these heavily, but the exact return shapes and context scoping need a focused local fixture. | Skin controls, pad text/query, custom button display; deck FX, video FX, transition FX. | Load [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml), press each LOAD pad, observe slider/button counts, labels, defaults, text, and `effect_has_*` states; repeat separately for `video` and `transition` targets. | TBD | None required | Untested | Built-in skin evidence is strong enough for documentation patterns, but local result values should be recorded before writing a complete behavior table. |
+| Native effect parameter examples | Existing pad pages provide working presets, but the repo does not yet have a systematic effect-by-effect slider/button map. | Pad XML and skin/custom button controls for selected native effects. | Use [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) as a starter fixture; for each native effect, load it in slot 1, record counts, labels, defaults, button count, and tested `effect_slider`/`padfx` presets with VirtualDJ build/effect version. | Partial local examples; full pass TBD | None required | Partial | `Pads/Reference - Slot FX.xml`, `Pads/PUSH FX.xml`, and built-in `pads_stems+fx.xml` document several working forms. This is not a complete parameter map. |
 | `get_mixfx_active` | Official sparse Mix FX helper; return value and relationship to `effect_mixfx_activate` need confirmation. | Skin text/query, pad query/color, custom button display. | Select a Mix FX, toggle `effect_mixfx_activate` off/on, display `` `get_mixfx_active` ``, and compare it to `effect_mixfx_activate ? on : off` in the same context. | TBD | None required | Untested | Official name only as of the 2026-05-26 appendix refresh. |
+| `effect_select_multi` with `effect_active <slot> '<effect>'` | Multi-effect-per-slot behavior is official by name/summary but easy to miss in pad design. | Pad XML, numeric deck FX slot, named stem FX slot. | Build a two-pad page for slot 1 and `vocals`: Echo Out pad uses `effect_select_multi ... 'echo out'`; Reverb pad uses `effect_select_multi ... 'reverb'`; query each with `effect_active ... '<effect>'`; verify independent LED state and simultaneous audio. | User-provided local result, build not recorded | None recorded | Partial | User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Needs repeat on a recorded build for fixture-grade `Pass`. |
+| `padfx` shared identity and `effect_disable_all 'padfx'` ordering | `padfx` is useful for quick triggers, but deterministic chained presets can be affected by shared effect/stem targets and cleanup timing. | Pad XML with stem-targeted pad FX. | Create Pad A with `effect_disable_all 'padfx' & padfx 'echo out' ... 'stemfx:vocal' & padfx 'reverb' ... 'stemfx:vocal'`; create Pad B with the same chain but no inline clear; create Pad C using one of the same effect/stem targets at different values; observe pad light/audible behavior and parameter changes. | User-provided local result, build not recorded | None recorded | Partial | Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Treat `effect_disable_all 'padfx'` as separate cleanup and do not treat `padfx` as private per-pad state. |
+| `effect_bank_save` / `effect_bank_load` | Official rack snapshot helpers; persistence, scope, and active-state recall need a reproducible note. | Pad XML or custom buttons on a deck with 1-6 FX slots. | Load three known effects with distinct active states and slider values, save bank 1, change all slots, load bank 1, then record restored effect names, active states, sliders, and whether bank is deck-specific. | TBD | None required | Untested | Useful everyday helper, but not yet locally characterized beyond official summary. |
+| `effect_releaseslider_active` / `is_releasefx` | Release-FX path is separate from normal slot sliders; selection and query behavior need a fixture. | Skin/custom button with a selected release FX. | Select a known release-capable effect if required, display `is_releasefx`, run `effect_releaseslider_active 50%`, and compare with `effect_active` / audible behavior. | TBD | None required | Untested | Keep examples conservative until release-FX target selection is recorded. |
+| `effect_fxsendreturn*` helpers | Routing depends on mixer/send-return context and may be hardware-sensitive. | Skin/custom button, controller with software/hardware FX send-return path. | Toggle `effect_fxsendreturnenable`, select master/mic/deck sources with `effect_fxsendreturndeck_multi`, and record available/visible routing changes. | TBD | Optional hardware | Untested | Official names are present; practical behavior is context-dependent. |
+| `effect_command` plugin commands | Command strings are plugin-specific; built-in BeatGrid UI provides evidence but not a universal command map. | Built-in BeatGrid plugin UI or a test skin targeting BeatGrid. | Open BeatGrid, run `effect_command 'get 00'`, `effect_command 'set 00'`, and `effect_command 'cur 0'`; compare visual state to built-in plugin UI. | TBD | None required | Untested | Built-in plugin UI XML uses these command strings; needs a recorded VirtualDJ result before promoting to `Local test`. |
+| Video FX slot controls | Built-in skins expose video FX panels, but a focused behavior pass would improve examples. | Built-in skin or test skin with video output enabled. | Select a video FX, toggle `video_fx`, move `video_fx_slider 1`, test `video_fx_clear`, then repeat with `deck master video_fx...`; record text/query behavior. | TBD | None required | Untested | Built-in skin evidence exists for controls and labels; audio-only/video-source edge cases need notes. |
 
 ## Deck And Mode Helpers
 

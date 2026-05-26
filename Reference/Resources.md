@@ -28,6 +28,7 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [VDJScript](https://www.virtualdj.com/wiki/VDJ%20Script.html) - Language overview.
 - [VDJScript Verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) - Current verb reference.
 - [VDJScript Examples](https://www.virtualdj.com/wiki/VDJScript%20Examples) - Official example scripts.
+- [Deck Effects Manual](https://www.virtualdj.com/manuals/virtualdj/interface/decks/decksadvanced/effects/) - Current deck FX layouts, including FX x6, stems FX, and effect-list behavior.
 - [Options List](https://www.virtualdj.com/manuals/virtualdj/appendix/optionslist/) - Settings/options appendix.
 - [Lyrics Editor](https://www.virtualdj.com/manuals/virtualdj/editors/lyricseditor.html) - AI-generated lyric editing, re-analysis, and censoring UI.
 - [Stems Help](https://de.virtualdj.com/help/stems.html) - Official stems overview, stem controls, preparation behavior, and five-stem terminology.
@@ -68,6 +69,8 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Saving 'PluginPage' Settings between sessions](https://www.virtualdj.com/forums/232382/General_Discussion/Saving__PluginPage__Settings_between_sessions.html) - Community/moderator Mix FX scripting examples, including `effect_mixfx_select`, `effect_mixfx_activate`, and indirect `param_equal` query patterns.
 - [How to find the scripts behind a skin?](https://virtualdj.com/forums/261775/VirtualDJ_Technical_Support/How_to_find_the_scripts_behind_a_skin%3F.html) - Forum thread identifying the Mix FX verb family used by skins.
 - [DDJ-FLX2 Advanced Setup](https://www.virtualdj.com/manuals/hardware/alphatheta/ddjflx2/advanced/index.html) - Official hardware manual note that Mix FX can be selected from Starter/Essentials skins or assigned with `effect_mixfx_select`.
+- [DDJ-REV5 Effects](https://www.virtualdj.com/manuals/hardware/pioneer/ddjrev5/layout/effects.html) - Official hardware manual language for six VirtualDJ FX slots and selecting multiple slots.
+- [DJM-S5 Effects](https://www.virtualdj.com/manuals/hardware/pioneer/djms5/layout/effects.html) - Official hardware manual language for the 6 FX Slots layout and bank controls.
 
 ## Community And Unofficial Sources
 

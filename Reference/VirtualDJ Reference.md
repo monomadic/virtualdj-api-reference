@@ -49,10 +49,25 @@ Source labels used below:
   Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
   Source: `Official`
 
+- Numbered deck FX slots:
+  Treat slots 1-6 as the supported numbered range.
+  Why: the current manual exposes an `FX x6` view, hardware manuals describe six FX slots, and `effect_bank_save` / `effect_bank_load` explicitly cover deck FX slots 1 to 6.
+  Source: `Official`
+
+- Generic FX panels:
+  Prefer `effect_has_slider`, `get_effect_slider_label`, `get_effect_slider_text`, `get_effect_slider_default`, `effect_has_button`, and `get_effect_button_shortname` so the UI follows the selected plugin.
+  Why: built-in skins use these helpers to disable missing controls and show plugin-provided labels/defaults for deck FX, video FX, and transitions.
+  Source: `Official`, `Built-in skin`, `Inference`
+
 - Stem-specific FX instances:
   Use named stem FX slots such as `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, or `kick` with the normal `effect_*` verbs when an effect instance should belong to a stem-specific slot. Use `padfx ... 'stemfx:<stem>'` for quick pad effects, and use `effect_stems <stem>` when the normal FX rack should follow a shared stem-routing mode.
   Why: CTO forum guidance says stem targets can be treated as separate slots for `effect_*` actions, and the official `padfx` docs expose `stemfx:stemname` for pad effects.
   Source: `Official`, `Official forum`, `Community`, `Local test`
+
+- Pad FX cleanup and ownership:
+  Use `padfx` for quick temporary effect triggers, not for private effect-chain ownership. Keep `effect_disable_all 'padfx'` as a separate cleanup/reset action rather than chaining it immediately before new `padfx` calls in the same pad.
+  Why: user-provided local testing showed that inline `effect_disable_all 'padfx'` can prevent the following `padfx` chain from activating, and that another pad using the same effect/stem target can alter that shared pad-FX instance's parameters.
+  Source: `Official`, `Local test`, `Inference`
 
 - Vocal/instrumental stem isolation:
   Prefer `stem_pad 'acapella' on` and `stem_pad 'instrumental' on` for button-style isolate pads.
@@ -645,6 +660,8 @@ Source: `Official`, `Local test`
 
 The official verbs and the current deck FX UI are slot-based.
 
+Use numbered deck FX slots 1-6 in reference examples and deterministic pad pages. The current manual exposes an `FX x6` view, hardware manuals describe six VirtualDJ FX slots, and the official `effect_bank_save` / `effect_bank_load` summaries save/load deck FX slots 1 to 6. Slots above 6 should be treated as unsupported unless a specific target build is locally tested.
+
 Preferred slot workflow:
 
 1. Select the effect into a slot
@@ -683,7 +700,10 @@ For documented pad pages, prefer one of these slot-based designs:
 - Shared slot preset pads:
   Many pads program the same slot, usually slot 1. Pressing Echo Out replaces whatever is in that slot with Echo Out, sets known parameters, and activates it. This works well for performance pages where the pad row is an effect picker rather than a multi-effect rack.
 
-Avoid mixing the two designs without documenting it. A pad labeled `ECHO` with only `query="effect_active 1"` can blink when slot 1 is active with a different effect. If the pad state is meant to mean "slot 1 contains Echo and is active," query `get_effect_name <slot>` first, then nest the slot active check:
+- Multi-effect slot pads:
+  Several pads target the same slot, but use `effect_select_multi` so VirtualDJ keeps earlier effect instances in that slot instead of replacing them. Query and activate with both the slot and effect name, for example `effect_active 1 'echo out'` or `effect_active 'vocals' 'reverb'`, so separate pads can light independently while sharing one slot/channel.
+
+Avoid mixing these designs without documenting it. A pad labeled `ECHO` with only `query="effect_active 1"` can blink when slot 1 is active with a different effect. If the pad state is meant to mean "slot 1 contains Echo and is active," query `get_effect_name <slot>` first, then nest the slot active check:
 
 ```vdjscript
 get_effect_name 1 & param_lowercase & param_equal 'echo' ?
@@ -705,7 +725,63 @@ Do not use bare `effect_select 1` as that state check. In pad actions, it can op
 
 Official VDJScript documents `&&` for query chains, for example "true only when both commands are true." That is different from using `&&` inside a complex pad action body that also branches and performs load/set/on actions. Use nested conditionals for same-pad toggle actions, and reserve `&&` for simple query expressions you have verified in the target surface.
 
-Source: `Official`, `Inference`
+For intentional multi-effect use in one numeric slot:
+
+```vdjscript
+effect_select_multi 1 'Echo Out' & effect_active 1 'Echo Out'
+effect_select_multi 1 'Reverb' & effect_active 1 'Reverb'
+```
+
+For a named stem FX slot, use the same pattern with the stem slot name. This local pad-page fragment keeps Echo Out and Reverb as separately queryable/activatable effects on the vocal stem FX slot:
+
+```xml
+<pad1 name="FX-VOCALS\nECHO OUT"
+      color="stem_color 'vocal'"
+      query="effect_active 'vocals' 'echo out'">
+  effect_select_multi 'vocals' 'echo out' &amp; effect_active 'vocals' 'echo out'
+</pad1>
+<pad2 name="FX-VOCALS\nREVERB"
+      color="stem_color 'vocal'"
+      query="effect_active 'vocals' 'reverb'">
+  effect_select_multi 'vocals' 'reverb' &amp; effect_active 'vocals' 'reverb'
+</pad2>
+```
+
+Omitting `on` makes the named effect instance toggle. Add `on` when the pad should only turn the effect on:
+
+```vdjscript
+effect_select_multi 'vocals' 'echo out' & effect_active 'vocals' 'echo out' on
+```
+
+Source: `Official`, `Official forum`, `Local test`, `Inference`
+
+#### Dynamic FX Controls
+
+For a reusable FX panel, ask VirtualDJ what the selected effect exposes instead of hardcoding slider/button labels:
+
+```xml
+<slider action="effect_slider 1 1"
+        dblclick="effect_slider_reset 1 1"
+        disabled="not effect_has_slider 1 1"
+        frommiddle="get_effect_slider_default 1 1 0.5"/>
+<text action="get_effect_slider_label 1 1"/>
+<button action="effect_button 1"
+        visibility="effect_has_button 1"
+        textaction="get_effect_button_shortname 1"/>
+```
+
+Use this for skin panels and generic controller displays. For pad pages that intentionally load one known effect preset, hardcoded values such as `effect_slider 1 1 75%` are still clearer.
+
+Video FX and transitions use the same pattern with special targets:
+
+```vdjscript
+effect_has_slider 'video' 1
+get_video_fx_slider_label 1
+effect_has_slider 'transition' 1
+get_effect_slider_label 'transition' 1
+```
+
+Source: `Official`, `Built-in skin`, `Inference`
 
 ### Filter and ColorFX
 
@@ -793,11 +869,17 @@ effect_active 'vocals'
 effect_slider 'vocals' 1 50%
 effect_slider 'vocals' 'echo' 1 50%
 effect_show_gui 'vocals' 'Reverb'
+effect_select_multi 'vocals' 'Echo Out'
+effect_active 'vocals' 'Echo Out'
 
 padfx 'reverb' 75% 'stemfx:vocal'
 ```
 
 The naming is easy to trip over: `padfx` uses the singular target string `stemfx:vocal`, while the separate vocal effect slot is documented in forum examples as `vocals`.
+Use `effect_select_multi 'vocals' '<effect>'` when multiple effects should remain loaded/active on the same vocal stem FX slot. Query or toggle each instance with `effect_active 'vocals' '<effect>'`, not just `effect_active 'vocals'`, when separate pad LEDs should reflect separate effects.
+
+`padfx` parameter values are applied when the pad effect starts, but `padfx` should not be treated as private per-pad state. User-provided testing showed that another pad can call the same effect/stem target and alter the active parameter values. User testing also found that placing `effect_disable_all 'padfx'` immediately before a new `padfx` chain can stop the new chain from activating. Use `effect_disable_all 'padfx'` as a separate cleanup control; use owned deck FX slots when a preset must be isolated from other pads.
+
 `melovocal` and `melorhythm` may exist as named stem FX slots, but they need local testing before being treated as confirmed.
 
 Observed pad XML selected-state pattern:
@@ -815,6 +897,30 @@ Caution:
 That first caution is intentionally dated because the forum guidance is older than the current manual.
 
 Source: `Official`, `Official forum`, `Community`, `Local test`
+
+### Advanced FX Helpers
+
+Some FX verbs are workflow helpers rather than separate audio engines:
+
+- `effect_bank_save <n>` / `effect_bank_load <n>`:
+  Save and recall deck FX slots 1-6. Use these for rack snapshots; use explicit `effect_select` / `effect_slider` macros for deterministic pad presets.
+
+- `effect_3slots_layout`, `effect_select_popup`, `effect_select_toggle`, `effect_list`, and `effect_list_edit`:
+  UI/list helpers for exposing VirtualDJ's native FX panel behavior. Do not use selector popups as state queries.
+
+- `effect_arm_*`:
+  Controller-style armed FX workflow: choose target deck/path, choose effect, choose participating slots, then activate. Prefer direct slot verbs in pad pages unless the controller workflow is intentionally armed.
+
+- `effect_releaseslider*` and `is_releasefx`:
+  Release-FX-specific controls, separate from ordinary deck FX sliders. Exact selection/query behavior still needs a focused local fixture.
+
+- `effect_fxsendreturn*`:
+  Hardware/software send-return routing helpers. Treat as mixer-context-specific, not default deck FX.
+
+- `effect_command`:
+  Plugin-specific command channel. Built-in BeatGrid plugin UI uses commands such as `set 00`, `get 00`, and `cur 0`; do not generalize those strings across effects.
+
+Source: `Official`, `Built-in skin`, `Inference`
 
 ### Native Effects
 

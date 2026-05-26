@@ -13,6 +13,9 @@ Start here:
 - [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md)
   Names-only audit comparing the live official VDJScript appendix against this repo's local verb reference.
 
+- [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md)
+  Local cross-check of the VDJScript action descriptions bundled in VirtualDJ's Button Editor language resources, plus binary string-table counts.
+
 - [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md)
   Manual verification matrix for sparse, hardware-specific, and environment-dependent official verbs.
 
@@ -45,12 +48,14 @@ Current status:
 - `VirtualDJ Reference.md` is the policy and architecture layer.
 - `VDJScript Verbs.md` is the first API-focused pass.
 - `Official VDJScript Coverage Audit.md` tracks official verb coverage depth, missing-name status, and the remaining local-test gap.
+- `Button Editor Catalog Audit.md` tracks the bundled Button Editor action-description catalog and runtime string-table cross-checks.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
 - `Resources.md` is the source index.
 - Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 21 official names remain in the formal `Needs local test` gap.
+- The bundled Button Editor action-description catalog currently has 813 unique action tags across all language files in the local VirtualDJ app, overlapping but not identical with the official appendix or runtime string table.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.
 
 Source labels used in the curated docs:
@@ -62,5 +67,6 @@ Source labels used in the curated docs:
 - `Built-in skin`: command or pattern observed in skin XML shipped inside the VirtualDJ app bundle.
 - `Published pad page`: command or pattern observed in a working public pad page.
 - `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle.
+- `Built-in app resource`: command name, description, or UI catalog entry observed in non-skin/non-pad resources shipped inside the VirtualDJ app bundle, such as `Resources/languages.zip`.
 - `Local test`: behavior reproduced in VirtualDJ locally.
 - `Inference`: conclusion drawn from official docs plus repo testing or architecture.

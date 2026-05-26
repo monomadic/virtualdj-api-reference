@@ -10,6 +10,8 @@ Official verb/alias names parsed: 991
 Names already present in local VDJScript reference: 991
 Names not yet present in local VDJScript reference: 0
 
+Related local cross-check: [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md). The local VirtualDJ app's bundled Button Editor language catalog has 813 unique `<Actions>` tags across all language files, and the richer runtime-looking executable string block has 967 names. These sources overlap with, but do not exactly match, the official appendix.
+
 ## Immediate Rule
 
 - Do not delete a VDJScript command only because it appears unfamiliar. Check this audit and the official appendix first.
@@ -30,12 +32,13 @@ Names not yet present in local VDJScript reference: 0
 - **Behavior confidence is not uniform**: high-frequency skin, pad, sampler, browser, loop, cue, FX, stems, timecode, video, config, and mixer helpers now have useful local notes or examples, while low-frequency hardware/developer helpers remain compact and conservative.
 - **The formal local-test gap is 21 official names**, about 2.1% of the official list. Three no-dedicated-hardware sparse helpers (`deck_has_error`, `get_mixfx_active`, and `system`) still need better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
 - **Reasonably complete for everyday documentation** means official-name coverage and searchability are complete. The earlier no-hardware sparse-helper pass is recorded for prior sparse names, but `deck_has_error` and `get_mixfx_active` still need lightweight local checks. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
+- **Bundled app-resource evidence now exists**: the Button Editor action-description catalog is stored in the local app bundle's `Resources/languages.zip`. It is useful for descriptions and discovery, but it omits some official sparse helpers and includes a small number of catalog/runtime candidates outside the official appendix.
 
 What still sticks out:
 
 - `deck_has_error` and `get_mixfx_active` are official sparse helpers added in the 2026-05-26 appendix refresh; they are present in functional sections but still need local behavior checks.
 - `system` is official but still too sparse to promote: local testing only showed blank text return and no visible action result in the sparse-helper pad context.
-- `dualdeckmode_decks` has official context through `dualdeckmode`, but its direct helper behavior still needs observation.
+- `dualdeckmode_decks` has official context through `dualdeckmode`; the bundled Button Editor language catalog also includes it in several non-English files, but its direct helper behavior still needs observation.
 - Hardware-specific helpers are the largest remaining blind spot; they are probably fine as compact official entries unless this repo gains access to the matching devices.
 
 ## Next Promotion Targets

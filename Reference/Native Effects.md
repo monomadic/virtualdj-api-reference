@@ -151,33 +151,62 @@ Most effects support multiple parameters that can be adjusted:
 3. **Feedback** - Controls effect repetition/resonance
 4. **Additional Controls** - Effect-specific parameters (filters, stages, modes, etc.)
 
-### Parameter Examples
+Use the effect introspection helpers when building a generic control surface:
 
-**Echo:**
+```vdjscript
+effect_has_slider 1 1
+get_effect_slider_label 1 1
+get_effect_slider_text 1 1
+get_effect_slider_default 1 1 0.5
+effect_has_button 1
+get_effect_button_shortname 1
+```
 
-- Parameter 1: Strength (%)
-- Parameter 2: Length (beats)
-- Parameter 3: Feedback (%)
+Those helpers are safer than assuming every native effect has the same slider count, button count, labels, or default values.
 
-**Flanger:**
+### Observed Parameter Examples
 
-- Parameter 1: Strength (%)
-- Parameter 2: Speed (beats)
-- Parameter 3: Feedback (%)
-- Parameter 4: LFO Amplitude (%)
+These examples are known working forms from local reference pad pages and built-in pad pages. They are not a complete native effect parameter map.
 
-**Cut:**
+**Slot FX presets:**
 
-- Parameter 1: Strength (%)
-- Parameter 2: Length (beats)
-- Parameter 3: Duty cycle (%)
-- Parameter 4: Swing (%)
-- Toggles: Low Cut, High Cut, Mute Beats, Video
+| Effect | Working form | Source |
+| --- | --- | --- |
+| Echo | `effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Echo Out | `effect_select 1 'Echo Out' & effect_slider 1 1 80% & effect_slider 1 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Reverb | `effect_select 2 'Reverb' & effect_slider 2 1 45% & effect_slider 2 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Delay | `effect_select 3 'Delay' & effect_slider 3 1 75% & effect_slider 3 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| BeatGrid | `effect_select 1 'BeatGrid' & effect_slider 1 1 75%` | `Local test`: `Pads/Reference - Slot FX.xml` |
 
-**BeatGrid:**
+**PadFX presets:**
 
-- Creates rhythmic slices based on the track's beatgrid
-- Visual interface for triggering individual beats
+| Effect | Working form | Source |
+| --- | --- | --- |
+| Cut | `padfx 'cut' 50% 0.5bt` | `Local test`: `Pads/PUSH FX.xml` |
+| Cut | `padfx 'cut' 40% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
+| Flanger | `padfx 'flanger' 70% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
+| BeatGrid | `padfx 'beatgrid'` | `Local test`: `Pads/PUSH FX.xml` |
+| Echo on vocal stem | `padfx 'echo' 50% 1bt 65% 75% 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
+| Reverb on vocal stem | `padfx 'reverb' 55% 2bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
+| Echo Out on vocal stem | `padfx_single 'echo out' 80% 1bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
+| Echo Out on vocal stem | `padfx "echo out" 80% 1bt "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
+| Reverb on vocal stem | `padfx "Reverb" 80% "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
+| BeatGrid on instrumental/melorhythm stem | `padfx "Beat Grid" "stemfx:MeloRhythm"` | `Built-in pad page`: `pads_stems+fx.xml` |
+
+These `padfx` forms are good quick-trigger examples, but they do not imply private pad ownership. User-provided local testing found that another pad using the same effect/stem target can alter the active pad-FX parameters, and that `effect_disable_all 'padfx'` should be kept as a separate cleanup action rather than chained immediately before new `padfx` calls.
+
+BeatGrid also has a plugin-specific UI command surface in the built-in plugin XML:
+
+```vdjscript
+effect_command 'set 00'
+effect_command 'get 00'
+effect_command 'cur 0'
+```
+
+Treat those strings as BeatGrid-specific until another plugin UI or local test proves otherwise.
 
 ## Effect Usage
 
@@ -230,6 +259,7 @@ VirtualDJ supports multiple effect slots:
 - FX1, FX2, FX3 (deck effects)
 - Master FX (master output effects)
 - Each slot can have its own effect with independent parameters
+- `effect_select_multi` can keep more than one effect instance in the same slot/channel; query/toggle a specific instance with `effect_active <slot> '<effect>'`
 
 ## Pre-Fader vs Post-Fader
 
@@ -267,6 +297,7 @@ VirtualDJ allows organizing effects into custom lists for easier access:
 - Effect availability and parameters may vary by VirtualDJ version
 - Some effects have graphical user interfaces (GUIs) for advanced parameter control
 - Effects can be combined and chained for complex sound design
+- Exact slider/button maps are only partially documented locally. Prefer tested examples for effect-specific pad presets, and record new parameter findings with the VirtualDJ build and effect version when possible.
 
 ---
 
