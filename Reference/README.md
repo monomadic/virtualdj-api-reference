@@ -54,7 +54,7 @@ Current status:
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
 - `Resources.md` is the source index.
-- Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 21 official names remain in the formal `Needs local test` gap.
+- Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 20 official names remain in the formal `Needs local test` gap.
 - The bundled Button Editor action-description catalog currently has 813 unique action tags across all language files in the local VirtualDJ app, overlapping but not identical with the official appendix or runtime string table.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.
 

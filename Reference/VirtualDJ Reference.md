@@ -5,6 +5,7 @@ Merged reference for this repo's VirtualDJ notes, examples, and preferred implem
 Last reviewed against live VirtualDJ documentation and forum sources on 2026-04-22.
 Local repo links and example inventory audited on 2026-05-09.
 Remote skin local deployment notes updated on 2026-05-24.
+Bundled Remote skin patterns updated on 2026-05-27.
 Stem FX slot forum sources updated on 2026-05-24.
 Variable-scope and device-definition forum sources updated on 2026-05-24.
 Pitch beats-parameter forum source updated on 2026-05-24.
@@ -103,6 +104,10 @@ Source labels used below:
   Prefer `display_time 'remain,elapsed'` with `get_time` instead of custom variables.
   Why: there is a dedicated verb for the job, and current forum guidance explicitly recommends using it instead of toggling your own skin vars for remain versus elapsed displays.
   Source: `Official`, `Official forum`
+
+- Remote browser/settings views:
+  For simple full-screen Remote layouts, follow the bundled pattern: `toggle '$rmbrowser'` drives deck/browser panels with `visibility="var '$rmbrowser' 0/1"`, and `toggle '$rmsettings'` drives a settings overlay initialized with `set '$rmsettings' 0`. In wide phone layouts where browser is one tab among deck/mixer panels, use `skin_panel 'rmbrowser' on` and hide deck-only groups with a `skin_panel 'rmbrowser'` visibility query. Use `browser_window 'folders'` / `'songs'` for touch buttons that focus specific browser panes.
+  Source: `Built-in skin`
 
 - Scripted tempo relationships:
   Use `pitch <beats>` or compute a BPM-like value, `param_cast 'beats'`, then pass it to the target deck's `pitch`.
@@ -324,6 +329,30 @@ Use named groups when the user is choosing a mode and you want it remembered.
 
 Source: `Official`
 
+Remote skins in `Skins/Built-In/Remote/` show two practical view-switching patterns:
+
+```xml
+<button action="toggle '$rmbrowser'"/>
+<panel name="rmdecksview" visibility="var '$rmbrowser' 0"/>
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="90" breakline2="1476-20"/>
+```
+
+```xml
+<button action="skin_panel 'rmbrowser' on"/>
+<group name="topwave" visibility="skin_panel 'rmbrowser' ? no : yes"/>
+<panel name="rmbrowser" group="rmporpanels" visible="no"/>
+```
+
+Use the first for a full-screen browser mode controlled by a global variable. Use the second when browser is one remembered panel inside the same manual panel group as deck/mixer views. Settings overlays are separate in the bundled files:
+
+```xml
+<oninit action="set '$rmsettings' 0"/>
+<button action="toggle '$rmsettings'"/>
+<panel name="rmsettingsview" visibility="var '$rmsettings' 1"/>
+```
+
+Source: `Built-in skin`
+
 ### Conditional Structure
 
 Use `visibility=""` for live display state and `condition=""` for structural selection.
@@ -493,7 +522,25 @@ Browser zoom / "mini" layouts are usually not separate VirtualDJ layout types. T
 
 The `<browser showzoom="yes">` attribute shows VirtualDJ's built-in zoom control in the browser toolbar; custom buttons can also use `action="browser_zoom"` and `query="browser_zoom"`.
 
-Source: `Official`, `Local test`, `Inference`
+Bundled Remote skins also use a dedicated Remote browser mode rather than `browser_zoom`. The browser panel carries panel-local `breakline1` / `breakline2` values so the resize/stretch region follows the active browser view:
+
+```xml
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="432+2+2" breakline2="432+2+975-4-2">
+  <browser>
+    <pos x="25" y="344"/>
+    <size width="2409" height="1061"/>
+  </browser>
+</panel>
+```
+
+For wide Remote phone layouts, the bundled browser side buttons use `browser_window` to focus panes:
+
+```xml
+<button action="browser_window 'folders'"/>
+<button action="browser_window 'songs'"/>
+```
+
+Source: `Official`, `Built-in skin`, `Local test`, `Inference`
 
 ## VDJScript Patterns
 

@@ -193,6 +193,36 @@ User manually switches between panels using buttons or shortcuts. Current state 
 </button>
 ```
 
+**3. Remote full-screen view toggle:**
+Bundled Remote skins commonly switch between deck and browser views with a global skin variable, then leave deck-side subpanels as normal named panels:
+
+```xml
+<button action="toggle '$rmbrowser'"/>
+
+<panel name="rmdecksview" visibility="var '$rmbrowser' 0">
+    ...
+</panel>
+
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="90" breakline2="1476-20">
+    <browser>
+        <pos x="25" y="102"/>
+        <size width="781" height="1272"/>
+    </browser>
+</panel>
+```
+
+Settings overlays in the same bundled Remote files use the same idea with `$rmsettings`:
+
+```xml
+<oninit action="set '$rmsettings' 0"/>
+<button action="toggle '$rmsettings'"/>
+<panel name="rmsettingsview" visibility="var '$rmsettings' 1">
+    ...
+</panel>
+```
+
+Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `4x3T.xml`, `16x9T.xml`, `16x10T.xml`)
+
 **Performance Tip:** If multiple elements share the same visibility condition, nest them in a single `<panel>` instead of adding `visibility=""` to each element individually.
 
 ### Conditional Structure vs Visibility
@@ -1165,6 +1195,21 @@ Some skins also combine `browser_zoom` with `browser_isactive` for an automatic 
 <panel class="browser_zoom_decks" visibility="browser_zoom ? true : browser_isactive ? true : false"/>
 ```
 
+Bundled Remote tablet skins use a related but separate pattern: a dedicated browser view toggled by `$rmbrowser`, with compact deck/mixer controls duplicated around the browser instead of using `browser_zoom`:
+
+```xml
+<button action="toggle '$rmbrowser'"/>
+<panel name="rmdecksview" visibility="var '$rmbrowser' 0"/>
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="432+2+2" breakline2="432+2+975-4-2">
+    <browser>
+        <pos x="25" y="344"/>
+        <size width="2409" height="1061"/>
+    </browser>
+</panel>
+```
+
+Source: `Built-in skin` (`Skins/Built-In/Remote/16x9T.xml`, `16x10T.xml`, `4x3T.xml`)
+
 **Children:**
 - `<pos x="" y=""/>` - Position on screen
 - `<size width="" height=""/>` - Browser dimensions
@@ -1328,6 +1373,23 @@ When using browser in skins, define breaklines in the `<skin>` element to specif
 - **breakline2** - Y-coordinate where stretching ends (bottom of browser)
 - Area between breaklines will stretch; ensure no fixed-position buttons in this area
 - Browser cannot be resized smaller than breakline 1 position
+
+Bundled Remote skins also use panel-local `breakline1` / `breakline2` attributes on full-screen browser and settings panels. This keeps the stretch region tied to the active view rather than only the root skin:
+
+```xml
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="90" breakline2="1476-20">
+    <browser>
+        <pos x="25" y="102"/>
+        <size width="781" height="1272"/>
+    </browser>
+</panel>
+
+<panel name="rmsettingsview" visibility="var '$rmsettings' 1" breakline1="90" breakline2="1476-10">
+    ...
+</panel>
+```
+
+Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `9x19P.xml`, `3x4T.xml`)
 
 **Notes:**
 - Browser automatically handles scrolling, sorting, filtering

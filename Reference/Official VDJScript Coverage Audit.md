@@ -30,13 +30,14 @@ Related local cross-check: [Button Editor Catalog Audit](Button%20Editor%20Catal
 - **Official-name coverage is complete**: 991/991 official verb and alias names are present in `VDJScript Verbs.md`; missing official names are at 0.
 - **Searchability is complete**: the compact official remainder is empty, so every tracked official name now lives in a functional section rather than only in a holding table.
 - **Behavior confidence is not uniform**: high-frequency skin, pad, sampler, browser, loop, cue, FX, stems, timecode, video, config, and mixer helpers now have useful local notes or examples, while low-frequency hardware/developer helpers remain compact and conservative.
-- **The formal local-test gap is 21 official names**, about 2.1% of the official list. Three no-dedicated-hardware sparse helpers (`deck_has_error`, `get_mixfx_active`, and `system`) still need better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
-- **Reasonably complete for everyday documentation** means official-name coverage and searchability are complete. The earlier no-hardware sparse-helper pass is recorded for prior sparse names, but `deck_has_error` and `get_mixfx_active` still need lightweight local checks. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
+- **The formal local-test gap is 20 official names**, about 2.0% of the official list. Two no-dedicated-hardware sparse helpers (`deck_has_error` and `system`) still need better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
+- **Reasonably complete for everyday documentation** means official-name coverage and searchability are complete. The earlier no-hardware sparse-helper pass is recorded for prior sparse names, but `deck_has_error` still needs a lightweight local check. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
 - **Bundled app-resource evidence now exists**: the Button Editor action-description catalog is stored in the local app bundle's `Resources/languages.zip`. It is useful for descriptions and discovery, but it omits some official sparse helpers and includes a small number of catalog/runtime candidates outside the official appendix.
 
 What still sticks out:
 
-- `deck_has_error` and `get_mixfx_active` are official sparse helpers added in the 2026-05-26 appendix refresh; they are present in functional sections but still need local behavior checks.
+- `deck_has_error` is an official sparse helper added in the 2026-05-26 appendix refresh; it is present in a functional section but still needs a local behavior check.
+- `get_mixfx_active` was locally checked in a pad-page text/query context on VirtualDJ `v2026-m b9336`; it mirrors `effect_mixfx_activate` off/on for the selected Mix FX after a track is loaded.
 - `system` is official but still too sparse to promote: local testing only showed blank text return and no visible action result in the sparse-helper pad context.
 - `dualdeckmode_decks` has official context through `dualdeckmode`; the bundled Button Editor language catalog also includes it in several non-English files, but its direct helper behavior still needs observation.
 - Hardware-specific helpers are the largest remaining blind spot; they are probably fine as compact official entries unless this repo gains access to the matching devices.
@@ -44,7 +45,7 @@ What still sticks out:
 ## Next Promotion Targets
 
 - No compact-remainder names currently remain.
-- Next depth pass: locally test `deck_has_error` and `get_mixfx_active`, revisit `system` only if official examples or harmless parameters are found, then test `dualdeckmode_decks` in an appropriate deck/controller context.
+- Next depth pass: locally test `deck_has_error`, revisit `system` only if official examples or harmless parameters are found, then test `dualdeckmode_decks` in an appropriate deck/controller context.
 - Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.
 - Promotion rule: do not remove a verb from **Needs local test** until [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) has a build, context/hardware, observed result, and notes.
 
@@ -60,13 +61,13 @@ What still sticks out:
 - Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
 - Final compact remainder sweep: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `get_beat`, `key_match_button`, `key_match_menu`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`, `open_stem_creator`, `handshake`, `is_using`, `system`, `debug`, `connect`
 - 2026-05-26 appendix refresh: `deck_has_error`, `get_mixfx_active`
-- Local-tested sparse helpers: `connect`, `karaoke_venue_name`, `open_stem_creator`
+- Local-tested sparse helpers: `connect`, `get_mixfx_active`, `karaoke_venue_name`, `open_stem_creator`
 
 ## Needs Local Test
 
 Manual verification lives in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
-- `deck_has_error`, `get_mixfx_active`, `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
+- `deck_has_error`, `system`, `controllerscreen_deck`, `controller_battery`, `gemini_waveform_zoomlevel`
 - `phase_movement`, `phase_position`, `phase_active`, `v7_status`, `rzx_touch`, `rzx_touch_x`, `rzx_touch_y`
 - `djc_shift`, `djc_button`, `djc_button_popup`, `djc_button_slider`, `djc_button_select`, `djc_panel`
 - `denon_platter`, `dualdeckmode_decks`

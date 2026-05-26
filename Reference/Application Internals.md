@@ -171,7 +171,8 @@ VirtualDJ Remote is the iOS/Android companion app. Official product text describ
 - Remote skins share the same general structure and elements as desktop skins.
 - Desktop skins usually cannot be dropped in unchanged; expect to recode the layout and device-specific behavior.
 - Remote 8 can load v7 Remote skins, but older skins may need updates for the Remote browser.
-- Use `action="browser"` to open the Remote browser.
+- Older/forum examples may use `action="browser"` to open the Remote browser.
+- The bundled Remote 8 skins under `Skins/Built-In/Remote/` mostly implement the browser as an in-skin view: `toggle '$rmbrowser'` switches full-screen deck/browser panels, while wide phone layouts use `skin_panel 'rmbrowser' on` inside a panel group.
 - Remote skins are scaled proportionally to the device screen, with side bars as needed.
 - Avoid video preview windows in Remote skins.
 - Staff guidance says to place custom Remote skins as zip files inside `RemoteSkins`.
@@ -211,6 +212,29 @@ This suggests two valid packaging styles:
 - A multi-variant package with several root-level XML layouts and shared assets, letting VirtualDJ/Remote choose or expose the better layout for the connected device class.
 
 Some downloaded Remote add-ons also act as containers for multiple nested Remote-skin zips. In that case, extract the inner zip files into `RemoteSkins` before selecting them in VirtualDJ.
+
+Bundled Remote browser/settings view patterns worth reusing:
+
+```xml
+<button action="toggle '$rmbrowser'"/>
+<panel name="rmdecksview" visibility="var '$rmbrowser' 0"/>
+<panel name="rmbrowserview" visibility="var '$rmbrowser' 1" breakline1="90" breakline2="1476-20"/>
+
+<oninit action="set '$rmsettings' 0"/>
+<button action="toggle '$rmsettings'"/>
+<panel name="rmsettingsview" visibility="var '$rmsettings' 1"/>
+```
+
+For wide phone variants, the bundled files instead put browser in the same manual panel group as deck/mixer views and add pane-focus buttons:
+
+```xml
+<button action="skin_panel 'rmbrowser' on"/>
+<button action="browser_window 'folders'"/>
+<button action="browser_window 'songs'"/>
+<panel name="rmbrowser" group="rmporpanels" visible="no"/>
+```
+
+Source: `Built-in skin`
 
 For local development, this machine successfully used both installed forms at once: an expanded folder at `RemoteSkins/<Remote Name>/` for fast inspection and a sibling `RemoteSkins/<Remote Name>.zip` for the staff-recommended package form. A compatibility-oriented package can include root-level files such as `skin.xml`/`skin.png` plus tablet aliases such as `skinT1610.xml`, `16x10T.xml`, and `4x3T.xml`. Some locally observed tooling also creates a wrapped top-level folder in the zip, so checking `unzip -l` matters before assuming one package shape.
 

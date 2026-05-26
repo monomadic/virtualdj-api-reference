@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Deck Error Test.xml
+  Manual-test pad page for the sparse official `deck_has_error` helper.
+
+  Test flow:
+    1. Load this pad page in VirtualDJ.
+    2. Record the VirtualDJ build and current deck.
+    3. Observe pads 1-4 before loading anything.
+    4. Press pad 5 with a valid browser track selected; observe whether error
+       state clears after a successful load.
+    5. Press pad 6 to unload; observe `loaded` and `deck_has_error` again.
+    6. Press pad 7 to load a deliberately missing file; observe error state.
+    7. Press pad 5 again with a valid track selected; record whether the error
+       clears after the successful load.
+    8. Use shift pads to log current/deck-scoped values.
+
+  The missing-file path is intentionally under /private/tmp and should not be
+  created. If that file exists locally, choose another nonexistent path and
+  record the change in the tracker.
+
+  Source: Official, Inference
+-->
+<page name="REF: DECK ERROR TEST">
+
+  <pad1 name="ERR: `deck_has_error`"
+        color="deck_has_error ? color 'red' : color 'green'"
+        query="deck_has_error ? on : off">
+    nothing
+  </pad1>
+
+  <pad2 name="LOAD: `loaded`"
+        color="loaded ? color 'blue' : color 'gray'"
+        query="loaded ? on : off">
+    nothing
+  </pad2>
+
+  <pad3 name="D1ERR: `deck 1 deck_has_error`"
+        color="deck 1 deck_has_error ? color 'red' : color 'green'"
+        query="deck 1 deck_has_error ? on : off">
+    deck 1 deck_has_error
+  </pad3>
+
+  <pad4 name="D2ERR: `deck 2 deck_has_error`"
+        color="deck 2 deck_has_error ? color 'red' : color 'green'"
+        query="deck 2 deck_has_error ? on : off">
+    deck 2 deck_has_error
+  </pad4>
+
+  <pad5 name="LOAD SEL"
+        color="color 'blue'">
+    load
+  </pad5>
+
+  <pad6 name="UNLOAD"
+        color="color 'gray'">
+    unload
+  </pad6>
+
+  <pad7 name="LOAD MISS"
+        color="color 'red'">
+    load "/private/tmp/virtualdj-deck-has-error-missing-do-not-create.mp3"
+  </pad7>
+
+  <pad8 name="UNDO"
+        color="color 'orange'">
+    undo_load
+  </pad8>
+
+  <shift_pad1 name="LOG ERR" color="color 'red'">debug `deck_has_error`</shift_pad1>
+  <shift_pad2 name="LOG LOAD" color="color 'blue'">debug `loaded`</shift_pad2>
+  <shift_pad3 name="LOG D1ERR" color="color 'red'">debug `deck 1 deck_has_error`</shift_pad3>
+  <shift_pad4 name="LOG D2ERR" color="color 'red'">debug `deck 2 deck_has_error`</shift_pad4>
+  <shift_pad5 name="D1 LOAD" color="color 'blue'">deck 1 load</shift_pad5>
+  <shift_pad6 name="D1 UNLOAD" color="color 'gray'">deck 1 unload</shift_pad6>
+  <shift_pad7 name="D1 MISS" color="color 'red'">deck 1 load "/private/tmp/virtualdj-deck-has-error-missing-do-not-create.mp3"</shift_pad7>
+  <shift_pad8 name="LOG D1LOAD" color="color 'blue'">debug `deck 1 loaded`</shift_pad8>
+
+</page>

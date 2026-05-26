@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Dual Deck Mode Test.xml
+  Manual-test pad page for the sparse official `dualdeckmode_decks` helper.
+
+  Test flow:
+    1. Load this pad page in VirtualDJ.
+    2. Observe pad 1 with dual-deck mode off, then press pad 1 to toggle it.
+    3. Compare current, deck 1, deck 2, deck 3, and deck 4 return values.
+    4. Repeat from different active-deck contexts, especially deck pairs 1/3
+       and 2/4.
+    5. Use shift pads to log deck-scoped values.
+
+  This page is meant to reveal whether `dualdeckmode_decks` is a boolean,
+  text/value helper, or action-only helper in pad/deck contexts.
+
+  Source: Official, Button Editor catalog, Inference
+-->
+<page name="REF: DUAL DECKMODE TEST">
+
+  <pad1 name="MODE: `dualdeckmode`"
+        color="dualdeckmode ? color 'blue' : color 'gray'"
+        query="dualdeckmode ? on : off">
+    dualdeckmode
+  </pad1>
+
+  <pad2 name="CUR: `dualdeckmode_decks`"
+        color="dualdeckmode_decks ? color 'green' : color 'red'"
+        query="dualdeckmode_decks ? on : off">
+    dualdeckmode_decks
+  </pad2>
+
+  <pad3 name="D1: `deck 1 dualdeckmode_decks`"
+        color="deck 1 dualdeckmode_decks ? color 'green' : color 'red'"
+        query="deck 1 dualdeckmode_decks ? on : off">
+    deck 1 dualdeckmode_decks
+  </pad3>
+
+  <pad4 name="D2: `deck 2 dualdeckmode_decks`"
+        color="deck 2 dualdeckmode_decks ? color 'green' : color 'red'"
+        query="deck 2 dualdeckmode_decks ? on : off">
+    deck 2 dualdeckmode_decks
+  </pad4>
+
+  <pad5 name="D3: `deck 3 dualdeckmode_decks`"
+        color="deck 3 dualdeckmode_decks ? color 'green' : color 'red'"
+        query="deck 3 dualdeckmode_decks ? on : off">
+    deck 3 dualdeckmode_decks
+  </pad5>
+
+  <pad6 name="D4: `deck 4 dualdeckmode_decks`"
+        color="deck 4 dualdeckmode_decks ? color 'green' : color 'red'"
+        query="deck 4 dualdeckmode_decks ? on : off">
+    deck 4 dualdeckmode_decks
+  </pad6>
+
+  <pad7 name="LOG CUR" color="color 'white'">debug `dualdeckmode_decks`</pad7>
+  <pad8 name="LOG MODE" color="color 'blue'">debug `dualdeckmode`</pad8>
+
+  <shift_pad1 name="TOG MODE" color="color 'blue'">dualdeckmode</shift_pad1>
+  <shift_pad2 name="LOG CUR" color="color 'white'">debug `dualdeckmode_decks`</shift_pad2>
+  <shift_pad3 name="LOG D1" color="color 'green'">debug `deck 1 dualdeckmode_decks`</shift_pad3>
+  <shift_pad4 name="LOG D2" color="color 'green'">debug `deck 2 dualdeckmode_decks`</shift_pad4>
+  <shift_pad5 name="LOG D3" color="color 'green'">debug `deck 3 dualdeckmode_decks`</shift_pad5>
+  <shift_pad6 name="LOG D4" color="color 'green'">debug `deck 4 dualdeckmode_decks`</shift_pad6>
+  <shift_pad7 name="LOG D1MODE" color="color 'blue'">debug `deck 1 dualdeckmode`</shift_pad7>
+  <shift_pad8 name="LOG D2MODE" color="color 'blue'">debug `deck 2 dualdeckmode`</shift_pad8>
+
+</page>

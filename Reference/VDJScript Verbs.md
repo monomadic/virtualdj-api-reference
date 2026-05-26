@@ -79,7 +79,7 @@ Coverage depth is tiered:
 - Broad catalog sections below cover common usage in a compact form.
 - Current official-name coverage is 991/991 with 0 missing names.
 - The [Official Appendix Remainder](#official-appendix-remainder) section is kept as an audit marker; all tracked official names are currently searchable in functional sections, so the compact official remainder is empty.
-- The remaining formal `Needs local test` gap is 21 sparse or hardware-specific official names; build/context results belong in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
+- The remaining formal `Needs local test` gap is 20 sparse or hardware-specific official names; build/context results belong in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
 Promote compact official entries into curated sections when they become relevant to skins, pads, mappings, published-skin findings, or local tests.
 
@@ -557,6 +557,8 @@ Typical forms:
 toggle 'MyVar'
 toggle '$MyVar'
 toggle '@$show_zoom_racks'
+toggle '$rmbrowser'
+toggle '$rmsettings'
 ```
 
 Preferred usage:
@@ -565,11 +567,13 @@ Preferred usage:
 - avoid using it when the target should mirror a built-in state such as `play`, `loop`, or `masterdeck`
 - the variable prefix is part of the variable identity. `toggle 'MyVar'` and `toggle '$MyVar'` change two different variables.
 - query a global variable with the same global name, for example `var_equal '$MyVar' 1 ? action1 : action2`
+- bundled Remote skins use `toggle '$rmbrowser'` for full-screen deck/browser view switching and `toggle '$rmsettings'` for the settings overlay; the matching panels use `visibility="var '$rmbrowser' 0/1"` and `visibility="var '$rmsettings' 1"`
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official forum`: "XML Variables in Skin and Database", PhantomDeejay, 2019-07-30
+- `Built-in skin`: `Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `16x9T.xml`
 
 ### `get_var`
 
@@ -667,17 +671,20 @@ Typical forms:
 ```vdjscript
 skin_panel 'my_panel' on
 skin_panel 'my_panel' off
+skin_panel 'rmbrowser' on
 ```
 
 Preferred usage:
 
 - use for explicit panel toggles
 - if panel visibility should simply follow a live condition, prefer panel `visibility=""` or other query-driven skin logic instead of setting extra vars only to call `skin_panel`
+- bundled wide Remote phone skins use `skin_panel 'rmbrowser' on` to select a browser panel inside `group="rmporpanels"`; nearby elements hide with queries such as `visibility="skin_panel 'rmbrowser' ? no : yes"`
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: Skin SDK panel documentation
+- `Built-in skin`: `Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
 
 ### `skin_panelgroup`
 
@@ -4130,10 +4137,12 @@ Preferred usage:
 
 - use this to move focus between browser panes
 - use `sideview` when the goal is to choose which sideview is shown, not just move focus to the sideview pane
+- bundled wide Remote phone skins expose large browser-panel buttons for `browser_window 'folders'` and `browser_window 'songs'`; this is a good reference for touch UIs that need explicit folder/list focus targets
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Built-in skin`: `Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
 
 ### `search`
 
@@ -5675,7 +5684,7 @@ Sources:
 | `effect_mixfx`        | Associate effect with crossfader    | `effect_mixfx`                    |
 | `effect_mixfx_select` | Select Mix FX                       | `effect_mixfx_select "filter"`    |
 | `effect_mixfx_activate` | Toggle Mix FX                     | `effect_mixfx_activate`           |
-| `get_mixfx_active`    | Sparse Mix FX active-state helper; needs local behavior check | `get_mixfx_active` |
+| `get_mixfx_active`    | Get/query Mix FX active state | `get_mixfx_active` |
 | `effect_stems`        | Route effects to selected stems     | `effect_stems 'vocal'`            |
 | `effect_stems_color`  | Get color for the `effect_stems` button | `effect_stems_color`          |
 | `effect_arm_stem`     | Arm stems for `stems` slot effect actions | `effect_arm_stem Vocal+Bass` |
@@ -5745,7 +5754,7 @@ Sources:
 
 FX catalog note:
 
-- `get_mixfx_active` appears in the official appendix but remains sparse; compare it against `effect_mixfx_activate` in skin, pad, and custom-button contexts before treating it as a preferred Mix FX state query.
+- `get_mixfx_active` appears in the official appendix and has sparse official prose. Local pad-page test on VirtualDJ `v2026-m b9336`: after loading a track, `` `get_mixfx_active` `` returned `off`/`on` and its query state mirrored `effect_mixfx_activate` while switching the selected Mix FX between Filter and Echo.
 - Numbered deck FX slots 1-6 are the supported range to use in reference examples. The manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and `effect_bank_save` / `effect_bank_load` explicitly save/load deck FX slots 1-6.
 - `effect_bank_save` / `effect_bank_load` are official rack snapshot helpers for deck FX slots 1-6. Prefer explicit `effect_select` / `effect_slider` / `effect_active` macros when a pad needs deterministic preset values rather than whatever a saved bank contains.
 - `effect_disable_all 'padfx'` clears temporary pad FX, but should be documented as a cleanup/reset control rather than an inline initializer before new `padfx` actions.
