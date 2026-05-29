@@ -1313,9 +1313,21 @@ Status: Needs local test.
 <visual source="effect_command 'cur 0'"/>
 ```
 
-Treat command strings as plugin-specific. Do not generalize BeatGrid's command map to other effects unless the plugin UI or a local test proves the command.
+The same file also shows context-dependent shortcuts around the selected plugin:
 
-Source: `Built-in skin`, `Inference`
+```xml
+<button action="effect_show_gui"/>
+<button action="effect_dock_gui"/>
+<button action="effect_active"/>
+<text action="get_effect_title"/>
+<button action="effect slider 1 +0.143"/>
+<text format="`get_effect_slider_text 1` / 8"/>
+<button action="effect_button 1 on"/>
+```
+
+This is useful evidence that a plugin UI can be a fixed bitmap control surface with hardcoded plugin commands, direct coordinate arithmetic such as `x="4*20+9+3"`, and repeated controls without `<define>`, `<deck>`, or `<panel>` containers. It is not evidence for a universal `effect_command` language, a reusable generic FX rack, or the recommended structure for desktop/Remote skins. Generic skins should still prefer slot/target-qualified controls and introspection helpers such as `effect_has_slider`, `get_effect_slider_label`, and `get_effect_button_shortname`.
+
+Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
 
 ### Effect Presets with Parameters
 

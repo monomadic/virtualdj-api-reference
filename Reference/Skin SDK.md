@@ -27,6 +27,10 @@ The root element of every skin with these attributes:
 | `image` | Graphics filename | filename (optional if matches XML name) |
 | `preview` | Preview screenshot | filename (optional) |
 
+Built-in plugin UI XML is a narrower surface than a desktop or Remote skin. The shipped BeatGrid plugin UI at `Skins/Built-In/Plugin-UI/AFX_beatgrid.xml` begins with `?<skin width="341" height="139" version="8">`, has no `name`, `image`, `preview`, `nbdecks`, `<deck>`, `<panel>`, browser, or `<oninit>` scaffolding, and pairs with `AFX_BeatGrid.png` beside it rather than declaring an `image=""` attribute. It is useful for studying small plugin-owned GUI layout and control idioms, but do not use it as the package/root template for full skins.
+
+Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
+
 ### Runtime Deck Count
 
 In addition to the root `nbdecks` attribute, working skins can set the exposed deck count with child `<nbdecks>` elements. These can be conditional, which lets a skin switch between two-deck and four-deck structures from stored skin state:

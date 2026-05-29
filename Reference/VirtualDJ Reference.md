@@ -154,6 +154,11 @@ Source labels used below:
   Why: app-bundle skins are stronger evidence than community skins for how Atomix exercises the skin engine, but they still need curation before becoming preferred local patterns.
   Source: `Built-in skin`, `Inference`
 
+- Built-in plugin UI XML:
+  Treat [Skins/Built-In/Plugin-UI/AFX_beatgrid.xml](../Skins/Built-In/Plugin-UI/AFX_beatgrid.xml) as evidence for compact effect/plugin GUI surfaces, not as a full desktop or Remote skin template.
+  Why: it is a tiny `341x139` skin with no explicit `name`, `image`, `preview`, `nbdecks`, `<deck>`, `<panel>`, browser, or initialization scaffolding. Its controls run in the current plugin context with hardcoded BeatGrid commands such as `effect_command 'set 00'`, `effect_command 'get 00'`, and `effect_command 'cur 0'`.
+  Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
+
 - Built-in pad pages:
   Use [Pads/Built-In](../Pads/Built-In/) as semi-official executable examples of pad-page XML shipped with VirtualDJ.
   Why: app-bundle pad pages are stronger evidence than community examples for how Atomix exercises pad helpers, but they still need curation before becoming preferred local patterns.

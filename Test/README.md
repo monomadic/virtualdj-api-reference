@@ -19,3 +19,10 @@ Test assets are important evidence for the documentation project. They are kept 
 | [Pads/Reference - Deck Error Test.xml](Pads/Reference%20-%20Deck%20Error%20Test.xml) | Deck load-error state checks for `deck_has_error`. |
 | [Pads/Reference - Dual Deck Mode Test.xml](Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Current and deck-scoped `dualdeckmode_decks` checks. |
 | [Pads/Reference - FX Introspection Test.xml](Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Deck FX slider/button label, count, default, and `effect_has_*` checks. |
+
+## Skin Fixtures
+
+| Folder | Purpose |
+| --- | --- |
+| [Skins/MixFxQueryTest/](Skins/MixFxQueryTest/) | Skin-side Mix FX query checks used with the Mix FX pad fixture. |
+| [Skins/PlaceholderConditionTest/](Skins/PlaceholderConditionTest/) | Define-placeholder `visibility=""` / `condition=""` canary for skin XML. |

@@ -4,6 +4,7 @@ Low-level reference for VirtualDJ's macOS application layout, user data, databas
 
 Last reviewed against local files and live VirtualDJ sources on 2026-05-23 (Asia/Manila).
 Remote skin deployment and selector behavior updated from local testing on 2026-05-24 (Asia/Manila).
+External-prep cue workflow added from current official sources and local database context on 2026-05-27 (Asia/Manila).
 
 ## Scope
 
@@ -569,6 +570,77 @@ printf '0x%08X\n' 4294901760
 ```
 
 Observed meaning is cue locking state, but the full set of values is not documented here yet.
+
+## External Prep And Auto-Hotcue Workflow
+
+This section answers the practical question: "If I prepare tracks outside VirtualDJ, what can VirtualDJ pick up without hand-editing every track in the POI Editor?"
+
+Short answer: VirtualDJ can inherit hotcue data from supported file tags or from its own `database.xml` cue POIs, but VirtualDJ analysis does not turn musical structure into normal Hot Cues by itself. It creates analysis POIs such as first-beat/beatgrid, automix/mix points, and remix points; user-facing Hot Cues still need to come from user action, imported cue metadata, or database preparation.
+
+Source: `Official`, `Local observation`, `Inference`
+
+### What VirtualDJ Can Inherit Automatically
+
+| Input | What VirtualDJ can use | Practical meaning | Source |
+| --- | --- | --- | --- |
+| File tags | Stored Hotcue/cue information when `getCuesFromTags` is enabled. Official option text calls this "Get the cues field from the tag"; VDJPedia says VirtualDJ can read stored Hotcue information from ID3 tags, by default for files seen for the first time, or always if the option is changed. | A prep tool that writes cue metadata in a format VirtualDJ recognizes can feed VirtualDJ without touching the POI Editor. This is the cleanest path for new files. | `Official` |
+| Existing `database.xml` entries | `<Poi Type="cue" Pos="..." Num="..." Name="..." Color="..."/>` entries under a matching `<Song>`. | If the VirtualDJ database already contains the cue POIs, the built-in Hot Cues pad page and skins can display/trigger them via `hot_cue`, `cue_display`, `cue_color`, `cue_name`, and related verbs. | `Official`, `Built-in pad page`, `Built-in skin`, `Local observation` |
+| VirtualDJ analysis | Beatgrid/first-beat POIs, Automix/mix POIs, and Remix Points. | These can help navigation and the Remix Points pad page, but they are not the same as normal Hot Cues 1-8/16 on controller pads. | `Official`, `Local observation` |
+| Saved loops in POIs | Saved-loop POIs can appear on the HotCue pad page when saved as cue-style loop slots. | Useful for prepared loop workflows, but still requires loop POIs with the right slot/size metadata rather than plain analysis markers. | `Official`, `Local observation` |
+
+### What Requires External Prep
+
+If the goal is "drop new tracks into a folder and have Hot Cues appear on pads with no manual VirtualDJ work," one of these steps has to happen before performance time:
+
+- Write recognized cue/hotcue metadata into the media file tags before VirtualDJ first indexes the file, then leave `getCuesFromTags` at its default "for new files" behavior or set it to `always` for a tag-authoritative workflow.
+- Use a library-conversion tool, tag editor, or custom script that understands the Serato/Traktor/Rekordbox-style cue metadata you want to feed VirtualDJ. The exact tag-frame grammar is not mapped in this repo yet.
+- Generate or update VirtualDJ `database.xml` cue POIs directly after VirtualDJ has created the `<Song>` rows. This is the most controllable path for custom auto-cue algorithms, but it is also the path that needs the strict backup/validation rules from this file.
+
+Source: `Official`, `Official forum`, `Local observation`, `Inference`
+
+### Realistic No-Manual-Touch Workflow On macOS
+
+Tag-first workflow, best for external DJ-library tools:
+
+1. Run the outside prep tool on the audio files.
+2. Make sure it writes hotcue metadata to file tags or to an intermediate library format VirtualDJ can read.
+3. In VirtualDJ, set `getCuesFromTags` to `for new files` when tags should seed only first import, or `always` when the external tags should stay authoritative.
+4. Put the files in a watched folder or browse them in VirtualDJ so they are added to the database.
+5. Load a track and use the built-in Hot Cues page, or this repo's cue pad pages, to confirm the cue names, positions, and colors.
+
+Database-first workflow, best for custom phrase/structure detection:
+
+1. Add or reveal the tracks to VirtualDJ once so `~/Library/Application Support/VirtualDJ/database.xml` gets `<Song>` rows with the final file paths and sizes.
+2. Quit VirtualDJ.
+3. Back up and validate `database.xml`.
+4. Run the external analyzer/prep script and merge cue POIs into the matching `<Song>` entries:
+
+```xml
+<Poi Type="cue" Pos="64.000000" Name="DROP" Num="1" Color="4278255360"/>
+<Poi Type="cue" Pos="128.000000" Name="BREAK" Num="2" Color="4293375736"/>
+```
+
+5. Validate `database.xml` again, reopen VirtualDJ, and load the tracks.
+
+The macOS paths for that workflow are:
+
+| Path | Role | Source |
+| --- | --- | --- |
+| `~/Library/Application Support/VirtualDJ/database.xml` | Main same-drive VirtualDJ track database and cue POI store. | `Official forum`, `Local observation` |
+| `/Volumes/<Drive>/VirtualDJ/database.xml` | Per-drive database for media on other drives. | `Official forum`, `Inference` |
+| `~/Library/Application Support/VirtualDJ/settings.xml` | Stores explicit overrides for options such as `getCuesFromTags`, `getTagsAuto`, watched folders, and related settings. Defaults may not appear until changed. | `Official`, `Local observation`, `Inference` |
+
+Source: `Official`, `Official forum`, `Local observation`, `Inference`
+
+### Cautions
+
+- VirtualDJ does not write its cue changes back to file tags; VirtualDJ's durable cue store is its database. If another app owns the tags, decide whether tags or VirtualDJ should be authoritative before setting `getCuesFromTags` to `always`.
+- If a file already has a VirtualDJ database entry, tag changes may not be imported again unless the relevant settings and first-seen/database state allow it.
+- Direct `database.xml` edits should only happen while VirtualDJ is closed. Always back up, validate XML before and after, and match by exact file path plus other identity fields where possible.
+- `Pos` values are seconds in observed `database.xml` cue POIs, while cue/loop UI actions may use beats, milliseconds, or display-time formats. Convert deliberately.
+- Auto-created Remix Points can be played from the Remix Points pad page, but they are not a substitute for numbered Hot Cues when the controller workflow expects `hot_cue 1` through `hot_cue 8` or `16`.
+
+Source: `Official`, `Official forum`, `Built-in pad page`, `Local observation`, `Inference`
 
 ## Querying database.xml
 
@@ -1171,6 +1243,10 @@ Known unknown:
 - [VirtualDJ forum: macOS `database.xml` location](https://www.virtualdj.com/forums/261193/VirtualDJ_Technical_Support/Where_can_I_find_the_database_xml_file_on_MacOS_.html) - `Official forum`
 - [VirtualDJ forum: home folder, master database, and per-drive local databases](https://www.virtualdj.com/forums/223863/VirtualDJ_Technical_Support/Machine_specific_settings_xml_and_licence_dat_.html) - `Official forum`
 - [VirtualDJ manual: Extensions](https://virtualdj.com/manuals/virtualdj/settings/extensions.html) - `Official`
+- [VirtualDJ manual: Options list](https://www.virtualdj.com/manuals/virtualdj/appendix/optionslist.html) - `Official`
+- [VirtualDJ manual: POI Editor](https://virtualdj.com/manuals/virtualdj/editors/poieditor.html) - `Official`
+- [VirtualDJ manual: Pads](https://virtualdj.com/manuals/virtualdj/interface/decks/decksadvanced/pads.html) - `Official`
+- [VDJPedia: Rekordbox settings and reading cues from tags](https://virtualdj.com/wiki/rekordboxsettings.html) - `Official`
 - [VirtualDJ manual: VirtualDJ Remote](https://www.virtualdj.com/manuals/virtualdj/vdjremote/) - `Official`
 - [VirtualDJ manual: Remote Setup](https://www.virtualdj.com/manuals/virtualdj/vdjremote/remotesetup.html) - `Official`
 - [VirtualDJ product page: VirtualDJ Remote](https://www.virtualdj.com/products/vdjremote.html) - `Official`

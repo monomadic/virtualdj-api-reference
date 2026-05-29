@@ -32,7 +32,7 @@ Related local cross-check: [Button Editor Catalog Audit](Button%20Editor%20Catal
 - **Behavior confidence is not uniform**: high-frequency skin, pad, sampler, browser, loop, cue, FX, stems, timecode, video, config, and mixer helpers now have useful local notes or examples, while low-frequency hardware/developer helpers remain compact and conservative.
 - **The formal local-test gap is 20 official names**, about 2.0% of the official list. Two no-dedicated-hardware sparse helpers (`deck_has_error` and `system`) still need better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers.
 - **Reasonably complete for everyday documentation** means official-name coverage and searchability are complete. The earlier no-hardware sparse-helper pass is recorded for prior sparse names, but `deck_has_error` still needs a lightweight local check. Fully verified coverage would require target controller hardware for controller-screen, Phase, RZX, DJC, V7, Gemini, and Denon-specific helpers.
-- **Bundled app-resource evidence now exists**: the Button Editor action-description catalog is stored in the local app bundle's `Resources/languages.zip`. It is useful for descriptions and discovery, but it omits some official sparse helpers and includes a small number of catalog/runtime candidates outside the official appendix.
+- **Bundled app-resource evidence now exists**: the Button Editor action-description catalog is stored in the local app bundle's `Resources/languages.zip`. It is useful for descriptions and discovery, but it omits some official sparse helpers and includes 14 catalog-only candidates outside the official appendix. The richer runtime string block adds 21 stricter runtime-only candidates outside both the official appendix and Button Editor catalog.
 
 What still sticks out:
 
@@ -41,11 +41,15 @@ What still sticks out:
 - `system` is official but still too sparse to promote: local testing only showed blank text return and no visible action result in the sparse-helper pad context.
 - `dualdeckmode_decks` has official context through `dualdeckmode`; the bundled Button Editor language catalog also includes it in several non-English files, but its direct helper behavior still needs observation.
 - Hardware-specific helpers are the largest remaining blind spot; they are probably fine as compact official entries unless this repo gains access to the matching devices.
+- The current [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md) found no exact-token `Built-in skin` or `Built-in pad page` XML evidence for any of the 35 non-official catalog/runtime candidates.
 
 ## Next Promotion Targets
 
 - No compact-remainder names currently remain.
 - Next depth pass: locally test `deck_has_error`, revisit `system` only if official examples or harmless parameters are found, then test `dualdeckmode_decks` in an appropriate deck/controller context.
+- Next catalog-only pass: test `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` Button Editor catalog group before promoting them into normal user-facing verb guidance.
+- Next hardware/context pass for catalog-only names: verify `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable` only with matching hardware or reliable official context.
+- Runtime string-table names such as `get_pad_page_name`, `pad_page_favorite`, `pad_page_split`, `hot_cue_stutter`, `timecode_no_jump`, and `setting_if_unchanged` should stay discovery-only until official, Button Editor, shipped XML, or local behavior evidence appears.
 - Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.
 - Promotion rule: do not remove a verb from **Needs local test** until [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) has a build, context/hardware, observed result, and notes.
 

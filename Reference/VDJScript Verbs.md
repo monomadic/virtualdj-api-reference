@@ -40,6 +40,8 @@ Current curated coverage includes:
 - `Built-in skin`: observed in skin XML shipped inside the VirtualDJ app bundle; treat as semi-official executable evidence, then curate before recommending
 - `Published pad page`: observed in a working public pad page; use as provenance and a prompt for testing, not as sole semantic authority
 - `Built-in pad page`: observed in pad-page XML shipped inside the VirtualDJ app bundle; treat as semi-official executable evidence, then curate before recommending
+- `Built-in app resource`: command name, description, or UI catalog entry observed in non-skin/non-pad resources shipped inside the VirtualDJ app bundle
+- `Binary string-table`: command-looking string observed in the VirtualDJ executable; use for discovery only, not as behavior evidence
 - `Local test`: behavior reproduced in VirtualDJ locally
 - `Inference`: a conclusion drawn from official behavior plus repo usage
 

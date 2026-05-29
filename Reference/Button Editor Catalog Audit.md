@@ -16,6 +16,8 @@ Observed on 2026-05-26:
 
 The Button Editor has a built-in searchable action catalog with categories, action names, and descriptions. This audit records the local source for the description text and compares it with the official appendix and the runtime-looking string table in the executable.
 
+Syntax highlighting and hover tokenization are tracked separately in [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md), since they are parser/highlighter evidence rather than catalog-description evidence.
+
 This is a documentation cross-check, not a replacement for the official appendix. Treat it as `Built-in app resource` evidence: stronger than community examples for existence and prose, but not sufficient by itself to prove behavior, parameter coverage, or current public support.
 
 ## Bundled Language Catalog
@@ -59,6 +61,61 @@ Initial counts:
 
 The second binary block includes aliases not seen in the first block, including `close`, `get_album`, `get_artist`, `get_beat`, `get_beatpos`, `get_bpm`, `get_title`, `get_vu_meter`, `pitch`, and `video_crossfader`.
 
+## Concrete Mismatch Findings
+
+Generated with:
+
+```sh
+python3 tools/extract_vdjscript_catalogs.py
+```
+
+### Button Editor Catalog, Not Official Appendix
+
+Source: `Built-in app resource` (`Resources/languages.zip` multilingual `<Actions>` union).
+
+These 14 action tags are present in the Button Editor catalog but are not parsed from the official VDJScript appendix audit:
+
+- `assign_related_controller`, `crash`, `flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`
+- `pad_page_insplit`, `pad_pressure_switch`, `rane_motor_enable`, `rane_timecode`, `rane_timecode_enable`
+- `sampler_inputgain`, `stem_volume`
+
+Treat these as catalog-only candidates until another source confirms behavior, parameter shape, or public support.
+
+### Runtime String Block, Not Official Or Button Editor
+
+Source: `Binary string-table` (`strings -a` block 2 from `Contents/MacOS/VirtualDJ`).
+
+These 21 VDJScript-looking names are present in the richer runtime string block but are not in the official appendix audit or the Button Editor action catalog:
+
+- `all_decks`, `browser_colorfilter_edit`, `combine_query`, `controllerscreen_action`, `effect_beats_sliderindex`
+- `flip_get_status`, `get_pad_page_name`, `hot_cue_stutter`, `load_security_shown`, `master_beat_num`
+- `masterbpm`, `motorwheel3`, `ns7_get_drift`, `pad_page_favorite`, `pad_page_split`
+- `rane_screen_input`, `rane_screen_output`, `remote_action`, `send_nothing`, `setting_if_unchanged`
+- `timecode_no_jump`
+
+Treat these as discovery-only candidates. The executable string table is useful for finding possible internals, but it is not enough evidence for normal user-facing recommendations.
+
+### Shipped XML Evidence Check
+
+Source labels searched: `Built-in pad page`, `Built-in skin`.
+
+The extractor scanned exact token matches for the 35 non-official candidates above across:
+
+- `Pads/Built-In/`
+- `Skins/Built-In/`
+- `examples/pads/official/`
+- `examples/skins/official/`
+- `examples/samplerbank/official/`
+
+Result: none of the 35 candidates currently has shipped XML evidence elsewhere in this repo.
+
+## Next-Step Promotion Targets
+
+- Immediate XML-backed promotions: none from this mismatch pass.
+- Highest-value catalog-only local tests: `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` group (`flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`).
+- Hardware/context-dependent catalog candidates: `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable`.
+- Runtime-only names to watch, not promote yet: `get_pad_page_name`, `pad_page_favorite`, `pad_page_split`, `hot_cue_stutter`, `timecode_no_jump`, and `setting_if_unchanged`.
+
 ## Interpretation
 
 The local evidence now points to at least three overlapping catalogs:
@@ -84,4 +141,4 @@ Run:
 python3 tools/extract_vdjscript_catalogs.py
 ```
 
-The helper is read-only and compares the installed app's language catalog, executable string block, and this repo's official coverage audit.
+The helper is read-only and compares the installed app's language catalog, executable string block, this repo's official coverage audit, and exact-token shipped XML evidence in the copied built-in/official XML roots.
