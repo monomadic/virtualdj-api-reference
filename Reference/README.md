@@ -16,6 +16,9 @@ Start here:
 - [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md)
   Local cross-check of the VDJScript action descriptions bundled in VirtualDJ's Button Editor language resources, plus binary string-table counts.
 
+- [Button Editor Taxonomy](Button%20Editor%20Taxonomy.md)
+  Extracted Button Editor category mapping from the compiled executable tables, including visible and hidden action counts.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 
@@ -37,6 +40,10 @@ Start here:
 - [Skin Inventory](../Skins/README.md)
   Local skin examples, copied built-in skins, and build-system demos.
 
+- [Skin Runtime Findings](Skin%20Runtime%20Findings.md)
+  Local-test notes for skin placeholder substitution, conditional placement,
+  and other runtime behavior promoted from skin project experiments.
+
 - [Documentation Tests](../Test/README.md)
   Reproducible local test harnesses used to support reference claims.
 
@@ -52,14 +59,17 @@ Current status:
 - `VDJScript Verbs.md` is the first API-focused pass.
 - `Official VDJScript Coverage Audit.md` tracks official verb coverage depth, missing-name status, and the remaining local-test gap.
 - `Button Editor Catalog Audit.md` tracks the bundled Button Editor action-description catalog and runtime string-table cross-checks.
+- `Button Editor Taxonomy.md` tracks the compiled Button Editor category mapping: 37 displayed categories, 918 visible actions, and 1028 compiled action items.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
+- `Skin Runtime Findings.md` tracks local skin runtime behavior that should be shared across projects rather than kept in one skin repo.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
 - `Resources.md` is the source index.
 - Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 20 official names remain in the formal `Needs local test` gap.
 - The bundled Button Editor action-description catalog currently has 813 unique action tags across all language files in the local VirtualDJ app, including 14 catalog-only names outside the official appendix; the richer runtime string block adds 21 stricter runtime-only names outside both official and Button Editor catalogs. None of those 35 non-official candidates currently has shipped XML evidence in the copied built-in/official XML roots.
+- The compiled Button Editor taxonomy has 37 displayed categories, 918 visible action items, and 1028 total compiled action items; it is useful as category metadata but not as behavior proof.
 - Button Editor syntax highlighting and hover tokenization are now tracked as parser evidence, with `DLGActionWizard::STree`, `customDraw`, `getCurrentWord`, and related symbols as the current binary anchors.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.
 
@@ -73,6 +83,7 @@ Source labels used in the curated docs:
 - `Published pad page`: command or pattern observed in a working public pad page.
 - `Built-in pad page`: command or pattern observed in pad-page XML shipped inside the VirtualDJ app bundle.
 - `Built-in app resource`: command name, description, or UI catalog entry observed in non-skin/non-pad resources shipped inside the VirtualDJ app bundle, such as `Resources/languages.zip`.
+- `Binary compiled table`: structured command metadata observed in compiled executable tables; useful for UI taxonomy and visibility evidence, not behavior evidence by itself.
 - `Binary string-table`: command-looking string observed in the VirtualDJ executable; use for discovery only, not as behavior evidence.
 - `Local test`: behavior reproduced in VirtualDJ locally.
 - `Inference`: conclusion drawn from official docs plus repo testing or architecture.

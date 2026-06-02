@@ -4,6 +4,11 @@
 
 Broad reference for VirtualDJ 8+ skin elements and attributes.
 
+Local-test notes promoted from skin project experiments live in
+[Skin Runtime Findings](Skin%20Runtime%20Findings.md). This file folds those
+findings into the broader SDK reference when they become stable enough to use as
+guidance.
+
 ## Overview
 
 A VirtualDJ skin is a `.zip` file containing:
@@ -350,7 +355,7 @@ Define reusable element templates to avoid repetition.
 
 **Named Placeholders:** Modern working skins commonly declare named placeholders with `placeholders=""`, then use bracketed uppercase tokens inside the define body.
 
-- `*name` marks a placeholder for substitution in expression-like contexts. Local VirtualDJ runtime tests showed this is important beyond math: placeholders used inside `condition=""`, VDJScript expressions, and text strings should be starred, or the bracket token may remain literal.
+- `*name` marks a placeholder for math/expression substitution. Atomix examples describe this as needed for simple math, but the exact boundary of "math" is not fully documented. Boolean operations, `condition=""`, and other VDJScript expression contexts may be part of that boundary.
 - `name=value` supplies a default.
 - Tokens are referenced as `[NAME]` in the template body.
 - Call sites pass values as normal XML attributes, usually lower-case.
@@ -364,9 +369,13 @@ Define reusable element templates to avoid repetition.
 <button class="labeled_button" label="SYNC" width="220" action="sync"/>
 ```
 
-**Starred placeholders in conditions:** The official SDK describes starred placeholders primarily around math, but working skins and local tests indicate a broader rule: star placeholders that must be substituted inside script/text contexts.
+Do not list pass-through element attributes such as `action` or `query` in a visual class's `placeholders=""` contract unless the define body forwards them, usually onto an inner `<button action="[ACTION]" query="[QUERY]">`. In local Remote skin testing, declaring `action`/`query` as placeholders on a base button style consumed those attributes: the button still showed its down visual state, but no command fired.
 
-Unstarred string placeholder values may not substitute in text or conditions:
+Official built-in skins also use many unstarred placeholders in ordinary pass-through contexts, including `action="[ACTION]"`, `text="[TEXT]"`, `source="[SOURCECOLOR]"`, `visibility="[ACTION1]"`, and `scroll="[ACTION2]"`. Do not assume every placeholder inside a VDJScript-bearing attribute must be starred.
+
+**Starred placeholders in conditions:** The official SDK describes starred placeholders primarily around math. Local canary tests suggest some condition/boolean-expression uses also need starred placeholders, but the exact behavior is still unclear and should be tested per pattern.
+
+Unstarred string placeholder values may not substitute in some text or condition forms:
 
 ```xml
 <!-- Observed fragile/non-working in local runtime tests: [SIDE] stayed literal -->
@@ -411,6 +420,12 @@ Numeric starred placeholders work in the usual expression style:
     <group condition="param_equal [FLIP] 1"/>
 </define>
 ```
+
+Current working guidance:
+
+- Use unstarred placeholders for simple pass-through values that match the official skin examples.
+- Use starred placeholders where placeholder values participate in arithmetic, coordinate/size formulas, boolean conditions, `param_equal` comparisons, or other expression-like contexts.
+- Record build-specific canary results before treating any narrower rule as definitive.
 
 **Legacy Positional Placeholders:** Some SDK/forum examples use `$1`, `$2`, etc. and pass values as `$1=""`, `$2=""` attributes:
 ```xml
@@ -457,6 +472,7 @@ Clickable button with multiple states and support for image graphics or vector s
 
 **Confirmed Behavior Notes:**
 - `query=""` drives the button's `<on>` graphics, not `<selected>`. If a button should change appearance when a VDJScript condition is true, use `<off>`/`<on>` for the graphics state. Official reference: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html)
+- For generic pad banks in skins, follow the bundled/default skin pattern: `action="pad <n>"`, shifted/right-click action `padshift <n>`, label `textaction="pad <n>"`, and color source `pad_color <n>` or `pad_button_color <n>`. This keeps the skin independent of the selected pad page; the page may be hot cues, FX, loops, sampler, custom buttons, or controller-specific actions. Use `pad_has_action <n>` only when the skin needs to hide or disable a pad with no current-page push action. Official references: [Pads Editor](https://www.virtualdj.com/manuals/virtualdj/editors/padseditor.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs/). Built-in references: [Pro.xml](../Skins/Built-In/Desktop/Pro.xml), [Performance.xml](../Skins/Built-In/Desktop/Performance.xml), [16x9T.xml](../Skins/Built-In/Remote/16x9T.xml).
 - `rightclick=""` can run any VDJScript action, including built-in menu/popup actions such as `key_match_menu`, `deck_options`, `loop_options`, `browser_options`, `search_options`, `pad_page_select 1`, `effect_select 1`, `effect_select_popup 1`, and `sampler_options`. This is the normal pattern for making a right-click open an existing VirtualDJ menu.
 - Custom skin `<menu>` elements are different: they open when their own menu hit area is clicked. The official `<menu>` element has no documented name/id trigger that lets another button open that exact custom menu from `rightclick=""`. If you need a custom right-click panel, use `rightclick="skin_panel 'my_context_panel' on"` and build the panel with normal buttons, or place a `<menu>` object where the user clicks. Placing a `<menu>` object there makes that area a normal menu click target, not a right-click-only target.
 - Dynamic button border colors are not currently supported. Even though `border=""` is documented as a color field, official clarification from VirtualDJ CTO Adion says dynamic colors are not supported for border color. Use `visual type="color"` overlays or underlays when a border needs to follow `cue_color`, `sampler_color`, etc. Official reference: [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)

@@ -18,6 +18,8 @@ VirtualDJ provides multiple independent effect engines that serve different purp
 | **Stems FX**  | Effects applied to individual stems | Stems pads, Pad FX, named stem slots | Shared routing plus stem-specific slots |
 | **Pad FX**    | Quick-trigger effects with presets  | Pads pages                | Temporary effect triggers |
 
+A useful state model is persistent rack versus volatile performance FX. FX1-FX6 behave like the persistent deck rack: they are meant to be selected, shown, saved, restored, and then triggered or adjusted. Pad FX and named stem FX slots behave more like volatile pad-owned performance state: pads can assign them on demand, they survive normal track changes/current-session use, and they eventually clear rather than becoming the performer's saved rack.
+
 ---
 
 ## ColorFX (Filter Slot)
@@ -212,6 +214,8 @@ See [Published Skin Findings](Published%20Skin%20Findings.md) for the provenance
 
 Standard effect slots on each deck that provide **full multi-parameter control** with up to 6 parameters and 3 buttons per effect.
 
+FX1-FX6 are the persistent deck rack. Skins and controller pages can show, trigger, and tweak whatever the performer has loaded there. A pad page can still select effects into these slots, but that should be treated as a deliberate rack-owning preset action because it changes persistent slot state.
+
 ### Slot Configuration
 
 VirtualDJ skins can display effects in different layouts:
@@ -222,7 +226,7 @@ VirtualDJ skins can display effects in different layouts:
 | **FX x3** (Multi FX)  | 3 slots | Up to 2 parameters per slot    |
 | **FX x6** (Advanced)  | 6 slots | 1-2 parameters per slot        |
 
-Treat numbered deck FX slots **1-6** as the supported range. The current manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and the official `effect_bank_save` / `effect_bank_load` summaries explicitly cover deck FX slots 1 to 6. Do not rely on numeric slots above 6 unless you have a local build-specific test and are comfortable with unsupported behavior.
+Treat numbered deck FX slots **1-6** as the supported range. The current manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and the official `effect_bank_save` / `effect_bank_load` summaries explicitly cover deck FX slots 1 to 6. User-provided local observation on 2026-06-01 also found that FX1-FX6 keep their loaded effect across a VirtualDJ quit/reopen, while FX7 and higher keep their loaded effect during the current session/across track loads but reset after restart. Do not rely on numeric slots above 6 unless you have a local build-specific test and are comfortable with unsupported behavior.
 
 ### VDJScript Commands
 
@@ -315,9 +319,9 @@ effect_active 'reverb' on       # Turn on Reverb effect
 
 This is valid VDJScript and can be the right choice for quick personal mappings or a deliberate "toggle Echo wherever Echo is" shortcut.
 
-For reference pad pages and controller-style examples, prefer slot addressing when the pad needs reliable state. A pad page usually wants to answer "what did this pad put in this slot?" rather than "is there any Echo active somewhere?" Slot addressing also gives the pad a known place to set sliders and buttons.
+For reference pad pages and controller-style examples, prefer slot addressing when the pad needs reliable state. If the page respects the user's persistent FX rack, trigger/control the existing slot with `effect_active`, `effect_slider`, and `effect_button` without changing the loaded effect. If the page is a self-contained preset page, it may use `effect_select` to write its own effect into the slot; document that as rack-owning behavior.
 
-Three reliable pad designs:
+Three reliable rack-owning pad designs:
 
 - Dedicated slot pads:
   Each pad owns one slot, such as Echo on slot 1 and Reverb on slot 2. Use this when several effects should be able to stay active together.
@@ -602,6 +606,10 @@ effect_show_gui 'rhythm' 'Beat Grid'
 `vocals` is plural in the stem-slot examples. This differs from the `effect_stems 'vocal'` and `padfx ... 'stemfx:vocal'` target strings.
 Current known named stem FX slots are `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`. `melovocal` and `melorhythm` may exist, but need local testing before they are treated as confirmed. Do not assume aggregate names such as `instrumental` or `acapella` are valid named stem FX slots unless tested.
 
+User-provided local observation on 2026-06-01 found that named stem FX slots keep their loaded effect during the current session and across track loads, but reset after a VirtualDJ restart. Treat this as loaded-effect selection behavior only; active state, slider values, and multi-effect contents still need a recorded build-specific persistence pass.
+
+That restart boundary makes named stem FX slots a good fit for pad-assigned, stateful performance effects. They let a pad own a vocal/rhythm/bass effect choice without overwriting the persistent FX1-FX6 rack.
+
 Pad XML selected-state pattern:
 
 ```xml
@@ -693,7 +701,7 @@ effect_active 'beatgrid'
 - `Official`: VDJScript appendix documents `effect_stems`, `effect_arm_stem`, and `padfx ... 'stemfx:stemname'`.
 - `Official forum`: Adion documented `effect_show_gui "rhythm" "Beat Grid"` and said the same syntax can be used with other `effect_*` actions; he also described `vocals` as a separate effect slot.
 - `Community`: moderator examples use `effect_show_gui vocals echo & padfx echo 'stemfx:vocal'` to inspect a vocal padfx mapping.
-- `Local test`: vocal Reverb pad pattern with `effect_select 'vocals' 'reverb' ? effect_active 'vocals'`; user-provided multi-effect vocal pad pattern with `effect_select_multi 'vocals' 'echo out'` and `effect_select_multi 'vocals' 'reverb'` (build not recorded); current named slot list in local notes is `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`.
+- `Local test`: vocal Reverb pad pattern with `effect_select 'vocals' 'reverb' ? effect_active 'vocals'`; user-provided multi-effect vocal pad pattern with `effect_select_multi 'vocals' 'echo out'` and `effect_select_multi 'vocals' 'reverb'` (build not recorded); user-provided restart-persistence observation that named stem FX slots reset their loaded effect after restart; current named slot list in local notes is `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`.
 
 ---
 
@@ -709,6 +717,7 @@ effect_active 'beatgrid'
 - **Temporary by design**: Intended to trigger and release, not save settings
 - **Independent from slots**: Can run alongside regular FX slots
 - **Shared by effect/target identity**: `padfx 'reverb' ... 'stemfx:vocal'` is not a private instance owned by the pad that called it
+- **Volatile pad-owned state**: Good when the pad should assign its own effect without rewriting FX1-FX6
 - **Perfect for performance**: Quick creative effects without knob adjustment
 
 ### VDJScript Commands
@@ -808,7 +817,7 @@ effect_disable_all 'padfx'
 
 That is useful for separate reset/cleanup controls on momentary performance pages that track their own pad state with variables. User-provided testing found that chaining `effect_disable_all 'padfx'` immediately before new `padfx` calls in the same pad action can prevent the new pad FX from activating or lighting, while the same chained `padfx` calls work when the inline clear is removed. Treat `effect_disable_all 'padfx'` as a cleanup command, not as a deterministic initializer for a new pad-FX chain.
 
-`padfx` is deterministic about the values passed at the moment it starts, but it does not appear to provide per-pad ownership. Another pad that calls the same effect and stem target, for example another `padfx 'reverb' ... 'stemfx:vocal'`, can reuse or retune that shared pad-FX identity. For a preset that must own a chain of effects and parameters, reserve numbered deck FX slots 1-6 and use explicit `effect_select` / `effect_slider` / `effect_active` actions instead of `padfx`.
+`padfx` is deterministic about the values passed at the moment it starts, but it does not appear to provide per-pad ownership. Another pad that calls the same effect and stem target, for example another `padfx 'reverb' ... 'stemfx:vocal'`, can reuse or retune that shared pad-FX identity. Use `padfx` for volatile performance gestures. If the performer needs a restart-persistent rack or a visible stable chain, reserve numbered deck FX slots 1-6; if a pad writes those slots with `effect_select`, document that it owns/reprograms the rack.
 
 ### Checking Pad FX Status
 
@@ -1217,7 +1226,7 @@ effect_bank_save 1
 effect_bank_load 1
 ```
 
-The official summary says banks cover deck FX slots 1-6. Treat bank contents as a rack-level snapshot, not a substitute for a deterministic pad preset. If a pad needs to guarantee Echo at 1 beat and Reverb at 40%, write explicit `effect_select` / `effect_slider` / `effect_active` actions instead.
+The official summary says banks cover deck FX slots 1-6. Treat bank contents as persistent rack-level snapshots. If a pad needs to guarantee Echo at 1 beat and Reverb at 40% by writing FX1-FX6, document that it is intentionally reprogramming the saved rack; otherwise leave bank/slot selection alone and only trigger or adjust the existing rack.
 
 Use variables only for custom behavior the bank helpers do not model, such as remembering one slot name inside a larger macro:
 
@@ -1566,6 +1575,7 @@ VirtualDJ's effect system is powerful and flexible:
 **Key Principles:**
 
 - Effects can be controlled by **slot number** or **by name**
+- FX1-FX6 are persistent rack state; Pad FX and named stem FX slots are volatile performance state
 - **Pre-fader** is default and recommended for most use cases
 - **Stems FX** requires pre-fader processing
 - **ColorFX** is always pre-fader (integrated with EQ engine)

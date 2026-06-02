@@ -44,7 +44,7 @@ Only three action tags vary by language:
 
 The multilingual union is therefore the best Button Editor catalog source, not English alone.
 
-The language XML does not appear to encode the per-action Button Editor category mapping shown in the UI. Category labels such as `flow`, `param`, `repeat`, `skin`, `system`, `variables`, and `window` are visible as executable strings near `DLGActionWizard`; the action-to-category mapping likely lives in code or a compiled table and still needs separate extraction.
+The language XML does not encode the per-action Button Editor category mapping shown in the UI. That mapping is compiled into the executable and is now tracked in [Button Editor Taxonomy](Button%20Editor%20Taxonomy.md).
 
 ## Runtime String Table Cross-Check
 
@@ -123,7 +123,7 @@ The local evidence now points to at least three overlapping catalogs:
 - The official VDJScript appendix: public names and aliases; currently parsed in this repo as 991 names.
 - The Button Editor language catalog: user-facing action descriptions; currently 813 action tags across bundled languages.
 - The executable string block: runtime-looking action names; currently 967 names in the richer block.
-- The Button Editor category mapping: visible in the UI, but not yet extracted as structured data.
+- The Button Editor compiled taxonomy: currently 918 visible action items across 37 displayed categories.
 
 None of these is identical to the others. The Button Editor catalog omits sparse or helper-style official names such as `deck_has_error`, `get_mixfx_active`, and `system`, while the binary block contains runtime/internal-looking names not currently in the official appendix.
 
@@ -131,7 +131,8 @@ Use this hierarchy when updating the API reference:
 
 1. `Official` remains authoritative for public name coverage.
 2. `Built-in app resource` can supply Button Editor description evidence and discover localized catalog-only names.
-3. Binary string-table evidence can identify runtime candidates, but candidate names need official, bundled-resource, shipped XML, or local behavior evidence before promotion into ordinary user-facing recommendations.
+3. `Binary compiled table` can supply Button Editor category placement and visibility.
+4. Binary string-table evidence can identify runtime candidates, but candidate names need official, bundled-resource, shipped XML, or local behavior evidence before promotion into ordinary user-facing recommendations.
 
 ## Reproduction
 

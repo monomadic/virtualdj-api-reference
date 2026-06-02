@@ -20,7 +20,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Check official verb coverage | [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md) |
 | Choose or maintain a pad page | [Pads/README.md](Pads/README.md) |
 | Run or update a test harness | [Test/README.md](Test/README.md) |
-| Build or study a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Skins/README.md](Skins/README.md) · [Skins/ModularSkeleton/](Skins/ModularSkeleton/) |
+| Build or study a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Reference/Skin Runtime Findings.md](Reference/Skin%20Runtime%20Findings.md) · [Skins/README.md](Skins/README.md) · [Skins/ModularSkeleton/](Skins/ModularSkeleton/) |
 | Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
 | Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |
 | Understand macOS paths and databases | [Reference/Application Internals.md](Reference/Application%20Internals.md) |

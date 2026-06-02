@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skin name="Reference Placeholder Condition Test" version="8" width="1040" height="620" nbdecks="2" author="Codex" breakline="620">
+<skin name="Reference Placeholder Condition Test" version="8" width="1360" height="820" nbdecks="2" author="Codex" breakline="820">
   <font name="Arial"/>
 
   <define color="bg" value="#10151B"/>
@@ -49,141 +49,265 @@
     </textzone>
   </define>
 
-  <define class="BOOL_VIS_INDICATOR" placeholders="*compact=false">
+  <define class="UNSTAR_BOOL_VIS_INDICATOR" placeholders="compact=false">
     <panel visibility="[COMPACT]">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="BOOL_COND_INDICATOR" placeholders="*compact=false">
+  <define class="STAR_BOOL_VIS_INDICATOR" placeholders="*compact=false">
+    <panel visibility="[COMPACT]">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_BOOL_COND_INDICATOR" placeholders="compact=false">
     <panel condition="[COMPACT]">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="MODE_VIS_INDICATOR" placeholders="*mode=none">
+  <define class="STAR_BOOL_COND_INDICATOR" placeholders="*compact=false">
+    <panel condition="[COMPACT]">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_MODE_VIS_INDICATOR" placeholders="mode=none">
     <panel visibility="param_equal '[MODE]' 'compact'">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="MODE_COND_INDICATOR" placeholders="*mode=none">
+  <define class="STAR_MODE_VIS_INDICATOR" placeholders="*mode=none">
+    <panel visibility="param_equal '[MODE]' 'compact'">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_MODE_COND_INDICATOR" placeholders="mode=none">
     <panel condition="param_equal '[MODE]' 'compact'">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="FLAG_EQUAL_INDICATOR" placeholders="*flag=0">
+  <define class="STAR_MODE_COND_INDICATOR" placeholders="*mode=none">
+    <panel condition="param_equal '[MODE]' 'compact'">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_FLAG_EQUAL_INDICATOR" placeholders="flag=0">
     <panel condition="param_equal [FLAG] 1">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="WIDTH_EQUAL_INDICATOR" placeholders="*width=420">
+  <define class="STAR_FLAG_EQUAL_INDICATOR" placeholders="*flag=0">
+    <panel condition="param_equal [FLAG] 1">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_WIDTH_EQUAL_INDICATOR" placeholders="width=420">
     <panel condition="param_equal [WIDTH] 420">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="WIDTH_SMALLER_INDICATOR" placeholders="*width=420">
+  <define class="STAR_WIDTH_EQUAL_INDICATOR" placeholders="*width=420">
+    <panel condition="param_equal [WIDTH] 420">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_WIDTH_SMALLER_INDICATOR" placeholders="width=420">
     <panel condition="param_smaller [WIDTH] 500">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="WIDTH_CONSTANT_SMALLER_INDICATOR" placeholders="*width=420">
+  <define class="STAR_WIDTH_SMALLER_INDICATOR" placeholders="*width=420">
+    <panel condition="param_smaller [WIDTH] 500">
+      <panel class="true_badge"/>
+    </panel>
+  </define>
+
+  <define class="UNSTAR_WIDTH_CONSTANT_SMALLER_INDICATOR" placeholders="width=420">
     <panel condition="constant [WIDTH] &amp; param_smaller 500">
       <panel class="true_badge"/>
     </panel>
   </define>
 
-  <define class="SKIN_WIDTH_INDICATOR">
-    <panel condition="skin_width &amp;&amp; param_bigger 0">
+  <define class="STAR_WIDTH_CONSTANT_SMALLER_INDICATOR" placeholders="*width=420">
+    <panel condition="constant [WIDTH] &amp; param_smaller 500">
       <panel class="true_badge"/>
     </panel>
+  </define>
+
+  <define class="UNSTAR_TEXT_VALUE" placeholders="label=unset">
+    <textzone>
+      <size width="250" height="18"/>
+      <text text="[LABEL]" color="green_border" fontsize="14" weight="bold" align="left"/>
+    </textzone>
+  </define>
+
+  <define class="STAR_TEXT_VALUE" placeholders="*label=unset">
+    <textzone>
+      <size width="250" height="18"/>
+      <text text="[LABEL]" color="green_border" fontsize="14" weight="bold" align="left"/>
+    </textzone>
+  </define>
+
+  <define class="UNSTAR_ACTION_TEXT_VALUE" placeholders="textaction">
+    <textzone>
+      <size width="250" height="18"/>
+      <text action="[TEXTACTION]" color="green_border" fontsize="14" weight="bold" align="left"/>
+    </textzone>
+  </define>
+
+  <define class="STAR_ACTION_TEXT_VALUE" placeholders="*textaction">
+    <textzone>
+      <size width="250" height="18"/>
+      <text action="[TEXTACTION]" color="green_border" fontsize="14" weight="bold" align="left"/>
+    </textzone>
   </define>
 
   <panel name="background" visible="yes">
     <square color="bg">
       <pos x="0" y="0"/>
-      <size width="1040" height="620"/>
+      <size width="1360" height="820"/>
     </square>
-    <grabzone x="0" y="0" width="1040" height="42"/>
+    <grabzone x="0" y="0" width="1360" height="42"/>
   </panel>
 
   <textzone>
     <pos x="40" y="28"/>
-    <size width="800" height="28"/>
-    <text text="Placeholder Condition Test" color="text" fontsize="24" weight="bold" align="left"/>
+    <size width="1000" height="28"/>
+    <text text="Placeholder Star vs Unstar Test" color="text" fontsize="24" weight="bold" align="left"/>
   </textzone>
   <textzone>
     <pos x="40" y="64"/>
-    <size width="900" height="20"/>
-    <text text="A green TRUE badge means VirtualDJ evaluated the expression as true for this skin load." color="muted" fontsize="12" align="left"/>
+    <size width="1220" height="20"/>
+    <text text="A green TRUE badge means VirtualDJ evaluated that placeholder expression as true for this skin load." color="muted" fontsize="12" align="left"/>
   </textzone>
 
   <panel class="test_cell" x="40" y="110"
-         title="boolean visibility"
-         detail="visibility=&quot;[COMPACT]&quot;, compact=true"/>
-  <panel class="bool_vis_indicator" x="40" y="110" compact="true"/>
+         title="unstar bool visibility"
+         detail="placeholders=&quot;compact=false&quot;, visibility=&quot;[COMPACT]&quot;"/>
+  <panel class="unstar_bool_vis_indicator" x="40" y="110" compact="true"/>
 
-  <panel class="test_cell" x="370" y="110"
-         title="boolean condition"
-         detail="condition=&quot;[COMPACT]&quot;, compact=true"/>
-  <panel class="bool_cond_indicator" x="370" y="110" compact="true"/>
+  <panel class="test_cell" x="360" y="110"
+         title="star bool visibility"
+         detail="placeholders=&quot;*compact=false&quot;, visibility=&quot;[COMPACT]&quot;"/>
+  <panel class="star_bool_vis_indicator" x="360" y="110" compact="true"/>
 
-  <panel class="test_cell" x="700" y="110"
-         title="skin width control"
-         detail="condition=&quot;skin_width &amp;&amp; param_bigger 0&quot;"/>
-  <panel class="skin_width_indicator" x="700" y="110"/>
+  <panel class="test_cell" x="680" y="110"
+         title="unstar bool condition"
+         detail="placeholders=&quot;compact=false&quot;, condition=&quot;[COMPACT]&quot;"/>
+  <panel class="unstar_bool_cond_indicator" x="680" y="110" compact="true"/>
 
-  <panel class="test_cell" x="40" y="220"
-         title="string visibility"
+  <panel class="test_cell" x="1000" y="110"
+         title="star bool condition"
+         detail="placeholders=&quot;*compact=false&quot;, condition=&quot;[COMPACT]&quot;"/>
+  <panel class="star_bool_cond_indicator" x="1000" y="110" compact="true"/>
+
+  <panel class="test_cell" x="40" y="210"
+         title="unstar string visibility"
          detail="visibility=&quot;param_equal '[MODE]' 'compact'&quot;"/>
-  <panel class="mode_vis_indicator" x="40" y="220" mode="compact"/>
+  <panel class="unstar_mode_vis_indicator" x="40" y="210" mode="compact"/>
 
-  <panel class="test_cell" x="370" y="220"
-         title="string condition"
+  <panel class="test_cell" x="360" y="210"
+         title="star string visibility"
+         detail="visibility=&quot;param_equal '[MODE]' 'compact'&quot;"/>
+  <panel class="star_mode_vis_indicator" x="360" y="210" mode="compact"/>
+
+  <panel class="test_cell" x="680" y="210"
+         title="unstar string condition"
          detail="condition=&quot;param_equal '[MODE]' 'compact'&quot;"/>
-  <panel class="mode_cond_indicator" x="370" y="220" mode="compact"/>
+  <panel class="unstar_mode_cond_indicator" x="680" y="210" mode="compact"/>
 
-  <panel class="test_cell" x="700" y="220"
-         title="numeric equality"
+  <panel class="test_cell" x="1000" y="210"
+         title="star string condition"
+         detail="condition=&quot;param_equal '[MODE]' 'compact'&quot;"/>
+  <panel class="star_mode_cond_indicator" x="1000" y="210" mode="compact"/>
+
+  <panel class="test_cell" x="40" y="310"
+         title="unstar numeric condition"
          detail="condition=&quot;param_equal [FLAG] 1&quot;, flag=1"/>
-  <panel class="flag_equal_indicator" x="700" y="220" flag="1"/>
+  <panel class="unstar_flag_equal_indicator" x="40" y="310" flag="1"/>
 
-  <panel class="test_cell" x="40" y="330"
-         title="width equality candidate"
-         detail="condition=&quot;param_equal [WIDTH] 420&quot;, width=420"/>
-  <panel class="width_equal_indicator" x="40" y="330" width="420"/>
+  <panel class="test_cell" x="360" y="310"
+         title="star numeric condition"
+         detail="condition=&quot;param_equal [FLAG] 1&quot;, flag=1"/>
+  <panel class="star_flag_equal_indicator" x="360" y="310" flag="1"/>
 
-  <panel class="test_cell" x="370" y="330"
-         title="width smaller candidate"
-         detail="condition=&quot;param_smaller [WIDTH] 500&quot;, width=420"/>
-  <panel class="width_smaller_indicator" x="370" y="330" width="420"/>
+  <panel class="test_cell" x="680" y="310"
+         title="unstar width equality"
+         detail="condition=&quot;param_equal [WIDTH] 420&quot;"/>
+  <panel class="unstar_width_equal_indicator" x="680" y="310" width="420"/>
 
-  <panel class="test_cell" x="700" y="330"
-         title="constant width candidate"
+  <panel class="test_cell" x="1000" y="310"
+         title="star width equality"
+         detail="condition=&quot;param_equal [WIDTH] 420&quot;"/>
+  <panel class="star_width_equal_indicator" x="1000" y="310" width="420"/>
+
+  <panel class="test_cell" x="40" y="410"
+         title="unstar width smaller"
+         detail="condition=&quot;param_smaller [WIDTH] 500&quot;"/>
+  <panel class="unstar_width_smaller_indicator" x="40" y="410" width="420"/>
+
+  <panel class="test_cell" x="360" y="410"
+         title="star width smaller"
+         detail="condition=&quot;param_smaller [WIDTH] 500&quot;"/>
+  <panel class="star_width_smaller_indicator" x="360" y="410" width="420"/>
+
+  <panel class="test_cell" x="680" y="410"
+         title="unstar constant width"
          detail="condition=&quot;constant [WIDTH] &amp; param_smaller 500&quot;"/>
-  <panel class="width_constant_smaller_indicator" x="700" y="330" width="420"/>
+  <panel class="unstar_width_constant_smaller_indicator" x="680" y="410" width="420"/>
+
+  <panel class="test_cell" x="1000" y="410"
+         title="star constant width"
+         detail="condition=&quot;constant [WIDTH] &amp; param_smaller 500&quot;"/>
+  <panel class="star_width_constant_smaller_indicator" x="1000" y="410" width="420"/>
 
   <square color="#151D25" border="border" border_size="1" radius="4">
-    <pos x="40" y="456"/>
-    <size width="960" height="96"/>
+    <pos x="40" y="540"/>
+    <size width="1280" height="170"/>
   </square>
   <textzone>
-    <pos x="60" y="474"/>
-    <size width="920" height="18"/>
-    <text text="Literal constant display check" color="text" fontsize="14" weight="bold" align="left"/>
+    <pos x="60" y="558"/>
+    <size width="1220" height="18"/>
+    <text text="Visible substitution checks" color="text" fontsize="14" weight="bold" align="left"/>
   </textzone>
   <textzone>
-    <pos x="60" y="504"/>
-    <size width="920" height="20"/>
-    <text action="constant 'constant returned this text'" color="green_border" fontsize="14" weight="bold" align="left"/>
+    <pos x="60" y="590"/>
+    <size width="220" height="18"/>
+    <text text="unstar text:" color="muted" fontsize="12" align="left"/>
   </textzone>
+  <panel class="unstar_text_value" x="210" y="590" label="UNSTAR_TEXT_OK"/>
   <textzone>
-    <pos x="60" y="532"/>
-    <size width="920" height="14"/>
-    <text text="This fixture records behavior; it does not make the candidate expressions recommended patterns." color="muted" fontsize="10" align="left"/>
+    <pos x="500" y="590"/>
+    <size width="220" height="18"/>
+    <text text="star text:" color="muted" fontsize="12" align="left"/>
+  </textzone>
+  <panel class="star_text_value" x="650" y="590" label="STAR_TEXT_OK"/>
+  <textzone>
+    <pos x="60" y="628"/>
+    <size width="220" height="18"/>
+    <text text="unstar text action:" color="muted" fontsize="12" align="left"/>
+  </textzone>
+  <panel class="unstar_action_text_value" x="210" y="628" textaction="get_text 'UNSTAR_ACTION_OK'"/>
+  <textzone>
+    <pos x="500" y="628"/>
+    <size width="220" height="18"/>
+    <text text="star text action:" color="muted" fontsize="12" align="left"/>
+  </textzone>
+  <panel class="star_action_text_value" x="650" y="628" textaction="get_text 'STAR_ACTION_OK'"/>
+  <textzone>
+    <pos x="60" y="676"/>
+    <size width="1220" height="14"/>
+    <text text="Record exactly which unstarred/starred cells show TRUE and whether visible text/action rows render OK or literal placeholders." color="muted" fontsize="10" align="left"/>
   </textzone>
 </skin>

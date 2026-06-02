@@ -681,11 +681,14 @@ Preferred usage:
 - use for explicit panel toggles
 - if panel visibility should simply follow a live condition, prefer panel `visibility=""` or other query-driven skin logic instead of setting extra vars only to call `skin_panel`
 - bundled wide Remote phone skins use `skin_panel 'rmbrowser' on` to select a browser panel inside `group="rmporpanels"`; nearby elements hide with queries such as `visibility="skin_panel 'rmbrowser' ? no : yes"`
+- for Remote touch tabs, prefer `skin_panel '<panel-name>' on` over `skin_panelgroup` when selecting a named panel in a group
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: Skin SDK panel documentation
+- `Built-in skin`: Remote tab buttons use `skin_panel ... on`
+- `Local test`: Grave Raver Remote top navigation did not react reliably with `skin_panelgroup`
 - `Built-in skin`: `Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
 
 ### `skin_panelgroup`
@@ -711,14 +714,14 @@ skin_panelgroup 'rack' 0.75
 Preferred usage:
 
 - use when the user is deliberately switching between remembered panel modes
-- for tab/view buttons, pair the action with `query="skin_panel '<panel-name>' on"` so the active tab can render selected
+- for Remote top-level touch tabs, prefer direct `skin_panel '<panel-name>' on`; use `skin_panelgroup` for generic panel-group cycling or contexts where it has been verified
 - use `skin_panelgroup_available` to keep unavailable panels out of cycles
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official`: Skin SDK panel documentation
-- `Local test`: Remote skin main-view buttons used `skin_panelgroup` with `skin_panel ... on` queries for selected state
+- `Local test`: Grave Raver Remote top navigation did not react reliably with `skin_panelgroup`
 
 ### `lock_panel`
 
@@ -1733,7 +1736,8 @@ Preferred usage:
 
 - use slot-based effect selection for deterministic pad pages and skins
 - prefer this over name-only global assumptions when you care which slot owns the effect
-- for pad presets, pair `effect_select <slot> '<name>'` with explicit `effect_slider <slot> ...` values before activating the slot
+- treat `effect_select` as a write to slot state. For user-facing FX1-FX6 rack controls that should respect the performer's saved rack, prefer `effect_active <slot>`, `effect_slider <slot> ...`, and `effect_button <slot> ...` without selecting a new effect.
+- for pad pages that intentionally own/reprogram a deck FX slot, pair `effect_select <slot> '<name>'` with explicit `effect_slider <slot> ...` values before activating the slot
 - do not use bare `effect_select <slot>` as a harmless selected-name query in pad actions; it can open the effect selector. Use `get_effect_name <slot>` for labels and state checks.
 - use `effect_select_multi <slot> '<name>'` instead when the pad should add/keep multiple effects in the same slot rather than replacing the previous effect
 - `<slot>` can be a normal numeric deck FX slot or a supported special/named slot. Official forum guidance documents stem FX slot names such as `rhythm` and `vocals`; use these when the effect instance should live on a stem-specific slot rather than on numeric slots 1/2/3.
@@ -1741,12 +1745,14 @@ Preferred usage:
 - the vocal stem FX slot is `vocals` in the forum examples, while `padfx` stem targets use `stemfx:vocal`
 - `melovocal` and `melorhythm` may exist as named stem FX slots, but need local testing before being treated as confirmed
 - a local stem-slot pad pattern uses `effect_select 'vocals' 'reverb' ? effect_active 'vocals' : off` as the selected-and-active query; keep the numeric-slot `get_effect_name <slot>` guidance for ordinary rack slots
+- do not rely on numeric slots above 6 or named stem FX slots as restart-persistent storage for the loaded effect. User-provided local observation on 2026-06-01 found that FX1-FX6 kept their loaded effect across a VirtualDJ restart, while FX7 and higher plus named stem slots such as `vocals` and `rhythm` kept their loaded effect only during the current session/across track loads and reset after restart.
 
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official forum`: "BUILD 7403 - Multiple stems fx can be used at the same time?", Adion, 2023-01-15
 - `Local test`: vocal Reverb stem-slot pad query/action pattern; current named slot list in local notes is `vocals`, `bass`, `instru`, `rhythm`, `melody`, `hihat`, and `kick`
+- `Local test`: user-provided FX slot restart-persistence observation, 2026-06-01, build not recorded
 
 ### `effect_select_multi`
 
@@ -5611,22 +5617,22 @@ loop_color 1 'yellow'
 
 | Verb               | Description             | Example                            |
 | ------------------ | ----------------------- | ---------------------------------- |
-| `pad`              | Activate pad            | `pad 1`                            |
-| `pad_page`         | Activate page           | `pad_page 1`, `pad_page 'hotcues'` |
+| `pad`              | Activate pad from current page | `pad 1`                     |
+| `pad_page`         | Activate current deck's pad page | `pad_page 1`, `pad_page 'hotcues'` |
 | `pad_edit`         | Edit page               | `pad_edit`                         |
 | `pad_param`        | Change param 1          | `pad_param`                        |
 | `pad_param2`       | Change param 2          | `pad_param2`                       |
 | `pad_pressure`     | Pad pressure amount     | `pad_pressure 1`                   |
 | `pad_has_param`    | Check whether pad page exposes a parameter | `pad_has_param 1`      |
 | `pad_param_visible` | Check/display pad parameter visibility | `pad_param_visible 1` |
-| `pad_color`        | Get pad color           | `pad_color 1`                      |
-| `pad_button_color` | Controller button color | `pad_button_color 1`               |
+| `pad_color`        | Get current-page pad color | `pad_color 1`                   |
+| `pad_button_color` | Controller-ready current-page pad color | `pad_button_color 1` |
 | `pad_pushed`       | Check whether pad is currently pressed | `pad_pushed 1`            |
 | `padshift`         | Force shifted pad action | `padshift 1`                      |
 | `padshift_pressure` | Force shifted pad pressure action | `padshift_pressure 1` |
 | `padshift_button_color` | Force shifted pad button color | `padshift_button_color 1` |
 | `pad_menu`         | Open current pad page menu | `pad_menu`                      |
-| `pad_has_action`   | Check whether pad has an action | `pad_has_action 1`          |
+| `pad_has_action`   | Check whether current page defines a pad action | `pad_has_action 1` |
 | `pad_has_pressure` | Check whether pad has pressure behavior | `pad_has_pressure 1` |
 | `pad_has_color`    | Check whether pad has color behavior | `pad_has_color 1`       |
 | `pad_has_menu`     | Check whether pad page has menu | `pad_has_menu`             |
@@ -5635,9 +5641,17 @@ loop_color 1 'yellow'
 | `padfx`            | Activate named effect   | `padfx "echo" 40% 90%`             |
 | `padfx_single`     | Activate single padfx   | `padfx_single "reverb"`            |
 
+### Generic Pad Notes
+
+- Pad pages are generic VDJScript surfaces. The selected page may contain hot cues, FX, loops, sampler actions, custom buttons, or controller-specific actions.
+- Use `pad_has_action <n>` when a skin/controller needs to know whether the current page defines a push action for pad `<n>`.
+- Use page-specific queries when documenting a page's own behavior: for example `has_cue <n>` for cue occupancy, `effect_active` / `effect_has_*` for FX state, and `sampler_loaded <absolute-slot>` only for sampler-slot occupancy.
+- Do not use `sampler_loaded` as a generic test for whether the current pad page defines an action.
+
 ### Pad FX Notes
 
 - Official `padfx` behavior is temporary: parameters are applied when the pad effect starts and return when it stops.
+- Use `padfx` for volatile pad-owned performance effects that should not overwrite the performer's persistent FX1-FX6 rack.
 - After slider values, `padfx` can also accept switch strings such as `"TRAIL:on"` and stem modifiers such as `stemfx:<stem>`, `solostem:<stem>`, or `mutestem:<stem>`.
 - Use `stemfx:<stem>` when the effect should apply only to that stem while other stems continue playing normally.
 - Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`; local pad pages normally use lowercase strings.
@@ -5757,8 +5771,10 @@ Sources:
 FX catalog note:
 
 - `get_mixfx_active` appears in the official appendix and has sparse official prose. Local pad-page test on VirtualDJ `v2026-m b9336`: after loading a track, `` `get_mixfx_active` `` returned `off`/`on` and its query state mirrored `effect_mixfx_activate` while switching the selected Mix FX between Filter and Echo.
-- Numbered deck FX slots 1-6 are the supported range to use in reference examples. The manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and `effect_bank_save` / `effect_bank_load` explicitly save/load deck FX slots 1-6.
-- `effect_bank_save` / `effect_bank_load` are official rack snapshot helpers for deck FX slots 1-6. Prefer explicit `effect_select` / `effect_slider` / `effect_active` macros when a pad needs deterministic preset values rather than whatever a saved bank contains.
+- Numbered deck FX slots 1-6 are the supported range to use in reference examples. The manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and `effect_bank_save` / `effect_bank_load` explicitly save/load deck FX slots 1-6. User-provided local observation on 2026-06-01 found that FX1-FX6 kept their loaded effect across a VirtualDJ restart, while FX7 and higher plus named stem FX slots kept their loaded effect only during the current session/across track loads and reset after restart.
+- Treat FX1-FX6 as persistent rack state. Pads that should use the performer's saved rack should usually trigger or adjust existing slots; pads that select effects into FX1-FX6 are intentionally reprogramming the rack.
+- Treat `padfx` and named stem FX slots as volatile, stateful performance targets. They are appropriate when pads should assign their own effect state without becoming the saved deck rack.
+- `effect_bank_save` / `effect_bank_load` are official rack snapshot helpers for deck FX slots 1-6. Treat them as persistent rack helpers. If a pad uses explicit `effect_select` / `effect_slider` / `effect_active` macros to guarantee preset values in FX1-FX6, document that it intentionally reprograms the rack.
 - `effect_disable_all 'padfx'` clears temporary pad FX, but should be documented as a cleanup/reset control rather than an inline initializer before new `padfx` actions.
 - `effect_3slots_layout` is a UI/layout helper; built-in and SDK example skins use it to switch between single-FX and multi-FX panels.
 - `effect_select_popup` opens the native selector and is appropriate for right-clicks, parameter buttons, or skin affordances. It is not a read-only selected-name query.

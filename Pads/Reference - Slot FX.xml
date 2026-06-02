@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Reference - Slot FX.xml
-  Reliable slot-based audio FX pad page.
+  Reliable slot-based audio FX pad page for rack-owning presets.
 
-  Why slots for pads?
+  Why slots for rack-owning pads?
     effect_active 'Echo' is valid VDJScript, but it asks for Echo by name
     wherever VirtualDJ represents it. A reference pad page usually needs a
     stricter contract: which slot owns the effect, which sliders are being set,
     and which state should light the pad.
+
+  State-lifetime note:
+    FX1-FX6 are the persistent deck rack. Use this pattern when the pad page is
+    meant to own/reprogram those slots. If a pad page should respect the user's
+    saved rack, trigger/control the existing slots with effect_active,
+    effect_slider, or effect_button instead of selecting a new effect. For
+    volatile pad-owned performance effects, use padfx or named stem FX slots.
 
   This page demonstrates two dependable designs:
 
@@ -32,7 +39,7 @@
     if the slot already contains this effect and is active, turn the slot off;
     otherwise load/select the effect, set sliders, and turn the slot on.
 
-  Source: Official
+  Source: Official, Local test, Inference
   See: Reference/VirtualDJ Reference.md - Deck FX Slots section
 -->
 <page name="REF: SLOT FX">

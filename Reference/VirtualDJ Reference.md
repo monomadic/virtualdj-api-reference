@@ -9,6 +9,9 @@ Bundled Remote skin patterns updated on 2026-05-27.
 Stem FX slot forum sources updated on 2026-05-24.
 Variable-scope and device-definition forum sources updated on 2026-05-24.
 Pitch beats-parameter forum source updated on 2026-05-24.
+Pad-page generic/sampler-scope notes updated on 2026-05-30.
+FX slot restart-persistence note added on 2026-06-01.
+FX state-lifetime model added on 2026-06-01.
 
 For verb-by-verb API details, use [VDJScript Verbs](VDJScript%20Verbs.md).
 
@@ -45,15 +48,20 @@ Source labels used below:
   Why: the current verbs list exposes four custom ColorFX slots, and CTO guidance explains they exist for extra dedicated controls rather than replacing the main filter knob.
   Source: `Official`, `Official forum`
 
-- Deterministic deck FX pads and buttons:
-  Prefer `effect_select <slot>`, `effect_active <slot>`, and `effect_slider <slot> ...`.
-  Why: the official effect verbs are slot-centric, and slot-based mappings avoid ambiguity that comes from global effect-name toggles. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
-  Source: `Official`
+- FX state lifetime:
+  Treat FX1-FX6 as persistent deck-rack state, and treat Pad FX plus named stem FX slots as volatile performance state. Pads that should respect the performer's saved rack should trigger/control existing FX1-FX6 assignments with `effect_active <slot>`, `effect_slider <slot> ...`, and `effect_button <slot> ...` rather than silently selecting a different effect into the slot. Pads that need to assign their own effect state should usually use `padfx` or named stem FX slots, or explicitly document that the pad page owns/reprograms the deck rack.
+  Why: official docs and UI expose FX1-FX6 as the deck rack, and local observation found FX1-FX6 persist loaded effects across restarts while FX7+ and named stem slots reset after restart.
+  Source: `Official`, `Local test`, `Inference`
+
+- Rack-owning deck FX presets:
+  When a pad page intentionally owns a deck FX slot, prefer `effect_select <slot>`, `effect_active <slot>`, and `effect_slider <slot> ...`.
+  Why: slot-based mappings avoid ambiguity that comes from global effect-name toggles and make the overwrite explicit. Name-based forms such as `effect_active 'Echo'` are valid VDJScript, but they are best treated as convenience shortcuts unless the mapping deliberately wants "whatever Echo instance exists."
+  Source: `Official`, `Inference`
 
 - Numbered deck FX slots:
   Treat slots 1-6 as the supported numbered range.
-  Why: the current manual exposes an `FX x6` view, hardware manuals describe six FX slots, and `effect_bank_save` / `effect_bank_load` explicitly cover deck FX slots 1 to 6.
-  Source: `Official`
+  Why: the current manual exposes an `FX x6` view, hardware manuals describe six FX slots, and `effect_bank_save` / `effect_bank_load` explicitly cover deck FX slots 1 to 6. User-provided local observation also found that FX1-FX6 keep their loaded effect across a VirtualDJ restart, while FX7 and higher keep their loaded effect only during the current session/across track loads and reset after restart.
+  Source: `Official`, `Local test`
 
 - Generic FX panels:
   Prefer `effect_has_slider`, `get_effect_slider_label`, `get_effect_slider_text`, `get_effect_slider_default`, `effect_has_button`, and `get_effect_button_shortname` so the UI follows the selected plugin.
@@ -75,9 +83,14 @@ Source labels used below:
   Why: official docs describe `stem_pad` as the stem-pad helper and local testing confirms the `on` argument forces these aggregate stem-pad states on in isolation. `only_stem <stem> on/off` also works, but it follows state-dependent button semantics and can require a second press from some starting states.
   Source: `Official`, `Local test`
 
-- Page-aware sampler pads:
+- Generic pad-page buttons:
+  Treat pad pages as generic VDJScript surfaces. In skins and controller displays, use `pad <n>` to trigger the current page's pad, `padshift <n>` for the shifted action, `pad_has_action <n>` when the skin needs to know whether the current page defines a push action, and `pad_color` / `pad_button_color` for current-page color feedback.
+  Why: the official Pads Editor says each pad is page-specific and can be mapped to any VDJScript action; bundled desktop and Remote skins dispatch pads generically with `pad <n>` and do not assume the page is a sampler.
+  Source: `Official`, `Built-in skin`
+
+- Sampler page-aware pads:
   Prefer `sampler_pad`, `sampler_color`, and `sampler_pad_page`.
-  Why: `sampler_color` explicitly follows the visible sampler page, and the pads manual documents page cycling when a bank has more than eight samples.
+  Why: this applies to sampler pages only. `sampler_color` explicitly follows the visible sampler page, and the pads manual documents sample-page cycling when a bank has more than eight samples.
   Source: `Official`
 
 - Sampler drag-and-drop assignment inside pads:
@@ -139,10 +152,10 @@ Source labels used below:
   Why: local testing confirmed the Interface tab is the local Remote skin selector; Settings -> Extensions is the online add-on catalog and can make a correctly deployed local skin look "missing."
   Source: `Official forum`, `Local test`, `Inference`
 
-- Skin view tabs:
-  Use a named panel group plus `skin_panelgroup` for manually selected skin views; drive selected button state with `query="skin_panel '<panel-name>' on"`.
-  Why: this uses the SDK's persistent panel mechanism directly and worked locally for Remote views such as decks, browser, pads, and waveforms.
-  Source: `Official`, `Local test`
+- Remote skin view tabs:
+  Prefer grouped named panels switched with `skin_panel '<panel-name>' on`; drive selected button state with `query="skin_panel '<panel-name>' on"`.
+  Why: bundled Remote skins use direct `skin_panel` for touch tabs inside panel groups, and local Grave Raver Remote testing found `skin_panelgroup` top-nav buttons did not react reliably on the Remote surface.
+  Source: `Built-in skin`, `Local test`, `Inference`
 
 - Published skin findings:
   Preserve unfamiliar commands from working public skins in [Published Skin Findings](Published%20Skin%20Findings.md), then reconcile them against live official docs, forum context, and local tests.
@@ -287,7 +300,9 @@ Practical conventions:
 
 - use uppercase class names in `<define>` and lower-case class calls for readability
 - keep placeholder tokens uppercase inside brackets
-- use `*name` when a placeholder must be substituted in math, VDJScript/`condition` expressions, or text strings; official docs describe `*` as enabling simple math, and local tests showed unstarred placeholders can remain literal in script/text contexts
+- use `*name` when a placeholder participates in math or expression-like contexts; Atomix describes this as needed for simple math, but the exact boundary of "math" is unclear and may include boolean/condition expressions
+- unstarred placeholders are common in official skins for straightforward pass-through values such as `action="[ACTION]"`, `text="[TEXT]"`, and `source="[SOURCECOLOR]"`; local canaries showed some unstarred string/condition patterns can remain literal, so document build-specific tests before generalizing
+- do not declare pass-through attributes such as `action` or `query` as placeholders in a visual button class unless the define body forwards them onto an inner button; otherwise VirtualDJ can consume the attributes and leave a button that shows down-state visuals but fires no command
 - use `name=value` to provide a default value
 - use conditional defines when one class needs different implementations per skin mode or color scheme
 
@@ -712,7 +727,9 @@ Source: `Official`, `Local test`
 
 The official verbs and the current deck FX UI are slot-based.
 
-Use numbered deck FX slots 1-6 in reference examples and deterministic pad pages. The current manual exposes an `FX x6` view, hardware manuals describe six VirtualDJ FX slots, and the official `effect_bank_save` / `effect_bank_load` summaries save/load deck FX slots 1 to 6. Slots above 6 should be treated as unsupported unless a specific target build is locally tested.
+Use numbered deck FX slots 1-6 in reference examples and deterministic pad pages. The current manual exposes an `FX x6` view, hardware manuals describe six VirtualDJ FX slots, and the official `effect_bank_save` / `effect_bank_load` summaries save/load deck FX slots 1 to 6. User-provided local observation on 2026-06-01 found that FX1-FX6 keep their loaded effect across a VirtualDJ quit/reopen, while FX7 and higher keep their loaded effect during the current session/across track loads but reset after restart. Treat slots above 6 as unsupported unless a specific target build is locally tested.
+
+Conceptual model: FX1-FX6 are the persistent deck rack. Use them like saved rack assignments that skins/controllers can display, trigger, and tweak. A pad can still call `effect_select` to write a new effect into FX1-FX6, but that is a rack-owning preset action because it changes the saved slot assignment. If the pad should behave like a temporary performance effect, prefer `padfx` or a named stem FX slot instead.
 
 Preferred slot workflow:
 
@@ -729,22 +746,22 @@ effect_slider 1 2 1bt &
 effect_active 1 on
 ```
 
-Why this is the safest reference pattern:
+Why this is the safest rack-owning reference pattern:
 
 - it mirrors the actual deck FX rack model
 - it behaves predictably across skins and controllers
 - it avoids name-based ambiguity when several effects are loaded
-- it lets a pad own both the effect choice and the parameter preset
+- it makes clear that the pad owns both the effect choice and the parameter preset
 
 Use [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
 
-Source: `Official`
+Source: `Official`, `Local test`
 
 #### Slot Pads vs Name-Based Pads
 
 `effect_active 'Echo'` is legal and useful for quick personal mappings. It asks VirtualDJ to toggle an effect by name, wherever that effect is currently represented.
 
-For documented pad pages, prefer one of these slot-based designs:
+For pad pages that intentionally own/reprogram deck FX slots, prefer one of these slot-based designs:
 
 - Dedicated slot pads:
   A pad owns a specific slot, for example Echo on slot 1 and Reverb on slot 2. This works well when the page should allow several effects to remain active at once.
@@ -754,6 +771,14 @@ For documented pad pages, prefer one of these slot-based designs:
 
 - Multi-effect slot pads:
   Several pads target the same slot, but use `effect_select_multi` so VirtualDJ keeps earlier effect instances in that slot instead of replacing them. Query and activate with both the slot and effect name, for example `effect_active 1 'echo out'` or `effect_active 'vocals' 'reverb'`, so separate pads can light independently while sharing one slot/channel.
+
+If a pad page is meant to respect the user's persistent FX1-FX6 rack, do not use these preset patterns as the normal pad action. Trigger or control the existing slot instead:
+
+```vdjscript
+effect_active 1
+effect_slider 1 1 75%
+effect_button 1 1
+```
 
 Avoid mixing these designs without documenting it. A pad labeled `ECHO` with only `query="effect_active 1"` can blink when slot 1 is active with a different effect. If the pad state is meant to mean "slot 1 contains Echo and is active," query `get_effect_name <slot>` first, then nest the slot active check:
 
@@ -930,7 +955,11 @@ padfx 'reverb' 75% 'stemfx:vocal'
 The naming is easy to trip over: `padfx` uses the singular target string `stemfx:vocal`, while the separate vocal effect slot is documented in forum examples as `vocals`.
 Use `effect_select_multi 'vocals' '<effect>'` when multiple effects should remain loaded/active on the same vocal stem FX slot. Query or toggle each instance with `effect_active 'vocals' '<effect>'`, not just `effect_active 'vocals'`, when separate pad LEDs should reflect separate effects.
 
-`padfx` parameter values are applied when the pad effect starts, but `padfx` should not be treated as private per-pad state. User-provided testing showed that another pad can call the same effect/stem target and alter the active parameter values. User testing also found that placing `effect_disable_all 'padfx'` immediately before a new `padfx` chain can stop the new chain from activating. Use `effect_disable_all 'padfx'` as a separate cleanup control; use owned deck FX slots when a preset must be isolated from other pads.
+User-provided local observation on 2026-06-01 found that named stem FX slots such as `vocals` and `rhythm` keep their loaded effect during the current session and across track loads, but reset after a VirtualDJ restart. This note is about loaded effect selection only; active state, slider values, and multi-effect contents still need a recorded build-specific persistence pass.
+
+This makes named stem FX slots useful as volatile, pad-assigned state: a pad can load/activate an effect for a stem without rewriting the performer's persistent FX1-FX6 rack, and VirtualDJ eventually clears that assignment on restart.
+
+`padfx` parameter values are applied when the pad effect starts, but `padfx` should not be treated as private per-pad state. User-provided testing showed that another pad can call the same effect/stem target and alter the active parameter values. User testing also found that placing `effect_disable_all 'padfx'` immediately before a new `padfx` chain can stop the new chain from activating. Use `effect_disable_all 'padfx'` as a separate cleanup control. If a preset must become a visible/restart-persistent rack chain, use deliberately owned FX1-FX6 slots; otherwise keep pad-owned performance effects in `padfx` or named stem FX slots.
 
 `melovocal` and `melorhythm` may exist as named stem FX slots, but they need local testing before being treated as confirmed.
 
@@ -955,7 +984,7 @@ Source: `Official`, `Official forum`, `Community`, `Local test`
 Some FX verbs are workflow helpers rather than separate audio engines:
 
 - `effect_bank_save <n>` / `effect_bank_load <n>`:
-  Save and recall deck FX slots 1-6. Use these for rack snapshots; use explicit `effect_select` / `effect_slider` macros for deterministic pad presets.
+  Save and recall deck FX slots 1-6. Use these for persistent rack snapshots; use explicit `effect_select` / `effect_slider` macros only for pad pages that intentionally own/reprogram the rack.
 
 - `effect_3slots_layout`, `effect_select_popup`, `effect_select_toggle`, `effect_list`, and `effect_list_edit`:
   UI/list helpers for exposing VirtualDJ's native FX panel behavior. Do not use selector popups as state queries.
@@ -996,19 +1025,42 @@ For the current full list, use the official appendix instead of hard-coding old 
 
 Source: `Official`
 
-## Sampler and Pads
+## Pads and Sampler Pages
 
-### Default Page Behavior
+### Generic Pad Page Model
 
-The current pads manual says:
+Pad pages are generic VDJScript containers. A page can be Hot Cues, Stems, Loop Roll, Slicer, Sampler, Stems+FX, Scratch, Keycue, Loop, Saved Loops, Manual Loop, Remix Points, Custom Buttons, a controller-specific FX page, or a user page. The official Pads Editor describes each pad as specific to its page and mappable to any VDJScript action.
+
+For skins and controller displays that need to operate on whatever page is currently selected, use the generic pad verbs:
+
+- `pad <n>` triggers the current page's pad action.
+- `padshift <n>` triggers the current page's shifted pad action.
+- `pad_has_action <n>` checks whether the current page defines a push action for that pad.
+- `pad_has_pressure <n>` and `pad_has_color <n>` check optional pressure/color behavior.
+- `pad_color <n>` returns the current page's pad color; `pad_button_color <n>` returns controller-ready color feedback.
+- `pad_has_param 1/2`, `pad_param`, `pad_param2`, `pad_has_menu`, and `pad_menu` expose the current page's parameters and menu.
+
+Bundled desktop and Remote skins follow this model: pad buttons use `action="pad 1"`, shifted actions use `rightclick="padshift 1"`, labels use `textaction="pad 1"`, and colors use `pad_color 1`. This keeps the skin agnostic to whether the active page contains hot cues, FX, sampler slots, loops, or blank custom buttons.
+
+Do not use sampler-specific queries such as `sampler_loaded` to decide whether a generic pad has a current-page action. "Empty" is page-specific: an empty Hot Cue pad may still be intentionally active because it sets a cue, an empty Saved Loop or Remix Point pad may create data, an empty Sampler pad may record when the bank is unlocked, and a blank Custom Button may have no action at all.
+
+Source: `Official`, `Built-in skin`
+
+### Default Sampler Page Behavior
+
+The current pads and sampler manuals say:
 
 - the Sampler page shows the first eight pads of the active bank
 - Parameter 2 cycles samples in the bank when there are more than eight
 - right-click or shift stops a triggered sample
+- an empty sampler pad can record a sample when the bank is unlocked
+- locking a sampler bank prevents recording and deletion
 
 Source: `Official`
 
 ### Page-Aware vs Absolute Sampler Methods
+
+This subsection is only about custom pages that intentionally operate on the Sampler. It does not define generic pad-page pushability.
 
 Use page-aware methods when the UI should follow the visible `1-8`, `9-16`, `17-24`, and later pages:
 
@@ -1028,8 +1080,8 @@ Use absolute-slot methods when the UI should always target the same underlying s
 
 Practical rule:
 
-- visible pad UI: page-aware
-- fixed utility controls: absolute
+- visible sampler-pad UI: page-aware
+- fixed sampler-slot utility controls: absolute
 
 Use [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
 
@@ -1040,7 +1092,7 @@ Source: `Official`, `Local test`, `Inference`
 The current verbs page documents `sampler_loaded <n>` as a fixed slot query.
 VirtualDJ forum examples and older local examples use `sampler_loaded <n> 'auto'` beside `sampler_pad <n> 'auto'`. The installed/public `Loop Recorder.xml` pad page uses the unquoted form `sampler_loaded <n> auto`. Neither form is documented as official behavior.
 
-Local diagnostic testing showed this pattern is not reliable for page-aware empty-slot checks:
+Local diagnostic testing showed this pattern is not reliable for page-aware sampler empty-slot checks:
 
 - Test page: [Reference - Sampler Loaded Test.xml](../Test/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
 - Build: VirtualDJ 8.5.9307 / 18.0.9336
@@ -1048,7 +1100,7 @@ Local diagnostic testing showed this pattern is not reliable for page-aware empt
 - Setup: sampler bank page 2 (`9-16`), slot 8 loaded, slot 16 empty
 - Result: `sampler_loaded 8 'auto'` and `sampler_loaded 8 auto` returned true while `sampler_loaded 16` and `sampler_loaded 16 auto` returned false
 
-Use `sampler_loaded` with the absolute slot behind the visible pad. Page 2 pad 8 should be guarded by `sampler_loaded 16`; keep `sampler_pad 8` for the visible page-aware action/label. Quoting `auto` does not change this behavior in the tested build.
+Use `sampler_loaded` with the absolute sampler slot behind the visible sampler pad. Page 2 pad 8 should be guarded by `sampler_loaded 16`; keep `sampler_pad 8` for the visible page-aware sampler action/label. Quoting `auto` does not change this behavior in the tested build.
 
 Source: `Official`, `Community`, `Published pad page`, `Local test`
 
@@ -1066,18 +1118,18 @@ Working example: [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml)
 
 Source: `Local test`, `Inference`
 
-### Empty Sampler Pads and Shifted Colors
+### Sampler Empty-Slot Guards and Shifted Colors
 
-When a sampler pad slot is empty, nullify the action with an explicit false branch instead of leaving the conditional incomplete:
+When a sampler slot is empty and the page should not record, assign, or edit it, nullify the sampler action with an explicit false branch instead of leaving the conditional incomplete:
 
 ```xml
-<pad10 name="`sampler_loaded 10 ? sampler_pad 10 : ''`" color="sampler_loaded 10 ? sampler_color 10 : dim" query="sampler_loaded 10 ? sampler_play 10 ? blink 1bt : on : off">sampler_loaded 10 ? sampler_pad 10 : nothing</pad10>
+<pad10 name="`sampler_loaded 10 ? sampler_pad 10 : get_text ' '`" color="sampler_loaded 10 ? sampler_color 10 : dim" query="sampler_loaded 10 ? sampler_play 10 ? blink 1bt : on : off">sampler_loaded 10 ? sampler_pad 10 : nothing</pad10>
 ```
 
 If the page defines `shift_pad<n>` entries, give the shifted pads their own `color=""` expression. Skin frameworks that render shifted pad state may read the shifted pad color separately; without a shifted color, empty or shifted sampler pads can fall back to the skin/default button color instead of matching the normal pad.
 
 ```xml
-<shift_pad10 name="`sampler_loaded 10 ? sampler_pad 10 : ''`" color="sampler_loaded 10 ? sampler_color 10 : dim">sampler_loaded 10 ? sampler_edit 10 : nothing</shift_pad10>
+<shift_pad10 name="`sampler_loaded 10 ? sampler_pad 10 : get_text ' '`" color="sampler_loaded 10 ? sampler_color 10 : dim">sampler_loaded 10 ? sampler_edit 10 : nothing</shift_pad10>
 ```
 
 Source: `Local test`, `Inference`
