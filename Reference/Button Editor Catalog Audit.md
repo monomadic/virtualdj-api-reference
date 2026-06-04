@@ -118,21 +118,23 @@ Result: none of the 35 candidates currently has shipped XML evidence elsewhere i
 
 ## Interpretation
 
-The local evidence now points to at least three overlapping catalogs:
+The local evidence now points to several overlapping catalogs and binary evidence streams:
 
 - The official VDJScript appendix: public names and aliases; currently parsed in this repo as 991 names.
 - The Button Editor language catalog: user-facing action descriptions; currently 813 action tags across bundled languages.
 - The executable string block: runtime-looking action names; currently 967 names in the richer block.
 - The Button Editor compiled taxonomy: currently 918 visible action items across 37 displayed categories.
+- The demangled `ACTION_*` symbol table: implementation-class and method-surface hints; currently 800 exact class matches inside the full compiled taxonomy.
 
-None of these is identical to the others. The Button Editor catalog omits sparse or helper-style official names such as `deck_has_error`, `get_mixfx_active`, and `system`, while the binary block contains runtime/internal-looking names not currently in the official appendix.
+None of these is identical to the others. The Button Editor catalog omits sparse or helper-style official names such as `deck_has_error`, `get_mixfx_active`, and `system`, while the binary block contains runtime/internal-looking names not currently in the official appendix. Exact `ACTION_*` method-symbol matches are useful for execute/query/tooltip hints, but alias and dispatcher-backed verbs can be visible, official, and language-described without an exact class name.
 
 Use this hierarchy when updating the API reference:
 
 1. `Official` remains authoritative for public name coverage.
 2. `Built-in app resource` can supply Button Editor description evidence and discover localized catalog-only names.
 3. `Binary compiled table` can supply Button Editor category placement and visibility.
-4. Binary string-table evidence can identify runtime candidates, but candidate names need official, bundled-resource, shipped XML, or local behavior evidence before promotion into ordinary user-facing recommendations.
+4. `Binary symbol table` can supply exact action-class and method-surface hints.
+5. Binary string-table evidence can identify runtime candidates, but candidate names need official, bundled-resource, shipped XML, or local behavior evidence before promotion into ordinary user-facing recommendations.
 
 ## Reproduction
 

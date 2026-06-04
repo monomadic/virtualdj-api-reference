@@ -40,6 +40,13 @@ python3 tools/extract_vdjscript_taxonomy.py --category rane --include-hidden --f
 python3 tools/extract_vdjscript_taxonomy.py --format csv > /tmp/vdjscript-button-editor-taxonomy.csv
 ```
 
+The joined metadata matrix combines the compiled taxonomy with official audit membership, bundled language-catalog membership, and exact `ACTION_*` method-symbol matches:
+
+```sh
+python3 tools/extract_vdjscript_metadata.py
+python3 tools/extract_vdjscript_metadata.py --include-hidden --include-external --format csv > /tmp/vdjscript-metadata.csv
+```
+
 ## Counts
 
 | Source | Count |
@@ -55,6 +62,66 @@ python3 tools/extract_vdjscript_taxonomy.py --format csv > /tmp/vdjscript-button
 | Language-catalog compiled names not visible | 16 |
 
 The Button Editor list is therefore larger than the language-description catalog. The description catalog has 813 action tags across bundled languages, while the compiled UI table has 918 visible actions and 1028 total entries.
+
+## Metadata Matrix
+
+The metadata join currently has no exact `ACTION_*` class outside the compiled taxonomy. In other words, every exact action class detected from the demangled symbol table maps back to a compiled Button Editor taxonomy row.
+
+| Matrix | Rows | Official audit names | Language-catalog names | Exact `ACTION_*` class match |
+| --- | ---: | ---: | ---: | ---: |
+| Visible Button Editor rows | 918 | 918 | 797 | 770 |
+| Full compiled taxonomy rows | 1028 | 991 | 813 | 800 |
+
+The 148 visible rows without an exact `ACTION_*` class match are not evidence of unsupported verbs. They often look like aliases, factory-created actions, or dispatcher-backed names. For example, `effect_select` and `video_fx` are visible, official, and language-described, but do not have exact `ACTION_effect_select` or `ACTION_video_fx` class symbols.
+
+Capability buckets are derived only from exact `ACTION_*` method symbols:
+
+| Bucket | Meaning |
+| --- | --- |
+| `execute+query` | Exact class has `onExecute` plus at least one query method. |
+| `execute-only` | Exact class has `onExecute` and no detected query method. |
+| `query-only` | Exact class has at least one query method and no detected `onExecute`. |
+| `tooltip-only` | Exact class has `onTooltip` only among the tracked methods. |
+| `no-action-class` | No exact class/method match; usually alias, dispatcher, or generated-path territory. |
+
+Visible Button Editor capability buckets:
+
+| Bucket | Visible rows |
+| --- | ---: |
+| `execute+query` | 282 |
+| `execute-only` | 160 |
+| `query-only` | 318 |
+| `tooltip-only` | 10 |
+| `no-action-class` | 148 |
+
+Full compiled taxonomy capability buckets:
+
+| Bucket | Rows |
+| --- | ---: |
+| `execute+query` | 296 |
+| `execute-only` | 165 |
+| `query-only` | 329 |
+| `tooltip-only` | 10 |
+| `no-action-class` | 228 |
+
+Hidden-row split:
+
+| Hidden group | Count | Notes |
+| --- | ---: | --- |
+| Flag0-hidden official names | 73 | All flag0-hidden rows are official audit names; 2 also have language descriptions. |
+| Flag1-hidden non-official names | 37 | All flag1-hidden rows are outside the official audit; 14 still have language descriptions. |
+| Hidden rows outside both official and language catalogs | 23 | Mostly internal, hardware-specific, or discovery-only-looking names. |
+
+Representative joined rows:
+
+| Name | Category | Visible | Official | Language | Capability bucket | Methods |
+| --- | --- | --- | --- | --- | --- | --- |
+| `effect_active` | `plugins` | yes | yes | yes | `execute+query` | `onExecute`, `onQuery` |
+| `effect_select` | `plugins` | yes | yes | yes | `no-action-class` | none detected |
+| `effect_slider` | `plugins` | yes | yes | yes | `execute+query` | `onExecute`, `onQuery`, `onTooltip` |
+| `get_mixfx_active` | `plugins` | yes | yes | no | `query-only` | `onQuery` |
+| `auto_crossfader` | `audio_volumes` | no | yes | no | `no-action-class` | none detected |
+| `all_decks` | `flow` | no | no | no | `execute+query` | `onExecute`, `onQuery`, `onQueryBool`, `onQueryText` |
 
 ## Displayed Categories
 
@@ -117,5 +184,6 @@ Use this taxonomy as a fourth lens alongside:
 - `Built-in app resource`: language-description tags from `Resources/languages.zip`.
 - `Binary string-table`: discovery-only runtime-looking names.
 - `Binary compiled table`: Button Editor category placement and visibility.
+- `Binary symbol table`: exact `ACTION_*` class and method-surface hints.
 
 The Button Editor taxonomy is useful for category labels and broad grouping, but it should not become the whole documentation taxonomy. Some UI categories are very broad (`get`, `plugins`, `browser`), while some are implementation-oriented (`flow`, `macro`, `rane`). The curated docs should preserve domain-oriented groupings where they are clearer, and use Button Editor category as a source-backed metadata field.

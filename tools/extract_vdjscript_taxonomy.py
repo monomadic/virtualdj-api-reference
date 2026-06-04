@@ -19,9 +19,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from zipfile import ZipFile
 
-from macholib.MachO import MachO
-from macholib.mach_o import LC_SEGMENT_64
-
 
 CPU_TYPES = {
     "x86_64": 0x01000007,
@@ -32,6 +29,11 @@ DEFAULT_CATEGORY_NAMES_VA = 0x10457A880
 DEFAULT_ACTION_ITEMS_VA = 0x104576830
 DEFAULT_CATEGORY_IDS_VA = 0x103D43974
 ACTION_SENTINEL = 0x3BB
+FAT_MAGIC = 0xCAFEBABE
+FAT_MAGIC_64 = 0xCAFEBABF
+MH_MAGIC_64 = 0xFEEDFACF
+MH_CIGAM_64 = 0xCFFAEDFE
+LC_SEGMENT_64 = 0x19
 
 
 @dataclass(frozen=True)
@@ -60,25 +62,63 @@ class MachOReader:
     def __init__(self, binary: Path, arch: str) -> None:
         self.binary = binary
         self.data = binary.read_bytes()
-        macho = MachO(str(binary))
         cputype = CPU_TYPES[arch]
-        matches = [header for header in macho.headers if header.header.cputype == cputype]
-        if not matches:
-            raise SystemExit(f"{binary} does not contain requested architecture {arch}")
-        self.header = matches[0]
+        self.slice_offset = self._slice_offset(cputype)
         self.segments: list[Segment] = []
-        for load_command, command, _sections in self.header.commands:
-            if getattr(load_command, "cmd", None) != LC_SEGMENT_64:
-                continue
-            name = command.segname.rstrip(b"\0").decode("ascii", errors="ignore")
-            self.segments.append(
-                Segment(name, command.vmaddr, command.vmsize, command.fileoff, command.filesize)
-            )
+        self._load_segments()
+
+    def _slice_offset(self, cputype: int) -> int:
+        magic = struct.unpack_from(">I", self.data, 0)[0]
+        if magic not in (FAT_MAGIC, FAT_MAGIC_64):
+            return 0
+
+        nfat = struct.unpack_from(">I", self.data, 4)[0]
+        offset = 8
+        for _index in range(nfat):
+            if magic == FAT_MAGIC_64:
+                arch_cputype, _cpusubtype, arch_offset, _size, _align, _reserved = struct.unpack_from(
+                    ">IIQQII", self.data, offset
+                )
+                offset += 32
+            else:
+                arch_cputype, _cpusubtype, arch_offset, _size, _align = struct.unpack_from(
+                    ">IIIII", self.data, offset
+                )
+                offset += 20
+            if arch_cputype == cputype:
+                return arch_offset
+        raise SystemExit(f"{self.binary} does not contain requested architecture cputype {cputype:#x}")
+
+    def _load_segments(self) -> None:
+        magic_le = struct.unpack_from("<I", self.data, self.slice_offset)[0]
+        magic_be = struct.unpack_from(">I", self.data, self.slice_offset)[0]
+        if magic_le == MH_MAGIC_64:
+            endian = "<"
+        elif magic_be == MH_MAGIC_64 or magic_le == MH_CIGAM_64:
+            endian = ">"
+        else:
+            raise ValueError(f"unsupported Mach-O magic at slice offset {self.slice_offset:#x}")
+
+        _magic, _cputype, _cpusubtype, _filetype, ncmds, _sizeofcmds, _flags, _reserved = struct.unpack_from(
+            f"{endian}IiiIIIII", self.data, self.slice_offset
+        )
+        command_offset = self.slice_offset + 32
+        for _index in range(ncmds):
+            command, command_size = struct.unpack_from(f"{endian}II", self.data, command_offset)
+            if command == LC_SEGMENT_64:
+                name = self.data[command_offset + 8 : command_offset + 24].rstrip(b"\0").decode(
+                    "ascii", errors="ignore"
+                )
+                vmaddr, vmsize, fileoff, filesize = struct.unpack_from(
+                    f"{endian}QQQQ", self.data, command_offset + 24
+                )
+                self.segments.append(Segment(name, vmaddr, vmsize, fileoff, filesize))
+            command_offset += command_size
 
     def offset(self, va: int) -> int:
         for segment in self.segments:
             if segment.vmaddr <= va < segment.vmaddr + segment.vmsize:
-                return self.header.offset + segment.fileoff + (va - segment.vmaddr)
+                return self.slice_offset + segment.fileoff + (va - segment.vmaddr)
         raise ValueError(f"virtual address {va:#x} is not inside a mapped segment")
 
     def u64(self, va: int) -> int:

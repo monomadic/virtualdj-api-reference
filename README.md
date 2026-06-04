@@ -24,6 +24,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
 | Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |
 | Understand macOS paths and databases | [Reference/Application Internals.md](Reference/Application%20Internals.md) |
+| Inspect or create `.vdjstems` sidecars | [Reference/Stem File Format.md](Reference/Stem%20File%20Format.md) |
 
 ## Agent Entry Point
 

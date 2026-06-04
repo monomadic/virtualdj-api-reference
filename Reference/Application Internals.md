@@ -1011,6 +1011,11 @@ Scratch banks live under `ScratchBanks/` and can embed a nested `<Song>` record:
 
 ## Stem Files
 
+See [VirtualDJ Stem File Format](Stem%20File%20Format.md) for the focused
+`.vdjstems` sidecar format reference. This section keeps the shorter
+application-internals view: where the files fit, how to inspect them, and how
+local helper scripts recreate the observed layout.
+
 VirtualDJ's public docs describe five stem components:
 
 - vocal
@@ -1224,7 +1229,7 @@ Known unknown:
 | `extra.db` | SQLite | Related tracks, track_data, lyrics. |
 | `Cache/cache.db` | SQLite | Waveform cache. |
 | `History/*.m3u` | M3U-like playlist text | Daily history. |
-| `*.vdjstems` | Matroska in observed VirtualDJ-prepared files | Five AAC streams named vocal/hihat/bass/instruments/kick. |
+| [`*.vdjstems`](Stem%20File%20Format.md) | Matroska in observed VirtualDJ-prepared files | Five AAC streams named vocal/hihat/bass/instruments/kick. |
 | `*.vdjsample` | Binary | Not fully mapped. Some files show a `VDJ` header and media payload. |
 
 ## Known Unknowns
