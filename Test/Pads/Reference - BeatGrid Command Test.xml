@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - BeatGrid Command Test.xml
+  Manual-test pad page for BeatGrid-specific effect_command strings observed in
+  Skins/Built-In/Plugin-UI/AFX_beatgrid.xml.
+
+  This page is a harness, not proof. It checks whether the plugin-UI commands
+  work from a normal pad-page context after BeatGrid is loaded into slot 1.
+  Do not generalize these strings to other plugins.
+
+  Suggested first pass:
+    1. Press LOAD BEATGRID and SHOW GUI.
+    2. Press SET 00, SET 01, SET 10, and SET 1F.
+    3. Compare GET pads and CUR readbacks with the visible BeatGrid UI.
+    4. Record which commands work in pad context and whether slot selection or
+       plugin GUI focus changes the result.
+
+  Source: Built-in skin, Inference
+-->
+<page name="REF: BEATGRID CMD TEST">
+
+  <pad1 name="LOAD BEATGRID"
+        color="color 'cyan'"
+        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'beatgrid' ? on : off">
+    effect_select 1 'BeatGrid' &amp; effect_slider 1 1 75% &amp; effect_active 1 on
+  </pad1>
+
+  <pad2 name="SHOW GUI"
+        color="color 'magenta'">
+    effect_show_gui 1
+  </pad2>
+
+  <pad3 name="SET 00"
+        color="effect_command 'get 00' ? color 'green' : color 'gray'"
+        query="effect_command 'get 00' ? on : off">
+    effect_command 'set 00'
+  </pad3>
+
+  <pad4 name="SET 01"
+        color="effect_command 'get 01' ? color 'green' : color 'gray'"
+        query="effect_command 'get 01' ? on : off">
+    effect_command 'set 01'
+  </pad4>
+
+  <pad5 name="SET 02"
+        color="effect_command 'get 02' ? color 'green' : color 'gray'"
+        query="effect_command 'get 02' ? on : off">
+    effect_command 'set 02'
+  </pad5>
+
+  <pad6 name="SET 03"
+        color="effect_command 'get 03' ? color 'green' : color 'gray'"
+        query="effect_command 'get 03' ? on : off">
+    effect_command 'set 03'
+  </pad6>
+
+  <pad7 name="SET 10"
+        color="effect_command 'get 10' ? color 'green' : color 'gray'"
+        query="effect_command 'get 10' ? on : off">
+    effect_command 'set 10'
+  </pad7>
+
+  <pad8 name="SET 1F"
+        color="effect_command 'get 1F' ? color 'green' : color 'gray'"
+        query="effect_command 'get 1F' ? on : off">
+    effect_command 'set 1F'
+  </pad8>
+
+  <pad9 name="GET00 `effect_command 'get 00'`"
+        color="effect_command 'get 00' ? color 'green' : color 'gray'"
+        query="effect_command 'get 00' ? on : off">
+    debug `effect_command 'get 00'`
+  </pad9>
+
+  <pad10 name="GET01 `effect_command 'get 01'`"
+         color="effect_command 'get 01' ? color 'green' : color 'gray'"
+         query="effect_command 'get 01' ? on : off">
+    debug `effect_command 'get 01'`
+  </pad10>
+
+  <pad11 name="CUR0 `effect_command 'cur 0'`"
+         color="color 'white'">
+    debug `effect_command 'cur 0'`
+  </pad11>
+
+  <pad12 name="CUR1 `effect_command 'cur 1'`"
+         color="color 'white'">
+    debug `effect_command 'cur 1'`
+  </pad12>
+
+  <pad13 name="SLOT `get_effect_name 1`"
+         color="effect_active 1 ? color 'green' : color 'gray'"
+         query="effect_active 1 ? on : off">
+    debug `get_effect_name 1`
+  </pad13>
+
+  <pad14 name="ACTIVE"
+         color="effect_active 1 ? color 'green' : color 'gray'"
+         query="effect_active 1 ? on : off">
+    effect_active 1
+  </pad14>
+
+  <pad15 name="DOCK GUI"
+         color="color 'magenta'">
+    effect_dock_gui 1
+  </pad15>
+
+  <pad16 name="LOG ALL"
+         color="color 'white'">
+    debug `effect_command 'get 00'` &amp; debug `effect_command 'get 01'` &amp; debug `effect_command 'cur 0'` &amp; debug `effect_command 'cur 1'`
+  </pad16>
+
+  <shift_pad1 name="LOG FX" color="color 'cyan'">debug `get_effect_name 1`</shift_pad1>
+  <shift_pad2 name="LOG 00" color="color 'green'">debug `effect_command 'get 00'`</shift_pad2>
+  <shift_pad3 name="LOG 01" color="color 'green'">debug `effect_command 'get 01'`</shift_pad3>
+  <shift_pad4 name="LOG 10" color="color 'green'">debug `effect_command 'get 10'`</shift_pad4>
+  <shift_pad5 name="LOG 1F" color="color 'green'">debug `effect_command 'get 1F'`</shift_pad5>
+  <shift_pad6 name="LOG CUR0" color="color 'white'">debug `effect_command 'cur 0'`</shift_pad6>
+  <shift_pad7 name="LOG CUR1" color="color 'white'">debug `effect_command 'cur 1'`</shift_pad7>
+  <shift_pad8 name="LOG ACTIVE" color="color 'white'">debug `effect_active 1`</shift_pad8>
+
+  <param1 name="SHOW GUI">effect_show_gui 1</param1>
+  <param2 name="SELECT FX1">effect_select_popup 1</param2>
+
+</page>

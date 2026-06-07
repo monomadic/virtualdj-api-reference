@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - FX Bank Test.xml
+  Manual-test pad page for effect_bank_save / effect_bank_load behavior.
+
+  This page is a harness, not proof. It writes to effect bank 1, so run it in a
+  throwaway VirtualDJ profile/session or edit the bank number before testing if
+  bank 1 contains user presets you want to preserve.
+
+  Suggested first pass:
+    1. Press SET RACK A, then record slot names, active states, and slider text.
+    2. Press SAVE BANK 1.
+    3. Press SET RACK B and confirm slot names/active states changed.
+    4. Press LOAD BANK 1 and compare restored names, active states, and sliders.
+    5. Repeat on deck 2 to check whether the bank is shared or deck-specific.
+
+  Record the VirtualDJ build, deck context, and observed values in:
+    Reference/VDJScript Local Test Tracker.md
+
+  Source: Official, Inference
+-->
+<page name="REF: FX BANK TEST">
+
+  <pad1 name="SET RACK A"
+        color="color 'cyan'">
+    effect_select 1 'Echo' &amp; effect_slider 1 1 75% &amp; effect_slider 1 2 50% &amp; effect_active 1 on &amp;
+    effect_select 2 'Reverb' &amp; effect_slider 2 1 45% &amp; effect_slider 2 2 60% &amp; effect_active 2 off &amp;
+    effect_select 3 'Flanger' &amp; effect_slider 3 1 35% &amp; effect_active 3 on
+  </pad1>
+
+  <pad2 name="SAVE BANK 1"
+        color="color 'orange'">
+    effect_bank_save 1
+  </pad2>
+
+  <pad3 name="SET RACK B"
+        color="color 'magenta'">
+    effect_select 1 'BeatGrid' &amp; effect_slider 1 1 25% &amp; effect_active 1 off &amp;
+    effect_select 2 'Echo Out' &amp; effect_slider 2 1 90% &amp; effect_active 2 on &amp;
+    effect_select 3 'Reverb' &amp; effect_slider 3 1 80% &amp; effect_active 3 on
+  </pad3>
+
+  <pad4 name="LOAD BANK 1"
+        color="color 'green'">
+    effect_bank_load 1
+  </pad4>
+
+  <pad5 name="FX1 `get_effect_name 1`"
+        color="effect_active 1 ? color 'green' : color 'gray'"
+        query="effect_active 1 ? on : off">
+    debug `get_effect_name 1`
+  </pad5>
+
+  <pad6 name="FX2 `get_effect_name 2`"
+        color="effect_active 2 ? color 'green' : color 'gray'"
+        query="effect_active 2 ? on : off">
+    debug `get_effect_name 2`
+  </pad6>
+
+  <pad7 name="FX3 `get_effect_name 3`"
+        color="effect_active 3 ? color 'green' : color 'gray'"
+        query="effect_active 3 ? on : off">
+    debug `get_effect_name 3`
+  </pad7>
+
+  <pad8 name="USED `get_effects_used 'deck'`"
+        color="effects_used 'deck' ? color 'yellow' : color 'gray'"
+        query="effects_used 'deck' ? on : off">
+    debug `get_effects_used 'deck'`
+  </pad8>
+
+  <pad9 name="FX1 S1 `get_effect_slider_text 1 1`"
+        color="effect_has_slider 1 1 ? color 'white' : color 'gray'"
+        query="effect_has_slider 1 1 ? on : off">
+    debug `get_effect_slider_text 1 1`
+  </pad9>
+
+  <pad10 name="FX1 S2 `get_effect_slider_text 1 2`"
+         color="effect_has_slider 1 2 ? color 'white' : color 'gray'"
+         query="effect_has_slider 1 2 ? on : off">
+    debug `get_effect_slider_text 1 2`
+  </pad10>
+
+  <pad11 name="FX2 S1 `get_effect_slider_text 2 1`"
+         color="effect_has_slider 2 1 ? color 'white' : color 'gray'"
+         query="effect_has_slider 2 1 ? on : off">
+    debug `get_effect_slider_text 2 1`
+  </pad11>
+
+  <pad12 name="FX3 S1 `get_effect_slider_text 3 1`"
+         color="effect_has_slider 3 1 ? color 'white' : color 'gray'"
+         query="effect_has_slider 3 1 ? on : off">
+    debug `get_effect_slider_text 3 1`
+  </pad12>
+
+  <pad13 name="CLEAR ACTIVE"
+         color="color 'red'">
+    effect_active 1 off &amp; effect_active 2 off &amp; effect_active 3 off
+  </pad13>
+
+  <pad14 name="SHOW FX1"
+         color="color 'cyan'">
+    effect_show_gui 1
+  </pad14>
+
+  <pad15 name="SELECT FX1"
+         color="color 'cyan'">
+    effect_select_popup 1
+  </pad15>
+
+  <pad16 name="LOG ALL"
+         color="color 'white'">
+    debug `get_effect_name 1` &amp; debug `get_effect_name 2` &amp; debug `get_effect_name 3` &amp; debug `get_effects_used 'deck'`
+  </pad16>
+
+  <shift_pad1 name="LOG FX1" color="color 'cyan'">debug `get_effect_name 1`</shift_pad1>
+  <shift_pad2 name="LOG FX2" color="color 'cyan'">debug `get_effect_name 2`</shift_pad2>
+  <shift_pad3 name="LOG FX3" color="color 'cyan'">debug `get_effect_name 3`</shift_pad3>
+  <shift_pad4 name="LOG USED" color="color 'yellow'">debug `get_effects_used 'deck'`</shift_pad4>
+  <shift_pad5 name="LOG FX1 S1" color="color 'white'">debug `get_effect_slider_text 1 1`</shift_pad5>
+  <shift_pad6 name="LOG FX1 S2" color="color 'white'">debug `get_effect_slider_text 1 2`</shift_pad6>
+  <shift_pad7 name="LOG FX2 S1" color="color 'white'">debug `get_effect_slider_text 2 1`</shift_pad7>
+  <shift_pad8 name="LOG FX3 S1" color="color 'white'">debug `get_effect_slider_text 3 1`</shift_pad8>
+
+  <param1 name="SAVE BANK 1">effect_bank_save 1</param1>
+  <param2 name="LOAD BANK 1">effect_bank_load 1</param2>
+
+</page>

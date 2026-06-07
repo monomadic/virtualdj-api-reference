@@ -20,6 +20,9 @@ Test assets are important evidence for the documentation project. They are kept 
 | [Pads/Reference - Deck Error Test.xml](Pads/Reference%20-%20Deck%20Error%20Test.xml) | Deck load-error state checks for `deck_has_error`. |
 | [Pads/Reference - Dual Deck Mode Test.xml](Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Current and deck-scoped `dualdeckmode_decks` checks. |
 | [Pads/Reference - FX Introspection Test.xml](Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Deck FX slider/button label, count, default, and `effect_has_*` checks. |
+| [Pads/Reference - FX Bank Test.xml](Pads/Reference%20-%20FX%20Bank%20Test.xml) | FX bank save/load restore checks for slot names, active state, slider values, and deck scope. |
+| [Pads/Reference - Release FX Test.xml](Pads/Reference%20-%20Release%20FX%20Test.xml) | Release-FX slider and `is_releasefx` checks against normal slot slider behavior. |
+| [Pads/Reference - BeatGrid Command Test.xml](Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | BeatGrid-specific `effect_command` probes based on the built-in plugin UI XML. |
 
 ## Skin Fixtures
 

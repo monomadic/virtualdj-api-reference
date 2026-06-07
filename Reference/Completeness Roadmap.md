@@ -39,9 +39,9 @@ These are the best next tests because they do not require new controller hardwar
 | 3 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
 | 4 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
 | 5 | `effect_has_*`, `get_effect_slider_*`, `get_effect_button_*` | [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Build a reliable generic FX control table. |
-| 6 | `effect_bank_save` / `effect_bank_load` | Custom buttons or `Pads/FX-SLOTS.xml` | Document restored effect names, active state, sliders, and deck scope. |
-| 7 | `effect_releaseslider*`, `is_releasefx` | Small custom-button or pad fixture | Separate release-FX behavior from normal deck FX. |
-| 8 | `effect_command` for BeatGrid only | Built-in BeatGrid plugin UI XML | Keep plugin-command examples plugin-specific. |
+| 6 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../Test/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
+| 7 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../Test/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
+| 8 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
 | 9 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | Hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
 
 `system` is intentionally not in the normal no-hardware queue. Revisit it only if an official example, bundled-resource context, or clearly harmless parameter appears.

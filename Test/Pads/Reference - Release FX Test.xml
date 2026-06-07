@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Release FX Test.xml
+  Manual-test pad page for effect_releaseslider, effect_releaseslider_active,
+  and is_releasefx behavior.
+
+  This page is a harness, not proof. Select or configure a release effect in
+  VirtualDJ's normal UI before testing if the target build requires that setup.
+
+  Suggested first pass:
+    1. Observe REL? state before selecting/configuring a release effect.
+    2. Select a release-capable effect in the UI, then observe REL? again.
+    3. Press REL 25/50/75 and REL ACTIVE 25/50/75.
+    4. Compare is_releasefx, audible behavior, active state, and visible slider
+       movement against normal effect_slider controls.
+
+  Record the VirtualDJ build, selected effect, setup steps, and observed values
+  in Reference/VDJScript Local Test Tracker.md.
+
+  Source: Official, Inference
+-->
+<page name="REF: RELEASE FX TEST">
+
+  <pad1 name="REL? `is_releasefx`"
+        color="is_releasefx ? color 'green' : color 'gray'"
+        query="is_releasefx ? on : off">
+    debug `is_releasefx`
+  </pad1>
+
+  <pad2 name="REL 25"
+        color="color 'cyan'">
+    effect_releaseslider 25%
+  </pad2>
+
+  <pad3 name="REL 50"
+        color="color 'cyan'">
+    effect_releaseslider 50%
+  </pad3>
+
+  <pad4 name="REL 75"
+        color="color 'cyan'">
+    effect_releaseslider 75%
+  </pad4>
+
+  <pad5 name="REL ACTIVE 25"
+        color="is_releasefx ? color 'orange' : color 'gray'"
+        query="is_releasefx ? on : off">
+    effect_releaseslider_active 25%
+  </pad5>
+
+  <pad6 name="REL ACTIVE 50"
+        color="is_releasefx ? color 'orange' : color 'gray'"
+        query="is_releasefx ? on : off">
+    effect_releaseslider_active 50%
+  </pad6>
+
+  <pad7 name="REL ACTIVE 75"
+        color="is_releasefx ? color 'orange' : color 'gray'"
+        query="is_releasefx ? on : off">
+    effect_releaseslider_active 75%
+  </pad7>
+
+  <pad8 name="FX `get_effect_name 1`"
+        color="effect_active 1 ? color 'green' : color 'gray'"
+        query="effect_active 1 ? on : off">
+    debug `get_effect_name 1`
+  </pad8>
+
+  <pad9 name="LOAD ECHO FX1"
+        color="color 'magenta'"
+        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'echo' ? on : off">
+    effect_select 1 'Echo' &amp; effect_slider 1 1 50% &amp; effect_active 1 on
+  </pad9>
+
+  <pad10 name="FX1 NORMAL 25"
+         color="color 'white'">
+    effect_slider 1 1 25%
+  </pad10>
+
+  <pad11 name="FX1 NORMAL 75"
+         color="color 'white'">
+    effect_slider 1 1 75%
+  </pad11>
+
+  <pad12 name="FX1 ACTIVE"
+         color="effect_active 1 ? color 'green' : color 'gray'"
+         query="effect_active 1 ? on : off">
+    effect_active 1
+  </pad12>
+
+  <pad13 name="SHOW FX1"
+         color="color 'cyan'">
+    effect_show_gui 1
+  </pad13>
+
+  <pad14 name="SELECT FX1"
+         color="color 'cyan'">
+    effect_select_popup 1
+  </pad14>
+
+  <pad15 name="LOG REL"
+         color="is_releasefx ? color 'green' : color 'gray'"
+         query="is_releasefx ? on : off">
+    debug `is_releasefx`
+  </pad15>
+
+  <pad16 name="LOG FX"
+         color="color 'white'">
+    debug `get_effect_name 1` &amp; debug `get_effect_slider_text 1 1` &amp; debug `effect_active 1`
+  </pad16>
+
+  <shift_pad1 name="LOG REL" color="color 'green'">debug `is_releasefx`</shift_pad1>
+  <shift_pad2 name="LOG FX1" color="color 'cyan'">debug `get_effect_name 1`</shift_pad2>
+  <shift_pad3 name="LOG S1" color="color 'white'">debug `get_effect_slider_text 1 1`</shift_pad3>
+  <shift_pad4 name="LOG ACTIVE" color="color 'white'">debug `effect_active 1`</shift_pad4>
+  <shift_pad5 name="REL 0" color="color 'cyan'">effect_releaseslider 0%</shift_pad5>
+  <shift_pad6 name="REL 100" color="color 'cyan'">effect_releaseslider 100%</shift_pad6>
+  <shift_pad7 name="REL ACT 0" color="color 'orange'">effect_releaseslider_active 0%</shift_pad7>
+  <shift_pad8 name="REL ACT 100" color="color 'orange'">effect_releaseslider_active 100%</shift_pad8>
+
+  <param1 name="SELECT FX1">effect_select_popup 1</param1>
+  <param2 name="SHOW FX1">effect_show_gui 1</param2>
+
+</page>
