@@ -13,6 +13,9 @@ Start here:
 - [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md)
   Names-only audit comparing the live official VDJScript appendix against this repo's local verb reference.
 
+- [Completeness Roadmap](Completeness%20Roadmap.md)
+  Evidence backlog for turning searchable names and source hints into locally observed, curated guidance.
+
 - [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md)
   Local cross-check of the VDJScript action descriptions bundled in VirtualDJ's Button Editor language resources, plus binary string-table counts.
 
@@ -65,6 +68,7 @@ Current status:
 - `Button Editor Taxonomy.md` tracks the compiled Button Editor category mapping and metadata join: 37 displayed categories, 918 visible actions, 1028 compiled action items, and exact `ACTION_*` method-symbol coverage.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
+- `Completeness Roadmap.md` is the default place to choose the next evidence pass and keep incomplete areas visible.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Skin Runtime Findings.md` tracks local skin runtime behavior that should be shared across projects rather than kept in one skin repo.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.

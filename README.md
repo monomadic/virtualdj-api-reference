@@ -18,6 +18,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Pick the right VDJScript verb or pattern | [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) |
 | Look up a specific verb | [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md) |
 | Check official verb coverage | [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md) |
+| Choose the next completeness pass | [Reference/Completeness Roadmap.md](Reference/Completeness%20Roadmap.md) |
 | Choose or maintain a pad page | [Pads/README.md](Pads/README.md) |
 | Run or update a test harness | [Test/README.md](Test/README.md) |
 | Build or study a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Reference/Skin Runtime Findings.md](Reference/Skin%20Runtime%20Findings.md) · [Skins/README.md](Skins/README.md) · [Skins/ModularSkeleton/](Skins/ModularSkeleton/) |
@@ -53,6 +54,7 @@ Unlabeled files are raw material not yet normalized to this standard.
 ## Status
 
 - VDJScript reference has official-name parity with the appendix: 991/991 official verb/alias names are present, missing names are 0, and the compact official remainder is empty. The remaining formal gap is 20 official names still marked `Needs local test`: sparse helpers such as `deck_has_error` and `system`; optional deck/controller setup for `dualdeckmode_decks`; and hardware-specific controller helpers.
+- Completeness work is tracked in `Reference/Completeness Roadmap.md`; the next low-hardware passes are `deck_has_error`, `dualdeckmode_decks`, hidden Button Editor probes, and FX introspection.
 - Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
 - Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 

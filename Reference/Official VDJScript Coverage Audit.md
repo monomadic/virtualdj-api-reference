@@ -45,6 +45,8 @@ What still sticks out:
 
 ## Next Promotion Targets
 
+See [Completeness Roadmap](Completeness%20Roadmap.md) for the ordered evidence backlog across official sparse helpers, Button Editor hidden candidates, FX behavior, skin canaries, and hardware-only helpers.
+
 - No compact-remainder names currently remain.
 - Next depth pass: locally test `deck_has_error`, revisit `system` only if official examples or harmless parameters are found, then test `dualdeckmode_decks` in an appropriate deck/controller context.
 - Next catalog-only pass: test `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` Button Editor catalog group before promoting them into normal user-facing verb guidance. Starter harness: [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml).
