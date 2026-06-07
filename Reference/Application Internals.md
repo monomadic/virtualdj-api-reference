@@ -159,9 +159,9 @@ cp "$skin_name.zip" "$VDJ_HOME/Skins/"
 
 After installation, select the skin from Settings -> Interface. Official add-on installs use Settings -> Extensions, then the relevant software section; for skins, that is the Interface tab.
 
-Development tip: when a skin variable controls structural XML such as conditional layout branches, conditional defines, or `<nbdecks>` choices, pair the state change with `load_skin` so VirtualDJ reparses the skin. For simple live `visibility=""` changes, a reload is usually unnecessary.
+Development tip: when a skin variable controls structural XML such as conditional layout branches, conditional `<breaklines>`, conditional defines, or `<nbdecks>` choices, pair the state change with `load_skin` so VirtualDJ reparses the skin. For simple live `visibility=""` changes, a reload is usually unnecessary.
 
-Source: `Official`, `Local observation`, `Inference`
+Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
 ### Remote Skins
 

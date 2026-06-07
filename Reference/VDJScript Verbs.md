@@ -1738,6 +1738,7 @@ Preferred usage:
 - prefer this over name-only global assumptions when you care which slot owns the effect
 - treat `effect_select` as a write to slot state. For user-facing FX1-FX6 rack controls that should respect the performer's saved rack, prefer `effect_active <slot>`, `effect_slider <slot> ...`, and `effect_button <slot> ...` without selecting a new effect.
 - for pad pages that intentionally own/reprogram a deck FX slot, pair `effect_select <slot> '<name>'` with explicit `effect_slider <slot> ...` values before activating the slot
+- `effect_select` and `effect_active` do not provide a known `padfx`-style inline parameter list. For persistent slot FX, write an explicit chain such as `effect_select 1 'cut' & effect_slider 1 1 90% & effect_slider 1 2 0.5bt & effect_slider 1 3 50% & effect_active 1 on`.
 - do not use bare `effect_select <slot>` as a harmless selected-name query in pad actions; it can open the effect selector. Use `get_effect_name <slot>` for labels and state checks.
 - use `effect_select_multi <slot> '<name>'` instead when the pad should add/keep multiple effects in the same slot rather than replacing the previous effect
 - `<slot>` can be a normal numeric deck FX slot or a supported special/named slot. Official forum guidance documents stem FX slot names such as `rhythm` and `vocals`; use these when the effect instance should live on a stem-specific slot rather than on numeric slots 1/2/3.
@@ -4980,7 +4981,7 @@ set '@$layout_4deck' 1
 var_equal '@$layout_4deck' 1 ? action1 : action2
 ```
 
-If a variable only drives live `visibility=""`, a reload is usually unnecessary. If it drives structural XML such as conditional `<nbdecks>`, mutually exclusive layout branches, or conditional define/color variants, pair the state change with `load_skin` so VirtualDJ reparses the skin:
+If a variable only drives live `visibility=""`, a reload is usually unnecessary. If it drives structural XML such as conditional `<nbdecks>`, conditional `<breaklines>`, mutually exclusive layout branches, or conditional define/color variants, pair the state change with `load_skin` so VirtualDJ reparses the skin:
 
 ```vdjscript
 set '@$layout_4deck' 1 & load_skin
@@ -5652,6 +5653,7 @@ loop_color 1 'yellow'
 
 - Official `padfx` behavior is temporary: parameters are applied when the pad effect starts and return when it stops.
 - Use `padfx` for volatile pad-owned performance effects that should not overwrite the performer's persistent FX1-FX6 rack.
+- The direct `padfx 'effect' <param...> 'stemfx:<stem>'` syntax is specific to Pad FX. Persistent slot FX use separate `effect_select`, `effect_slider`, `effect_button`, and `effect_active` commands instead of a single inline-parameter selector.
 - After slider values, `padfx` can also accept switch strings such as `"TRAIL:on"` and stem modifiers such as `stemfx:<stem>`, `solostem:<stem>`, or `mutestem:<stem>`.
 - Use `stemfx:<stem>` when the effect should apply only to that stem while other stems continue playing normally.
 - Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`; local pad pages normally use lowercase strings.
@@ -5774,6 +5776,7 @@ FX catalog note:
 - Numbered deck FX slots 1-6 are the supported range to use in reference examples. The manual exposes an `FX x6` deck view, hardware manuals describe six VirtualDJ FX slots, and `effect_bank_save` / `effect_bank_load` explicitly save/load deck FX slots 1-6. User-provided local observation on 2026-06-01 found that FX1-FX6 kept their loaded effect across a VirtualDJ restart, while FX7 and higher plus named stem FX slots kept their loaded effect only during the current session/across track loads and reset after restart.
 - Treat FX1-FX6 as persistent rack state. Pads that should use the performer's saved rack should usually trigger or adjust existing slots; pads that select effects into FX1-FX6 are intentionally reprogramming the rack.
 - Treat `padfx` and named stem FX slots as volatile, stateful performance targets. They are appropriate when pads should assign their own effect state without becoming the saved deck rack.
+- There is no known one-command persistent-slot equivalent to `padfx 'cut' 90% 0.5bt 50% 'stemfx:vocal'`; use `effect_select` plus explicit `effect_slider`/`effect_button`/`effect_active` steps when a pad intentionally writes FX1-FX6.
 - `effect_bank_save` / `effect_bank_load` are official rack snapshot helpers for deck FX slots 1-6. Treat them as persistent rack helpers. If a pad uses explicit `effect_select` / `effect_slider` / `effect_active` macros to guarantee preset values in FX1-FX6, document that it intentionally reprograms the rack.
 - `effect_disable_all 'padfx'` clears temporary pad FX, but should be documented as a cleanup/reset control rather than an inline initializer before new `padfx` actions.
 - `effect_3slots_layout` is a UI/layout helper; built-in and SDK example skins use it to switch between single-FX and multi-FX panels.

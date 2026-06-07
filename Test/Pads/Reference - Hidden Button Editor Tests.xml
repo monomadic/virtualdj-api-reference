@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Reference - Hidden Button Editor Tests.xml
+  Manual-test pad page for low-risk flag1-hidden Button Editor taxonomy rows.
+
+  This page is a harness, not proof. The actions here are hidden from the
+  Button Editor list and are absent from the official VDJScript appendix. Load
+  the page, observe labels/debug output, then record VirtualDJ build, setup,
+  result, and any follow-up in:
+    Reference/VDJScript Local Test Tracker.md
+
+  Deliberately excluded from this page:
+    - crash: destructive-looking system diagnostic.
+    - rane_* / motorwheel* / ns7_* / assign_related_controller: hardware-specific.
+    - all_decks / combine_query: likely grammar/combinator helpers; test later
+      in custom buttons after safe readback behavior is understood.
+
+  Source: Built-in app resource, Binary compiled table, Binary symbol table
+-->
+<page name="REF: HIDDEN TAXONOMY TEST">
+
+  <pad1 name="VOC 50: `stem_volume 'Vocal'`"
+        color="color 'purple'">
+    stem_volume 'Vocal' 50%
+  </pad1>
+
+  <pad2 name="VOC 100: `stem_volume 'Vocal'`"
+        color="color 'purple'">
+    stem_volume 'Vocal' 100%
+  </pad2>
+
+  <pad3 name="INSTRU 50: `stem_volume 'Instru'`"
+        color="color 'blue'">
+    stem_volume 'Instru' 50%
+  </pad3>
+
+  <pad4 name="SAM IN: `sampler_inputgain`"
+        color="color 'orange'">
+    sampler_inputgain 50%
+  </pad4>
+
+  <pad5 name="PAGE: `get_pad_page_name`"
+        color="color 'white'">
+    nothing
+  </pad5>
+
+  <pad6 name="INSPLIT: `pad_page_insplit`"
+        color="pad_page_insplit ? color 'green' : color 'gray'"
+        query="pad_page_insplit ? on : off">
+    nothing
+  </pad6>
+
+  <pad7 name="COLORFX: `is_colorfx`"
+        color="is_colorfx ? color 'green' : color 'gray'"
+        query="is_colorfx ? on : off">
+    nothing
+  </pad7>
+
+  <pad8 name="BEATS IDX: `effect_beats_sliderindex`"
+        color="color 'cyan'">
+    nothing
+  </pad8>
+
+  <shift_pad1 name="LOG VOCAL" color="color 'purple'">debug `stem_volume 'Vocal'`</shift_pad1>
+  <shift_pad2 name="LOG INSTRU" color="color 'blue'">debug `stem_volume 'Instru'`</shift_pad2>
+  <shift_pad3 name="LOG SAM IN" color="color 'orange'">debug `sampler_inputgain`</shift_pad3>
+  <shift_pad4 name="LOG PAGE" color="color 'white'">debug `get_pad_page_name`</shift_pad4>
+  <shift_pad5 name="LOG SPLIT" color="color 'green'">debug `pad_page_insplit`</shift_pad5>
+  <shift_pad6 name="LOG FAV" color="color 'green'">debug `pad_page_favorite`</shift_pad6>
+  <shift_pad7 name="LOG PAGE SPLIT" color="color 'green'">debug `pad_page_split`</shift_pad7>
+  <shift_pad8 name="LOG BEATS IDX" color="color 'cyan'">debug `effect_beats_sliderindex`</shift_pad8>
+
+  <param1 name="FLIP STATUS: `flip_get_status`">flip_play</param1>
+  <param2 name="FLIP RECORD">flip_record</param2>
+
+</page>

@@ -176,6 +176,36 @@ The UI hides entries when either of the first two flag bytes has bit 0 set.
 
 Those labels are interpretive. The extractor keeps the fields literal as `flag0_hidden` and `flag1_hidden`.
 
+## Flag1 Hidden Rows
+
+Flag1-hidden rows are the most interesting unpublished group: all 37 are absent from the official appendix, 14 have bundled Button Editor language descriptions, and 30 have exact `ACTION_*` method-symbol evidence. They should stay out of ordinary user-facing recommendations until locally tested, but several are good same-day probes.
+
+| Area | Hidden rows | Evidence | Exploration angle |
+| --- | --- | --- | --- |
+| Browser | `browser_colorfilter_edit`, `load_security_shown` | Exact symbols: execute-only / query-only. | Color-filter editor and load-security state internals. |
+| Config | `setting_if_unchanged` | Exact query symbol. | May test whether setting mutations are conditional or dirty-state aware. |
+| Controller hardware | `assign_related_controller`, `controllerscreen_action`, `motorwheel2`, `motorwheel3`, `ns7_get_drift`, `rane_motor_enable`, `rane_timecode`, `rane_timecode_enable`, `send_nothing` | Several exact symbols; `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable` also have language descriptions. | Mostly controller/hardware context. Do not generalize without matching device or mapper evidence. |
+| Cues | `hot_cue_stutter` | No official, language, or exact-class evidence. | Watch-only candidate unless another source appears. |
+| Stems | `stem_volume` | Language description, no exact class. | Promising: description distinguishes slider-style stem volume from `stem` knob/isolate behavior. |
+| Flow | `all_decks`, `combine_query` | Exact execute/query/bool/text symbols. | Potential grammar or multi-deck query combinators. Test carefully in readback contexts first. |
+| Master deck values | `master_beat_num`, `masterbpm` | Exact execute/query symbols. | Compare with `get_bpm`, `masterdeck`, beatgrid, and sync helpers. |
+| Flip macros | `flip_arm`, `flip_get_status`, `flip_load`, `flip_loop`, `flip_play`, `flip_record` | `flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record` have language descriptions; several also have exact query/execute symbols. | Likely tied to saved Flip state; good candidate group if Flip functionality is available. |
+| Pads | `get_pad_page_name`, `pad_page_favorite`, `pad_page_insplit`, `pad_page_split`, `pad_pressure_switch` | Exact symbols for all except `pad_pressure_switch`; `pad_page_insplit` and `pad_pressure_switch` have language descriptions. | Good pad-page state probes; likely useful for split/favorite page tooling. |
+| Plugins | `effect_beats_sliderindex`, `is_colorfx` | Exact query symbols. | Low-risk readback candidates for effect UI state. |
+| Rane screen | `rane_screen_input`, `rane_screen_output` | Exact execute/query and query symbols. | Hardware/display integration; not a general VDJScript surface yet. |
+| Sampler | `sampler_inputgain` | Language description and exact execute/query symbols. | Promising hardware sampler input gain probe. |
+| Remote skin | `remote_action` | Exact execute/query/bool/text symbols. | VirtualDJ Remote or remote-skin integration candidate. |
+| System | `crash` | Language description and exact execute symbol. | Diagnostic/destructive-looking; do not run in a live session. |
+| Timecode | `timecode_no_jump` | No official, language, or exact-class evidence. | Watch-only candidate unless timecode behavior suggests a safe probe. |
+
+Same-day low-risk shortlist:
+
+1. `stem_volume`: compare `stem_volume 'Vocal' 0%/50%/100%` with `stem 'vocal'`, visible stem levels, and audio output.
+2. `sampler_inputgain`: check readback and whether values affect a hardware/input sampler path.
+3. `get_pad_page_name`, `pad_page_insplit`, `pad_page_favorite`, `pad_page_split`: observe current/split/favorite pad-page state.
+4. `is_colorfx`, `effect_beats_sliderindex`: observe ColorFX/effect beat-index state in labels and debug logs.
+5. `flip_*`: only after confirming Flip is available; record whether `flip_get_status` changes across record/load/play/loop/arm actions.
+
 ## Documentation Use
 
 Use this taxonomy as a fourth lens alongside:

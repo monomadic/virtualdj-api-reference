@@ -12,6 +12,8 @@ Pitch beats-parameter forum source updated on 2026-05-24.
 Pad-page generic/sampler-scope notes updated on 2026-05-30.
 FX slot restart-persistence note added on 2026-06-01.
 FX state-lifetime model added on 2026-06-01.
+Conditional skin breaklines added on 2026-06-06.
+Skin condition and dynamic-color rules updated on 2026-06-08.
 
 For verb-by-verb API details, use [VDJScript Verbs](VDJScript%20Verbs.md).
 
@@ -104,8 +106,18 @@ Source labels used below:
   Source: `Official`
 
 - Dynamic text color in skins:
-  Prefer one `<text color="`...`">` over state-specific text color attributes when the color itself is dynamic.
+  Prefer one `<text>` element whose `color` attribute is a backticked VDJScript expression over state-specific text color attributes when the color itself is dynamic.
   Why: the color docs distinguish between action-returning color values and literal colors, and Development Manager guidance recommends a single dynamic text color action.
+  Source: `Official`, `Official forum`
+
+- Deck-scoped dynamic text color in reusable skin classes:
+  When a dynamic color depends on deck state inside a reusable class, explicitly scope the predicate with the class's deck placeholder, for example ``color="`deck [DECK] masterdeck ? color 'orange' : color 'white'`"``.
+  Why: the dynamic-color pattern is officially supported, but deck-sensitive predicates can otherwise follow the ambient/current deck context. The explicit `deck [DECK] masterdeck` form was confirmed working in GraveRaver's `SYNC_INFO_EXTENDED` class.
+  Source: `Official`, `Official forum`, `Local test`, `Inference`
+
+- Defined skin colors inside dynamic color scripts:
+  Use `<define color="name" value="..."/>` names directly in XML color fields such as `color="name"`, but do not reference those names inside backticked VDJScript color expressions.
+  Why: official color docs define custom colors for skin color fields, and staff guidance says defined colors are not available inside scripts such as `` color="`play ? color 'green' : color 'mydefine'`" ``.
   Source: `Official`, `Official forum`
 
 - Dynamic button borders:
@@ -141,6 +153,11 @@ Source labels used below:
   Prefer `<panel visibility="...">` for pure query-driven UI and `name=""`, `group=""`, `visible=""`, plus `skin_panelgroup` when you want manual switching that persists across sessions.
   Why: this is exactly how the panel SDK page distinguishes the two patterns.
   Source: `Official`
+
+- Multi-layout skin breaklines:
+  Use top-level conditional `<breaklines>` children when different structural layouts in one desktop skin need different vertical stretch regions.
+  Why: root `<skin breakline="" breakline2="">` is static for the whole document, while conditional `<breaklines breakline1="" breakline2="" condition="">` entries were confirmed working in GraveRaver and have VirtualDJ community/forum evidence. Pair layout-variable changes with `load_skin`.
+  Source: `Official forum`, `Community`, `Local test`
 
 - Modular skins:
   Prefer build-time includes that flatten to one installed `skin.xml`.
@@ -249,6 +266,24 @@ Minimal root pattern:
   ...
 </skin>
 ```
+
+Conditional breaklines for multi-layout skins:
+
+```xml
+<skin ...>
+  <breaklines breakline1="675" breakline2="1000" condition="var_equal '@$skin_mode' 0"/>
+  <breaklines breakline1="980" breakline2="1070" condition="var_equal '@$skin_mode' 1"/>
+  ...
+</skin>
+```
+
+Use static root `breakline=""` / `breakline2=""` when the whole skin has one
+stretch region. Use top-level conditional `<breaklines>` children when one
+runtime skin contains mutually exclusive layouts with different stretch regions.
+If the controlling variable changes from a button or menu, pair it with
+`load_skin` so the breakline selection is rebuilt.
+
+Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
 Conditional deck-count pattern:
 
@@ -375,7 +410,7 @@ Source: `Built-in skin`
 
 ### Conditional Structure
 
-Use `visibility=""` for live display state and `condition=""` for structural selection.
+Use `visibility=""` for live display state and `condition=""` for structural selection. Both take VDJScript-style boolean queries, but they are evaluated at different times.
 
 ```xml
 <panel class="main_decks" visibility="not browser_zoom"/>
@@ -387,10 +422,14 @@ Use `visibility=""` for live display state and `condition=""` for structural sel
 
 Useful rule of thumb:
 
-- `visibility=""` can follow frequently changing state without a skin reload.
-- `condition=""` is better for mutually exclusive layout branches, conditional define/color variants, and conditional `<nbdecks>` entries. When user actions change those controlling variables, reload the skin.
+- `visibility=""` can follow frequently changing state without a skin reload: `masterdeck`, `loaded`, `play`, `browser_zoom`, `skin_panel`, loop state, current deck role, and similar performance-time state.
+- `condition=""` is better for load-time or reload-time choices: mutually exclusive layout branches, OS-specific controls, texture/color variants, conditional `<nbdecks>`, conditional `<breaklines>`, and conditional `customicons`.
+- `condition=""` is allowed on skin elements and many nested children, but it is still structural. A false branch is ignored/not loaded rather than merely hidden. When user actions change the controlling state, pair the change with `load_skin`.
+- For layout mode buttons, `set '@$skin_mode' 1 & load_skin` is reasonable. For a masterdeck-colored label, prefer `visibility=""` wrappers or a dynamic color expression.
+- For panels, official docs allow `visible=""` / `visibility=""`; use query-driven visibility for live panels, and `name=""` + `group=""` + `skin_panel` / `skin_panelgroup` when the user should manually switch and persist a panel choice.
+- `visibility=""` can also be a numeric opacity. If a ternary must return opacity values, wrap the numbers with `constant`, for example `visibility="loaded ? constant 0.5 : constant 0.0"`.
 
-Source: `Local test`, `Inference`
+Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
 ### Buttons, State, and Query
 
@@ -418,8 +457,10 @@ Source: `Official`, `Official forum`
 
 The safest dynamic-color rules are:
 
-- `source=` on `<visual type="color">` expects an action that returns a color.
+- `source=` on `<visual type="color">` expects an action that returns a color. Do not wrap it in backticks.
 - `color=` expects a color value, so a script action must be wrapped in backticks.
+- Inside a dynamic color expression, return a color with `color 'orange'`, `color '#FF7F00'`, `get_key_color`, `cue_color 1`, etc.
+- Skin-defined color names work in XML color fields, but not inside backticked VDJScript color expressions.
 
 Examples:
 
@@ -434,16 +475,27 @@ Examples:
 <text color="`get_key_color`" action="get_key"/>
 ```
 
+Deck-scoped reusable-class example:
+
+```xml
+<define class="SYNC_INFO_EXTENDED" placeholders="*deck">
+  <text color="`deck [DECK] masterdeck ? color 'orange' : color 'white'`"
+        action="get_bpm"/>
+</define>
+```
+
 Preferred methods:
 
 - Use `<visual type="color">` for colored underlines, fills, and status bars.
-- Use a single dynamic `<text color="`...`">` when only the text color changes.
+- Use a single `<text>` with a dynamic `color` expression when only the text color changes.
+- Use separate `visibility=""` wrappers when you need to preserve skin-defined color names, separate click handlers, or substantially different child structure.
 
 Avoid:
 
 - Dynamic `border=` colors on button vector states. CTO guidance says this is not supported.
+- `` color="`play ? color 'green' : color 'my_defined_skin_color'`" ``. Use the literal color value inside the script, or keep separate XML branches that can use the defined color directly.
 
-Source: `Official`, `Official forum`
+Source: `Official`, `Official forum`, `Local test`, `Inference`
 
 ### `<visual type="...">` — Full Type Reference
 
@@ -660,7 +712,7 @@ set '@$layout_4deck' 1 & load_skin
 var_equal '@$layout_4deck' 1 ? action1 : action2
 ```
 
-Use `load_skin` when the variable controls structural XML, such as conditional `<nbdecks>`, conditional defines, or mutually exclusive layout branches. Avoid reloading for simple live visibility toggles unless the skin actually needs to rebuild.
+Use `load_skin` when the variable controls structural XML, such as conditional `<nbdecks>`, conditional `<breaklines>`, conditional defines, or mutually exclusive layout branches. Avoid reloading for simple live visibility toggles unless the skin actually needs to rebuild.
 
 Source: `Local test`, `Inference`
 
@@ -731,6 +783,8 @@ Use numbered deck FX slots 1-6 in reference examples and deterministic pad pages
 
 Conceptual model: FX1-FX6 are the persistent deck rack. Use them like saved rack assignments that skins/controllers can display, trigger, and tweak. A pad can still call `effect_select` to write a new effect into FX1-FX6, but that is a rack-owning preset action because it changes the saved slot assignment. If the pad should behave like a temporary performance effect, prefer `padfx` or a named stem FX slot instead.
 
+There is no known single-command persistent-slot equivalent to `padfx 'cut' 90% 0.5bt 50% 'stemfx:vocal'`. That compact `padfx` form is specific to volatile Pad FX: it names the effect, passes effect parameters directly, can include switch/stem modifiers, and VirtualDJ returns parameters when the pad effect stops. Persistent slot FX use separate verbs: select the effect, set each slider/button, then activate the slot.
+
 Preferred slot workflow:
 
 1. Select the effect into a slot
@@ -745,6 +799,18 @@ effect_slider 1 1 75% &
 effect_slider 1 2 1bt &
 effect_active 1 on
 ```
+
+For a slot-FX preset equivalent to a `padfx` parameter call, write the steps explicitly:
+
+```vdjscript
+effect_select 1 'Cut' &
+effect_slider 1 1 90% &
+effect_slider 1 2 0.5bt &
+effect_slider 1 3 50% &
+effect_active 1 on
+```
+
+In XML attributes, write those chain separators as `&amp;`.
 
 Why this is the safest rack-owning reference pattern:
 
@@ -960,6 +1026,8 @@ User-provided local observation on 2026-06-01 found that named stem FX slots suc
 This makes named stem FX slots useful as volatile, pad-assigned state: a pad can load/activate an effect for a stem without rewriting the performer's persistent FX1-FX6 rack, and VirtualDJ eventually clears that assignment on restart.
 
 `padfx` parameter values are applied when the pad effect starts, but `padfx` should not be treated as private per-pad state. User-provided testing showed that another pad can call the same effect/stem target and alter the active parameter values. User testing also found that placing `effect_disable_all 'padfx'` immediately before a new `padfx` chain can stop the new chain from activating. Use `effect_disable_all 'padfx'` as a separate cleanup control. If a preset must become a visible/restart-persistent rack chain, use deliberately owned FX1-FX6 slots; otherwise keep pad-owned performance effects in `padfx` or named stem FX slots.
+
+This direct parameter syntax is one reason `padfx` fits volatile pad-owned FX. A Pad FX can say "run Cut now with these values" in one command. A persistent rack slot is treated more like stored device state, so `effect_select` and `effect_active` do not take inline slider values; use `effect_slider` / `effect_button` steps when a pad intentionally rewrites that rack state.
 
 `melovocal` and `melorhythm` may exist as named stem FX slots, but they need local testing before being treated as confirmed.
 

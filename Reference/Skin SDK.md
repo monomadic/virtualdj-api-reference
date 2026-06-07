@@ -53,11 +53,25 @@ set '@$4decks' 1 & load_skin
 
 ### Breaklines
 
-Optional `<breakline>` elements define y-coordinates for browser stretching:
+Static skin breaklines can be declared as root `<skin>` attributes:
+
 ```xml
-<breakline y="300"/>
-<breakline y="800"/>
+<skin ... breakline="1000" breakline2="1000">
 ```
+
+Layout-dependent breaklines can be declared as top-level `<breaklines>` child
+elements. This is useful when the loaded skin has mutually exclusive structural
+layouts that need different vertical stretch regions:
+
+```xml
+<breaklines breakline1="675" breakline2="1000" condition="var_equal '@$skin_mode' 0"/>
+<breaklines breakline1="980" breakline2="1070" condition="var_equal '@$skin_mode' 1"/>
+```
+
+When the controlling variable changes from a button or menu, pair that state
+change with `load_skin` so VirtualDJ reparses the structural skin state.
+
+Source: `Official`, `Official forum`, `Community`, `Local test`
 
 ## Skin Children Elements
 
@@ -241,6 +255,18 @@ Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.x
 - `visibility=""` controls whether an existing element is displayed. Use it for live UI state that can change without rebuilding the skin, such as loop state, deck assignment, browser focus, or a panel that should appear and disappear.
 - `condition=""` selects whether an element, group, browser, or define variant participates in the loaded skin structure. Use it for mutually exclusive layout branches, conditional color/class definitions, conditional `<nbdecks>` entries, and other choices that are normally refreshed with `load_skin`.
 
+Operational rules:
+
+- `condition=""` takes a VDJScript action/query that returns true or false.
+- `condition=""` is evaluated when the skin is loaded or reloaded. It does not live-update when its source action changes later.
+- A false `condition=""` branch is ignored/not loaded; it is not merely hidden.
+- Staff guidance says `condition=""` can be added to all skin elements and most nested children. Built-in/staff examples include OS-specific groups, conditional `<nbdecks>`, conditional `customicons`, conditional vector-state children, and conditional background variants.
+- Use `condition=""` for structural choices: layout family, OS-specific buttons, color-scheme asset branches, root/deck count, breakline selection, and heavy UI branches where saving loaded elements matters.
+- Use `visibility=""` or panel `visible=""` / `visibility=""` for live choices: `masterdeck`, loaded/play state, loop state, `skin_panel` state, browser focus/zoom, and panels that should appear or disappear while performing.
+- If a button or menu changes a variable that is read by `condition=""`, include `load_skin` in that action so VirtualDJ reparses the branch.
+- If many elements share one live visibility predicate, put them in one wrapper `<panel>` or `<group>` with that `visibility=""`; this is both cleaner and cheaper than repeating the same predicate on every child.
+- `visibility=""` can be a boolean action or a numeric opacity. For ternaries that return opacity, use `constant` so the branch returns a number: `visibility="deck 1 loaded ? constant 0.5 : constant 0.0"`.
+
 Examples:
 
 ```xml
@@ -252,6 +278,26 @@ Examples:
 <panel class="pro_2decks" condition="var_equal '@$layout_4deck' 0"/>
 <panel class="pro_4decks" condition="var_equal '@$layout_4deck' 1"/>
 ```
+
+Deck-state example:
+
+```xml
+<!-- Good: live masterdeck display state. -->
+<textzone visibility="masterdeck">
+    <text color="color_masterdeck" action="get_bpm"/>
+</textzone>
+
+<!-- Good: one live element when only the color changes. -->
+<textzone>
+    <text color="`deck [DECK] masterdeck ? color 'orange' : color 'white'`"
+          action="get_bpm"/>
+</textzone>
+
+<!-- Avoid for live deck state: this is structural and reload-bound. -->
+<text color="color_masterdeck" action="get_bpm" condition="masterdeck"/>
+```
+
+Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
 ---
 
@@ -476,7 +522,7 @@ Clickable button with multiple states and support for image graphics or vector s
 - `rightclick=""` can run any VDJScript action, including built-in menu/popup actions such as `key_match_menu`, `deck_options`, `loop_options`, `browser_options`, `search_options`, `pad_page_select 1`, `effect_select 1`, `effect_select_popup 1`, and `sampler_options`. This is the normal pattern for making a right-click open an existing VirtualDJ menu.
 - Custom skin `<menu>` elements are different: they open when their own menu hit area is clicked. The official `<menu>` element has no documented name/id trigger that lets another button open that exact custom menu from `rightclick=""`. If you need a custom right-click panel, use `rightclick="skin_panel 'my_context_panel' on"` and build the panel with normal buttons, or place a `<menu>` object where the user clicks. Placing a `<menu>` object there makes that area a normal menu click target, not a right-click-only target.
 - Dynamic button border colors are not currently supported. Even though `border=""` is documented as a color field, official clarification from VirtualDJ CTO Adion says dynamic colors are not supported for border color. Use `visual type="color"` overlays or underlays when a border needs to follow `cue_color`, `sampler_color`, etc. Official reference: [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)
-- For dynamic text colors, the most reliable documented pattern is to use a single `<text>` element with a dynamic `color="`...`"` expression, rather than relying on `colorselected=""` or other state-specific color attributes to evaluate VDJScript. Official references: [Skin Default Colors](https://www.virtualdj.com/wiki/Skin%20Default%20Colors.html), [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
+- For dynamic text colors, the most reliable documented pattern is to use a single `<text>` element with a backticked VDJScript expression in `color`, rather than relying on `colorselected=""` or other state-specific color attributes to evaluate VDJScript. Official references: [Skin Default Colors](https://www.virtualdj.com/wiki/Skin%20Default%20Colors.html), [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
 - The current documented `<button>` API is click-oriented: `action`, `leftclick`, `middleclick`, `rightclick`, `dblclick`, and `query`. No generic drag/drop callback is documented for `<button>`. If you need a drag target in a skin, use `<dropzone>` instead of inventing a button "dragged" state. For sampler slot assignment inside custom pad pages, current working XML uses pad `drop="sampler_assign <slot>"` rather than a skin button callback; see [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml). Official references: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html), [Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html), [Sampler manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html)
 
 **Children:**
@@ -1394,6 +1440,24 @@ When using browser in skins, define breaklines in the `<skin>` element to specif
 - Area between breaklines will stretch; ensure no fixed-position buttons in this area
 - Browser cannot be resized smaller than breakline 1 position
 
+For desktop skins with multiple structural layouts, use top-level conditional
+`<breaklines>` children when each layout needs a different stretch region:
+
+```xml
+<skin ...>
+    <breaklines breakline1="675" breakline2="1000" condition="var_equal '@$skin_mode' 0"/>
+    <breaklines breakline1="980" breakline2="1070" condition="var_equal '@$skin_mode' 1"/>
+    ...
+</skin>
+```
+
+This pattern was reported in VirtualDJ community skin-engine notes for build
+7438+ and was locally confirmed in the GraveRaver desktop skin. Treat the
+controlling variable as structural state: update it with `load_skin` when the
+selected breakline should change.
+
+Source: `Community`, `Local test`
+
 Bundled Remote skins also use panel-local `breakline1` / `breakline2` attributes on full-screen browser and settings panels. This keeps the stretch region tied to the active view rather than only the root skin:
 
 ```xml
@@ -1562,33 +1626,57 @@ Graphics are referenced by coordinates in the PNG file:
 ## Predefined Colors
 
 Colors can be specified as:
-- Hex: `"#FF0000"`
+- Hex: `"#FF0000"` or alpha-first ARGB `"#40FF0000"` for semi-transparent red
 - RGB: `"255,0,0"`
 - Named: `"red"`, `"white"`, `"blue"`, etc.
-- Defined: Use `<define color="" value="">` to create custom color names
+- Defined: Use `<define color="" value="">` to create custom color names. Add `deck=""` when the same color name should resolve differently by deck in direct XML color fields.
 
 ### Dynamic Color Rules
 
 Human-friendly rule of thumb:
 - `source=` is for actions that return a color. Example: `<visual type="color" source="cue_color 1"/>`
-- `color=` is for a color value. If you want to run VDJScript there, wrap the action in backticks. Example: `<text color="`get_key_color`"/>`
+- `color=` is for a color value. If you want to run VDJScript there, wrap the action in backticks. Example: ``<text color="`get_key_color`"/>``
 - `border=` behaves like a static color field in practice. Dynamic border colors are not currently supported, so do not rely on `border="cue_color 1"` or `border="`cue_color 1`"` working on buttons.
 - `query=` changes the button's `on/off` graphics state. It does not automatically use the `selected` state.
+- Skin-defined color names are replaced only in XML fields that directly expect color values. They are not available inside VDJScript color actions.
+- In reusable classes, explicitly deck-scope deck-sensitive dynamic color predicates, for example `deck [DECK] masterdeck ? ...`.
 
 What we know for sure from official docs and staff replies:
 - `visual type="color"` is specifically designed to render a color returned by its `source=` action. Official reference: [VirtualDJ Skin SDK Visual](https://virtualdj.com/wiki/skinsdkvisual.html)
 - The official color docs distinguish between attributes that expect an action and attributes that expect a color value. `source=` expects an action that returns a color; `color=` expects a value and needs backticks around any action. Official reference: [Skin Default Colors](https://www.virtualdj.com/wiki/Skin%20Default%20Colors.html)
 - Button `border=` does not support dynamic colors according to VirtualDJ CTO Adion. Official reference: [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)
-- VirtualDJ Development Manager djdad recommends a single `<text color="`...`">` when the text color itself needs to be dynamic. Official reference: [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
+- VirtualDJ Development Manager djdad recommends a single `<text>` with dynamic `color` when the text color itself needs to change. Official reference: [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
+- VirtualDJ staff says defined skin colors can be used in XML color fields, but not inside scripts such as `` color="`play ? color 'green' : color 'my_defined_color'`" ``. Official forum reference: [On the use of colour defines](https://virtualdj.com/forums/265321/VirtualDJ_Skins/On_the_use_of_colour_defines.html)
 
 Practical implication for hot cue colors:
 - If `cue_color` works in a `visual type="color"` but fails on a button border, that is expected behavior based on the official implementation notes above.
 - If a dynamic color appears black where a cue color was expected, that usually means the attribute accepted a literal color value but did not evaluate the action in that location. This is an inference from the documented behavior above, not an explicit SDK statement.
+- If a dynamic text color needs a custom skin color, either use the literal/predefined color value inside the script or split the element into `visibility=""` branches so each branch can use `color="my_defined_color"` directly.
 
 Verified locally in this workspace:
-- `<text color="`cue_color [INDEX]`">` renders the current cue color correctly inside a button.
+- ``<text color="`cue_color [INDEX]`">`` renders the current cue color correctly inside a button.
 - `<visual type="color" source="cue_color [INDEX]">` renders the current cue color correctly, including when used inside a reusable class instantiated via `<panel class="..."/>`.
 - Button `border=` still does not render the cue color dynamically in the same mini-cue tests, which matches the official limitation above.
+- In GraveRaver's `SYNC_INFO_EXTENDED` class, ``<text color="`deck [DECK] masterdeck ? color 'orange' : color 'white'`" .../>`` works for masterdeck-aware BPM text.
+
+Examples:
+
+```xml
+<!-- Direct color-returning action; color= needs backticks. -->
+<text color="`get_key_color`" action="get_key"/>
+
+<!-- Dynamic text color with explicit deck scope inside a reusable class. -->
+<text color="`deck [DECK] masterdeck ? color 'orange' : color 'white'`"
+      action="get_bpm"/>
+
+<!-- Literal hex values are fine inside the color action. -->
+<text color="`loaded ? color '#FF7F00' : color '#FFFFFF'`"
+      action="get_bpm"/>
+
+<!-- Do not do this; defined color names are not script variables. -->
+<text color="`masterdeck ? color 'color_masterdeck' : color 'white'`"
+      action="get_bpm"/>
+```
 
 Recommended workaround for mini hot cue buttons:
 - If you want a cue-colored mini button, use a `visual type="color"` as the color layer and place a transparent or semi-transparent button on top for click handling, hover state, and text.

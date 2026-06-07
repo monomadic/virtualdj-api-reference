@@ -20,7 +20,9 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Skin Browser](https://www.virtualdj.com/wiki/Skin%2BBrowser.html) - `<browser>` element reference.
 - [Custom Browser](https://virtualdj.com/wiki/custombrowser.html) - Official decomposition of the default browser into custom skin elements.
 - [Split Panel](https://www.virtualdj.com/wiki/Split%20Panel.html) - `<split>` layout panels.
+- [Skin Element Properties](https://virtualdj.com/wiki/Skin%20Element%20Properties.html) - Common element attributes including `visibility=""`, `os=""`, and `panel=""`.
 - [Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html) - Button actions, mouse handlers, and state graphics.
+- [Skin Define](https://www.virtualdj.com/wiki/Skin%20Define.html) - Class definitions, placeholders, class decks, and color defines.
 - [Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html) - Drag/drop target element.
 - [Skin Panel](https://www.virtualdj.com/wiki/Skin%20SDK%20Panel.html) - Query-driven and named panels.
 - [Skin Default Colors](https://virtualdj.com/wiki/Skin%20Default%20Colors.html) - Static and dynamic color handling.
@@ -44,8 +46,13 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [VirtualDJ Technical Support forum](https://www.virtualdj.com/forums/2/VirtualDJ_Technical_Support.html) - Good for scripting, browser, sampler, and effect behavior questions.
 - [Atomix Productions acquires AdionSoft](https://www.virtualdj.com/press/adionsoft.html) - Atomix press archive context for why Adion/CTO forum replies are treated as close implementation authority.
 - [VirtualDJ 2020 - Additions in Skin Engine](https://www.virtualdj.com/forums/230926/VirtualDJ_Skins/VirtualDJ_2020_-_Additions_in_Skin_Engine.html) - Staff-maintained thread for skin engine additions.
+- [Plugin interface Type VDJINTERFACE_SKIN and new additions in skin engine](https://virtualdj.com/forums/234125/VirtualDJ_Plugins/Plugin_interface_Type_VDJINTERFACE_SKIN_and_new_additions_in_skin_engine.html) - Senior staff clarification that `condition` is evaluated on skin load/reload, while `visibility` / panel `visible` update dynamically.
+- [Asking for a skin development advice](https://www.virtualdj.com/forums/236416/VirtualDJ_Skins/Asking__for_a_skin_development_advice.html) - Staff guidance on choosing `condition` for infrequent structural choices versus `visible` for performance-time switching.
+- [Lightweight skin design rules?](https://virtualdj.com/forums/261278/VirtualDJ_Skins/Lightweight_skin_design_rules%3F.html) - Moderator guidance on reducing repeated visibility predicates and using conditions for load-time structure.
+- [How can one set both, Visibility and Transparency of a skin button](https://www.virtualdj.com/forums/246184/VirtualDJ_Skins/How_can_one_set_both__Visibility_and_Transparency_of_a_skin_button_.html) - Staff note that `visibility=""` can be boolean or numeric opacity, with `constant` needed in ternaries that return numbers.
 - [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html) - Staff clarification that dynamic button border colors are not supported.
 - [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html) - Staff guidance for dynamic skin text color.
+- [On the use of colour defines](https://virtualdj.com/forums/265321/VirtualDJ_Skins/On_the_use_of_colour_defines.html) - Staff clarification that defined skin colors work in direct color fields but not inside VDJScript color actions.
 - [effect_colorfx & effect_stems_color ?](https://www.virtualdj.com/forums/241078/VirtualDJ_Technical_Support/effect_colorfx___effect_stems_color__.html) - Staff discussion of extra ColorFX controls.
 - [BUILD 7403 - Multiple stems fx can be used at the same time?](https://virtualdj.com/forums/250499/VirtualDJ_Technical_Support/BUILD_7403_____-Multiple_stems_fx_can_be_used_at_the_same_time__.html) - Adion/CTO guidance that stem FX targets can be treated as separate slots for `effect_*` actions.
 - [Default filter and color fx filter](https://virtualdj.com/forums/252675/VirtualDJ_Technical_Support/Default_filter_and_color_fx_filter.html) - Staff guidance on filter and ColorFX behavior.

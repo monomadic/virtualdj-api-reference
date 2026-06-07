@@ -239,6 +239,18 @@ effect_select 3 'reverb'        # Load Reverb into slot 3
 effect_select_multi 1 'reverb'  # Add Reverb to slot 1 without clearing earlier effects
 ```
 
+Unlike `padfx`, `effect_select` does not accept inline effect parameter values. A persistent slot preset is an explicit chain:
+
+```
+effect_select 1 'cut' &
+effect_slider 1 1 90% &
+effect_slider 1 2 0.5bt &
+effect_slider 1 3 50% &
+effect_active 1 on
+```
+
+This writes the selected effect and slider values into the persistent FX1-FX6 rack. It does not have Pad FX's automatic "return parameters when stopped" behavior.
+
 **Effect Activation:**
 
 ```
@@ -760,6 +772,8 @@ Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Mel
 ```
 padfx 'effectname' param1 param2 param3 param4 'stemfx:stemname'
 ```
+
+This compact "effect plus parameter list plus optional stem/switch modifier" form is specific to Pad FX. For regular persistent slot FX, the closest equivalent is an explicit `effect_select` / `effect_slider` / `effect_button` / `effect_active` chain, and that chain changes the rack state until something else changes it.
 
 ### Pad FX Parameter Order
 

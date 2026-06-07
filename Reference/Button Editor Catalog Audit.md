@@ -112,7 +112,7 @@ Result: none of the 35 candidates currently has shipped XML evidence elsewhere i
 ## Next-Step Promotion Targets
 
 - Immediate XML-backed promotions: none from this mismatch pass.
-- Highest-value catalog-only local tests: `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` group (`flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`).
+- Highest-value catalog-only local tests: `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` group (`flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`). Use [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) as the starter harness for low-risk probes.
 - Hardware/context-dependent catalog candidates: `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable`.
 - Runtime-only names to watch, not promote yet: `get_pad_page_name`, `pad_page_favorite`, `pad_page_split`, `hot_cue_stutter`, `timecode_no_jump`, and `setting_if_unchanged`.
 

@@ -3,249 +3,59 @@
   Phrase Jump.xml
 
   Jump landmarks are measured from goto_first_beat:
-    - param1 selects a 16-beat or 32-beat phrase size.
-    - param2 offsets the "bar 1" anchor by -1, 0, or +1 bar.
+    - param1 cycles phrase size: 16, 32, 64, 128, 256 beats.
+    - param2 cycles phrase-start offset: 0, 1, 2, 3 bars.
 
-  Default state is phrase size 16 and offset 0 when the vars have not been set.
+  Pad 1 jumps to the first beat. Pads 2-16 alternate CUT and DROP
+  phrase landmarks. CUT is one bar before the matching DROP.
 -->
-<page name="PHRASE JUMP">
-  <pad1 name="BAR 1" color="color 'white'" autodim="false">
-    var_equal 'phrase_bar1_offset' -4 ?
-      goto_first_beat &amp; goto -4bt :
-    var_equal 'phrase_bar1_offset' 4 ?
-      goto_first_beat &amp; goto +4bt :
-      goto_first_beat
-  </pad1>
-
-  <pad2 name="P1 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +24bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +32bt :
-        goto_first_beat &amp; goto +28bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +8bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +16bt :
-        goto_first_beat &amp; goto +12bt
-  </pad2>
-
-  <pad3 name="PHRASE 1" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +28bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +36bt :
-        goto_first_beat &amp; goto +32bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +12bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +20bt :
-        goto_first_beat &amp; goto +16bt
-  </pad3>
-
-  <pad4 name="P2 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +56bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +64bt :
-        goto_first_beat &amp; goto +60bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +24bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +32bt :
-        goto_first_beat &amp; goto +28bt
-  </pad4>
-
-  <pad5 name="PHRASE 2" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +60bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +68bt :
-        goto_first_beat &amp; goto +64bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +28bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +36bt :
-        goto_first_beat &amp; goto +32bt
-  </pad5>
-
-  <pad6 name="P3 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +88bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +96bt :
-        goto_first_beat &amp; goto +92bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +40bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +48bt :
-        goto_first_beat &amp; goto +44bt
-  </pad6>
-
-  <pad7 name="PHRASE 3" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +92bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +100bt :
-        goto_first_beat &amp; goto +96bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +44bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +52bt :
-        goto_first_beat &amp; goto +48bt
-  </pad7>
-
-  <pad8 name="P4 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +120bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +128bt :
-        goto_first_beat &amp; goto +124bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +56bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +64bt :
-        goto_first_beat &amp; goto +60bt
-  </pad8>
-
-  <shift_pad1 name="PHRASE 4" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +124bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +132bt :
-        goto_first_beat &amp; goto +128bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +60bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +68bt :
-        goto_first_beat &amp; goto +64bt
-  </shift_pad1>
-
-  <shift_pad2 name="P5 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +152bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +160bt :
-        goto_first_beat &amp; goto +156bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +72bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +80bt :
-        goto_first_beat &amp; goto +76bt
-  </shift_pad2>
-
-  <shift_pad3 name="PHRASE 5" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +156bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +164bt :
-        goto_first_beat &amp; goto +160bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +76bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +84bt :
-        goto_first_beat &amp; goto +80bt
-  </shift_pad3>
-
-  <shift_pad4 name="P6 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +184bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +192bt :
-        goto_first_beat &amp; goto +188bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +88bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +96bt :
-        goto_first_beat &amp; goto +92bt
-  </shift_pad4>
-
-  <shift_pad5 name="PHRASE 6" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +188bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +196bt :
-        goto_first_beat &amp; goto +192bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +92bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +100bt :
-        goto_first_beat &amp; goto +96bt
-  </shift_pad5>
-
-  <shift_pad6 name="P7 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +216bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +224bt :
-        goto_first_beat &amp; goto +220bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +104bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +112bt :
-        goto_first_beat &amp; goto +108bt
-  </shift_pad6>
-
-  <shift_pad7 name="PHRASE 7" color="color '#43a8ff'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +220bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +228bt :
-        goto_first_beat &amp; goto +224bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +108bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +116bt :
-        goto_first_beat &amp; goto +112bt
-  </shift_pad7>
-
-  <shift_pad8 name="P8 -1 BAR" color="color '#ffb000'" autodim="false">
-    var_equal 'phrase_jump_size' 32 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +248bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +256bt :
-        goto_first_beat &amp; goto +252bt :
-      var_equal 'phrase_bar1_offset' -4 ?
-        goto_first_beat &amp; goto +120bt :
-      var_equal 'phrase_bar1_offset' 4 ?
-        goto_first_beat &amp; goto +128bt :
-        goto_first_beat &amp; goto +124bt
-  </shift_pad8>
-
-  <param1 name="`var_equal 'phrase_jump_size' 32 ? get_text 'SIZE 32' : get_text 'SIZE 16'`">
-    param_smaller 0 ?
-      set 'phrase_jump_size' 16 :
-    var_equal 'phrase_jump_size' 32 ?
-      set 'phrase_jump_size' 16 :
-      set 'phrase_jump_size' 32
+<page shortname="PHRASE" name="PHRASE JUMP">
+  <pad1 name="INTRO" color="color 'red'" autodim="false">goto_first_beat &amp; play_sync</pad1>
+  <pad2 name="CUT 1" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +264bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +260bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +256bt &amp; play) : (goto_first_beat &amp; goto +252bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +136bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +132bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +128bt &amp; play) : (goto_first_beat &amp; goto +124bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +72bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +68bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +64bt &amp; play) : (goto_first_beat &amp; goto +60bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +40bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +36bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +32bt &amp; play) : (goto_first_beat &amp; goto +28bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +24bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +20bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +16bt &amp; play) : (goto_first_beat &amp; goto +12bt &amp; play)</pad2>
+  <pad3 name="DROP 1" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +268bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +264bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +260bt &amp; play_sync) : (goto_first_beat &amp; goto +256bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +140bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +136bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +132bt &amp; play_sync) : (goto_first_beat &amp; goto +128bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +76bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +72bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +68bt &amp; play_sync) : (goto_first_beat &amp; goto +64bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +44bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +40bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +36bt &amp; play_sync) : (goto_first_beat &amp; goto +32bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +28bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +24bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +20bt &amp; play_sync) : (goto_first_beat &amp; goto +16bt &amp; play_sync)</pad3>
+  <pad4 name="CUT 2" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +520bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +516bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +512bt &amp; play) : (goto_first_beat &amp; goto +508bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +264bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +260bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +256bt &amp; play) : (goto_first_beat &amp; goto +252bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +136bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +132bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +128bt &amp; play) : (goto_first_beat &amp; goto +124bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +72bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +68bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +64bt &amp; play) : (goto_first_beat &amp; goto +60bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +40bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +36bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +32bt &amp; play) : (goto_first_beat &amp; goto +28bt &amp; play)</pad4>
+  <pad5 name="DROP 2" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +524bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +520bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +516bt &amp; play_sync) : (goto_first_beat &amp; goto +512bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +268bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +264bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +260bt &amp; play_sync) : (goto_first_beat &amp; goto +256bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +140bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +136bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +132bt &amp; play_sync) : (goto_first_beat &amp; goto +128bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +76bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +72bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +68bt &amp; play_sync) : (goto_first_beat &amp; goto +64bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +44bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +40bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +36bt &amp; play_sync) : (goto_first_beat &amp; goto +32bt &amp; play_sync)</pad5>
+  <pad6 name="CUT 3" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +776bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +772bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +768bt &amp; play) : (goto_first_beat &amp; goto +764bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +392bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +388bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +384bt &amp; play) : (goto_first_beat &amp; goto +380bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +200bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +196bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +192bt &amp; play) : (goto_first_beat &amp; goto +188bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +104bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +100bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +96bt &amp; play) : (goto_first_beat &amp; goto +92bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +56bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +52bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +48bt &amp; play) : (goto_first_beat &amp; goto +44bt &amp; play)</pad6>
+  <pad7 name="DROP 3" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +780bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +776bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +772bt &amp; play_sync) : (goto_first_beat &amp; goto +768bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +396bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +392bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +388bt &amp; play_sync) : (goto_first_beat &amp; goto +384bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +204bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +200bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +196bt &amp; play_sync) : (goto_first_beat &amp; goto +192bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +108bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +104bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +100bt &amp; play_sync) : (goto_first_beat &amp; goto +96bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +60bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +56bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +52bt &amp; play_sync) : (goto_first_beat &amp; goto +48bt &amp; play_sync)</pad7>
+  <pad8 name="CUT 4" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1032bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1028bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1024bt &amp; play) : (goto_first_beat &amp; goto +1020bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +520bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +516bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +512bt &amp; play) : (goto_first_beat &amp; goto +508bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +264bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +260bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +256bt &amp; play) : (goto_first_beat &amp; goto +252bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +136bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +132bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +128bt &amp; play) : (goto_first_beat &amp; goto +124bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +72bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +68bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +64bt &amp; play) : (goto_first_beat &amp; goto +60bt &amp; play)</pad8>
+  <pad9 name="DROP 4" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1036bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1032bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1028bt &amp; play_sync) : (goto_first_beat &amp; goto +1024bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +524bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +520bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +516bt &amp; play_sync) : (goto_first_beat &amp; goto +512bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +268bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +264bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +260bt &amp; play_sync) : (goto_first_beat &amp; goto +256bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +140bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +136bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +132bt &amp; play_sync) : (goto_first_beat &amp; goto +128bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +76bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +72bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +68bt &amp; play_sync) : (goto_first_beat &amp; goto +64bt &amp; play_sync)</pad9>
+  <pad10 name="CUT 5" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1288bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1284bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1280bt &amp; play) : (goto_first_beat &amp; goto +1276bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +648bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +644bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +640bt &amp; play) : (goto_first_beat &amp; goto +636bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +328bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +324bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +320bt &amp; play) : (goto_first_beat &amp; goto +316bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +168bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +164bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +160bt &amp; play) : (goto_first_beat &amp; goto +156bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +88bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +84bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +80bt &amp; play) : (goto_first_beat &amp; goto +76bt &amp; play)</pad10>
+  <pad11 name="DROP 5" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1292bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1288bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1284bt &amp; play_sync) : (goto_first_beat &amp; goto +1280bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +652bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +648bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +644bt &amp; play_sync) : (goto_first_beat &amp; goto +640bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +332bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +328bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +324bt &amp; play_sync) : (goto_first_beat &amp; goto +320bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +172bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +168bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +164bt &amp; play_sync) : (goto_first_beat &amp; goto +160bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +92bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +88bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +84bt &amp; play_sync) : (goto_first_beat &amp; goto +80bt &amp; play_sync)</pad11>
+  <pad12 name="CUT 6" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1544bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1540bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1536bt &amp; play) : (goto_first_beat &amp; goto +1532bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +776bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +772bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +768bt &amp; play) : (goto_first_beat &amp; goto +764bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +392bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +388bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +384bt &amp; play) : (goto_first_beat &amp; goto +380bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +200bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +196bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +192bt &amp; play) : (goto_first_beat &amp; goto +188bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +104bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +100bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +96bt &amp; play) : (goto_first_beat &amp; goto +92bt &amp; play)</pad12>
+  <pad13 name="DROP 6" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1548bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1544bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1540bt &amp; play_sync) : (goto_first_beat &amp; goto +1536bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +780bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +776bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +772bt &amp; play_sync) : (goto_first_beat &amp; goto +768bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +396bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +392bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +388bt &amp; play_sync) : (goto_first_beat &amp; goto +384bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +204bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +200bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +196bt &amp; play_sync) : (goto_first_beat &amp; goto +192bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +108bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +104bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +100bt &amp; play_sync) : (goto_first_beat &amp; goto +96bt &amp; play_sync)</pad13>
+  <pad14 name="CUT 7" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1800bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1796bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1792bt &amp; play) : (goto_first_beat &amp; goto +1788bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +904bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +900bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +896bt &amp; play) : (goto_first_beat &amp; goto +892bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +456bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +452bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +448bt &amp; play) : (goto_first_beat &amp; goto +444bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +232bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +228bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +224bt &amp; play) : (goto_first_beat &amp; goto +220bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +120bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +116bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +112bt &amp; play) : (goto_first_beat &amp; goto +108bt &amp; play)</pad14>
+  <pad15 name="DROP 7" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1804bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1800bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1796bt &amp; play_sync) : (goto_first_beat &amp; goto +1792bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +908bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +904bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +900bt &amp; play_sync) : (goto_first_beat &amp; goto +896bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +460bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +456bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +452bt &amp; play_sync) : (goto_first_beat &amp; goto +448bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +236bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +232bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +228bt &amp; play_sync) : (goto_first_beat &amp; goto +224bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +124bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +120bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +116bt &amp; play_sync) : (goto_first_beat &amp; goto +112bt &amp; play_sync)</pad15>
+  <pad16 name="CUT 8" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +2056bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +2052bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +2048bt &amp; play) : (goto_first_beat &amp; goto +2044bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1032bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1028bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1024bt &amp; play) : (goto_first_beat &amp; goto +1020bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +520bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +516bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +512bt &amp; play) : (goto_first_beat &amp; goto +508bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +264bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +260bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +256bt &amp; play) : (goto_first_beat &amp; goto +252bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +136bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +132bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +128bt &amp; play) : (goto_first_beat &amp; goto +124bt &amp; play)</pad16>
+  <shift_pad1 name="DROP 4" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1036bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1032bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1028bt &amp; play_sync) : (goto_first_beat &amp; goto +1024bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +524bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +520bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +516bt &amp; play_sync) : (goto_first_beat &amp; goto +512bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +268bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +264bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +260bt &amp; play_sync) : (goto_first_beat &amp; goto +256bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +140bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +136bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +132bt &amp; play_sync) : (goto_first_beat &amp; goto +128bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +76bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +72bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +68bt &amp; play_sync) : (goto_first_beat &amp; goto +64bt &amp; play_sync)</shift_pad1>
+  <shift_pad2 name="CUT 5" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1288bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1284bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1280bt &amp; play) : (goto_first_beat &amp; goto +1276bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +648bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +644bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +640bt &amp; play) : (goto_first_beat &amp; goto +636bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +328bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +324bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +320bt &amp; play) : (goto_first_beat &amp; goto +316bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +168bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +164bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +160bt &amp; play) : (goto_first_beat &amp; goto +156bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +88bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +84bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +80bt &amp; play) : (goto_first_beat &amp; goto +76bt &amp; play)</shift_pad2>
+  <shift_pad3 name="DROP 5" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1292bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1288bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1284bt &amp; play_sync) : (goto_first_beat &amp; goto +1280bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +652bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +648bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +644bt &amp; play_sync) : (goto_first_beat &amp; goto +640bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +332bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +328bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +324bt &amp; play_sync) : (goto_first_beat &amp; goto +320bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +172bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +168bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +164bt &amp; play_sync) : (goto_first_beat &amp; goto +160bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +92bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +88bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +84bt &amp; play_sync) : (goto_first_beat &amp; goto +80bt &amp; play_sync)</shift_pad3>
+  <shift_pad4 name="CUT 6" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1544bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1540bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1536bt &amp; play) : (goto_first_beat &amp; goto +1532bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +776bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +772bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +768bt &amp; play) : (goto_first_beat &amp; goto +764bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +392bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +388bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +384bt &amp; play) : (goto_first_beat &amp; goto +380bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +200bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +196bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +192bt &amp; play) : (goto_first_beat &amp; goto +188bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +104bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +100bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +96bt &amp; play) : (goto_first_beat &amp; goto +92bt &amp; play)</shift_pad4>
+  <shift_pad5 name="DROP 6" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1548bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1544bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1540bt &amp; play_sync) : (goto_first_beat &amp; goto +1536bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +780bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +776bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +772bt &amp; play_sync) : (goto_first_beat &amp; goto +768bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +396bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +392bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +388bt &amp; play_sync) : (goto_first_beat &amp; goto +384bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +204bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +200bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +196bt &amp; play_sync) : (goto_first_beat &amp; goto +192bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +108bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +104bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +100bt &amp; play_sync) : (goto_first_beat &amp; goto +96bt &amp; play_sync)</shift_pad5>
+  <shift_pad6 name="CUT 7" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1800bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1796bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1792bt &amp; play) : (goto_first_beat &amp; goto +1788bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +904bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +900bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +896bt &amp; play) : (goto_first_beat &amp; goto +892bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +456bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +452bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +448bt &amp; play) : (goto_first_beat &amp; goto +444bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +232bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +228bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +224bt &amp; play) : (goto_first_beat &amp; goto +220bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +120bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +116bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +112bt &amp; play) : (goto_first_beat &amp; goto +108bt &amp; play)</shift_pad6>
+  <shift_pad7 name="DROP 7" color="color 'green'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1804bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1800bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1796bt &amp; play_sync) : (goto_first_beat &amp; goto +1792bt &amp; play_sync)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +908bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +904bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +900bt &amp; play_sync) : (goto_first_beat &amp; goto +896bt &amp; play_sync)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +460bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +456bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +452bt &amp; play_sync) : (goto_first_beat &amp; goto +448bt &amp; play_sync)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +236bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +232bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +228bt &amp; play_sync) : (goto_first_beat &amp; goto +224bt &amp; play_sync)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +124bt &amp; play_sync) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +120bt &amp; play_sync) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +116bt &amp; play_sync) : (goto_first_beat &amp; goto +112bt &amp; play_sync)</shift_pad7>
+  <shift_pad8 name="CUT 8" color="color '#FF00FF'" autodim="false">var_equal 'phrase_jump_size' 256 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +2056bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +2052bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +2048bt &amp; play) : (goto_first_beat &amp; goto +2044bt &amp; play)) : var_equal 'phrase_jump_size' 128 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +1032bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +1028bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +1024bt &amp; play) : (goto_first_beat &amp; goto +1020bt &amp; play)) : var_equal 'phrase_jump_size' 64 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +520bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +516bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +512bt &amp; play) : (goto_first_beat &amp; goto +508bt &amp; play)) : var_equal 'phrase_jump_size' 32 ? (var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +264bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +260bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +256bt &amp; play) : (goto_first_beat &amp; goto +252bt &amp; play)) : var_equal 'phrase_jump_offset' 3 ? (goto_first_beat &amp; goto +136bt &amp; play) : var_equal 'phrase_jump_offset' 2 ? (goto_first_beat &amp; goto +132bt &amp; play) : var_equal 'phrase_jump_offset' 1 ? (goto_first_beat &amp; goto +128bt &amp; play) : (goto_first_beat &amp; goto +124bt &amp; play)</shift_pad8>
+  <param1 name="`var_equal 'phrase_jump_size' 256 ? get_text 'SIZE 256' : var_equal 'phrase_jump_size' 128 ? get_text 'SIZE 128' : var_equal 'phrase_jump_size' 64 ? get_text 'SIZE 64' : var_equal 'phrase_jump_size' 32 ? get_text 'SIZE 32' : get_text 'SIZE 16'`">
+    param_bigger 0 ?
+      (var_equal 'phrase_jump_size' 256 ? set 'phrase_jump_size' 16 :
+      var_equal 'phrase_jump_size' 128 ? set 'phrase_jump_size' 256 :
+      var_equal 'phrase_jump_size' 64 ? set 'phrase_jump_size' 128 :
+      var_equal 'phrase_jump_size' 32 ? set 'phrase_jump_size' 64 :
+      set 'phrase_jump_size' 32) :
+      (var_equal 'phrase_jump_size' 256 ? set 'phrase_jump_size' 128 :
+      var_equal 'phrase_jump_size' 128 ? set 'phrase_jump_size' 64 :
+      var_equal 'phrase_jump_size' 64 ? set 'phrase_jump_size' 32 :
+      var_equal 'phrase_jump_size' 32 ? set 'phrase_jump_size' 16 :
+      set 'phrase_jump_size' 256)
   </param1>
-
-  <param2 name="`var_equal 'phrase_bar1_offset' -4 ? get_text 'BAR1 -1' : var_equal 'phrase_bar1_offset' 4 ? get_text 'BAR1 +1' : get_text 'BAR1 0'`">
-    param_smaller 0 ?
-      var_equal 'phrase_bar1_offset' -4 ?
-        nothing :
-      var_equal 'phrase_bar1_offset' 4 ?
-        set 'phrase_bar1_offset' 0 :
-        set 'phrase_bar1_offset' -4 :
-      var_equal 'phrase_bar1_offset' 4 ?
-        nothing :
-      var_equal 'phrase_bar1_offset' -4 ?
-        set 'phrase_bar1_offset' 0 :
-        set 'phrase_bar1_offset' 4
+  <param2 name="`var_equal 'phrase_jump_offset' 3 ? get_text 'OFFSET 3' : var_equal 'phrase_jump_offset' 2 ? get_text 'OFFSET 2' : var_equal 'phrase_jump_offset' 1 ? get_text 'OFFSET 1' : get_text 'OFFSET 0'`">
+    param_bigger 0 ?
+      (var_equal 'phrase_jump_offset' 3 ? set 'phrase_jump_offset' 0 :
+      var_equal 'phrase_jump_offset' 2 ? set 'phrase_jump_offset' 3 :
+      var_equal 'phrase_jump_offset' 1 ? set 'phrase_jump_offset' 2 :
+      set 'phrase_jump_offset' 1) :
+      (var_equal 'phrase_jump_offset' 3 ? set 'phrase_jump_offset' 2 :
+      var_equal 'phrase_jump_offset' 2 ? set 'phrase_jump_offset' 1 :
+      var_equal 'phrase_jump_offset' 1 ? set 'phrase_jump_offset' 0 :
+      set 'phrase_jump_offset' 3)
   </param2>
 </page>
