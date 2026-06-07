@@ -6220,7 +6220,7 @@ get_hastimecode ? timecode_options : timecode_config
 
 ## Official Appendix Remainder
 
-No compact entries currently remain. All 991 official names tracked by the audit are present in functional sections above; the remaining 21 sparse or hardware-specific official names are marked `Needs local test` in the audit and tracker.
+No compact entries currently remain. All 991 official names tracked by the audit are present in functional sections above; the remaining 20 sparse or hardware-specific official names are marked `Needs local test` in the audit and tracker.
 
 Sources:
 

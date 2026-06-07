@@ -10,7 +10,7 @@ README.md                     — human-facing project overview
 Reference/README.md          — index of all reference docs, source label policy, current status
 Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
-Reference/Official VDJScript Coverage Audit.md — names-only parity audit for the 989 official verb/alias names, plus promotion targets
+Reference/Official VDJScript Coverage Audit.md — names-only parity audit for the 991 official verb/alias names, plus promotion targets
 Pads/README.md                — pad page inventory, status labels, and maintenance checklist
 Test/README.md                — documentation test harnesses and reproducible fixtures
 ```
@@ -32,7 +32,7 @@ Reference/                   — Markdown documentation
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Working/reference pad pages live in `Pads/*.xml`; copied built-in app-bundle pages live in `Pads/Built-In/`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`; copied built-in app-bundle skins live in `Skins/Built-In/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
-- The official VDJScript verb appendix currently parses to 989 verb/alias names. The local VDJScript reference has 989/989 names present, but some are compact catalog entries rather than fully curated sections.
+- The official VDJScript verb appendix currently parses to 991 verb/alias names. The local VDJScript reference has 991/991 names present, with 20 official names still marked `Needs local test`.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 
 ## Preferred patterns (quick version)
