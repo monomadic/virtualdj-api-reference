@@ -45,7 +45,11 @@ The joined metadata matrix combines the compiled taxonomy with official audit me
 ```sh
 python3 tools/extract_vdjscript_metadata.py
 python3 tools/extract_vdjscript_metadata.py --include-hidden --include-external --format csv > /tmp/vdjscript-metadata.csv
+python3 tools/extract_vdjscript_metadata.py --flag1-hidden --format names
+python3 tools/extract_vdjscript_metadata.py --flag1-hidden --language-described-only --format csv
 ```
+
+The metadata CSV includes an `english_description` column read from `Resources/languages.zip` / `English.xml`. Keep this distinct from the multilingual language-catalog union: the union can contain names that are not present in the English action-description file.
 
 ## Counts
 
@@ -197,6 +201,31 @@ Flag1-hidden rows are the most interesting unpublished group: all 37 are absent 
 | Remote skin | `remote_action` | Exact execute/query/bool/text symbols. | VirtualDJ Remote or remote-skin integration candidate. |
 | System | `crash` | Language description and exact execute symbol. | Diagnostic/destructive-looking; do not run in a live session. |
 | Timecode | `timecode_no_jump` | No official, language, or exact-class evidence. | Watch-only candidate unless timecode behavior suggests a safe probe. |
+
+Language-backed flag1 hints from `Resources/languages.zip`:
+
+Reproduce this group with:
+
+```sh
+python3 tools/extract_vdjscript_metadata.py --flag1-hidden --language-described-only --format csv
+```
+
+| Hidden row | Bundled description hint | Test implication |
+| --- | --- | --- |
+| `assign_related_controller` | Assigns a related controller to a deck while leaving the current controller untouched. | Requires a controller relationship/layer context. |
+| `flip_arm` | Armed Flip playback starts when the playhead reaches the beginning of the Flip. | Needs an existing Flip and moving playhead. |
+| `flip_load` | Loads a saved Flip for playback. | Needs saved Flip content. |
+| `flip_loop` | Loops Flip playback when it reaches the end. | Test after loading or recording a Flip. |
+| `flip_play` | Starts playback from the recorded Flip start. | Compare with `flip_get_status` readback. |
+| `flip_record` | Prepares Flip recording; recording begins at the first cue point and stops when record is pressed again. | Needs cue points; record state must be observed carefully. |
+| `pad_page_insplit` | Tests whether a referenced pad page belongs to a split, top or bottom. | Try normal pad view and split pad-page view. |
+| `pad_pressure_switch` | Toggles pad pressure use. | Requires pressure-capable pad hardware to be meaningful. |
+| `rane_motor_enable` | Reports/sends hardware motor state so software and controller motor state agree. | Requires matching Rane/motorized hardware context. |
+| `rane_timecode` | Enables the controller-indexed timecode input and disables conflicting deck inputs from the same input. | Requires Rane/timecode input context. |
+| `rane_timecode_enable` | Sets this deck to MIDI-controlled timecode play-state mode. | Requires compatible Rane/timecode mapping context. |
+| `sampler_inputgain` | Sets gain for a hardware sampler input. | May need a hardware/input sampler path for audible effect. |
+| `stem_volume` | Sets stem mix amount with direct stem names and aggregate groups; intended for 0-100% slider-style control rather than `stem` knob/isolate behavior. | First low-risk probe: compare `Vocal`, `Instru`, and aggregate names against visible stem levels and audio output. |
+| `crash` | Bundled description presents it as an intentional crash/debug action. | Do not run in a live session; keep as diagnostic-only evidence. |
 
 Same-day low-risk shortlist:
 

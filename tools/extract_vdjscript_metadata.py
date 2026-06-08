@@ -15,9 +15,11 @@ import argparse
 import csv
 import json
 import sys
+import xml.etree.ElementTree as ET
 from collections import Counter
 from dataclasses import asdict, dataclass
 from pathlib import Path
+from zipfile import ZipFile
 
 from extract_vdjscript_catalogs import DEFAULT_AUDIT, official_names
 from extract_vdjscript_symbols import action_capabilities, demangled_symbols
@@ -75,6 +77,7 @@ class MetadataRow:
     has_tooltip: bool
     capability_bucket: str
     symbol_methods: str
+    english_description: str
 
 
 def capability_bucket(methods: set[str]) -> str:
@@ -91,16 +94,35 @@ def capability_bucket(methods: set[str]) -> str:
     return "no-action-class"
 
 
+def english_action_descriptions(app: Path) -> dict[str, str]:
+    zip_path = app / "Contents/Resources/languages.zip"
+    with ZipFile(zip_path) as archive:
+        root = ET.fromstring(archive.read("English.xml"))
+    actions = root.find("Actions")
+    if actions is None:
+        return {}
+    descriptions: dict[str, str] = {}
+    for child in actions:
+        text = " ".join("".join(child.itertext()).split())
+        if text:
+            descriptions[child.tag] = text
+    return descriptions
+
+
 def metadata_rows(
     taxonomy,
     official: set[str],
     language: set[str],
     capabilities: dict[str, set[str]],
+    english_descriptions: dict[str, str],
     include_external: bool,
+    taxonomy_lookup=None,
 ) -> list[MetadataRow]:
     rows: list[MetadataRow] = []
-    taxonomy_by_name = {entry.name: entry for entry in taxonomy}
-    names = set(taxonomy_by_name)
+    lookup_entries = taxonomy_lookup if taxonomy_lookup is not None else taxonomy
+    taxonomy_by_name = {entry.name: entry for entry in lookup_entries}
+    selected_names = {entry.name for entry in taxonomy}
+    names = set(selected_names)
     if include_external:
         names.update(official)
         names.update(language)
@@ -132,9 +154,33 @@ def metadata_rows(
                 has_tooltip="onTooltip" in methods,
                 capability_bucket=capability_bucket(methods),
                 symbol_methods="|".join(ordered_methods),
+                english_description=english_descriptions.get(name, ""),
             )
         )
     return rows
+
+
+def filtered_rows(rows: list[MetadataRow], args: argparse.Namespace) -> list[MetadataRow]:
+    filtered = rows
+    if args.hidden_only:
+        filtered = [row for row in filtered if not row.taxonomy_visible]
+    if args.visible_only:
+        filtered = [row for row in filtered if row.taxonomy_visible]
+    if args.flag0_hidden:
+        filtered = [row for row in filtered if row.flag0_hidden]
+    if args.flag1_hidden:
+        filtered = [row for row in filtered if row.flag1_hidden]
+    if args.official_only:
+        filtered = [row for row in filtered if row.in_official_audit]
+    if args.non_official_only:
+        filtered = [row for row in filtered if not row.in_official_audit]
+    if args.language_described_only:
+        filtered = [row for row in filtered if row.english_description]
+    if args.action_class_only:
+        filtered = [row for row in filtered if row.has_action_class]
+    if args.no_action_class_only:
+        filtered = [row for row in filtered if not row.has_action_class]
+    return filtered
 
 
 def print_summary(rows: list[MetadataRow], include_external: bool) -> None:
@@ -142,6 +188,7 @@ def print_summary(rows: list[MetadataRow], include_external: bool) -> None:
     taxonomy_rows = [row for row in rows if row.category]
     official_rows = [row for row in rows if row.in_official_audit]
     language_rows = [row for row in rows if row.in_language_catalog]
+    described_rows = [row for row in rows if row.english_description]
     action_class_rows = [row for row in rows if row.has_action_class]
     buckets = Counter(row.capability_bucket for row in rows)
     visible_buckets = Counter(row.capability_bucket for row in visible_rows)
@@ -152,6 +199,7 @@ def print_summary(rows: list[MetadataRow], include_external: bool) -> None:
     print(f"Visible taxonomy rows: {len(visible_rows)}")
     print(f"Official audit names in matrix: {len(official_rows)}")
     print(f"Language-catalog names in matrix: {len(language_rows)}")
+    print(f"Rows with English action descriptions: {len(described_rows)}")
     print(f"Rows with exact ACTION_* class match: {len(action_class_rows)}")
     print()
     print("Capability buckets:")
@@ -189,6 +237,19 @@ def main() -> int:
     parser.add_argument("--arch", choices=sorted(CPU_TYPES), default="arm64")
     parser.add_argument("--category", help="Limit taxonomy rows to one category")
     parser.add_argument("--include-hidden", action="store_true", help="Include hidden taxonomy entries")
+    parser.add_argument("--hidden-only", action="store_true", help="Keep only hidden taxonomy rows")
+    parser.add_argument("--visible-only", action="store_true", help="Keep only visible taxonomy rows")
+    parser.add_argument("--flag0-hidden", action="store_true", help="Keep only flag0-hidden taxonomy rows")
+    parser.add_argument("--flag1-hidden", action="store_true", help="Keep only flag1-hidden taxonomy rows")
+    parser.add_argument("--official-only", action="store_true", help="Keep only rows present in the official audit")
+    parser.add_argument("--non-official-only", action="store_true", help="Keep only rows absent from the official audit")
+    parser.add_argument(
+        "--language-described-only",
+        action="store_true",
+        help="Keep only rows with an English Button Editor action description",
+    )
+    parser.add_argument("--action-class-only", action="store_true", help="Keep only rows with exact ACTION_* symbols")
+    parser.add_argument("--no-action-class-only", action="store_true", help="Keep only rows without exact ACTION_* symbols")
     parser.add_argument(
         "--include-external",
         action="store_true",
@@ -203,17 +264,28 @@ def main() -> int:
     reader = MachOReader(args.app / "Contents/MacOS/VirtualDJ", args.arch)
     language = language_action_union(args.app)
     official = official_names(args.audit)
+    english_descriptions = english_action_descriptions(args.app)
     categories = category_names(reader, args.category_names_va)
-    taxonomy = taxonomy_entries(
+    all_taxonomy = taxonomy_entries(
         reader,
         categories,
         language,
         args.action_items_va,
         args.category_ids_va,
     )
-    taxonomy = filtered_entries(taxonomy, args.category, args.include_hidden)
+    include_hidden = args.include_hidden or args.hidden_only or args.flag0_hidden or args.flag1_hidden
+    taxonomy = filtered_entries(all_taxonomy, args.category, include_hidden)
     capabilities = action_capabilities(demangled_symbols(args.app, args.arch))
-    rows = metadata_rows(taxonomy, official, language, capabilities, args.include_external)
+    rows = metadata_rows(
+        taxonomy,
+        official,
+        language,
+        capabilities,
+        english_descriptions,
+        args.include_external,
+        all_taxonomy,
+    )
+    rows = filtered_rows(rows, args)
 
     if args.format == "summary":
         print_summary(rows, args.include_external)

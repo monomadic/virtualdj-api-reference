@@ -66,6 +66,12 @@ Run:
 python3 tools/extract_vdjscript_symbols.py --show-anchors
 ```
 
+For machine-readable parser/editor anchors:
+
+```sh
+python3 tools/extract_vdjscript_symbols.py --anchors-format csv
+```
+
 Initial arm64 counts from the installed app:
 
 | Symbol bucket | Count |
@@ -78,6 +84,19 @@ Initial arm64 counts from the installed app:
 | Classes with `onTooltip` | 79 |
 | Parser/editor anchor symbols | 68 |
 
+Structured parser/editor anchor groups from the same run:
+
+| Anchor group | Count | Main evidence |
+| --- | ---: | --- |
+| `action_param` | 20 | `SActionParam` conversion, serialization, equality, and `isTxt<N>` helpers. |
+| `catalog_list` | 4 | Category/action list handlers plus `DLGActionWizard::onChanged()::deckArguments`. |
+| `editor_dialog` | 8 | `CActionEdit` wrapper lifecycle and action-edit callback. |
+| `hover_help` | 7 | Current-word extraction, touch-over handling, hint update, and help text setters. |
+| `render_position` | 6 | Highlight drawing and source/rendered position conversion. |
+| `runtime_create_execute` | 6 | Skin action creation, macro action insertion, controller execution. |
+| `syntax_tree` | 7 | `DLGActionWizard::STree` plus `vector<DLGActionWizard::SItem*>` storage. |
+| `wizard_lifecycle` | 10 | Wizard construction, linking, text setting, key handling, and change handling. |
+
 The helper summarizes `ACTION_*` implementation classes by visible methods. This is not a perfect verb list because aliases, dispatcher-only names, and public spellings may not map one-to-one with implementation class names, but it can identify useful capability buckets:
 
 - action classes with `onExecute`
@@ -85,6 +104,72 @@ The helper summarizes `ACTION_*` implementation classes by visible methods. This
 - text-query classes with `onQueryText`
 - tooltip-aware classes with `onTooltip`
 - editor/parser anchor symbols around `DLGActionWizard`
+
+## Parser Structure From Symbols
+
+The symbol cluster now looks like a layered parser/editor pipeline, not a single flat autocomplete table:
+
+| Layer | Symbol evidence | Current interpretation |
+| --- | --- | --- |
+| Dialog shell | `CActionEdit::onCreate`, `CActionEdit::onActionEdit`, `CActionEdit::onClose` | The Button Editor action field is wrapped by a dedicated action-edit dialog. |
+| Wizard lifecycle | `DLGActionWizard::setAction`, `DLGActionWizard::onKey`, `DLGActionWizard::onChanged`, `DLGActionWizard::onCallback` | Text entry flows through a dedicated wizard/editor object that can react to each edit. |
+| Syntax tree/span model | `DLGActionWizard::STree::clear`, `STree::setColor`, `STree::toString`, `vector<DLGActionWizard::SItem*>::push_back` | The editor appears to build an internal item/tree representation for colored spans. `setColor` is the strongest direct syntax-highlighting clue. |
+| Position mapping | `customDraw`, `setPosition`, `posToRealPos`, `realPosToPos`, `posToXY`, `xyToPos` | Highlighted text is drawn with explicit mapping between source offsets and rendered coordinates. This matches the hover/cursor behavior seen in the UI. |
+| Hover/help | `getCurrentWord`, `onTouchOver`, `updateHint`, `setHelp`, `onHelp` | The editor has a token-at-position path that can turn the current word/span into help text. |
+| Catalog list | `onCategory`, `updateList`, `onList`, `onChanged()::deckArguments` | The visible category/action browser is tied to the same wizard. `deckArguments` suggests special handling for the `deck` wrapper or its autocomplete/help path. |
+| Runtime creation | `CSkinEngine::createAction`, `CMacroEngine::addAction`, `IController::execute` | Runtime parsing/execution is separate but adjacent: skins create actions, macros add actions, controllers execute action strings with `SActionParam` values. |
+| Value representation | `SActionParam::toString`, `toFloat`, `toColor`, `serialize`, `unserialize`, `operator==`, `isTxt<4ul>` through `isTxt<19ul>` | Runtime parameters are typed/convertible values, with optimized text-comparison helpers for fixed string lengths. This is relevant to constants such as `on`, `off`, named stems, and quoted/unquoted text. |
+
+Important caveat: these symbols prove the existence of parser/highlighter infrastructure, but they do not by themselves prove the complete grammar or precedence table. The next confirmation layer is UI observation for token spans plus harmless runtime tests.
+
+High-value binary handles for the next deeper pass:
+
+| Handle | Address | Mangled name |
+| --- | --- | --- |
+| `DLGActionWizard::onChanged()` | `0x1006908bc` | `__ZN15DLGActionWizard9onChangedEv` |
+| `DLGActionWizard::getCurrentWord(...)` | `0x10068feb8` | `__ZN15DLGActionWizard14getCurrentWordERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEmRmS9_` |
+| `DLGActionWizard::customDraw(...)` | `0x1006913a4` | `__ZN15DLGActionWizard10customDrawEiiiiii` |
+| `DLGActionWizard::updateList()` | `0x100691a24` | `__ZN15DLGActionWizard10updateListEv` |
+| `DLGActionWizard::updateHint()` | `0x1006921e8` | `__ZN15DLGActionWizard10updateHintEv` |
+| `DLGActionWizard::STree::toString()` | `0x100692800` | `__ZN15DLGActionWizard5STree8toStringEv` |
+| `DLGActionWizard::STree::setColor(unsigned int)` | `0x100692998` | `__ZN15DLGActionWizard5STree8setColorEj` |
+| `CSkinEngine::createAction(bool, string const&, int)` | `0x100512c9c` | `__ZN11CSkinEngine12createActionEbRKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEi` |
+| `CSkinEngine::createAction(vector<SActionCacheItem*>*, char const*, int)` | `0x100512cf4` | `__ZN11CSkinEngine12createActionEPNSt3__16vectorIP16SActionCacheItemNS0_9allocatorIS3_EEEEPKci` |
+| `CMacroEngine::addAction(...)` | `0x1005f19e4` | `__ZN12CMacroEngine9addActionEP7IActionP12SActionParamjj` |
+| `IController::execute(...)` | `0x10073c380` | `__ZN11IController7executeERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEEiP12SActionParamjP16IControllerInput` |
+
+Use `otool` for targeted Mach-O disassembly:
+
+```sh
+otool -arch arm64 -tV -p __ZN15DLGActionWizard10updateListEv /Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ
+```
+
+The helper below runs that command for known parser/editor targets and summarizes calls, literals, ASCII immediates, and decoded bitmasks:
+
+```sh
+python3 tools/disassemble_vdjscript_parser_targets.py --target getCurrentWord --target updateList --target updateHint --target setColor
+```
+
+## Targeted Disassembly Findings
+
+These are instruction-level findings from `otool`; still treat them as parser/editor evidence until paired with UI observations and harmless runtime tests.
+
+| Target | Finding |
+| --- | --- |
+| `DLGActionWizard::customDraw` | Calls `updateList`, then `updateHint`, then `CDLGText::draw`. This ties parser refresh and hover/help refresh directly to drawing the editor text. |
+| `DLGActionWizard::getCurrentWord` | Contains literal `"deck "`, calls `_strncasecmp`, uses delimiter bitmask `& ( : ?`, skips spaces, and scans the resulting word as `[A-Za-z0-9_]`. This is the strongest current evidence for the editor's hover/current-token rule. |
+| `DLGActionWizard::updateList` | Clears `STree`, allocates parser/list nodes, measures text, and includes literals `"while_pressed"`, `"deck"`, `"not"`, and `"string_view::substr"`. Its structural delimiter mask is `& ( ) : ?`; it also recognizes string delimiters/end markers `\0`, newline, `"`, `'`, plus a shifted mask for `"`, `'`, and backtick. |
+| `DLGActionWizard::updateHint` | Contains literals `"?"`, `" ?"`, `"not "`, `"config"`, and `"condition: "`, and calls `STree::setColor` plus `STree::toString`. This links the tree representation to hover help and conditional-context display. |
+| `DLGActionWizard::STree::toString` | Recursively calls itself three times and appends child text, supporting the interpretation that `STree` is a nested expression/tree representation rather than a flat token array. |
+| `DLGActionWizard::STree::setColor` | Iterates the tree's item vector, writes the color at item offset `0x10`, and recursively calls `setColor` on three child pointers before following another link. This confirms recursive color propagation through syntax-tree branches. |
+
+Working grammar clues from this pass:
+
+- Hover/current-word extraction treats `&`, `(`, `:`, and `?` as token boundaries, then consumes letters, digits, and `_`.
+- The syntax-tree builder treats `&`, `(`, `)`, `:`, and `?` as structural delimiters.
+- Quotes and backticks have explicit tokenizer handling in `updateList`; they are not just ordinary word characters.
+- `deck` and `not` are special in the editor path, so they deserve focused UI/runtime tests rather than being documented as ordinary verbs/parameters.
+- `while_pressed` is checked during tree construction, which suggests it has special parser/highlighter treatment even if runtime behavior is action-specific.
 
 ## Grammar Questions To Test
 
