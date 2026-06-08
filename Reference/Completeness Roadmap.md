@@ -9,7 +9,7 @@ Use this file to choose the next evidence pass. Record detailed run results in [
 | Area | Current state | Next completeness move |
 | --- | --- | --- |
 | Official VDJScript names | 991/991 names present, 0 missing, compact official remainder empty | Keep count consistency automated and refresh when the official appendix changes. |
-| Official behavior depth | 20 official names still in the formal `Needs local test` gap | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
+| Official behavior depth | 19 official names still in the formal `Needs local test` gap | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
 | Button Editor catalog-only candidates | 14 catalog-only names and 21 stricter runtime-string candidates outside the official appendix | Keep them discovery-only until local behavior or stronger source evidence exists. |
 | Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior | Keep promoting only pages with source-backed rationale or recorded local tests. |
 | Skin SDK | Broad coverage, with several useful local runtime findings | Finish `visual type` and element-surface passes with small canary skins. |
@@ -34,15 +34,14 @@ These are the best next tests because they do not require new controller hardwar
 
 | Priority | Topic | Fixture or source | Promotion target |
 | ---: | --- | --- | --- |
-| 1 | `deck_has_error` | [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml) | Close or narrow the official sparse-helper gap. |
-| 2 | `dualdeckmode_decks` | [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Clarify helper return/action behavior and deck scoping. |
-| 3 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
-| 4 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
-| 5 | `effect_has_*`, `get_effect_slider_*`, `get_effect_button_*` | [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Build a reliable generic FX control table. |
-| 6 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../Test/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
-| 7 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../Test/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
-| 8 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
-| 9 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | Hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
+| 1 | `dualdeckmode_decks` | [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Test any visible dual-deck pair/controller context. |
+| 2 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
+| 3 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
+| 4 | `effect_has_*`, `get_effect_slider_*`, `get_effect_button_*` | [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Build a reliable generic FX control table. |
+| 5 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../Test/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
+| 6 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../Test/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
+| 7 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
+| 8 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | Hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
 
 `system` is intentionally not in the normal no-hardware queue. Revisit it only if an official example, bundled-resource context, or clearly harmless parameter appears.
 

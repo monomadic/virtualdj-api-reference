@@ -81,7 +81,7 @@ Coverage depth is tiered:
 - Broad catalog sections below cover common usage in a compact form.
 - Current official-name coverage is 991/991 with 0 missing names.
 - The [Official Appendix Remainder](#official-appendix-remainder) section is kept as an audit marker; all tracked official names are currently searchable in functional sections, so the compact official remainder is empty.
-- The remaining formal `Needs local test` gap is 20 sparse or hardware-specific official names; build/context results belong in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
+- The remaining formal `Needs local test` gap is 19 sparse or hardware-specific official names; build/context results belong in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
 
 Promote compact official entries into curated sections when they become relevant to skins, pads, mappings, published-skin findings, or local tests.
 
@@ -5041,7 +5041,7 @@ Window/workflow note:
 - `mixermode` returns true for internal mixer mode and false for external mixer mode; pass `internal` or `external` to test explicitly.
 - `beat_juggle` alternates direction each time it runs. Pass a beat amount such as `0.5` for half-beat juggling.
 - `dualdeckmode_decks` is official but sparsely documented; official prose ties it to dual-deck mode applying to deck pairs 1/3 or 2/4, so test controller mappings that depend on it.
-- Record build/context results for `dualdeckmode_decks` in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
+- Local pad-page result on VirtualDJ `v2026-m b9336`: in [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red after `dualdeckmode` toggled on/blue, and the same behavior was reported from deck 2. Test any visible dual-deck pair/controller context before relying on it.
 
 ## Play Controls
 
@@ -5273,7 +5273,7 @@ Scratchbank source note:
 | `load_pulse`    | Brief pulse on load | `load_pulse`          |
 | `load_pulse_active` | Pulse when a new song becomes audible | `load_pulse_active 1000ms 5000ms` |
 | `loaded`        | Check if loaded     | `loaded`              |
-| `deck_has_error` | Sparse deck load-error helper; needs local behavior check | `deck_has_error` |
+| `deck_has_error` | Sparse deck load-error helper; partial user-provided pad test exists | `deck_has_error` |
 | `not_played`    | Do not mark this deck's song as played | `not_played` |
 | `undo_load`     | Reload previous     | `undo_load`           |
 | `unload`        | Unload song         | `unload`              |
@@ -5284,7 +5284,7 @@ Scratchbank source note:
 
 Loading note:
 
-- `deck_has_error` appears in the official appendix but remains sparse; record build/context results in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) before relying on its exact error-state semantics.
+- `deck_has_error` appears in the official appendix but remains sparse. Local test on VirtualDJ `v2026-m b9336`: in [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml), it stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load.
 
 ## Cue Points
 
@@ -6220,7 +6220,7 @@ get_hastimecode ? timecode_options : timecode_config
 
 ## Official Appendix Remainder
 
-No compact entries currently remain. All 991 official names tracked by the audit are present in functional sections above; the remaining 20 sparse or hardware-specific official names are marked `Needs local test` in the audit and tracker.
+No compact entries currently remain. All 991 official names tracked by the audit are present in functional sections above; the remaining 19 sparse or hardware-specific official names are marked `Needs local test` in the audit and tracker.
 
 Sources:
 

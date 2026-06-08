@@ -8,7 +8,7 @@ Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
 Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) and local official/published skin examples.
 
-- Current coverage cross-check: the 2026-05-26 official appendix refresh parses to 991 official verb/alias names; `VDJScript Verbs.md` contains all 991, missing names are 0, and the compact official remainder is empty. The formal `Needs local test` gap is 20 official names: `deck_has_error`, `system`, `dualdeckmode_decks`, and the 17 hardware-specific controller helpers below.
+- Current coverage cross-check: the 2026-05-26 official appendix refresh parses to 991 official verb/alias names; `VDJScript Verbs.md` contains all 991, missing names are 0, and the compact official remainder is empty. The formal `Needs local test` gap is 19 official names: `system`, `dualdeckmode_decks`, and the 17 hardware-specific controller helpers below. `dualdeckmode_decks` now has a build-recorded pad-page observation, but still needs a dual-deck pair/controller-context repeat before promotion to `Pass`.
 - `Untested` means behavior has not been observed in VirtualDJ locally, even if the verb is official.
 - `Pass` means a specific VirtualDJ build, hardware/context, action, and observed result were recorded.
 - `connect` has local skin evidence: [official Lite](../examples/skins/official/Lite.xml) uses `<button action="connect">`. Local testing on VirtualDJ `v2026-m b9336` confirmed action/query behavior for logged-in and logged-out states.
@@ -16,13 +16,14 @@ Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs a
 - `system` was locally tested on VirtualDJ `v2026-m b9336`; in the sparse helper pad context it returned blank text and pressing it produced no visible UI or log result. This is still too sparse to promote beyond a conservative note. Do not infer `system` behavior from unrelated parameter values such as `get_vu_meter 'system'` or from `system_volume`.
 - `open_stem_creator` was locally tested on VirtualDJ `v2026-m b9336`; pressing it opened the Stem Creator dialog. Treat it as a workflow opener, not a selected-track automation helper.
 - `get_mixfx_active` was locally tested on VirtualDJ `v2026-m b9336`; in a pad-page text/query context, it mirrored `effect_mixfx_activate` off/on for Filter and Echo after a track was loaded.
-- `dualdeckmode_decks` is tied to `dualdeckmode` official prose for deck pairs 1/3 and 2/4, but the helper itself still needs an observed deck-context result.
+- `deck_has_error` was locally tested on VirtualDJ `v2026-m b9336`; it stayed off for normal load/unload states, turned on after loading a deliberately missing file, scoped to deck 1 in the tested context, and cleared after a later successful selected-track load.
+- `dualdeckmode_decks` has a local pad-page result on VirtualDJ `v2026-m b9336`: in the pad-page context it remained false/red for current and deck-scoped readbacks even after `dualdeckmode` toggled on; repeated on deck 2 with the same reported behavior.
 - Controller-display, Phase, RZX, DJC, V7, Gemini, and Denon rows are hardware-dependent; keep them `Untested` unless the named target device or an equivalent controller mapping environment was used.
 
 Suggested test order:
 
-1. No-hardware sparse helpers: `deck_has_error` with [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml); revisit `system` only if official examples or harmless parameters are found.
-2. Optional controller/deck setup: `dualdeckmode_decks` with [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
+1. No-hardware sparse helpers: revisit `system` only if official examples or harmless parameters are found.
+2. Optional controller/deck setup: repeat/expand `dualdeckmode_decks` with [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), especially in any context where dual-deck pair routing is visible.
 3. Hardware-only batches: controller displays, Phase, RZX, DJC, V7, Gemini, Denon
 4. Non-official Button Editor hidden probes: use [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml), then record results in the dedicated hidden-candidate section below without promoting them to official guidance.
 
@@ -120,6 +121,50 @@ Tracker rows updated: effect_select, get_effect_name
 Follow-up: repeat on a recorded VirtualDJ build and capture whether active state, slider values, and `effect_select_multi` contents follow the same persistence boundary.
 ```
 
+```text
+Date: 2026-06-08
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Deck Error Test.xml; shown in VirtualDJ as "REF: DECK ERROR TEST"
+Account/deck/hardware state: no dedicated hardware; deck 1/current deck had a valid selected browser track available
+Steps: load the deck error test page, load a valid track, observe state, press LOAD SEL, press UNLOAD, press LOAD MISS, then press LOAD SEL again.
+Observed result: After the initial valid load, ERR was off, LOAD was on, D1ERR was off, and D2ERR was off. Pressing LOAD SEL caused no visible state change. After UNLOAD, ERR stayed off, LOAD turned off, and D1ERR/D2ERR stayed off. Pressing LOAD MISS turned ERR on/red, left LOAD off/gray, turned D1ERR on/red, and left D2ERR off/green. Pressing LOAD SEL with a valid selected track cleared ERR and D1ERR back off/green and set LOAD on/blue.
+Tracker rows updated: deck_has_error
+Follow-up: optional repeat from deck 2/current-deck context to further confirm scoped error behavior.
+```
+
+```text
+Date: 2026-06-08
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Dual Deck Mode Test.xml; shown in VirtualDJ as "REF: DUAL DECKMODE TEST"
+Account/deck/hardware state: no dedicated hardware; tested from deck 1/current context and repeated on deck 2
+Steps: load the dual deck mode test page, observe MODE/CUR/D1-D4 states with dual-deck mode off, press MODE to toggle `dualdeckmode` on, then repeat from deck 2.
+Observed result: With mode off, MODE was off/gray and CUR, D1, D2, D3, and D4 were false/red. Pressing MODE toggled MODE on/blue, but CUR and all deck-scoped `dualdeckmode_decks` pads stayed false/red. Repeating on deck 2 produced the same reported behavior.
+Tracker rows updated: dualdeckmode_decks
+Follow-up: test any deck layout/controller context where dual-deck pair routing is visibly active; current pad-page evidence suggests `dualdeckmode_decks` may not be a simple boolean query for "dual-deck mode is enabled."
+```
+
+```text
+Date: 2026-06-08
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - Hidden Button Editor Tests.xml; expected page name "REF: HIDDEN TAXONOMY TEST"
+Account/deck/hardware state: no dedicated hardware
+Steps: look for the hidden taxonomy test page in the VirtualDJ pad-page selector.
+Observed result: Page was not found in the pad-page selector during the user run. A later local filesystem check showed the XML installed at `~/Library/Application Support/VirtualDJ/Pads/Reference - Hidden Button Editor Tests.xml` with page name `REF: HIDDEN TAXONOMY TEST`, and repo pad lint passed.
+Tracker rows updated: hidden Button Editor candidate probes
+Follow-up: reload/restart VirtualDJ or recopy the XML, then look for page name `REF: HIDDEN TAXONOMY TEST`; if it still does not appear, inspect VirtualDJ logs/loading behavior for that pad file.
+```
+
+```text
+Date: 2026-06-08
+VirtualDJ build: v2026-m b9336
+Test asset: Reference - FX Introspection Test.xml; shown in VirtualDJ as "REF: FX INTROSPECT"
+Account/deck/hardware state: no dedicated hardware; Flanger loaded in deck FX slot 1
+Steps: load the FX introspection page, load Flanger, and open the effect GUI.
+Observed result: The Flanger GUI opened and displayed Strength 50%, Speed 8bt, Tone n/a, Feedback 50%, and LFO AMP 40%.
+Tracker rows updated: effect_has_slider/get_effect_slider_* probes, native effect parameter examples
+Follow-up: press the count/label/text/default shift-log pads for Flanger, then repeat for Echo, Reverb, and BeatGrid to compare returned helper values against visible GUI controls.
+```
+
 ## Button Editor Hidden Candidate Probes
 
 These rows are not official `Needs local test` rows. They track flag1-hidden Button Editor taxonomy candidates that are absent from the official appendix but have one or more local evidence streams: bundled language descriptions, compiled taxonomy placement, runtime strings, or exact `ACTION_*` method-symbol hints.
@@ -186,8 +231,8 @@ Do not promote these into ordinary user-facing verb guidance until a row has a c
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `effect_has_slider` / `effect_has_button` and `get_effect_slider_*` / `get_effect_button_*` | Built-in skins use these heavily, but the exact return shapes and context scoping need a focused local fixture. | Skin controls, pad text/query, custom button display; deck FX, video FX, transition FX. | Load [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml), press each LOAD pad, observe slider/button counts, labels, defaults, text, and `effect_has_*` states; repeat separately for `video` and `transition` targets. | TBD | None required | Untested | Built-in skin evidence is strong enough for documentation patterns, but local result values should be recorded before writing a complete behavior table. |
-| Native effect parameter examples | Existing pad pages provide working presets, but the repo does not yet have a systematic effect-by-effect slider/button map. | Pad XML and skin/custom button controls for selected native effects. | Use [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) as a starter fixture; for each native effect, load it in slot 1, record counts, labels, defaults, button count, and tested `effect_slider`/`padfx` presets with VirtualDJ build/effect version. | Partial local examples; full pass TBD | None required | Partial | `Pads/Reference - Slot FX.xml`, `Pads/PUSH FX.xml`, and built-in `pads_stems+fx.xml` document several working forms. This is not a complete parameter map. |
+| `effect_has_slider` / `effect_has_button` and `get_effect_slider_*` / `get_effect_button_*` | Built-in skins use these heavily, but the exact return shapes and context scoping need a focused local fixture. | Skin controls, pad text/query, custom button display; deck FX, video FX, transition FX. | Load [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml), press each LOAD pad, observe slider/button counts, labels, defaults, text, and `effect_has_*` states; repeat separately for `video` and `transition` targets. | v2026-m b9336 | None required | Partial | Flanger GUI opened from the fixture and showed Strength 50%, Speed 8bt, Tone n/a, Feedback 50%, and LFO AMP 40%. Still need the pad readbacks/logs for counts, labels, defaults, and `effect_has_*` state before writing the generic behavior table. |
+| Native effect parameter examples | Existing pad pages provide working presets, but the repo does not yet have a systematic effect-by-effect slider/button map. | Pad XML and skin/custom button controls for selected native effects. | Use [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) as a starter fixture; for each native effect, load it in slot 1, record counts, labels, defaults, button count, and tested `effect_slider`/`padfx` presets with VirtualDJ build/effect version. | v2026-m b9336; full pass TBD | None required | Partial | Flanger GUI values recorded: Strength 50%, Speed 8bt, Tone n/a, Feedback 50%, LFO AMP 40%. `Pads/Reference - Slot FX.xml`, `Pads/PUSH FX.xml`, and built-in `pads_stems+fx.xml` document several working forms, but this is not a complete parameter map. |
 | `get_mixfx_active` | Official sparse Mix FX helper; return value and relationship to `effect_mixfx_activate` needed confirmation. | Skin text/query, pad query/color, custom button display. | Load [Reference - Mix FX Query Test.xml](../Test/Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml), select Filter/Echo, toggle Pad 7 `effect_mixfx_activate` off/on, then compare Pad 8 and shift-pad debug output for `` `get_mixfx_active` ``. | v2026-m b9336 | None required | Pass | In pad text/query/color, `` `get_mixfx_active` `` returned `off`/`on` and matched `effect_mixfx_activate` for Filter and Echo once a track was loaded on deck 1. |
 | `effect_select_multi` with `effect_active <slot> '<effect>'` | Multi-effect-per-slot behavior is official by name/summary but easy to miss in pad design. | Pad XML, numeric deck FX slot, named stem FX slot. | Build a two-pad page for slot 1 and `vocals`: Echo Out pad uses `effect_select_multi ... 'echo out'`; Reverb pad uses `effect_select_multi ... 'reverb'`; query each with `effect_active ... '<effect>'`; verify independent LED state and simultaneous audio. | User-provided local result, build not recorded | None recorded | Partial | User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Needs repeat on a recorded build for fixture-grade `Pass`. |
 | `padfx` shared identity and `effect_disable_all 'padfx'` ordering | `padfx` is useful for quick triggers, but deterministic chained presets can be affected by shared effect/stem targets and cleanup timing. | Pad XML with stem-targeted pad FX. | Create Pad A with `effect_disable_all 'padfx' & padfx 'echo out' ... 'stemfx:vocal' & padfx 'reverb' ... 'stemfx:vocal'`; create Pad B with the same chain but no inline clear; create Pad C using one of the same effect/stem targets at different values; observe pad light/audible behavior and parameter changes. | User-provided local result, build not recorded | None recorded | Partial | Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Treat `effect_disable_all 'padfx'` as separate cleanup and do not treat `padfx` as private per-pad state. |
@@ -202,8 +247,8 @@ Do not promote these into ordinary user-facing verb guidance until a row has a c
 
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `deck_has_error` | Official sparse loading/deck helper; error states and reset behavior are undocumented locally. | Deck skin query/text, load workflow, custom button display. | Load [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml), compare current/deck-scoped `` `deck_has_error` `` before load, after a valid selected-track load, after unload, after loading the deliberately missing file, and after a subsequent valid load. | TBD | None required | Untested | Official name only as of the 2026-05-26 appendix refresh. |
-| `dualdeckmode_decks` | Official prose ties it to dual-deck pairs 1/3 or 2/4, but mapping behavior is sparse. | Controller mapping, deck assignment logic, dual-deck mode. | Load [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), toggle `dualdeckmode`, compare current and `deck 1`-`deck 4` `` `dualdeckmode_decks` `` labels/queries/logs, then repeat from deck-pair contexts 1/3 and 2/4 if available. | TBD | Optional controller | Untested | Official pair relationship documented; helper return/action behavior unobserved. |
+| `deck_has_error` | Official sparse loading/deck helper; error state and reset behavior are now locally characterized in a pad-page load workflow. | Deck skin query/text, load workflow, custom button display. | Load [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml), compare current/deck-scoped `` `deck_has_error` `` before load, after a valid selected-track load, after unload, after loading the deliberately missing file, and after a subsequent valid load. | v2026-m b9336 | None required | Pass | In the pad-page run, `deck_has_error` stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load. |
+| `dualdeckmode_decks` | Official prose ties it to dual-deck pairs 1/3 or 2/4, but mapping behavior remains sparse. | Controller mapping, deck assignment logic, dual-deck mode. | Load [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), toggle `dualdeckmode`, compare current and `deck 1`-`deck 4` `` `dualdeckmode_decks` `` labels/queries/logs, then repeat from deck-pair contexts 1/3 and 2/4 if available. | v2026-m b9336 | Optional controller | Partial | In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion. |
 
 ## Karaoke
 

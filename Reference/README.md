@@ -75,7 +75,7 @@ Current status:
 - `Application Internals.md` is the low-level file/database/stem architecture reference.
 - `Stem File Format.md` is the focused file-format reference for `.vdjstems` sidecars.
 - `Resources.md` is the source index.
-- Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 20 official names remain in the formal `Needs local test` gap.
+- Current VDJScript coverage is 991/991 official verb/alias names present, 0 missing, and an empty compact official remainder; 19 official names remain in the formal `Needs local test` gap.
 - The bundled Button Editor action-description catalog currently has 813 unique action tags across all language files in the local VirtualDJ app, including 14 catalog-only names outside the official appendix; the richer runtime string block adds 21 stricter runtime-only names outside both official and Button Editor catalogs. None of those 35 non-official candidates currently has shipped XML evidence in the copied built-in/official XML roots.
 - The compiled Button Editor taxonomy has 37 displayed categories, 918 visible action items, and 1028 total compiled action items. All 918 visible rows are official audit names; 797 have bundled language descriptions; 770 have exact `ACTION_*` method-symbol matches. The taxonomy is useful as category metadata, but not as behavior proof.
 - Button Editor syntax highlighting and hover tokenization are now tracked as parser evidence, with `DLGActionWizard::STree`, `customDraw`, `getCurrentWord`, and related symbols as the current binary anchors.
