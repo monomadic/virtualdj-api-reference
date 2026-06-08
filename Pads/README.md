@@ -15,7 +15,9 @@ Use root-level `Reference - *.xml` files when copying a pattern into documentati
 
 ## Reference And Working Pages
 
-| File | Page name | Status | Notes |
+For local pad XML files, VirtualDJ's pad-page selector generally shows the filename stem. The XML `<page name="">` remains useful for `pad_page` targets, internal metadata, and source documentation.
+
+| File | XML `<page name="">` | Status | Notes |
 | --- | --- | --- | --- |
 | [Reference - Slot FX.xml](Reference%20-%20Slot%20FX.xml) | `REF: SLOT FX` | Canonical | Slot-based audio FX selection, sliders, and state. |
 | [Reference - ColorFX.xml](Reference%20-%20ColorFX.xml) | `REF: COLOR FX` | Canonical | Main filter ColorFX plus extra custom ColorFX slots. Queries use `filter_label 'name'` for selected-state checks. |

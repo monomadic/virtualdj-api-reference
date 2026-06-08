@@ -22,6 +22,9 @@ Start here:
 - [Button Editor Taxonomy](Button%20Editor%20Taxonomy.md)
   Extracted Button Editor category mapping from the compiled executable tables, including visible/hidden counts and symbol-capability joins.
 
+- [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md)
+  Conservative notes for non-official hidden Button Editor taxonomy rows, including evidence streams, probe order, and promotion rules.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 
@@ -66,6 +69,7 @@ Current status:
 - `Official VDJScript Coverage Audit.md` tracks official verb coverage depth, missing-name status, and the remaining local-test gap.
 - `Button Editor Catalog Audit.md` tracks the bundled Button Editor action-description catalog and runtime string-table cross-checks.
 - `Button Editor Taxonomy.md` tracks the compiled Button Editor category mapping and metadata join: 37 displayed categories, 918 visible actions, 1028 compiled action items, and exact `ACTION_*` method-symbol coverage.
+- `Undocumented VDJScript Candidates.md` tracks the 37 flag1-hidden non-official compiled taxonomy rows separately from the normal VDJScript API reference.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Completeness Roadmap.md` is the default place to choose the next evidence pass and keep incomplete areas visible.

@@ -10,7 +10,7 @@ Use this file to choose the next evidence pass. Record detailed run results in [
 | --- | --- | --- |
 | Official VDJScript names | 991/991 names present, 0 missing, compact official remainder empty | Keep count consistency automated and refresh when the official appendix changes. |
 | Official behavior depth | 19 official names still in the formal `Needs local test` gap | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
-| Button Editor catalog-only candidates | 14 catalog-only names and 21 stricter runtime-string candidates outside the official appendix | Keep them discovery-only until local behavior or stronger source evidence exists. |
+| Button Editor hidden candidates | 14 catalog-only names, 21 stricter runtime-string candidates, and 37 flag1-hidden compiled taxonomy rows outside the official appendix | Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) to keep them discovery-only until local behavior or stronger source evidence exists. |
 | Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior | Keep promoting only pages with source-backed rationale or recorded local tests. |
 | Skin SDK | Broad coverage, with several useful local runtime findings | Finish `visual type` and element-surface passes with small canary skins. |
 | FX behavior | Good slot, ColorFX, PadFX, and stem-FX model notes | Add repeatable FX introspection, bank save/load, release-FX, and plugin-command passes. |
@@ -41,7 +41,7 @@ These are the best next tests because they do not require new controller hardwar
 | 5 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../Test/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
 | 6 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../Test/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
 | 7 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
-| 8 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | Hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
+| 8 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) and hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
 
 `system` is intentionally not in the normal no-hardware queue. Revisit it only if an official example, bundled-resource context, or clearly harmless parameter appears.
 

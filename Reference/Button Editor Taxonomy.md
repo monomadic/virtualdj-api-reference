@@ -184,6 +184,8 @@ Those labels are interpretive. The extractor keeps the fields literal as `flag0_
 
 Flag1-hidden rows are the most interesting unpublished group: all 37 are absent from the official appendix, 14 have bundled Button Editor language descriptions, and 30 have exact `ACTION_*` method-symbol evidence. They should stay out of ordinary user-facing recommendations until locally tested, but several are good same-day probes.
 
+See [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) for the full candidate inventory, promotion rules, and prioritized test queues.
+
 | Area | Hidden rows | Evidence | Exploration angle |
 | --- | --- | --- | --- |
 | Browser | `browser_colorfilter_edit`, `load_security_shown` | Exact symbols: execute-only / query-only. | Color-filter editor and load-security state internals. |

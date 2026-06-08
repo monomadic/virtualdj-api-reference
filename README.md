@@ -46,6 +46,10 @@ Every fact in the reference docs is labeled by source:
 | `Built-in skin` | Observed in skin XML shipped inside the VirtualDJ app bundle |
 | `Published pad page` | Observed in a working public pad page |
 | `Built-in pad page` | Observed in pad-page XML shipped inside the VirtualDJ app bundle |
+| `Built-in app resource` | Command name, description, or UI catalog entry observed in non-skin/non-pad app resources |
+| `Binary compiled table` | Structured command metadata observed in compiled executable tables |
+| `Binary symbol table` | Demangled implementation symbols observed in the VirtualDJ executable |
+| `Binary string-table` | Command-looking string observed in the VirtualDJ executable; discovery only |
 | `Local test` | Reproduced in VirtualDJ locally |
 | `Inference` | Conclusion drawn from the above sources |
 
