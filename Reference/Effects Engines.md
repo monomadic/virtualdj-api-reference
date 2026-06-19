@@ -1052,6 +1052,15 @@ get_effect_slider_count            # Number of sliders in the current context
 get_effect_button_count            # Number of buttons in the current context
 ```
 
+Recorded local evidence is still partial. Use this as the current status table, not as a complete parameter map:
+
+| Effect / helper group | Local evidence | Unknowns / next readback |
+| --- | --- | --- |
+| Flanger visible GUI | `Local test`: VirtualDJ `v2026-m b9336`, [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml), deck FX slot 1. Opening the GUI after loading Flanger displayed `Strength 50%`, `Speed 8bt`, `Tone n/a`, `Feedback 50%`, and `LFO AMP 40%`. | The fixture did not yet record `get_effect_slider_count`, `get_effect_button_count`, `effect_has_slider`, `effect_has_button`, labels, defaults, or text readbacks for Flanger. Do not infer the count or button availability from the visible GUI alone. |
+| `effect_has_slider` / `effect_has_button` | `Built-in skin`: used to disable/hide generic FX controls when a selected plugin lacks that indexed control. | Local pad/query return shape and target scoping are still unknown for deck FX, video FX, and transition FX. Record `on`/`off` state by index before promoting behavior beyond the generic pattern. |
+| `get_effect_slider_*` | `Official` / `Built-in skin`: helper family includes count, label, label/full/skip-length variants, name/shortname variants, text, text/skip-length, and default readbacks. | Only the Flanger GUI values above are recorded locally. The exact returned strings, fallback behavior, and whether `Tone n/a` maps to a disabled slider, text value, or special control state are unknown. |
+| `get_effect_button_*` | `Official` / `Built-in skin`: helper family includes button count, name, and short name readbacks. | No local button count or label readbacks have been recorded for Echo, Reverb, BeatGrid, or Flanger. |
+
 Built-in desktop skins use this pattern for slot controls:
 
 ```xml
@@ -1095,9 +1104,9 @@ Video FX and transition panels use the same idea with special targets:
 <text action="get_effect_slider_label 'transition' 1"/>
 ```
 
-This is the preferred way to build a reusable FX surface. Hardcoded parameter labels are fine for a known pad preset, but generic panels should follow the selected plugin's actual slider/button count and labels.
+This is the preferred way to build a reusable FX surface. Hardcoded parameter labels are fine for a known pad preset, but generic panels should follow the selected plugin's actual slider/button count and labels. Until the fixture logs more native effects, keep effect-specific labels in examples tied to the recorded effect/build, and leave missing counts or helper strings as unknown.
 
-Source: `Official`, `Built-in skin`, `Inference`
+Source: `Official`, `Built-in skin`, `Local test`, `Inference`
 
 ---
 

@@ -41,13 +41,6 @@ def check_count_consistency(count: str, gap: str, errors: list[str]) -> None:
         return
 
     required = {
-        ROOT / "README.md": [f"{count}/{count}", f"{gap} official names"],
-        ROOT / "AGENTS.md": [
-            f"parity audit for the {count} official",
-            f"{count}/{count} names present",
-            f"{gap} official names",
-        ],
-        ROOT / "Reference" / "README.md": [f"{count}/{count}", f"{gap} official names"],
         ROOT / "Reference" / "VDJScript Verbs.md": [
             f"{count}/{count}",
             f"remaining {gap} sparse or hardware-specific official names",
@@ -117,6 +110,7 @@ def check_tracked_generated_files(errors: list[str]) -> None:
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
     roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "Reference", ROOT / "Pads", ROOT / "Skins", ROOT / "Test"]
+    roots.append(ROOT / "TODO.md")
     files: list[Path] = []
     for root in roots:
         if root.is_file():

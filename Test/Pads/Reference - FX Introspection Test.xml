@@ -11,8 +11,9 @@
   Suggested first pass:
     1. Load Echo, Reverb, BeatGrid, and Flanger into slot 1.
     2. Observe count, slider label/text/default, and button helper pads.
-    3. Open the effect GUI and compare visible controls against returned labels.
-    4. Repeat on any build where native effects or plugin UI behavior changes.
+    3. Press Shift+Pads 1-16 to log the core and sibling readback helpers.
+    4. Open the effect GUI and compare visible controls against returned labels.
+    5. Repeat on any build where native effects or plugin UI behavior changes.
 
   Source: Official, Built-in skin, Inference
 -->
@@ -120,6 +121,14 @@
   <shift_pad6 name="LOG TEXT1" color="color 'green'">debug `get_effect_slider_text 1 1`</shift_pad6>
   <shift_pad7 name="LOG HAS S1" color="color 'green'">debug `effect_has_slider 1 1`</shift_pad7>
   <shift_pad8 name="LOG HAS B1" color="color 'orange'">debug `effect_has_button 1`</shift_pad8>
+  <shift_pad9 name="LOG LABELFULL1" color="color 'green'">debug `get_effect_slider_label_full 1 1`</shift_pad9>
+  <shift_pad10 name="LOG SHORT1" color="color 'green'">debug `get_effect_slider_shortname 1 1`</shift_pad10>
+  <shift_pad11 name="LOG NAME1" color="color 'green'">debug `get_effect_slider_name 1 1`</shift_pad11>
+  <shift_pad12 name="LOG NAMESKIP1" color="color 'green'">debug `get_effect_slider_name_skip_length 1 1`</shift_pad12>
+  <shift_pad13 name="LOG LABELSKIP1" color="color 'green'">debug `get_effect_slider_label_skip_length 1 1`</shift_pad13>
+  <shift_pad14 name="LOG TEXTSKIP1" color="color 'green'">debug `get_effect_slider_text_skip_length 1 1`</shift_pad14>
+  <shift_pad15 name="LOG BNAME1" color="color 'orange'">debug `get_effect_button_name 1`</shift_pad15>
+  <shift_pad16 name="LOG BSHORT1" color="color 'orange'">debug `get_effect_button_shortname 1`</shift_pad16>
 
   <param1 name="FX SELECT">effect_select_popup 1</param1>
   <param2 name="SHOW GUI">effect_show_gui 1</param2>

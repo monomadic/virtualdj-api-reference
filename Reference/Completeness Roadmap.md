@@ -8,8 +8,8 @@ Use this file to choose the next evidence pass. Record detailed run results in [
 
 | Area | Current state | Next completeness move |
 | --- | --- | --- |
-| Official VDJScript names | 991/991 names present, 0 missing, compact official remainder empty | Keep count consistency automated and refresh when the official appendix changes. |
-| Official behavior depth | 19 official names still in the formal `Needs local test` gap | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
+| Official VDJScript names | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for current counts. | Keep count consistency automated and refresh when the official appendix changes. |
+| Official behavior depth | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for the current formal `Needs local test` gap. | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
 | Button Editor hidden candidates | 14 catalog-only names, 21 stricter runtime-string candidates, and 37 flag1-hidden compiled taxonomy rows outside the official appendix | Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) to keep them discovery-only until local behavior or stronger source evidence exists. |
 | Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior | Keep promoting only pages with source-backed rationale or recorded local tests. |
 | Skin SDK | Broad coverage, with several useful local runtime findings | Finish `visual type` and element-surface passes with small canary skins. |

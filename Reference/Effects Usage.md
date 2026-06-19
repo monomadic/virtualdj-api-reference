@@ -441,6 +441,8 @@ Dynamic FX controls:
 
 Use this pattern for generic panels where the selected plugin can change. Record effect-specific presets separately.
 
+Current local evidence is not a full introspection table yet. The recorded run for [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) on VirtualDJ `v2026-m b9336` only confirms that Flanger loaded in deck FX slot 1 and its GUI showed `Strength 50%`, `Speed 8bt`, `Tone n/a`, `Feedback 50%`, and `LFO AMP 40%`. Counts, `effect_has_*` states, button labels, slider labels, defaults, and formatted text readbacks remain unknown until the shift-log pads are recorded.
+
 Plugin commands:
 
 ```vdjscript

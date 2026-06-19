@@ -7,14 +7,27 @@ VirtualDJ does not publish comprehensive developer documentation; this repo fill
 
 ```
 README.md                     — human-facing project overview
+TODO.md                       — active operational queue for open-ended work
+INDEX.yml                     — topic-to-file routing map
 Reference/README.md          — index of all reference docs, source label policy, current status
 Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
-Reference/Official VDJScript Coverage Audit.md — names-only parity audit for the 991 official verb/alias names, plus promotion targets
+Reference/Official VDJScript Coverage Audit.md — authoritative names-only parity audit and local-test gap count
 Reference/Completeness Roadmap.md — ordered backlog for closing behavior, fixture, and hardware gaps
 Pads/README.md                — pad page inventory, status labels, and maintenance checklist
 Test/README.md                — documentation test harnesses and reproducible fixtures
 ```
+
+## Open-ended work
+
+For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task.
+
+Search budget:
+
+- Read the active task’s listed files, fixtures, and checks before running broad searches.
+- Prefer `INDEX.yml`, `just next-task`, `just find-verb <name>`, and path-scoped `rg` over repo-wide discovery.
+- Use broad repository-wide search only after the task route is insufficient or contradictory.
+- Keep volatile coverage counts sourced from `Reference/Official VDJScript Coverage Audit.md`; do not repeat exact count summaries in entrypoint docs unless the checker intentionally enforces them.
 
 ## What is here
 
@@ -33,7 +46,7 @@ Reference/                   — Markdown documentation
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Working/reference pad pages live in `Pads/*.xml`; copied built-in app-bundle pages live in `Pads/Built-In/`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`; copied built-in app-bundle skins live in `Skins/Built-In/`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
-- The official VDJScript verb appendix currently parses to 991 verb/alias names. The local VDJScript reference has 991/991 names present, with 19 official names still marked `Needs local test`.
+- The official VDJScript appendix coverage and local-test gap are tracked in `Reference/Official VDJScript Coverage Audit.md`.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 - Run `python3 tools/check_reference_status.py` after changing coverage counts, fixture inventories, or local reference links.
 

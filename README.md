@@ -14,6 +14,8 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 
 | Goal | File |
 | --- | --- |
+| Pick the next active maintenance task | [TODO.md](TODO.md) |
+| Route a topic to the right docs and fixtures | [INDEX.yml](INDEX.yml) |
 | Understand the repo structure and source labeling | [Reference/README.md](Reference/README.md) |
 | Pick the right VDJScript verb or pattern | [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) |
 | Look up a specific verb | [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md) |
@@ -57,8 +59,8 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- VDJScript reference has official-name parity with the appendix: 991/991 official verb/alias names are present, missing names are 0, and the compact official remainder is empty. The remaining formal gap is 19 official names still marked `Needs local test`: sparse `system`; optional deck/controller setup for `dualdeckmode_decks`; and hardware-specific controller helpers.
-- Completeness work is tracked in `Reference/Completeness Roadmap.md`; the next low-hardware passes are `dualdeckmode_decks`, hidden Button Editor probes, and FX introspection.
+- Current official coverage and local-test gap counts are tracked in [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md).
+- Active next tasks are tracked in [TODO.md](TODO.md); the broader evidence backlog remains in [Reference/Completeness Roadmap.md](Reference/Completeness%20Roadmap.md).
 - Skin SDK coverage is broad but `<visual type="...">` types not yet fully documented
 - Controller mapper XML format: initial reference added in `Reference/Mapper XML.md`
 
