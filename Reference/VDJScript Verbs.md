@@ -4505,17 +4505,17 @@ Sources:
 
 | Verb | Aliases | Surfaces | Summary | Example |
 | --- | --- | --- | --- | --- |
-| `automix_dualdeck` | — | `Button`, `SkinAction`, `SkinQuery` | Enable/disable automix using both decks. | `automix_dualdeck` |
-| `automix_add_next` | — | `Button`, `SkinAction` | Add selected browser songs right after the currently playing automix song. | `automix_add_next` |
-| `automix_editor` | — | `Button`, `SkinAction` | Open the Automix Editor. | `automix_editor` |
-| `automix_editor_movetrack` | — | `Map`, `Button`, `SkinAction` | Move the selected Automix Editor track. | `automix_editor_movetrack 'current' +10` |
-| `get_automix` | — | `Text`, `SkinQuery` | Return the automix crossfader position. | `get_automix` |
-| `get_automix_song` | — | `Text`, `SkinQuery` | Return a property from the next automix song or a later queued song. | `get_automix_song 'title' 2` |
-| `get_automix_position` | — | `Text`, `SkinQuery` | Return the position of the currently playing song in the automix list. | `get_automix_position` |
-| `get_playlist_time` | — | `Text`, `SkinQuery` | Return time left before the end of the automix playlist. | `get_playlist_time` |
+| `automix_dualdeck` | — | `Button`, `SkinAction`, `SkinQuery` | Toggle/query the Automix dual-deck mode, matching the `automixDualDeck` setting label. | `automix_dualdeck` |
+| `automix_add_next` | — | `Button`, `SkinAction` | Insert the selected browser song(s) after the current Automix song. | `automix_add_next` |
+| `automix_editor` | — | `Button`, `SkinAction` | Open the Automix Editor window for arranging Automix items. | `automix_editor` |
+| `automix_editor_movetrack` | — | `Map`, `Button`, `SkinAction` | Move the selected Automix Editor track by a relative amount. | `automix_editor_movetrack 'current' +10` |
+| `get_automix` | — | `Text`, `SkinQuery` | Return the current Automix crossfader position/value. | `get_automix` |
+| `get_automix_song` | — | `Text`, `SkinQuery` | Return a requested field from the next or indexed Automix queue entry. | `get_automix_song 'title' 2` |
+| `get_automix_position` | — | `Text`, `SkinQuery` | Return the current Automix song position within the queue. | `get_automix_position` |
+| `get_playlist_time` | — | `Text`, `SkinQuery` | Return the remaining Automix playlist time. | `get_playlist_time` |
 | `playlist_options` | — | `Button`, `SkinAction` | Show playlist options. | `playlist_options` |
-| `playlist_add` | — | `Button`, `SkinAction` | Add selected browser songs to the automix list. | `playlist_add` |
-| `playlist_load` | — | `Button`, `SkinAction` | Load selected folder/playlist into the automix playlist. | `playlist_load 'append'` |
+| `playlist_add` | — | `Button`, `SkinAction` | Add the selected browser song(s) to the Automix playlist. | `playlist_add` |
+| `playlist_load` | — | `Button`, `SkinAction` | Load the selected folder/playlist into the Automix playlist. | `playlist_load 'append'` |
 | `playlist_load_and_remove` | — | `Button`, `SkinAction` | Load first automix-list song and remove it from the list. | `playlist_load_and_remove` |
 | `playlist_load_and_keep` | — | `Button`, `SkinAction` | Load first automix-list song without removing it. | `playlist_load_and_keep` |
 | `playlist_randomize_once` | — | `Button`, `SkinAction` | Shuffle playlist order once. | `playlist_randomize_once` |
@@ -4535,6 +4535,14 @@ Sources:
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Built-in app resource`: Button Editor taxonomy has a visible `automix` category and includes `playlist_add` as an example; this supports grouping only, not detailed behavior.
+- `Inference`: `automixDualDeck` in configuration options is the setting-side counterpart to `automix_dualdeck`.
+
+Needs local test:
+
+- `automix_editor_movetrack`: confirm accepted target tokens beyond `'current'` and whether the offset is item rows.
+- `get_automix`, `get_automix_song`, `get_automix_position`, `get_playlist_time`: confirm return formats, empty-list behavior, and whether indexes are zero- or one-based where relevant.
+- `playlist_add` and `playlist_load`: confirm selected-item scope, append/replace behavior, and whether folder versus playlist input differs.
 
 ### Karaoke Browser Helpers
 
@@ -4644,25 +4652,24 @@ Sources:
 ### EQ
 
 VirtualDJ's three-band EQ. Each band operates on the full deck signal.
-The numeric scale for `eq_high`, `eq_mid`, `eq_low` runs from `0%` (cut) to `100%` (unity) to `200%` (boost).
-EQ values are center-off: `100%` is unity, below cuts, above boosts.
+Shipped skin XML treats EQ knobs as center-origin controls: `frommiddle="true"`, double-click reset to `eq_* 50%`, and right-click toggles between `eq_* 0%` and `eq_* 50%`.
 
-| Canonical | Aliases | Surfaces | Description |
-| --- | --- | --- | --- |
-| `eq_high` | — | `Map`, `SkinAction`, `SkinQuery` | High-frequency EQ band. Read returns current value; write sets it. | `Official` |
-| `eq_mid` | `eq_med` | `Map`, `SkinAction`, `SkinQuery` | Mid-frequency EQ band. | `Official` |
-| `eq_low` | — | `Map`, `SkinAction`, `SkinQuery` | Low-frequency EQ band. | `Official` |
-| `eq_kill_high` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle high-band kill (cut to zero). Query returns `on` when killed. | `Official` |
-| `eq_kill_mid` | `eq_kill_med` | `Map`, `SkinAction`, `SkinQuery` | Toggle mid-band kill. | `Official` |
-| `eq_kill_low` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle low-band kill. | `Official` |
-| `eq_reset` | — | `Map`, `SkinAction` | Reset all three EQ bands to unity (100%). | `Official` |
+| Canonical | Aliases | Surfaces | Description | Sources |
+| --- | --- | --- | --- | --- |
+| `eq_high` | — | `Map`, `SkinAction`, `SkinQuery` | Deck high-EQ control/query. Built-in skins bind it to center-origin sliders and reset with `eq_high 50%`. | `Official`, `Built-in skin` |
+| `eq_mid` | `eq_med` | `Map`, `SkinAction`, `SkinQuery` | Deck mid-EQ control/query. Built-in skins bind it to center-origin sliders and reset with `eq_mid 50%`. | `Official`, `Built-in skin` |
+| `eq_low` | — | `Map`, `SkinAction`, `SkinQuery` | Deck low-EQ control/query. Built-in skins bind it to center-origin sliders and reset with `eq_low 50%`. | `Official`, `Built-in skin` |
+| `eq_kill_high` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle/query high-band kill. Built-in skins use it as button/query state and label visibility state. | `Official`, `Built-in skin` |
+| `eq_kill_mid` | `eq_kill_med` | `Map`, `SkinAction`, `SkinQuery` | Toggle/query mid-band kill. Built-in skins use it as button/query state and label visibility state. | `Official`, `Built-in skin` |
+| `eq_kill_low` | — | `Map`, `SkinAction`, `SkinQuery` | Toggle/query low-band kill. Built-in skins use it as button/query state and label visibility state. | `Official`, `Built-in skin` |
+| `eq_reset` | — | `Map`, `SkinAction` | Reset deck EQ bands. Built-in skins more often reset individual bands with `eq_* 50%`. | `Official`, `Built-in skin` |
 | `eq_high_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the high band. | `Official` |
 | `eq_mid_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the mid band. | `Official` |
 | `eq_low_freq` | — | `Map`, `SkinAction` | Set the crossover frequency of the low band. | `Official` |
-| `eq_high_slider` | — | `Map`, `SkinAction` | Center-off slider form of `eq_high` (50% = unity). Use on physical sliders. | `Official` |
-| `eq_mid_slider` | `eq_med_slider` | `Map`, `SkinAction` | Center-off slider form of `eq_mid`. | `Official` |
-| `eq_low_slider` | — | `Map`, `SkinAction` | Center-off slider form of `eq_low`. | `Official` |
-| `eq_mode` | — | `Map`, `SkinAction` | Cycle or set EQ mode. Values: `standard`, `stem`. | `Official` |
+| `eq_high_slider` | — | `Map`, `SkinAction` | Controller/slider-oriented high-EQ form. For skins, shipped XML uses `eq_high` with `frommiddle="true"`. | `Official`, `Built-in skin` |
+| `eq_mid_slider` | `eq_med_slider` | `Map`, `SkinAction` | Controller/slider-oriented mid-EQ form. For skins, shipped XML uses `eq_mid` with `frommiddle="true"`. | `Official`, `Built-in skin` |
+| `eq_low_slider` | — | `Map`, `SkinAction` | Controller/slider-oriented low-EQ form. For skins, shipped XML uses `eq_low` with `frommiddle="true"`. | `Official`, `Built-in skin` |
+| `eq_mode` | — | `Map`, `SkinAction` | Cycle or set EQ mode. Built-in skins use `eq_mode` and `eq_mode +1`; config docs list `frequency`, `modernEQ`, `ezRemix`, and `stems` as setting-side values. | `Official`, `Built-in skin`, `Inference` |
 | `fake_eq` | — | `Map`, `SkinAction` | EQ that only affects the preview/headphone signal, not master output. | `Official` |
 
 Examples:
@@ -4684,7 +4691,16 @@ Kill button pattern for a skin button:
 </button>
 ```
 
-Source: `Official`
+Sources:
+
+- `Official`: VDJScript verbs appendix
+- `Built-in skin`: shipped desktop skins use `eq_high`, `eq_mid`, `eq_low`, `eq_kill_*`, and `eq_mode +1` in knob/label controls
+- `Inference`: `eqMode` and equalizer frequency settings in configuration docs provide setting-side context, not direct verb behavior proof
+
+Needs local test:
+
+- `eq_high_freq`, `eq_mid_freq`, `eq_low_freq`: confirm accepted units/ranges and whether they mirror the `equalizer*Frequency` settings exactly.
+- `eq_high_slider`, `eq_mid_slider`, `eq_low_slider`: confirm controller-slider value scale in mapper contexts; built-in skin XML uses the non-`_slider` verbs with `frommiddle="true"`.
 
 ---
 
