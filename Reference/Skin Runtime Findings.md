@@ -177,6 +177,45 @@ In the canary, the child-`<pos>` group rendered but did not move horizontally,
 while equivalent `condition` branches on groups with direct `x` / `y` behaved
 correctly.
 
+## Runtime Variables In Position/Size Values
+
+Source: `Local test` from the GraveRaver desktop skin, June 2026.
+
+VirtualDJ evaluates `@$vars` and VDJScript in element **`condition=""`** attributes,
+but **not** inside the `x` / `y` / `width` / `height` **value** expressions. Position
+and size values are static arithmetic over numeric literals and `[PLACEHOLDER]`
+substitutions only. An embedded backtick script or `get_var` term in a value is
+dropped — VirtualDJ keeps the static remainder, so the element renders at a fixed
+spot instead of tracking the variable.
+
+This is distinct from `[PLACEHOLDER]` substitution (see "Define Placeholders And
+`*`"), which *does* work in position/size values because it is resolved at class
+instantiation, before the value is evaluated. The limitation is specifically about
+reading a **runtime** variable inside a value.
+
+Observed as non-working (a browser surface meant to track `@$infntywavesize`):
+
+```xml
+<!-- Browser stayed at the @$infntywavesize=0 position; the backtick term was ignored. -->
+<pos x="0" width="1920"
+     y="1080-[HEIGHT]+7+`get_var '@$infntywavesize' &amp; param_multiply 20`-207"
+     height="[HEIGHT]-7-`get_var '@$infntywavesize' &amp; param_multiply 20`+207-50"/>
+```
+
+The working form enumerates one rung per value and selects it with a `condition`:
+
+```xml
+<pos x="0" width="1920" y="1080-[HEIGHT]+7-207"  height="+[HEIGHT]-7+207-50"  condition="var_equal '@$infntywavesize' 0"/>
+<pos x="0" width="1920" y="1080-[HEIGHT]+27-207" height="+[HEIGHT]-27+207-50" condition="var_equal '@$infntywavesize' 1"/>
+<!-- ...one rung per @$infntywavesize value... -->
+```
+
+Implication: a size/position that depends on a runtime variable must be a ladder of
+`condition`-gated `<pos>` rungs, not a single computed expression. To keep large
+ladders DRY, generate the rungs with a build script rather than computing inline
+(GraveRaver does this in `tools`/`scripts` for its browser position tables). This is
+the same condition-vs-value split seen in "Conditional Group Positioning" above.
+
 ## Conditional Breaklines
 
 Source: `Official forum` for the top-level `<breaklines>` element syntax,
