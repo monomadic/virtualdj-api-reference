@@ -891,8 +891,8 @@ These query the track loaded on the current deck, unlike `get_browsed_*`, which 
 | `get_title_artist` | `Text`, `SkinQuery` | Combined title-artist text for the loaded song. | `get_title_artist` |
 | `get_title_remix` | `Text`, `SkinQuery` | Title plus remix in parentheses. | `get_title_remix` |
 | `get_artist_before_feat` | `Text`, `SkinQuery` | Artist text before a featuring separator. | `get_artist_before_feat` |
-| `get_featuring_after_artist` | `Text`, `SkinQuery` | Featuring text after the artist. | `get_featuring_after_artist` |
-| `get_artist_title_separator` | `Text`, `SkinQuery` | Separator used in combined artist/title display. | `get_artist_title_separator` |
+| `get_featuring_after_artist` | `Text`, `SkinQuery` | Featuring artist text stripped from the artist or title field. | `get_featuring_after_artist` |
+| `get_artist_title_separator` | `Text`, `SkinQuery` | Dash separator when both artist and title are available. | `get_artist_title_separator` |
 | `get_loaded_song_color` | `Text`, `SkinQuery` | Color of the loaded track, including color filters. | `get_loaded_song_color 'white'` |
 | `has_cover` | `SkinQuery`, `Button` | True when cover art is available. | `has_cover` |
 | `has_linked_tracks` | `SkinQuery`, `Button` | True when the track has links to other tracks. | `has_linked_tracks` |
@@ -901,6 +901,7 @@ Notes:
 
 - `get_loaded_song_color` includes color filters; use `get_loaded_song color` when you specifically want the manually selected track color.
 - `has_linked_tracks browsed` checks the browsed track; it can also take a script that returns a full file path.
+- `get_featuring_after_artist` and `get_artist_title_separator` are useful for custom track-title layouts that need to rebuild VirtualDJ's artist/title/featuring formatting in separate text fields.
 
 Sources:
 
@@ -944,13 +945,13 @@ Notes:
 | `get_plugindeck` | `Text`, `SkinQuery` | Plugin context deck number, with special values for master/sampler/mic. | `get_plugindeck` |
 | `get_display` | `Text`, `SkinQuery` | Display identifier for the current skin or screen context. | `get_display` |
 | `get_version` | `Text`, `SkinQuery` | VirtualDJ version text. | `get_version` |
-| `get_build` | `Text`, `SkinQuery` | VirtualDJ build number. | `get_build` |
-| `get_vdj_folder` | `Text`, `SkinQuery` | VirtualDJ home folder. | `get_vdj_folder` |
+| `get_build` | `Text`, `SkinQuery` | VirtualDJ build number, useful in debug/status panels. | `get_build` |
+| `get_vdj_folder` | `Text`, `SkinQuery` | VirtualDJ home folder path. | `get_vdj_folder` |
 | `get_username` | `Text`, `SkinQuery` | Current VirtualDJ account username. | `get_username` |
 | `get_membership` | `Text`, `SkinQuery` | Current VirtualDJ membership text. | `get_membership` |
 | `get_license` | `Text`, `SkinQuery` | Current VirtualDJ license text. | `get_license` |
 | `get_lemode` | `SkinQuery`, `Text` | True when VirtualDJ is running in Limited Edition mode. | `get_lemode` |
-| `get_hwnd` | `Text`, `SkinQuery` | Windows handle for the VirtualDJ window. | `get_hwnd` |
+| `get_hwnd` | `Text`, `SkinQuery` | Windows handle for the VirtualDJ window; platform-specific. | `get_hwnd` |
 | `get_skin_color` | `Text`, `SkinQuery` | Skin theme/default color helper. | `get_skin_color` |
 | `skin_width` | `Text`, `SkinQuery` | Current skin width. | `skin_width` |
 | `skin_height` | `Text`, `SkinQuery` | Current skin height. | `skin_height` |
@@ -961,6 +962,11 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
+
+Notes:
+
+- The 2026-06-30 appendix refresh confirmed `get_build`, `get_vdj_folder`, and `get_hwnd` as official environment queries.
+- Treat `get_hwnd` as Windows-specific; prefer `get_build`, `get_version`, and `get_vdj_folder` for cross-platform diagnostic text.
 
 ### Input And Output Availability Queries
 
@@ -1793,6 +1799,11 @@ Pad XML pattern:
      query="effect_active 'vocals' 'echo out'">
   effect_select_multi 'vocals' 'echo out' &amp; effect_active 'vocals' 'echo out'
 </pad>
+<pad name="FX-VOCALS\nREVERB"
+     color="stem_color 'vocal'"
+     query="effect_active 'vocals' 'reverb'">
+  effect_select_multi 'vocals' 'reverb' &amp; effect_active 'vocals' 'reverb'
+</pad>
 ```
 
 Sources:
@@ -1822,6 +1833,7 @@ effect_active 1 off
 effect_active 1 'flanger' on
 effect_active 'vocals'
 effect_active 'vocals' 'echo' on
+effect_active 'vocals' 'reverb'
 ```
 
 Preferred usage:
@@ -1835,6 +1847,7 @@ Preferred usage:
 - `&&` is documented for query chains, but use nested conditionals for action branches that combine effect-name checks, `? :`, and load/set/on side effects
 - named stem FX slots can be activated with the same verb family, for example `effect_active 'vocals'` after loading a vocal-only Reverb into the `vocals` slot
 - when `effect_select_multi` keeps several effect instances in one slot, include the effect name to query/toggle one instance, for example `effect_active 1 'echo out'` or `effect_active 'vocals' 'reverb'`
+- use the effect-name form for per-pad LED/query state on shared slots. A slot-wide query such as `effect_active 'vocals'` can describe the stem slot as a whole, not which named effect in that slot is active.
 
 Sources:
 
@@ -4729,7 +4742,7 @@ All are Text-surface verbs (read-only). None take a deck scope — they always r
 | `get_browsed_header` | Column header label for sorting context | `Official` |
 | `get_browsed_scrollpos` | Current browser scroll position (numeric) | `Official` |
 | `get_browsed_scrollsize` | Total browser scroll range (numeric) | `Official` |
-| `get_browsed_selection_index` | Index of the selected row | `Official` |
+| `get_browsed_selection_index` | Selected row index in the visible browser list | `Official` |
 | `get_browsed_folder` | Name of the currently open folder | `Official` |
 | `get_browsed_folder_path` | Full path of the currently open folder | `Official` |
 | `get_browsed_folder_icon` | Icon identifier for the current folder | `Official` |
@@ -4740,6 +4753,8 @@ All are Text-surface verbs (read-only). None take a deck scope — they always r
 
 Contrast with deck metadata verbs (loaded track, not browsed):
 `get_artist`, `get_title`, `get_bpm`, `get_key`, `get_genre`, `get_comment`.
+
+`get_browsed_selection_index` can be used by custom browser skins that need row-relative selection state. The official appendix describes forms such as `get_browsed_selection_index 1 3` for testing whether row 1 is selected in a three-line browser and `get_browsed_selection_index 3` for returning the selected line number in a three-line browser.
 
 Browser info panel example (skin XML):
 

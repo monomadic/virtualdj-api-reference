@@ -1,6 +1,6 @@
 # Official VDJScript Coverage Audit
 
-Fetched from the current VirtualDJ VDJScript verbs appendix on 2026-05-26.
+Fetched from the current VirtualDJ VDJScript verbs appendix on 2026-06-30.
 
 Purpose: keep this repo honest about official verb coverage. This is a names-only audit, not a copy of the official manual. Use it to decide what still needs curated local documentation in `VDJScript Verbs.md`.
 
@@ -27,7 +27,7 @@ Related local cross-check: [Button Editor Catalog Audit](Button%20Editor%20Catal
 
 ## Current Readiness Snapshot
 
-- **Official-name coverage is complete**: 991/991 official verb and alias names are present in `VDJScript Verbs.md`; missing official names are at 0.
+- **Official-name coverage is complete**: the 2026-06-30 appendix refresh still parses to 991/991 official verb and alias names present in `VDJScript Verbs.md`; missing official names are at 0.
 - **Searchability is complete**: the compact official remainder is empty, so every tracked official name now lives in a functional section rather than only in a holding table.
 - **Behavior confidence is not uniform**: high-frequency skin, pad, sampler, browser, loop, cue, FX, stems, timecode, video, config, and mixer helpers now have useful local notes or examples, while low-frequency hardware/developer helpers remain compact and conservative.
 - **The formal local-test gap is 19 official names**, about 1.9% of the official list. One no-dedicated-hardware sparse helper (`system`) still needs better behavior evidence, one is optional deck/controller setup (`dualdeckmode_decks`), and the rest are hardware-specific controller helpers. `dualdeckmode_decks` now has a build-recorded pad-page observation, but still needs a dual-deck pair/controller-context repeat before promotion to `Pass`.
@@ -67,6 +67,7 @@ See [Completeness Roadmap](Completeness%20Roadmap.md) for the ordered evidence b
 - Config and browser workflow helpers: `auto_pitch_lock`, `auto_sync_settings`, `keyboard_shortcuts`, `mark_linked_tracks`, `browsed_song`, `loaded_song`
 - Final compact remainder sweep: `beat_juggle`, `dualdeckmode_decks`, `shift_all_cues`, `sort_cues`, `repeat_song`, `get_beat`, `key_match_button`, `key_match_menu`, `sampler_default`, `sampler_rapidfire`, `os2l_scene`, `open_stem_creator`, `handshake`, `is_using`, `system`, `debug`, `connect`
 - 2026-05-26 appendix refresh: `deck_has_error`, `get_mixfx_active`
+- 2026-06-30 appendix refresh: no new missing official names; compact entries for `get_build`, `get_vdj_folder`, `get_hwnd`, `get_browsed_selection_index`, `get_featuring_after_artist`, and `get_artist_title_separator` were rechecked against the live appendix.
 - Local-tested sparse helpers: `connect`, `deck_has_error`, `get_mixfx_active`, `karaoke_venue_name`, `open_stem_creator`
 
 ## Needs Local Test
