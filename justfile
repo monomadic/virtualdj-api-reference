@@ -51,6 +51,9 @@ status:
     @printf "\nReady queue:\n"
     @rg -n "^### |^Status: Ready$" TODO.md
 
+inventory:
+    python3 tools/extract_xml_inventory.py
+
 check:
     python3 tools/lint_pads.py
     python3 tools/check_reference_status.py
