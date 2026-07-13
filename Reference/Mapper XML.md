@@ -1,49 +1,26 @@
 # VirtualDJ Mapper XML
 
-Reference for VirtualDJ controller and keyboard mapper files.
+Reference for VirtualDJ controller and keyboard mapper files, and the device-definition XML they bind to.
 
-Mappers live in `~/Library/Application Support/VirtualDJ/Mappers/` on macOS.
-Each mapper is an XML file targeting a specific controller, MIDI device, or keyboard.
+Ground truth for this doc: four real working mappers copied into [Mappers/Local/](../Mappers/README.md) (two factory Atomix mappings, one Atomix keyboard mapping, one user-authored controller mapping), plus the official VDJPedia pages `ControllerMappingFile_v8.html`, `ControllerDefinitionMIDIv8.html`, and `ControllerDefinitionHIDv8.html`.
 
-Source labels used below match the rest of this repo:
-`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`.
+> An earlier revision of this document described an inline schema (`<button note="36" action="..."/>` directly inside `<mapper>`). That schema does not match any real mapper file and has been removed. Real mappers bind *named controls* to VDJScript with `<map value="" action=""/>`; the hardware I/O lives in a separate device definition.
 
----
-
-## File Structure
-
-A mapper file is a single XML document with a root `<mapper>` element.
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<mapper>
-  <map .../>
-  <button .../>
-  <slider .../>
-  <knob .../>
-  <fader .../>
-  ...
-</mapper>
-```
-
-VirtualDJ ships built-in mappers for supported controllers inside the application bundle at:
-`/Applications/VirtualDJ.app/Contents/Resources/Mappers/`
-
-User mappers override or extend built-in ones.
-
-For controller devices with a separate device definition, mapper files commonly use `<map value="CONTROL_NAME" action="..."/>` entries that target the named controls declared by the definition. In that split, the device definition declares the hardware I/O and the mapper supplies the VDJScript.
-
-Source: `Official`, `Local observation`
+Source labels match the rest of this repo:
+`Official`, `Official forum`, `Community`, `Built-in app resource`, `Local test`, `Inference`.
 
 ---
 
-## Mapper XML vs Device Definition XML
+## The Two-Layer Model
 
-Mapper actions are VDJScript. Device definitions are not.
+VirtualDJ splits controller support into two XML layers:
 
-Use the device definition XML to declare how VirtualDJ talks to the hardware: input buttons, sliders, MIDI notes, CC numbers, LED outputs, bars, channels, and static value ranges. Do not expect VDJScript variables, conditionals, backticks, or actions to be evaluated inside device definition elements such as `<button>`, `<led>`, `cc=""`, `value=""`, `ccoff=""`, or `zero=""`.
+1. **Device definition** (`<device>` root) — declares the hardware: which MIDI notes/CCs or HID byte offsets exist, what they are named, LEDs, encoders, value ranges. No VDJScript is evaluated here.
+2. **Mapper** (`<mapper>` root) — binds each named control from the definition to a VDJScript action: `<map value="PLAY" action="play_pause"/>`.
 
-Put dynamic behavior in the mapper instead:
+Most shipped controllers have a *compiled* built-in definition: the app bundle contains `Resources/controllers.dat` (binary, not XML) and no `Resources/Mappers/` or `Resources/Devices/` folders (`Local test`, bundle 18.0.9482). You only write a device definition XML for hardware VirtualDJ does not already know; you write or edit a mapper whenever you want custom behavior on any controller.
+
+Mapper actions are VDJScript. Device definitions are not — do not expect variables, conditionals, backticks, or actions to be evaluated inside definition elements such as `<button>`, `<led>`, `cc=""`, `value=""`, or `zero=""` (`Official forum`, staff reply in "Sending MIDI CC Commands"). Put dynamic behavior in the mapper:
 
 ```xml
 <!-- Device definition: static hardware output declarations -->
@@ -55,245 +32,130 @@ Put dynamic behavior in the mapper instead:
 <map value="LED_CC_001" action="var_equal 'CCOut' 1"/>
 ```
 
-Source: `Official forum`
-
 ---
 
-## Root `<mapper>` Attributes
+## Mapper Files
 
-| Attribute | Description | Example | Source |
-| --- | --- | --- | --- |
-| `name` | Display name shown in the controller setup UI | `name="DDJ-FLX4"` | `Official` |
-| `author` | Mapper author name | `author="monomadic"` | `Official` |
-| `version` | Mapper version string | `version="1.0"` | `Official` |
-| `device` | Target device name (must match the connected device name) | `device="DDJ-FLX4"` | `Official` |
-| `class` | Device class: `controller`, `keyboard`, `midi` | `class="controller"` | `Official` |
-| `channel` | Default MIDI channel (0-15; 0 = any) | `channel="0"` | `Official` |
-
----
-
-## Input Elements
-
-### `<button>`
-
-Maps a button, pad, or key press to one or more VDJScript actions.
+### Root `<mapper>` element
 
 ```xml
-<button note="36" channel="1" deck="1" action="cue_stop"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper device="DDJXP2" author="Atomix Productions" version="850" date="2025-11-09">
+  <info>http://www.virtualdj.com/manuals/hardware/pioneer/ddjxp2/index.html</info>
+  <map value="SHIFT" action="shift" />
+  <map value="PLAY" action="play_pause" />
+</mapper>
 ```
 
 | Attribute | Description | Source |
 | --- | --- | --- |
-| `note` | MIDI note number (0-127) | `Official` |
-| `channel` | MIDI channel (1-16; overrides mapper default) | `Official` |
-| `deck` | Target deck: `1`, `2`, `3`, `4`, `left`, `right`, `master`, `active` | `Official` |
-| `action` | VDJScript action to run on press | `Official` |
-| `shift` | Action to run when the shift modifier is held | `Official` |
-| `type` | Button type: `trigger` (default), `toggle`, `hold` | `Official` |
+| `device` | Unique string identifying the controller; must match the device definition's `name` | `Official`, `Local test` |
+| `author` | Optional author name; factory mappings saved by the app carry `Atomix Productions` | `Official`, `Local test` |
+| `version` | Minimum VirtualDJ version, e.g. `850` | `Official`, `Local test` |
+| `date` | Optional creation/update date | `Official`, `Local test` |
+| `priority` | Optional precedence: `-1` higher, `1` lower | `Official` |
 
-**`type` values:**
+Children:
 
-- `trigger` — fires once on press
-- `toggle` — alternates between on and off states
-- `hold` — fires while held, releases on up
-
-### `<slider>`
-
-Maps a continuous controller (CC) to a VDJScript action that accepts a percentage.
-
-```xml
-<slider cc="48" channel="1" deck="1" action="volume"/>
-```
-
-| Attribute | Description | Source |
+| Element | Description | Source |
 | --- | --- | --- |
-| `cc` | MIDI continuous controller number (0-127) | `Official` |
-| `channel` | MIDI channel | `Official` |
-| `deck` | Target deck | `Official` |
-| `action` | VDJScript action — must accept a `%` parameter | `Official` |
-| `shift` | Shift-action | `Official` |
-| `min` | Minimum output value (default `0%`) | `Official` |
-| `max` | Maximum output value (default `100%`) | `Official` |
-| `invert` | `yes` to flip the direction | `Official` |
+| `<info>` | Optional URL documenting the mapping | `Official`, `Local test` |
+| `<map value="" action="" />` | One binding per named control | `Official`, `Local test` |
 
-### `<knob>`
+`<map>` may also carry a `name=""` attribute (seen empty in factory keyboard mappings; purpose unconfirmed) (`Local test`).
 
-Maps a relative or absolute encoder to a VDJScript action.
+### `<map>` semantics
 
-```xml
-<knob cc="54" channel="1" deck="1" action="eq_high" relative="yes"/>
-```
+- `value=""` is the control name declared by the device definition (`PLAY`, `BROWSE`, `LED_DECK_LEFT`, …).
+- `action=""` is VDJScript. For buttons it runs on press; for sliders/encoders the moved value is passed to the action implicitly (e.g. `action="volume"`); for LED-out controls the action is evaluated as a *query* whose result drives the LED.
+- The same query rules as skin/pad `query=""` apply to LED bindings, including `blink` (`Local test`: `<map value="DNC_MODE" action="blink 150ms"/>` in the factory DDJ-XP2 mapping).
 
-| Attribute | Description | Source |
-| --- | --- | --- |
-| `cc` | MIDI CC number | `Official` |
-| `channel` | MIDI channel | `Official` |
-| `deck` | Target deck | `Official` |
-| `action` | VDJScript action | `Official` |
-| `shift` | Shift-action | `Official` |
-| `relative` | `yes` for relative (jogwheel/encoder) CC messages | `Official` |
-| `sensitivity` | Multiplier for relative movement | `Official` |
+### Special `value=""` names
 
-### `<fader>`
+Observed in factory and user mappings (`Local test`, [Mappers/Local/](../Mappers/README.md)):
 
-Alias for `<slider>` with common default settings for crossfader and channel faders.
-
-```xml
-<fader cc="14" channel="1" action="crossfader"/>
-```
-
-### `<jogwheel>`
-
-Dedicated element for jog wheel control. Handles scratch vs. pitch-bend mode.
-
-```xml
-<jogwheel cc="33" channel="1" deck="1" scratch="yes" scratchcc="34"/>
-```
-
-| Attribute | Description | Source |
-| --- | --- | --- |
-| `cc` | CC for pitch-bend (touch-off) movement | `Official` |
-| `scratchcc` | CC for scratch (touch-on) movement | `Official` |
-| `scratch` | `yes` to enable scratch mode when touched | `Official` |
-| `channel` | MIDI channel | `Official` |
-| `deck` | Target deck | `Official` |
-
----
-
-## Deck Targeting
-
-The `deck=""` attribute on any input element sets which deck the action targets.
-
-| Value | Meaning |
+| Name | Fires |
 | --- | --- |
-| `1` / `2` / `3` / `4` | Fixed deck |
-| `left` | Left deck in the current layout |
-| `right` | Right deck in the current layout |
-| `master` | Master deck |
-| `active` | The deck currently in focus / last touched |
+| `ONINIT` | Once when the controller connects — used for setup chains (`effect_3slots_layout on`, `setting_setsession …`) |
+| `ONEXIT` | When the controller disconnects — used to undo `ONINIT` state |
+| `UNMAPPED` | Fallback for controls with no explicit `<map>` (factory keyboard maps it to `search`) |
+| `SHIFT` | Declares the shift modifier: `<map value="SHIFT" action="shift" />` |
+| `SHIFT_<NAME>` | Binding for `<NAME>` while shift is held (a separate `<map>` row, not an attribute) |
+| `LED_<NAME>` | Output binding driving an LED; action evaluated as query |
+| `DNC_MODE`, `DNC_LOADED` | Display/notification controls on supported hardware (e.g. `blink 150ms`, `load_pulse`) |
 
-Source: `Official`
-
----
-
-## Shift Modifier
-
-VirtualDJ mappers support a global shift button. When the shift button is held,
-`shift=""` attribute values fire instead of `action=""` values.
-
-Declare the shift button:
+Shift layers are therefore expressed as parallel `SHIFT_`-prefixed control names, not as a `shift=""` attribute:
 
 ```xml
-<button note="63" channel="1" action="shift"/>
+<map value="BROWSE" action="browser_scroll" />
+<map value="SHIFT_BROWSE" action="browser_scroll" />
+<map value="BROWSE_PUSH" action="browser_window 'folders' ? browser_enter : browser_window 'folders'" />
 ```
 
-Use it on other elements:
+### Keyboard mappers
+
+Keyboard mappers use the **same** `<mapper>`/`<map>` schema with `device="KEYBOARD"`. Key identifiers are the `value=""` names — there is no `key=""` attribute (`Local test`, factory keyboard mapping):
 
 ```xml
-<button note="36" channel="1" deck="1" action="cue_stop" shift="cue_loop"/>
-```
-
-Multiple shift layers can be named:
-
-```xml
-<button note="63" channel="1" action="shift 'layer2'"/>
-<button note="36" channel="1" deck="1" action="play" shift_layer2="loop 4bt"/>
-```
-
-Source: `Official`, `Inference`
-
----
-
-## LED Feedback
-
-Controller buttons with LEDs are driven by a `query=""` attribute.
-VirtualDJ evaluates the query continuously and sends a Note On/Off to the same note when it changes.
-
-```xml
-<button note="36" channel="1" deck="1" action="cue_stop" query="cue_stop"/>
-```
-
-The query follows the same VDJScript rules as skin `query=""` attributes.
-
-For multi-color LEDs (e.g. cue point color feedback):
-
-```xml
-<button note="40" channel="1" deck="1"
-        action="goto_cue 1"
-        query="cue_pos 1 ? cue_color 1 : off"/>
-```
-
-Source: `Official`, `Inference`
-
----
-
-## Keyboard Mappers
-
-Keyboard mappers use `key=""` instead of `note=""` / `cc=""`.
-
-```xml
-<mapper class="keyboard">
-  <button key="space" action="play_pause" deck="active"/>
-  <button key="left"  action="pitch -1%" deck="active"/>
-  <button key="right" action="pitch +1%" deck="active"/>
-  <button key="up"    action="eq_high +10%" deck="active"/>
+<mapper device="KEYBOARD" author="Atomix Productions" version="850" date="2026-03-14">
+  <map value="UNMAPPED" action="search" />
+  <map value="ALT" action="keyboard_shortcuts" name="" />
+  <map value="RIGHT ALT" action="keyboard_shortcuts" name="" />
+  <map value="ALT+1" action="deck 1 select" />
+  <map value="ALT+Q" action="deck 1 play_pause" />
 </mapper>
 ```
 
-Key names are standard keyboard identifiers: `space`, `return`, `escape`, `left`, `right`, `up`, `down`,
-`a`–`z`, `0`–`9`, `f1`–`f12`.
+Observed key-name forms: bare keys (`A`, `1`, `SPACE`-style names), positional modifiers (`RIGHT ALT`), and `MOD+KEY` combos (`ALT+1`, `ALT+Q`). Full key-name enumeration has not been captured locally; harvest more names from a saved keyboard mapping before relying on unobserved ones (`Inference`).
 
-Modifiers: prefix with `ctrl+`, `shift+`, `alt+`, `cmd+` (macOS).
+### Deck targeting
+
+Deck scoping happens *inside the VDJScript action*, not via a `deck=""` attribute on `<map>`:
 
 ```xml
-<button key="ctrl+left" action="loop_half" deck="active"/>
+<map value="DECK_LEFT" action="deck 3 leftdeck ? deck 1 leftdeck : deck 3 leftdeck" />
+<map value="LED_DECK_LEFT" action="deck 3 leftdeck" />
 ```
 
-Source: `Official`, `Inference`
+(`Local test`, factory DDJ-XP2 mapping. Device definitions may declare per-control `deck=""` so a control name is deck-scoped before the mapper sees it — see below.)
 
 ---
 
-## Common Patterns
+## Device Definition Files
 
-### Deck-paired layout (two-deck controller)
+Summary of the official schema (`Official`: `ControllerDefinitionMIDIv8.html`, `ControllerDefinitionHIDv8.html`). No local device-definition XML has been tested yet; treat details below as official-doc-derived, not locally verified.
 
-```xml
-<mapper name="Example Two-Deck" class="controller">
-
-  <!-- Deck 1 (left side, channel 1) -->
-  <button note="11" channel="1" deck="1" action="play_pause" query="play"/>
-  <button note="12" channel="1" deck="1" action="cue_stop"   query="cue_stop"/>
-  <slider cc="19"   channel="1" deck="1" action="volume"/>
-  <knob   cc="21"   channel="1" deck="1" action="eq_high" relative="yes"/>
-  <knob   cc="22"   channel="1" deck="1" action="eq_mid"  relative="yes"/>
-  <knob   cc="23"   channel="1" deck="1" action="eq_low"  relative="yes"/>
-
-  <!-- Deck 2 (right side, channel 2) -->
-  <button note="11" channel="2" deck="2" action="play_pause" query="play"/>
-  <button note="12" channel="2" deck="2" action="cue_stop"   query="cue_stop"/>
-  <slider cc="19"   channel="2" deck="2" action="volume"/>
-  <knob   cc="21"   channel="2" deck="2" action="eq_high" relative="yes"/>
-  <knob   cc="22"   channel="2" deck="2" action="eq_mid"  relative="yes"/>
-  <knob   cc="23"   channel="2" deck="2" action="eq_low"  relative="yes"/>
-
-  <!-- Crossfader (channel 1) -->
-  <fader cc="14" channel="1" action="crossfader"/>
-
-</mapper>
-```
-
-### Hot cue pads (8 pads, one deck)
+### Root `<device>` (MIDI)
 
 ```xml
-<button note="36" channel="1" deck="1"
-        action="cue_pos 1 ? goto_cue 1 : cue_select 1 &amp; cue"
-        shift="cue_select 1 &amp; cue_delete"
-        query="cue_pos 1 ? cue_color 1 : off"/>
-<button note="37" channel="1" deck="1"
-        action="cue_pos 2 ? goto_cue 2 : cue_select 2 &amp; cue"
-        shift="cue_select 2 &amp; cue_delete"
-        query="cue_pos 2 ? cue_color 2 : off"/>
+<device name="DDJSX" author="Atomix Productions"
+        description="Pioneer DDJ-SX" version="800"
+        type="MIDI" vid="0x08E4" pid="0x0171"
+        decks="4" padColumns="4" padRows="2" padSides="2">
+  <audio description="Pioneer DDJ-SX" input="1" output="2"
+         mixer="yes" vid="0x08E4" pid="0x0171"
+         asio="Pioneer DDJ_SX ASIO" />
+  <button note="0x34" name="PLAY_PAUSE" deck="1" channel="1" />
+  <slider ccmsb="0x08" cclsb="0x28" name="LEVEL" deck="1" channel="0"/>
+  <init sendsysex="F00001020304057F" />
+</device>
 ```
+
+Key root attributes: `name` (the string mappers reference via `device=""`), `type="MIDI"`, `description`, `version`, `author`, `decks`, detection ids (`vid`/`pid`, `sysexid`, `drivername`), and optional `singledeck`, `motor`, `platform="pc|mac"`, `padColumns`/`padRows`/`padSides`.
+
+MIDI input elements: `<button>` (`note` or `cc`, `value`/`off`, `inverted`, `autoled`, `channel`, `deck`, `nbdecks`), `<toggle>`, `<slider>` (`cc`/`ccmsb` 14-bit, `note` for velocity, `pitch` for pitch-bend, `min`/`max`/`zero`/`zerorange`, `inverted`, `ghost` soft-takeover, `nozero`), `<jog>`/`<fulljog>` (incremental `zero`/`full` vs absolute `max`/`mask`), `<encoder>`/`<fullencoder>`, `<touchstrip>`, `<sysexin>`.
+
+MIDI output elements: `<led>` (note- or CC-based, `noteoff`/`ccoff`, `default` linked button), `<color>` (RGB CCs or velocity→color `values="0x00=#000000,0x01=#FF0000"`), `<bar>` (VU/progress), `<digit>` (LCD digits), `<text>` (CC- or SysEx-based character displays, `encoding`), `<init>`/`<exit>`/`<ledsysex>`/`<sysex>`.
+
+Relative encoders are handled by the definition layer (`<encoder zero="">`, `<jog zero="0x40">`), so the mapper only ever sees clean movement values — encoder two's-complement handling never appears in mapper XML.
+
+### Root `<device>` (HID)
+
+`type="HID"` with `reportsize`/`outreportsize`, then `<page type="in|out|init|wait|exit">` blocks containing the same logical elements positioned by `bit`/`byte`/`word`/`dword` + `nbbits`/`size` + `endian` instead of notes/CCs.
+
+### Built-in definitions
+
+Built-in definitions are compiled into `controllers.dat` (app bundle and `~/Library/Application Support/VirtualDJ/Devices/`); they are not inspectable XML (`Local test`). Custom definition XML files go in the `Devices/` folder of the VirtualDJ home directory.
 
 ---
 
@@ -304,25 +166,30 @@ Pad pages (`Pads/*.xml`) and mapper files are separate systems with a shared scr
 | | Pad pages | Mapper files |
 | --- | --- | --- |
 | **Triggered by** | On-screen pads in VirtualDJ UI | Physical controller hardware |
-| **File location** | `Pads/*.xml` | `Mappers/*.xml` |
+| **File location** | `Pads/` in the VirtualDJ home folder | `Mappers/` in the VirtualDJ home folder |
 | **Root element** | `<page>` | `<mapper>` |
-| **Input elements** | `<pad1>` … `<pad16>`, `<param1>`, `<param2>` | `<button>`, `<slider>`, `<knob>`, `<fader>` |
-| **Scripting** | VDJScript in element content and attributes | VDJScript in `action=`, `shift=`, `query=` |
-| **LED feedback** | `query=""` drives pad color and blink | `query=""` drives MIDI Note On/Off to LED |
+| **Input elements** | `<pad1>` … `<pad16>`, `<param1>`, `<param2>` | `<map value="" action="" />` |
+| **LED feedback** | `query=""` drives pad color and blink | `LED_*` map bindings; action evaluated as query |
 
-A physical pad grid controller typically needs both:
-- a **mapper** to receive MIDI from the hardware and send VDJScript actions
-- a **pad page** displayed in the VirtualDJ UI for visual feedback (optional but common)
-
-Source: `Official`, `Inference`
+A physical pad-grid controller typically pairs a mapper (hardware → VDJScript) with a pad page shown in the UI. Factory pad-controller mappings drive mode switching with global variables plus `refresh_controller` (`Local test`, APC Mini MK2: `set '$apclivemode' 0 & wait 300ms & refresh_controller`).
 
 ---
 
-## macOS Install Paths
+## Install Paths (macOS, `Local test`)
 
 | Path | Purpose |
 | --- | --- |
-| `~/Library/Application Support/VirtualDJ/Mappers/` | User mappers (override built-ins) |
-| `/Applications/VirtualDJ.app/Contents/Resources/Mappers/` | Built-in controller mappers (read-only) |
+| `~/Library/Application Support/VirtualDJ/Mappers/` | User and factory-saved mappers (XML) |
+| `~/Library/Application Support/VirtualDJ/Devices/` | Custom device definitions (XML) + compiled `controllers.dat` |
+| `/Applications/VirtualDJ.app/Contents/Resources/controllers.dat` | Compiled built-in definitions (binary) |
 
-Source: `Local observation`
+The v8-era official docs reference `Documents/VirtualDJ/Mappers/`; on this Mac install the live folder is under `Application Support` (`Local test`, 2026-07-12).
+
+---
+
+## Open Questions
+
+- `<map name="">` attribute purpose (always empty in observed factory files).
+- Full keyboard key-name enumeration.
+- Whether `priority` interacts with multiple mappers for one device.
+- No custom device-definition XML has been authored and load-tested locally yet; the definition schema above is official-doc-derived.

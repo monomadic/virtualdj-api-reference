@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper device="APCMINI2" author="Atomix Productions" version="850" date="2026-07-05">
+	<info>https://virtualdj.com/manuals/hardware/akai/apcminimk2.html</info>
+	<map value="SHIFT" action="shift" />
+	<map value="NOTE_MODE" action="set &apos;$apclivemode&apos; 2" />
+	<map value="LIVE_MODE" action="set &apos;$apclivemode&apos; 0 &amp; wait 300ms &amp; refresh_controller" />
+	<map value="DRUM_MODE" action="set &apos;$apclivemode&apos; 1 &amp; wait 300ms &amp; refresh_controller" />
+	<map value="SHIFT_VOLUME" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 1 -1" />
+	<map value="LED_VOLUME" action="deck left mute_stem &quot;Vocal&quot; off" />
+	<map value="PAN" action="effect_active 2" />
+	<map value="SHIFT_PAN" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 2 -1" />
+	<map value="LED_PAN" action="effect_active 2" />
+	<map value="SEND" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 3 +1" />
+	<map value="SHIFT_SEND" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 3 -1" />
+	<map value="LED_SEND" action="var &apos;$apclivemode&apos; 0 ? deck left effect_has_beats 3" />
+	<map value="DEVICE" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 4 +1" />
+	<map value="SHIFT_DEVICE" action="var &apos;$apclivemode&apos; 0 ? deck left effect_beats 4 -1" />
+	<map value="LED_DEVICE" action="var &apos;$apclivemode&apos; 0 ? deck left effect_has_beats 4" />
+	<map value="UP" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 1 +1" />
+	<map value="SHIFT_UP" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 1 -1" />
+	<map value="LED_UP" action="var &apos;$apclivemode&apos; 0 ? deck right effect_has_beats 1" />
+	<map value="DOWN" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 2 +1" />
+	<map value="SHIFT_DOWN" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 2 -1" />
+	<map value="LED_DOWN" action="var &apos;$apclivemode&apos; 0 ? deck right effect_has_beats 2" />
+	<map value="LEFT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 3 +1" />
+	<map value="SHIFT_LEFT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 3 -1" />
+	<map value="LED_LEFT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_has_beats 3" />
+	<map value="RIGHT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 4 +1" />
+	<map value="SHIFT_RIGHT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_beats 4 -1" />
+	<map value="LED_RIGHT" action="var &apos;$apclivemode&apos; 0 ? deck right effect_has_beats 4" />
+	<map value="SOLO" action="deck all pad_page 2" />
+	<map value="MUTE" action="deck all pad_page 3" />
+	<map value="REC_ARM" action="deck all pad_page 4" />
+	<map value="SELECT" action="var &apos;$apclivemode&apos; 1 ? sampler_mode &apos;stutter&apos; : nothing" />
+	<map value="DRUM" action="set &apos;$apclivemode&apos; 1 &amp; wait 300ms &amp; refresh_controller" />
+	<map value="LED_CLIP_STOP" action="deck all pad_page 1" />
+	<map value="LED_REC_ARM" action="deck all pad_page 4" />
+	<map value="LED_SELECT" action="var &apos;$apclivemode&apos; 1 ? sampler_mode &apos;stutter&apos; : off" />
+	<map value="ROW1_PAD1" action="deck left pad 1" />
+	<map value="ROW1_PAD2" action="deck left pad 2" />
+	<map value="ROW1_PAD3" action="deck left pad 3" />
+	<map value="ROW1_PAD4" action="deck left pad 4" />
+	<map value="ROW1_PAD5" action="deck right pad 1" />
+	<map value="ROW1_PAD6" action="deck right pad 2" />
+	<map value="ROW1_PAD7" action="deck right pad 3" />
+	<map value="ROW1_PAD8" action="deck right pad 4" />
+	<map value="ROW2_PAD1" action="deck left pad 5" />
+	<map value="ROW2_PAD2" action="deck left pad 6" />
+	<map value="ROW2_PAD3" action="deck left pad 7" />
+	<map value="ROW2_PAD4" action="deck left pad 8" />
+	<map value="ROW2_PAD5" action="deck right pad 5" />
+	<map value="ROW2_PAD6" action="deck right pad 6" />
+	<map value="ROW2_PAD7" action="deck right pad 7" />
+	<map value="ROW2_PAD8" action="deck right pad 8" />
+	<map value="ROW3_PAD1" action="deck left pad 9" />
+	<map value="ROW3_PAD2" action="deck left pad 10" />
+	<map value="ROW3_PAD3" action="deck left pad 11" />
+	<map value="ROW3_PAD4" action="deck left pad 12" />
+	<map value="ROW3_PAD5" action="deck right pad 9" />
+	<map value="ROW3_PAD6" action="deck right pad 10" />
+	<map value="ROW3_PAD7" action="deck right pad 11" />
+	<map value="ROW3_PAD8" action="deck right pad 12" />
+	<map value="ROW4_PAD1" action="deck left pad 13" />
+	<map value="ROW4_PAD2" action="deck left pad 14" />
+	<map value="ROW4_PAD3" action="deck left pad 15" />
+	<map value="ROW4_PAD4" action="deck left pad 16" />
+	<map value="ROW4_PAD5" action="deck right pad 13" />
+	<map value="ROW4_PAD6" action="deck right pad 14" />
+	<map value="ROW4_PAD7" action="deck right pad 15" />
+	<map value="ROW4_PAD8" action="deck right pad 16" />
+	<map value="SHIFT_ROW5_PAD1" action="deck left effect_select 1 -1" />
+	<map value="SHIFT_ROW5_PAD2" action="deck left effect_select 2 -1" />
+	<map value="SHIFT_ROW5_PAD3" action="deck left effect_select 3 -1" />
+	<map value="SHIFT_ROW5_PAD4" action="deck left effect_select 4 -1" />
+	<map value="SHIFT_ROW5_PAD5" action="deck right effect_select 1 -1" />
+	<map value="SHIFT_ROW5_PAD6" action="deck right effect_select 2 -1" />
+	<map value="SHIFT_ROW5_PAD7" action="deck right effect_select 3 -1" />
+	<map value="SHIFT_ROW5_PAD8" action="deck right effect_select 4 -1" />
+	<map value="ROW6_PAD2" action="deck left reloop_exit" />
+	<map value="ROW6_PAD4" action="deck left loop_exit" />
+	<map value="ROW6_PAD5" action="deck right loop" />
+	<map value="ROW6_PAD6" action="deck right reloop_exit" />
+	<map value="ROW6_PAD7" action="deck right loop_half" />
+	<map value="ROW6_PAD8" action="deck right loop_double" />
+	<map value="SHIFT_ROW6_PAD1" action="deck left loop_in" />
+	<map value="SHIFT_ROW6_PAD2" action="deck left loop_out" />
+	<map value="SHIFT_ROW6_PAD5" action="deck right loop_in" />
+	<map value="SHIFT_ROW6_PAD6" action="deck right loop_out" />
+	<map value="ROW7_PAD1" action="deck left stem_pad &quot;Vocal&quot;" />
+	<map value="ROW7_PAD2" action="deck left stem_pad &quot;Instru&quot;" />
+	<map value="ROW7_PAD3" action="deck left stem_pad &quot;Bass&quot;" />
+	<map value="ROW7_PAD4" action="deck left stem_pad &quot;Rhythm&quot;" />
+	<map value="ROW7_PAD5" action="deck right stem_pad &quot;Vocal&quot;" />
+	<map value="ROW7_PAD6" action="deck right stem_pad &quot;Instru&quot;" />
+	<map value="ROW7_PAD7" action="deck right stem_pad &quot;Bass&quot;" />
+	<map value="ROW7_PAD8" action="deck right stem_pad &quot;Rhythm&quot;" />
+	<map value="ROW8_PAD1" action="deck left play_button" />
+	<map value="ROW8_PAD2" action="deck left masterdeck" />
+	<map value="ROW8_PAD3" action="deck left play_button" />
+	<map value="ROW8_PAD4" action="var_equal &apos;$phrase_len&apos; 16 ? deck left phrase_sync 16 &amp;amp; deck left sync : deck left phrase_sync 32 &amp;amp; deck left sync" />
+	<map value="ROW8_PAD5" action="deck right var_equal &apos;$phrase_len&apos; 16 ? deck right phrase_sync 16 &amp;amp; deck right sync : deck right phrase_sync 32 &amp;amp; deck right sync" />
+	<map value="ROW8_PAD6" action="deck right cue_button" />
+	<map value="ROW8_PAD7" action="deck right masterdeck" />
+	<map value="ROW8_PAD8" action="deck right play_button" />
+	<map value="LED_ROW1_PAD1" action="deck left pad_button_color 1" />
+	<map value="LED_ROW1_PAD2" action="deck left pad_button_color 2" />
+	<map value="LED_ROW1_PAD3" action="deck left pad_button_color 3" />
+	<map value="LED_ROW1_PAD4" action="deck left pad_button_color 4" />
+	<map value="LED_ROW1_PAD5" action="deck right pad_button_color 1" />
+	<map value="LED_ROW1_PAD6" action="deck right pad_button_color 2" />
+	<map value="LED_ROW1_PAD7" action="deck right pad_button_color 3" />
+	<map value="LED_ROW1_PAD8" action="deck right pad_button_color 4" />
+	<map value="LED_ROW2_PAD1" action="deck left pad_button_color 5" />
+	<map value="LED_ROW2_PAD2" action="deck left pad_button_color 6" />
+	<map value="LED_ROW2_PAD3" action="deck left pad_button_color 7" />
+	<map value="LED_ROW2_PAD4" action="deck left pad_button_color 8" />
+	<map value="LED_ROW2_PAD5" action="deck right pad_button_color 5" />
+	<map value="LED_ROW2_PAD6" action="deck right pad_button_color 6" />
+	<map value="LED_ROW2_PAD7" action="deck right pad_button_color 7" />
+	<map value="LED_ROW2_PAD8" action="deck right pad_button_color 8" />
+	<map value="LED_ROW3_PAD1" action="deck left pad_button_color 9" />
+	<map value="LED_ROW3_PAD2" action="deck left pad_button_color 10" />
+	<map value="LED_ROW3_PAD3" action="deck left pad_button_color 11" />
+	<map value="LED_ROW3_PAD4" action="deck left pad_button_color 12" />
+	<map value="LED_ROW3_PAD5" action="deck right pad_button_color 9" />
+	<map value="LED_ROW3_PAD6" action="deck right pad_button_color 10" />
+	<map value="LED_ROW3_PAD7" action="deck right pad_button_color 11" />
+	<map value="LED_ROW3_PAD8" action="deck right pad_button_color 12" />
+	<map value="LED_ROW4_PAD1" action="deck left pad_button_color 13" />
+	<map value="LED_ROW4_PAD2" action="deck left pad_button_color 14" />
+	<map value="LED_ROW4_PAD3" action="deck left pad_button_color 15" />
+	<map value="LED_ROW4_PAD4" action="deck left pad_button_color 16" />
+	<map value="LED_ROW4_PAD5" action="deck right pad_button_color 13" />
+	<map value="LED_ROW4_PAD6" action="deck right pad_button_color 14" />
+	<map value="LED_ROW4_PAD7" action="deck right pad_button_color 15" />
+	<map value="LED_ROW4_PAD8" action="deck right pad_button_color 16" />
+	<map value="LED_ROW6_PAD2" action="deck left is_using &apos;colorfx&apos; ? color magenta : color darkmagenta" />
+	<map value="LED_ROW6_PAD3" action="deck left is_using &apos;sample&apos; ? color green : color darkgreen" />
+	<map value="LED_ROW6_PAD4" action="deck left loop ? color &apos;blue&apos; : color &apos;darkblue&apos;" />
+	<map value="LED_ROW6_PAD5" action="deck right loop ? color &apos;green&apos; : color &apos;darkgreen&apos;" />
+	<map value="LED_ROW6_PAD6" action="deck right reloop_exit ? color &apos;green&apos; : color &apos;darkgreen&apos;" />
+	<map value="LED_ROW6_PAD7" action="color &apos;darkgreen&apos;" />
+	<map value="LED_ROW6_PAD8" action="deck right loop ? blink 1bt ? color &apos;lightblue&apos; : color &apos;darkblue&apos;" />
+	<map value="LED_ROW7_PAD2" action="deck left stem_pad &apos;Instru&apos; ? stem_color &apos;Instru&apos; :   color 50% orange" />
+	<map value="LED_ROW7_PAD3" action="deck left stem_pad &apos;Bass&apos; ? stem_color &apos;Bass&apos; :   color &apos;#990000&apos;" />
+	<map value="LED_ROW7_PAD4" action="deck left stem_pad &apos;Rhythm&apos; ? stem_color &apos;Rhythm&apos; : color darkblue" />
+	<map value="LED_ROW7_PAD5" action="deck right stem_pad &apos;Vocal&apos; ? stem_color &apos;Vocal&apos; :   color 50% green" />
+	<map value="LED_ROW7_PAD6" action="deck right stem_pad &apos;Instru&apos; ? stem_color &apos;Instru&apos; :   color 50% orange" />
+	<map value="LED_ROW7_PAD7" action="deck right stem_pad &apos;Bass&apos; ? stem_color &apos;Bass&apos; :   color 50% red" />
+	<map value="LED_ROW8_PAD2" action="deck left masterdeck ? color &apos;orange&apos; : color &apos;darkorange&apos;" />
+	<map value="LED_ROW8_PAD4" action="deck left loaded ? deck left is_sync ? color &apos;green&apos; : color &apos;red&apos; : none" />
+	<map value="LED_ROW8_PAD5" action="deck right loaded ? deck right is_sync ? color &apos;green&apos; : color &apos;red&apos; : none" />
+	<map value="LED_ROW8_PAD6" action="color blue" />
+	<map value="LED_ROW8_PAD7" action="deck right masterdeck ? color &apos;orange&apos; : color &apos;darkorange&apos;" />
+	<map value="LED_ROW8_PAD8" action="deck right play ? color green : blink 1bt ? color green" />
+	<map value="SLIDER2" action="effect_slider 2" />
+	<map value="SLIDER3" action="var &apos;$apclivemode&apos; 0 ? deck left effect_slider 3 1" />
+	<map value="SLIDER4" action="var &apos;$apclivemode&apos; 0 ? deck left effect_slider 4 1" />
+	<map value="SLIDER5" action="var &apos;$apclivemode&apos; 0 ? deck right effect_slider 1 1" />
+	<map value="SLIDER6" action="var &apos;$apclivemode&apos; 0 ? deck right effect_slider 2 1" />
+	<map value="SLIDER7" action="var &apos;$apclivemode&apos; 0 ? deck right effect_slider 3 1" />
+	<map value="SLIDER8" action="var &apos;$apclivemode&apos; 0 ? deck right effect_slider 4 1" />
+	<map value="SLIDER9" action="sampler_volume_master" />
+	<map value="ROW1_DRUM1" action="sampler_pad 1" />
+	<map value="ROW1_DRUM2" action="sampler_pad 2" />
+	<map value="ROW1_DRUM3" action="sampler_pad 3" />
+	<map value="ROW1_DRUM4" action="sampler_pad 4" />
+	<map value="ROW1_DRUM5" action="sampler_pad 5" />
+	<map value="ROW1_DRUM6" action="sampler_pad 6" />
+	<map value="ROW1_DRUM7" action="sampler_pad 7" />
+	<map value="ROW1_DRUM8" action="sampler_pad 8" />
+	<map value="ROW2_DRUM1" action="sampler_pad 9" />
+	<map value="ROW2_DRUM2" action="sampler_pad 10" />
+	<map value="ROW2_DRUM3" action="sampler_pad 11" />
+	<map value="ROW2_DRUM4" action="sampler_pad 12" />
+	<map value="ROW2_DRUM5" action="sampler_pad 13" />
+	<map value="ROW2_DRUM6" action="sampler_pad 14" />
+	<map value="ROW2_DRUM7" action="sampler_pad 15" />
+	<map value="ROW2_DRUM8" action="sampler_pad 16" />
+	<map value="ROW3_DRUM1" action="sampler_pad 17" />
+	<map value="ROW3_DRUM2" action="sampler_pad 18" />
+	<map value="ROW3_DRUM3" action="sampler_pad 19" />
+	<map value="ROW3_DRUM4" action="sampler_pad 20" />
+	<map value="ROW3_DRUM5" action="sampler_pad 21" />
+	<map value="ROW3_DRUM6" action="sampler_pad 22" />
+	<map value="ROW3_DRUM7" action="sampler_pad 23" />
+	<map value="ROW3_DRUM8" action="sampler_pad 24" />
+	<map value="ROW4_DRUM1" action="sampler_pad 25" />
+	<map value="ROW4_DRUM2" action="sampler_pad 26" />
+	<map value="ROW4_DRUM3" action="sampler_pad 27" />
+	<map value="ROW4_DRUM4" action="sampler_pad 28" />
+	<map value="ROW4_DRUM5" action="sampler_pad 29" />
+	<map value="ROW4_DRUM6" action="sampler_pad 30" />
+	<map value="ROW4_DRUM7" action="sampler_pad 31" />
+	<map value="ROW4_DRUM8" action="sampler_pad 32" />
+	<map value="ROW5_DRUM1" action="sampler_pad 33" />
+	<map value="ROW5_DRUM2" action="sampler_pad 34" />
+	<map value="ROW5_DRUM3" action="sampler_pad 35" />
+	<map value="ROW5_DRUM4" action="sampler_pad 36" />
+	<map value="ROW5_DRUM5" action="sampler_pad 37" />
+	<map value="ROW5_DRUM6" action="sampler_pad 38" />
+	<map value="ROW5_DRUM7" action="sampler_pad 39" />
+	<map value="ROW5_DRUM8" action="sampler_pad 40" />
+	<map value="ROW6_DRUM1" action="sampler_pad 41" />
+	<map value="ROW6_DRUM2" action="sampler_pad 42" />
+	<map value="ROW6_DRUM3" action="sampler_pad 43" />
+	<map value="ROW6_DRUM4" action="sampler_pad 44" />
+	<map value="ROW6_DRUM5" action="sampler_pad 45" />
+	<map value="ROW6_DRUM6" action="sampler_pad 46" />
+	<map value="ROW6_DRUM7" action="sampler_pad 47" />
+	<map value="ROW6_DRUM8" action="sampler_pad 48" />
+	<map value="ROW7_DRUM1" action="sampler_pad 49" />
+	<map value="ROW7_DRUM2" action="sampler_pad 50" />
+	<map value="ROW7_DRUM3" action="sampler_pad 51" />
+	<map value="ROW7_DRUM4" action="sampler_pad 52" />
+	<map value="ROW7_DRUM5" action="sampler_pad 53" />
+	<map value="ROW7_DRUM6" action="sampler_pad 54" />
+	<map value="ROW7_DRUM7" action="sampler_pad 55" />
+	<map value="ROW7_DRUM8" action="sampler_pad 56" />
+	<map value="ROW8_DRUM1" action="sampler_pad 57" />
+	<map value="ROW8_DRUM2" action="sampler_pad 58" />
+	<map value="ROW8_DRUM3" action="sampler_pad 59" />
+	<map value="ROW8_DRUM4" action="sampler_pad 60" />
+	<map value="ROW8_DRUM5" action="sampler_pad 61" />
+	<map value="ROW8_DRUM6" action="sampler_pad 62" />
+	<map value="ROW8_DRUM7" action="sampler_pad 63" />
+	<map value="ROW8_DRUM8" action="sampler_pad 64" />
+	<map value="LED_ROW1_DRUM1" action="sampler_loaded 1 ? sampler_pad 1 ? blink 400ms ? sampler_color 1 : off : sampler_color 1 : off" />
+	<map value="LED_ROW1_DRUM2" action="sampler_loaded 2 ? sampler_pad 2 ? blink 400ms ? sampler_color 2 : off : sampler_color 2 : off" />
+	<map value="LED_ROW1_DRUM3" action="sampler_loaded 3 ? sampler_pad 3 ? blink 400ms ? sampler_color 3 : off : sampler_color 3 : off" />
+	<map value="LED_ROW1_DRUM4" action="sampler_loaded 4 ? sampler_pad 4 ? blink 400ms ? sampler_color 4 : off : sampler_color 4 : off" />
+	<map value="LED_ROW1_DRUM5" action="sampler_loaded 5 ? sampler_pad 5 ? blink 400ms ? sampler_color 5 : off : sampler_color 5 : off" />
+	<map value="LED_ROW1_DRUM6" action="sampler_loaded 6 ? sampler_pad 6 ? blink 400ms ? sampler_color 6 : off : sampler_color 6 : off" />
+	<map value="LED_ROW1_DRUM7" action="sampler_loaded 7 ? sampler_pad 7 ? blink 400ms ? sampler_color 7 : off : sampler_color 7 : off" />
+	<map value="LED_ROW1_DRUM8" action="sampler_loaded 8 ? sampler_pad 8 ? blink 400ms ? sampler_color 8 : off : sampler_color 8 : off" />
+	<map value="LED_ROW2_DRUM1" action="sampler_loaded 9 ? sampler_pad 9 ? blink 400ms ? sampler_color 9 : off : sampler_color 9 : off" />
+	<map value="LED_ROW2_DRUM2" action="sampler_loaded 10 ? sampler_pad 10 ? blink 400ms ? sampler_color 10 : off : sampler_color 10 : off" />
+	<map value="LED_ROW2_DRUM3" action="sampler_loaded 11 ? sampler_pad 11 ? blink 400ms ? sampler_color 11 : off : sampler_color 11 : off" />
+	<map value="LED_ROW2_DRUM4" action="sampler_loaded 12 ? sampler_pad 12 ? blink 400ms ? sampler_color 12 : off : sampler_color 12 : off" />
+	<map value="LED_ROW2_DRUM5" action="sampler_loaded 13 ? sampler_pad 13 ? blink 400ms ? sampler_color 13 : off : sampler_color 13 : off" />
+	<map value="LED_ROW2_DRUM6" action="sampler_loaded 14 ? sampler_pad 14 ? blink 400ms ? sampler_color 14 : off : sampler_color 14 : off" />
+	<map value="LED_ROW2_DRUM7" action="sampler_loaded 15 ? sampler_pad 15 ? blink 400ms ? sampler_color 15 : off : sampler_color 15 : off" />
+	<map value="LED_ROW2_DRUM8" action="sampler_loaded 16 ? sampler_pad 16 ? blink 400ms ? sampler_color 16 : off : sampler_color 16 : off" />
+	<map value="LED_ROW3_DRUM1" action="sampler_loaded 17 ? sampler_pad 17 ? blink 400ms ? sampler_color 17 : off : sampler_color 17 : off" />
+	<map value="LED_ROW3_DRUM2" action="sampler_loaded 18 ? sampler_pad 18 ? blink 400ms ? sampler_color 18 : off : sampler_color 18 : off" />
+	<map value="LED_ROW3_DRUM3" action="sampler_loaded 19 ? sampler_pad 19 ? blink 400ms ? sampler_color 19 : off : sampler_color 19 : off" />
+	<map value="LED_ROW3_DRUM4" action="sampler_loaded 20 ? sampler_pad 20 ? blink 400ms ? sampler_color 20 : off : sampler_color 20 : off" />
+	<map value="LED_ROW3_DRUM5" action="sampler_loaded 21 ? sampler_pad 21 ? blink 400ms ? sampler_color 21 : off : sampler_color 21 : off" />
+	<map value="LED_ROW3_DRUM6" action="sampler_loaded 22 ? sampler_pad 22 ? blink 400ms ? sampler_color 22 : off : sampler_color 22 : off" />
+	<map value="LED_ROW3_DRUM7" action="sampler_loaded 23 ? sampler_pad 23 ? blink 400ms ? sampler_color 23 : off : sampler_color 23 : off" />
+	<map value="LED_ROW3_DRUM8" action="sampler_loaded 24 ? sampler_pad 24 ? blink 400ms ? sampler_color 24 : off : sampler_color 24 : off" />
+	<map value="LED_ROW4_DRUM1" action="sampler_loaded 25 ? sampler_pad 25 ? blink 400ms ? sampler_color 25 : off : sampler_color 25 : off" />
+	<map value="LED_ROW4_DRUM2" action="sampler_loaded 26 ? sampler_pad 26 ? blink 400ms ? sampler_color 26 : off : sampler_color 26 : off" />
+	<map value="LED_ROW4_DRUM3" action="sampler_loaded 27 ? sampler_pad 27 ? blink 400ms ? sampler_color 27 : off : sampler_color 27 : off" />
+	<map value="LED_ROW4_DRUM4" action="sampler_loaded 28 ? sampler_pad 28 ? blink 400ms ? sampler_color 28 : off : sampler_color 28 : off" />
+	<map value="LED_ROW4_DRUM5" action="sampler_loaded 29 ? sampler_pad 29 ? blink 400ms ? sampler_color 29 : off : sampler_color 29 : off" />
+	<map value="LED_ROW4_DRUM6" action="sampler_loaded 30 ? sampler_pad 30 ? blink 400ms ? sampler_color 30 : off : sampler_color 30 : off" />
+	<map value="LED_ROW4_DRUM7" action="sampler_loaded 31 ? sampler_pad 31 ? blink 400ms ? sampler_color 31 : off : sampler_color 31 : off" />
+	<map value="LED_ROW4_DRUM8" action="sampler_loaded 32 ? sampler_pad 32 ? blink 400ms ? sampler_color 32 : off : sampler_color 32 : off" />
+	<map value="LED_ROW5_DRUM1" action="sampler_loaded 33 ? sampler_pad 33 ? blink 400ms ? sampler_color 33 : off : sampler_color 33 : off" />
+	<map value="LED_ROW5_DRUM2" action="sampler_loaded 34 ? sampler_pad 34 ? blink 400ms ? sampler_color 34 : off : sampler_color 34 : off" />
+	<map value="LED_ROW5_DRUM3" action="sampler_loaded 35 ? sampler_pad 35 ? blink 400ms ? sampler_color 35 : off : sampler_color 35 : off" />
+	<map value="LED_ROW5_DRUM4" action="sampler_loaded 36 ? sampler_pad 36 ? blink 400ms ? sampler_color 36 : off : sampler_color 36 : off" />
+	<map value="LED_ROW5_DRUM5" action="sampler_loaded 37 ? sampler_pad 37 ? blink 400ms ? sampler_color 37 : off : sampler_color 37 : off" />
+	<map value="LED_ROW5_DRUM6" action="sampler_loaded 38 ? sampler_pad 38 ? blink 400ms ? sampler_color 38 : off : sampler_color 38 : off" />
+	<map value="LED_ROW5_DRUM7" action="sampler_loaded 39 ? sampler_pad 39 ? blink 400ms ? sampler_color 39 : off : sampler_color 39 : off" />
+	<map value="LED_ROW5_DRUM8" action="sampler_loaded 40 ? sampler_pad 40 ? blink 400ms ? sampler_color 40 : off : sampler_color 40 : off" />
+	<map value="LED_ROW6_DRUM1" action="sampler_loaded 41 ? sampler_pad 41 ? blink 400ms ? sampler_color 41 : off : sampler_color 41 : off" />
+	<map value="LED_ROW6_DRUM2" action="sampler_loaded 42 ? sampler_pad 42 ? blink 400ms ? sampler_color 42 : off : sampler_color 42 : off" />
+	<map value="LED_ROW6_DRUM3" action="sampler_loaded 43 ? sampler_pad 43 ? blink 400ms ? sampler_color 43 : off : sampler_color 43 : off" />
+	<map value="LED_ROW6_DRUM4" action="sampler_loaded 44 ? sampler_pad 44 ? blink 400ms ? sampler_color 44 : off : sampler_color 44 : off" />
+	<map value="LED_ROW6_DRUM5" action="sampler_loaded 45 ? sampler_pad 45 ? blink 400ms ? sampler_color 45 : off : sampler_color 45 : off" />
+	<map value="LED_ROW6_DRUM6" action="sampler_loaded 46 ? sampler_pad 46 ? blink 400ms ? sampler_color 46 : off : sampler_color 46 : off" />
+	<map value="LED_ROW6_DRUM7" action="sampler_loaded 47 ? sampler_pad 47 ? blink 400ms ? sampler_color 47 : off : sampler_color 47 : off" />
+	<map value="LED_ROW6_DRUM8" action="sampler_loaded 48 ? sampler_pad 48 ? blink 400ms ? sampler_color 48 : off : sampler_color 48 : off" />
+	<map value="LED_ROW7_DRUM1" action="sampler_loaded 49 ? sampler_pad 49 ? blink 400ms ? sampler_color 49 : off : sampler_color 49 : off" />
+	<map value="LED_ROW7_DRUM2" action="sampler_loaded 50 ? sampler_pad 50 ? blink 400ms ? sampler_color 50 : off : sampler_color 50 : off" />
+	<map value="LED_ROW7_DRUM3" action="sampler_loaded 51 ? sampler_pad 51 ? blink 400ms ? sampler_color 51 : off : sampler_color 51 : off" />
+	<map value="LED_ROW7_DRUM4" action="sampler_loaded 52 ? sampler_pad 52 ? blink 400ms ? sampler_color 52 : off : sampler_color 52 : off" />
+	<map value="LED_ROW7_DRUM5" action="sampler_loaded 53 ? sampler_pad 53 ? blink 400ms ? sampler_color 53 : off : sampler_color 53 : off" />
+	<map value="LED_ROW7_DRUM6" action="sampler_loaded 54 ? sampler_pad 54 ? blink 400ms ? sampler_color 54 : off : sampler_color 54 : off" />
+	<map value="LED_ROW7_DRUM7" action="sampler_loaded 55 ? sampler_pad 55 ? blink 400ms ? sampler_color 55 : off : sampler_color 55 : off" />
+	<map value="LED_ROW7_DRUM8" action="sampler_loaded 56 ? sampler_pad 56 ? blink 400ms ? sampler_color 56 : off : sampler_color 56 : off" />
+	<map value="LED_ROW8_DRUM1" action="sampler_loaded 57 ? sampler_pad 57 ? blink 400ms ? sampler_color 57 : off : sampler_color 57 : off" />
+	<map value="LED_ROW8_DRUM2" action="sampler_loaded 58 ? sampler_pad 58 ? blink 400ms ? sampler_color 58 : off : sampler_color 58 : off" />
+	<map value="LED_ROW8_DRUM3" action="sampler_loaded 59 ? sampler_pad 59 ? blink 400ms ? sampler_color 59 : off : sampler_color 59 : off" />
+	<map value="LED_ROW8_DRUM4" action="sampler_loaded 60 ? sampler_pad 60 ? blink 400ms ? sampler_color 60 : off : sampler_color 60 : off" />
+	<map value="LED_ROW8_DRUM5" action="sampler_loaded 61 ? sampler_pad 61 ? blink 400ms ? sampler_color 61 : off : sampler_color 61 : off" />
+	<map value="LED_ROW8_DRUM6" action="sampler_loaded 62 ? sampler_pad 62 ? blink 400ms ? sampler_color 62 : off : sampler_color 62 : off" />
+	<map value="LED_ROW8_DRUM7" action="sampler_loaded 63 ? sampler_pad 63 ? blink 400ms ? sampler_color 63 : off : sampler_color 63 : off" />
+	<map value="LED_ROW8_DRUM8" action="sampler_loaded 64 ? sampler_pad 64 ? blink 400ms ? sampler_color 64 : off : sampler_color 64 : off" />
+	<map value="VOLUME" action="deck left stem_pad &quot;Vocal&quot;" />
+	<map value="LED_MUTE" action="deck all pad_page 3" />
+	<map value="LED_ROW8_PAD1" action="deck left play ? color green : blink 1bt ? color green" />
+	<map value="LED_ROW8_PAD3" action="color blue" />
+	<map value="LED_NOTE" action="var_equal &apos;$apclivemode&apos; 2" />
+	<map value="NOTE" action="set &apos;$apclivemode&apos; 2 &amp; wait 300ms &amp; refresh_controller" />
+	<map value="CLIP_STOP" action="deck all pad_page 1" />
+	<map value="LED_ROW7_PAD1" action="deck left stem_pad &apos;Vocal&apos; ? stem_color &apos;Vocal&apos; :   color 50% green" />
+	<map value="LED_ROW7_PAD8" action="deck right stem_pad &apos;Rhythm&apos; ? stem_color &apos;Rhythm&apos; :   color 50% blue" />
+	<map value="LED_STOP_ALL_CLIPS" action="deck master is_using &apos;sample&apos; ? blink 1bt" />
+	<map value="STOP_ALL_CLIPS" action="sampler_stop all" />
+	<map value="LED_ROW6_PAD1" action="deck left is_using &apos;effect&apos; ? color yellow : color darkyellow" />
+	<map value="ROW6_PAD3" action="deck left sampler_stop" />
+</mapper>
