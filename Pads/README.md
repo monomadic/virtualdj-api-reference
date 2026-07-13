@@ -4,6 +4,8 @@ This folder contains local working pad pages, focused reference pages, and copie
 
 Use root-level `Reference - *.xml` files when copying a pattern into documentation. Built-in pages live under [Built-In/](Built-In/) as provenance examples. Documentation test harnesses live outside this folder in [Test/Pads/](../Test/Pads/).
 
+Format reference: [Pad Page XML](../Reference/Pad%20Page%20XML.md) — container schema for `<page>`, `<padN>`/`<shift_padN>`, `<param1>`/`<param2>`, `<menu>`, and `<custompadsmode>`.
+
 ## Status Labels
 
 | Status | Meaning |
