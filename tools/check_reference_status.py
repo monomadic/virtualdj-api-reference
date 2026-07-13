@@ -11,7 +11,7 @@ from urllib.parse import unquote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-AUDIT = ROOT / "Reference" / "Official VDJScript Coverage Audit.md"
+AUDIT = ROOT / "docs" / "Official VDJScript Coverage Audit.md"
 
 
 def read(path: Path) -> str:
@@ -41,11 +41,11 @@ def check_count_consistency(count: str, gap: str, errors: list[str]) -> None:
         return
 
     required = {
-        ROOT / "Reference" / "VDJScript Verbs.md": [
+        ROOT / "docs" / "VDJScript Verbs.md": [
             f"{count}/{count}",
             f"remaining {gap} sparse or hardware-specific official names",
         ],
-        ROOT / "Reference" / "VDJScript Local Test Tracker.md": [
+        ROOT / "docs" / "VDJScript Local Test Tracker.md": [
             f"parses to {count} official",
             f"gap is {gap} official names",
         ],
@@ -63,7 +63,7 @@ def check_count_consistency(count: str, gap: str, errors: list[str]) -> None:
         r"21 sparse or hardware-specific official names",
         r"21 official names still marked",
     )
-    scan_paths = [ROOT / "README.md", ROOT / "AGENTS.md"] + sorted((ROOT / "Reference").glob("*.md"))
+    scan_paths = [ROOT / "README.md", ROOT / "AGENTS.md"] + sorted((ROOT / "docs").glob("*.md"))
     for path in scan_paths:
         text = read(path)
         for pattern in stale_patterns:
@@ -109,7 +109,7 @@ def check_tracked_generated_files(errors: list[str]) -> None:
 
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
-    roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "Reference", ROOT / "xml", ROOT / "tests"]
+    roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "docs", ROOT / "examples", ROOT / "tests"]
     roots.append(ROOT / "TODO.md")
     files: list[Path] = []
     for root in roots:

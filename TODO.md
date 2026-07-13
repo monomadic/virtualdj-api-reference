@@ -9,7 +9,7 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 - `Ready`: startable now with the listed files and fixtures.
 - `Blocked`: needs hardware, a live VirtualDJ setup, or a clearer external source.
 - `Parking lot`: useful later, but not the next best use of time.
-- Record manual VirtualDJ observations in [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md).
+- Record manual VirtualDJ observations in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md).
 - Promote stable conclusions into the topical docs named by the task.
 - Run `just check` after documentation, fixture, or status edits.
 
@@ -27,17 +27,17 @@ Start here:
 
 Read first:
 
-- [Reference/VDJScript Syntax Evidence.md](Reference/VDJScript%20Syntax%20Evidence.md)
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Syntax Evidence.md](docs/VDJScript%20Syntax%20Evidence.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/VDJScript Syntax Evidence.md](Reference/VDJScript%20Syntax%20Evidence.md)
-- [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) (replace the "precedence is unproven" guidance with tested rules)
+- [docs/VDJScript Syntax Evidence.md](docs/VDJScript%20Syntax%20Evidence.md)
+- [docs/VirtualDJ Reference.md](docs/VirtualDJ%20Reference.md) (replace the "precedence is unproven" guidance with tested rules)
 
 Done when:
 
@@ -52,13 +52,13 @@ The mapper reference's device-definition schema is official-doc-derived but neve
 
 Start here:
 
-- [Reference/Mapper XML.md](Reference/Mapper%20XML.md)
-- [xml/Mappers/README.md](xml/Mappers/README.md)
+- [docs/Mapper XML.md](docs/Mapper%20XML.md)
+- [examples/Mappers/README.md](examples/Mappers/README.md)
 
 Done when:
 
 - A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
-- Results (including failures) are recorded in [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
+- Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
 
 ### 3. Repeat `dualdeckmode_decks` In A Better Context
 
@@ -67,20 +67,20 @@ Status: Ready
 Start here:
 
 - [tests/Pads/Reference - Dual Deck Mode Test.xml](tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Read first:
 
-- [Reference/Completeness Roadmap.md](Reference/Completeness%20Roadmap.md)
-- [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md)
+- [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md)
+- [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Done when:
 
@@ -94,22 +94,22 @@ Status: Ready
 Start here:
 
 - [tests/Pads/Reference - Hidden Button Editor Tests.xml](tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
-- [Reference/Undocumented VDJScript Candidates.md](Reference/Undocumented%20VDJScript%20Candidates.md)
+- [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
 
 Read first:
 
-- [Reference/Button Editor Catalog Audit.md](Reference/Button%20Editor%20Catalog%20Audit.md)
-- [Reference/Button Editor Taxonomy.md](Reference/Button%20Editor%20Taxonomy.md)
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/Button Editor Catalog Audit.md](docs/Button%20Editor%20Catalog%20Audit.md)
+- [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
-- [Reference/Undocumented VDJScript Candidates.md](Reference/Undocumented%20VDJScript%20Candidates.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
 
 Promote to:
 
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md), only when behavior is locally observed and useful enough for normal guidance.
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md), only when behavior is locally observed and useful enough for normal guidance.
 
 Done when:
 
@@ -126,19 +126,19 @@ Start here:
 
 Read first:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Effects Usage.md](Reference/Effects%20Usage.md)
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Effects Usage.md](Reference/Effects%20Usage.md)
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Done when:
 
@@ -155,17 +155,17 @@ Start here:
 
 Read first:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Effects Usage.md](Reference/Effects%20Usage.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
 
 Done when:
 
@@ -181,17 +181,17 @@ Start here:
 
 Read first:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Effects Usage.md](Reference/Effects%20Usage.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Effects Usage.md](Reference/Effects%20Usage.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
 
 Done when:
 
@@ -207,17 +207,17 @@ Start here:
 
 Read first:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/Native Effects.md](Reference/Native%20Effects.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Native Effects.md](docs/Native%20Effects.md)
 
 Record results in:
 
-- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Promote to:
 
-- [Reference/Effects Engines.md](Reference/Effects%20Engines.md)
-- [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Done when:
 

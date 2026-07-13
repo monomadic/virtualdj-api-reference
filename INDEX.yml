@@ -1,35 +1,35 @@
 # Routing index for agents and humans.
-# Keep volatile coverage counts in Reference/Official VDJScript Coverage Audit.md,
+# Keep volatile coverage counts in docs/Official VDJScript Coverage Audit.md,
 # not here.
 
 tasks:
   queue: TODO.md
-  roadmap: Reference/Completeness Roadmap.md
+  roadmap: docs/Completeness Roadmap.md
   commands:
     - just next-task
     - just status
 
 vdjscript:
   primary:
-    - Reference/VirtualDJ Reference.md
-    - Reference/VDJScript Verbs.md
+    - docs/VirtualDJ Reference.md
+    - docs/VDJScript Verbs.md
   grammar:
-    - Reference/VDJScript Syntax Evidence.md
+    - docs/VDJScript Syntax Evidence.md
     - tests/Pads/Reference - Grammar Battery Test.xml
   status:
-    - Reference/Official VDJScript Coverage Audit.md
-    - Reference/VDJScript Local Test Tracker.md
+    - docs/Official VDJScript Coverage Audit.md
+    - docs/VDJScript Local Test Tracker.md
   candidates:
-    - Reference/Undocumented VDJScript Candidates.md
+    - docs/Undocumented VDJScript Candidates.md
   commands:
     - just find-verb NAME
     - just needs-test
 
 fx:
   primary:
-    - Reference/Effects Usage.md
-    - Reference/Effects Engines.md
-    - Reference/Native Effects.md
+    - docs/Effects Usage.md
+    - docs/Effects Engines.md
+    - docs/Native Effects.md
   fixtures:
     - tests/Pads/Reference - FX Introspection Test.xml
     - tests/Pads/Reference - FX Bank Test.xml
@@ -37,82 +37,82 @@ fx:
     - tests/Pads/Reference - BeatGrid Command Test.xml
     - tests/Pads/Reference - Mix FX Query Test.xml
   status:
-    - Reference/VDJScript Local Test Tracker.md
+    - docs/VDJScript Local Test Tracker.md
 
 pads:
   primary:
-    - xml/Pads/README.md
-    - Reference/Pad Page XML.md
-    - Reference/Example Pad XML Pages.md
+    - examples/Pads/README.md
+    - docs/Pad Page XML.md
+    - docs/Example Pad XML Pages.md
   examples:
-    - xml/Pads/Reference - Slot FX.xml
-    - xml/Pads/Reference - ColorFX.xml
-    - xml/Pads/Reference - Page Aware Sampler.xml
-    - xml/Pads/SAMPLER READ ONLY.xml
+    - examples/Pads/Reference - Slot FX.xml
+    - examples/Pads/Reference - ColorFX.xml
+    - examples/Pads/Reference - Page Aware Sampler.xml
+    - examples/Pads/SAMPLER READ ONLY.xml
   built_in:
-    - xml/Pads/Built-In/README.md
+    - examples/Pads/Built-In/README.md
   tests:
     - tests/README.md
     - tests/Pads/README.md
 
 sampler:
   primary:
-    - Reference/Example Pad XML Pages.md
-    - xml/Pads/README.md
+    - docs/Example Pad XML Pages.md
+    - examples/Pads/README.md
   examples:
-    - xml/Pads/Reference - Page Aware Sampler.xml
-    - xml/Pads/SAMPLER READ ONLY.xml
+    - examples/Pads/Reference - Page Aware Sampler.xml
+    - examples/Pads/SAMPLER READ ONLY.xml
   fixtures:
     - tests/Pads/Reference - Sampler Loaded Test.xml
 
 skin_runtime:
   primary:
-    - Reference/Skin Runtime Findings.md
-    - Reference/Skin SDK.md
+    - docs/Skin Runtime Findings.md
+    - docs/Skin SDK.md
   fixtures:
     - tests/Skins/PlaceholderConditionTest/README.md
     - tests/Skins/PlaceholderConditionTest/skin.xml
 
 skin_sdk:
   primary:
-    - Reference/Skin SDK.md
-    - Reference/Skin Waveforms.md
-    - Reference/Example Skin XML Objects.md
+    - docs/Skin SDK.md
+    - docs/Skin Waveforms.md
+    - docs/Example Skin XML Objects.md
   status:
-    - Reference/Skin XML Inventory.md
+    - docs/Skin XML Inventory.md
   examples:
-    - xml/Skins/ModularSkeleton/README.md
-    - xml/Skins/GraveRaver/README.md
+    - examples/Skins/ModularSkeleton/README.md
+    - examples/Skins/GraveRaver/README.md
   built_in:
-    - xml/Skins/Built-In/README.md
+    - examples/Skins/Built-In/README.md
   commands:
     - just inventory
 
 application_internals:
   primary:
-    - Reference/Application Internals.md
+    - docs/Application Internals.md
   related:
-    - Reference/Resources.md
+    - docs/Resources.md
 
 stems:
   primary:
-    - Reference/Stem File Format.md
-    - Reference/Application Internals.md
+    - docs/Stem File Format.md
+    - docs/Application Internals.md
   related:
-    - Reference/Lyrics AI and Skins.md
+    - docs/Lyrics AI and Skins.md
 
 mappers:
   primary:
-    - Reference/Mapper XML.md
+    - docs/Mapper XML.md
   examples:
-    - xml/Mappers/README.md
+    - examples/Mappers/README.md
   related:
-    - xml/Pads/README.md
+    - examples/Pads/README.md
 
 samplerbanks:
   primary:
-    - xml/Samplerbanks/Built-In/README.md
-    - Reference/Pad Page XML.md
+    - examples/Samplerbanks/Built-In/README.md
+    - docs/Pad Page XML.md
 
 tests:
   primary:

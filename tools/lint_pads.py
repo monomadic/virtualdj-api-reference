@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PADS_DIR = ROOT / "xml" / "Pads"
+PADS_DIR = ROOT / "examples" / "Pads"
 TEST_PADS_DIR = ROOT / "tests" / "Pads"
 PAD_PAGE_REF = re.compile(r"\bpad_page\s+['\"]([^'\"]+)['\"]")
 FILTER_SELECT_IN_QUERY = re.compile(

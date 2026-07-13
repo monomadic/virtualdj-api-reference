@@ -2,7 +2,7 @@
 
 These XML files are documentation test assets. They exist to reproduce and record specific VDJScript behavior, not to serve as polished pad-page examples.
 
-VirtualDJ's installed pad folder is flat, so copy the specific harness XML into `~/Library/Application Support/VirtualDJ/Pads/` when running a test, then record the build, setup, result, and follow-up in [VDJScript Local Test Tracker](../../Reference/VDJScript%20Local%20Test%20Tracker.md).
+VirtualDJ's installed pad folder is flat, so copy the specific harness XML into `~/Library/Application Support/VirtualDJ/Pads/` when running a test, then record the build, setup, result, and follow-up in [VDJScript Local Test Tracker](../../docs/VDJScript%20Local%20Test%20Tracker.md).
 
 VirtualDJ's pad-page selector shows the filename stem for these local XML files, not the XML `<page name="">` value. The XML name is still useful as internal metadata and for documenting the harness source.
 

@@ -5,11 +5,11 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 
 ## What is here
 
-- **`Reference/`** — Markdown documentation: VDJScript verb reference, skin SDK, waveform elements, pad-page schema, effects, options, filter syntax, mapper format, application internals
-- **`xml/Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, reference patterns, and copied built-in pad pages; see [xml/Pads/README.md](xml/Pads/README.md)
-- **`xml/Skins/`** — skin examples, copied built-in skins, and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
-- **`xml/Mappers/`** — real working controller/keyboard mapper XML copied from a local install; ground truth for the mapper format
-- **`xml/Samplerbanks/`** — sampler-bank XML copied from the app bundle (a third XML format alongside skins and pads)
+- **`docs/`** — Markdown documentation: VDJScript verb reference, skin SDK, waveform elements, pad-page schema, effects, options, filter syntax, mapper format, application internals
+- **`examples/Pads/`** — focused pad page XML examples for ColorFX, samplers, cues, transport, reference patterns, and copied built-in pad pages; see [examples/Pads/README.md](examples/Pads/README.md)
+- **`examples/Skins/`** — skin examples, copied built-in skins, and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
+- **`examples/Mappers/`** — real working controller/keyboard mapper XML copied from a local install; ground truth for the mapper format
+- **`examples/Samplerbanks/`** — sampler-bank XML copied from the app bundle (a third XML format alongside skins and pads)
 - **`tests/`** — reproducible documentation test harnesses, including pad-page XML fixtures
 
 ## Where to start
@@ -18,21 +18,21 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | --- | --- |
 | Pick the next active maintenance task | [TODO.md](TODO.md) |
 | Route a topic to the right docs and fixtures | [INDEX.yml](INDEX.yml) |
-| Understand the repo structure and source labeling | [Reference/README.md](Reference/README.md) |
-| Pick the right VDJScript verb or pattern | [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) |
-| Look up a specific verb | [Reference/VDJScript Verbs.md](Reference/VDJScript%20Verbs.md) |
-| Check official verb coverage | [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md) |
-| Choose the next completeness pass | [Reference/Completeness Roadmap.md](Reference/Completeness%20Roadmap.md) |
-| Choose or maintain a pad page | [xml/Pads/README.md](xml/Pads/README.md) |
-| Look up the pad-page XML format | [Reference/Pad Page XML.md](Reference/Pad%20Page%20XML.md) |
-| Build skin waveforms | [Reference/Skin Waveforms.md](Reference/Skin%20Waveforms.md) |
-| Check skin/pad XML doc coverage | [Reference/Skin XML Inventory.md](Reference/Skin%20XML%20Inventory.md) (generated; `just inventory`) |
+| Understand the repo structure and source labeling | [docs/README.md](docs/README.md) |
+| Pick the right VDJScript verb or pattern | [docs/VirtualDJ Reference.md](docs/VirtualDJ%20Reference.md) |
+| Look up a specific verb | [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md) |
+| Check official verb coverage | [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md) |
+| Choose the next completeness pass | [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md) |
+| Choose or maintain a pad page | [examples/Pads/README.md](examples/Pads/README.md) |
+| Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
+| Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
+| Check skin/pad XML doc coverage | [docs/Skin XML Inventory.md](docs/Skin%20XML%20Inventory.md) (generated; `just inventory`) |
 | Run or update a test harness | [tests/README.md](tests/README.md) |
-| Build or study a skin | [Reference/Skin SDK.md](Reference/Skin%20SDK.md) · [Reference/Skin Runtime Findings.md](Reference/Skin%20Runtime%20Findings.md) · [xml/Skins/README.md](xml/Skins/README.md) · [xml/Skins/ModularSkeleton/](xml/Skins/ModularSkeleton/) |
-| Work with effects | [Reference/Effects Usage.md](Reference/Effects%20Usage.md) · [Reference/Native Effects.md](Reference/Native%20Effects.md) |
-| Map a controller or keyboard | [Reference/Mapper XML.md](Reference/Mapper%20XML.md) |
-| Understand macOS paths and databases | [Reference/Application Internals.md](Reference/Application%20Internals.md) |
-| Inspect or create `.vdjstems` sidecars | [Reference/Stem File Format.md](Reference/Stem%20File%20Format.md) |
+| Build or study a skin | [docs/Skin SDK.md](docs/Skin%20SDK.md) · [docs/Skin Runtime Findings.md](docs/Skin%20Runtime%20Findings.md) · [examples/Skins/README.md](examples/Skins/README.md) · [examples/Skins/ModularSkeleton/](examples/Skins/ModularSkeleton/) |
+| Work with effects | [docs/Effects Usage.md](docs/Effects%20Usage.md) · [docs/Native Effects.md](docs/Native%20Effects.md) |
+| Map a controller or keyboard | [docs/Mapper XML.md](docs/Mapper%20XML.md) |
+| Understand macOS paths and databases | [docs/Application Internals.md](docs/Application%20Internals.md) |
+| Inspect or create `.vdjstems` sidecars | [docs/Stem File Format.md](docs/Stem%20File%20Format.md) |
 
 ## Agent Entry Point
 
@@ -64,9 +64,9 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 ## Status
 
-- Current official coverage and local-test gap counts are tracked in [Reference/Official VDJScript Coverage Audit.md](Reference/Official%20VDJScript%20Coverage%20Audit.md).
-- Active next tasks are tracked in [TODO.md](TODO.md); the broader evidence backlog remains in [Reference/Completeness Roadmap.md](Reference/Completeness%20Roadmap.md).
-- Skin SDK coverage is broad; the waveform element family is documented in `Reference/Skin Waveforms.md` and remaining element gaps are tracked mechanically in the generated `Reference/Skin XML Inventory.md`
-- Controller mapper XML format: rewritten around the real `<map value="">` + device-definition split, with real working mappers in `xml/Mappers/Local/`; custom device-definition XML is official-doc-derived and not yet load-tested locally
+- Current official coverage and local-test gap counts are tracked in [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md).
+- Active next tasks are tracked in [TODO.md](TODO.md); the broader evidence backlog remains in [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md).
+- Skin SDK coverage is broad; the waveform element family is documented in `docs/Skin Waveforms.md` and remaining element gaps are tracked mechanically in the generated `docs/Skin XML Inventory.md`
+- Controller mapper XML format: rewritten around the real `<map value="">` + device-definition split, with real working mappers in `examples/Mappers/Local/`; custom device-definition XML is official-doc-derived and not yet load-tested locally
 
 Contributions and corrections welcome.

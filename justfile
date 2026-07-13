@@ -13,21 +13,21 @@ next-task:
 
 find-verb name:
     @rg -n --fixed-strings "{{name}}" \
-      "Reference/VDJScript Verbs.md" \
-      "Reference/Official VDJScript Coverage Audit.md" \
-      "Reference/VDJScript Local Test Tracker.md" \
-      "Reference/Undocumented VDJScript Candidates.md" \
-      "Reference/Effects Engines.md" \
-      "Reference/Effects Usage.md" \
-      "xml/Pads" \
+      "docs/VDJScript Verbs.md" \
+      "docs/Official VDJScript Coverage Audit.md" \
+      "docs/VDJScript Local Test Tracker.md" \
+      "docs/Undocumented VDJScript Candidates.md" \
+      "docs/Effects Engines.md" \
+      "docs/Effects Usage.md" \
+      "examples/Pads" \
       "tests"
 
 needs-test:
     @rg -n "Needs local test|Untested|Partial|Status: Needs local test|Status: Partial" \
-      "Reference/Official VDJScript Coverage Audit.md" \
-      "Reference/VDJScript Local Test Tracker.md" \
-      "Reference/Completeness Roadmap.md" \
-      "Reference/Undocumented VDJScript Candidates.md" \
+      "docs/Official VDJScript Coverage Audit.md" \
+      "docs/VDJScript Local Test Tracker.md" \
+      "docs/Completeness Roadmap.md" \
+      "docs/Undocumented VDJScript Candidates.md" \
       "TODO.md"
 
 official-needs-test:
@@ -35,19 +35,19 @@ official-needs-test:
       /^## Needs Local Test/ { in_section=1; next } \
       in_section && /^## / { exit } \
       in_section && NF { print } \
-    ' "Reference/Official VDJScript Coverage Audit.md"
+    ' "docs/Official VDJScript Coverage Audit.md"
 
 tracker-untested:
-    @rg -n "\| .* \| .* \| .* \| Untested \|" "Reference/VDJScript Local Test Tracker.md"
+    @rg -n "\| .* \| .* \| .* \| Untested \|" "docs/VDJScript Local Test Tracker.md"
 
 tracker-partial:
-    @rg -n "\| .* \| .* \| .* \| Partial \|" "Reference/VDJScript Local Test Tracker.md"
+    @rg -n "\| .* \| .* \| .* \| Partial \|" "docs/VDJScript Local Test Tracker.md"
 
 thin-verbs:
-    @rg -n '^\| `[^`]+` \| — \|' "Reference/VDJScript Verbs.md"
+    @rg -n '^\| `[^`]+` \| — \|' "docs/VDJScript Verbs.md"
 
 status:
-    @python3 -c 'from pathlib import Path; import re; text=Path("Reference/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
+    @python3 -c 'from pathlib import Path; import re; text=Path("docs/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
     @printf "\nReady queue:\n"
     @rg -n "^### |^Status: Ready$" TODO.md
 
