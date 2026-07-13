@@ -32,9 +32,9 @@ The root element of every skin with these attributes:
 | `image` | Graphics filename | filename (optional if matches XML name) |
 | `preview` | Preview screenshot | filename (optional) |
 
-Built-in plugin UI XML is a narrower surface than a desktop or Remote skin. The shipped BeatGrid plugin UI at `Skins/Built-In/Plugin-UI/AFX_beatgrid.xml` begins with `?<skin width="341" height="139" version="8">`, has no `name`, `image`, `preview`, `nbdecks`, `<deck>`, `<panel>`, browser, or `<oninit>` scaffolding, and pairs with `AFX_BeatGrid.png` beside it rather than declaring an `image=""` attribute. It is useful for studying small plugin-owned GUI layout and control idioms, but do not use it as the package/root template for full skins.
+Built-in plugin UI XML is a narrower surface than a desktop or Remote skin. The shipped BeatGrid plugin UI at `xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml` begins with `?<skin width="341" height="139" version="8">`, has no `name`, `image`, `preview`, `nbdecks`, `<deck>`, `<panel>`, browser, or `<oninit>` scaffolding, and pairs with `AFX_BeatGrid.png` beside it rather than declaring an `image=""` attribute. It is useful for studying small plugin-owned GUI layout and control idioms, but do not use it as the package/root template for full skins.
 
-Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
+Source: `Built-in skin` (`xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
 
 ### Runtime Deck Count
 
@@ -271,7 +271,7 @@ Settings overlays in the same bundled Remote files use the same idea with `$rmse
 </panel>
 ```
 
-Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `4x3T.xml`, `16x9T.xml`, `16x10T.xml`)
+Source: `Built-in skin` (`xml/Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `4x3T.xml`, `16x9T.xml`, `16x10T.xml`)
 
 **Performance Tip:** If multiple elements share the same visibility condition, nest them in a single `<panel>` instead of adding `visibility=""` to each element individually.
 
@@ -547,12 +547,12 @@ Clickable button with multiple states and support for image graphics or vector s
 
 **Confirmed Behavior Notes:**
 - `query=""` drives the button's `<on>` graphics, not `<selected>`. If a button should change appearance when a VDJScript condition is true, use `<off>`/`<on>` for the graphics state. Official reference: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html)
-- For generic pad banks in skins, follow the bundled/default skin pattern: `action="pad <n>"`, shifted/right-click action `padshift <n>`, label `textaction="pad <n>"`, and color source `pad_color <n>` or `pad_button_color <n>`. This keeps the skin independent of the selected pad page; the page may be hot cues, FX, loops, sampler, custom buttons, or controller-specific actions. Use `pad_has_action <n>` only when the skin needs to hide or disable a pad with no current-page push action. Official references: [Pads Editor](https://www.virtualdj.com/manuals/virtualdj/editors/padseditor.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs/). Built-in references: [Pro.xml](../Skins/Built-In/Desktop/Pro.xml), [Performance.xml](../Skins/Built-In/Desktop/Performance.xml), [16x9T.xml](../Skins/Built-In/Remote/16x9T.xml).
+- For generic pad banks in skins, follow the bundled/default skin pattern: `action="pad <n>"`, shifted/right-click action `padshift <n>`, label `textaction="pad <n>"`, and color source `pad_color <n>` or `pad_button_color <n>`. This keeps the skin independent of the selected pad page; the page may be hot cues, FX, loops, sampler, custom buttons, or controller-specific actions. Use `pad_has_action <n>` only when the skin needs to hide or disable a pad with no current-page push action. Official references: [Pads Editor](https://www.virtualdj.com/manuals/virtualdj/editors/padseditor.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs/). Built-in references: [Pro.xml](../xml/Skins/Built-In/Desktop/Pro.xml), [Performance.xml](../xml/Skins/Built-In/Desktop/Performance.xml), [16x9T.xml](../xml/Skins/Built-In/Remote/16x9T.xml).
 - `rightclick=""` can run any VDJScript action, including built-in menu/popup actions such as `key_match_menu`, `deck_options`, `loop_options`, `browser_options`, `search_options`, `pad_page_select 1`, `effect_select 1`, `effect_select_popup 1`, and `sampler_options`. This is the normal pattern for making a right-click open an existing VirtualDJ menu.
 - Custom skin `<menu>` elements are different: they open when their own menu hit area is clicked. The official `<menu>` element has no documented name/id trigger that lets another button open that exact custom menu from `rightclick=""`. If you need a custom right-click panel, use `rightclick="skin_panel 'my_context_panel' on"` and build the panel with normal buttons, or place a `<menu>` object where the user clicks. Placing a `<menu>` object there makes that area a normal menu click target, not a right-click-only target.
 - Dynamic button border colors are not currently supported. Even though `border=""` is documented as a color field, official clarification from VirtualDJ CTO Adion says dynamic colors are not supported for border color. Use `visual type="color"` overlays or underlays when a border needs to follow `cue_color`, `sampler_color`, etc. Official reference: [Border Color using placeholder](https://virtualdj.com/forums/242871/VirtualDJ_Skins/Border_Color_using_placeholder.html)
 - For dynamic text colors, the most reliable documented pattern is to use a single `<text>` element with a backticked VDJScript expression in `color`, rather than relying on `colorselected=""` or other state-specific color attributes to evaluate VDJScript. Official references: [Skin Default Colors](https://www.virtualdj.com/wiki/Skin%20Default%20Colors.html), [Skin text action; visibility or visual?](https://www.virtualdj.com/forums/267953/VirtualDJ_Skins/Skin_text_action%3B_visibility_or_visual%3F.html)
-- The current documented `<button>` API is click-oriented: `action`, `leftclick`, `middleclick`, `rightclick`, `dblclick`, and `query`. No generic drag/drop callback is documented for `<button>`. If you need a drag target in a skin, use `<dropzone>` instead of inventing a button "dragged" state. For sampler slot assignment inside custom pad pages, current working XML uses pad `drop="sampler_assign <slot>"` rather than a skin button callback; see [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml). Official references: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html), [Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html), [Sampler manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html)
+- The current documented `<button>` API is click-oriented: `action`, `leftclick`, `middleclick`, `rightclick`, `dblclick`, and `query`. No generic drag/drop callback is documented for `<button>`. If you need a drag target in a skin, use `<dropzone>` instead of inventing a button "dragged" state. For sampler slot assignment inside custom pad pages, current working XML uses pad `drop="sampler_assign <slot>"` rather than a skin button callback; see [SAMPLER SIMPLE.xml](../xml/Pads/SAMPLER%20SIMPLE.xml). Official references: [VirtualDJ Skin Button](https://www.virtualdj.com/wiki/Skin%20Button.html), [Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html), [VDJScript verbs](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html), [Sampler manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html)
 
 **Children:**
 - `<tooltip>` - Tooltip text (supports `\n` for multiple lines)
@@ -741,7 +741,7 @@ Mirrors the button graphic states. All values are normal skin color values
 
 **Children:** None.
 
-**Example (system icon on a menu button, `Skins/Built-In/Lite/Lite.xml`):**
+**Example (system icon on a menu button, `xml/Skins/Built-In/Lite/Lite.xml`):**
 ```xml
 <menu tooltip="SKIN LAYOUT\nSelect the layout adapted to your mixing style">
     <pos x="+50" y="+0"/>
@@ -753,7 +753,7 @@ Mirrors the button graphic states. All values are normal skin color values
 </menu>
 ```
 
-**Example (skin-image glyph with state colors, `Skins/Built-In/Desktop/Performance.xml`):**
+**Example (skin-image glyph with state colors, `xml/Skins/Built-In/Desktop/Performance.xml`):**
 ```xml
 <button ...>
     <off shape="circle" color="darker" border_size="1" border="bordercolor3"/>
@@ -797,7 +797,7 @@ while a drag is hovering.
 - `<mouserect x="" y="" width="" height=""/>` - Optional rectangular hit zone (`Official`; not used by any built-in skin)
 - `<mousecircle x="" y="" r=""/>` - Optional circular hit zone (`Official`; not used by any built-in skin)
 
-**Example (`Skins/Built-In/Desktop/Vertical.xml`):**
+**Example (`xml/Skins/Built-In/Desktop/Vertical.xml`):**
 ```xml
 <dropzone deck="1">
     <pos x="+22-20" y="+0"/>
@@ -1338,7 +1338,7 @@ instead.
   coordinates of a skin-image graphic, by all appearances the placeholder art
   shown when the track has no cover. Semantics not yet confirmed locally
 
-**Example (`Skins/Built-In/Lite/Lite.xml`, jog-wheel center):**
+**Example (`xml/Skins/Built-In/Lite/Lite.xml`, jog-wheel center):**
 ```xml
 <cover rotate="yes">
     <pos x="+19" y="+26"/>
@@ -1468,7 +1468,7 @@ Bundled Remote tablet skins use a related but separate pattern: a dedicated brow
 </panel>
 ```
 
-Source: `Built-in skin` (`Skins/Built-In/Remote/16x9T.xml`, `16x10T.xml`, `4x3T.xml`)
+Source: `Built-in skin` (`xml/Skins/Built-In/Remote/16x9T.xml`, `16x10T.xml`, `4x3T.xml`)
 
 **Children:**
 - `<pos x="" y=""/>` - Position on screen
@@ -1667,7 +1667,7 @@ Bundled Remote skins also use panel-local `breakline1` / `breakline2` attributes
 </panel>
 ```
 
-Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `9x19P.xml`, `3x4T.xml`)
+Source: `Built-in skin` (`xml/Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `9x19P.xml`, `3x4T.xml`)
 
 **Notes:**
 - Browser automatically handles scrolling, sorting, filtering
@@ -1829,13 +1829,13 @@ interchangeably.
   or simply declare several `<oninit>` elements (built-in skins do the latter)
 - `condition=""` - Observed on built-in `<onload>` elements only: standard
   structural condition evaluated at load time, e.g. layout-variable checks
-  (`Built-in skin`, `Skins/Built-In/Desktop/Vertical.xml`)
+  (`Built-in skin`, `xml/Skins/Built-In/Desktop/Vertical.xml`)
 
 **Children:** None.
 
 **Built-in patterns.** Desktop skins end with a block of `setting_setdefault`
 calls so the skin can express its preferred defaults without overwriting the
-user's explicit choices (`Skins/Built-In/Desktop/Pro.xml`, end of file):
+user's explicit choices (`xml/Skins/Built-In/Desktop/Pro.xml`, end of file):
 
 ```xml
 <oninit action="setting_setdefault skinWaveformType 'shapes'"/>
@@ -2048,7 +2048,7 @@ resolution can cause issues at lower resolutions.
 
 **Built-in pattern.** 23 uses in 16 files, all plain `<logo>` with `<pos>` and
 `<size>`; the desktop skins declare one per OS-specific top bar so the logo
-sits opposite the window buttons (`Skins/Built-In/Desktop/Pro.xml`):
+sits opposite the window buttons (`xml/Skins/Built-In/Desktop/Pro.xml`):
 
 ```xml
 <group name="applicationbuttons" condition="is_mac">
@@ -2087,7 +2087,7 @@ grabzones to stay movable.
 - `<size width="" height=""/>` - Dimensions
 
 **Built-in pattern.** 28 uses in 7 files. Desktop skins declare four thin
-zones along the window edges (`Skins/Built-In/Desktop/Pro.xml`):
+zones along the window edges (`xml/Skins/Built-In/Desktop/Pro.xml`):
 
 ```xml
 <grabzone>

@@ -14,8 +14,8 @@ Reference/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, r
 Reference/VDJScript Verbs.md — curated API reference: canonical names, aliases, surfaces
 Reference/Official VDJScript Coverage Audit.md — authoritative names-only parity audit and local-test gap count
 Reference/Completeness Roadmap.md — ordered backlog for closing behavior, fixture, and hardware gaps
-Pads/README.md                — pad page inventory, status labels, and maintenance checklist
-Test/README.md                — documentation test harnesses and reproducible fixtures
+xml/Pads/README.md            — pad page inventory, status labels, and maintenance checklist
+tests/README.md               — documentation test harnesses and reproducible fixtures
 ```
 
 ## Open-ended work
@@ -32,11 +32,11 @@ Search budget:
 ## What is here
 
 ```
-Pads/                        — working/reference pad page XML files plus copied built-in pad pages
-Test/                        — documentation test harnesses, including pad XML fixtures
-Skins/                       — skin source trees, reference skins, and copied built-in skins
-Mappers/                     — real working controller/keyboard mapper XML (ground truth for the mapper format)
-Samplerbanks/                — copied built-in sampler-bank XML (third XML format)
+xml/Pads/                    — working/reference pad page XML files plus copied built-in pad pages
+xml/Skins/                   — skin source trees, reference skins, and copied built-in skins
+xml/Mappers/                 — real working controller/keyboard mapper XML (ground truth for the mapper format)
+xml/Samplerbanks/            — copied built-in sampler-bank XML (third XML format)
+tests/                       — documentation test harnesses, including pad XML fixtures
 Reference/                   — Markdown documentation
 ```
 
@@ -46,9 +46,9 @@ Reference/                   — Markdown documentation
 - `action=""` attributes take VDJScript actions. `query=""` takes a boolean/value expression.
 - `&` chains actions in XML attributes and must be written `&amp;` inside XML.
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
-- Working/reference pad pages live in `Pads/*.xml`; copied built-in app-bundle pages live in `Pads/Built-In/`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`; copied built-in app-bundle skins live in `Skins/Built-In/`.
-- The pad-page container format is specified in `Reference/Pad Page XML.md`; skin waveforms in `Reference/Skin Waveforms.md`; the mapper format in `Reference/Mapper XML.md` with real mappers in `Mappers/Local/`. `just inventory` regenerates the element-coverage report `Reference/Skin XML Inventory.md`.
-- `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
+- Working/reference pad pages live in `xml/Pads/*.xml`; copied built-in app-bundle pages live in `xml/Pads/Built-In/`; documentation test harnesses live under `tests/`. See `xml/Pads/README.md` before choosing a reference page. Skins live in `xml/Skins/*/`; copied built-in app-bundle skins live in `xml/Skins/Built-In/`.
+- The pad-page container format is specified in `Reference/Pad Page XML.md`; skin waveforms in `Reference/Skin Waveforms.md`; the mapper format in `Reference/Mapper XML.md` with real mappers in `xml/Mappers/Local/`. `just inventory` regenerates the element-coverage report `Reference/Skin XML Inventory.md`.
+- `xml/Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript appendix coverage and local-test gap are tracked in `Reference/Official VDJScript Coverage Audit.md`.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
 - Run `python3 tools/check_reference_status.py` after changing coverage counts, fixture inventories, or local reference links.
@@ -68,15 +68,15 @@ Reference/                   — Markdown documentation
 
 | File | Demonstrates |
 | --- | --- |
-| [Pads/Reference - Slot FX.xml](Pads/Reference%20-%20Slot%20FX.xml) | Canonical slot-based audio FX pads |
-| [Pads/Reference - ColorFX.xml](Pads/Reference%20-%20ColorFX.xml) | Canonical filter + ColorFX selection |
-| [Pads/Reference - Page Aware Sampler.xml](Pads/Reference%20-%20Page%20Aware%20Sampler.xml) | Page-aware sampler labels, colors, actions |
-| [Pads/SAMPLER READ ONLY.xml](Pads/SAMPLER%20READ%20ONLY.xml) | Confirmed read-only multi-page sampler with absolute empty-slot guards |
-| [Pads/Built-In/README.md](Pads/Built-In/README.md) | Copied VirtualDJ app-bundle pad pages; semi-official executable examples |
-| [Pads/COLOR FX.xml](Pads/COLOR%20FX.xml) | ColorFX selection with stems context |
-| [Skins/Built-In/README.md](Skins/Built-In/README.md) | Copied VirtualDJ app-bundle skins; semi-official executable examples |
-| [Skins/ModularSkeleton/build/skin.xml](Skins/ModularSkeleton/build/skin.xml) | Minimal modular skin scaffold |
-| [Skins/GraveRaver/src/skin.xml](Skins/GraveRaver/src/skin.xml) | Minimal XInclude build-system demo, not a skin design reference |
+| [xml/Pads/Reference - Slot FX.xml](xml/Pads/Reference%20-%20Slot%20FX.xml) | Canonical slot-based audio FX pads |
+| [xml/Pads/Reference - ColorFX.xml](xml/Pads/Reference%20-%20ColorFX.xml) | Canonical filter + ColorFX selection |
+| [xml/Pads/Reference - Page Aware Sampler.xml](xml/Pads/Reference%20-%20Page%20Aware%20Sampler.xml) | Page-aware sampler labels, colors, actions |
+| [xml/Pads/SAMPLER READ ONLY.xml](xml/Pads/SAMPLER%20READ%20ONLY.xml) | Confirmed read-only multi-page sampler with absolute empty-slot guards |
+| [xml/Pads/Built-In/README.md](xml/Pads/Built-In/README.md) | Copied VirtualDJ app-bundle pad pages; semi-official executable examples |
+| [xml/Pads/COLOR FX.xml](xml/Pads/COLOR%20FX.xml) | ColorFX selection with stems context |
+| [xml/Skins/Built-In/README.md](xml/Skins/Built-In/README.md) | Copied VirtualDJ app-bundle skins; semi-official executable examples |
+| [xml/Skins/ModularSkeleton/build/skin.xml](xml/Skins/ModularSkeleton/build/skin.xml) | Minimal modular skin scaffold |
+| [xml/Skins/GraveRaver/src/skin.xml](xml/Skins/GraveRaver/src/skin.xml) | Minimal XInclude build-system demo, not a skin design reference |
 
 ## macOS paths
 

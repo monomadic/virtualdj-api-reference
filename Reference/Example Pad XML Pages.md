@@ -6,7 +6,7 @@ These examples were checked against the current VirtualDJ manual, recent forum g
 
 ## Read-Only Multi-Page Sampler
 
-Use [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml) when a pad page should only play existing samples and must never record into empty slots. This is the current safest pattern for banks with more than eight samples.
+Use [SAMPLER READ ONLY.xml](../xml/Pads/SAMPLER%20READ%20ONLY.xml) when a pad page should only play existing samples and must never record into empty slots. This is the current safest pattern for banks with more than eight samples.
 
 The important discovery is that `sampler_pad_page` evaluates as text ranges such as `"1 to 8"` and `"9 to 16"` in the tested pad/skin contexts. `sampler_loaded` should still be treated as an absolute-slot query, so each page branch checks the real slot behind the visible pad.
 
@@ -43,7 +43,7 @@ Keep these limits in mind:
 - The current official docs show `sampler_assign` with explicit slot numbers and do not document a page-aware `"auto"` form.
 - `sampler_pad_page` is the official pager for the visible `1-8`, `9-16`, `17-24`, and later windows, but you should not assume `drop="sampler_assign 1"` follows that pager automatically.
 - If you want page-aware drag targets, map each visible pad to the correct absolute slot yourself, or verify build-specific behavior before relying on it.
-- The current stock/local sampler page in this repo uses this exact pattern in [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml).
+- The current stock/local sampler page in this repo uses this exact pattern in [SAMPLER SIMPLE.xml](../xml/Pads/SAMPLER%20SIMPLE.xml).
 - The target bank must be unlocked for samples to be added by drag-and-drop.
 
 ## Sampler Utility Page

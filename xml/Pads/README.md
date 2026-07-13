@@ -2,9 +2,9 @@
 
 This folder contains local working pad pages, focused reference pages, and copied built-in VirtualDJ pad pages.
 
-Use root-level `Reference - *.xml` files when copying a pattern into documentation. Built-in pages live under [Built-In/](Built-In/) as provenance examples. Documentation test harnesses live outside this folder in [Test/Pads/](../Test/Pads/).
+Use root-level `Reference - *.xml` files when copying a pattern into documentation. Built-in pages live under [Built-In/](Built-In/) as provenance examples. Documentation test harnesses live outside this folder in [tests/Pads/](../../tests/Pads/).
 
-Format reference: [Pad Page XML](../Reference/Pad%20Page%20XML.md) — container schema for `<page>`, `<padN>`/`<shift_padN>`, `<param1>`/`<param2>`, `<menu>`, and `<custompadsmode>`.
+Format reference: [Pad Page XML](../../Reference/Pad%20Page%20XML.md) — container schema for `<page>`, `<padN>`/`<shift_padN>`, `<param1>`/`<param2>`, `<menu>`, and `<custompadsmode>`.
 
 ## Status Labels
 
@@ -53,4 +53,4 @@ Use these as `Built-in pad page` evidence when a shipped page demonstrates a VDJ
 - Keep `query=""` attributes read-only where possible. For ColorFX selected-state checks, prefer `filter_label 'name'` instead of selector actions such as `filter_selectcolorfx`.
 - Promote a page to `Canonical` only after it has matching reference notes and either official/source-backed rationale or local VirtualDJ verification.
 - Do not hand-edit files in [Built-In/](Built-In/); refresh them from the app bundle and review diffs when VirtualDJ is updated.
-- Keep test harnesses in [Test/Pads/](../Test/Pads/) unless the page is meant to remain installed as a normal working/reference pad page.
+- Keep test harnesses in [tests/Pads/](../../tests/Pads/) unless the page is meant to remain installed as a normal working/reference pad page.

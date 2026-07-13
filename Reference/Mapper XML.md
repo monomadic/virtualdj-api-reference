@@ -2,7 +2,7 @@
 
 Reference for VirtualDJ controller and keyboard mapper files, and the device-definition XML they bind to.
 
-Ground truth for this doc: four real working mappers copied into [Mappers/Local/](../Mappers/README.md) (two factory Atomix mappings, one Atomix keyboard mapping, one user-authored controller mapping), plus the official VDJPedia pages `ControllerMappingFile_v8.html`, `ControllerDefinitionMIDIv8.html`, and `ControllerDefinitionHIDv8.html`.
+Ground truth for this doc: four real working mappers copied into [xml/Mappers/Local/](../xml/Mappers/README.md) (two factory Atomix mappings, one Atomix keyboard mapping, one user-authored controller mapping), plus the official VDJPedia pages `ControllerMappingFile_v8.html`, `ControllerDefinitionMIDIv8.html`, and `ControllerDefinitionHIDv8.html`.
 
 > An earlier revision of this document described an inline schema (`<button note="36" action="..."/>` directly inside `<mapper>`). That schema does not match any real mapper file and has been removed. Real mappers bind *named controls* to VDJScript with `<map value="" action=""/>`; the hardware I/O lives in a separate device definition.
 
@@ -72,7 +72,7 @@ Children:
 
 ### Special `value=""` names
 
-Observed in factory and user mappings (`Local test`, [Mappers/Local/](../Mappers/README.md)):
+Observed in factory and user mappings (`Local test`, [xml/Mappers/Local/](../xml/Mappers/README.md)):
 
 | Name | Fires |
 | --- | --- |
@@ -161,7 +161,7 @@ Built-in definitions are compiled into `controllers.dat` (app bundle and `~/Libr
 
 ## Relationship to Pad Pages
 
-Pad pages (`Pads/*.xml`) and mapper files are separate systems with a shared scripting language.
+Pad pages (`xml/Pads/*.xml`) and mapper files are separate systems with a shared scripting language.
 
 | | Pad pages | Mapper files |
 | --- | --- | --- |

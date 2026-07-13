@@ -19,8 +19,8 @@ find-verb name:
       "Reference/Undocumented VDJScript Candidates.md" \
       "Reference/Effects Engines.md" \
       "Reference/Effects Usage.md" \
-      "Pads" \
-      "Test"
+      "xml/Pads" \
+      "tests"
 
 needs-test:
     @rg -n "Needs local test|Untested|Partial|Status: Needs local test|Status: Partial" \

@@ -814,13 +814,13 @@ Treat these as working examples, not a complete effect-parameter specification. 
 
 | Effect | Working form | Source |
 | --- | --- | --- |
-| Cut | `padfx 'cut' 50% 0.5bt` | `Local test`: `Pads/PUSH FX.xml` |
-| Cut | `padfx 'cut' 40% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
-| Flanger | `padfx 'flanger' 70% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
-| BeatGrid | `padfx 'beatgrid'` | `Local test`: `Pads/PUSH FX.xml` |
-| Echo on vocal stem | `padfx 'echo' 50% 1bt 65% 75% 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
-| Reverb on vocal stem | `padfx 'reverb' 55% 2bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
-| Echo Out on vocal stem | `padfx_single 'echo out' 80% 1bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
+| Cut | `padfx 'cut' 50% 0.5bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Cut | `padfx 'cut' 40% 1bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Flanger | `padfx 'flanger' 70% 1bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| BeatGrid | `padfx 'beatgrid'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Echo on vocal stem | `padfx 'echo' 50% 1bt 65% 75% 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Reverb on vocal stem | `padfx 'reverb' 55% 2bt 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Echo Out on vocal stem | `padfx_single 'echo out' 80% 1bt 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
 | Echo Out on vocal stem | `padfx "echo out" 80% 1bt "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
 | Reverb on vocal stem | `padfx "Reverb" 80% "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
 | BeatGrid on instrumental/melorhythm stem | `padfx "Beat Grid" "stemfx:MeloRhythm"` | `Built-in pad page`: `pads_stems+fx.xml` |
@@ -1058,7 +1058,7 @@ Recorded local evidence is still partial. Use this as the current status table, 
 
 | Effect / helper group | Local evidence | Unknowns / next readback |
 | --- | --- | --- |
-| Flanger visible GUI | `Local test`: VirtualDJ `v2026-m b9336`, [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml), deck FX slot 1. Opening the GUI after loading Flanger displayed `Strength 50%`, `Speed 8bt`, `Tone n/a`, `Feedback 50%`, and `LFO AMP 40%`. | The fixture did not yet record `get_effect_slider_count`, `get_effect_button_count`, `effect_has_slider`, `effect_has_button`, labels, defaults, or text readbacks for Flanger. Do not infer the count or button availability from the visible GUI alone. |
+| Flanger visible GUI | `Local test`: VirtualDJ `v2026-m b9336`, [Reference - FX Introspection Test.xml](../tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml), deck FX slot 1. Opening the GUI after loading Flanger displayed `Strength 50%`, `Speed 8bt`, `Tone n/a`, `Feedback 50%`, and `LFO AMP 40%`. | The fixture did not yet record `get_effect_slider_count`, `get_effect_button_count`, `effect_has_slider`, `effect_has_button`, labels, defaults, or text readbacks for Flanger. Do not infer the count or button availability from the visible GUI alone. |
 | `effect_has_slider` / `effect_has_button` | `Built-in skin`: used to disable/hide generic FX controls when a selected plugin lacks that indexed control. | Local pad/query return shape and target scoping are still unknown for deck FX, video FX, and transition FX. Record `on`/`off` state by index before promoting behavior beyond the generic pattern. |
 | `get_effect_slider_*` | `Official` / `Built-in skin`: helper family includes count, label, label/full/skip-length variants, name/shortname variants, text, text/skip-length, and default readbacks. | Only the Flanger GUI values above are recorded locally. The exact returned strings, fallback behavior, and whether `Tone n/a` maps to a disabled slider, text value, or special control state are unknown. |
 | `get_effect_button_*` | `Official` / `Built-in skin`: helper family includes button count, name, and short name readbacks. | No local button count or label readbacks have been recorded for Echo, Reverb, BeatGrid, or Flanger. |
@@ -1361,7 +1361,7 @@ The same file also shows context-dependent shortcuts around the selected plugin:
 
 This is useful evidence that a plugin UI can be a fixed bitmap control surface with hardcoded plugin commands, direct coordinate arithmetic such as `x="4*20+9+3"`, and repeated controls without `<define>`, `<deck>`, or `<panel>` containers. It is not evidence for a universal `effect_command` language, a reusable generic FX rack, or the recommended structure for desktop/Remote skins. Generic skins should still prefer slot/target-qualified controls and introspection helpers such as `effect_has_slider`, `get_effect_slider_label`, and `get_effect_button_shortname`.
 
-Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
+Source: `Built-in skin` (`xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
 
 ### Effect Presets with Parameters
 

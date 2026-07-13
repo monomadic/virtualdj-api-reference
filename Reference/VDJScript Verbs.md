@@ -575,7 +575,7 @@ Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Official forum`: "XML Variables in Skin and Database", PhantomDeejay, 2019-07-30
-- `Built-in skin`: `Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `16x9T.xml`
+- `Built-in skin`: `xml/Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `3x4T.xml`, `16x9T.xml`
 
 ### `get_var`
 
@@ -689,7 +689,7 @@ Sources:
 - `Official`: Skin SDK panel documentation
 - `Built-in skin`: Remote tab buttons use `skin_panel ... on`
 - `Local test`: Grave Raver Remote top navigation did not react reliably with `skin_panelgroup`
-- `Built-in skin`: `Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
+- `Built-in skin`: `xml/Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
 
 ### `skin_panelgroup`
 
@@ -1074,7 +1074,7 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `Pads/Built-In/pads_keycue.xml`
+- `Official`: `xml/Pads/Built-In/pads_keycue.xml`
 
 ### `get_browsed_song`
 
@@ -2157,7 +2157,7 @@ Preferred usage:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `Pads/Built-In/pads_stems.xml`
+- `Official`: `xml/Pads/Built-In/pads_stems.xml`
 
 ### `effect_arm_stem`
 
@@ -2367,7 +2367,7 @@ Sources:
 - `Official`: current VDJScript verbs appendix
 - `Community`: Mix FX forum examples and behavior notes
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
-- `Local test`: `Test/Pads/Reference - Mix FX Query Test.xml` and `Test/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
+- `Local test`: `tests/Pads/Reference - Mix FX Query Test.xml` and `tests/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_mixfx_select`
 
@@ -2443,7 +2443,7 @@ Sources:
 - `Official`: DDJ-FLX2 hardware manual recommends assigning `effect_mixfx_select` to custom buttons when a skin lacks Mix FX controls
 - `Community`: Mix FX scripting examples and indirect query guidance
 - `Published skin`: Denon Prime 4 Deluxe skin, `PRIME 4.xml` lines 1149-1153
-- `Local test`: `Test/Pads/Reference - Mix FX Query Test.xml` and `Test/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
+- `Local test`: `tests/Pads/Reference - Mix FX Query Test.xml` and `tests/Skins/MixFxQueryTest/skin.xml`, VirtualDJ 8.5.9307 / 850.9336.mac.2224, May 12, 2026
 
 ### `effect_show_gui`
 
@@ -2626,7 +2626,7 @@ Preferred usage:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `Pads/Built-In/pads_sampler_velocity.xml`
+- `Official`: `xml/Pads/Built-In/pads_sampler_velocity.xml`
 
 ### `sampler_assign`
 
@@ -2658,7 +2658,7 @@ Preferred usage:
 Quirk:
 
 - treat the target slot as absolute unless you have build-specific proof otherwise. The current official docs show fixed slot numbers and do not document a page-aware `"auto"` form for `sampler_assign`.
-- The current stock/local sampler page in this repo uses `drop="sampler_assign <slot>"`; see [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml).
+- The current stock/local sampler page in this repo uses `drop="sampler_assign <slot>"`; see [SAMPLER SIMPLE.xml](../xml/Pads/SAMPLER%20SIMPLE.xml).
 
 Sources:
 
@@ -2696,7 +2696,7 @@ Sources:
 - `Official`: VDJScript verbs appendix
 - `Community`: VirtualDJ forum examples using `"auto"`
 - `Published pad page`: installed `Loop Recorder.xml` uses unquoted `auto`
-- `Local test`: [Reference - Sampler Loaded Test.xml](../Test/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml), VirtualDJ 8.5.9307 / 18.0.9336, 2026-05-21
+- `Local test`: [Reference - Sampler Loaded Test.xml](../tests/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml), VirtualDJ 8.5.9307 / 18.0.9336, 2026-05-21
 
 ### `sampler_color`
 
@@ -3639,7 +3639,7 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `Pads/Built-In/pads_saved_loops.xml`
+- `Official`: `xml/Pads/Built-In/pads_saved_loops.xml`
 
 ### `pad_page_select`
 
@@ -3899,9 +3899,9 @@ Sources:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `Pads/Built-In/pads_manual_loop.xml`
-- `Official`: `Pads/Built-In/pads_loop_roll.xml`
-- `Official`: `Pads/Built-In/pads_hotcues.xml`
+- `Official`: `xml/Pads/Built-In/pads_manual_loop.xml`
+- `Official`: `xml/Pads/Built-In/pads_loop_roll.xml`
+- `Official`: `xml/Pads/Built-In/pads_hotcues.xml`
 
 ### `is_fluid`
 
@@ -4170,7 +4170,7 @@ Preferred usage:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Built-in skin`: `Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
+- `Built-in skin`: `xml/Skins/Built-In/Remote/16x9P.xml`, `19x9P.xml`
 
 ### `search`
 
@@ -5078,7 +5078,7 @@ Window/workflow note:
 - `mixermode` returns true for internal mixer mode and false for external mixer mode; pass `internal` or `external` to test explicitly.
 - `beat_juggle` alternates direction each time it runs. Pass a beat amount such as `0.5` for half-beat juggling.
 - `dualdeckmode_decks` is official but sparsely documented; official prose ties it to dual-deck mode applying to deck pairs 1/3 or 2/4, so test controller mappings that depend on it.
-- Local pad-page result on VirtualDJ `v2026-m b9336`: in [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red after `dualdeckmode` toggled on/blue, and the same behavior was reported from deck 2. Test any visible dual-deck pair/controller context before relying on it.
+- Local pad-page result on VirtualDJ `v2026-m b9336`: in [Reference - Dual Deck Mode Test.xml](../tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml), current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red after `dualdeckmode` toggled on/blue, and the same behavior was reported from deck 2. Test any visible dual-deck pair/controller context before relying on it.
 
 ## Play Controls
 
@@ -5321,7 +5321,7 @@ Scratchbank source note:
 
 Loading note:
 
-- `deck_has_error` appears in the official appendix but remains sparse. Local test on VirtualDJ `v2026-m b9336`: in [Reference - Deck Error Test.xml](../Test/Pads/Reference%20-%20Deck%20Error%20Test.xml), it stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load.
+- `deck_has_error` appears in the official appendix but remains sparse. Local test on VirtualDJ `v2026-m b9336`: in [Reference - Deck Error Test.xml](../tests/Pads/Reference%20-%20Deck%20Error%20Test.xml), it stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load.
 
 ## Cue Points
 
@@ -5712,7 +5712,7 @@ Sources:
 - `Official`: VDJScript verbs appendix
 - `Community`: "How to map specific Fx?", moderator example for `effect_show_gui vocals echo & padfx echo 'stemfx:vocal'`
 - `Built-in pad page`: `pads_stems+fx.xml` uses `padfx "echo out" 80% 1bt "stemfx:vocal"`, `padfx "Reverb" 80% "stemfx:vocal"`, and `padfx "Beat Grid" "stemfx:MeloRhythm"`
-- `Local test`: `Pads/PUSH FX.xml` contains working momentary `padfx` examples for Cut, Flanger, BeatGrid, Echo, Reverb, and Echo Out, including stem-targeted variants
+- `Local test`: `xml/Pads/PUSH FX.xml` contains working momentary `padfx` examples for Cut, Flanger, BeatGrid, Echo, Reverb, and Echo Out, including stem-targeted variants
 
 ## Effects
 
@@ -5933,7 +5933,7 @@ Video FX note:
 - For 16-pad pad pages, pads `9-16` are the next eight visible sampler positions. Example: on page `"9 to 16"`, pad 16 is backed by absolute slot 24.
 - To nullify an empty sampler pad, use an explicit false branch in each relevant field: blank text in `name`, dim/off visual state in `color`/`query`, and `: nothing` in the action body.
 - For intentionally blank sampler pad labels, prefer `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later sampler pages.
-- For a confirmed read-only implementation, see [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml).
+- For a confirmed read-only implementation, see [SAMPLER READ ONLY.xml](../xml/Pads/SAMPLER%20READ%20ONLY.xml).
 - When defining `shift_pad<n>` entries for sampler pages, also define shifted `color=""` values such as `sampler_loaded 1 ? sampler_color 1 : dim`; skin pad frameworks may render shifted pad colors separately, and missing shifted colors can fall back to the skin/default button color. Source: `Local test`, `Inference`
 - `sampler_play`, `sampler_stop`, `sampler_volume`, `get_sample_name`, `get_sample_info`, and `get_sample_color` are best treated as absolute-slot helpers.
 - `sampler_default` is the official alias of `sampler_select`; prefer `sampler_select` in new docs unless documenting older mappings.

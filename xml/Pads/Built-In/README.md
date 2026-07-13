@@ -16,7 +16,7 @@ Do not hand-edit these copies. Refresh them from the app bundle when updating to
 Refresh command:
 
 ```sh
-cp -p /Applications/VirtualDJ.app/Contents/Resources/pads_*.xml Pads/Built-In/
+cp -p /Applications/VirtualDJ.app/Contents/Resources/pads_*.xml xml/Pads/Built-In/
 ```
 
 Included files:

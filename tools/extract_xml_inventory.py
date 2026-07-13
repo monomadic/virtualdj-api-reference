@@ -34,26 +34,27 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
     (
         "skins",
         [
-            "Skins/Built-In/**/*.xml",
-            "Skins/SDK Example - Custom Browser Skin/skin.xml",
-            "Skins/ModularSkeleton/build/*.xml",
-            "Skins/GraveRaver/build/*.xml",
+            "xml/Skins/Built-In/**/*.xml",
+            "xml/Skins/SDK Example - Custom Browser Skin/skin.xml",
+            "xml/Skins/ModularSkeleton/build/*.xml",
+            "xml/Skins/GraveRaver/build/*.xml",
+            "tests/Skins/**/*.xml",
         ],
         ["Reference/Skin SDK.md", "Reference/Skin Waveforms.md"],
     ),
     (
         "pads",
-        ["Pads/**/*.xml", "Test/**/*.xml"],
+        ["xml/Pads/**/*.xml", "tests/Pads/*.xml"],
         ["Reference/Pad Page XML.md", "Reference/Example Pad XML Pages.md"],
     ),
     (
         "samplerbanks",
-        ["Samplerbanks/**/*.xml"],
+        ["xml/Samplerbanks/**/*.xml"],
         [],
     ),
     (
         "mappers",
-        ["Mappers/**/*.xml"],
+        ["xml/Mappers/**/*.xml"],
         ["Reference/Mapper XML.md"],
     ),
 ]

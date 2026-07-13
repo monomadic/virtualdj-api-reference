@@ -5,7 +5,7 @@ Curated reference for the waveform, rhythm, and song-position element family in 
 Evidence base:
 
 - The six official wiki pages (`Skin Rhythmzone.html`, `Skin Scratchwave.html`, `Skin BlockWave.html`, `Skin BeatTunnel.html`, `Skin songpos.html`, `Skin scratch.html`), all linked from the official Skin SDK index and all live as of 2026-07-12. Source: `Official`.
-- All 15 built-in skin XML files copied into this repo (`Skins/Built-In/Desktop/*.xml`, `Skins/Built-In/Lite/Lite.xml`, `Skins/Built-In/Remote/*.xml`) plus `Skins/SDK Example - Custom Browser Skin/skin.xml`. Source: `Built-in skin` / `Published skin` (SDK example).
+- All 15 built-in skin XML files copied into this repo (`xml/Skins/Built-In/Desktop/*.xml`, `xml/Skins/Built-In/Lite/Lite.xml`, `xml/Skins/Built-In/Remote/*.xml`) plus `xml/Skins/SDK Example - Custom Browser Skin/skin.xml`. Source: `Built-in skin` / `Published skin` (SDK example).
 
 Every attribute row below carries a source label. Attributes that appear only on the official page and never in shipped XML are marked `Official (not observed locally)`. Attributes that appear only in shipped XML are marked `Built-in skin`. Semantics this repo derived rather than read are marked `Inference`.
 
@@ -16,7 +16,7 @@ VirtualDJ skins have two unrelated ways to draw a deck waveform:
 1. **`<visual type="waveform">`** — the simple mechanism documented in [Skin SDK](Skin%20SDK.md) §`<visual>`. One deck's waveform in a box, no beat grid, no cue markers, no color scheme, no mouse behavior. Must sit inside a `<deck>` container. Source: `Official`.
 2. **`<rhythmzone>` / `<scratchwave>`** — the full-featured mechanism every built-in skin actually uses. `<rhythmzone>` draws the classic multi-deck "rhythm wave" (two opposing curves approaching a center needle); `<scratchwave>` draws a per-deck scrolling scratch waveform with beat grid, cue markers, and mouse nudge/scratch behavior. Source: `Official`, `Built-in skin`.
 
-No built-in skin in this repo's copies uses `<visual type="waveform">`; all use `<rhythmzone>` and `<scratchwave>`. Built-in desktop skins switch between the two displays with panels keyed to the `skinWaveformType` setting, e.g. `<panel name="horizontal_scratch_active" visibility="not setting skinWaveformType 0">` (`Skins/Built-In/Lite/Lite.xml` ~line 884). Source: `Built-in skin`.
+No built-in skin in this repo's copies uses `<visual type="waveform">`; all use `<rhythmzone>` and `<scratchwave>`. Built-in desktop skins switch between the two displays with panels keyed to the `skinWaveformType` setting, e.g. `<panel name="horizontal_scratch_active" visibility="not setting skinWaveformType 0">` (`xml/Skins/Built-In/Lite/Lite.xml` ~line 884). Source: `Built-in skin`.
 
 Usage counts across the 16 local skin XML files (15 built-in + SDK example):
 
@@ -72,7 +72,7 @@ Observed attribute matrix (25 `<colors>` blocks: 19 in rhythmzones, 6 in `<defin
 
 Values may be hex colors, named skin colors (`waveform_active1`), or `0`. Pro.xml ships two parallel rhythmzones that differ only in which slots are `0` versus colored (lines 4672-4695 vs 4698-4721), and the official ignore rule says black/transparent waves are skipped — so `0` appears to be the "don't draw this variant" switch. Source: `Built-in skin`; interpretation: `Inference`.
 
-Trimmed real example (`Skins/Built-In/Desktop/Pro.xml` lines 4698-4706):
+Trimmed real example (`xml/Skins/Built-In/Desktop/Pro.xml` lines 4698-4706):
 
 ```xml
 <colors
@@ -133,7 +133,7 @@ The play-position needle/marker drawn over the wave. Children `<pos>`, `<size>`,
 
 ### Full example
 
-`Skins/Built-In/Lite/Lite.xml` lines 864-882 (trimmed indentation):
+`xml/Skins/Built-In/Lite/Lite.xml` lines 864-882 (trimmed indentation):
 
 ```xml
 <rhythmzone mirror="false" upsidedown="false" fade="200" deck1="left" deck2="right">
@@ -178,7 +178,7 @@ Per-deck scrolling scratch waveform. Source: `Official`, `Built-in skin` (62 ins
 | `color2` | color | Secondary color (official: when primary isn't full) | `Official`, `Built-in skin` (58/62) |
 | `colorVocal`, `colorInstru`, `colorBeat` | colors | Stem-colored waveform colors | `Official (not observed locally)` |
 | `colorNoVocal`, `colorNoInstru`, `colorNoBeat` | colors | Colors when that stem is muted; default to darkened versions | `Official (not observed locally)` |
-| `nudge` | `yes`\|`no`\|`vinylmode` | Mouse behavior: nudge the song or scratch | `Official`; `Built-in skin` (`nudge="vinylmode"` in 4 Remote skin instances, e.g. `Skins/Built-In/Remote/16x9T.xml` ~line 1712) |
+| `nudge` | `yes`\|`no`\|`vinylmode` | Mouse behavior: nudge the song or scratch | `Official`; `Built-in skin` (`nudge="vinylmode"` in 4 Remote skin instances, e.g. `xml/Skins/Built-In/Remote/16x9T.xml` ~line 1712) |
 | `visibility` | bool or VDJScript | Conditional visibility | `Built-in skin` (6 instances) |
 
 **Children:** `<pos>`, `<size>`, `<grid>`, `<gridlines>` (see rhythmzone section above), `<cue>` (see above), `<overlay>` (see above). Source: `Official`, `Built-in skin`. Pro.xml also stacks multiple `<size ... condition="..."/>` children so the wave resizes per layout condition (Pro.xml ~lines 5822-5823). Source: `Built-in skin`.
@@ -205,7 +205,7 @@ Different attribute set than the rhythmzone grid — flat attributes instead of 
 
 ### Full example
 
-`Skins/Built-In/Desktop/Pro.xml` lines 4724-4738:
+`xml/Skins/Built-In/Desktop/Pro.xml` lines 4724-4738:
 
 ```xml
 <scratchwave deck="1" orientation="horizontal" color="scratch1" color2="scratch2">
@@ -260,7 +260,7 @@ Whole-song position/overview bar with waveform, hot-cue markers, and POI markers
 
 Built-in skins never inline songpos styling at the call site. They declare one template and instantiate it per deck/panel:
 
-`Skins/Built-In/Desktop/Pro.xml` lines 1336-1350:
+`xml/Skins/Built-In/Desktop/Pro.xml` lines 1336-1350:
 
 ```xml
 <define class="songpos" colorPlayed="darker" colorBass="colorbass" colorMed="colormed"
@@ -291,7 +291,7 @@ Instantiation (Pro.xml lines 1615-1618):
 </songpos>
 ```
 
-Source: `Built-in skin`. The SDK example uses `classdeck="left"` / `classdeck="right"` on its songpos defines to make per-deck template variants (`Skins/SDK Example - Custom Browser Skin/skin.xml` lines 19-33). Source: `Published skin`.
+Source: `Built-in skin`. The SDK example uses `classdeck="left"` / `classdeck="right"` on its songpos defines to make per-deck template variants (`xml/Skins/SDK Example - Custom Browser Skin/skin.xml` lines 19-33). Source: `Published skin`.
 
 ---
 
@@ -314,7 +314,7 @@ All four attributes are the standard inherited/global ones; built-in instances i
 | `<mousemask x="" y=""/>` | Black/white graphic mask for mouse detection | `Official`, `Built-in skin` (2 instances; most local mousemask usage is on `<slider>`) |
 | `<center x="" y=""/>` | Center point for circular mouse movement | `Official (not observed locally)` |
 
-Real example (`Skins/Built-In/Desktop/Pro.xml` lines 1203-1207, inside a jogwheel define):
+Real example (`xml/Skins/Built-In/Desktop/Pro.xml` lines 1203-1207, inside a jogwheel define):
 
 ```xml
 <scratch>
@@ -381,7 +381,7 @@ Source: `Official`.
 
 ## Related Elements That Are Not Part of This Family
 
-- **`<zoomed x="" y="" width="" height=""/>`** — despite the waveform-sounding name, every local instance (8 in 5 files, e.g. `Skins/Built-In/Lite/Lite.xml` line 1380) is a child of `<browser>` and defines the browser's zoomed-view rectangle. Not a waveform element. Source: `Built-in skin`.
+- **`<zoomed x="" y="" width="" height=""/>`** — despite the waveform-sounding name, every local instance (8 in 5 files, e.g. `xml/Skins/Built-In/Lite/Lite.xml` line 1380) is a child of `<browser>` and defines the browser's zoomed-view rectangle. Not a waveform element. Source: `Built-in skin`.
 - **`<songposbar>`** — does not exist. Not on the official Skin SDK index, no dedicated wiki page, zero hits in local skin XML. Source: `Official` (absence from index), `Built-in skin` (absence).
 - **Legacy `<rhythm>` top-level element** — the official rhythmzone page says rhythmzone superseded an older rhythm element with mask/up images. Every local `<rhythm>` hit is the rhythmzone *child* described above; the legacy standalone form has no local evidence and no live wiki page found. Source: `Official` (mention), `Built-in skin` (absence).
 - **`<visual type="waveform">` and `type="spectrum">`** — see [Skin SDK](Skin%20SDK.md) §`<visual>` and [VirtualDJ Reference](VirtualDJ%20Reference.md) §Skin SDK for the simple visual-based alternatives.
@@ -412,4 +412,4 @@ Unresolved items; do not treat any of these as documented behavior.
 
 - All line numbers are approximate (files may drift when re-copied from newer VirtualDJ versions).
 - Built-in skin XML is not strictly well-formed XML (unescaped `&` in scripts, duplicate attributes such as repeated conditional `<pos>`/`<size>`); parsers need to be lenient. Source: `Built-in skin` (parse attempts on all 15 files failed under a strict XML parser).
-- Counts in this document were generated by regex scans over `Skins/Built-In/**/*.xml` plus the SDK example skin on 2026-07-12.
+- Counts in this document were generated by regex scans over `xml/Skins/Built-In/**/*.xml` plus the SDK example skin on 2026-07-12.

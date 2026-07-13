@@ -109,7 +109,7 @@ def check_tracked_generated_files(errors: list[str]) -> None:
 
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
-    roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "Reference", ROOT / "Pads", ROOT / "Skins", ROOT / "Test"]
+    roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "Reference", ROOT / "xml", ROOT / "tests"]
     roots.append(ROOT / "TODO.md")
     files: list[Path] = []
     for root in roots:
@@ -134,10 +134,10 @@ def check_markdown_links(errors: list[str]) -> None:
 
 def check_test_fixture_inventory(errors: list[str]) -> None:
     readmes = [
-        ROOT / "Test" / "README.md",
-        ROOT / "Test" / "Pads" / "README.md",
+        ROOT / "tests" / "README.md",
+        ROOT / "tests" / "Pads" / "README.md",
     ]
-    fixture_names = sorted(path.name for path in (ROOT / "Test" / "Pads").glob("Reference - *.xml"))
+    fixture_names = sorted(path.name for path in (ROOT / "tests" / "Pads").glob("Reference - *.xml"))
     for readme in readmes:
         text = read(readme)
         for name in fixture_names:

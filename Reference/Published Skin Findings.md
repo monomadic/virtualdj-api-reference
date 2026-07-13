@@ -65,8 +65,8 @@ Notes:
 Local test, May 12, 2026:
 
 - Build: VirtualDJ 8.5.9307 / `850.9336.mac.2224`.
-- Runnable pad page: [Test/Pads/Reference - Mix FX Query Test.xml](../Test/Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml).
-- Runnable skin: [Test/Skins/MixFxQueryTest/skin.xml](../Test/Skins/MixFxQueryTest/skin.xml).
+- Runnable pad page: [tests/Pads/Reference - Mix FX Query Test.xml](../tests/Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml).
+- Runnable skin: [tests/Skins/MixFxQueryTest/skin.xml](../tests/Skins/MixFxQueryTest/skin.xml).
 - Setup: installed the pad page into the local VirtualDJ Pads folder, loaded the test skin, switched between `FILTER` and `ECHO`, and read the pad XML state through `pad_button_color`.
 
 | Context | Direct pattern | Indirect pattern | Result |
@@ -117,7 +117,7 @@ These were observed in the Denon skin and should be reconciled against the curre
 
 ## Built-In Skin Attribute Typos (Parser Tolerance Evidence)
 
-The generated [Skin XML Inventory](Skin%20XML%20Inventory.md) (regenerate with `just inventory`) surfaced two attribute typos in VirtualDJ's own shipped skins. The built-in skin XML under `Skins/Built-In/` is a verbatim reference copy, so the typos are preserved as-is; they matter here as evidence about how tolerant the skin parser is to unknown attribute names.
+The generated [Skin XML Inventory](Skin%20XML%20Inventory.md) (regenerate with `just inventory`) surfaced two attribute typos in VirtualDJ's own shipped skins. The built-in skin XML under `xml/Skins/Built-In/` is a verbatim reference copy, so the typos are preserved as-is; they matter here as evidence about how tolerant the skin parser is to unknown attribute names.
 
 Source class: `Built-in skin`.
 
@@ -129,7 +129,7 @@ All three touch-oriented Remote skins ship the mic volume slider with the `actio
 <slider ction="mic_volume" dblclick="mic_volume 100%" rightclick="mic_volume 100% ? mic_volume 0% : mic_volume 100%" disabled="not get_hasmic"/>
 ```
 
-Observed at [Skins/Built-In/Remote/4x3T.xml:2205](../Skins/Built-In/Remote/4x3T.xml), [Skins/Built-In/Remote/16x9T.xml:2076](../Skins/Built-In/Remote/16x9T.xml), and [Skins/Built-In/Remote/16x10T.xml:2076](../Skins/Built-In/Remote/16x10T.xml) (3 uses total; the inventory lists `ction` as a `<slider>` attribute). Since `ction` cannot be an intentional alias, the shipped mic volume sliders most likely have no drag action — only the `dblclick` and `rightclick` handlers work. This is strong evidence that the parser silently ignores unknown attributes rather than erroring.
+Observed at [xml/Skins/Built-In/Remote/4x3T.xml:2205](../xml/Skins/Built-In/Remote/4x3T.xml), [xml/Skins/Built-In/Remote/16x9T.xml:2076](../xml/Skins/Built-In/Remote/16x9T.xml), and [xml/Skins/Built-In/Remote/16x10T.xml:2076](../xml/Skins/Built-In/Remote/16x10T.xml) (3 uses total; the inventory lists `ction` as a `<slider>` attribute). Since `ction` cannot be an intentional alias, the shipped mic volume sliders most likely have no drag action — only the `dblclick` and `rightclick` handlers work. This is strong evidence that the parser silently ignores unknown attributes rather than erroring.
 
 ### `hightlight=` vs `highlight=` on `<line>`
 
@@ -140,7 +140,7 @@ Built-in skins split cleanly by spelling, with no file mixing the two:
 | `hightlight=` | 65 | Desktop `Pro.xml` (21), `Performance.xml` (25), `Vertical.xml` (19) | `"hightlight"` (61) or `"shadow"` (4) |
 | `highlight=` | 30 | `Lite/Lite.xml`, Desktop `Starter.xml`, Desktop `Essentials.xml` | `""` or `"darker"` |
 
-The misspelling is systematic in the Pro/Performance/Vertical family: those skins also declare matching color defines, e.g. `<define color="hightlight" value="#47494c"/>` at [Skins/Built-In/Desktop/Performance.xml:185](../Skins/Built-In/Desktop/Performance.xml), and reference them as both an attribute value and a plain `color=` value on other `<line>` elements. So the color *name* `hightlight` works regardless (define names are arbitrary strings); the open question is only the attribute name.
+The misspelling is systematic in the Pro/Performance/Vertical family: those skins also declare matching color defines, e.g. `<define color="hightlight" value="#47494c"/>` at [xml/Skins/Built-In/Desktop/Performance.xml:185](../xml/Skins/Built-In/Desktop/Performance.xml), and reference them as both an attribute value and a plain `color=` value on other `<line>` elements. So the color *name* `hightlight` works regardless (define names are arbitrary strings); the open question is only the attribute name.
 
 Two readings are possible and untested:
 

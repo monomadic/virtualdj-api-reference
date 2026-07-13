@@ -26,7 +26,7 @@ Refresh command:
 
 ```sh
 for f in "AUDIO FX" "FAMOUS" "INSTRUMENTS" "VIDEO & SCRATCH"; do
-  cp -p "/Applications/VirtualDJ.app/Contents/Resources/$f.xml" "Samplerbanks/Built-In/$f.xml"
+  cp -p "/Applications/VirtualDJ.app/Contents/Resources/$f.xml" "xml/Samplerbanks/Built-In/$f.xml"
 done
 ```
 

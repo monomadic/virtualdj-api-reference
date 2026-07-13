@@ -9,7 +9,7 @@ VirtualDJ splits controller support into two layers:
 1. **Device definition** — declares the hardware: MIDI notes/CCs or HID offsets, LEDs, encoders, value ranges. Built-in definitions ship *compiled* inside the app (`Resources/controllers.dat` and `Devices/controllers.dat`, a non-XML binary), so they cannot be copied here as XML. Custom definitions are XML; the official schema lives on the wiki (`ControllerDefinitionMIDIv8.html`, `ControllerDefinitionHIDv8.html`).
 2. **Mapper** — binds named controls from a device definition to VDJScript. This folder contains real mappers. Root element: `<mapper device="" author="" version="" date="">`; every binding is `<map value="CONTROL_NAME" action="vdjscript" />`.
 
-See [Reference/Mapper XML.md](../Reference/Mapper%20XML.md) for the format reference.
+See [Reference/Mapper XML.md](../../Reference/Mapper%20XML.md) for the format reference.
 
 ## Local/
 

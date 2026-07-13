@@ -23,7 +23,7 @@ This is the highest-leverage manual test in the queue: it resolves the three gra
 
 Start here:
 
-- [Test/Pads/Reference - Grammar Battery Test.xml](Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml)
+- [tests/Pads/Reference - Grammar Battery Test.xml](tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml)
 
 Read first:
 
@@ -53,7 +53,7 @@ The mapper reference's device-definition schema is official-doc-derived but neve
 Start here:
 
 - [Reference/Mapper XML.md](Reference/Mapper%20XML.md)
-- [Mappers/README.md](Mappers/README.md)
+- [xml/Mappers/README.md](xml/Mappers/README.md)
 
 Done when:
 
@@ -66,7 +66,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - Dual Deck Mode Test.xml](Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
+- [tests/Pads/Reference - Dual Deck Mode Test.xml](tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
 - [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
 
 Read first:
@@ -93,7 +93,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - Hidden Button Editor Tests.xml](Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
+- [tests/Pads/Reference - Hidden Button Editor Tests.xml](tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
 - [Reference/Undocumented VDJScript Candidates.md](Reference/Undocumented%20VDJScript%20Candidates.md)
 
 Read first:
@@ -122,7 +122,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - FX Introspection Test.xml](Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml)
+- [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml)
 
 Read first:
 
@@ -151,7 +151,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - FX Bank Test.xml](Test/Pads/Reference%20-%20FX%20Bank%20Test.xml)
+- [tests/Pads/Reference - FX Bank Test.xml](tests/Pads/Reference%20-%20FX%20Bank%20Test.xml)
 
 Read first:
 
@@ -177,7 +177,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - Release FX Test.xml](Test/Pads/Reference%20-%20Release%20FX%20Test.xml)
+- [tests/Pads/Reference - Release FX Test.xml](tests/Pads/Reference%20-%20Release%20FX%20Test.xml)
 
 Read first:
 
@@ -203,7 +203,7 @@ Status: Ready
 
 Start here:
 
-- [Test/Pads/Reference - BeatGrid Command Test.xml](Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml)
+- [tests/Pads/Reference - BeatGrid Command Test.xml](tests/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml)
 
 Read first:
 

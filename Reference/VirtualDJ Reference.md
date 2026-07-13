@@ -180,58 +180,58 @@ Source labels used below:
   Source: `Published skin`, `Official`, `Community`, `Inference`
 
 - Built-in skins:
-  Use [Skins/Built-In](../Skins/Built-In/) as semi-official executable examples of skin XML shipped with VirtualDJ.
+  Use [xml/Skins/Built-In](../xml/Skins/Built-In/) as semi-official executable examples of skin XML shipped with VirtualDJ.
   Why: app-bundle skins are stronger evidence than community skins for how Atomix exercises the skin engine, but they still need curation before becoming preferred local patterns.
   Source: `Built-in skin`, `Inference`
 
 - Built-in plugin UI XML:
-  Treat [Skins/Built-In/Plugin-UI/AFX_beatgrid.xml](../Skins/Built-In/Plugin-UI/AFX_beatgrid.xml) as evidence for compact effect/plugin GUI surfaces, not as a full desktop or Remote skin template.
+  Treat [xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml](../xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml) as evidence for compact effect/plugin GUI surfaces, not as a full desktop or Remote skin template.
   Why: it is a tiny `341x139` skin with no explicit `name`, `image`, `preview`, `nbdecks`, `<deck>`, `<panel>`, browser, or initialization scaffolding. Its controls run in the current plugin context with hardcoded BeatGrid commands such as `effect_command 'set 00'`, `effect_command 'get 00'`, and `effect_command 'cur 0'`.
-  Source: `Built-in skin` (`Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
+  Source: `Built-in skin` (`xml/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
 
 - Built-in pad pages:
-  Use [Pads/Built-In](../Pads/Built-In/) as semi-official executable examples of pad-page XML shipped with VirtualDJ.
+  Use [xml/Pads/Built-In](../xml/Pads/Built-In/) as semi-official executable examples of pad-page XML shipped with VirtualDJ.
   Why: app-bundle pad pages are stronger evidence than community examples for how Atomix exercises pad helpers, but they still need curation before becoming preferred local patterns.
   Source: `Built-in pad page`, `Inference`
 
 ## Real Examples In This Repo
 
-For the current pad-page inventory, status labels, built-in page copies, and maintenance checklist, see [Pads/README.md](../Pads/README.md). For reproducible documentation fixtures, see [Test/README.md](../Test/README.md).
+For the current pad-page inventory, status labels, built-in page copies, and maintenance checklist, see [xml/Pads/README.md](../xml/Pads/README.md). For reproducible documentation fixtures, see [tests/README.md](../tests/README.md).
 
 Recommended runnable pad-page examples:
 
-- [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml)
+- [Reference - Slot FX.xml](../xml/Pads/Reference%20-%20Slot%20FX.xml)
   Canonical slot-based audio FX pads.
 
-- [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml)
+- [Reference - ColorFX.xml](../xml/Pads/Reference%20-%20ColorFX.xml)
   Canonical filter and ColorFX selection patterns using the current verbs.
 
-- [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [Reference - Page Aware Sampler.xml](../xml/Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
   Legacy page-aware sampler labels, colors, and actions retained for comparison with newer sampler findings.
 
-- [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml)
+- [SAMPLER READ ONLY.xml](../xml/Pads/SAMPLER%20READ%20ONLY.xml)
   Confirmed read-only multi-page sampler with absolute empty-slot guards.
 
-- [Reference - Sparse Helper Tests.xml](../Test/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
+- [Reference - Sparse Helper Tests.xml](../tests/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
   Manual-test harness for sparse official helpers such as `connect`, `system`, `open_stem_creator`, `karaoke_venue_name`, and `dualdeckmode_decks`.
 
 Built-in pad-page examples:
 
-- [Built-In/README.md](../Pads/Built-In/README.md)
+- [Built-In/README.md](../xml/Pads/Built-In/README.md)
   Copied app-bundle `pads_*.xml` pages from VirtualDJ `8.5.9307` / `18.0.9336`; use as `Built-in pad page` evidence rather than curated recommendations.
 
 Skin examples:
 
-- [Built-In/README.md](../Skins/Built-In/README.md)
+- [Built-In/README.md](../xml/Skins/Built-In/README.md)
   Copied app-bundle desktop, Lite, Remote, and plugin UI skins from VirtualDJ `8.5.9307` / `18.0.9336`; use as `Built-in skin` evidence rather than curated recommendations.
 
-- [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
+- [ModularSkeleton README](../xml/Skins/ModularSkeleton/README.md)
   Build-time XInclude workflow, `<define class>` system, and named color patterns.
 
-- [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
+- [ModularSkeleton built skin](../xml/Skins/ModularSkeleton/build/skin.xml)
   Flat installed output showing real `<define>`, `<panel>`, `<deck>`, and `<visual>` usage.
 
-- [GraveRaver Build Demo](../Skins/GraveRaver/README.md)
+- [GraveRaver Build Demo](../xml/Skins/GraveRaver/README.md)
   Minimal XInclude source tree that exists only to demonstrate the build system. Do not treat it as a polished skin reference.
 
 ## Skin SDK
@@ -384,7 +384,7 @@ Use named groups when the user is choosing a mode and you want it remembered.
 
 Source: `Official`
 
-Remote skins in `Skins/Built-In/Remote/` show two practical view-switching patterns:
+Remote skins in `xml/Skins/Built-In/Remote/` show two practical view-switching patterns:
 
 ```xml
 <button action="toggle '$rmbrowser'"/>
@@ -819,7 +819,7 @@ Why this is the safest rack-owning reference pattern:
 - it avoids name-based ambiguity when several effects are loaded
 - it makes clear that the pad owns both the effect choice and the parameter preset
 
-Use [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
+Use [Reference - Slot FX.xml](../xml/Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
 
 Source: `Official`, `Local test`
 
@@ -970,7 +970,7 @@ Notes:
 - In pad XML `query=""` attributes, use `filter_label 'name'` for selected-state checks instead of running selector actions such as `filter_selectcolorfx 'Name'`.
 - CTO guidance says that the dedicated `colorfx` slot only exposes approved ColorFX-compatible effects, while extra slots are more flexible.
 
-Use [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml) for a working repo example.
+Use [Reference - ColorFX.xml](../xml/Pads/Reference%20-%20ColorFX.xml) for a working repo example.
 
 Source: `Official`, `Official forum`
 
@@ -1151,7 +1151,7 @@ Practical rule:
 - visible sampler-pad UI: page-aware
 - fixed sampler-slot utility controls: absolute
 
-Use [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
+Use [SAMPLER READ ONLY.xml](../xml/Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../xml/Pads/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
 
 Source: `Official`, `Local test`, `Inference`
 
@@ -1162,7 +1162,7 @@ VirtualDJ forum examples and older local examples use `sampler_loaded <n> 'auto'
 
 Local diagnostic testing showed this pattern is not reliable for page-aware sampler empty-slot checks:
 
-- Test page: [Reference - Sampler Loaded Test.xml](../Test/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
+- Test page: [Reference - Sampler Loaded Test.xml](../tests/Pads/Reference%20-%20Sampler%20Loaded%20Test.xml)
 - Build: VirtualDJ 8.5.9307 / 18.0.9336
 - Date: 2026-05-21
 - Setup: sampler bank page 2 (`9-16`), slot 8 loaded, slot 16 empty
@@ -1182,7 +1182,7 @@ For sampler pages that must never record into empty slots, use `sampler_pad_page
 
 Use `sampler_pad <pad>` for loaded actions and `nothing` for empty actions. Do not include `sampler_rec`, `sampler_assign`, or `drop=` on a read-only page. For intentionally blank names, return `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later pages.
 
-Working example: [SAMPLER READ ONLY.xml](../Pads/SAMPLER%20READ%20ONLY.xml)
+Working example: [SAMPLER READ ONLY.xml](../xml/Pads/SAMPLER%20READ%20ONLY.xml)
 
 Source: `Local test`, `Inference`
 
@@ -1316,7 +1316,7 @@ Use build-time modularity:
 - compose with XInclude or another XML preprocessor locally
 - build one flattened `skin.xml` before install
 
-This is the pattern demonstrated by [ModularSkeleton](../Skins/ModularSkeleton/README.md). Its flattened `build/skin.xml` output is the installed-form reference.
+This is the pattern demonstrated by [ModularSkeleton](../xml/Skins/ModularSkeleton/README.md). Its flattened `build/skin.xml` output is the installed-form reference.
 
 Why:
 
@@ -1328,7 +1328,7 @@ Source: `Inference`
 
 ### Skeleton In This Repo
 
-Use [ModularSkeleton](../Skins/ModularSkeleton/README.md) as the starting point.
+Use [ModularSkeleton](../xml/Skins/ModularSkeleton/README.md) as the starting point.
 
 It demonstrates:
 
@@ -1379,21 +1379,21 @@ Community forum examples cited for method choices:
 
 Repo examples:
 
-- [32 Samples.xml](../Pads/32%20Samples.xml)
-- [AUTO CUES.xml](../Pads/AUTO%20CUES.xml)
-- [COLOR FX.xml](../Pads/COLOR%20FX.xml)
-- [CUE.xml](../Pads/CUE.xml)
-- [CUE 16.xml](../Pads/CUE%2016.xml)
-- [CUE SCAN.xml](../Pads/CUE%20SCAN.xml)
-- [PLAY 16.xml](../Pads/PLAY%2016.xml)
-- [PUSH FX.xml](../Pads/PUSH%20FX.xml)
-- [Reference - Slot FX.xml](../Pads/Reference%20-%20Slot%20FX.xml)
-- [Reference - ColorFX.xml](../Pads/Reference%20-%20ColorFX.xml)
-- [Reference - Page Aware Sampler.xml](../Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
-- [SAMPLER.xml](../Pads/SAMPLER.xml)
-- [SAMPLER SIMPLE.xml](../Pads/SAMPLER%20SIMPLE.xml)
-- [TRANSPORT.xml](../Pads/TRANSPORT.xml)
-- [Built-in skins](../Skins/Built-In/README.md)
-- [ModularSkeleton README](../Skins/ModularSkeleton/README.md)
-- [ModularSkeleton built skin](../Skins/ModularSkeleton/build/skin.xml)
-- [GraveRaver Build Demo](../Skins/GraveRaver/README.md)
+- [32 Samples.xml](../xml/Pads/32%20Samples.xml)
+- [AUTO CUES.xml](../xml/Pads/AUTO%20CUES.xml)
+- [COLOR FX.xml](../xml/Pads/COLOR%20FX.xml)
+- [CUE.xml](../xml/Pads/CUE.xml)
+- [CUE 16.xml](../xml/Pads/CUE%2016.xml)
+- [CUE SCAN.xml](../xml/Pads/CUE%20SCAN.xml)
+- [PLAY 16.xml](../xml/Pads/PLAY%2016.xml)
+- [PUSH FX.xml](../xml/Pads/PUSH%20FX.xml)
+- [Reference - Slot FX.xml](../xml/Pads/Reference%20-%20Slot%20FX.xml)
+- [Reference - ColorFX.xml](../xml/Pads/Reference%20-%20ColorFX.xml)
+- [Reference - Page Aware Sampler.xml](../xml/Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [SAMPLER.xml](../xml/Pads/SAMPLER.xml)
+- [SAMPLER SIMPLE.xml](../xml/Pads/SAMPLER%20SIMPLE.xml)
+- [TRANSPORT.xml](../xml/Pads/TRANSPORT.xml)
+- [Built-in skins](../xml/Skins/Built-In/README.md)
+- [ModularSkeleton README](../xml/Skins/ModularSkeleton/README.md)
+- [ModularSkeleton built skin](../xml/Skins/ModularSkeleton/build/skin.xml)
+- [GraveRaver Build Demo](../xml/Skins/GraveRaver/README.md)

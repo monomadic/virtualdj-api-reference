@@ -101,16 +101,16 @@ Source labels searched: `Built-in pad page`, `Built-in skin`.
 
 The extractor scanned exact token matches for the 35 non-official candidates above across:
 
-- `Pads/Built-In/`
-- `Skins/Built-In/`
-- `Samplerbanks/Built-In/`
+- `xml/Pads/Built-In/`
+- `xml/Skins/Built-In/`
+- `xml/Samplerbanks/Built-In/`
 
 Result: none of the 35 candidates currently has shipped XML evidence elsewhere in this repo.
 
 ## Next-Step Promotion Targets
 
 - Immediate XML-backed promotions: none from this mismatch pass.
-- Highest-value catalog-only local tests: `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` group (`flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`). Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) for the candidate inventory and [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) as the starter harness for low-risk probes.
+- Highest-value catalog-only local tests: `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` group (`flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`). Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) for the candidate inventory and [Reference - Hidden Button Editor Tests.xml](../tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) as the starter harness for low-risk probes.
 - Hardware/context-dependent catalog candidates: `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable`.
 - Runtime-only names to watch, not promote yet: `get_pad_page_name`, `pad_page_favorite`, `pad_page_split`, `remote_action`, `hot_cue_stutter`, `timecode_no_jump`, and `setting_if_unchanged`. Some now have forum, changelog, or published-skin context; keep behavior promotion in [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) and the local tracker until a current build run confirms syntax and side effects.
 

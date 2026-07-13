@@ -21,9 +21,9 @@ from zipfile import ZipFile
 DEFAULT_APP = Path("/Applications/VirtualDJ.app")
 DEFAULT_AUDIT = Path("Reference/Official VDJScript Coverage Audit.md")
 DEFAULT_XML_ROOTS = (
-    Path("Pads/Built-In"),
-    Path("Skins/Built-In"),
-    Path("Samplerbanks/Built-In"),
+    Path("xml/Pads/Built-In"),
+    Path("xml/Skins/Built-In"),
+    Path("xml/Samplerbanks/Built-In"),
 )
 
 

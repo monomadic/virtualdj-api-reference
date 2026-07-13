@@ -94,13 +94,13 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Lyrics AI and Skins](Lyrics%20AI%20and%20Skins.md) - AI lyrics, skin styling surface, filters, and useful script quirks.
 - [Application Internals](Application%20Internals.md) - Low-level macOS paths, file formats, databases, stem sidecars, and shell examples.
 - [Skin SDK](Skin%20SDK.md) - Local skin SDK reference.
-- [Built-in skins](../Skins/Built-In/README.md) - App-bundle skin XML and assets used as semi-official executable examples.
+- [Built-in skins](../xml/Skins/Built-In/README.md) - App-bundle skin XML and assets used as semi-official executable examples.
 - [VDJScript Verbs](VDJScript%20Verbs.md) - Curated verb notes.
 - [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) - Names-only comparison against the live official VDJScript appendix.
-- [Built-in pad pages](../Pads/Built-In/README.md) - App-bundle `pads_*.xml` copies used as semi-official executable examples.
+- [Built-in pad pages](../xml/Pads/Built-In/README.md) - App-bundle `pads_*.xml` copies used as semi-official executable examples.
 - [Published Skin Findings](Published%20Skin%20Findings.md) - Provenance log for commands and patterns mined from working public skins.
 - [Filter Syntax](Filter%20Syntax.md) - Browser filter notes.
 - [Example Skin XML Objects](Example%20Skin%20XML%20Objects.md) - Local skin XML examples.
-- [GraveRaver build demo](../Skins/GraveRaver/README.md) - Minimal XInclude source tree for the build workflow; not a polished skin reference.
-- [GraveRaver build file](../Skins/GraveRaver/justfile) - Build-time XInclude workflow.
-- [ModularSkeleton build skin](../Skins/ModularSkeleton/build/skin.xml) - Minimal modular skin scaffold output.
+- [GraveRaver build demo](../xml/Skins/GraveRaver/README.md) - Minimal XInclude source tree for the build workflow; not a polished skin reference.
+- [GraveRaver build file](../xml/Skins/GraveRaver/justfile) - Build-time XInclude workflow.
+- [ModularSkeleton build skin](../xml/Skins/ModularSkeleton/build/skin.xml) - Minimal modular skin scaffold output.

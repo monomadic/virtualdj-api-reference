@@ -8,8 +8,8 @@
   page-aware empty-slot checks: on sampler page 2, sampler_loaded 8 'auto'
   still returned true for absolute slot 8 while visible pad 8 mapped to empty
   slot 16. Use absolute-slot guards derived from sampler_pad_page instead;
-  see Pads/SAMPLER READ ONLY.xml (canonical) and
-  Test/Pads/Reference - Sampler Loaded Test.xml.
+  see xml/Pads/SAMPLER READ ONLY.xml (canonical) and
+  tests/Pads/Reference - Sampler Loaded Test.xml.
 -->
 <page name="SAMPLER">
   <pad1 name="`sampler_loaded 1 'auto' ? sampler_pad 1 : '(empty 1)'`" color="sampler_loaded 1 'auto' ? sampler_color 1 'auto' : dim" query="sampler_pad_page &amp; param_add -1 &amp; param_multiply 8 &amp; param_add 1 &amp; sampler_play ? blink 1bt : on" drop="param_equal `sampler_pad_page` 1 ? sampler_assign 1 : param_equal `sampler_pad_page` 2 ? sampler_assign 9 : param_equal `sampler_pad_page` 3 ? sampler_assign 17 : param_equal `sampler_pad_page` 4 ? sampler_assign 25 : param_equal `sampler_pad_page` 5 ? sampler_assign 33 : param_equal `sampler_pad_page` 6 ? sampler_assign 41 : param_equal `sampler_pad_page` 7 ? sampler_assign 49 : param_equal `sampler_pad_page` 8 ? sampler_assign 57 : param_equal `sampler_pad_page` 9 ? sampler_assign 65 : param_equal `sampler_pad_page` 10 ? sampler_assign 73 : param_equal `sampler_pad_page` 11 ? sampler_assign 81 : param_equal `sampler_pad_page` 12 ? sampler_assign 89 : param_equal `sampler_pad_page` 13 ? sampler_assign 97 : param_equal `sampler_pad_page` 14 ? sampler_assign 105 : param_equal `sampler_pad_page` 15 ? sampler_assign 113 : param_equal `sampler_pad_page` 16 ? sampler_assign 121 : nothing">sampler_loaded 1 'auto' ? sampler_pad 1 'auto' : nothing</pad1>

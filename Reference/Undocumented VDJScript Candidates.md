@@ -99,7 +99,7 @@ Sources:
 
 ## First Probe Queue
 
-Use [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
+Use [Reference - Hidden Button Editor Tests.xml](../tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
 for the current low-risk pad-page probes.
 
 | Candidate group | Why it is first | Minimal result to record |

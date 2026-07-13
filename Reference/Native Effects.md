@@ -172,26 +172,26 @@ These examples are known working forms from local reference pad pages and built-
 
 | Effect | Working form | Source |
 | --- | --- | --- |
-| Echo | `effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Echo Out | `effect_select 1 'Echo Out' & effect_slider 1 1 80% & effect_slider 1 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Reverb | `effect_select 2 'Reverb' & effect_slider 2 1 45% & effect_slider 2 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Delay | `effect_select 3 'Delay' & effect_slider 3 1 75% & effect_slider 3 2 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `Pads/Reference - Slot FX.xml` |
-| BeatGrid | `effect_select 1 'BeatGrid' & effect_slider 1 1 75%` | `Local test`: `Pads/Reference - Slot FX.xml` |
+| Echo | `effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Echo Out | `effect_select 1 'Echo Out' & effect_slider 1 1 80% & effect_slider 1 2 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Reverb | `effect_select 2 'Reverb' & effect_slider 2 1 45% & effect_slider 2 2 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Delay | `effect_select 3 'Delay' & effect_slider 3 1 75% & effect_slider 3 2 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
+| BeatGrid | `effect_select 1 'BeatGrid' & effect_slider 1 1 75%` | `Local test`: `xml/Pads/Reference - Slot FX.xml` |
 
 **PadFX presets:**
 
 | Effect | Working form | Source |
 | --- | --- | --- |
-| Cut | `padfx 'cut' 50% 0.5bt` | `Local test`: `Pads/PUSH FX.xml` |
-| Cut | `padfx 'cut' 40% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
-| Flanger | `padfx 'flanger' 70% 1bt` | `Local test`: `Pads/PUSH FX.xml` |
-| BeatGrid | `padfx 'beatgrid'` | `Local test`: `Pads/PUSH FX.xml` |
-| Echo on vocal stem | `padfx 'echo' 50% 1bt 65% 75% 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
-| Reverb on vocal stem | `padfx 'reverb' 55% 2bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
-| Echo Out on vocal stem | `padfx_single 'echo out' 80% 1bt 'stemfx:vocal'` | `Local test`: `Pads/PUSH FX.xml` |
+| Cut | `padfx 'cut' 50% 0.5bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Cut | `padfx 'cut' 40% 1bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Flanger | `padfx 'flanger' 70% 1bt` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| BeatGrid | `padfx 'beatgrid'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Echo on vocal stem | `padfx 'echo' 50% 1bt 65% 75% 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Reverb on vocal stem | `padfx 'reverb' 55% 2bt 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
+| Echo Out on vocal stem | `padfx_single 'echo out' 80% 1bt 'stemfx:vocal'` | `Local test`: `xml/Pads/PUSH FX.xml` |
 | Echo Out on vocal stem | `padfx "echo out" 80% 1bt "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
 | Reverb on vocal stem | `padfx "Reverb" 80% "stemfx:vocal"` | `Built-in pad page`: `pads_stems+fx.xml` |
 | BeatGrid on instrumental/melorhythm stem | `padfx "Beat Grid" "stemfx:MeloRhythm"` | `Built-in pad page`: `pads_stems+fx.xml` |

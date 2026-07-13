@@ -16,19 +16,19 @@ Do not hand-edit these copies. Refresh them from the app bundle when updating to
 Refresh commands:
 
 ```sh
-mkdir -p Skins/Built-In/Desktop Skins/Built-In/Remote Skins/Built-In/Lite Skins/Built-In/Plugin-UI
-unzip -o -q /Applications/VirtualDJ.app/Contents/Resources/skin.zip -d Skins/Built-In/Desktop
-unzip -o -q /Applications/VirtualDJ.app/Contents/Resources/remoteskin.zip -d Skins/Built-In/Remote
-cp -p /Applications/VirtualDJ.app/Contents/Resources/Lite.xml Skins/Built-In/Lite/
-cp -p /Applications/VirtualDJ.app/Contents/Resources/lite.png Skins/Built-In/Lite/
-cp -p Skins/Built-In/Desktop/gfx-basic.png Skins/Built-In/Lite/
-cp -p /Applications/VirtualDJ.app/Contents/Resources/AFX_beatgrid.xml Skins/Built-In/Plugin-UI/
-cp -p /Applications/VirtualDJ.app/Contents/Resources/AFX_BeatGrid.png Skins/Built-In/Plugin-UI/
+mkdir -p xml/Skins/Built-In/Desktop xml/Skins/Built-In/Remote xml/Skins/Built-In/Lite xml/Skins/Built-In/Plugin-UI
+unzip -o -q /Applications/VirtualDJ.app/Contents/Resources/skin.zip -d xml/Skins/Built-In/Desktop
+unzip -o -q /Applications/VirtualDJ.app/Contents/Resources/remoteskin.zip -d xml/Skins/Built-In/Remote
+cp -p /Applications/VirtualDJ.app/Contents/Resources/Lite.xml xml/Skins/Built-In/Lite/
+cp -p /Applications/VirtualDJ.app/Contents/Resources/lite.png xml/Skins/Built-In/Lite/
+cp -p xml/Skins/Built-In/Desktop/gfx-basic.png xml/Skins/Built-In/Lite/
+cp -p /Applications/VirtualDJ.app/Contents/Resources/AFX_beatgrid.xml xml/Skins/Built-In/Plugin-UI/
+cp -p /Applications/VirtualDJ.app/Contents/Resources/AFX_BeatGrid.png xml/Skins/Built-In/Plugin-UI/
 ```
 
 Important parser note: these files are kept as shipped. Some built-in skin XML does not pass generic `xmllint` checks because the VirtualDJ skin parser accepts VDJScript-heavy attributes, raw `&` / `&&`, and other constructs that are not strict XML. Do not "fix" these copies unless the goal is to maintain a separate normalized fixture.
 
-These copies also contain genuine attribute typos shipped by Atomix — `ction="mic_volume"` instead of `action=` in all three Remote skins, and `hightlight=` alongside `highlight=` on `<line>` in the Desktop skins. Keep them as-is; they are evidence of parser tolerance to unknown attributes. See [Built-In Skin Attribute Typos](../../Reference/Published%20Skin%20Findings.md#built-in-skin-attribute-typos-parser-tolerance-evidence) in Published Skin Findings.
+These copies also contain genuine attribute typos shipped by Atomix — `ction="mic_volume"` instead of `action=` in all three Remote skins, and `hightlight=` alongside `highlight=` on `<line>` in the Desktop skins. Keep them as-is; they are evidence of parser tolerance to unknown attributes. See [Built-In Skin Attribute Typos](../../../Reference/Published%20Skin%20Findings.md#built-in-skin-attribute-typos-parser-tolerance-evidence) in Published Skin Findings.
 
 ## Desktop
 

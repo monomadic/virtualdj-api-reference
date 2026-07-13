@@ -49,7 +49,7 @@ See [Completeness Roadmap](Completeness%20Roadmap.md) for the ordered evidence b
 
 - No compact-remainder names currently remain.
 - Next depth pass: revisit `system` only if official examples or harmless parameters are found, then repeat/expand `dualdeckmode_decks` in an appropriate deck/controller context.
-- Next catalog-only pass: test `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` Button Editor catalog group before promoting them into normal user-facing verb guidance. Starter harness: [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml).
+- Next catalog-only pass: test `stem_volume`, `sampler_inputgain`, `pad_pressure_switch`, `pad_page_insplit`, and the `flip_*` Button Editor catalog group before promoting them into normal user-facing verb guidance. Starter harness: [Reference - Hidden Button Editor Tests.xml](../tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml).
 - Next hardware/context pass for catalog-only names: verify `assign_related_controller`, `rane_motor_enable`, `rane_timecode`, and `rane_timecode_enable` only with matching hardware or reliable official context.
 - Runtime string-table names such as `get_pad_page_name`, `pad_page_favorite`, `pad_page_split`, `hot_cue_stutter`, `timecode_no_jump`, and `setting_if_unchanged` should stay discovery-only until official, Button Editor, shipped XML, or local behavior evidence appears.
 - Next hardware pass: verify controller-specific helpers such as `controllerscreen_deck`, `controller_battery`, `phase_*`, `rzx_*`, `djc_*`, and `denon_platter` on target hardware.

@@ -11,10 +11,10 @@ Use this file to choose the next evidence pass. Record detailed run results in [
 | Official VDJScript names | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for current counts. | Keep count consistency automated and refresh when the official appendix changes. |
 | Official behavior depth | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for the current formal `Needs local test` gap. | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
 | Button Editor hidden candidates | 14 catalog-only names, 21 stricter runtime-string candidates, and 37 flag1-hidden compiled taxonomy rows outside the official appendix | Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) to keep them discovery-only until local behavior or stronger source evidence exists. |
-| VDJScript grammar | Operator precedence, nested-ternary associativity, and backtick argument interpolation are documented as unresolved | Run [Reference - Grammar Battery Test](../Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) and promote results into `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md`. |
+| VDJScript grammar | Operator precedence, nested-ternary associativity, and backtick argument interpolation are documented as unresolved | Run [Reference - Grammar Battery Test](../tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) and promote results into `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md`. |
 | Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior; container schema documented in [Pad Page XML](Pad%20Page%20XML.md) | Resolve that doc's Open Questions (menu-DSL semantics, `custompadsmode` trigger, `pressure`/`right_click`) with small local probes. |
 | Skin SDK | Broad coverage incl. the waveform family ([Skin Waveforms](Skin%20Waveforms.md)) and root-level support elements; remaining element gaps tracked in the generated [Skin XML Inventory](Skin%20XML%20Inventory.md) | Finish `visual type` passes with small canary skins; close inventory-reported undocumented elements (browser `<colors>` children, `<text2>`/`<text3>`); refine the inventory doc-matcher for numbered pad elements. |
-| Mappers | Format rewritten from real files; four working mappers in [Mappers/Local](../Mappers/README.md); device-definition schema official-doc-derived | Author a minimal custom MIDI device definition + mapper pair and load-test it (a `SIMPLE_MIDI` device context already exists locally). |
+| Mappers | Format rewritten from real files; four working mappers in [xml/Mappers/Local](../xml/Mappers/README.md); device-definition schema official-doc-derived | Author a minimal custom MIDI device definition + mapper pair and load-test it (a `SIMPLE_MIDI` device context already exists locally). |
 | FX behavior | Good slot, ColorFX, PadFX, and stem-FX model notes | Add repeatable FX introspection, bank save/load, release-FX, and plugin-command passes; goal is a per-effect slider table for the native effects catalog. |
 | Application internals and stems | Useful macOS-first notes and stem sidecar format documentation | Convert known unknowns into fixture-backed checks when safe. |
 
@@ -25,7 +25,7 @@ Use these labels when deciding whether a topic is ready to promote:
 | Tier | Meaning | Good destination |
 | --- | --- | --- |
 | Searchable | Name or topic is present with conservative source labels | `VDJScript Verbs.md` compact section or topical note |
-| Fixture-ready | A safe local repro asset or clear manual script exists | `Test/` plus tracker row |
+| Fixture-ready | A safe local repro asset or clear manual script exists | `tests/` plus tracker row |
 | Locally observed | Build, setup, steps, and observed result are recorded | `VDJScript Local Test Tracker.md` |
 | Curated | Behavior is useful enough for copyable examples and caveats | `VirtualDJ Reference.md`, topical docs, canonical pads |
 | Hardware verified | Device-specific helper tested on matching hardware | Mapper/controller docs and hardware-specific rows |
@@ -36,14 +36,14 @@ These are the best next tests because they do not require new controller hardwar
 
 | Priority | Topic | Fixture or source | Promotion target |
 | ---: | --- | --- | --- |
-| 0 | VDJScript grammar: ternary/`&` precedence, nested-ternary associativity, backtick arguments | [Reference - Grammar Battery Test.xml](../Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) | Replace the "precedence is unproven" caveats in `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md` with tested rules. Highest correctness leverage per test run. |
-| 1 | `dualdeckmode_decks` | [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Test any visible dual-deck pair/controller context. |
-| 2 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
-| 3 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
-| 4 | `effect_has_*`, `get_effect_slider_*`, `get_effect_button_*` | [Reference - FX Introspection Test.xml](../Test/Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Build a reliable generic FX control table. |
-| 5 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../Test/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
-| 6 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../Test/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
-| 7 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../Test/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
+| 0 | VDJScript grammar: ternary/`&` precedence, nested-ternary associativity, backtick arguments | [Reference - Grammar Battery Test.xml](../tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) | Replace the "precedence is unproven" caveats in `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md` with tested rules. Highest correctness leverage per test run. |
+| 1 | `dualdeckmode_decks` | [Reference - Dual Deck Mode Test.xml](../tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Test any visible dual-deck pair/controller context. |
+| 2 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
+| 3 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
+| 4 | `effect_has_*`, `get_effect_slider_*`, `get_effect_button_*` | [Reference - FX Introspection Test.xml](../tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml) | Build a reliable generic FX control table. |
+| 5 | `effect_bank_save` / `effect_bank_load` | [Reference - FX Bank Test.xml](../tests/Pads/Reference%20-%20FX%20Bank%20Test.xml) | Document restored effect names, active state, sliders, and deck scope. |
+| 6 | `effect_releaseslider*`, `is_releasefx` | [Reference - Release FX Test.xml](../tests/Pads/Reference%20-%20Release%20FX%20Test.xml) | Separate release-FX behavior from normal deck FX. |
+| 7 | `effect_command` for BeatGrid only | [Reference - BeatGrid Command Test.xml](../tests/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml) | Keep plugin-command examples plugin-specific. |
 | 8 | `flip_*`, `setting_if_unchanged`, `masterbpm`, `master_beat_num`, `all_decks`, `combine_query` | [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) and hidden-candidate tracker rows | Add careful probes before any user-facing recommendation. |
 
 `system` is intentionally not in the normal no-hardware queue. Revisit it only if an official example, bundled-resource context, or clearly harmless parameter appears.

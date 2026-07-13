@@ -11,7 +11,7 @@ runtime behavior here and fold stable guidance into [Skin SDK](Skin%20SDK.md).
 
 Source: `Local test` from a temporary GraveRaver skin canary; build not
 recorded. See also the maintained canary fixture in
-[Test/Skins/PlaceholderConditionTest](../Test/Skins/PlaceholderConditionTest/).
+[tests/Skins/PlaceholderConditionTest](../tests/Skins/PlaceholderConditionTest/).
 
 The official docs describe `*placeholder` as enabling simple math. Local
 testing showed a broader practical rule for expression-like contexts:
