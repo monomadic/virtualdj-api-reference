@@ -85,16 +85,29 @@ Available elements as children of `<skin>`:
 
 ### Interactive Elements
 - `<button>` - Clickable button
-- `<slider>` - Movable slider control
-- `<switch>` - Multi-state toggle
-- `<knob>` - Rotary knob control
+- `<slider>` - Movable slider control (rotary knobs are `<slider orientation="round">`, not a separate element)
+- `<menu>` - Clickable custom menu object
+- `<dropzone>` - Drag-and-drop target area for loading tracks
+
+> `<icon>` is not a direct `<skin>` child: it is an overlay child of `<button>`,
+> `<define>`, and `<menu>`. See the `<icon>` section under Element Details.
+
+> There is no `<switch>` or `<knob>` element. Neither name appears in the
+> official Skin SDK element list or in any built-in skin. Multi-state toggles
+> are buttons driven by `query=""`/`action=""`; knobs are round sliders.
+> Source: `Official` (Skin SDK element list), `Built-in skin` (zero uses).
 
 ### Display Elements
 - `<visual>` - Static/dynamic graphics display
 - `<textzone>` - Text display area
 - `<video>` - Video output display
 - `<led>` - LED indicator
-- `<equalizer>` - Spectrum analyzer
+- `<equalizer>` - Spectrum analyzer (`Official` element; not used by any built-in skin, which draw spectra with `<visual>` instead)
+- `<cover>` - Album-art display for a deck, the browser, automix, or karaoke
+
+> The waveform display family — `<rhythmzone>`, `<scratchwave>`, `<wave>`,
+> `<songpos>`, `<blockwave>`, `<beattunnel>`, `<scratch>` — is covered
+> separately in [Skin Waveforms](Skin%20Waveforms.md).
 
 ### Window Elements
 - `<window>` - Popup/separate window
@@ -111,6 +124,7 @@ Available elements as children of `<skin>`:
 - `<browserinfo>` - Selected-track info and prelisten area
 - `<pluginzone>` - Docked effect GUI area
 - `<sampler>` - Sampler trigger-pad view
+- `<prelisten>` - Standalone prelisten player (also a `<browser><colors>` styling child)
 
 ### Simple Shapes
 - `<square>` - Rectangle/rounded rectangle
@@ -119,6 +133,19 @@ Available elements as children of `<skin>`:
 
 ### Special Elements
 - `<define>` - Define reusable element templates
+
+### Root-Level Support Elements
+Non-visual or window-level elements placed directly under `<skin>`
+(see "Root-Level Support Elements" below for details):
+- `<oninit>` / `<onload>` - Run a VDJScript action once when the skin loads
+- `<font>` - Default skin font, plus browser variants `<fonttoolbar>`, `<fontsearch>`, `<fontheader>`, `<fontgridtitle>`, `<fontplugins>`
+- `<customicons>` - Replace/override the default icon sprite
+- `<background>` - Window background fill or tile
+- `<dialogs>` - Dark/light mode for native VirtualDJ dialogs
+- `<copyright>` - Copyright text metadata
+- `<logo>` - Placement of the VirtualDJ logo
+- `<grabzone>` - Area that drags the whole window
+- `<resizezone>` - Area that resizes the window
 
 ---
 
@@ -353,6 +380,8 @@ Container that displays multiple items with smooth fade transitions. Shows only 
 - Context-sensitive control panels that appear when using specific features
 - Status notifications that stack and auto-dismiss
 - Progressive disclosure UI where multiple contextual panels may be visible simultaneously
+
+Source: `Official` (Skin SDK element list and `Skin Stack.html` wiki page). Not observed in any built-in skin; treat the attribute details as official-doc-derived rather than locally verified.
 
 ---
 
@@ -650,6 +679,146 @@ Use `rightclick=""` when the menu is exposed by a VDJScript action.
 
 ---
 
+### `<icon>`
+
+Glyph overlay drawn on top of a `<button>`, `<define>`, or `<menu>`. This is
+the standard built-in-skin way to put a recolorable arrow, chevron, settings
+gear, close cross, etc. on a vector or transparent button without baking the
+glyph into each button graphic.
+
+`<icon>` is not in the official Skin SDK element list; the only official
+appearance is a usage example on the CustomIcons wiki page
+(`<icon sysicon="arrowleft" width="32" height="32"/>`). Everything below is
+reverse-engineered from bundled skins: 750 uses across 17 built-in skin files
+(Desktop `Vertical.xml` 136, `Performance.xml` 128, `Pro.xml` 110, plus the
+Remote and Lite skins).
+
+**Syntax:** `<icon sysicon="" x="" y="" width="" height="" color="" colorover="" colordown="" colorselected="" align="" dx="" dy=""/>`
+
+Always self-closing. No closing `</icon>` tag or element children appear
+anywhere in the built-in skins.
+
+**Glyph source (pick one):**
+
+| Attribute | Description | Source |
+| --- | --- | --- |
+| `sysicon=""` | Name of a system icon (see [Explicit `sysicon` Names](#explicit-sysicon-names) below). Most common source: 515 of 750 uses. Defines often forward it as a placeholder, e.g. `sysicon="[SYSICON]"` | `Built-in skin`, `Official` (CustomIcons page example) |
+| `x=""` `y=""` | Coordinates of a glyph cropped from the skin image instead of a system icon (226 uses). The crop is used as a recolorable mask: the same state-color attributes apply, e.g. `<icon x="288" y="101" width="11" height="11" coloroff="textdark" colorover="textover" coloron="texton"/>` (`Performance.xml`) | `Built-in skin` |
+
+No `file=""` attribute is observed on `<icon>`; a separate icon image file is
+declared via root-level `<customicons file=""/>`, not per icon.
+
+**Size and placement:**
+
+| Attribute | Description | Source |
+| --- | --- | --- |
+| `width=""` `height=""` | Rendered size in pixels (on ~740 of 750 uses). Icons scale freely; common sizes are 12-40 px | `Built-in skin` |
+| `align=""` | Horizontal alignment inside the parent button: `"center"` (112 uses) or `"left"` (36 uses) | `Built-in skin` |
+| `dx=""` `dy=""` | Pixel offset from the default/aligned position; accepts signed values like `dx="+160"` `dy="-1"` | `Built-in skin` |
+| `iconsize=""` | Rare (3 uses, all `<icon sysicon="headphones" width="65" height="65" iconsize="65"/>` in Remote skins). Presumably the source cell size, matching the `customicons` attribute of the same name; exact semantics not yet confirmed | `Built-in skin` |
+
+**State colors:**
+
+Mirrors the button graphic states. All values are normal skin color values
+(predefined names, defines, hex):
+
+| Attribute | Button state | Built-in uses |
+| --- | --- | --- |
+| `color=""` | Base/default | 406 |
+| `coloroff=""` | Off | 224 |
+| `colorup=""` | Up | 14 |
+| `coloron=""` | On (`query=""` true) | 3 |
+| `colorover=""` | Mouse over | 477 |
+| `colordown=""` | Pressed | 505 |
+| `colorselected=""` | Selected | 354 |
+| `coloroverselected=""` | Hover while selected | 12 |
+
+**Other observed attributes:**
+
+- `important=""` - 52 uses, values `"important"` (44) and `"true"` (8), always
+  on icons that share a button with text or sit in dense toolbars. Its exact
+  effect is not yet confirmed locally; do not rely on it until tested.
+
+**Children:** None.
+
+**Example (system icon on a menu button, `Skins/Built-In/Lite/Lite.xml`):**
+```xml
+<menu tooltip="SKIN LAYOUT\nSelect the layout adapted to your mixing style">
+    <pos x="+50" y="+0"/>
+    <size width="123" height="27"/>
+    <text dx="10" width="90" fontsize="11" color="textoff3" colorover="textover"
+          align="left" text="VDJ LITE" localize="true" important="true"/>
+    <icon dx="45" dy="-1" sysicon="chevrondown" height="17" width="17"
+          color="textdark" colorover="textover" colordown="texton"/>
+</menu>
+```
+
+**Example (skin-image glyph with state colors, `Skins/Built-In/Desktop/Performance.xml`):**
+```xml
+<button ...>
+    <off shape="circle" color="darker" border_size="1" border="bordercolor3"/>
+    <over shape="circle" color="dark" border_size="1" border="bordercolor3"/>
+    <selected shape="circle" color="dark" border_size="1" border="bordercolor3"/>
+    <icon x="288" y="101" width="11" height="11"
+          coloroff="textdark" colorover="textover" coloron="texton"/>
+</button>
+```
+
+See also [Default Icons](#default-icons) for the `sysicon` name table and
+action-name icon behavior, and `<customicons>` under Root-Level Support
+Elements for overriding the icon sprite.
+
+Source: `Built-in skin` (attribute set and usage counts), `Official` (CustomIcons page example only)
+
+---
+
+### `<dropzone>`
+
+Interactive area where files can be dragged and dropped to load them onto a
+deck. Since VirtualDJ 2020 it can draw visual feedback (an `<over>` overlay)
+while a drag is hovering.
+
+**Syntax:** `<dropzone deck="" panel="" visibility="" os="">`
+
+**Attributes:**
+- `deck=""` - Target deck for the dropped file (global attribute). Built-in
+  skins use `"1"`-`"4"` and `"left"`/`"right"`, or omit it entirely inside a
+  `<deck>` container so the zone follows the enclosing deck
+- `panel=""`, `visibility=""`, `os=""` - Standard global attributes
+
+**Children:**
+- `<pos x="" y=""/>` - Position (required)
+- `<size width="" height=""/>` - Dimensions (required)
+- `<over color="" border="" border_size="" shape=""/>` - Visual feedback while
+  a drag hovers the zone (VirtualDJ 2020+). Accepts normal color values;
+  `shape=""` is `"square"` or `"circle"`. Built-in skins typically use a
+  transparent fill with a deck-colored border
+- `<mousemask x="" y=""/>` - Optional B&W graphic mask for hit detection (`Official`; not used by any built-in skin)
+- `<mouserect x="" y="" width="" height=""/>` - Optional rectangular hit zone (`Official`; not used by any built-in skin)
+- `<mousecircle x="" y="" r=""/>` - Optional circular hit zone (`Official`; not used by any built-in skin)
+
+**Example (`Skins/Built-In/Desktop/Vertical.xml`):**
+```xml
+<dropzone deck="1">
+    <pos x="+22-20" y="+0"/>
+    <size width="159" height="342-2"/>
+    <over color="transparent" border_size="1" border="deckcolor"/>
+</dropzone>
+```
+
+Conditional `<pos>`/`<size>` children work inside dropzones like elsewhere:
+the same `Vertical.xml` zones carry alternate `<pos ... condition="var_not_equal '@$4decks' 0"/>`
+rows for the four-deck layout.
+
+Built-in cross-check: 66 uses across 10 built-in skin files
+(`Performance.xml` 20, `Pro.xml` 16, `Vertical.xml` 10, Lite/Starter 4 each).
+Only `deck=""`, `<pos>`, `<size>`, and `<over>` appear in practice; the mouse
+mask/rect/circle children are official-doc-only so far.
+
+Source: `Official` ([Skin SDK Dropzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Dropzone.html)), `Built-in skin`
+
+---
+
 ### `<slider>` and `<knob>`
 
 Movable slider control for faders, knobs, and other continuous value adjustments. Sliders can be horizontal, vertical, or circular (knobs).
@@ -916,7 +1085,7 @@ Display area for static or dynamic text.
 **Text Element Attributes:**
 - `font` - Font name (default: Arial)
 - `weight` - Font weight: `"bold"`, `"normal"`
-- `fontsize` - Size in pixels
+- `fontsize` - Size in pixels. `size` is also accepted as a synonym: built-in skins overwhelmingly use `fontsize=` (~1,600 uses vs 5), but `size=` appears in shipped skins and is `Local test` confirmed working (see `Skin Runtime Findings.md`). Prefer `fontsize` to match built-in convention.
 - `color` - Text color
 - `align` - `"left"`, `"center"`, `"right"`
 - `valign` - `"top"`, `"center"`, `"bottom"`
@@ -1021,36 +1190,6 @@ In local tests, the child-`<pos>` group rendered but did not move horizontally, 
         <pos x="+90" y="+0"/>
     </button>
 </group>
-```
-
----
-
-### `<stack>`
-
-Container with fade-in/fade-out transition effects for switching between items.
-
-**Syntax:** `<stack fadein="" fadeout="">`
-
-**Attributes:**
-- `fadein` - Fade-in duration (e.g., `"200ms"`)
-- `fadeout` - Fade-out duration (e.g., `"500ms"`)
-
-**Children:**
-- `<pos>`, `<size>` - Container dimensions
-- `<slot>` - Positioning for items
-- `<item class="" visibility="">` - Individual stack items
-
-**Example:**
-```xml
-<stack fadein="200ms" fadeout="500ms">
-    <pos x="100" y="100"/>
-    <size width="300" height="200"/>
-    <slot x="+0" y="+0"/>
-    
-    <item class="looppanel" visibility="is_using 'loop' 1000ms"/>
-    <item class="hotcuepanel" visibility="is_using 'cue' 1000ms"/>
-    <item class="defaultpanel"/>
-</stack>
 ```
 
 ---
@@ -1167,6 +1306,55 @@ Display video output.
 
 ---
 
+### `<cover>`
+
+Displays album art. Defaults to the calling deck's cover; `source=""` can pull
+art from the browser selection, automix, karaoke, or background-music track
+instead.
+
+**Syntax:** `<cover source="" shape="" rotate="" linkdrop="" visibility="" os="" panel="" deck="">`
+
+**Attributes:**
+- `source=""` - Art source: `"browser"` (selected browser track), `"automix"`
+  (track playing in the automix deck), `"automix 1"` (next automix track),
+  `"karaoke"` / `"karaoke 1"` (karaoke deck / next karaoke track),
+  `"backgroundmusic"`. Default: the calling deck's cover. (`Official`; no
+  built-in skin uses `source=""` — they all show the enclosing deck's cover)
+- `shape=""` - `"circle"` for circular art
+- `rotate=""` - `"yes"` to spin the art while the deck plays (default no).
+  With `rotate="yes"` and no explicit shape, the cover renders circular. This
+  is the dominant built-in pattern (28 of 54 uses, jog-wheel center art)
+- `linkdrop=""` - `"yes|no"`: whether dropping a video file on the cover links
+  it to the loaded track. Falls back to the `videoCreateLinkOnDrop` setting
+  when unspecified
+- Global attributes: `visibility=""` (built-ins use both queries and constant
+  opacities such as `visibility="0.7"`), `os=""`, `panel=""`, `deck=""`
+
+**Children:**
+- `<pos x="" y=""/>` - Position
+- `<size width="" height=""/>` - Dimensions
+- `<clipmask x="" y="" width="" height=""/>` - B&W mask image for custom shapes (`Official`)
+- `<default x="" y="" width="" height=""/>` - Observed in built-in skins only:
+  coordinates of a skin-image graphic, by all appearances the placeholder art
+  shown when the track has no cover. Semantics not yet confirmed locally
+
+**Example (`Skins/Built-In/Lite/Lite.xml`, jog-wheel center):**
+```xml
+<cover rotate="yes">
+    <pos x="+19" y="+26"/>
+    <size width="184" height="184"/>
+    <default x="1628" y="26" width="184" height="184"/>
+</cover>
+```
+
+Built-in cross-check: 54 uses across 16 built-in skin files; observed
+attributes are `rotate` (28), `visibility` (26), `shape="circle"` (2), and
+relative `x`/`y` offsets (2).
+
+Source: `Official` ([Skin Cover](https://virtualdj.com/wiki/Skin%20Cover.html)), `Built-in skin`, `Inference` (meaning of `<default>`)
+
+---
+
 ### `<led>`
 
 LED indicator that changes based on conditions.
@@ -1198,17 +1386,21 @@ LED indicator that changes based on conditions.
 
 Spectrum analyzer visualization.
 
-**Syntax:** `<equalizer type="" nb="" color="" source="">`
+**Syntax:** `<equalizer nb="" type="" color="" width="" offset="" slow="" bass="" mirror="" canstretch="" visibility="" os="" panel="" deck="">`
 
 **Attributes:**
-- `type` - Display type:
-  - `"bar"` - Bar graph
-  - `"line"` - Line graph
-- `nb` - Number of bands
-- `color` - Color or color gradient
-- `source` - Audio source:
-  - `"deck"` - Current deck
-  - `"master"` - Master output
+- `nb` - Number of equalizer bars/bands
+- `type` - Layout type:
+  - `"horizontal"` - Linear bar layout
+  - `"circle"` - Circular layout
+- `color` - Equalizer graphics color
+- `width` - Bar width as a fraction (`0.0`-`1.0`)
+- `offset` - Circle end position (`0.0`-`1.0`, default `0.7`; circle type)
+- `slow` - `"true"|"false"` smoother visual rendering
+- `bass` - Bass frequency position: `"top"|"bottom"|"left"|"outside"|"middle"`
+- `mirror` - `"false"|"true"` mirror from center
+- `canstretch` - `"false"|"true"` maintain aspect ratio on resize
+- Inherited common attributes: `visibility=""`, `os=""`, `panel=""`, `deck=""`
 
 **Children:**
 - `<pos x="" y=""/>` - Position
@@ -1216,11 +1408,13 @@ Spectrum analyzer visualization.
 
 **Example:**
 ```xml
-<equalizer type="bar" nb="32" color="#00ff00" source="master">
+<equalizer type="horizontal" nb="32" color="#00ff00" deck="master">
     <pos x="100" y="500"/>
     <size width="800" height="100"/>
 </equalizer>
 ```
+
+Source: `Official` (`Skin Equalizer.html` wiki page). Not observed in any built-in skin; built-in skins draw spectra with `<visual>` types instead. An earlier revision of this section listed `type="bar|line"` and a `source=""` attribute — neither exists in the official element reference.
 
 ---
 
@@ -1484,6 +1678,53 @@ Source: `Built-in skin` (`Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`, `9x19P.
 
 ---
 
+### `<prelisten>`
+
+Standalone prelisten player. The prelisten controls normally live inside the
+browser info area, but this element lets a skin position and style the player
+anywhere.
+
+**Syntax:** `<prelisten>`
+
+**Attributes:** None documented.
+
+**Children:**
+- `<pos x="" y=""/>` - Position
+- `<size width="" height=""/>` - Dimensions
+- `<colors background="" border="" selected="" cursor="" button="" buttonbackground="" buttonselected=""/>` -
+  Optional styling; when omitted, inherits from `<browser><colors><prelisten>`
+  or the defaults
+
+**Example (official wiki):**
+```xml
+<prelisten>
+    <pos x="0" y="50"/>
+    <size width="280" height="30"/>
+    <colors background="#1F1F1F" border="#7A7A7A" selected="#136024"
+            cursor="#18A639" button="#CBCBCB" buttonbackground="#5C5C5C"
+            buttonselected="#18A639"/>
+</prelisten>
+```
+
+**Do not confuse with the browser color child of the same name.** All six
+built-in uses of `<prelisten>` are one-line styling children inside
+`<browser><colors>`, next to `<scrollbars>`, `<info>`, and `<search>`:
+
+```xml
+<colors>
+    ...
+    <search background="browserback" text="textbrowser"/>
+    <prelisten background="background2"/>
+</colors>
+```
+
+No built-in skin uses the standalone element, so treat the standalone form as
+official-doc-derived rather than locally verified.
+
+Source: `Official` ([Skin Prelisten](https://virtualdj.com/wiki/Skin%20Prelisten.html)), `Built-in skin` (colors-child form)
+
+---
+
 ### `<menu>`
 
 Clickable skin object that opens a custom menu at its own hit area.
@@ -1565,6 +1806,335 @@ Create a separate popup window.
     <!-- Window contents -->
 </window>
 ```
+
+---
+
+## Root-Level Support Elements
+
+Non-visual, window-level, or one-line elements placed directly under `<skin>`.
+Built-in skins put `<copyright>` and `<font>` immediately after the `<skin>`
+open tag and the `<oninit>` block at the very end of the file, but position in
+the file is a convention, not a requirement.
+
+### `<oninit>` / `<onload>`
+
+Runs a VDJScript action once when the skin initializes (loads or reloads).
+`onload` is the official alias of `oninit`; built-in skins use both names
+interchangeably.
+
+**Syntax:** `<oninit action=""/>`
+
+**Attributes:**
+- `action=""` - VDJScript action to perform. Chain multiple actions with `&`,
+  or simply declare several `<oninit>` elements (built-in skins do the latter)
+- `condition=""` - Observed on built-in `<onload>` elements only: standard
+  structural condition evaluated at load time, e.g. layout-variable checks
+  (`Built-in skin`, `Skins/Built-In/Desktop/Vertical.xml`)
+
+**Children:** None.
+
+**Built-in patterns.** Desktop skins end with a block of `setting_setdefault`
+calls so the skin can express its preferred defaults without overwriting the
+user's explicit choices (`Skins/Built-In/Desktop/Pro.xml`, end of file):
+
+```xml
+<oninit action="setting_setdefault skinWaveformType 'shapes'"/>
+<oninit action="setting_setdefault coverflow 'no'"/>
+<oninit action="setting_setdefault browserPadding 25%"/>
+<oninit action="setting_setdefault EqMode 'modernEQ'"/>
+<oninit action="setting_setdefault autoBPMMatch 'smart'"/>
+<oninit action="setting_setdefault autoKey on"/>
+<oninit action="setting_setdefault smartPlay off"/>
+<oninit action="setting_setdefault autoPitchLock off"/>
+```
+
+Remote skins reset view variables (`<oninit action="set '$rmsettings' 0"/>`),
+and `Vertical.xml` uses conditional `<onload>` rows to derive one variable
+from others at load time:
+
+```xml
+<onload action="set '$singlerack' 0"/>
+<onload action="set '$singlerack' 1"
+        condition="var_equal '@$decklayout' 1 && var_not_equal '@$4decks' 0"/>
+```
+
+Built-in cross-check: 42 `<oninit>` uses in 13 files plus 27 `<onload>` uses
+in 3 files.
+
+Source: `Official` ([Skin OnInit](https://virtualdj.com/wiki/Skin%20OnInit.html)), `Built-in skin`
+
+### `<font>` and Browser Font Variants
+
+Sets the default typeface for the skin, or for the browser area when nested
+inside `<browser>` (built-in skins put the variants inside their browser
+define, next to `<colors>`).
+
+**Syntax:** `<font name="Arial" size="20" weight="bold"/>`
+
+**Attributes:**
+- `name=""` (or `font=""`) - Typeface name
+- `size=""` - Font size
+- `weight=""` - `"bold"` for bold
+
+**Children:** None.
+
+**Variants.** The official docs list specialized elements with the same
+attributes, except they use `font=""` instead of `name=""` for the typeface:
+
+| Element | Scope | Built-in uses |
+| --- | --- | --- |
+| `<font>` | Skin default / browser list text | 22 |
+| `<fontsearch>` | Browser search box and edit controls | 6 |
+| `<fontheader>` | Browser header text | 6 |
+| `<fontgridtitle>` | Browser grid titles | 6 |
+| `<fonttoolbar>` | Browser toolbar labels | 6 |
+| `<fontplugins>` | Plugin-related text | 0 |
+
+**Built-in pattern.** Every bundled desktop skin declares
+`<font name="Arial"/>` as the second or third root element, then sizes the
+browser fonts inside its browser define:
+
+```xml
+<font name="Arial" size="20"/>
+<fontsearch size="18"/>
+<fontheader size="16"/>
+<fontgridtitle size="18"/>
+<fonttoolbar size="14"/>
+```
+
+Built-in skins only ever set `name="Arial"` and `size=""`; `weight=""` and the
+variants' `font=""` attribute are official-doc-only so far.
+
+Source: `Official` ([Skin Font](https://virtualdj.com/wiki/Skin%20Font.html)), `Built-in skin`
+
+### `<customicons>`
+
+Overrides the default icon sprite with a grid of custom icons, either from a
+separate PNG in the skin zip or from a region of the main skin image.
+
+**Syntax:** `<customicons file="" x="" y="" iconsize="" nb="" nbx=""/>`
+
+**Attributes:**
+- `file=""` - Optional image filename inside the skin zip; when omitted, the
+  icons are read from the skin image
+- `x=""` `y=""` - Top-left corner of the icon grid in the image
+- `iconsize=""` - Width/height of each icon cell in pixels (default 64)
+- `nb=""` - Total number of icons in the grid
+- `nbx=""` - Number of columns (rows are computed as `nb/nbx`)
+- `condition=""` - Structural condition (built-in pattern below)
+
+**Children:** None.
+
+To override only some icons, supply a grid with transparent cells for the
+icons you want to keep; missing icons fall back to the defaults. Icons
+referenced by `sysicon` name stay recolorable and resizable (see
+[Default Icons](#default-icons)).
+
+**Built-in pattern.** The four big desktop skins each ship one conditional
+override that swaps the icon sprite for the light "daylight" color scheme:
+
+```xml
+<customicons file="icons_daylight.png" nb="64" nbx="16"
+             condition="var_equal '@$colorscheme' 2"/>
+```
+
+Note the built-ins omit `x=""`, `y=""`, and `iconsize=""` when using a
+dedicated file, even though the official page marks the coordinates as
+required; the file's grid evidently starts at the origin with the default cell
+size.
+
+Source: `Official` ([Skin CustomIcons](https://virtualdj.com/wiki/Skin%20CustomIcons.html)), `Built-in skin`
+
+### `<background>` (root level)
+
+Fills the skin window background, either by tiling a region of the skin image
+or with a flat color. No official wiki page is known for this element; the
+details below are derived from built-in skins (24 root-level uses across 16
+files).
+
+**Tiling form (the standard desktop-skin window background):**
+
+```xml
+<background x="1817" y="0" width="100" height="100" repeat="true"/>
+```
+
+- `x=""` `y=""` `width=""` `height=""` - Region of the skin image to use as the tile
+- `repeat=""` - `"true"` to tile the region across the window
+- `condition=""` - Structural condition; `Pro.xml` selects one of four tiles
+  by color scheme:
+
+```xml
+<background x="1817" y="0"   width="100" height="100" repeat="true" condition="var_equal '@$colorscheme' 0"/>
+<background x="1817" y="210" width="100" height="100" repeat="true" condition="var_equal '@$colorscheme' 1"/>
+<background x="1817" y="106" width="100" height="100" repeat="true" condition="var_equal '@$colorscheme' 2"/>
+<background x="1817" y="312" width="100" height="100" repeat="true" condition="var_equal '@$colorscheme' 3"/>
+```
+
+**Color/border form (nested):** inside container defines, `<background>` acts
+as a flat fill with optional borders. Every bundled desktop skin's browser
+define starts with:
+
+```xml
+<background color="browserback" bordercolortop="bordercolor"
+            bordercolor="bordercolor" bordersize="1"/>
+```
+
+Observed nested attributes: `color=""`, `shape="square"`, `bordercolor=""`,
+`bordercolortop=""`, `bordersize=""`. Most nested uses (81) are inside
+waveform `<overlay>` blocks — see [Skin Waveforms](Skin%20Waveforms.md) for
+that family.
+
+Attribute semantics beyond the patterns above are not yet confirmed; no
+official page has been found to cross-check against.
+
+Source: `Built-in skin`
+
+### `<dialogs>`
+
+Selects whether native VirtualDJ dialogs and popups follow a dark or light
+style to match the skin. No official wiki page is known; derived from 10 uses
+in 6 built-in skins.
+
+**Syntax:** `<dialogs darkmode="true|false"/>`
+
+**Attributes:**
+- `darkmode=""` - `"true"` or `"false"`
+- `condition=""` - Structural condition; the desktop skins pair two
+  declarations with the color-scheme variable:
+
+```xml
+<dialogs darkmode="true"  condition="var_not_equal '@$colorscheme' 2"/>
+<dialogs darkmode="false" condition="var_equal '@$colorscheme' 2"/>
+```
+
+**Children:** None.
+
+Source: `Built-in skin`
+
+### `<copyright>`
+
+Copyright metadata for the skin. Unlike most skin elements it takes text
+content, not attributes, and every built-in skin declares it as the first
+child of `<skin>`:
+
+```xml
+<skin name="VirtualDJ • Lite" version="2020" ...>
+<copyright>Atomix Productions</copyright>
+<font name="Arial"/>
+```
+
+No attributes are observed (16 uses in 16 built-in files, all identical in
+form). No official wiki page is known; where the text surfaces in the UI is
+not yet confirmed.
+
+Source: `Built-in skin`
+
+### `<logo>`
+
+Places the VirtualDJ logo. Note the official warning: the logo has a minimum
+size defined by the skin resolution, so a size that looks fine at high
+resolution can cause issues at lower resolutions.
+
+**Syntax:** `<logo circle="" os="">`
+
+**Attributes:**
+- `circle=""` - `"true"` renders the logo inside a red circular boundary
+  (default `"false"`)
+- Global attributes: `visibility=""`, `os=""`, `panel=""`
+
+**Children:**
+- `<pos x="" y=""/>` - Position
+- `<size width="" height=""/>` - Dimensions
+
+**Built-in pattern.** 23 uses in 16 files, all plain `<logo>` with `<pos>` and
+`<size>`; the desktop skins declare one per OS-specific top bar so the logo
+sits opposite the window buttons (`Skins/Built-In/Desktop/Pro.xml`):
+
+```xml
+<group name="applicationbuttons" condition="is_mac">
+    <logo>
+        <pos x="1920-115" y="8"/>
+        <size width="115" height="27"/>
+    </logo>
+    ...
+</group>
+<group name="applicationbuttons" condition="is_pc">
+    <logo>
+        <pos x="10" y="8"/>
+        <size width="115" height="27"/>
+    </logo>
+    ...
+</group>
+```
+
+`circle=""` is official-doc-only so far (no built-in use).
+
+Source: `Official` ([Skin Logo](https://virtualdj.com/wiki/Skin%20Logo.html)), `Built-in skin`
+
+### `<grabzone>`
+
+Area the user can drag to move the VirtualDJ window when it is not maximized.
+If no grabzone is defined, any area not covered by a defined element acts as
+one — so skins that cover the whole window with elements need explicit
+grabzones to stay movable.
+
+**Syntax:** `<grabzone>`
+
+**Attributes:** None.
+
+**Children:**
+- `<pos x="" y=""/>` - Position
+- `<size width="" height=""/>` - Dimensions
+
+**Built-in pattern.** 28 uses in 7 files. Desktop skins declare four thin
+zones along the window edges (`Skins/Built-In/Desktop/Pro.xml`):
+
+```xml
+<grabzone>
+    <pos x="0" y="0"/>
+    <size width="1920" height="48"/>
+</grabzone>
+<grabzone>
+    <pos x="0" y="0"/>
+    <size width="15" height="1080"/>
+</grabzone>
+<grabzone>
+    <pos x="0" y="1080-15"/>
+    <size width="1920" height="15"/>
+</grabzone>
+<grabzone>
+    <pos x="1920-15" y="0"/>
+    <size width="15" height="1080"/>
+</grabzone>
+```
+
+Source: `Official` ([Skin GrabZone](https://virtualdj.com/wiki/Skin%20GrabZone.html)), `Built-in skin`
+
+### `<resizezone>`
+
+Area that resizes the VirtualDJ window when it is not maximized, typically a
+small square in the bottom-right corner.
+
+**Syntax:** `<resizezone>`
+
+**Attributes:** None.
+
+**Children:**
+- `<pos x="" y=""/>` - Position
+- `<size width="" height=""/>` - Dimensions
+
+**Example (official wiki):**
+```xml
+<resizezone>
+    <pos x="1920-20" y="1080-20"/>
+    <size width="20" height="20"/>
+</resizezone>
+```
+
+No built-in skin uses `<resizezone>` (0 uses), so treat it as
+official-doc-derived rather than locally verified.
+
+Source: `Official` ([Skin ResizeZone](https://virtualdj.com/wiki/Skin%20ResizeZone.html))
 
 ---
 
