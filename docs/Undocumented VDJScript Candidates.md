@@ -109,6 +109,7 @@ for the current low-risk pad-page probes.
 | `get_pad_page_name`, `pad_page_insplit`, `pad_page_favorite`, `pad_page_split` | Pad-page state helpers are low-risk and may improve page tooling. | Normal page, split page, and favorite page readbacks with the exact page names shown in VirtualDJ. |
 | `is_colorfx`, `effect_beats_sliderindex` | Query-only plugin helpers should be safe to observe. | Readbacks while switching normal FX, ColorFX, and beat-length controls. |
 | `masterbpm`, `master_beat_num` | Exact execute/query symbols suggest useful master-deck diagnostics. | Readbacks across master-deck changes, tempo changes, and beatgrid movement; compare with `get_bpm` and `get_beat_num`. |
+| `browser_filter`, `browser_search`, `none` | Used by Atomix-authored factory mappers copied into [examples/Mappers/Local/](../examples/Mappers/README.md) (surfaced by `tools/lint_mappers.py` verb checks), so they demonstrably execute, but none is in the official appendix. | For `browser_filter ""`/`browser_search ""`: observed browser state change from a keyboard mapping. For `none`: whether it behaves as an LED-query off/no-op like `nothing`/`off` in the `... : none` fallback position. |
 
 ## Deferred Probe Queue
 

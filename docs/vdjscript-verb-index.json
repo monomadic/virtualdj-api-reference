@@ -1,0 +1,7531 @@
+{
+ "_meta": {
+  "generated_by": "tools/extract_verb_index.py",
+  "source": "docs/VDJScript Verbs.md + docs/Official VDJScript Coverage Audit.md",
+  "counts": {
+   "total": 991,
+   "curated": 142,
+   "catalog": 641,
+   "alias": 59,
+   "official-name-only": 149,
+   "official": 991
+  }
+ },
+ "verbs": {
+  "action_deck": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Check button deck",
+   "example": "action_deck 1 ? actionA : actionB",
+   "official": true
+  },
+  "add_favoritefolder": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Make folder a favorite/monitored folder",
+   "example": "add_favoritefolder",
+   "official": true
+  },
+  "add_filterfolder": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Create filter folder",
+   "example": "add_filterfolder",
+   "official": true
+  },
+  "add_list": {
+   "tier": "curated",
+   "aliases": [
+    "add_virtualfolder"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "add_to_list": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Add selected songs to list",
+   "example": "add_to_list 'Warmup'",
+   "aliases": [
+    "virtualfolder_add"
+   ],
+   "official": true
+  },
+  "add_virtualfolder": {
+   "tier": "alias",
+   "canonical": "add_list",
+   "official": true
+  },
+  "adjust_cbg": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Adjust beat grid",
+   "example": "adjust_cbg +2",
+   "official": true
+  },
+  "apply_audio_config": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Apply current audio config",
+   "example": "apply_audio_config",
+   "official": true
+  },
+  "assign_controller": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Assign controller to deck",
+   "example": "deck 1 assign_controller \"CDJ400\" 2",
+   "official": true
+  },
+  "auto_bpm_transition": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Gradually move BPM toward the other deck",
+   "example": "auto_bpm_transition",
+   "official": true
+  },
+  "auto_bpm_transition_options": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Configure auto BPM transition features",
+   "example": "auto_bpm_transition_options \"length\"",
+   "official": true
+  },
+  "auto_crossfade": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Auto crossfade",
+   "example": "auto_crossfade 2000ms",
+   "aliases": [
+    "auto_crossfader"
+   ],
+   "official": true
+  },
+  "auto_crossfader": {
+   "tier": "alias",
+   "canonical": "auto_crossfade",
+   "official": true
+  },
+  "auto_cue": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "auto_match_bpm": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Auto-match BPM on load",
+   "example": "auto_match_bpm",
+   "official": true
+  },
+  "auto_match_key": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Auto-match key on load",
+   "example": "auto_match_key",
+   "official": true
+  },
+  "auto_pitch_lock": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Engage pitch lock when BPMs are matched",
+   "example": "auto_pitch_lock",
+   "official": true
+  },
+  "auto_sync": {
+   "tier": "alias",
+   "canonical": "smart_play",
+   "official": true
+  },
+  "auto_sync_options": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Menu for auto-sync behavior",
+   "example": "auto_sync_options",
+   "official": true
+  },
+  "auto_sync_settings": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Apply automatic sync settings preset",
+   "example": "auto_sync_settings",
+   "official": true
+  },
+  "automix": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Start/stop automix",
+   "example": "automix",
+   "official": true
+  },
+  "automix_add_next": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Add selected songs after current automix song",
+   "example": "automix_add_next",
+   "official": true
+  },
+  "automix_dualdeck": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Use both decks",
+   "example": "automix_dualdeck",
+   "official": true
+  },
+  "automix_editor": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Open Automix Editor",
+   "example": "automix_editor",
+   "official": true
+  },
+  "automix_editor_movetrack": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Move selected Automix Editor track",
+   "example": "automix_editor_movetrack 'current' +10",
+   "official": true
+  },
+  "automix_skip": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Skip current song",
+   "example": "automix_skip",
+   "official": true
+  },
+  "aux_volume": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Set aux input volume",
+   "example": "aux_volume",
+   "official": true
+  },
+  "backspin": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Trigger backspin",
+   "example": "backspin 4bt",
+   "official": true
+  },
+  "beat_juggle": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Alternate beat jumps forward and backward",
+   "example": "beat_juggle 0.5",
+   "official": true
+  },
+  "beat_tap": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Tap to set BPM",
+   "example": "beat_tap",
+   "official": true
+  },
+  "beatjump": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Jump beats",
+   "example": "beatjump +1",
+   "official": true
+  },
+  "beatjump_pad": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Execute jump",
+   "example": "beatjump_pad",
+   "official": true
+  },
+  "beatjump_page": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Change jump offset",
+   "example": "beatjump_page",
+   "official": true
+  },
+  "beatjump_select": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Set jump size",
+   "example": "beatjump_select 4",
+   "official": true
+  },
+  "beatlock": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Keep synchronized",
+   "example": "beatlock",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "blink": {
+   "tier": "curated",
+   "section": "Timing & Animation",
+   "description": "Toggle LED on/off",
+   "example": "blink 1000ms",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Pad",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "blink_play": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "End-of-track/paused blink helper",
+   "example": "blink_play on",
+   "official": true
+  },
+  "booth_volume": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Booth volume",
+   "example": "booth_volume 70%",
+   "official": true
+  },
+  "bpm_stabilizer": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Lock fluid track to current BPM",
+   "example": "bpm_stabilizer",
+   "official": true
+  },
+  "brakespeed": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Vinyl-style brake ramp",
+   "example": "brakespeed 2000ms",
+   "official": true
+  },
+  "broadcast": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Start/stop broadcast",
+   "example": "broadcast \"video\"",
+   "official": true
+  },
+  "broadcast_message": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Set/query broadcast message",
+   "example": "broadcast_message 'Live now'",
+   "official": true
+  },
+  "browsed_file_analyze": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Reanalyze file",
+   "example": "browsed_file_analyze",
+   "official": true
+  },
+  "browsed_file_color": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Set file color",
+   "example": "browsed_file_color \"red\"",
+   "official": true
+  },
+  "browsed_file_info": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Open browsed-song Tag Editor",
+   "example": "browsed_file_info",
+   "official": true
+  },
+  "browsed_file_prepare_stems": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Prepare stems for selected browser file(s)",
+   "example": "browsed_file_prepare_stems",
+   "official": true
+  },
+  "browsed_file_reload_tag": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Reload browsed file tag from source file",
+   "example": "browsed_file_reload_tag",
+   "official": true
+  },
+  "browsed_file_rename": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Rename browsed file",
+   "example": "browsed_file_rename",
+   "official": true
+  },
+  "browsed_file_reveal": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Reveal browsed song in OS file manager",
+   "example": "browsed_file_reveal",
+   "official": true
+  },
+  "browsed_song": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Set browsed file property",
+   "example": "browsed_song 'rating' 5",
+   "official": true
+  },
+  "browsed_song_hashtag": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Add/remove hashtag on browsed song",
+   "example": "browsed_song_hashtag 'user 1' '#tag'",
+   "official": true
+  },
+  "browser": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "browser_enter": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Load or focus songs",
+   "example": "browser_enter",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_export": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_folder": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Focus folders",
+   "example": "browser_folder",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_geniusdj": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Lookup recommendations",
+   "example": "browser_geniusdj playing",
+   "official": true
+  },
+  "browser_gotofolder": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Go to folder",
+   "example": "browser_gotofolder \"/path\"",
+   "official": true
+  },
+  "browser_isactive": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Recently used by controller",
+   "example": "browser_isactive",
+   "official": true
+  },
+  "browser_move": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Move song in playlist",
+   "example": "browser_move +1",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_open_folder": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Expand/collapse folder",
+   "example": "browser_open_folder",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_options": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_padding": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Change browser line padding",
+   "example": "browser_padding 50%",
+   "official": true
+  },
+  "browser_remove": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Remove from playlist",
+   "example": "browser_remove",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_scroll": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Scroll songs/folders",
+   "example": "browser_scroll +1",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_shortcut": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Assign/jump browser shortcut",
+   "example": "browser_shortcut 1",
+   "official": true
+  },
+  "browser_sort": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Sort browser",
+   "example": "browser_sort \"artist\"",
+   "official": true
+  },
+  "browser_window": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Change browser zone",
+   "example": "browser_window 'folders'",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "browser_zoom": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "can_sandbox": {
+   "tier": "catalog",
+   "section": "Sandbox",
+   "description": "Check if can sandbox",
+   "example": "can_sandbox",
+   "official": true
+  },
+  "clear_search": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Clear search",
+   "example": "clear_search",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "clone_deck": {
+   "tier": "curated",
+   "section": "Deck Management",
+   "description": "Clone deck",
+   "example": "clone_deck",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "clone_from_deck": {
+   "tier": "curated",
+   "section": "Deck Management",
+   "description": "Clone from other deck",
+   "example": "clone_from_deck",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "close": {
+   "tier": "catalog",
+   "section": "Window Control",
+   "description": "Close application",
+   "example": "close",
+   "official": true
+  },
+  "color": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Return color value",
+   "example": "color \"red\"",
+   "official": true
+  },
+  "color_mix": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Mix two colors based on action",
+   "example": "color_mix white red \\",
+   "official": true
+  },
+  "colorfx_prefader": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Make ColorFX prefader for controller compatibility",
+   "example": "colorfx_prefader",
+   "official": true
+  },
+  "colorfx_slider": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Adjust ColorFX parameter",
+   "example": "colorfx_slider 50%",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "config": {
+   "tier": "alias",
+   "canonical": "settings",
+   "official": true
+  },
+  "connect": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "VirtualDJ account/connect action or query",
+   "example": "connect",
+   "official": true
+  },
+  "constant": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Return specified value",
+   "example": "get constant 75%",
+   "aliases": [
+    "get_constant"
+   ],
+   "official": true
+  },
+  "controller_battery": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Controller battery-state helper",
+   "example": "controller_battery",
+   "official": true
+  },
+  "controller_mapping": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Assign a mapping to a controller",
+   "example": "controller_mapping \"CDJ400\" \"My Mapping\" 2",
+   "official": true
+  },
+  "controllerscreen_deck": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Controller-screen deck helper",
+   "example": "controllerscreen_deck",
+   "official": true
+  },
+  "controllervar": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Controller-unique variable",
+   "example": "controllervar",
+   "official": true
+  },
+  "countdown": {
+   "tier": "catalog",
+   "section": "Text Queries",
+   "description": "Count down to date/time",
+   "example": "countdown '2025/01/01 00:00'",
+   "official": true
+  },
+  "create_list_from_playlist": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Save automix list in MyLists",
+   "example": "create_list_from_playlist",
+   "aliases": [
+    "create_virtualfolder_from_playlist"
+   ],
+   "official": true
+  },
+  "create_virtualfolder_from_playlist": {
+   "tier": "alias",
+   "canonical": "create_list_from_playlist",
+   "official": true
+  },
+  "cross_assign": {
+   "tier": "catalog",
+   "section": "Deck Selection",
+   "description": "Assign deck to crossfader side or through state",
+   "example": "deck 3 cross_assign 'left'",
+   "official": true
+  },
+  "crossfader": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Move crossfader",
+   "example": "crossfader 50%",
+   "aliases": [
+    "crossfader_slider"
+   ],
+   "official": true
+  },
+  "crossfader_curve": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Crossfader curve",
+   "example": "crossfader_curve \"scratch\"",
+   "official": true
+  },
+  "crossfader_disable": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Disable crossfader",
+   "example": "crossfader_disable",
+   "official": true
+  },
+  "crossfader_hamster": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Invert crossfader",
+   "example": "crossfader_hamster",
+   "official": true
+  },
+  "crossfader_slider": {
+   "tier": "alias",
+   "canonical": "crossfader",
+   "official": true
+  },
+  "cue": {
+   "tier": "curated",
+   "section": "Cue Points",
+   "description": "Jump to cue",
+   "example": "cue",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "cue_3button": {
+   "tier": "alias",
+   "canonical": "cue_button",
+   "official": true
+  },
+  "cue_action": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_button": {
+   "tier": "curated",
+   "aliases": [
+    "cue_3button"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "cue_color": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Get/set cue color",
+   "example": "cue_color 1 'yellow'",
+   "official": true
+  },
+  "cue_countdown": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_counter": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_countup": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_cup": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "cue_display": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_loop": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Jump and loop",
+   "example": "cue_loop",
+   "official": true
+  },
+  "cue_loop_autosync": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_loop_hold": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "cue_name": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Get/set cue name",
+   "example": "cue_name 1",
+   "official": true
+  },
+  "cue_play": {
+   "tier": "curated",
+   "section": "Cue Points",
+   "description": "Cue with hold-to-play",
+   "example": "cue_play 1 1000ms",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "cue_pos": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Get cue position",
+   "example": "cue_pos 1",
+   "official": true
+  },
+  "cue_select": {
+   "tier": "curated",
+   "section": "Cue Points",
+   "description": "Select default cue",
+   "example": "cue_select",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "cue_stop": {
+   "tier": "curated",
+   "section": "Cue Points",
+   "description": "Cue with preview",
+   "example": "cue_stop",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "cues_options": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "custom_button": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Custom button action",
+   "example": "custom_button",
+   "official": true
+  },
+  "custom_button_edit": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Open editor",
+   "example": "custom_button_edit",
+   "official": true
+  },
+  "custom_button_name": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Get/set button name",
+   "example": "custom_button_name",
+   "official": true
+  },
+  "cycle": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Increment with wrap",
+   "example": "cycle \"my_var\" 42",
+   "official": true
+  },
+  "debug": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Display the incoming parameter value",
+   "example": "debug",
+   "official": true
+  },
+  "deck_has_error": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Sparse deck load-error helper; partial user-provided pad test exists",
+   "example": "deck_has_error",
+   "official": true
+  },
+  "deck_options": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Open the built-in deck behavior/options popup; useful from skin `rightclick=\"\"` when a right-click-only deck menu is needed",
+   "example": "deck_options",
+   "official": true
+  },
+  "delete_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Delete cue",
+   "example": "delete_cue 1",
+   "official": true
+  },
+  "denon_platter": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Denon platter action/helper",
+   "example": "denon_platter",
+   "official": true
+  },
+  "device_side": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Left/right device action",
+   "example": "device_side 'left' ? action1 : action2",
+   "official": true
+  },
+  "dim": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Equivalent to `constant 0.1`",
+   "example": "dim",
+   "official": true
+  },
+  "display_time": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "djc_button": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller button helper",
+   "example": "djc_button",
+   "official": true
+  },
+  "djc_button_popup": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller popup-button helper",
+   "example": "djc_button_popup",
+   "official": true
+  },
+  "djc_button_select": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller selection-button helper",
+   "example": "djc_button_select",
+   "official": true
+  },
+  "djc_button_slider": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller slider-button helper",
+   "example": "djc_button_slider",
+   "official": true
+  },
+  "djc_mic": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Controller/mic helper",
+   "example": "djc_mic",
+   "official": true
+  },
+  "djc_panel": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller panel helper",
+   "example": "djc_panel",
+   "official": true
+  },
+  "djc_shift": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "DJC controller shift helper",
+   "example": "djc_shift",
+   "official": true
+  },
+  "doubleclick": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Execute if double-clicked",
+   "example": "doubleclick ? automix : mix_now",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "down": {
+   "tier": "curated",
+   "section": "Flow Control",
+   "description": "Execute action on key press/release",
+   "example": "down ? action1 : action2",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "dualdeckmode": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Toggle dual deck mode",
+   "example": "dualdeckmode",
+   "official": true
+  },
+  "dualdeckmode_decks": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Dual-deck pair helper for decks 1/3 or 2/4",
+   "example": "dualdeckmode_decks",
+   "official": true
+  },
+  "dump": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Reverse temporarily",
+   "example": "dump",
+   "official": true
+  },
+  "edit_bpm": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Open BPM editor",
+   "example": "edit_bpm",
+   "official": true
+  },
+  "edit_comment": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Edit selected track comment",
+   "example": "edit_comment",
+   "official": true
+  },
+  "edit_lyrics": {
+   "tier": "curated",
+   "section": "POI & BPM",
+   "description": "Open Lyrics Editor",
+   "example": "edit_lyrics",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "edit_poi": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Open POI editor",
+   "example": "edit_poi",
+   "official": true
+  },
+  "edit_search": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Focus search without clearing",
+   "example": "edit_search",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "edit_singer": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "effect_3slots_layout": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Toggle 1-slot/3-slot FX layout",
+   "example": "effect_3slots_layout",
+   "official": true
+  },
+  "effect_activate": {
+   "tier": "alias",
+   "canonical": "effect_active",
+   "official": true
+  },
+  "effect_active": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Activate/deactivate",
+   "example": "effect_active 1 on",
+   "aliases": [
+    "effect_activate"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "effect_arm_active": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Activate selected armed effect",
+   "example": "effect_arm_active",
+   "official": true
+  },
+  "effect_arm_beats": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Change armed effect speed",
+   "example": "effect_arm_beats 1",
+   "official": true
+  },
+  "effect_arm_bpm": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get BPM of armed deck target",
+   "example": "effect_arm_bpm",
+   "official": true
+  },
+  "effect_arm_deck": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select target deck/path for armed FX",
+   "example": "effect_arm_deck master",
+   "official": true
+  },
+  "effect_arm_select": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select effect for armed FX",
+   "example": "effect_arm_select \"echo\"",
+   "official": true
+  },
+  "effect_arm_select_popup": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Popup selector for armed FX",
+   "example": "effect_arm_select_popup",
+   "official": true
+  },
+  "effect_arm_slider": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Move armed effect parameter",
+   "example": "effect_arm_slider 1 2",
+   "official": true
+  },
+  "effect_arm_slider_label": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get armed effect parameter label",
+   "example": "effect_arm_slider_label 1 short",
+   "official": true
+  },
+  "effect_arm_slider_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get armed effect parameter name",
+   "example": "effect_arm_slider_name 1 short",
+   "official": true
+  },
+  "effect_arm_slider_text": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get armed effect parameter text",
+   "example": "effect_arm_slider_text 1",
+   "official": true
+  },
+  "effect_arm_slot": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Toggle armed FX slot participation",
+   "example": "effect_arm_slot 1",
+   "official": true
+  },
+  "effect_arm_stem": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Arm stems for `stems` slot effect actions",
+   "example": "effect_arm_stem Vocal+Bass",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_bank_load": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Load deck FX slots 1-6 from bank",
+   "example": "effect_bank_load 1",
+   "official": true
+  },
+  "effect_bank_save": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Save deck FX slots 1-6 to bank",
+   "example": "effect_bank_save 1",
+   "official": true
+  },
+  "effect_beats": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Set beat parameter",
+   "example": "effect_beats",
+   "official": true
+  },
+  "effect_beats_all": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Set beat parameter across slots/layouts",
+   "example": "effect_beats_all",
+   "official": true
+  },
+  "effect_bpm_deck": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Set/get custom plugin BPM for this deck",
+   "example": "effect_bpm_deck 120",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "effect_bpm_deck_tap": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Tap custom plugin BPM for this deck",
+   "example": "effect_bpm_deck_tap",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_button": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Press effect button",
+   "example": "effect_button 1 2",
+   "official": true
+  },
+  "effect_clone": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Clone all three FX slots from another deck",
+   "example": "effect_clone",
+   "official": true
+  },
+  "effect_colorfx": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Select effect for a custom ColorFX slot",
+   "example": "effect_colorfx 1 \"echo\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_colorslider": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Center-off custom ColorFX-style control",
+   "example": "effect_colorslider 1",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_command": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Send command to effect/plugin",
+   "example": "effect_command",
+   "official": true
+  },
+  "effect_disable_all": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Disable deck/master effects",
+   "example": "effect_disable_all",
+   "official": true
+  },
+  "effect_dock_gui": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Dock/undock effect GUI",
+   "example": "effect_dock_gui 1",
+   "official": true
+  },
+  "effect_fxsendreturndeck": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select FX send/return source deck",
+   "example": "effect_fxsendreturndeck",
+   "official": true
+  },
+  "effect_fxsendreturndeck_multi": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select source for multi send/return",
+   "example": "effect_fxsendreturndeck_multi mic",
+   "official": true
+  },
+  "effect_fxsendreturnenable": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Enable/query FX send/return path",
+   "example": "effect_fxsendreturnenable",
+   "official": true
+  },
+  "effect_has_beats": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Check effect beat parameter support",
+   "example": "effect_has_beats",
+   "official": true
+  },
+  "effect_has_button": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Check if effect has button",
+   "example": "effect_has_button 2",
+   "official": true
+  },
+  "effect_has_length": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Check effect length parameter support",
+   "example": "effect_has_length",
+   "official": true
+  },
+  "effect_has_slider": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Check if effect has slider",
+   "example": "effect_has_slider 1 2",
+   "official": true
+  },
+  "effect_list": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select/cycle effect list",
+   "example": "effect_list 1 +1",
+   "official": true
+  },
+  "effect_list_edit": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Edit an effect list",
+   "example": "effect_list_edit 1",
+   "official": true
+  },
+  "effect_mixfx": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Associate effect with crossfader",
+   "example": "effect_mixfx",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_mixfx_activate": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Toggle Mix FX",
+   "example": "effect_mixfx_activate",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "effect_mixfx_select": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Select Mix FX",
+   "example": "effect_mixfx_select \"filter\"",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "effect_releaseslider": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Control release-FX slider",
+   "example": "effect_releaseslider",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_releaseslider_active": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Control release-FX slider and activate",
+   "example": "effect_releaseslider_active",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_select": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Select effect (deactivate previous)",
+   "example": "effect_select 1 \"echo\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_select_multi": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Select effect (keep previous)",
+   "example": "effect_select_multi 2 \"flanger\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_select_popup": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select effect with temporary dropdown",
+   "example": "effect_select_popup 1",
+   "official": true
+  },
+  "effect_select_toggle": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select effect and keep activation continuity",
+   "example": "effect_select_toggle 1 \"echo\"",
+   "official": true
+  },
+  "effect_show_gui": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_slider": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Move effect slider",
+   "example": "effect_slider 1 2 50%",
+   "aliases": [
+    "effect_slider_slider"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "effect_slider_activate": {
+   "tier": "alias",
+   "canonical": "effect_slider_active",
+   "official": true
+  },
+  "effect_slider_active": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Move slider while activating effect",
+   "example": "effect_slider_active 1",
+   "aliases": [
+    "effect_slider_activate"
+   ],
+   "official": true
+  },
+  "effect_slider_reset": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Reset effect slider to default",
+   "example": "effect_slider_reset 1 2",
+   "official": true
+  },
+  "effect_slider_skip_length": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Move slider while skipping length slider",
+   "example": "effect_slider_skip_length 1 2 50%",
+   "official": true
+  },
+  "effect_slider_slider": {
+   "tier": "alias",
+   "canonical": "effect_slider",
+   "official": true
+  },
+  "effect_stems": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Route effects to selected stems",
+   "example": "effect_stems 'vocal'",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "effect_stems_color": {
+   "tier": "curated",
+   "section": "Effects",
+   "description": "Get color for the `effect_stems` button",
+   "example": "effect_stems_color",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Pad"
+   ],
+   "official": true
+  },
+  "effect_string": {
+   "tier": "alias",
+   "canonical": "get_effect_string",
+   "official": true
+  },
+  "effects_used": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Query whether effects are active",
+   "example": "effects_used \"deck\"",
+   "official": true
+  },
+  "emergency_play": {
+   "tier": "catalog",
+   "section": "Play Controls",
+   "description": "Play something",
+   "example": "emergency_play",
+   "official": true
+  },
+  "eq_crossfader_high": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Crossfade treble between decks",
+   "example": "eq_crossfader_high 50%",
+   "official": true
+  },
+  "eq_crossfader_low": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Crossfade bass between decks",
+   "example": "eq_crossfader_low 50%",
+   "official": true
+  },
+  "eq_crossfader_med": {
+   "tier": "alias",
+   "canonical": "eq_crossfader_mid",
+   "official": true
+  },
+  "eq_crossfader_mid": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Crossfade mids between decks",
+   "example": "eq_crossfader_mid 50%",
+   "aliases": [
+    "eq_crossfader_med"
+   ],
+   "official": true
+  },
+  "eq_high": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "High EQ/HiHat/Vocal",
+   "example": "eq_high",
+   "official": true
+  },
+  "eq_high_freq": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_high_slider": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_kill_high": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_kill_low": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_kill_med": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_kill_mid": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_low": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Low EQ/Kick",
+   "example": "eq_low",
+   "official": true
+  },
+  "eq_low_freq": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_low_slider": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_med": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_mid": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Mid EQ/Melody/Vocals",
+   "example": "eq_mid",
+   "official": true
+  },
+  "eq_mid_freq": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_mid_slider": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eq_mode": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Select EQ behavior",
+   "example": "eq_mode +1",
+   "official": true
+  },
+  "eq_reset": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "eventscheduler": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Open Event Scheduler",
+   "example": "eventscheduler",
+   "official": true
+  },
+  "eventscheduler_start": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Start Event Scheduler",
+   "example": "eventscheduler_start 'summer_wedding'",
+   "official": true
+  },
+  "fadeout": {
+   "tier": "catalog",
+   "section": "Timing & Animation",
+   "description": "Fade out when condition ends",
+   "example": "fadeout 10000ms 3000ms \\",
+   "official": true
+  },
+  "fader_curve": {
+   "tier": "alias",
+   "canonical": "levelfader_curve",
+   "official": true
+  },
+  "fader_start": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Enable/disable fader start",
+   "example": "fader_start on",
+   "official": true
+  },
+  "fake_eq": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply EQ to sound output",
+   "example": "fake_eq",
+   "official": true
+  },
+  "fake_filter": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply filter to sound output",
+   "example": "fake_filter",
+   "official": true
+  },
+  "fake_gain": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply gain to sound output",
+   "example": "fake_gain",
+   "official": true
+  },
+  "fake_hp": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply headphone volume to headphone output",
+   "example": "fake_hp",
+   "official": true
+  },
+  "fake_hpmix": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply headphone mix to headphone output",
+   "example": "fake_hpmix",
+   "official": true
+  },
+  "fake_master": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply master volume to master output",
+   "example": "fake_master",
+   "official": true
+  },
+  "fake_mixer": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Tell VirtualDJ not to apply mixer volumes to sound output",
+   "example": "fake_mixer",
+   "official": true
+  },
+  "fake_pfl": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Disable skin PFL switching when PFL is controlled elsewhere",
+   "example": "fake_pfl",
+   "official": true
+  },
+  "false": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Returns false",
+   "example": "false",
+   "aliases": [
+    "no",
+    "off"
+   ],
+   "official": true
+  },
+  "file_count": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Text",
+    "SkinQuery",
+    "Button"
+   ],
+   "official": true
+  },
+  "file_info": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Open tag editor",
+   "example": "file_info",
+   "official": true
+  },
+  "filter": {
+   "tier": "curated",
+   "section": "Equalizer & Stems",
+   "description": "Apply color FX",
+   "example": "filter",
+   "aliases": [
+    "filter_slider"
+   ],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "filter_activate": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Enable/disable deck filter/ColorFX",
+   "example": "filter_activate",
+   "official": true
+  },
+  "filter_label": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "filter_resonance": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "filter_selectcolorfx": {
+   "tier": "curated",
+   "section": "Equalizer & Stems",
+   "description": "Select color effect",
+   "example": "filter_selectcolorfx 'Reverb'",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "filter_slider": {
+   "tier": "alias",
+   "canonical": "filter",
+   "official": true
+  },
+  "font_size": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Change browser font size",
+   "example": "font_size +1",
+   "official": true
+  },
+  "gain": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Set gain",
+   "example": "gain",
+   "aliases": [
+    "gain_slider",
+    "power_gain"
+   ],
+   "official": true
+  },
+  "gain_label": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Gain label text",
+   "example": "gain_label",
+   "official": true
+  },
+  "gain_relative": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Move gain relative to software position",
+   "example": "gain_relative +1%",
+   "official": true
+  },
+  "gain_slider": {
+   "tier": "alias",
+   "canonical": "gain",
+   "official": true
+  },
+  "gemini_waveform_zoomlevel": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Gemini waveform zoom helper",
+   "example": "gemini_waveform_zoomlevel",
+   "official": true
+  },
+  "get_active_loop": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Current active loop length",
+   "example": "get_active_loop",
+   "official": true
+  },
+  "get_activedeck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_album": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Album tag",
+   "example": "get_album",
+   "official": true
+  },
+  "get_arm": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_artist": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Artist tag",
+   "example": "get_artist",
+   "official": true
+  },
+  "get_artist_before_feat": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_artist_title": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_artist_title_separator": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_askthedj": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_askthedj_unread": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_automix": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Automix crossfader position",
+   "example": "get_automix",
+   "official": true
+  },
+  "get_automix_position": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Current automix song position",
+   "example": "get_automix_position",
+   "official": true
+  },
+  "get_automix_song": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Next automix song property",
+   "example": "get_automix_song 'title'",
+   "official": true
+  },
+  "get_bar": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_battery": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Battery level",
+   "example": "get_battery",
+   "official": true
+  },
+  "get_beat": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Beat intensity at current position",
+   "example": "get_beat",
+   "official": true
+  },
+  "get_beat2": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beat_bar": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beat_counter": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beat_num": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beatdiff": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beatgrid": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_beatpos": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Beat position",
+   "example": "get_beatpos",
+   "official": true
+  },
+  "get_bpm": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Song BPM",
+   "example": "get_bpm",
+   "official": true
+  },
+  "get_bpm_match": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Return BPM match amount",
+   "example": "get_bpm_match",
+   "official": true
+  },
+  "get_browsed_album": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_artist": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_artist_title": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_bpm": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_color": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_comment": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_composer": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_filepath": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_icon": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_path": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_scrollpos": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_scrollsize": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_selection_index": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_folder_tab": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_genre": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_header": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_key": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_scrollpos": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_scrollsize": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_selection_index": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_song": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Browsed file property",
+   "example": "get_browsed_song 'title'",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Button",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_browsed_title": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_browsed_title_artist": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_build": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_clock": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Current time",
+   "example": "get_clock",
+   "official": true
+  },
+  "get_comment": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_composer": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_constant": {
+   "tier": "alias",
+   "canonical": "constant",
+   "official": true
+  },
+  "get_controller_image": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Cover art for controller screens",
+   "example": "get_controller_image",
+   "official": true
+  },
+  "get_controller_name": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Controller name(s) assigned to deck",
+   "example": "get_controller_name",
+   "official": true
+  },
+  "get_controller_screen": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Controller-screen helper",
+   "example": "get_controller_screen",
+   "official": true
+  },
+  "get_cpu": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "CPU activity",
+   "example": "get_cpu",
+   "official": true
+  },
+  "get_crossfader_result": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Effective left/right deck mix after crossfader and levels",
+   "example": "get_crossfader_result",
+   "official": true
+  },
+  "get_cue": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_custom_text": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_date": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Current date",
+   "example": "get_date \"%Y/%m/%d\"",
+   "official": true
+  },
+  "get_deck": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Deck number",
+   "example": "get_deck",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_deck_analysis": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_deck_color": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Get deck color",
+   "example": "get_deck_color 50%",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Button"
+   ],
+   "official": true
+  },
+  "get_deck_letter": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_decks": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_defaultdeck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_denon_cuepoints": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Denon cue point LED helper",
+   "example": "get_denon_cuepoints 100",
+   "official": true
+  },
+  "get_denon_platter": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Denon platter display helper",
+   "example": "get_denon_platter",
+   "official": true
+  },
+  "get_display": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_effect_button_count": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get number of effect buttons",
+   "example": "get_effect_button_count",
+   "official": true
+  },
+  "get_effect_button_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect button name",
+   "example": "get_effect_button_name 1",
+   "official": true
+  },
+  "get_effect_button_shortname": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get compact effect button label",
+   "example": "get_effect_button_shortname 2",
+   "official": true
+  },
+  "get_effect_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect name",
+   "example": "get_effect_name",
+   "official": true
+  },
+  "get_effect_slider_count": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get number of effect sliders",
+   "example": "get_effect_slider_count",
+   "official": true
+  },
+  "get_effect_slider_default": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider default value",
+   "example": "get_effect_slider_default 1",
+   "official": true
+  },
+  "get_effect_slider_label": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider label",
+   "example": "get_effect_slider_label 1",
+   "official": true
+  },
+  "get_effect_slider_label_full": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get full effect slider label",
+   "example": "get_effect_slider_label_full 1",
+   "official": true
+  },
+  "get_effect_slider_label_skip_length": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider label while skipping length slider",
+   "example": "get_effect_slider_label_skip_length 1",
+   "official": true
+  },
+  "get_effect_slider_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider name",
+   "example": "get_effect_slider_name 1",
+   "official": true
+  },
+  "get_effect_slider_name_skip_length": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider name while skipping length slider",
+   "example": "get_effect_slider_name_skip_length 1",
+   "official": true
+  },
+  "get_effect_slider_shortname": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get compact effect slider label",
+   "example": "get_effect_slider_shortname 2",
+   "official": true
+  },
+  "get_effect_slider_text": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect slider value text",
+   "example": "get_effect_slider_text 1",
+   "official": true
+  },
+  "get_effect_slider_text_skip_length": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get slider text while skipping length slider",
+   "example": "get_effect_slider_text_skip_length 1",
+   "official": true
+  },
+  "get_effect_string": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get/set effect string text",
+   "example": "get_effect_string",
+   "aliases": [
+    "effect_string"
+   ],
+   "official": true
+  },
+  "get_effect_string_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect string label",
+   "example": "get_effect_string_name",
+   "official": true
+  },
+  "get_effect_title": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get effect title",
+   "example": "get_effect_title",
+   "official": true
+  },
+  "get_effects_used": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Count active effects",
+   "example": "get_effects_used",
+   "official": true
+  },
+  "get_featuring_after_artist": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_filename": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_filepath": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_filesize": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_firstbeat": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_firstbeat_local": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_gemini_display": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Gemini display helper",
+   "example": "get_gemini_display",
+   "official": true
+  },
+  "get_gemini_waveform": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Gemini waveform helper",
+   "example": "get_gemini_waveform",
+   "official": true
+  },
+  "get_genre": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Genre tag",
+   "example": "get_genre",
+   "official": true
+  },
+  "get_harmonic": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Harmonic key display",
+   "example": "get_harmonic",
+   "official": true
+  },
+  "get_hasheadphone": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_hasheadphones": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_hasinput": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_haslinein": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_hasmaster": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_hasmic": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_hastimecode": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Check if has timecode",
+   "example": "get_hastimecode",
+   "official": true
+  },
+  "get_hwnd": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_karaoke_background_song": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_key": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Song key",
+   "example": "get_key \"musical\"",
+   "official": true
+  },
+  "get_key_color": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Color for current key",
+   "example": "get_key_color",
+   "official": true
+  },
+  "get_key_modifier": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_key_modifier_text": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_leftdeck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_lemode": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_level": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Signal level",
+   "example": "get_level",
+   "official": true
+  },
+  "get_level_left": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Left channel before master volume",
+   "example": "get_level_left 'master'",
+   "official": true
+  },
+  "get_level_left_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Left peak before master volume",
+   "example": "get_level_left_peak",
+   "official": true
+  },
+  "get_level_log": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Log-scaled signal level",
+   "example": "get_level_log",
+   "official": true
+  },
+  "get_level_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Peak level before master volume",
+   "example": "get_level_peak",
+   "official": true
+  },
+  "get_level_right": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Right channel before master volume",
+   "example": "get_level_right 'master'",
+   "official": true
+  },
+  "get_level_right_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Right peak before master volume",
+   "example": "get_level_right_peak",
+   "official": true
+  },
+  "get_license": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_limiter": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Check compression",
+   "example": "get_limiter",
+   "official": true
+  },
+  "get_loaded_song": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Loaded file property",
+   "example": "get_loaded_song 'album'",
+   "official": true
+  },
+  "get_loaded_song_color": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_loop": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Active loop length or default loop size",
+   "example": "get_loop",
+   "official": true
+  },
+  "get_loop_in_time": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Loop start time",
+   "example": "get_loop_in_time \"sec\"",
+   "official": true
+  },
+  "get_loop_out_time": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Loop end time",
+   "example": "get_loop_out_time \"sec\"",
+   "official": true
+  },
+  "get_lyrics_language": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Loaded deck lyric language",
+   "example": "get_lyrics_language",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_membership": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_mixfx_active": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get/query Mix FX active state",
+   "example": "get_mixfx_active",
+   "official": true
+  },
+  "get_nb_multicam": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_next_karaoke_song": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Get upcoming track info",
+   "example": "get_next_karaoke_song \"singer\" +1",
+   "official": true
+  },
+  "get_ns7_platter": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_numark_beatgrid": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Numark beatgrid display helper",
+   "example": "get_numark_beatgrid",
+   "official": true
+  },
+  "get_numark_songpos": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Numark song position display helper",
+   "example": "get_numark_songpos",
+   "official": true
+  },
+  "get_numark_waveform": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Numark waveform data helper",
+   "example": "get_numark_waveform",
+   "official": true
+  },
+  "get_peak_audio": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_phrase_num": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_pioneer_display": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Pioneer-style display helper",
+   "example": "get_pioneer_display",
+   "official": true
+  },
+  "get_pioneer_loop_display": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Pioneer-style loop display helper",
+   "example": "get_pioneer_loop_display",
+   "official": true
+  },
+  "get_pitch": {
+   "tier": "curated",
+   "section": "Key & Pitch",
+   "description": "Get pitch value",
+   "example": "get_pitch",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_pitch_value": {
+   "tier": "curated",
+   "section": "Key & Pitch",
+   "description": "Get pitch on 0-200 scale centered on 100",
+   "example": "get_pitch_value",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_pitch_zero": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Check whether pitch is zero/original",
+   "example": "get_pitch_zero 'absolute' 0.1%",
+   "official": true
+  },
+  "get_playlist_time": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Time left in automix playlist",
+   "example": "get_playlist_time",
+   "official": true
+  },
+  "get_plugindeck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_position": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Song position",
+   "example": "get_position",
+   "official": true
+  },
+  "get_record_message": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_min": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_ms": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_msf": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_sec": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_size": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_record_time": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Recording time",
+   "example": "get_record_time",
+   "official": true
+  },
+  "get_remix_after_title": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Remix text split from title",
+   "example": "get_remix_after_title",
+   "official": true
+  },
+  "get_rightdeck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_rotation": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Disc angle",
+   "example": "get_rotation",
+   "official": true
+  },
+  "get_rotation_cue": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Cue point angle on jog display",
+   "example": "get_rotation_cue",
+   "official": true
+  },
+  "get_rotation_slip": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Slip point jog angle, otherwise normal rotation",
+   "example": "get_rotation_slip",
+   "official": true
+  },
+  "get_sample_color": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the actual stored color of a sample slot",
+   "example": "get_sample_color 9",
+   "official": true
+  },
+  "get_sample_info": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Read sample metadata such as `fullpath`, `group`, or `length`",
+   "example": "get_sample_info 9 fullpath",
+   "official": true
+  },
+  "get_sample_name": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Get the name of an absolute sample slot",
+   "example": "get_sample_name 9",
+   "aliases": [
+    "get_sample_slot_name"
+   ],
+   "kind": "Query",
+   "surfaces": [
+    "Text",
+    "Pad",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "get_sample_slot_name": {
+   "tier": "alias",
+   "canonical": "get_sample_name",
+   "official": true
+  },
+  "get_sampler_bank": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the name of the active sampler bank",
+   "example": "get_sampler_bank",
+   "official": true
+  },
+  "get_sampler_bank_count": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the total number of sampler banks",
+   "example": "get_sampler_bank_count",
+   "official": true
+  },
+  "get_sampler_bank_id": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the numeric id of the active sampler bank",
+   "example": "get_sampler_bank_id",
+   "official": true
+  },
+  "get_sampler_count": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the number of slots in the current sampler bank",
+   "example": "get_sampler_count",
+   "official": true
+  },
+  "get_sampler_slot": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the sampler slot that currently has focus",
+   "example": "get_sampler_slot",
+   "official": true
+  },
+  "get_sampler_used": {
+   "tier": "alias",
+   "canonical": "sampler_used",
+   "official": true
+  },
+  "get_saved_loop": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_scratch_direction": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_skin_color": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_slip_active": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Slip currently active",
+   "example": "get_slip_active",
+   "official": true
+  },
+  "get_slip_time": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Time that will resume when slip exits",
+   "example": "get_slip_time \"sec\"",
+   "official": true
+  },
+  "get_song_event": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_songlength": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_spectrum_band": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_status": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Background task text",
+   "example": "get_status",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Text",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "get_text": {
+   "tier": "catalog",
+   "section": "Text Queries",
+   "description": "Get formatted text",
+   "example": "get_text 'You are listening to \\",
+   "official": true
+  },
+  "get_time": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Elapsed time",
+   "example": "get_time \"remain\" \"short\"",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "get_time_hour": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_time_min": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_time_ms": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_time_msf": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_time_sec": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_time_sign": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_timecode_quality": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Timecode signal quality",
+   "example": "get_timecode_quality",
+   "official": true
+  },
+  "get_title": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Title tag",
+   "example": "get_title",
+   "official": true
+  },
+  "get_title_artist": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_title_before_remix": {
+   "tier": "catalog",
+   "section": "Get (Query Actions)",
+   "description": "Title with remix/bracket handling",
+   "example": "get_title_before_remix",
+   "official": true
+  },
+  "get_title_remix": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_totaltime_min": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_totaltime_ms": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_totaltime_msf": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_totaltime_sec": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_username": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_var": {
+   "tier": "curated",
+   "section": "Variables",
+   "description": "Get variable value",
+   "example": "get_var \"varname\"",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "get_vdj_folder": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_version": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_video_fx_slider_label": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get video FX slider label",
+   "example": "get_video_fx_slider_label 1",
+   "official": true
+  },
+  "get_videofx_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get selected video effect name",
+   "example": "get_videofx_name",
+   "official": true
+  },
+  "get_videotrans_name": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Get selected video transition name",
+   "example": "get_videotrans_name",
+   "official": true
+  },
+  "get_volume": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "get_vu_meter": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "VU meter level",
+   "example": "get_vu_meter",
+   "official": true
+  },
+  "get_vu_meter_left": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Left VU after master volume",
+   "example": "get_vu_meter_left 'master'",
+   "official": true
+  },
+  "get_vu_meter_left_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Left VU peak after master volume",
+   "example": "get_vu_meter_left_peak",
+   "official": true
+  },
+  "get_vu_meter_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "VU peak after master volume",
+   "example": "get_vu_meter_peak",
+   "official": true
+  },
+  "get_vu_meter_right": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Right VU after master volume",
+   "example": "get_vu_meter_right 'master'",
+   "official": true
+  },
+  "get_vu_meter_right_peak": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Right VU peak after master volume",
+   "example": "get_vu_meter_right_peak",
+   "official": true
+  },
+  "get_year": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "getfood": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "goto": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Change position",
+   "example": "goto +10ms",
+   "official": true
+  },
+  "goto_bar": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Jump to beat after downbeat",
+   "example": "goto_bar 4",
+   "official": true
+  },
+  "goto_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Jump to cue",
+   "example": "goto_cue 1",
+   "official": true
+  },
+  "goto_first_beat": {
+   "tier": "curated",
+   "section": "Audio Playback",
+   "description": "Jump to first beat",
+   "example": "goto_first_beat",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "goto_last_folder": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "goto_mixpoint": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Jump to automix/mix point",
+   "example": "goto_mixpoint \"StartCut\"",
+   "official": true
+  },
+  "goto_start": {
+   "tier": "curated",
+   "section": "Audio Playback",
+   "description": "Go to start",
+   "example": "goto_start",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "grid_view": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Grid view mode",
+   "example": "grid_view",
+   "official": true
+  },
+  "handshake": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Developer plugin environment handshake",
+   "example": "handshake 'nonce'",
+   "official": true
+  },
+  "has_aux": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "has_battery": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Has batteries",
+   "example": "has_battery",
+   "official": true
+  },
+  "has_cover": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "has_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Check if cue exists",
+   "example": "has_cue 1",
+   "official": true
+  },
+  "has_custom_button": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Check if has action",
+   "example": "has_custom_button",
+   "official": true
+  },
+  "has_karaoke_next": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "has_linked_tracks": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Check linked/related tracks",
+   "example": "has_linked_tracks browsed",
+   "official": true
+  },
+  "has_logo": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "has_lyrics": {
+   "tier": "curated",
+   "section": "Get (Query Actions)",
+   "description": "Loaded deck has lyrics",
+   "example": "has_lyrics",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "has_notch": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Check for display notch",
+   "example": "has_notch",
+   "official": true
+  },
+  "has_quick_filter": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Check if quick filter exists",
+   "example": "has_quick_filter 1",
+   "official": true
+  },
+  "has_stems": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Check if has stems",
+   "example": "has_stems \"ready\"",
+   "official": true
+  },
+  "has_system_volume": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Can modify system volume",
+   "example": "has_system_volume",
+   "official": true
+  },
+  "has_variable_bpm": {
+   "tier": "alias",
+   "canonical": "is_fluid",
+   "official": true
+  },
+  "has_video_mix": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "headphone_crossfader": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "PFL left/right fader",
+   "example": "headphone_crossfader 50%",
+   "official": true
+  },
+  "headphone_gain": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "PFL output gain",
+   "example": "headphone_gain +1dB",
+   "official": true
+  },
+  "headphone_mix": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "PFL mix",
+   "example": "headphone_mix",
+   "official": true
+  },
+  "headphone_volume": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Headphone volume",
+   "example": "headphone_volume",
+   "official": true
+  },
+  "high_label": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "High EQ band label",
+   "example": " ",
+   "official": true
+  },
+  "hold": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Stop for scratching",
+   "example": "hold on",
+   "aliases": [
+    "scratch_hold"
+   ],
+   "official": true
+  },
+  "holding": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Execute if held long",
+   "example": "holding ? automix : mix_now",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "hot_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Set or jump to cue",
+   "example": "hot_cue 1",
+   "aliases": [
+    "hotcue"
+   ],
+   "official": true
+  },
+  "hotcue": {
+   "tier": "alias",
+   "canonical": "hot_cue",
+   "official": true
+  },
+  "info_options": {
+   "tier": "curated",
+   "aliases": [
+    "infos_options"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "infos_options": {
+   "tier": "alias",
+   "canonical": "info_options",
+   "official": true
+  },
+  "invert_controllers": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Invert controller decks",
+   "example": "invert_controllers",
+   "official": true
+  },
+  "invert_deck": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Swap left/right deck",
+   "example": "invert_deck",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "invert_timecode": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Switch/invert timecode control across available decks",
+   "example": "invert_timecode",
+   "official": true
+  },
+  "is_audible": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Deck on-air",
+   "example": "is_audible",
+   "official": true
+  },
+  "is_audioonlyvisualisation": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Check whether audio-only visualisation is running",
+   "example": "is_audioonlyvisualisation",
+   "official": true
+  },
+  "is_battery": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Running on battery",
+   "example": "is_battery",
+   "official": true
+  },
+  "is_fluid": {
+   "tier": "curated",
+   "aliases": [
+    "has_variable_bpm"
+   ],
+   "kind": "Query",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "is_karaoke_idle": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Karaoke idle check",
+   "example": "is_karaoke_idle",
+   "official": true
+  },
+  "is_karaoke_playing": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Karaoke playing check",
+   "example": "is_karaoke_playing",
+   "official": true
+  },
+  "is_mac": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Check if Mac",
+   "example": "is_mac",
+   "aliases": [
+    "is_macos"
+   ],
+   "official": true
+  },
+  "is_macos": {
+   "tier": "alias",
+   "canonical": "is_mac",
+   "official": true
+  },
+  "is_pc": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Check if PC",
+   "example": "is_pc",
+   "aliases": [
+    "is_windows"
+   ],
+   "official": true
+  },
+  "is_releasefx": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Query release-FX slot state",
+   "example": "is_releasefx",
+   "official": true
+  },
+  "is_sync": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Query synchronized BPM/phase state",
+   "example": "is_sync",
+   "official": true
+  },
+  "is_using": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Query whether a feature was recently used",
+   "example": "is_using 'filter' 1000ms",
+   "official": true
+  },
+  "is_video": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Check if has video",
+   "example": "is_video",
+   "official": true
+  },
+  "is_windows": {
+   "tier": "alias",
+   "canonical": "is_pc",
+   "official": true
+  },
+  "isrepeat": {
+   "tier": "catalog",
+   "section": "Flow Control",
+   "description": "Check if key is auto-repeating",
+   "example": "isrepeat ? nothing : goto_cue",
+   "official": true
+  },
+  "jog": {
+   "tier": "alias",
+   "canonical": "jogwheel",
+   "official": true
+  },
+  "jog_wheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Official alias of `jogwheel`",
+   "example": "jog_wheel +1.0",
+   "official": true
+  },
+  "jogwheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Jogwheel without touch",
+   "example": "jogwheel +1.0",
+   "aliases": [
+    "jog"
+   ],
+   "official": true
+  },
+  "karaoke": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Start/stop karaoke",
+   "example": "karaoke",
+   "official": true
+  },
+  "karaoke_add": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "karaoke_load": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "karaoke_options": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Open karaoke options",
+   "example": "karaoke_options",
+   "official": true
+  },
+  "karaoke_show": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Show singer list",
+   "example": "karaoke_show",
+   "official": true
+  },
+  "karaoke_venue_name": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Karaoke venue-name helper",
+   "example": " ",
+   "official": true
+  },
+  "key": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Change key (semitones)",
+   "example": "key +1",
+   "official": true
+  },
+  "key_lock": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Lock key",
+   "example": "key_lock",
+   "aliases": [
+    "keylock"
+   ],
+   "official": true
+  },
+  "key_match_button": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Match the other deck's key on first press, or reset key on second press",
+   "example": "key_match_button",
+   "official": true
+  },
+  "key_match_menu": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Open key-match menu",
+   "example": "key_match_menu",
+   "official": true
+  },
+  "key_move": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Move key by semitones",
+   "example": "key_move +1",
+   "official": true
+  },
+  "key_smooth": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Change key (smooth)",
+   "example": "key_smooth +0.5",
+   "official": true
+  },
+  "keyboard_shortcuts": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Show/control keyboard shortcuts overlay",
+   "example": "keyboard_shortcuts 500ms",
+   "official": true
+  },
+  "keycue_pad": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Key-cue pad helper",
+   "example": "keycue_pad 1",
+   "official": true
+  },
+  "keycue_pad_color": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Key-cue pad color",
+   "example": "keycue_pad_color 1",
+   "official": true
+  },
+  "keycue_pad_jump": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Key-cue jump option",
+   "example": "keycue_pad_jump",
+   "official": true
+  },
+  "keycue_pad_page": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Key-cue pad page/window",
+   "example": "keycue_pad_page",
+   "official": true
+  },
+  "keylock": {
+   "tier": "alias",
+   "canonical": "key_lock",
+   "official": true
+  },
+  "leftcross": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Assign to left crossfader",
+   "example": "leftcross",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "leftdeck": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Select left deck",
+   "example": "leftdeck +1",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "leftvideo": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Assign left video",
+   "example": "leftvideo +1",
+   "official": true
+  },
+  "leftvideo_button": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Button helper for left video source",
+   "example": "deck 3 leftvideo_button",
+   "official": true
+  },
+  "level": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Set deck volume",
+   "example": "level",
+   "aliases": [
+    "level_slider",
+    "volume",
+    "volume_slider"
+   ],
+   "official": true
+  },
+  "level_slider": {
+   "tier": "alias",
+   "canonical": "level",
+   "official": true
+  },
+  "levelfader_curve": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Level fader curve",
+   "example": "levelfader_curve 50%",
+   "aliases": [
+    "fader_curve"
+   ],
+   "official": true
+  },
+  "linein": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Activate line input",
+   "example": "deck 1 linein 2 on",
+   "official": true
+  },
+  "linein_rec": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Record line input",
+   "example": "linein_rec",
+   "official": true
+  },
+  "load": {
+   "tier": "curated",
+   "section": "Loading",
+   "description": "Load song",
+   "example": "load",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "load_deck_set": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Load a saved deck-set file",
+   "example": "load_deck_set",
+   "official": true
+  },
+  "load_next": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Load next track",
+   "example": "load_next",
+   "official": true
+  },
+  "load_previous": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Load previous track",
+   "example": "load_previous",
+   "official": true
+  },
+  "load_pulse": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Brief pulse on load",
+   "example": "load_pulse",
+   "official": true
+  },
+  "load_pulse_active": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Pulse when a new song becomes audible",
+   "example": "load_pulse_active 1000ms 5000ms",
+   "official": true
+  },
+  "load_skin": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Load new skin/variation",
+   "example": "load_skin ':newvariation'",
+   "official": true
+  },
+  "loaded": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Check if loaded",
+   "example": "loaded",
+   "official": true
+  },
+  "loaded_song": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Set loaded track property",
+   "example": "loaded_song 'rating' 5",
+   "official": true
+  },
+  "loaded_song_hashtag": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Add/remove hashtag on loaded song",
+   "example": "loaded_song_hashtag 'user 1' '#tag'",
+   "official": true
+  },
+  "lock_cues": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Lock/unlock cues",
+   "example": "lock_cues",
+   "official": true
+  },
+  "lock_panel": {
+   "tier": "curated",
+   "section": "Skin Control",
+   "description": "Acts on split elements",
+   "example": "lock_panel",
+   "aliases": [
+    "lock_pannel"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "lock_pannel": {
+   "tier": "alias",
+   "canonical": "lock_panel",
+   "official": true
+  },
+  "log_search": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Log current search",
+   "example": "log_search",
+   "official": true
+  },
+  "loop": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Set/remove loop",
+   "example": "loop 4",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_adjust": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Adjust loop with jog",
+   "example": "loop_adjust 'move'",
+   "official": true
+  },
+  "loop_back": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Toggle loop-back mode",
+   "example": "loop_back",
+   "official": true
+  },
+  "loop_button": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Smart one-button loop control",
+   "example": "loop_button",
+   "official": true
+  },
+  "loop_color": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Saved-loop color",
+   "example": "loop_color 1",
+   "official": true
+  },
+  "loop_delete": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Delete saved loop",
+   "example": "loop_delete 1",
+   "official": true
+  },
+  "loop_double": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Double loop",
+   "example": "loop_double",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "loop_exit": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Remove loop",
+   "example": "loop_exit",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_half": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Halve loop",
+   "example": "loop_half",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "loop_in": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Set loop start",
+   "example": "loop_in",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_length": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Change loop length",
+   "example": "loop_length 0.5",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_load": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Load saved loop",
+   "example": "loop_load 1",
+   "official": true
+  },
+  "loop_load_prepare": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Prepare/load saved loop and query prepared state",
+   "example": "loop_load_prepare 1",
+   "official": true
+  },
+  "loop_move": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Move loop",
+   "example": "loop_move +2",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_options": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Show loop options menu",
+   "example": "loop_options",
+   "official": true
+  },
+  "loop_out": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Set loop end",
+   "example": "loop_out",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "loop_pad": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Trigger predefined loop pad",
+   "example": "loop_pad 1",
+   "official": true
+  },
+  "loop_pad_mode": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Cycle loop pad behavior",
+   "example": "loop_pad_mode +1",
+   "official": true
+  },
+  "loop_pad_page": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Cycle loop pad page",
+   "example": "loop_pad_page +1",
+   "official": true
+  },
+  "loop_position": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Current position inside active loop",
+   "example": "loop_position",
+   "official": true
+  },
+  "loop_roll": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Loop roll",
+   "example": "loop_roll 0.25",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "loop_roll_mode": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Toggle loop roll release behavior",
+   "example": "loop_roll_mode",
+   "official": true
+  },
+  "loop_save": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Save loop",
+   "example": "loop_save 1",
+   "official": true
+  },
+  "loop_select": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Select/default loop size",
+   "example": "loop_select 4",
+   "official": true
+  },
+  "low_label": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Low EQ band label",
+   "example": " ",
+   "official": true
+  },
+  "macro_play": {
+   "tier": "catalog",
+   "section": "Macros",
+   "description": "Play macro",
+   "example": "macro_play",
+   "official": true
+  },
+  "macro_record": {
+   "tier": "catalog",
+   "section": "Macros",
+   "description": "Record macro",
+   "example": "macro_record",
+   "official": true
+  },
+  "mark_linked_tracks": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Link decks 1 and 2 as related tracks",
+   "example": "mark_linked_tracks",
+   "aliases": [
+    "mark_related_tracks"
+   ],
+   "official": true
+  },
+  "mark_related_tracks": {
+   "tier": "alias",
+   "canonical": "mark_linked_tracks",
+   "official": true
+  },
+  "master_balance": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Master left/right balance",
+   "example": "master_balance 50%",
+   "official": true
+  },
+  "master_tempo": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Toggle master tempo",
+   "example": "master_tempo",
+   "official": true
+  },
+  "master_volume": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Master volume",
+   "example": "master_volume",
+   "official": true
+  },
+  "masterdeck": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Select/unselect master",
+   "example": "masterdeck",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "masterdeck_auto": {
+   "tier": "catalog",
+   "section": "Deck Selection",
+   "description": "Auto masterdeck",
+   "example": "masterdeck_auto",
+   "official": true
+  },
+  "match_bpm": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Match BPM only",
+   "example": "match_bpm",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "match_gain": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Match gain to the other deck",
+   "example": "match_gain",
+   "official": true
+  },
+  "match_key": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Match compatible key",
+   "example": "match_key",
+   "official": true
+  },
+  "maximize": {
+   "tier": "catalog",
+   "section": "Window Control",
+   "description": "Maximize/fullscreen/windowed",
+   "example": "maximize 'fullscreen'",
+   "official": true
+  },
+  "menu": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Controller-screen menu for `menu_button` controls",
+   "example": "menu",
+   "official": true
+  },
+  "menu_button": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Changeable button",
+   "example": "menu_button 1 \"hotcue,sampler\"",
+   "official": true
+  },
+  "menu_cycledisplay": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Cycle single-line controller display",
+   "example": "menu_cycledisplay",
+   "official": true
+  },
+  "mic": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Toggle microphone",
+   "example": "mic",
+   "aliases": [
+    "microphone"
+   ],
+   "official": true
+  },
+  "mic2_volume": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Set second microphone volume",
+   "example": "mic2_volume",
+   "official": true
+  },
+  "mic_eq_high": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Microphone high EQ",
+   "example": "mic_eq_high",
+   "official": true
+  },
+  "mic_eq_low": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Microphone low EQ",
+   "example": "mic_eq_low",
+   "official": true
+  },
+  "mic_eq_mid": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Microphone mid EQ",
+   "example": "mic_eq_mid",
+   "official": true
+  },
+  "mic_rec": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Record microphone",
+   "example": "mic_rec",
+   "official": true
+  },
+  "mic_talkover": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Lower decks, activate mic",
+   "example": "mic_talkover 20% 1000ms",
+   "official": true
+  },
+  "mic_volume": {
+   "tier": "catalog",
+   "section": "Audio Inputs",
+   "description": "Set mic volume",
+   "example": "mic_volume",
+   "official": true
+  },
+  "microphone": {
+   "tier": "alias",
+   "canonical": "mic",
+   "official": true
+  },
+  "mid_label": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Mid EQ band label",
+   "example": " ",
+   "official": true
+  },
+  "midiclock_active": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Toggle MIDI clock output to a controller",
+   "example": "midiclock_active",
+   "official": true
+  },
+  "miditovst_active": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Toggle MIDI routing to deck VST instruments/effects",
+   "example": "miditovst_active",
+   "official": true
+  },
+  "minimize": {
+   "tier": "catalog",
+   "section": "Window Control",
+   "description": "Minimize to taskbar",
+   "example": "minimize",
+   "official": true
+  },
+  "mix_and_load_next": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Mix and load next",
+   "example": "mix_and_load_next",
+   "official": true
+  },
+  "mix_next": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Mix to next",
+   "example": "mix_next",
+   "official": true
+  },
+  "mix_next_sidelist": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Mix next using sidelist source",
+   "example": "mix_next_sidelist",
+   "official": true
+  },
+  "mix_now": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Crossfade with sync",
+   "example": "mix_now 4000ms",
+   "official": true
+  },
+  "mix_now_nosync": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Crossfade without sync",
+   "example": "mix_now_nosync",
+   "official": true
+  },
+  "mix_selected": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Mix to selected",
+   "example": "mix_selected",
+   "official": true
+  },
+  "mixer_order": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Four-deck controller mixer order",
+   "example": "mixer_order 3124",
+   "official": true
+  },
+  "mixermode": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Query internal vs external mixer mode",
+   "example": "mixermode 'internal'",
+   "official": true
+  },
+  "mono_mix": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Mix left/right channels together",
+   "example": "mono_mix",
+   "official": true
+  },
+  "motor_switch": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Assign deck to motorized wheel",
+   "example": "motor_switch",
+   "official": true
+  },
+  "motorwheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Motorized jogwheel",
+   "example": "motorwheel \"move\" +1.0",
+   "official": true
+  },
+  "motorwheel_instant_play": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Start instantly on motorized-wheel decks",
+   "example": "motorwheel_instant_play on",
+   "official": true
+  },
+  "move_deck": {
+   "tier": "curated",
+   "section": "Deck Management",
+   "description": "Move song to other deck",
+   "example": "move_deck",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "multibutton": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Click multibutton",
+   "example": "multibutton \"my_button\"",
+   "official": true
+  },
+  "multibutton_select": {
+   "tier": "catalog",
+   "section": "Custom Buttons & Multi-buttons",
+   "description": "Open selection menu",
+   "example": "multibutton_select \"my_button\"",
+   "official": true
+  },
+  "mute": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Mute deck",
+   "example": "mute",
+   "official": true
+  },
+  "mute_stem": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Mute stem",
+   "example": "mute_stem vocal",
+   "official": true
+  },
+  "no": {
+   "tier": "alias",
+   "canonical": "false",
+   "official": true
+  },
+  "not_played": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Do not mark this deck's song as played",
+   "example": "not_played",
+   "official": true
+  },
+  "nothing": {
+   "tier": "curated",
+   "section": "Flow Control",
+   "description": "Do nothing; no-op, not an early return",
+   "example": "nothing",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "ns7_platter": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "nudge": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Nudge position",
+   "example": "nudge +120ms",
+   "official": true
+  },
+  "numark_waveform_zoom": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Numark waveform zoom level",
+   "example": "numark_waveform_zoom +1",
+   "official": true
+  },
+  "off": {
+   "tier": "alias",
+   "canonical": "false",
+   "official": true
+  },
+  "on": {
+   "tier": "alias",
+   "canonical": "true",
+   "official": true
+  },
+  "only_stem": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Isolate stem",
+   "example": "only_stem vocal",
+   "official": true
+  },
+  "open_help": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Open user guide",
+   "example": "open_help",
+   "official": true
+  },
+  "open_stem_creator": {
+   "tier": "catalog",
+   "section": "Window Control",
+   "description": "Open the Stem Creator workflow",
+   "example": "open_stem_creator",
+   "official": true
+  },
+  "os2l_button": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Trigger named OS2L lighting button",
+   "example": "os2l_button 'blackout'",
+   "official": true
+  },
+  "os2l_cmd": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Trigger numbered OS2L command",
+   "example": "os2l_cmd 1 on while_pressed",
+   "official": true
+  },
+  "os2l_info": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Show/read OS2L lighting connection info",
+   "example": "os2l_info",
+   "official": true
+  },
+  "os2l_scene": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Trigger or queue an OS2L scene when the deck is audible",
+   "example": "os2l_scene 'scene1'",
+   "official": true
+  },
+  "over_video": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Force this deck's video output to video master",
+   "example": "over_video on",
+   "aliases": [
+    "overvideo"
+   ],
+   "official": true
+  },
+  "overvideo": {
+   "tier": "alias",
+   "canonical": "over_video",
+   "official": true
+  },
+  "pad": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Activate pad from current page",
+   "example": "pad 1",
+   "official": true
+  },
+  "pad_bank2": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Switch skin display between pads 1-8 and 9-16",
+   "example": "pad_bank2",
+   "official": true
+  },
+  "pad_button_color": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Controller-ready current-page pad color",
+   "example": "pad_button_color 1",
+   "official": true
+  },
+  "pad_color": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Get current-page pad color",
+   "example": "pad_color 1",
+   "official": true
+  },
+  "pad_edit": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Edit page",
+   "example": "pad_edit",
+   "official": true
+  },
+  "pad_has_16pads": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Controller exposes 4x4 pads",
+   "example": "pad_has_16pads",
+   "official": true
+  },
+  "pad_has_action": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether current page defines a pad action",
+   "example": "pad_has_action 1",
+   "official": true
+  },
+  "pad_has_color": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether pad has color behavior",
+   "example": "pad_has_color 1",
+   "official": true
+  },
+  "pad_has_menu": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether pad page has menu",
+   "example": "pad_has_menu",
+   "official": true
+  },
+  "pad_has_param": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether pad page exposes a parameter",
+   "example": "pad_has_param 1",
+   "official": true
+  },
+  "pad_has_pressure": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether pad has pressure behavior",
+   "example": "pad_has_pressure 1",
+   "official": true
+  },
+  "pad_menu": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Open current pad page menu",
+   "example": "pad_menu",
+   "official": true
+  },
+  "pad_page": {
+   "tier": "curated",
+   "section": "Pads",
+   "description": "Activate current deck's pad page",
+   "example": "pad_page 1",
+   "aliases": [
+    "pad_pages"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "pad_page_favorite_select": {
+   "tier": "alias",
+   "canonical": "pad_page_select",
+   "official": true
+  },
+  "pad_page_select": {
+   "tier": "curated",
+   "aliases": [
+    "pad_page_favorite_select"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "pad_pages": {
+   "tier": "alias",
+   "canonical": "pad_page",
+   "official": true
+  },
+  "pad_param": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Change param 1",
+   "example": "pad_param",
+   "official": true
+  },
+  "pad_param2": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Change param 2",
+   "example": "pad_param2",
+   "official": true
+  },
+  "pad_param_visible": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check/display pad parameter visibility",
+   "example": "pad_param_visible 1",
+   "official": true
+  },
+  "pad_pressure": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Pad pressure amount",
+   "example": "pad_pressure 1",
+   "official": true
+  },
+  "pad_pushed": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Check whether pad is currently pressed",
+   "example": "pad_pushed 1",
+   "official": true
+  },
+  "padfx": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Activate named effect",
+   "example": "padfx \"echo\" 40% 90%",
+   "official": true
+  },
+  "padfx_single": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Activate single padfx",
+   "example": "padfx_single \"reverb\"",
+   "official": true
+  },
+  "padshift": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Force shifted pad action",
+   "example": "padshift 1",
+   "official": true
+  },
+  "padshift_button_color": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Force shifted pad button color",
+   "example": "padshift_button_color 1",
+   "official": true
+  },
+  "padshift_pressure": {
+   "tier": "catalog",
+   "section": "Pads",
+   "description": "Force shifted pad pressure action",
+   "example": "padshift_pressure 1",
+   "official": true
+  },
+  "page": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Browser/page helper",
+   "example": "page",
+   "official": true
+  },
+  "param_1_x": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Invert value (1/x)",
+   "example": "param_1_x & effect slider",
+   "official": true
+  },
+  "param_add": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Add values",
+   "example": "param_add \\",
+   "official": true
+  },
+  "param_bigger": {
+   "tier": "curated",
+   "section": "Parameter Comparison & Math",
+   "description": "Check if value is bigger",
+   "example": "param_bigger 0 ? action1 : action2",
+   "aliases": [
+    "param_greater"
+   ],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "param_cast": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Cast to new type",
+   "example": "param_cast \"percentage\"",
+   "official": true
+  },
+  "param_contains": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Check if value contains string",
+   "example": "param_contains",
+   "official": true
+  },
+  "param_delta": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Transform absolute to relative",
+   "example": "param_delta",
+   "official": true
+  },
+  "param_equal": {
+   "tier": "curated",
+   "section": "Parameter Comparison & Math",
+   "description": "Check if value equals something",
+   "example": "param_equal \\",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "param_greater": {
+   "tier": "alias",
+   "canonical": "param_bigger",
+   "official": true
+  },
+  "param_invert": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Invert value (1-x)",
+   "example": "param_invert & pitch_slider",
+   "official": true
+  },
+  "param_lowercase": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Convert to lowercase",
+   "example": "param_lowercase",
+   "official": true
+  },
+  "param_make_discrete": {
+   "tier": "catalog",
+   "section": "Timing & Animation",
+   "description": "Make smooth encoder discrete",
+   "example": "param_make_discrete 0.1",
+   "official": true
+  },
+  "param_mod": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Wrap value",
+   "example": "param_mod",
+   "official": true
+  },
+  "param_multiply": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Multiply value",
+   "example": "param_multiply 300% & effect slider",
+   "official": true
+  },
+  "param_pingpong": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Linear to forth-and-back scale",
+   "example": "param_pingpong",
+   "official": true
+  },
+  "param_pow": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Power calculation",
+   "example": "param_pow 0.5",
+   "official": true
+  },
+  "param_smaller": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Check if value is smaller",
+   "example": "param_smaller 0 ? action1 : action2",
+   "official": true
+  },
+  "param_ucfirst": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "First letter uppercase",
+   "example": "param_ucfirst",
+   "official": true
+  },
+  "param_uppercase": {
+   "tier": "catalog",
+   "section": "Parameter Comparison & Math",
+   "description": "Convert to uppercase",
+   "example": "param_uppercase",
+   "official": true
+  },
+  "pause": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Pause deck",
+   "example": "pause",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "pause_stop": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Pause or stop",
+   "example": "pause_stop",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "pfl": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Send to headphones",
+   "example": "pfl",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "phase_active": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Phase controller active-state helper",
+   "example": "phase_active",
+   "official": true
+  },
+  "phase_movement": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Phase controller movement helper",
+   "example": "phase_movement",
+   "official": true
+  },
+  "phase_position": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Phase controller position helper",
+   "example": "phase_position",
+   "official": true
+  },
+  "phrase_sync": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Match phrase",
+   "example": "phrase_sync 16",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "pioneer_cue": {
+   "tier": "catalog",
+   "section": "Play Controls",
+   "description": "Pioneer-style cue button/LED helper state",
+   "example": "pioneer_cue",
+   "official": true
+  },
+  "pioneer_loop": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Pioneer-style loop helper",
+   "example": "pioneer_loop",
+   "official": true
+  },
+  "pioneer_loop_in": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Pioneer-style loop in helper",
+   "example": "pioneer_loop_in",
+   "official": true
+  },
+  "pioneer_loop_out": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Pioneer-style loop out helper",
+   "example": "pioneer_loop_out",
+   "official": true
+  },
+  "pioneer_play": {
+   "tier": "catalog",
+   "section": "Play Controls",
+   "description": "Pioneer-style play LED/helper state",
+   "example": "pioneer_play",
+   "official": true
+  },
+  "pitch": {
+   "tier": "curated",
+   "section": "Key & Pitch",
+   "description": "Set pitch",
+   "example": "pitch 112%",
+   "aliases": [
+    "pitch2"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "pitch2": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Official aliases of `pitch` / `pitch_slider`",
+   "example": "pitch2 112%",
+   "aliases": [
+    "pitch2_slider"
+   ],
+   "official": true
+  },
+  "pitch2_slider": {
+   "tier": "alias",
+   "canonical": "pitch2",
+   "official": true
+  },
+  "pitch_bend": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Temporary bend",
+   "example": "pitch_bend +3%",
+   "official": true
+  },
+  "pitch_lock": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Link pitch sliders between matched decks",
+   "example": "pitch_lock on",
+   "aliases": [
+    "pitchlock"
+   ],
+   "official": true
+  },
+  "pitch_motorized": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Motorized pitch helper",
+   "example": "pitch_motorized",
+   "official": true
+  },
+  "pitch_range": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Set pitch range",
+   "example": "pitch_range 12%",
+   "official": true
+  },
+  "pitch_relative": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Relative pitch helper for controllers",
+   "example": "pitch_relative +0.1%",
+   "official": true
+  },
+  "pitch_reset": {
+   "tier": "curated",
+   "section": "Key & Pitch",
+   "description": "Slowly return to 0%",
+   "example": "pitch_reset 5%",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "pitch_slider": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "pitch_zero": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Reset to 0%",
+   "example": "pitch_zero",
+   "official": true
+  },
+  "pitchlock": {
+   "tier": "alias",
+   "canonical": "pitch_lock",
+   "official": true
+  },
+  "play": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Start deck",
+   "example": "play",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "play_3button": {
+   "tier": "alias",
+   "canonical": "play_button",
+   "official": true
+  },
+  "play_button": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Depends on play_mode",
+   "example": "play_button",
+   "aliases": [
+    "play_3button"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "play_mode": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Set play/stop/cue behavior family",
+   "example": "play_mode 'pioneer'",
+   "official": true
+  },
+  "play_onbeat": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Play synchronized to local beat",
+   "example": "play_onbeat",
+   "official": true
+  },
+  "play_options": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Menu for play/cue/smart behavior",
+   "example": "play_options",
+   "official": true
+  },
+  "play_pause": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Toggle play/pause",
+   "example": "play_pause",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "play_stutter": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Start or restart",
+   "example": "play_stutter",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "play_sync": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Play synchronized",
+   "example": "play_sync",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "play_sync_onbeat": {
+   "tier": "curated",
+   "aliases": [
+    "sync_nocbg"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "playlist_add": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Add selected songs to automix list",
+   "example": "playlist_add",
+   "official": true
+  },
+  "playlist_clear": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Empty playlist",
+   "example": "playlist_clear",
+   "official": true
+  },
+  "playlist_load": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load folder/list into automix playlist",
+   "example": "playlist_load 'append'",
+   "official": true
+  },
+  "playlist_load_and_keep": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load first automix song and keep it",
+   "example": "playlist_load_and_keep",
+   "official": true
+  },
+  "playlist_load_and_remove": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load first automix song and remove it",
+   "example": "playlist_load_and_remove",
+   "official": true
+  },
+  "playlist_options": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Show playlist options",
+   "example": "playlist_options",
+   "official": true
+  },
+  "playlist_randomize": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Shuffle playlist",
+   "example": "playlist_randomize",
+   "official": true
+  },
+  "playlist_randomize_once": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Shuffle playlist once",
+   "example": "playlist_randomize_once",
+   "official": true
+  },
+  "playlist_remove_duplicates": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Remove duplicate playlist songs",
+   "example": "playlist_remove_duplicates",
+   "official": true
+  },
+  "playlist_remove_played": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Remove played songs from playlist",
+   "example": "playlist_remove_played",
+   "official": true
+  },
+  "playlist_repeat": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Repeat playlist",
+   "example": "playlist_repeat",
+   "official": true
+  },
+  "playlist_save": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Save playlist to file",
+   "example": "playlist_save",
+   "official": true
+  },
+  "pluginsongpos": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Plugin song position helper",
+   "example": "pluginsongpos",
+   "official": true
+  },
+  "power_gain": {
+   "tier": "alias",
+   "canonical": "gain",
+   "official": true
+  },
+  "prelisten": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "prelisten_info": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "prelisten_options": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "prelisten_output": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "prelisten_pos": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "prelisten_stop": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "preview": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "pulse": {
+   "tier": "catalog",
+   "section": "Timing & Animation",
+   "description": "True for duration when action turns true",
+   "example": "is_using 'equalizer' & pulse 2000ms",
+   "official": true
+  },
+  "quantize_all": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Set all quantize options",
+   "example": "quantize_all",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "quantize_loop": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Quantize loops/rolls",
+   "example": "quantize_loop",
+   "official": true
+  },
+  "quantize_setcue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Quantize newly set cues",
+   "example": "quantize_setcue",
+   "official": true
+  },
+  "quick_filter": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Toggle browser quick filter",
+   "example": "quick_filter 'Has Lyrics is not \"\"'",
+   "official": true
+  },
+  "rack": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Open/close rack unit",
+   "example": "rack 'rack1' 'unit1'",
+   "official": true
+  },
+  "rack_prioritize": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Prioritize unit",
+   "example": "rack_prioritize 'rack1' 'unit1'",
+   "official": true
+  },
+  "rack_solo": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Open unit full size",
+   "example": "rack_solo 'rack1' 'unit1'",
+   "official": true
+  },
+  "rating": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction",
+    "Text"
+   ],
+   "official": true
+  },
+  "reanalyze": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Reanalyze file",
+   "example": "reanalyze multi",
+   "official": true
+  },
+  "record": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Start recording",
+   "example": "record",
+   "official": true
+  },
+  "record_config": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Open record configuration",
+   "example": "record_config",
+   "official": true
+  },
+  "record_cut": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Cut to new file",
+   "example": "record_cut",
+   "official": true
+  },
+  "record_vu": {
+   "tier": "catalog",
+   "section": "Recording & Broadcasting",
+   "description": "Recording signal level",
+   "example": "record_vu",
+   "official": true
+  },
+  "recurse_folder": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Include selected folder subfolders",
+   "example": "recurse_folder",
+   "official": true
+  },
+  "refresh_controller": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Refresh controller displays",
+   "example": "refresh_controller",
+   "official": true
+  },
+  "reinit_controller": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Reinitialize controller",
+   "example": "reinit_controller",
+   "official": true
+  },
+  "relay_play": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Auto-start opposite deck at track end",
+   "example": "relay_play",
+   "official": true
+  },
+  "reloop": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Jump to loop start",
+   "example": "reloop",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "reloop_exit": {
+   "tier": "curated",
+   "section": "Loops",
+   "description": "Remove or reactivate",
+   "example": "reloop_exit",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "repeat": {
+   "tier": "catalog",
+   "section": "Repeat & Delay",
+   "description": "Repeat action while pressed",
+   "example": "repeat 1000ms & browser_scroll +1",
+   "official": true
+  },
+  "repeat_song": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Restart the current song when it reaches the end",
+   "example": "repeat_song on",
+   "official": true
+  },
+  "repeat_start": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Start repeating action",
+   "example": "repeat_start 'name' 1000ms 5 & action",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "repeat_start_instant": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Start repeating immediately",
+   "example": "repeat_start_instant 'name' 1000ms",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "repeat_stop": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Stop repeat",
+   "example": "repeat_stop 'name'",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "rescan_controllers": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Rescan connected controllers",
+   "example": "rescan_controllers",
+   "official": true
+  },
+  "reverse": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Play backward",
+   "example": "reverse",
+   "official": true
+  },
+  "rightcross": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Assign to right crossfader",
+   "example": "rightcross",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "rightdeck": {
+   "tier": "curated",
+   "section": "Deck Selection",
+   "description": "Select right deck",
+   "example": "rightdeck +1",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "rightvideo": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Assign right video",
+   "example": "rightvideo +1",
+   "official": true
+  },
+  "rightvideo_button": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Button helper for right video source",
+   "example": "deck 3 rightvideo_button",
+   "official": true
+  },
+  "rzx_touch": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Pioneer RZX touch helper",
+   "example": "rzx_touch",
+   "official": true
+  },
+  "rzx_touch_x": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Pioneer RZX touch X-position helper",
+   "example": "rzx_touch_x",
+   "official": true
+  },
+  "rzx_touch_y": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Pioneer RZX touch Y-position helper",
+   "example": "rzx_touch_y",
+   "official": true
+  },
+  "sampler_abort_rec": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Cancel recording and delete the unfinished sample",
+   "example": "sampler_abort_rec",
+   "official": true
+  },
+  "sampler_assign": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Assign a `.vdjsample` file to a slot",
+   "example": "sampler_assign 1 \"/Samples/horn.vdjsample\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Pad",
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "sampler_bank": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Select or cycle sampler banks",
+   "example": "sampler_bank \"birthday\"",
+   "official": true
+  },
+  "sampler_color": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Get the color of the visible sampler pad slot",
+   "example": "sampler_color 1",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "sampler_default": {
+   "tier": "alias",
+   "canonical": "sampler_select",
+   "official": true
+  },
+  "sampler_edit": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Open the Sample Editor for a sample",
+   "example": "sampler_edit 4",
+   "official": true
+  },
+  "sampler_group_color": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the color of a sampler group",
+   "example": "sampler_group_color \"horns\"",
+   "official": true
+  },
+  "sampler_group_mute": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Mute/unmute a sampler group",
+   "example": "sampler_group_mute \"horns\"",
+   "official": true
+  },
+  "sampler_group_name": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the name of a sampler group",
+   "example": "sampler_group_name 1",
+   "official": true
+  },
+  "sampler_group_volume": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Adjust all samples in a sampler group",
+   "example": "sampler_group_volume \"horns\" 75%",
+   "official": true
+  },
+  "sampler_has_group": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Check whether a group exists in the current bank",
+   "example": "sampler_has_group \"horns\"",
+   "official": true
+  },
+  "sampler_load_to_deck": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Load the selected sampler slot to a deck",
+   "example": "sampler_load_to_deck",
+   "official": true
+  },
+  "sampler_loaded": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Check whether an absolute sampler slot has a sample loaded; do not rely on `\"auto\"` for paged empty-slot checks",
+   "example": "sampler_loaded 1",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "sampler_loop": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Change the loop length of a sample or set it explicitly",
+   "example": "sampler_loop 1 1",
+   "official": true
+  },
+  "sampler_mode": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Set global or per-sample trigger mode",
+   "example": "sampler_mode 1 'stutter'",
+   "aliases": [
+    "sampler_rapidfire"
+   ],
+   "official": true
+  },
+  "sampler_mute": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Mute or unmute a sample",
+   "example": "sampler_mute 4",
+   "official": true
+  },
+  "sampler_options": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Open or toggle sampler bank options",
+   "example": "sampler_options",
+   "official": true
+  },
+  "sampler_output": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Route sampler output to master, trigger deck, headphones, etc.",
+   "example": "sampler_output \"headphones\"",
+   "official": true
+  },
+  "sampler_pad": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Trigger the currently exposed sampler pad slot; in display/name contexts it can also return the visible pad label",
+   "example": "sampler_pad 1",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Pad",
+    "Button",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "sampler_pad_page": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Change/query the current 8-pad sampler window",
+   "example": "sampler_pad_page +1",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Pad",
+    "Button",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "sampler_pad_shift": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Stop a sample if playing, delete it otherwise",
+   "example": "sampler_pad_shift 1",
+   "official": true
+  },
+  "sampler_pad_volume": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Set sample volume by visible sampler pad position",
+   "example": "sampler_pad_volume 1 75%",
+   "official": true
+  },
+  "sampler_pfl": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Send sampler to headphones or set sampler PFL volume",
+   "example": "sampler_pfl 75%",
+   "official": true
+  },
+  "sampler_play": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Play the selected or specified sample slot",
+   "example": "sampler_play 4",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "sampler_play_stop": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Play sample if stopped, or stop it if already playing",
+   "example": "sampler_play_stop 4",
+   "official": true
+  },
+  "sampler_play_stutter": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Play sample and restart it from the beginning if already playing",
+   "example": "sampler_play_stutter 4",
+   "official": true
+  },
+  "sampler_position": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Get the current playback position of the selected sample",
+   "example": "sampler_position",
+   "official": true
+  },
+  "sampler_rapidfire": {
+   "tier": "alias",
+   "canonical": "sampler_mode",
+   "official": true
+  },
+  "sampler_rec": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Record a sample from the deck, mic, or master",
+   "example": "sampler_rec",
+   "official": true
+  },
+  "sampler_rec_delete": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Delete a sample from the Recordings bank",
+   "example": "sampler_rec_delete 3",
+   "official": true
+  },
+  "sampler_select": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Select the default sampler slot for the deck",
+   "example": "sampler_select 5",
+   "aliases": [
+    "sampler_default"
+   ],
+   "official": true
+  },
+  "sampler_start_rec": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Start recording a new sample",
+   "example": "sampler_start_rec \"master\"",
+   "official": true
+  },
+  "sampler_stop": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Stop one sample or all currently playing samples",
+   "example": "sampler_stop 4",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "sampler_stop_rec": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Stop recording and save the sample",
+   "example": "sampler_stop_rec",
+   "official": true
+  },
+  "sampler_unload_from_deck": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "sampler_used": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Check whether any sample, or a specific count of samples, is playing",
+   "example": "sampler_used",
+   "aliases": [
+    "get_sampler_used"
+   ],
+   "official": true
+  },
+  "sampler_velocity": {
+   "tier": "curated",
+   "section": "Sampler",
+   "description": "Velocity/pressure value for a sampler pad",
+   "example": "sampler_velocity 1",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Pad",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "sampler_volume": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Set sample volume by absolute slot or sample name",
+   "example": "sampler_volume 9 75%",
+   "official": true
+  },
+  "sampler_volume_master": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Set the sampler master volume",
+   "example": "sampler_volume_master +5%",
+   "official": true
+  },
+  "sampler_volume_nogroup": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Adjust one sample without also changing other samples in its group",
+   "example": "sampler_volume_nogroup 9 75%",
+   "official": true
+  },
+  "sandbox": {
+   "tier": "catalog",
+   "section": "Sandbox",
+   "description": "Toggle sandbox mode",
+   "example": "sandbox",
+   "official": true
+  },
+  "save_config": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Save config now",
+   "example": "save_config",
+   "aliases": [
+    "saveregistryconfig"
+   ],
+   "official": true
+  },
+  "save_deck_set": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Save current loaded-deck configuration",
+   "example": "save_deck_set",
+   "official": true
+  },
+  "saved_loop": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Load or set loop",
+   "example": "saved_loop 1",
+   "official": true
+  },
+  "saved_loop_autotrigger": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Auto-trigger saved loop when playhead reaches it",
+   "example": "saved_loop_autotrigger 1",
+   "official": true
+  },
+  "saved_loop_display": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Saved-loop pad label/display mode",
+   "example": " ",
+   "official": true
+  },
+  "saved_loop_prepare": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Prepare/load saved loop or set it if missing",
+   "example": "saved_loop_prepare 1",
+   "official": true
+  },
+  "saveregistryconfig": {
+   "tier": "alias",
+   "canonical": "save_config",
+   "official": true
+  },
+  "scratch": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Scratch forward/back",
+   "example": "scratch +120ms",
+   "official": true
+  },
+  "scratch_dna": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Execute DNA scratch",
+   "example": "scratch_dna",
+   "official": true
+  },
+  "scratch_dna_editor": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Open DNA editor",
+   "example": "scratch_dna_editor",
+   "official": true
+  },
+  "scratch_dna_option": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Configure Scratch DNA behavior",
+   "example": "scratch_dna_option \"quantized\"",
+   "official": true
+  },
+  "scratch_hold": {
+   "tier": "alias",
+   "canonical": "hold",
+   "official": true
+  },
+  "scratch_wheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Official alias of `touchwheel` / `scratchwheel`",
+   "example": "scratch_wheel +1.0",
+   "official": true
+  },
+  "scratch_wheel_touch": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Official aliases of `touchwheel_touch`",
+   "example": "scratch_wheel_touch on",
+   "aliases": [
+    "scratchwheel_touch",
+    "speedwheel_touch"
+   ],
+   "official": true
+  },
+  "scratchbank_assign": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Assign dropped file to scratchbank slot",
+   "example": "scratchbank_assign 1",
+   "official": true
+  },
+  "scratchbank_edit": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Open scratchbank editor/menu",
+   "example": "scratchbank_edit",
+   "official": true
+  },
+  "scratchbank_load": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Scratchbank page load/helper",
+   "example": "scratchbank_load",
+   "official": true
+  },
+  "scratchbank_load_to_deck": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Load scratchbank slot to deck, or return its label/color in pad contexts",
+   "example": "scratchbank_load_to_deck 1",
+   "official": true
+  },
+  "scratchbank_unload": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "scratchwheel": {
+   "tier": "alias",
+   "canonical": "touchwheel",
+   "official": true
+  },
+  "scratchwheel_touch": {
+   "tier": "alias",
+   "canonical": "scratch_wheel_touch",
+   "official": true
+  },
+  "search": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Focus search or search text",
+   "example": "search \"text\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "search_add": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Append to search query",
+   "example": "search_add \"house\"",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "search_delete": {
+   "tier": "curated",
+   "section": "Browser",
+   "description": "Remove last search character",
+   "example": "search_delete",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "search_folder": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Search folders/lists",
+   "example": "search_folder dialog",
+   "official": true
+  },
+  "search_folder_options": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Folder-search options",
+   "example": "search_folder_options",
+   "official": true
+  },
+  "search_options": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Search field options",
+   "example": "search_options 'composer'",
+   "official": true
+  },
+  "search_playlists": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Find playlists containing song",
+   "example": "search_playlists deck",
+   "official": true
+  },
+  "seek": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Move while pressed",
+   "example": "seek +2",
+   "official": true
+  },
+  "select": {
+   "tier": "catalog",
+   "section": "Deck Selection",
+   "description": "Select working deck",
+   "example": "select",
+   "official": true
+  },
+  "select_master_output": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Select computer/controller master output",
+   "example": "select_master_output",
+   "official": true
+  },
+  "set": {
+   "tier": "curated",
+   "section": "Variables",
+   "description": "Set variable value",
+   "example": "set 'varname' 5",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "set_bpm": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Set BPM",
+   "example": "set_bpm 129.3",
+   "official": true
+  },
+  "set_browsed_file_bpm": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Set BPM for selected browser songs",
+   "example": "set_browsed_file_bpm 129.3",
+   "official": true
+  },
+  "set_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Store cue position",
+   "example": "set_cue 1 500ms",
+   "official": true
+  },
+  "set_deck": {
+   "tier": "curated",
+   "section": "Controllers",
+   "description": "Affect which deck",
+   "example": "set_deck \\",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "set_firstbeat": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Set first beat",
+   "example": "set_firstbeat",
+   "official": true
+  },
+  "set_fluid": {
+   "tier": "curated",
+   "aliases": [
+    "set_variable_bpm"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "set_gain": {
+   "tier": "catalog",
+   "section": "Volume & Mixing",
+   "description": "Set gain to dBA",
+   "example": "set_gain 0",
+   "official": true
+  },
+  "set_key": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Match exact key",
+   "example": "set_key \"A#m\"",
+   "official": true
+  },
+  "set_loadpoint": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Set where the track starts when loaded",
+   "example": "set_loadpoint",
+   "official": true
+  },
+  "set_mixpoint": {
+   "tier": "catalog",
+   "section": "POI & BPM",
+   "description": "Move automix/mix point to current position",
+   "example": "set_mixpoint \"StartTempo\"",
+   "official": true
+  },
+  "set_var": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Set variable value",
+   "example": "set_var",
+   "official": true
+  },
+  "set_var_dialog": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Dialog to set var",
+   "example": "set_var_dialog 'varname'",
+   "official": true
+  },
+  "set_variable_bpm": {
+   "tier": "alias",
+   "canonical": "set_fluid",
+   "official": true
+  },
+  "setting": {
+   "tier": "curated",
+   "section": "Configuration",
+   "description": "Read/write setting",
+   "example": "setting \"jogSensitivityScratch\" 80%",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "setting_ismodified": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Query whether setting differs from default",
+   "example": "setting_ismodified 'jogSensitivityScratch'",
+   "official": true
+  },
+  "setting_reset": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Reset setting to default",
+   "example": "setting_reset 'jogSensitivityScratch'",
+   "official": true
+  },
+  "setting_setdefault": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Change setting default for this session",
+   "example": "setting_setdefault 'jogSensitivityScratch' 80%",
+   "official": true
+  },
+  "setting_setsession": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Force setting value for this session",
+   "example": "setting_setsession 'videoRandomTransition' on",
+   "official": true
+  },
+  "setting_setsession_deck": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Force deck-specific setting value for this session",
+   "example": "deck 1 setting_setsession_deck 'pitchRange' 12%",
+   "official": true
+  },
+  "settings": {
+   "tier": "curated",
+   "section": "Configuration",
+   "description": "Open config window",
+   "example": "settings",
+   "aliases": [
+    "config"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "shift": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Built-in shift variable",
+   "example": "shift",
+   "official": true
+  },
+  "shift_all_cues": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Shift all cue points by a time offset",
+   "example": "shift_all_cues -10ms",
+   "official": true
+  },
+  "show_keyboard": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Show onscreen keyboard",
+   "example": "show_keyboard",
+   "official": true
+  },
+  "show_pluginpage": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Show/hide plugin control windows",
+   "example": "show_pluginpage",
+   "official": true
+  },
+  "show_splitpanel": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Show/hide split panel",
+   "example": "show_splitpanel 'sidelist'",
+   "official": true
+  },
+  "show_text": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Show temporary controller display text",
+   "example": "show_text 'Line 1|Line 2' 3000ms",
+   "official": true
+  },
+  "show_window": {
+   "tier": "catalog",
+   "section": "Window Control",
+   "description": "Show/hide window",
+   "example": "show_window",
+   "official": true
+  },
+  "sidelist_add": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Add selected songs to sidelist",
+   "example": "sidelist_add",
+   "official": true
+  },
+  "sidelist_clear": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Clear sidelist",
+   "example": "sidelist_clear",
+   "official": true
+  },
+  "sidelist_load": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load folder/list into sidelist",
+   "example": "sidelist_load 'append'",
+   "official": true
+  },
+  "sidelist_load_and_keep": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load first sidelist song and keep it",
+   "example": "sidelist_load_and_keep",
+   "official": true
+  },
+  "sidelist_load_and_remove": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Load first sidelist song and remove it",
+   "example": "sidelist_load_and_remove",
+   "official": true
+  },
+  "sidelist_options": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Show sidelist options",
+   "example": "sidelist_options",
+   "official": true
+  },
+  "sidereco_options": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Sideview recommendation panel options",
+   "example": "sidereco_options",
+   "official": true
+  },
+  "sidereco_song": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Recommendation-panel song helper",
+   "example": "sidereco_song",
+   "official": true
+  },
+  "sidereco_source": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Recommendation-panel source helper",
+   "example": "sidereco_source",
+   "official": true
+  },
+  "sideview": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "sideview_options": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Sideview shortcut options",
+   "example": "sideview_options",
+   "official": true
+  },
+  "sideview_sort": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Sort sideview",
+   "example": "sideview_sort \"artist\"",
+   "official": true
+  },
+  "sideview_title": {
+   "tier": "curated",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "Text",
+    "SkinQuery"
+   ],
+   "official": true
+  },
+  "sideview_triggerpad": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Toggle sideview sampler mode",
+   "example": "sideview_triggerpad",
+   "official": true
+  },
+  "silent_cue": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Mute until cue activated",
+   "example": "silent_cue",
+   "official": true
+  },
+  "skin_empty_buttons": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Query/toggle empty custom button space",
+   "example": "skin_empty_buttons",
+   "official": true
+  },
+  "skin_height": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "skin_panel": {
+   "tier": "curated",
+   "section": "Skin Control",
+   "description": "Show/hide panel",
+   "example": "skin_panel 'my_panel' on",
+   "aliases": [
+    "skin_pannel"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "skin_panelgroup": {
+   "tier": "curated",
+   "section": "Skin Control",
+   "description": "Change panel in group",
+   "example": "skin_panelgroup 'groupname' 'panelname'",
+   "aliases": [
+    "skin_pannelgroup"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "skin_panelgroup_available": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Set panel availability",
+   "example": "skin_panelgroup_available",
+   "official": true
+  },
+  "skin_pannel": {
+   "tier": "alias",
+   "canonical": "skin_panel",
+   "official": true
+  },
+  "skin_pannelgroup": {
+   "tier": "alias",
+   "canonical": "skin_panelgroup",
+   "official": true
+  },
+  "skin_starter_tip": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "skin_width": {
+   "tier": "official-name-only",
+   "official": true
+  },
+  "slicer": {
+   "tier": "catalog",
+   "section": "Loops",
+   "description": "Slicer effect",
+   "example": "slicer 1",
+   "official": true
+  },
+  "slip": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Global slip mode",
+   "example": "slip",
+   "official": true
+  },
+  "slip_mode": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Slip mode",
+   "example": "slip_mode",
+   "official": true
+  },
+  "smart_cue": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Auto-sync on cue",
+   "example": "smart_cue",
+   "official": true
+  },
+  "smart_fader": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Sync while crossfading",
+   "example": "smart_fader",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "smart_loop": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Auto-adjust loops",
+   "example": "smart_loop",
+   "official": true
+  },
+  "smart_play": {
+   "tier": "curated",
+   "section": "Configuration",
+   "description": "Auto-sync on play",
+   "example": "smart_play",
+   "aliases": [
+    "auto_sync"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "smart_scratch": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Mute backward scratching",
+   "example": "smart_scratch",
+   "official": true
+  },
+  "song_pos": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Position in song (slider)",
+   "example": "song_pos",
+   "official": true
+  },
+  "songpos_remain": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Remaining time",
+   "example": "songpos_remain 500ms ? blink",
+   "official": true
+  },
+  "songpos_warning": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Last 30s warning",
+   "example": "songpos_warning",
+   "official": true
+  },
+  "sort_cues": {
+   "tier": "catalog",
+   "section": "Cue Points",
+   "description": "Sort cue points chronologically",
+   "example": "sort_cues",
+   "official": true
+  },
+  "speedwheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Position and speed",
+   "example": "speedwheel +1.0 1.5",
+   "official": true
+  },
+  "speedwheel_touch": {
+   "tier": "alias",
+   "canonical": "scratch_wheel_touch",
+   "official": true
+  },
+  "startupspeed": {
+   "tier": "catalog",
+   "section": "Key & Pitch",
+   "description": "Vinyl-style start ramp",
+   "example": "startupspeed 2000ms",
+   "official": true
+  },
+  "stem": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Control stem amount",
+   "example": "stem \"vocal\" 50%",
+   "official": true
+  },
+  "stem_color": {
+   "tier": "curated",
+   "section": "Equalizer & Stems",
+   "description": "Get default stem color",
+   "example": "stem_color 'Vocal'",
+   "aliases": [],
+   "kind": "Query",
+   "surfaces": [
+    "SkinQuery",
+    "Text",
+    "Pad"
+   ],
+   "official": true
+  },
+  "stem_pad": {
+   "tier": "catalog",
+   "section": "Equalizer & Stems",
+   "description": "Mute/isolate stem pad",
+   "example": "stem_pad 'acapella' on",
+   "official": true
+  },
+  "stems_bleed": {
+   "tier": "curated",
+   "section": "Equalizer & Stems",
+   "description": "Stem bleed control/query",
+   "example": "stems_bleed",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Pad",
+    "Button",
+    "SkinAction",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "stems_split": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Split stems to decks",
+   "example": "stems_split vocal target",
+   "official": true
+  },
+  "stems_split_unlink": {
+   "tier": "catalog",
+   "section": "Deck Management",
+   "description": "Unlink split stems",
+   "example": "stems_split_unlink",
+   "official": true
+  },
+  "stop": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Stop to cue/beginning",
+   "example": "stop",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "stop_3button": {
+   "tier": "alias",
+   "canonical": "stop_button",
+   "official": true
+  },
+  "stop_button": {
+   "tier": "curated",
+   "section": "Play Controls",
+   "description": "Depends on play_mode",
+   "example": "stop_button",
+   "aliases": [
+    "stop_3button"
+   ],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "stopwatch": {
+   "tier": "catalog",
+   "section": "Text Queries",
+   "description": "Stopwatch",
+   "example": "stopwatch",
+   "official": true
+  },
+  "stopwatch_reset": {
+   "tier": "catalog",
+   "section": "Text Queries",
+   "description": "Reset stopwatch",
+   "example": "stopwatch_reset",
+   "official": true
+  },
+  "swap_decks": {
+   "tier": "curated",
+   "section": "Deck Management",
+   "description": "Swap deck 1 and 2",
+   "example": "swap_decks",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button"
+   ],
+   "official": true
+  },
+  "switch_sidelist_playlist": {
+   "tier": "catalog",
+   "section": "Automix",
+   "description": "Exchange playlist and sidelist contents",
+   "example": "switch_sidelist_playlist",
+   "official": true
+  },
+  "switch_skin_variation": {
+   "tier": "catalog",
+   "section": "Configuration",
+   "description": "Switch current skin variation",
+   "example": "switch_skin_variation",
+   "official": true
+  },
+  "sync": {
+   "tier": "curated",
+   "section": "Sync",
+   "description": "Synchronize with other deck",
+   "example": "sync",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "sync_hint": {
+   "tier": "catalog",
+   "section": "Sync",
+   "description": "Query sync hint such as pitch or phase",
+   "example": "sync_hint \"phase\"",
+   "official": true
+  },
+  "sync_nocbg": {
+   "tier": "alias",
+   "canonical": "play_sync_onbeat",
+   "official": true
+  },
+  "system": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Sparse official system helper",
+   "example": "system",
+   "official": true
+  },
+  "system_volume": {
+   "tier": "catalog",
+   "section": "System Info",
+   "description": "Change system volume",
+   "example": "system_volume",
+   "official": true
+  },
+  "timecode_active": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Enable timecode control",
+   "example": "timecode_active 1 on",
+   "official": true
+  },
+  "timecode_bypass": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Use as line input",
+   "example": "timecode_bypass",
+   "official": true
+  },
+  "timecode_cd_mode": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Force timecode to CD mode",
+   "example": "timecode_cd_mode on",
+   "official": true
+  },
+  "timecode_config": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Open timecode configuration",
+   "example": "timecode_config",
+   "official": true
+  },
+  "timecode_mode": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Set mode",
+   "example": "timecode_mode 'smart'",
+   "official": true
+  },
+  "timecode_motor_enable": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Hybrid turntable motor-state helper",
+   "example": "timecode_motor_enable on",
+   "official": true
+  },
+  "timecode_options": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Show timecode options",
+   "example": "timecode_options",
+   "official": true
+  },
+  "timecode_pitch": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Tell timecode engine a controller pitch-slider position",
+   "example": "timecode_pitch 100%",
+   "official": true
+  },
+  "timecode_reset_pitch": {
+   "tier": "catalog",
+   "section": "Timecode",
+   "description": "Reset software pitch so deck pitch matches turntable pitch",
+   "example": "timecode_reset_pitch",
+   "official": true
+  },
+  "toggle": {
+   "tier": "curated",
+   "section": "Variables",
+   "description": "Toggle true/false",
+   "example": "toggle '$MyVar'",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinAction"
+   ],
+   "official": true
+  },
+  "touchwheel": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Jogwheel with touch",
+   "example": "touchwheel +1.0",
+   "aliases": [
+    "scratchwheel"
+   ],
+   "official": true
+  },
+  "touchwheel_touch": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Touch detection",
+   "example": "touchwheel_touch",
+   "official": true
+  },
+  "true": {
+   "tier": "catalog",
+   "section": "Parameters & Constants",
+   "description": "Returns true",
+   "example": "true",
+   "aliases": [
+    "on",
+    "yes"
+   ],
+   "official": true
+  },
+  "undo_load": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Reload previous",
+   "example": "undo_load",
+   "official": true
+  },
+  "unload": {
+   "tier": "catalog",
+   "section": "Loading",
+   "description": "Unload song",
+   "example": "unload",
+   "official": true
+  },
+  "up": {
+   "tier": "curated",
+   "section": "Flow Control",
+   "description": "Execute action on key press/release",
+   "example": "up ? action1 : action2",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "v7_status": {
+   "tier": "catalog",
+   "section": "Controllers",
+   "description": "Numark V7 status helper",
+   "example": "v7_status",
+   "official": true
+  },
+  "var": {
+   "tier": "curated",
+   "section": "Variables",
+   "description": "Conditional based on variable",
+   "example": "var \"my_var\" ? action1 : action2",
+   "aliases": [],
+   "kind": "Dual",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad",
+    "SkinQuery",
+    "Text"
+   ],
+   "official": true
+  },
+  "var_equal": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Check equality",
+   "example": "var_equal '$MyVar' 1 ? action1 : action2",
+   "official": true
+  },
+  "var_greater": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Check greater than",
+   "example": "var_greater \"my_var\" 42",
+   "official": true
+  },
+  "var_list": {
+   "tier": "curated",
+   "section": "Variables",
+   "description": "Show variables window",
+   "example": "var_list",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Button",
+    "Pad",
+    "Map"
+   ],
+   "official": true
+  },
+  "var_not_equal": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Check inequality",
+   "example": "var_not_equal \"my_var\" 42",
+   "official": true
+  },
+  "var_smaller": {
+   "tier": "catalog",
+   "section": "Variables",
+   "description": "Check less than",
+   "example": "var_smaller \"my_var\" 42",
+   "official": true
+  },
+  "video": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Open/close video window",
+   "example": "video",
+   "official": true
+  },
+  "video_crossfader": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Video crossfader",
+   "example": "video_crossfader",
+   "official": true
+  },
+  "video_crossfader_auto": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Automatically move video crossfader based on deck activity",
+   "example": "video_crossfader_auto on",
+   "official": true
+  },
+  "video_crossfader_link": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Link video crossfader to audio crossfader",
+   "example": "video_crossfader_link on",
+   "official": true
+  },
+  "video_delay": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Offset video/audio sync delay",
+   "example": "video_delay +100ms",
+   "official": true
+  },
+  "video_fadetoblack": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Fade video to black from volume sliders",
+   "example": "video_fadetoblack on",
+   "official": true
+  },
+  "video_fx": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Activate/deactivate selected video effect",
+   "example": "video_fx",
+   "official": true
+  },
+  "video_fx_button": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Press video FX button",
+   "example": "video_fx_button 1",
+   "official": true
+  },
+  "video_fx_clear": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Deactivate all video effects",
+   "example": "video_fx_clear",
+   "official": true
+  },
+  "video_fx_select": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select video effect",
+   "example": "video_fx_select \"my_plugin\"",
+   "official": true
+  },
+  "video_fx_slider": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Move video FX slider",
+   "example": "video_fx_slider 1 50%",
+   "aliases": [
+    "video_fx_slider_slider"
+   ],
+   "official": true
+  },
+  "video_fx_slider_slider": {
+   "tier": "alias",
+   "canonical": "video_fx_slider",
+   "official": true
+  },
+  "video_level": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Independent fade-to-black video level",
+   "example": "video_level 50%",
+   "official": true
+  },
+  "video_output": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Select monitor",
+   "example": "video_output 1",
+   "official": true
+  },
+  "video_source": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Activate/select video source",
+   "example": "video_source",
+   "official": true
+  },
+  "video_source_select": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select video source plugin",
+   "example": "video_source_select \"webcam\"",
+   "official": true
+  },
+  "video_transition": {
+   "tier": "catalog",
+   "section": "Video",
+   "description": "Launch transition",
+   "example": "video_transition 1000ms",
+   "official": true
+  },
+  "video_transition_button": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Press transition button",
+   "example": "video_transition_button 1",
+   "official": true
+  },
+  "video_transition_select": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Select video transition plugin",
+   "example": "video_transition_select \"fade\"",
+   "official": true
+  },
+  "video_transition_slider": {
+   "tier": "catalog",
+   "section": "Effects",
+   "description": "Move transition slider",
+   "example": "video_transition_slider 1 50%",
+   "aliases": [
+    "video_transition_slider_slider"
+   ],
+   "official": true
+  },
+  "video_transition_slider_slider": {
+   "tier": "alias",
+   "canonical": "video_transition_slider",
+   "official": true
+  },
+  "view_options": {
+   "tier": "catalog",
+   "section": "Browser",
+   "description": "Browser view options",
+   "example": "view_options",
+   "official": true
+  },
+  "vinyl_mode": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Set vinyl/CD mode",
+   "example": "vinyl_mode",
+   "official": true
+  },
+  "virtualfolder_add": {
+   "tier": "alias",
+   "canonical": "add_to_list",
+   "official": true
+  },
+  "volume": {
+   "tier": "alias",
+   "canonical": "level",
+   "official": true
+  },
+  "volume_slider": {
+   "tier": "alias",
+   "canonical": "level",
+   "official": true
+  },
+  "wait": {
+   "tier": "curated",
+   "section": "Repeat & Delay",
+   "description": "Wait between actions",
+   "example": "wait 1bt & pause",
+   "aliases": [],
+   "kind": "Action",
+   "surfaces": [
+    "Map",
+    "Button",
+    "Pad"
+   ],
+   "official": true
+  },
+  "wheel_mode": {
+   "tier": "catalog",
+   "section": "Scratch & Jogwheel",
+   "description": "Change wheel mode",
+   "example": "wheel_mode +1",
+   "official": true
+  },
+  "yes": {
+   "tier": "alias",
+   "canonical": "true",
+   "official": true
+  },
+  "zoom": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Zoom horizontal",
+   "example": "zoom",
+   "aliases": [
+    "zoom_scratch"
+   ],
+   "official": true
+  },
+  "zoom_scratch": {
+   "tier": "alias",
+   "canonical": "zoom",
+   "official": true
+  },
+  "zoom_vertical": {
+   "tier": "catalog",
+   "section": "Skin Control",
+   "description": "Zoom vertical",
+   "example": "zoom_vertical",
+   "official": true
+  }
+ }
+}

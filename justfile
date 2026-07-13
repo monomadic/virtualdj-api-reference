@@ -54,7 +54,20 @@ status:
 inventory:
     python3 tools/extract_xml_inventory.py
 
+verb-index:
+    python3 tools/extract_verb_index.py
+
+lint-skins *paths:
+    python3 tools/lint_skins.py {{paths}}
+
+lint-mappers *paths:
+    python3 tools/lint_mappers.py {{paths}}
+
 check:
     python3 tools/lint_pads.py
+    python3 tools/lint_skins.py
+    python3 tools/lint_mappers.py
+    python3 tools/extract_verb_index.py --check
+    python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
