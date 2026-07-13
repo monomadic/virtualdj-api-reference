@@ -26,7 +26,7 @@
 <page name="REF: GRAMMAR BATTERY">
 
   <!-- SETUP: reset all battery variables. Run before each test. -->
-  <pad1 name="SETUP: reset vars" color="color 'white'">set '$gb_true' 1 &amp; set '$gb_false' 0 &amp; set '$gb_a' 0 &amp; set '$gb_b' 0 &amp; set '$gb_c' 0 &amp; set '$gb_r' 'none' &amp; set '$gb_src' 42 &amp; set '$gb_dst' 0 &amp; set '$gb_n' 0</pad1>
+  <pad1 name="SETUP: reset vars" color="color 'white'">set '$gb_true' 1 &amp; set '$gb_false' 0 &amp; set '$gb_a' 0 &amp; set '$gb_b' 0 &amp; set '$gb_c' 0 &amp; set '$gb_r' 0 &amp; set '$gb_src' 42 &amp; set '$gb_dst' 0 &amp; set '$gb_n' 0</pad1>
 
   <!--
     TEST A1: trailing & after false branch, with TRUE condition.
@@ -56,18 +56,20 @@
 
   <!--
     TEST B1: nested ternary, outer TRUE, inner FALSE.
-      action: cond(true) ? cond(false) ? r='X' : r='Y' : r='Z'
-      Standard nesting predicts r='Y'.
+      action: cond(true) ? cond(false) ? r=1 : r=2 : r=3
+      Numeric codes (1='X', 2='Y', 3='Z') because string values set by `set`
+      display blank via `get_var` in pad labels (observed v2026-m).
+      Standard nesting predicts r=2.
       If the parser mis-associates (inner colon consumed by outer), r may be
-      'Z' or a parse failure (r stays 'none').
+      3 or a parse failure (r stays 0).
   -->
-  <pad5 name="B1: nested ternary t/f" color="color 'cyan'">var_equal '$gb_true' 1 ? var_equal '$gb_false' 1 ? set '$gb_r' 'X' : set '$gb_r' 'Y' : set '$gb_r' 'Z'</pad5>
+  <pad5 name="B1: nested ternary t/f" color="color 'cyan'">var_equal '$gb_true' 1 ? var_equal '$gb_false' 1 ? set '$gb_r' 1 : set '$gb_r' 2 : set '$gb_r' 3</pad5>
 
   <!--
     TEST B2: nested ternary, outer FALSE.
-      Standard nesting predicts r='Z'. Mis-association may give 'Y'.
+      Standard nesting predicts r=3. Mis-association may give 2.
   -->
-  <pad6 name="B2: nested ternary f/-" color="color 'cyan'">var_equal '$gb_false' 1 ? var_equal '$gb_true' 1 ? set '$gb_r' 'X' : set '$gb_r' 'Y' : set '$gb_r' 'Z'</pad6>
+  <pad6 name="B2: nested ternary f/-" color="color 'cyan'">var_equal '$gb_false' 1 ? var_equal '$gb_true' 1 ? set '$gb_r' 1 : set '$gb_r' 2 : set '$gb_r' 3</pad6>
 
   <!--
     TEST C1: backtick-computed argument to set.
@@ -93,18 +95,23 @@
 
   <!--
     TEST C4: backtick argument to beatjump (requires playing track).
-      Pass: playhead jumps 4 beats. Compare against plain `beatjump 4`.
+      Stores '+4' as a string because unsigned literal `beatjump 4` is itself
+      a no-op on v2026-m b9482 (only the signed form `beatjump +4` jumps), so
+      an unsigned interpolated value could not discriminate backtick handling.
+      Pass: playhead jumps 4 beats. Compare against yellow `beatjump +4`.
   -->
-  <pad10 name="C4: beatjump `get_var`" color="color 'green'">set '$gb_n' 4 &amp; beatjump `get_var '$gb_n'`</pad10>
+  <pad10 name="C4: beatjump `get_var`" color="color 'green'">set '$gb_n' '+4' &amp; beatjump `get_var '$gb_n'`</pad10>
 
   <!-- RESULT pads: read-only displays of the battery variables. -->
   <pad11 name="`get_var '$gb_a'`-`get_var '$gb_b'`-`get_var '$gb_c'` (a-b-c)" color="color 'blue'" query="on">nothing</pad11>
-  <pad12 name="r=`get_var '$gb_r'`" color="color 'blue'" query="on">nothing</pad12>
+  <pad12 name="r=`get_var '$gb_r'` (1=X 2=Y 3=Z)" color="color 'blue'" query="on">nothing</pad12>
   <pad13 name="dst=`get_var '$gb_dst'`" color="color 'blue'" query="on">nothing</pad13>
   <pad14 name="src=`get_var '$gb_src'` n=`get_var '$gb_n'`" color="color 'blue'" query="on">nothing</pad14>
 
-  <!-- Controls for C2/C4 comparison. -->
+  <!-- Controls for C2/C4 comparison. `beatjump 4` (unsigned) produced no jump
+       on v2026-m b9482; the official example form is signed (`beatjump +1`),
+       so the control tests the signed form. -->
   <pad15 name="literal loop 4" color="color 'yellow'">loop 4</pad15>
-  <pad16 name="literal beatjump 4" color="color 'yellow'">beatjump 4</pad16>
+  <pad16 name="literal beatjump +4" color="color 'yellow'">beatjump +4</pad16>
 
 </page>

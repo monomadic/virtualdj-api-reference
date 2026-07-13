@@ -15,36 +15,7 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 ## Ready Tasks
 
-### 1. Run The VDJScript Grammar Battery
-
-Status: Ready
-
-This is the highest-leverage manual test in the queue: it resolves the three grammar unknowns (ternary/`&` precedence, nested-ternary associativity, backtick-computed action arguments) that currently gate every non-trivial generated script.
-
-Start here:
-
-- [tests/Pads/Reference - Grammar Battery Test.xml](tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml)
-
-Read first:
-
-- [docs/VDJScript Syntax Evidence.md](docs/VDJScript%20Syntax%20Evidence.md)
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/VDJScript Syntax Evidence.md](docs/VDJScript%20Syntax%20Evidence.md)
-- [docs/VirtualDJ Reference.md](docs/VirtualDJ%20Reference.md) (replace the "precedence is unproven" guidance with tested rules)
-
-Done when:
-
-- A build, per-pad observed variable states, and derived precedence/associativity/interpolation rules are recorded.
-- The `phrase_sync` backtick-argument failure is either generalized or shown to be verb-specific.
-
-### 2. Author And Load-Test A Minimal Custom Device Definition
+### 1. Author And Load-Test A Minimal Custom Device Definition
 
 Status: Ready
 
@@ -60,7 +31,7 @@ Done when:
 - A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
 - Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
 
-### 3. Repeat `dualdeckmode_decks` In A Better Context
+### 2. Repeat `dualdeckmode_decks` In A Better Context
 
 Status: Ready
 
@@ -87,7 +58,7 @@ Done when:
 - A build, deck/controller context, observed result, and follow-up decision are recorded.
 - The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
 
-### 4. Continue Hidden Button Editor Candidate Probes
+### 3. Continue Hidden Button Editor Candidate Probes
 
 Status: Ready
 
@@ -116,7 +87,7 @@ Done when:
 - Candidate behavior is recorded as pass, partial, failed, or still discovery-only.
 - Catalog-only names stay out of ordinary recommendations unless behavior proof supports promotion.
 
-### 5. Build The FX Introspection Table
+### 4. Build The FX Introspection Table
 
 Status: Ready
 
@@ -145,7 +116,7 @@ Done when:
 - Slider/button counts, labels, defaults, text readbacks, and `effect_has_*` behavior are recorded for representative built-in effects.
 - Generic FX control guidance distinguishes observed behavior from inference.
 
-### 6. Characterize FX Bank Save And Load
+### 5. Characterize FX Bank Save And Load
 
 Status: Ready
 
@@ -171,7 +142,7 @@ Done when:
 
 - Restored effect names, active states, slider values, and deck scope are recorded.
 
-### 7. Separate Release FX From Normal Slot FX
+### 6. Separate Release FX From Normal Slot FX
 
 Status: Ready
 
@@ -197,7 +168,7 @@ Done when:
 
 - `effect_releaseslider*` and `is_releasefx` behavior is described separately from normal deck FX controls.
 
-### 8. Keep BeatGrid `effect_command` Plugin-Specific
+### 7. Keep BeatGrid `effect_command` Plugin-Specific
 
 Status: Ready
 

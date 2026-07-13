@@ -63,6 +63,8 @@ docs/                   — Markdown documentation
 - **Dynamic text color**: one `<text color="`action`">`, not per-state color attributes.
 - **Dynamic border color**: not supported (CTO confirmed). Use fill or background instead.
 - **Time mode**: `display_time 'remain,elapsed'` + `get_time`, not custom skin vars.
+- **Computed arguments**: transport-style verbs (`loop`, `beatjump`, `phrase_sync`) ignore backtick-computed arguments even when the literal works — branch to literals (`var_equal '$n' 16 ? loop 16 : loop 32`) or chain params (`get_var '$src' & param_multiply 2 & set '$dst'`); `set` does accept backticks. Tested rules: `docs/VirtualDJ Reference.md` §Tested Grammar Rules.
+- **beatjump**: argument must be signed (`beatjump +4`; bare `beatjump 4` is a no-op).
 
 ## Working examples in this repo
 

@@ -628,7 +628,7 @@ Source: `Official`, `Built-in skin`, `Local test`, `Inference`
   Query-only conjunction. Official VDJScript docs describe this as the way to make a chained query return true only when both commands are true.
 
 - Backticks around action-returning values
-  Use when a value consumer needs the result of another action
+  Use when a value consumer needs the result of another action. Acceptance is per-verb: `set` and query comparisons take computed values, but transport-style verbs such as `loop`, `beatjump`, and `phrase_sync` ignore them (see Tested Grammar Rules below)
 
 - `param_*`
   Use for live parameter comparisons and transforms
@@ -651,6 +651,38 @@ repeat_start 'fxpulse' 1bt & effect_active 1
 ```
 
 Source: `Official`
+
+### Tested Grammar Rules
+
+Established by a controlled run of the grammar battery pad page on VirtualDJ `v2026-m b9482` (see [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md) and the 2026-07-14 entry in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md)):
+
+- A trailing `&` chain after a ternary's `:` belongs to the false branch, not the whole statement. In `cond ? a : b & c`, `c` runs only when `cond` is false. Do not place always-run cleanup after a ternary.
+
+  ```vdjscript
+  var_equal '$x' 1 ? action_a : action_b & action_c
+  ```
+
+  runs `action_c` only alongside `action_b`.
+
+- A leading `&` chain before a ternary stays a separate statement. Put unconditional actions first:
+
+  ```vdjscript
+  set '$mode' 1 & play ? action_a : action_b
+  ```
+
+  runs the `set` always, then branches.
+
+- Nested ternaries associate the standard way, `a ? (b ? c : d) : e`, so clamped-value selection like `var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32` composes safely.
+
+- Backtick-computed arguments are accepted per-verb. `set '$dst' `` `get_var '$src'` `` works, but `loop`, `beatjump`, and `phrase_sync` silently ignore backtick-computed arguments even when the identical literal works. For those verbs, select literal values with a conditional, or use implicit param chaining, which does work:
+
+  ```vdjscript
+  get_var '$src' & param_multiply 2 & set '$dst'
+  ```
+
+- `beatjump` needs a signed argument on the tested build: `beatjump +4` jumps, `beatjump 4` does nothing.
+
+Source: `Local test`
 
 ### Prefer Built-ins Over Skin Vars
 

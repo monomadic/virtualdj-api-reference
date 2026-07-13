@@ -18,6 +18,7 @@ Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs a
 - `get_mixfx_active` was locally tested on VirtualDJ `v2026-m b9336`; in a pad-page text/query context, it mirrored `effect_mixfx_activate` off/on for Filter and Echo after a track was loaded.
 - `deck_has_error` was locally tested on VirtualDJ `v2026-m b9336`; it stayed off for normal load/unload states, turned on after loading a deliberately missing file, scoped to deck 1 in the tested context, and cleared after a later successful selected-track load.
 - `dualdeckmode_decks` has a local pad-page result on VirtualDJ `v2026-m b9336`: in the pad-page context it remained false/red for current and deck-scoped readbacks even after `dualdeckmode` toggled on; repeated on deck 2 with the same reported behavior.
+- The VDJScript grammar battery ran on VirtualDJ `v2026-m b9482` (2026-07-14 log entry): trailing `&` chains bind to the ternary false branch, leading chains split off normally, nested ternaries associate standard, and backtick-computed arguments work for `set` but are ignored by `loop`, `beatjump`, and `phrase_sync`. Side findings: `beatjump` needs a signed argument (`+4` jumps, `4` is a no-op), and string values read back blank via `get_var` in pad labels.
 - Controller-display, Phase, RZX, DJC, V7, Gemini, and Denon rows are hardware-dependent; keep them `Untested` unless the named target device or an equivalent controller mapping environment was used.
 
 Suggested test order:
@@ -187,7 +188,46 @@ Steps: compare a working clamped form against two interpolated forms that pass t
   3. sync & phrase_sync `get_var '$phrase_len'`                             (documented get_var query in backticks)
 Observed result: Form 1 works and was kept. Form 3 (`phrase_sync `get_var '$phrase_len'`) did NOT work either, despite `get_var` being the documented way to read a variable value inside backticks. Form 2 also does not work as written. Working interpretation: `phrase_sync` does not accept a backtick-interpolated/computed argument in this context and requires a literal beat count; select the literal with a conditional instead.
 Tracker rows updated: phrase_sync (see FX/Deck note below)
-Follow-up: repeat on a recorded VirtualDJ build; test whether other numeric-argument action verbs (e.g. beatjump, loop) accept `` `get_var '...'` `` interpolation, to determine whether this is a `phrase_sync`-specific limit or a general rule that action arguments must be literals rather than backtick-substituted values.
+Follow-up: repeat on a recorded VirtualDJ build; test whether other numeric-argument action verbs (e.g. beatjump, loop) accept `` `get_var '...'` `` interpolation, to determine whether this is a `phrase_sync`-specific limit or a general rule that action arguments must be literals rather than backtick-substituted values. RESOLVED 2026-07-14: see the grammar battery entry below; the failure generalizes to `loop` and `beatjump`.
+```
+
+```text
+Date: 2026-07-14
+VirtualDJ build: v2026-m b9482
+Test asset: Reference - Grammar Battery Test.xml; shown in VirtualDJ as "Reference - Grammar Battery Test"
+Account/deck/hardware state: no dedicated hardware; A/B/C1/C3 ran with no track needed; deck 1 loaded and playing for C2/C4 and the literal control pads
+Steps: pressed SETUP (pad 1) before every test pad, then read the blue result pads (a-b-c, r, dst, src/n); for C2/C4 compared against the yellow literal control pads on a playing deck. Mid-run fixture fixes: B1/B2 switched from string result codes ('X'/'Y'/'Z') to numeric codes (1/2/3) after string values displayed blank; the beatjump control pad switched to the signed form after unsigned `beatjump 4` proved to be a no-op; C4 switched to interpolating a stored '+4' string so the sign could not confound the backtick test.
+Observed result:
+  A1 (true cond, trailing & after false branch): a-b-c = 1-0-0. The trailing "& set c" did not run when the condition was true, so a trailing & chain binds inside the ternary false branch, not at statement level.
+  A2 (false cond, same statement): a-b-c = 0-1-1. The false branch ran together with its trailing & chain. (A first press without SETUP read 1-1-1 from leftover A1 state; rerun cleanly after SETUP.)
+  A3 (leading "set a &" then ternary, true cond): a-b-c = 1-1-0. The leading chain executed as its own statement and the ternary then evaluated independently.
+  B1 (nested ternary, outer true / inner false): r = 2 ('Y'). Standard inner-binds-tightest nesting.
+  B2 (nested ternary, outer false): r = 3 ('Z'). Standard nesting confirmed.
+  C1 (set '$gb_dst' `get_var '$gb_src'`): dst = 42. `set` accepts a backtick-computed argument.
+  C2 (loop `get_var '$gb_n'` with n=4 confirmed on the readout): no loop engaged; the literal `loop 4` control engaged a 4-beat loop on the same playing deck.
+  C3 (get_var '$gb_src' & param_multiply 2 & set '$gb_dst'): dst = 84. Implicit param chaining works as the alternative pattern.
+  C4 (beatjump `get_var '$gb_n'` with $gb_n set to the string '+4'): no jump; the literal `beatjump +4` control jumped on the same playing deck.
+  Side findings: unsigned `beatjump 4` is a no-op on this build while `beatjump +4` jumps; string values written by `set` read back blank via `get_var` in pad labels, while numeric values display normally.
+Tracker rows updated: phrase_sync follow-up (2026-07-05) resolved as a general rule, not verb-specific: `loop`, `beatjump`, and `phrase_sync` all ignore backtick-computed arguments even when the identical literal works, while `set` accepts them and param chaining works.
+Follow-up: derived rules promoted to VDJScript Syntax Evidence.md and VirtualDJ Reference.md; optional later pass: map which other value-consumer verbs besides `set` accept backtick-computed arguments, and whether the signed-argument requirement applies to other relative-jump verbs.
+```
+
+```text
+Date: 2026-07-14
+VirtualDJ build: v2026-m b9482
+Test asset: Reference - Grammar Battery Test.xml; shown in VirtualDJ as "Reference - Grammar Battery Test"
+Account/deck/hardware state: no dedicated hardware; no track needed for A/B/C1/C3
+Steps: pressed SETUP before each test pad, read blue result pads after each press
+Observed result:
+  SETUP: 000 (a-b-c) / r= / dst=0 / src=42 n=0
+  A1 (true-cond trailing &): a-b-c = 1-0-0 -> a=1, b=0, c=0 - The trailing
+  "& set '$gb_c' 1" did NOT run when the condition was true, so the trailing & chain
+  binds inside the ternary false branch, not at statement level.
+  Side note: SETUP sets $gb_r to 'none' but the r= pad displayed blank.
+  A2 (false-cond trailing &): 0-1-1
+Tracker rows updated: none yet (grammar evidence, not a verb row)
+Follow-up: complete A2, A3, B1, B2, C1-C4; then promote derived precedence rules to
+  VDJScript Syntax Evidence.md and VirtualDJ Reference.md
 ```
 
 ## Button Editor Hidden Candidate Probes

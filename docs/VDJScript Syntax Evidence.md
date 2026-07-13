@@ -200,6 +200,13 @@ The visible ternary form is:
 query ? true_branch : false_branch
 ```
 
-The true and false branches can themselves be action expressions. Nested conditionals are already common in working pad XML, but the exact precedence between `? :`, `&`, and `&&` should be documented from controlled tests rather than inferred from examples alone.
+The true and false branches can themselves be action expressions. The following precedence and interpolation rules were established by a controlled pad-page run of [Reference - Grammar Battery Test.xml](../tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) on VirtualDJ `v2026-m b9482` (2026-07-14 entry in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md)):
+
+- **Trailing `&` chains bind to the false branch.** In `cond ? a : b & c`, the `& c` runs only when the false branch runs. With a true condition the observed state was `a=1 b=0 c=0`; with a false condition it was `a=0 b=1 c=1`. Never place always-run actions after a ternary.
+- **Leading `&` chains split off before the ternary parses.** `set 'a' 1 & cond ? b : c` ran the `set` unconditionally and then evaluated the ternary independently (observed `a=1 b=1 c=0` with a true condition). Put unconditional actions first, or put the ternary last in the statement.
+- **Nested ternaries associate standard.** `a ? b ? c : d : e` parses as `a ? (b ? c : d) : e`: outer-true/inner-false selected the inner false branch, and outer-false selected the outermost false branch.
+- **Backtick-computed arguments are accepted per-verb, not globally.** ``set '$dst' `get_var '$src'` `` works (dst read back 42), but `loop`, `beatjump`, and `phrase_sync` ignored backtick-computed arguments even when the identical literal worked on the same playing deck. The `beatjump` case was tested with a stored `'+4'` string, ruling out the unsigned-argument no-op as the cause. For verbs that reject computed arguments, select literals with a conditional, or use implicit param chaining, which works: `get_var '$src' & param_multiply 2 & set '$dst'` read back 84.
+
+Build-specific side observations from the same run: `beatjump` requires a signed argument (`beatjump +4` jumps, `beatjump 4` does nothing), and string values written by `set` read back blank via `get_var` in pad labels while numeric values display.
 
 `&&` should continue to be treated as a query-composition operator until tests prove broader action-branch semantics. For side-effecting action branches, nested ternaries remain the clearer documented pattern.

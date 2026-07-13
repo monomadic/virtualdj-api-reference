@@ -3860,7 +3860,8 @@ phrase_sync 16
 Notes:
 
 - The beat-count argument must be a literal. A local test found that a backtick-interpolated/computed argument does **not** work here: neither `` phrase_sync '`$phrase_len`' `` nor the otherwise-documented `` phrase_sync `get_var '$phrase_len'` `` produced the expected result.
-- To pick the count from a variable, branch to a literal instead of interpolating, e.g. `var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32`. See [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) (2026-07-05 entry).
+- This is not `phrase_sync`-specific: the grammar battery run on `v2026-m b9482` showed `loop` and `beatjump` also ignore backtick-computed arguments while the identical literals work. See Tested Grammar Rules in [VirtualDJ Reference](VirtualDJ%20Reference.md).
+- To pick the count from a variable, branch to a literal instead of interpolating, e.g. `var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32`. See [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) (2026-07-05 and 2026-07-14 entries).
 
 Sources:
 
@@ -5068,7 +5069,7 @@ Window/workflow note:
 | `dualdeckmode_decks` | Dual-deck pair helper for decks 1/3 or 2/4 | `dualdeckmode_decks` |
 | `mixermode`          | Query internal vs external mixer mode | `mixermode 'internal'` |
 | `beat_juggle`        | Alternate beat jumps forward and backward | `beat_juggle 0.5` |
-| `beatjump`           | Jump beats              | `beatjump +1`              |
+| `beatjump`           | Jump beats; the argument must be signed — bare `beatjump 4` was a no-op on `v2026-m b9482` (`Local test`) | `beatjump +1`              |
 | `beatjump_select`    | Set jump size           | `beatjump_select 4`        |
 | `beatjump_page`      | Change jump offset      | `beatjump_page`            |
 | `beatjump_pad`       | Execute jump            | `beatjump_pad`             |
