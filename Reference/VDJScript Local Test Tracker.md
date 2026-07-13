@@ -176,6 +176,20 @@ Tracker rows updated: effect_has_slider/effect_has_button/get_effect_slider_* pr
 Follow-up: press the count/label/text/default/name/shortname/button shift-log pads for Flanger, then repeat for Echo, Reverb, and BeatGrid to compare returned helper values against visible GUI controls.
 ```
 
+```text
+Date: 2026-07-05
+VirtualDJ build: user-provided local result, build not recorded
+Test asset: User-provided skin `<button>` with action `sync & phrase_sync <arg>`, driven by a global `$phrase_len` variable
+Account/deck/hardware state: not recorded
+Steps: compare a working clamped form against two interpolated forms that pass the variable value as the `phrase_sync` argument:
+  1. sync & var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32   (clamped literal)
+  2. sync & phrase_sync '`$phrase_len`'                                     (bare $var in backticks, quoted)
+  3. sync & phrase_sync `get_var '$phrase_len'`                             (documented get_var query in backticks)
+Observed result: Form 1 works and was kept. Form 3 (`phrase_sync `get_var '$phrase_len'`) did NOT work either, despite `get_var` being the documented way to read a variable value inside backticks. Form 2 also does not work as written. Working interpretation: `phrase_sync` does not accept a backtick-interpolated/computed argument in this context and requires a literal beat count; select the literal with a conditional instead.
+Tracker rows updated: phrase_sync (see FX/Deck note below)
+Follow-up: repeat on a recorded VirtualDJ build; test whether other numeric-argument action verbs (e.g. beatjump, loop) accept `` `get_var '...'` `` interpolation, to determine whether this is a `phrase_sync`-specific limit or a general rule that action arguments must be literals rather than backtick-substituted values.
+```
+
 ## Button Editor Hidden Candidate Probes
 
 These rows are not official `Needs local test` rows. They track flag1-hidden Button Editor taxonomy candidates that are absent from the official appendix but have one or more local evidence streams: bundled language descriptions, compiled taxonomy placement, runtime strings, or exact `ACTION_*` method-symbol hints.

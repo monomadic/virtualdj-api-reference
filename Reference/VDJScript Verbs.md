@@ -3857,9 +3857,15 @@ phrase_sync
 phrase_sync 16
 ```
 
+Notes:
+
+- The beat-count argument must be a literal. A local test found that a backtick-interpolated/computed argument does **not** work here: neither `` phrase_sync '`$phrase_len`' `` nor the otherwise-documented `` phrase_sync `get_var '$phrase_len'` `` produced the expected result.
+- To pick the count from a variable, branch to a literal instead of interpolating, e.g. `var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32`. See [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) (2026-07-05 entry).
+
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Local test`: user-provided result, build not recorded (argument interpolation does not work; literal/conditional form required)
 
 ### `quantize_all`
 
