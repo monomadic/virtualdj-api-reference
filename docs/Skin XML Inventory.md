@@ -6,15 +6,15 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 
 ## Summary
 
-141 distinct elements observed across all families; 33 undocumented.
+141 distinct elements observed across all families; 0 undocumented.
 
-- skins: 99 elements, 13 undocumented (`<text2>`, `<text3>`, `<active>`, `<buttons>`, `<columns>`, `<grids>`, `<lists>`, `<menuover>`, `<plugins>`, `<separators>`, `<sliders>`, `<toolbars>`, `<textoverselected>`)
-- pads: 37 elements, 20 undocumented (`<shift_pad2>`, `<shift_pad3>`, `<shift_pad5>`, `<shift_pad6>`, `<shift_pad7>`, `<shift_pad8>`, `<pad10>`, `<pad9>`, `<pad11>`, `<pad12>`, `<pad13>`, `<pad14>`, `<pad15>`, `<shift_pad10>`, `<shift_pad11>`, `<shift_pad12>`, `<shift_pad13>`, `<shift_pad14>`, `<shift_pad9>`, `<shift_pad15>`)
+- skins: 99 elements, 0 undocumented (none)
+- pads: 37 elements, 0 undocumented (none)
 - samplerbanks: 2 elements, no reference doc to check against
 - mappers: 3 elements, 0 undocumented (none)
 
-<!-- undocumented skins: text2,text3,active,buttons,columns,grids,lists,menuover,plugins,separators,sliders,toolbars,textoverselected -->
-<!-- undocumented pads: shift_pad2,shift_pad3,shift_pad5,shift_pad6,shift_pad7,shift_pad8,pad10,pad9,pad11,pad12,pad13,pad14,pad15,shift_pad10,shift_pad11,shift_pad12,shift_pad13,shift_pad14,shift_pad9,shift_pad15 -->
+<!-- undocumented skins:  -->
+<!-- undocumented pads:  -->
 <!-- undocumented samplerbanks:  -->
 <!-- undocumented mappers:  -->
 
@@ -73,7 +73,7 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<font>` | 26 | 20 | yes | `name` (26), `size` (6), `xml:base` (2) |
 | `<menu>` | 26 | 7 | yes | `tooltip` (10), `border` (6), `border_size` (6), `color` (6), `height` (6), `shape` (6), `width` (6), `class` (1) |
 | `<colors>` | 25 | 16 | yes | `deck1` (19), `deck1_active` (19), `deck2` (19), `deck2_active` (19), `deck1_left` (5), `deck2_right` (5), `deck3` (4), `deck3_active` (4), `deck3_left` (4), `deck4` (4), `deck4_active` (4), `deck4_right` (4) |
-| `<text2>` | 24 | 5 | **no** | `color` (17), `align` (16), `weight` (15), `action` (11), `fontsize` (8), `format` (8), `important` (8), `size` (8) |
+| `<text2>` | 24 | 5 | yes | `color` (17), `align` (16), `weight` (15), `action` (11), `fontsize` (8), `format` (8), `important` (8), `size` (8) |
 | `<logo>` | 23 | 16 | yes | `os` (2) |
 | `<video>` | 23 | 8 | yes | `source` (23), `x` (23), `y` (23), `linkdrop` (15), `chan` (12), `letterboxing` (5), `visibility` (1) |
 | `<cues>` | 21 | 16 | yes | `dy` (19), `shade` (19) |
@@ -90,32 +90,32 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<overselected>` | 11 | 1 | yes | `x` (11), `y` (11), `dx` (4), `height` (4), `width` (4) |
 | `<nbdecks>` | 8 | 5 | yes | `value` (8), `condition` (6), `xml:base` (2) |
 | `<zoomed>` | 8 | 5 | yes | `height` (8), `width` (8), `x` (8), `y` (8) |
-| `<text3>` | 7 | 1 | **no** | `align` (5), `color` (5), `size` (5), `weight` (5), `action` (4), `format` (1) |
-| `<active>` | 6 | 6 | **no** | `border` (6), `border_size` (6), `color` (6), `height` (6), `width` (6) |
-| `<buttons>` | 6 | 6 | **no** | `border` (6), `border_down` (6), `border_over` (6), `border_selected` (6), `down` (6), `down_deck1` (6), `down_deck2` (6), `over` (6), `over_deck1` (6), `over_deck2` (6), `selected` (6), `selected_deck1` (6), `selected_deck2` (6), `up` (6) |
+| `<text3>` | 7 | 1 | yes | `align` (5), `color` (5), `size` (5), `weight` (5), `action` (4), `format` (1) |
+| `<active>` | 6 | 6 | yes | `border` (6), `border_size` (6), `color` (6), `height` (6), `width` (6) |
+| `<buttons>` | 6 | 6 | yes | `border` (6), `border_down` (6), `border_over` (6), `border_selected` (6), `down` (6), `down_deck1` (6), `down_deck2` (6), `over` (6), `over_deck1` (6), `over_deck2` (6), `selected` (6), `selected_deck1` (6), `selected_deck2` (6), `up` (6) |
 | `<circle>` | 6 | 1 | yes | `anglemax` (6), `anglemin` (6), `direction` (6) |
-| `<columns>` | 6 | 6 | **no** | `background` (6), `text` (6) |
+| `<columns>` | 6 | 6 | yes | `background` (6), `text` (6) |
 | `<default>` | 6 | 4 | yes | `height` (6), `width` (6), `x` (6), `y` (6) |
 | `<fontgridtitle>` | 6 | 6 | yes | `size` (6) |
 | `<fontheader>` | 6 | 6 | yes | `size` (6) |
 | `<fontsearch>` | 6 | 6 | yes | `size` (6) |
 | `<fonttoolbar>` | 6 | 6 | yes | `size` (6) |
-| `<grids>` | 6 | 6 | **no** | `background` (6), `focus` (6), `label` (6), `over` (6), `selected` (6), `text` (6), `focustext` (5), `selectedtext` (5) |
+| `<grids>` | 6 | 6 | yes | `background` (6), `focus` (6), `label` (6), `over` (6), `selected` (6), `text` (6), `focustext` (5), `selectedtext` (5) |
 | `<info>` | 6 | 6 | yes | `artist` (6), `background` (6), `label` (6), `stripes` (6), `text` (6), `title` (6) |
-| `<lists>` | 6 | 6 | **no** | `text` (12), `over` (9), `stripes` (9), `automix` (6), `button` (6), `buttonactive` (6), `download` (6), `focus` (6), `focustext` (6), `livefeedback` (6), `overstripes` (6), `overtext` (6), `scan` (6), `selected` (6), `selectedtext` (6), `background` (5) |
-| `<menuover>` | 6 | 6 | **no** | `border` (6), `border_size` (6), `color` (6), `height` (6), `shape` (6), `width` (6) |
-| `<plugins>` | 6 | 6 | **no** | `background` (6), `text` (6), `title` (6), `titletext` (6) |
+| `<lists>` | 6 | 6 | yes | `text` (12), `over` (9), `stripes` (9), `automix` (6), `button` (6), `buttonactive` (6), `download` (6), `focus` (6), `focustext` (6), `livefeedback` (6), `overstripes` (6), `overtext` (6), `scan` (6), `selected` (6), `selectedtext` (6), `background` (5) |
+| `<menuover>` | 6 | 6 | yes | `border` (6), `border_size` (6), `color` (6), `height` (6), `shape` (6), `width` (6) |
+| `<plugins>` | 6 | 6 | yes | `background` (6), `text` (6), `title` (6), `titletext` (6) |
 | `<prelisten>` | 6 | 6 | yes | `background` (6) |
 | `<scrollbars>` | 6 | 6 | yes | `background` (6), `button` (6) |
 | `<search>` | 6 | 6 | yes | `background` (6), `text` (6) |
-| `<separators>` | 6 | 6 | **no** | `background` (6), `line` (6), `text` (6) |
-| `<sliders>` | 6 | 6 | **no** | `background` (6), `deck1` (6), `deck1_disabled` (6), `deck2` (6), `deck2_disabled` (6), `needle` (6), `on` (6), `on_disabled` (6) |
-| `<toolbars>` | 6 | 6 | **no** | `background` (6), `backgroundmouseover` (6), `backgroundselected` (6), `border` (6), `iconbackground` (6), `text` (6), `icon` (5) |
+| `<separators>` | 6 | 6 | yes | `background` (6), `line` (6), `text` (6) |
+| `<sliders>` | 6 | 6 | yes | `background` (6), `deck1` (6), `deck1_disabled` (6), `deck2` (6), `deck2_disabled` (6), `needle` (6), `on` (6), `on_disabled` (6) |
+| `<toolbars>` | 6 | 6 | yes | `background` (6), `backgroundmouseover` (6), `backgroundselected` (6), `border` (6), `iconbackground` (6), `text` (6), `icon` (5) |
 | `<customicons>` | 4 | 4 | yes | `condition` (4), `file` (4), `nb` (4), `nbx` (4) |
 | `<left>` | 4 | 1 | yes | — |
 | `<right>` | 4 | 1 | yes | — |
 | `<split>` | 4 | 1 | yes | `grab` (4), `name` (4), `position` (4), `type` (4) |
-| `<textoverselected>` | 4 | 1 | **no** | `align` (4), `color` (4), `dx` (4), `localize` (4), `size` (4), `text` (4), `weight` (4) |
+| `<textoverselected>` | 4 | 1 | yes | `align` (4), `color` (4), `dx` (4), `localize` (4), `size` (4), `text` (4), `weight` (4) |
 | `<downselected>` | 2 | 1 | yes | `x` (2), `y` (2) |
 | `<browserinfo>` | 1 | 1 | yes | — |
 | `<browsertoolbartree>` | 1 | 1 | yes | `attachx` (1), `resizex` (1) |
@@ -135,37 +135,37 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<pad3>` | 52 | 46 | yes | `name` (52), `color` (50), `query` (18), `autodim` (15), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad4>` | 52 | 46 | yes | `name` (52), `color` (50), `query` (18), `autodim` (15), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<shift_pad1>` | 47 | 40 | yes | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
-| `<shift_pad2>` | 47 | 40 | **no** | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
-| `<shift_pad3>` | 47 | 40 | **no** | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
+| `<shift_pad2>` | 47 | 40 | yes | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
+| `<shift_pad3>` | 47 | 40 | yes | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
 | `<page>` | 46 | 46 | yes | `name` (30), `shortname` (8) |
 | `<pad5>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (18), `autodim` (9), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad6>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (19), `autodim` (9), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad7>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (18), `autodim` (8), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad8>` | 45 | 45 | yes | `name` (45), `color` (42), `query` (18), `autodim` (8), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<shift_pad4>` | 44 | 38 | yes | `name` (44), `color` (41), `autodim` (11), `query` (5), `right_click` (1) |
-| `<shift_pad5>` | 35 | 35 | **no** | `name` (35), `color` (32), `autodim` (8), `query` (4), `right_click` (1) |
-| `<shift_pad6>` | 35 | 35 | **no** | `name` (35), `color` (32), `autodim` (8), `query` (4), `right_click` (1) |
-| `<shift_pad7>` | 35 | 35 | **no** | `name` (35), `color` (31), `autodim` (7), `query` (4), `right_click` (1) |
-| `<shift_pad8>` | 35 | 35 | **no** | `name` (35), `color` (31), `autodim` (7), `query` (4), `right_click` (1) |
+| `<shift_pad5>` | 35 | 35 | yes | `name` (35), `color` (32), `autodim` (8), `query` (4), `right_click` (1) |
+| `<shift_pad6>` | 35 | 35 | yes | `name` (35), `color` (32), `autodim` (8), `query` (4), `right_click` (1) |
+| `<shift_pad7>` | 35 | 35 | yes | `name` (35), `color` (31), `autodim` (7), `query` (4), `right_click` (1) |
+| `<shift_pad8>` | 35 | 35 | yes | `name` (35), `color` (31), `autodim` (7), `query` (4), `right_click` (1) |
 | `<param1>` | 34 | 34 | yes | `name` (33), `tooltip` (1), `visible` (1) |
 | `<param2>` | 29 | 29 | yes | `name` (28), `visible` (4), `query` (1) |
-| `<pad10>` | 28 | 28 | **no** | `name` (28), `color` (27), `query` (14), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
-| `<pad9>` | 28 | 28 | **no** | `name` (28), `color` (27), `query` (15), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
-| `<pad11>` | 27 | 27 | **no** | `name` (27), `color` (26), `query` (13), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
-| `<pad12>` | 27 | 27 | **no** | `name` (27), `color` (26), `query` (13), `autodim` (6), `drop` (3), `pressure` (1), `right_click` (1) |
-| `<pad13>` | 27 | 27 | **no** | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
-| `<pad14>` | 27 | 27 | **no** | `name` (27), `color` (26), `query` (12), `autodim` (7), `drop` (3), `pressure` (1) |
-| `<pad15>` | 27 | 27 | **no** | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
+| `<pad10>` | 28 | 28 | yes | `name` (28), `color` (27), `query` (14), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
+| `<pad9>` | 28 | 28 | yes | `name` (28), `color` (27), `query` (15), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
+| `<pad11>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (13), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
+| `<pad12>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (13), `autodim` (6), `drop` (3), `pressure` (1), `right_click` (1) |
+| `<pad13>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
+| `<pad14>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (12), `autodim` (7), `drop` (3), `pressure` (1) |
+| `<pad15>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
 | `<pad16>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (8), `autodim` (6), `drop` (3), `pressure` (1) |
 | `<menu>` | 24 | 24 | yes | — |
 | `<shift_pad16>` | 18 | 18 | yes | `name` (18), `color` (16), `autodim` (5), `query` (5) |
-| `<shift_pad10>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
-| `<shift_pad11>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
-| `<shift_pad12>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
-| `<shift_pad13>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4) |
-| `<shift_pad14>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4) |
-| `<shift_pad9>` | 17 | 17 | **no** | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
-| `<shift_pad15>` | 16 | 16 | **no** | `name` (16), `color` (14), `autodim` (5), `query` (4) |
+| `<shift_pad10>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
+| `<shift_pad11>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
+| `<shift_pad12>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
+| `<shift_pad13>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4) |
+| `<shift_pad14>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4) |
+| `<shift_pad9>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
+| `<shift_pad15>` | 16 | 16 | yes | `name` (16), `color` (14), `autodim` (5), `query` (4) |
 | `<custompadsmode>` | 8 | 8 | yes | `nb` (8) |
 
 ## Samplerbanks

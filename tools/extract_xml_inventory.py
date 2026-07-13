@@ -173,11 +173,19 @@ def load_doc_texts(doc_paths: list[str]) -> tuple[str, str, list[tuple[str, bool
     return text, fenced, availability
 
 
+NUMBERED_ELEMENT = re.compile(r"^(shift_pad|pad|param)([1-9]|1[0-6])$", re.IGNORECASE)
+
+
 def is_documented(name: str, doc_text: str, fenced_text: str) -> bool:
     """Documented = backticked `<name>` mention (headings included) or a
-    `<name ...>` tag inside a fenced code block."""
+    `<name ...>` tag inside a fenced code block. Numbered pad-family elements
+    (pad2..pad16, shift_padN, paramN) count as documented when their
+    1-numbered representative is documented."""
     if not doc_text:
         return False
+    numbered = NUMBERED_ELEMENT.match(name)
+    if numbered and numbered.group(2) != "1":
+        return is_documented(numbered.group(1) + "1", doc_text, fenced_text)
     escaped = re.escape(name)
     if re.search(r"`</?" + escaped + r"[\s/>`]", doc_text, re.IGNORECASE):
         return True

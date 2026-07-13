@@ -594,6 +594,31 @@ Omitting `<up>` (and `<off>` for action buttons) leaves the button fully transpa
 - `<textover>` - Text when mouse is over
 - `<textdown>` - Text when button is pressed
 - `<textselected>` - Text when button is selected
+- `<textoverselected>` - Text when hovering a selected button (pairs with the
+  `<overselected>` graphic state). Not on the official Skin Button page, which
+  lists only the four text states above; observed working in the published SDK
+  example skin, always alongside `<text>` and `<textselected>` with identical
+  attributes:
+
+  ```xml
+  <button action="skin_panel 'audiomixer' on">
+      <pos x="+0" y="+35"/>
+      <size width="99" height="25"/>
+      <selected x="1518" y="1144"/>
+      <up x="1518" y="1116"/>
+      <over x="1518" y="1172"/>
+      <overselected x="1518" y="1144"/>
+      <text dx="45" size="14" color="#aaaaaa" align="left" weight="bold" text="MIXER" localize="true"/>
+      <textselected dx="45" size="14" color="#aaaaaa" align="left" weight="bold" text="MIXER" localize="true"/>
+      <textoverselected dx="45" size="14" color="#aaaaaa" align="left" weight="bold" text="MIXER" localize="true"/>
+      <textover dx="45" size="14" color="#eeeeee" align="left" weight="bold" text="MIXER" localize="true"/>
+  </button>
+  ```
+
+  A matching `<textdownselected>` (for the official `<downselected>` graphic
+  state) has not been observed in any local corpus and is not confirmed.
+
+  Source: `Published skin` (`examples/Skins/SDK Example - Custom Browser Skin/skin.xml`)
 
 **Icon Overlays:**
 - `<icon>` - Icon overlay (can use custom or system icons)
@@ -1107,6 +1132,55 @@ Display area for static or dynamic text.
 </textzone>
 ```
 
+**Cycling Texts: `<text2>` and `<text3>`**
+
+The official [Skin SDK Textzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Textzone.html)
+page says that without `group="horizontal"`, additional text children cycle:
+clicking the textzone displays the next text. It also documents
+`resetcounter="true"` and the `%counter` format command. The official page
+spells the extra children as repeated `<text>` elements, but real skins spell
+them `<text2>` and `<text3>` — same attribute surface as `<text>` (`color`,
+`align`, `weight`, `action`, `fontsize`/`size`, `format`, `important`, `dx`,
+`width`).
+
+Built-in desktop skins use `<text>` + `<text2>` for a click-to-cycle
+clock/counter:
+
+```xml
+<textzone>
+    <pos x="+0" y="+0"/>
+    <size width="76" height="27"/>
+    <text fontsize="13" color="textoff2" align="center" weight="" action="get_clock"/>
+    <text2 fontsize="13" color="textoff2" align="center" weight="bold" format="%counter" important="true"/>
+</textzone>
+```
+
+The published SDK example skin uses all three lines, both in textzones and in
+class `<define>` templates where the numbering makes each cycling line
+addressable for per-class color overrides:
+
+```xml
+<textzone name="keyleft" class="textcolorline3">
+    <pos x="+81+28" y="+38"/>
+    <size width="32" height="15"/>
+    <text size="15" align="left" weight="bold" action="get_harmonic"/>
+    <text2 size="15" align="left" weight="bold" action="get_key"/>
+    <text3 size="15" align="left" weight="bold" action="get_key_modifier"/>
+</textzone>
+
+<define class="textcolorline3" classdeck="left">
+    <text color="#00b8ff"/>
+    <text2 color="#00b8ff"/>
+    <text3 color="#00b8ff"/>
+</define>
+```
+
+Numbering beyond `<text3>` has not been observed in any local corpus. Whether
+`<text2>`/`<text3>` behave identically to repeated `<text>` children in every
+case is not officially confirmed; the cycling mechanism itself is official.
+
+Source: `Official` ([Skin SDK Textzone](https://www.virtualdj.com/wiki/Skin%20SDK%20Textzone.html)), `Built-in skin` (`examples/Skins/Built-In/Desktop/Pro.xml`, `Performance.xml`, `Essentials.xml`, `Vertical.xml`), `Published skin` (`examples/Skins/SDK Example - Custom Browser Skin/skin.xml`)
+
 ---
 
 ## Lyrics AI In Skins
@@ -1477,13 +1551,122 @@ Source: `Built-in skin` (`examples/Skins/Built-In/Remote/16x9T.xml`, `16x10T.xml
 - `<size width="" height=""/>` - Browser dimensions
 - `<colors background="">` - Color customization (see below)
 
-**Color Customization:**
-The `<colors>` element has these child elements:
+**Color Customization: `<colors>` and Its Children**
+
+`<colors>` takes one attribute of its own:
+
 - `background=""` - Background color (use `"transparent"` for transparent background)
   - **Note:** With transparent background, strongly recommended to set skin `breakline` and `breakline2` to prevent stretching issues
 
-Browser color children (all optional, VirtualDJ uses defaults if not specified):
-- Various color properties for text, highlights, borders, etc. (see example)
+Each browser region is styled by an optional one-line child of `<colors>` whose
+attributes are all color values (hex, named, or skin `<define color>` names).
+All children are optional; VirtualDJ falls back to defaults when a child or
+attribute is omitted. The official [Skin Browser](https://www.virtualdj.com/wiki/Skin%20Browser.html)
+page documents every child below except `<buttons>`. All six bundled skins that
+style the browser (the five Desktop skins plus Lite) carry the same block
+inside their `<define class="browser">` template.
+
+| Child | Styles | Attributes |
+| --- | --- | --- |
+| `<lists>` | Folder tree and file list rows | Official: `background`, `stripes`, `over`, `overstripes`, `selected`, `focus`, `text`, `overtext`, `selectedtext`, `focustext`, `automix`, `livefeedback`, `download`, `scan`, `button`, `buttonactive`, `insert`, `label`. Built-ins use all except `insert` and `label` |
+| `<separators>` | Separator tabs between browser areas | Official: `line`. Built-in extras: `text`, `background` |
+| `<toolbars>` | Browser toolbars (left toolbar, search/edit toolbar) | Official: `background`, `text`, `iconbackground`, `border`, `label`, `backgroundselected`, `backgroundmouseover`, `quickfilter_down`, `quickfilter_over`, `quickfilter_selected`, `quickfilter_border`. Built-in extra: `icon` |
+| `<grids>` | Grid (cover) view cells | Official: `background`, `over`, `selected`, `focus`, `text`, `overtext`, `selectedtext`, `focustext`, `stripes`, `overstripes`, `selectedstripes`, `focusstripes`, `label`. Built-ins use `background`, `over`, `selected`, `focus`, `text`, `selectedtext`, `focustext`, `label` |
+| `<columns>` | File-list column headers | Official: `background`, `text` (built-ins use exactly these) |
+| `<scrollbars>` | Browser scrollbars | Official: `background`, `button` (built-ins use exactly these) |
+| `<info>` | Info panel below the file list | Official: `background`, `stripes`, `over`, `text`, `label`, `artist`, `title` |
+| `<search>` | Search box | Official: `background`, `border`, `selected`, `text`, `cursor`. Built-ins set only `background`, `text` |
+| `<prelisten>` | Prelisten player in the info area | Official: `background`, `border`, `selected`, `cursor`, `button`, `buttonbackground`, `buttonselected`. Built-ins set only `background`. See the standalone [`<prelisten>`](#prelisten) element notes |
+| `<plugins>` | Docked effect-plugin GUIs (default plugin interface) | Official: `background`, `text`, `title`, `titletext`. Container for `<buttons>` and `<sliders>` below |
+
+Unlike the other one-line children, `<plugins>` is a container with two nested
+styling children for controls drawn inside default plugin GUIs:
+
+- `<sliders>` - Official attributes: `background`, `needle`, `deck1`, `deck2`.
+  Built-in extras: `deck1_disabled`, `deck2_disabled`, `on`, `on_disabled`.
+- `<buttons>` - Not on the official Skin Browser page; observed only in
+  built-in skins. Attributes (all six built-ins use the identical set): `up`,
+  `over`, `selected`, `down`, `border`, `border_over`, `border_selected`,
+  `border_down`, plus per-deck tints `over_deck1`, `selected_deck1`,
+  `down_deck1`, `over_deck2`, `selected_deck2`, `down_deck2`. The names mirror
+  skin button states, so they read as plugin-button state colors with per-deck
+  variants; exact rendering targets are not officially confirmed.
+
+**Real built-in example (trimmed):**
+```xml
+<define class="browser">
+    <background color="browserback" bordercolortop="bordercolor" bordercolor="bordercolor" bordersize="1"/>
+    <colors>
+        <lists text="textbrowser" background="browserback" stripes="browserstripe" over="browserover"
+               selected="browser_selected" focus="browseroverfocus" overtext="textbrowser"
+               selectedtext="texton" focustext="texton" automix="browser_automix"
+               download="browser_download" scan="browser_scan"
+               button="browser_button" buttonactive="browser_buttonactive"/>
+        <separators line="browser_seperatorline" text="texton" background="browser_seperatortab"/>
+        <toolbars background="background" text="textoff" iconbackground="browserback" border="bordercolor"
+                  backgroundselected="browser_toolbarbutton" backgroundmouseover="browser_toolbarbuttonover" icon="textoff3"/>
+        <grids background="browsergrid_bg" text="textbrowser" selectedtext="texton" focustext="texton"
+               over="browsergrid_over" selected="browsergrid_selected" focus="browsergrid_focus" label="textdark"/>
+        <columns background="background" text="textoff3"/>
+        <scrollbars background="browser_scrollbar" button="browser_scrollbtn"/>
+        <info background="background" stripes="background2" text="textbrowser" label="textdark" artist="textover" title="textbright"/>
+        <search background="browserback" text="textbrowser"/>
+        <prelisten background="background2"/>
+        <plugins background="browserback" text="textbrowser" title="background2" titletext="textbright">
+            <buttons up="background" over="background2" selected="browser_buttonselected" down="browser_buttonactive"
+                     border="bordercolor" border_down="bordercolor" border_selected="bordercolor" border_over="bordercolor"
+                     over_deck1="#1c7b97" selected_deck1="#136c8a" down_deck1="#0b485d"
+                     over_deck2="#b73b42" selected_deck2="#ad3237" down_deck2="#821a1f"/>
+            <sliders background="knobfilloff" needle="textbrowser" deck1="#136c8a" deck1_disabled="#0a3f50"
+                     deck2="#ad3237" deck2_disabled="#761318" on="gray" on_disabled="graydarker"/>
+        </plugins>
+    </colors>
+    ...
+</define>
+```
+
+Source: `Official` ([Skin Browser](https://www.virtualdj.com/wiki/Skin%20Browser.html)), `Built-in skin` (`examples/Skins/Built-In/Desktop/Pro.xml`, `Performance.xml`, `Essentials.xml`, `Vertical.xml`, `Starter.xml`, `examples/Skins/Built-In/Lite/Lite.xml`)
+
+> **Parser-tolerance note:** every bundled `<lists>` line repeats `text=""`,
+> and Lite/Starter/Essentials also repeat `stripes=""` and `over=""` with a
+> second `"transparent"` value. Strict XML parsers reject duplicate
+> attributes, but VirtualDJ loads these skins. See
+> [Published Skin Findings](Published%20Skin%20Findings.md) for the
+> parser-tolerance evidence stream.
+
+**Browser Button States: `<button>` block with `<active>` and `<menuover>`**
+
+All six styling built-ins also place a `<button>` block next to `<colors>`
+inside the browser define. It restyles the browser's own icon buttons using
+vector-state children (same attributes as vector button states: `color`,
+`border`, `border_size`, `width`, `height`, plus `shape` on the menu states):
+
+```xml
+<button>
+    <up color="browser_iconbuttonup" border="bordercolor2" border_size="2" width="60" height="54"/>
+    <down color="browser_iconbuttondown" border="bordercolor2" border_size="2" width="60" height="54"/>
+    <over color="browser_iconbuttonover" border="bordercolor2" border_size="2" width="60" height="54"/>
+    <selected color="browser_iconbuttonselected" border="bordercolor2" border_size="2" width="60" height="54"/>
+    <active color="browser_iconbuttonactive" border="bordercolor2" border_size="2" width="60" height="54"/>
+    <menu shape="circle" color="darkgray" border="bordercolor3" border_size="8" width="29" height="29"/>
+    <menuover shape="circle" color="gray" border="bordercolor3" border_size="8" width="29" height="29"/>
+</button>
+```
+
+- `<up>` / `<down>` / `<over>` / `<selected>` follow the normal button-state
+  names.
+- `<active>` is an extra state that exists only in this browser block (color
+  name `browser_iconbuttonactive`); it is not part of the documented skin
+  `<button>` states. Its exact trigger (likely "currently active browser
+  tool") is not yet confirmed.
+- `<menu>` / `<menuover>` style the round menu buttons in the browser (normal
+  and hover). In this context `<menu>` is a one-line vector state, not the
+  custom [`<menu>`](#menu) object documented later — all shape/color `<menu>`
+  attribute uses in the inventory come from these browser blocks.
+
+This block is not on the official Skin Browser page.
+
+Source: `Built-in skin` (same six files as above)
 
 **Example 1: Basic Browser**
 ```xml
