@@ -21,9 +21,12 @@ vdjscript:
     - docs/VDJScript Local Test Tracker.md
   candidates:
     - docs/Undocumented VDJScript Candidates.md
+  machine_index:
+    - docs/vdjscript-verb-index.json
   commands:
     - just find-verb NAME
     - just needs-test
+    - just verb-index
 
 fx:
   primary:
@@ -87,6 +90,7 @@ skin_sdk:
     - examples/Skins/Built-In/README.md
   commands:
     - just inventory
+    - just lint-skins
 
 application_internals:
   primary:
@@ -108,6 +112,8 @@ mappers:
     - examples/Mappers/README.md
   related:
     - examples/Pads/README.md
+  commands:
+    - just lint-mappers
 
 samplerbanks:
   primary:
@@ -120,6 +126,10 @@ tests:
     - tests/Pads/README.md
     - tests/Skins/README.md
   commands:
-    - python3 tools/lint_pads.py
-    - python3 tools/check_reference_status.py
     - just check
+    - just lint-skins
+    - just lint-mappers
+
+tools:
+  primary:
+    - tools/README.md

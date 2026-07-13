@@ -27,6 +27,8 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
 | Check skin/pad XML doc coverage | [docs/Skin XML Inventory.md](docs/Skin%20XML%20Inventory.md) (generated; `just inventory`) |
+| Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
+| Validate skin/mapper XML | `just lint-skins [paths]` · `just lint-mappers [paths]` · [tools/README.md](tools/README.md) |
 | Run or update a test harness | [tests/README.md](tests/README.md) |
 | Build or study a skin | [docs/Skin SDK.md](docs/Skin%20SDK.md) · [docs/Skin Runtime Findings.md](docs/Skin%20Runtime%20Findings.md) · [examples/Skins/README.md](examples/Skins/README.md) · [examples/Skins/ModularSkeleton/](examples/Skins/ModularSkeleton/) |
 | Work with effects | [docs/Effects Usage.md](docs/Effects%20Usage.md) · [docs/Native Effects.md](docs/Native%20Effects.md) |

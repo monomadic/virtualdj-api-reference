@@ -55,6 +55,12 @@ Start here:
 - [Skin XML Inventory](Skin%20XML%20Inventory.md)
   Generated element×attribute usage report across built-in/curated skin, pad, samplerbank, and mapper XML, cross-checked against the docs. Regenerate with `just inventory`; do not hand-edit.
 
+- [VDJScript Verb Index (JSON)](vdjscript-verb-index.json)
+  Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py`.
+
+- [Tools](../tools/README.md)
+  Validator/generator suite (`just check` gates) and the version-pinned binary-extraction pipeline, including the new-VirtualDJ-build refresh procedure.
+
 - [Pad Page Inventory](../examples/Pads/README.md)
   Current `examples/Pads/*.xml` status labels, canonical examples, built-in pad-page copies, and maintenance checklist.
 
