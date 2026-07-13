@@ -44,7 +44,16 @@ Start here:
   Focused notes on VirtualDJ 2026 AI lyric detection, skin styling limits, lyric queries, filters, and forum-observed quirks.
 
 - [Mapper XML](Mapper%20XML.md)
-  Controller and keyboard mapper file format: `<map>`, `<button>`, `<slider>`, `<knob>`, shift layers, LED feedback, device-definition boundaries, and the relationship to pad pages.
+  Controller and keyboard mapper file format: the `<mapper>`/`<map value="">` split model, special control names (`ONINIT`, `SHIFT_*`, `LED_*`), device-definition XML (MIDI and HID), and the relationship to pad pages. Ground truth in [Mappers/Local/](../Mappers/README.md).
+
+- [Pad Page XML](Pad%20Page%20XML.md)
+  Formal pad-page container schema: `<page>` attributes, `<padN>`/`<shift_padN>` attribute surface, `<param1>`/`<param2>`, the `<menu>` mini-DSL, `<custompadsmode>`, color forms, and samplerbank XML.
+
+- [Skin Waveforms](Skin%20Waveforms.md)
+  The waveform/rhythm skin element family: `<rhythmzone>`, `<scratchwave>`, `<songpos>`, `<scratch>`, `<blockwave>`, `<beattunnel>`, their children (`<colors>`, `<grid>`, `<cue>`, `<overlay>`, ...), and how they differ from `visual type="waveform"`.
+
+- [Skin XML Inventory](Skin%20XML%20Inventory.md)
+  Generated element×attribute usage report across built-in/curated skin, pad, samplerbank, and mapper XML, cross-checked against the docs. Regenerate with `just inventory`; do not hand-edit.
 
 - [Pad Page Inventory](../Pads/README.md)
   Current `Pads/*.xml` status labels, canonical examples, built-in pad-page copies, and maintenance checklist.

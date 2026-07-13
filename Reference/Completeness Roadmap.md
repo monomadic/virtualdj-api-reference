@@ -11,9 +11,11 @@ Use this file to choose the next evidence pass. Record detailed run results in [
 | Official VDJScript names | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for current counts. | Keep count consistency automated and refresh when the official appendix changes. |
 | Official behavior depth | See [Official VDJScript Coverage Audit](Official%20VDJScript%20Coverage%20Audit.md) for the current formal `Needs local test` gap. | Test no-hardware helpers first, then hardware helpers when matching devices are available. |
 | Button Editor hidden candidates | 14 catalog-only names, 21 stricter runtime-string candidates, and 37 flag1-hidden compiled taxonomy rows outside the official appendix | Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) to keep them discovery-only until local behavior or stronger source evidence exists. |
-| Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior | Keep promoting only pages with source-backed rationale or recorded local tests. |
-| Skin SDK | Broad coverage, with several useful local runtime findings | Finish `visual type` and element-surface passes with small canary skins. |
-| FX behavior | Good slot, ColorFX, PadFX, and stem-FX model notes | Add repeatable FX introspection, bank save/load, release-FX, and plugin-command passes. |
+| VDJScript grammar | Operator precedence, nested-ternary associativity, and backtick argument interpolation are documented as unresolved | Run [Reference - Grammar Battery Test](../Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) and promote results into `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md`. |
+| Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior; container schema documented in [Pad Page XML](Pad%20Page%20XML.md) | Resolve that doc's Open Questions (menu-DSL semantics, `custompadsmode` trigger, `pressure`/`right_click`) with small local probes. |
+| Skin SDK | Broad coverage incl. the waveform family ([Skin Waveforms](Skin%20Waveforms.md)) and root-level support elements; remaining element gaps tracked in the generated [Skin XML Inventory](Skin%20XML%20Inventory.md) | Finish `visual type` passes with small canary skins; close inventory-reported undocumented elements (browser `<colors>` children, `<text2>`/`<text3>`); refine the inventory doc-matcher for numbered pad elements. |
+| Mappers | Format rewritten from real files; four working mappers in [Mappers/Local](../Mappers/README.md); device-definition schema official-doc-derived | Author a minimal custom MIDI device definition + mapper pair and load-test it (a `SIMPLE_MIDI` device context already exists locally). |
+| FX behavior | Good slot, ColorFX, PadFX, and stem-FX model notes | Add repeatable FX introspection, bank save/load, release-FX, and plugin-command passes; goal is a per-effect slider table for the native effects catalog. |
 | Application internals and stems | Useful macOS-first notes and stem sidecar format documentation | Convert known unknowns into fixture-backed checks when safe. |
 
 ## Completion Tiers
@@ -34,6 +36,7 @@ These are the best next tests because they do not require new controller hardwar
 
 | Priority | Topic | Fixture or source | Promotion target |
 | ---: | --- | --- | --- |
+| 0 | VDJScript grammar: ternary/`&` precedence, nested-ternary associativity, backtick arguments | [Reference - Grammar Battery Test.xml](../Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) | Replace the "precedence is unproven" caveats in `VDJScript Syntax Evidence.md` and `VirtualDJ Reference.md` with tested rules. Highest correctness leverage per test run. |
 | 1 | `dualdeckmode_decks` | [Reference - Dual Deck Mode Test.xml](../Test/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml) | Test any visible dual-deck pair/controller context. |
 | 2 | `stem_volume`, `sampler_inputgain`, pad-page split/favorite helpers | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Decide which catalog-only names deserve normal user-facing guidance. |
 | 3 | `is_colorfx`, `effect_beats_sliderindex` | [Reference - Hidden Button Editor Tests.xml](../Test/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Improve effect selected-state and beat-slider docs if behavior is useful. |
@@ -80,6 +83,13 @@ Run these after documentation or fixture edits:
 python3 tools/lint_pads.py
 python3 tools/check_reference_status.py
 git diff --check
+```
+
+After adding or documenting skin/pad XML elements, regenerate the coverage report:
+
+```sh
+just inventory   # rewrites Reference/Skin XML Inventory.md
+python3 tools/extract_xml_inventory.py --check   # nonzero exit on new undocumented elements
 ```
 
 The status checker is intentionally offline. Use the live official appendix only when intentionally refreshing the coverage audit.

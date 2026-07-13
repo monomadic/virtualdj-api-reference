@@ -35,6 +35,8 @@ Search budget:
 Pads/                        — working/reference pad page XML files plus copied built-in pad pages
 Test/                        — documentation test harnesses, including pad XML fixtures
 Skins/                       — skin source trees, reference skins, and copied built-in skins
+Mappers/                     — real working controller/keyboard mapper XML (ground truth for the mapper format)
+Samplerbanks/                — copied built-in sampler-bank XML (third XML format)
 Reference/                   — Markdown documentation
 ```
 
@@ -45,6 +47,7 @@ Reference/                   — Markdown documentation
 - `&` chains actions in XML attributes and must be written `&amp;` inside XML.
 - Backtick-wrapped expressions (`` `verb` ``) evaluate and return a value in string/color contexts.
 - Working/reference pad pages live in `Pads/*.xml`; copied built-in app-bundle pages live in `Pads/Built-In/`; documentation test harnesses live under `Test/`. See `Pads/README.md` before choosing a reference page. Skins live in `Skins/*/`; copied built-in app-bundle skins live in `Skins/Built-In/`.
+- The pad-page container format is specified in `Reference/Pad Page XML.md`; skin waveforms in `Reference/Skin Waveforms.md`; the mapper format in `Reference/Mapper XML.md` with real mappers in `Mappers/Local/`. `just inventory` regenerates the element-coverage report `Reference/Skin XML Inventory.md`.
 - `Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript appendix coverage and local-test gap are tracked in `Reference/Official VDJScript Coverage Audit.md`.
 - Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.

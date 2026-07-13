@@ -15,7 +15,52 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 ## Ready Tasks
 
-### 1. Repeat `dualdeckmode_decks` In A Better Context
+### 1. Run The VDJScript Grammar Battery
+
+Status: Ready
+
+This is the highest-leverage manual test in the queue: it resolves the three grammar unknowns (ternary/`&` precedence, nested-ternary associativity, backtick-computed action arguments) that currently gate every non-trivial generated script.
+
+Start here:
+
+- [Test/Pads/Reference - Grammar Battery Test.xml](Test/Pads/Reference%20-%20Grammar%20Battery%20Test.xml)
+
+Read first:
+
+- [Reference/VDJScript Syntax Evidence.md](Reference/VDJScript%20Syntax%20Evidence.md)
+- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+
+Record results in:
+
+- [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [Reference/VDJScript Syntax Evidence.md](Reference/VDJScript%20Syntax%20Evidence.md)
+- [Reference/VirtualDJ Reference.md](Reference/VirtualDJ%20Reference.md) (replace the "precedence is unproven" guidance with tested rules)
+
+Done when:
+
+- A build, per-pad observed variable states, and derived precedence/associativity/interpolation rules are recorded.
+- The `phrase_sync` backtick-argument failure is either generalized or shown to be verb-specific.
+
+### 2. Author And Load-Test A Minimal Custom Device Definition
+
+Status: Ready
+
+The mapper reference's device-definition schema is official-doc-derived but never load-tested locally. A `SIMPLE_MIDI` device context already exists in the local install's Mappers folder.
+
+Start here:
+
+- [Reference/Mapper XML.md](Reference/Mapper%20XML.md)
+- [Mappers/README.md](Mappers/README.md)
+
+Done when:
+
+- A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
+- Results (including failures) are recorded in [Reference/VDJScript Local Test Tracker.md](Reference/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
+
+### 3. Repeat `dualdeckmode_decks` In A Better Context
 
 Status: Ready
 
@@ -42,7 +87,7 @@ Done when:
 - A build, deck/controller context, observed result, and follow-up decision are recorded.
 - The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
 
-### 2. Continue Hidden Button Editor Candidate Probes
+### 4. Continue Hidden Button Editor Candidate Probes
 
 Status: Ready
 
@@ -71,7 +116,7 @@ Done when:
 - Candidate behavior is recorded as pass, partial, failed, or still discovery-only.
 - Catalog-only names stay out of ordinary recommendations unless behavior proof supports promotion.
 
-### 3. Build The FX Introspection Table
+### 5. Build The FX Introspection Table
 
 Status: Ready
 
@@ -100,7 +145,7 @@ Done when:
 - Slider/button counts, labels, defaults, text readbacks, and `effect_has_*` behavior are recorded for representative built-in effects.
 - Generic FX control guidance distinguishes observed behavior from inference.
 
-### 4. Characterize FX Bank Save And Load
+### 6. Characterize FX Bank Save And Load
 
 Status: Ready
 
@@ -126,7 +171,7 @@ Done when:
 
 - Restored effect names, active states, slider values, and deck scope are recorded.
 
-### 5. Separate Release FX From Normal Slot FX
+### 7. Separate Release FX From Normal Slot FX
 
 Status: Ready
 
@@ -152,7 +197,7 @@ Done when:
 
 - `effect_releaseslider*` and `is_releasefx` behavior is described separately from normal deck FX controls.
 
-### 6. Keep BeatGrid `effect_command` Plugin-Specific
+### 8. Keep BeatGrid `effect_command` Plugin-Specific
 
 Status: Ready
 
