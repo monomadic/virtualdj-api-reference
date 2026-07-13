@@ -115,6 +115,43 @@ These were observed in the Denon skin and should be reconciled against the curre
 | `filter_activate '<name>'` | Master row toggles named ColorFX/filter effects on all decks around lines 1522-1547 | Official/local docs already use `filter_activate`; named parameter behavior needs clearer notes | Test exact names and deck scoping |
 | `get_title_before_remix`, `get_harmonic`, `get_loop`, `get_slip_active` | Track title, key, loop, and slip display around lines 925-981 and 552-564 | Official appendix lists this family | Promoted to broad Get, Loops, and Scratch/Jogwheel catalogs |
 
+## Built-In Skin Attribute Typos (Parser Tolerance Evidence)
+
+The generated [Skin XML Inventory](Skin%20XML%20Inventory.md) (regenerate with `just inventory`) surfaced two attribute typos in VirtualDJ's own shipped skins. The built-in skin XML under `Skins/Built-In/` is a verbatim reference copy, so the typos are preserved as-is; they matter here as evidence about how tolerant the skin parser is to unknown attribute names.
+
+Source class: `Built-in skin`.
+
+### `ction=` instead of `action=` on `<slider>`
+
+All three touch-oriented Remote skins ship the mic volume slider with the `action` attribute misspelled:
+
+```xml
+<slider ction="mic_volume" dblclick="mic_volume 100%" rightclick="mic_volume 100% ? mic_volume 0% : mic_volume 100%" disabled="not get_hasmic"/>
+```
+
+Observed at [Skins/Built-In/Remote/4x3T.xml:2205](../Skins/Built-In/Remote/4x3T.xml), [Skins/Built-In/Remote/16x9T.xml:2076](../Skins/Built-In/Remote/16x9T.xml), and [Skins/Built-In/Remote/16x10T.xml:2076](../Skins/Built-In/Remote/16x10T.xml) (3 uses total; the inventory lists `ction` as a `<slider>` attribute). Since `ction` cannot be an intentional alias, the shipped mic volume sliders most likely have no drag action — only the `dblclick` and `rightclick` handlers work. This is strong evidence that the parser silently ignores unknown attributes rather than erroring.
+
+### `hightlight=` vs `highlight=` on `<line>`
+
+Built-in skins split cleanly by spelling, with no file mixing the two:
+
+| Spelling | Uses on `<line>` | Skins | Typical value |
+| -------- | ---------------- | ----- | ------------- |
+| `hightlight=` | 65 | Desktop `Pro.xml` (21), `Performance.xml` (25), `Vertical.xml` (19) | `"hightlight"` (61) or `"shadow"` (4) |
+| `highlight=` | 30 | `Lite/Lite.xml`, Desktop `Starter.xml`, Desktop `Essentials.xml` | `""` or `"darker"` |
+
+The misspelling is systematic in the Pro/Performance/Vertical family: those skins also declare matching color defines, e.g. `<define color="hightlight" value="#47494c"/>` at [Skins/Built-In/Desktop/Performance.xml:185](../Skins/Built-In/Desktop/Performance.xml), and reference them as both an attribute value and a plain `color=` value on other `<line>` elements. So the color *name* `hightlight` works regardless (define names are arbitrary strings); the open question is only the attribute name.
+
+Two readings are possible and untested:
+
+- The parser accepts both `highlight` and `hightlight` as the `<line>` highlight-edge attribute (deliberate or legacy alias), or
+- only `highlight` is real and the Pro/Performance/Vertical lines silently render without their highlight edge.
+
+| Pattern | Current understanding | Sources | Test status |
+| ------- | --------------------- | ------- | ----------- |
+| Unknown attribute on skin element (`ction=`) | Silently ignored; no parse error, element still renders with its remaining attributes | `Built-in skin`; `Inference` | Needs test (compare mic slider drag vs dblclick in a Remote skin) |
+| `<line hightlight=...>` | Either an accepted alias of `highlight` or silently ignored | `Built-in skin` | Needs test (render a `<line>` with only `hightlight=` set to a loud color and compare against `highlight=`) |
+
 ## External Sources Found For Mix FX
 
 - [Official VDJScript verbs appendix](https://virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html): lists `effect_mixfx`, `effect_mixfx_activate`, and `effect_mixfx_select`.

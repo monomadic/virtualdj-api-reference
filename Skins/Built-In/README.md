@@ -28,6 +28,8 @@ cp -p /Applications/VirtualDJ.app/Contents/Resources/AFX_BeatGrid.png Skins/Buil
 
 Important parser note: these files are kept as shipped. Some built-in skin XML does not pass generic `xmllint` checks because the VirtualDJ skin parser accepts VDJScript-heavy attributes, raw `&` / `&&`, and other constructs that are not strict XML. Do not "fix" these copies unless the goal is to maintain a separate normalized fixture.
 
+These copies also contain genuine attribute typos shipped by Atomix — `ction="mic_volume"` instead of `action=` in all three Remote skins, and `hightlight=` alongside `highlight=` on `<line>` in the Desktop skins. Keep them as-is; they are evidence of parser tolerance to unknown attributes. See [Built-In Skin Attribute Typos](../../Reference/Published%20Skin%20Findings.md#built-in-skin-attribute-typos-parser-tolerance-evidence) in Published Skin Findings.
+
 ## Desktop
 
 Extracted from `/Applications/VirtualDJ.app/Contents/Resources/skin.zip`.
