@@ -1,6 +1,8 @@
-# VirtualDJ Effects Engines Guide
+# Effects Engines
 
 Comprehensive guide to VirtualDJ's multiple effect systems, how they work, and practical usage patterns.
+
+> Companion docs: [Effects Usage.md](Effects%20Usage.md) is the shorter mental-model overview; [Native Effects.md](Native%20Effects.md) is the effect-name catalog.
 
 ---
 

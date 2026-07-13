@@ -1,6 +1,8 @@
-# VirtualDJ FX Engines
+# Effects Usage
 
-This doc is **not just a list of effects** — it’s a mental model for **VirtualDJ’s different FX engines** and how to drive them from **skins** and **pad pages** without fighting the scripting model.
+A mental model for **VirtualDJ's different FX engines** and how to drive them from **skins** and **pad pages** without fighting the scripting model.
+
+> Companion docs: [Effects Engines.md](Effects%20Engines.md) is the deep per-engine control reference (7 engines, verbs, patterns); [Native Effects.md](Native%20Effects.md) is the effect-name catalog. Start here for the mental model, go there for details.
 
 ---
 
