@@ -103,9 +103,7 @@ The extractor scanned exact token matches for the 35 non-official candidates abo
 
 - `Pads/Built-In/`
 - `Skins/Built-In/`
-- `examples/pads/official/`
-- `examples/skins/official/`
-- `examples/samplerbank/official/`
+- `Samplerbanks/Built-In/`
 
 Result: none of the 35 candidates currently has shipped XML evidence elsewhere in this repo.
 

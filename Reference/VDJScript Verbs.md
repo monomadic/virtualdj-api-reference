@@ -1074,7 +1074,7 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `examples/pads/official/pads_keycue.xml`
+- `Official`: `Pads/Built-In/pads_keycue.xml`
 
 ### `get_browsed_song`
 
@@ -2157,7 +2157,7 @@ Preferred usage:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `examples/pads/official/pads_stems.xml`
+- `Official`: `Pads/Built-In/pads_stems.xml`
 
 ### `effect_arm_stem`
 
@@ -2626,7 +2626,7 @@ Preferred usage:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `examples/pads/official/pads_sampler_velocity.xml`
+- `Official`: `Pads/Built-In/pads_sampler_velocity.xml`
 
 ### `sampler_assign`
 
@@ -3639,7 +3639,7 @@ Notes:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `examples/pads/official/pads_saved_loops.xml`
+- `Official`: `Pads/Built-In/pads_saved_loops.xml`
 
 ### `pad_page_select`
 
@@ -3899,9 +3899,9 @@ Sources:
 Sources:
 
 - `Official`: VDJScript verbs appendix
-- `Official`: `examples/pads/official/pads_manual_loop.xml`
-- `Official`: `examples/pads/official/pads_loop_roll.xml`
-- `Official`: `examples/pads/official/pads_hotcues.xml`
+- `Official`: `Pads/Built-In/pads_manual_loop.xml`
+- `Official`: `Pads/Built-In/pads_loop_roll.xml`
+- `Official`: `Pads/Built-In/pads_hotcues.xml`
 
 ### `is_fluid`
 

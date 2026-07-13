@@ -39,4 +39,4 @@ Included files:
 - [pads_stems.xml](pads_stems.xml)
 - [pads_stems+fx.xml](pads_stems+fx.xml)
 
-Nearby app resources such as `AUDIO FX.xml`, `FAMOUS.xml`, `INSTRUMENTS.xml`, and `VIDEO & SCRATCH.xml` are sampler banks rather than pad pages, so they are intentionally not copied here.
+Nearby app resources such as `AUDIO FX.xml`, `FAMOUS.xml`, `INSTRUMENTS.xml`, and `VIDEO & SCRATCH.xml` are sampler banks rather than pad pages; they are copied to [Samplerbanks/Built-In/](../../Samplerbanks/Built-In/README.md) instead.

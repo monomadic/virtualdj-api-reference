@@ -23,9 +23,7 @@ DEFAULT_AUDIT = Path("Reference/Official VDJScript Coverage Audit.md")
 DEFAULT_XML_ROOTS = (
     Path("Pads/Built-In"),
     Path("Skins/Built-In"),
-    Path("examples/pads/official"),
-    Path("examples/skins/official"),
-    Path("examples/samplerbank/official"),
+    Path("Samplerbanks/Built-In"),
 )
 
 
