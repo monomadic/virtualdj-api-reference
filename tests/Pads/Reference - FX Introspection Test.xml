@@ -143,7 +143,10 @@
   <shift_pad9 name="S1 default:`get_effect_slider_default 1 1 0.5`" color="color 'green'">nothing</shift_pad9>
   <shift_pad10 name="S1 label_full:`get_effect_slider_label_full 1 1`" color="color 'green'">nothing</shift_pad10>
   <shift_pad11 name="S1 shortname:`get_effect_slider_shortname 1 1`" color="color 'green'">nothing</shift_pad11>
-  <shift_pad12 name="S1 name:`get_effect_slider_name 1 1`" color="color 'green'">nothing</shift_pad12>
+  <!-- default signature probe: [effect_name] [slider_number] form vs the
+       (slot,index,fallback) form on shift_pad9. Hardcoded 'Backspin' name;
+       change to the loaded effect when sweeping others. -->
+  <shift_pad12 name="S1 def[byname]:`get_effect_slider_default 'Backspin' 1`" color="color 'yellow'">nothing</shift_pad12>
   <shift_pad13 name="B1 name:`get_effect_button_name 1`" color="color 'cyan'">nothing</shift_pad13>
   <shift_pad14 name="B1 short:`get_effect_button_shortname 1`" color="color 'cyan'">nothing</shift_pad14>
   <shift_pad15 name="SET S1 50% (write test)" color="color 'orange'">effect_slider 1 1 50%</shift_pad15>

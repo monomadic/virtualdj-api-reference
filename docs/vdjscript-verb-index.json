@@ -2438,7 +2438,7 @@
   "get_effect_slider_default": {
    "tier": "catalog",
    "section": "Effects",
-   "description": "Get effect slider default value. `Local test` (v2026-m b9482): returned `off` for real and empty sliders — not a usable default; capture defaults via `effect_slider_reset` then `get_effect_slider_text`",
+   "description": "Get effect slider default value. Signature unresolved: built-in skins use `get_effect_slider_default 1 1 0.5` in `<slider frommiddle=>`; another source gives `[effect_name] [slider_number]`. A `1 1 0.5` call in a pad `name=` returned `off` (`Local test` v2026-m b9482) — likely a wrong-arg/context miss, not a defect. For a reliable default, `effect_slider_reset` then `get_effect_slider_text`",
    "example": "get_effect_slider_default 1",
    "official": true
   },
