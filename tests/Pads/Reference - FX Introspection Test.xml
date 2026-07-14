@@ -129,16 +129,23 @@
   <shift_pad2 name="LOAD REVERB" color="color 'cyan'">effect_select 1 'Reverb' &amp; effect_slider 1 1 45% &amp; effect_slider 1 2 50% &amp; effect_active 1 on</shift_pad2>
   <shift_pad3 name="LOAD FLANGER" color="color 'cyan'">effect_select 1 'Flanger' &amp; effect_slider 1 1 50% &amp; effect_active 1 on</shift_pad3>
   <shift_pad4 name="LOAD BEATGRID" color="color 'cyan'">effect_select 1 'BeatGrid' &amp; effect_slider 1 1 75% &amp; effect_active 1 on</shift_pad4>
-  <shift_pad5 name="DBG NAME" color="color 'white'">debug `get_effect_name 1`</shift_pad5>
-  <shift_pad6 name="DBG COUNTS" color="color 'white'">debug `get_effect_slider_count` &amp; debug `get_effect_button_count`</shift_pad6>
-  <shift_pad7 name="DBG S1 LABEL" color="color 'green'">debug `get_effect_slider_label 1 1`</shift_pad7>
-  <shift_pad8 name="DBG S1 TEXT" color="color 'green'">debug `get_effect_slider_text 1 1`</shift_pad8>
-  <shift_pad9 name="DBG S1 DEFAULT" color="color 'green'">debug `get_effect_slider_default 1 1 0.5`</shift_pad9>
-  <shift_pad10 name="DBG S1 LABELFULL" color="color 'green'">debug `get_effect_slider_label_full 1 1`</shift_pad10>
-  <shift_pad11 name="DBG S1 SHORTNAME" color="color 'green'">debug `get_effect_slider_shortname 1 1`</shift_pad11>
-  <shift_pad12 name="DBG S1 NAME" color="color 'green'">debug `get_effect_slider_name 1 1`</shift_pad12>
-  <shift_pad13 name="DBG B1 NAME" color="color 'cyan'">debug `get_effect_button_name 1`</shift_pad13>
-  <shift_pad14 name="DBG B1 SHORT" color="color 'cyan'">debug `get_effect_button_shortname 1`</shift_pad14>
+  <!--
+    Exact-string readers via name= interpolation (full width, no truncation).
+    NOT debug: on v2026-m b9482, `debug` ignores a backtick-computed argument
+    and logs the literal expression text (same class as loop/beatjump/
+    phrase_sync). Backticks DO evaluate inside a pad name=, so read these by
+    holding shift and looking at the labels. All target slider 1 / button 1.
+  -->
+  <shift_pad5 name="NAME:`get_effect_name 1`" color="color 'white'">nothing</shift_pad5>
+  <shift_pad6 name="Scount:`get_effect_slider_count` Bcount:`get_effect_button_count`" color="color 'white'">nothing</shift_pad6>
+  <shift_pad7 name="S1 label:`get_effect_slider_label 1 1`" color="color 'green'">nothing</shift_pad7>
+  <shift_pad8 name="S1 text:`get_effect_slider_text 1 1`" color="color 'green'">nothing</shift_pad8>
+  <shift_pad9 name="S1 default:`get_effect_slider_default 1 1 0.5`" color="color 'green'">nothing</shift_pad9>
+  <shift_pad10 name="S1 label_full:`get_effect_slider_label_full 1 1`" color="color 'green'">nothing</shift_pad10>
+  <shift_pad11 name="S1 shortname:`get_effect_slider_shortname 1 1`" color="color 'green'">nothing</shift_pad11>
+  <shift_pad12 name="S1 name:`get_effect_slider_name 1 1`" color="color 'green'">nothing</shift_pad12>
+  <shift_pad13 name="B1 name:`get_effect_button_name 1`" color="color 'cyan'">nothing</shift_pad13>
+  <shift_pad14 name="B1 short:`get_effect_button_shortname 1`" color="color 'cyan'">nothing</shift_pad14>
   <shift_pad15 name="SET S1 50% (write test)" color="color 'orange'">effect_slider 1 1 50%</shift_pad15>
   <shift_pad16 name="RESET S1" color="color 'orange'">effect_slider_reset 1 1</shift_pad16>
 
