@@ -6,15 +6,17 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 
 ## Summary
 
-141 distinct elements observed across all families; 0 undocumented.
+179 distinct elements observed across all families; 0 undocumented.
 
 - skins: 99 elements, 0 undocumented (none)
 - pads: 37 elements, 0 undocumented (none)
+- video_skins: 38 elements, 0 undocumented (none)
 - samplerbanks: 2 elements, no reference doc to check against
 - mappers: 3 elements, 0 undocumented (none)
 
 <!-- undocumented skins:  -->
 <!-- undocumented pads:  -->
+<!-- undocumented video_skins:  -->
 <!-- undocumented samplerbanks:  -->
 <!-- undocumented mappers:  -->
 
@@ -139,7 +141,7 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<shift_pad3>` | 47 | 40 | yes | `name` (47), `color` (44), `autodim` (12), `query` (6), `right_click` (1) |
 | `<page>` | 46 | 46 | yes | `name` (30), `shortname` (8) |
 | `<pad5>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (18), `autodim` (9), `drop` (5), `pressure` (2), `right_click` (1) |
-| `<pad6>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (19), `autodim` (9), `drop` (5), `pressure` (2), `right_click` (1) |
+| `<pad6>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (20), `autodim` (9), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad7>` | 45 | 45 | yes | `name` (45), `color` (43), `query` (18), `autodim` (8), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<pad8>` | 45 | 45 | yes | `name` (45), `color` (42), `query` (18), `autodim` (8), `drop` (5), `pressure` (2), `right_click` (1) |
 | `<shift_pad4>` | 44 | 38 | yes | `name` (44), `color` (41), `autodim` (11), `query` (5), `right_click` (1) |
@@ -154,8 +156,8 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<pad11>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (13), `autodim` (7), `drop` (3), `pressure` (1), `right_click` (1) |
 | `<pad12>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (13), `autodim` (6), `drop` (3), `pressure` (1), `right_click` (1) |
 | `<pad13>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
-| `<pad14>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (12), `autodim` (7), `drop` (3), `pressure` (1) |
-| `<pad15>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (10), `autodim` (7), `drop` (3), `pressure` (1) |
+| `<pad14>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (11), `autodim` (7), `drop` (3), `pressure` (1) |
+| `<pad15>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (9), `autodim` (7), `drop` (3), `pressure` (1) |
 | `<pad16>` | 27 | 27 | yes | `name` (27), `color` (26), `query` (8), `autodim` (6), `drop` (3), `pressure` (1) |
 | `<menu>` | 24 | 24 | yes | — |
 | `<shift_pad16>` | 18 | 18 | yes | `name` (18), `color` (16), `autodim` (5), `query` (5) |
@@ -167,6 +169,51 @@ Element and attribute inventory of every offline XML corpus in this repo, cross-
 | `<shift_pad9>` | 17 | 17 | yes | `name` (17), `color` (15), `autodim` (5), `query` (4), `right_click` (1) |
 | `<shift_pad15>` | 16 | 16 | yes | `name` (16), `color` (14), `autodim` (5), `query` (4) |
 | `<custompadsmode>` | 8 | 8 | yes | `nb` (8) |
+
+## Video_skins
+
+3 files scanned, 38 distinct elements. Docs cross-checked: `docs/Skin SDK.md`, `docs/Skin Waveforms.md`.
+
+| Element | Uses | Files | Documented | Attributes (count) |
+| --- | ---: | ---: | --- | --- |
+| `<pos>` | 205 | 3 | yes | `x` (201), `y` (193), `height` (4), `width` (4) |
+| `<size>` | 186 | 3 | yes | `height` (186), `width` (186) |
+| `<text>` | 102 | 3 | yes | `color` (86), `action` (52), `size` (51), `weight` (51), `align` (44), `fontsize` (34), `text` (34), `format` (9), `localize` (2) |
+| `<square>` | 81 | 3 | yes | `class` (57), `visibility` (47), `color` (23), `name` (10), `canstretch` (3), `radius` (3) |
+| `<textzone>` | 78 | 3 | yes | `group` (13), `align` (4), `class` (3), `action` (2), `attachx` (2), `deck` (2), `orientation` (2), `scroll` (2), `canstretch` (1), `visibility` (1) |
+| `<define>` | 66 | 2 | yes | `class` (52), `classdeck` (22), `color` (16), `value` (14), `radius` (11), `deck` (8), `type` (2), `visibility` (2) |
+| `<visual>` | 43 | 2 | yes | `source` (16), `class` (9), `type` (8), `orientation` (4), `x` (4), `y` (4), `name` (3), `visibility` (3) |
+| `<panel>` | 34 | 3 | yes | `x` (33), `y` (33), `class` (28), `visibility` (6) |
+| `<slider>` | 32 | 2 | yes | `action` (23), `frommiddle` (19), `orientation` (13), `name` (2), `visibility` (2), `x` (2), `y` (2), `height` (1), `width` (1) |
+| `<item>` | 29 | 2 | yes | `class` (29), `visibility` (23) |
+| `<off>` | 29 | 2 | yes | `x` (24), `y` (24), `color` (5), `shape` (5), `height` (2), `radius` (2), `width` (2), `border` (1), `border_size` (1) |
+| `<on>` | 27 | 2 | yes | `x` (23), `y` (23), `color` (4), `shape` (4), `radius` (2), `border` (1), `border_size` (1) |
+| `<group>` | 23 | 3 | yes | `name` (22), `x` (15), `y` (15), `visibility` (5) |
+| `<fader>` | 13 | 2 | yes | `anglemax` (5), `anglemin` (5), `color` (2), `height` (2), `radius` (2), `width` (2) |
+| `<gradient>` | 10 | 2 | yes | `color1` (10), `color2` (10), `type` (10) |
+| `<slot>` | 9 | 2 | yes | `x` (9), `y` (9) |
+| `<line>` | 8 | 1 | yes | `color` (8), `height` (8), `width` (8), `x` (8), `y` (8) |
+| `<default>` | 5 | 2 | yes | `x` (5), `y` (5) |
+| `<fill>` | 5 | 2 | yes | — |
+| `<stack>` | 5 | 2 | yes | `fadein` (5), `fadeout` (5) |
+| `<blockwave>` | 4 | 2 | yes | `blocksize` (4), `center` (4), `color` (4), `deck` (4), `zoom` (4), `visibility` (2) |
+| `<deck>` | 4 | 2 | yes | `deck` (4) |
+| `<logo>` | 4 | 3 | yes | `visibility` (4), `circle` (2) |
+| `<beattunnel>` | 3 | 2 | yes | `color` (3), `depth` (3) |
+| `<copyright>` | 3 | 3 | yes | — |
+| `<cover>` | 3 | 3 | yes | `source` (1) |
+| `<equalizer>` | 3 | 3 | yes | `type` (4), `bass` (3), `color` (3), `mirror` (3), `nb` (3), `slow` (3), `width` (3), `canstretch` (2), `deck` (2), `visibility` (1), `x` (1), `y` (1) |
+| `<font>` | 3 | 3 | yes | `name` (3) |
+| `<skin>` | 3 | 3 | yes | `author` (3), `breaklinev` (3), `comment` (3), `height` (3), `name` (3), `preview` (3), `version` (3), `width` (3), `breaklinev2` (1), `karaoke` (1) |
+| `<clipmask>` | 2 | 2 | yes | `height` (2), `width` (2), `x` (2), `y` (2) |
+| `<left>` | 2 | 1 | yes | — |
+| `<right>` | 2 | 1 | yes | — |
+| `<sampleicon>` | 2 | 2 | yes | `slot` (2) |
+| `<split>` | 2 | 1 | yes | `name` (2), `type` (2) |
+| `<button>` | 1 | 1 | yes | `action` (1) |
+| `<circle>` | 1 | 1 | yes | `color` (1), `radius` (1), `visibility` (1) |
+| `<icon>` | 1 | 1 | yes | `height` (1), `width` (1), `x` (1), `y` (1) |
+| `<video>` | 1 | 1 | yes | `canstretch` (1), `source` (1) |
 
 ## Samplerbanks
 

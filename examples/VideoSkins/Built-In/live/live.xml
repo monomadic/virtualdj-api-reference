@@ -1,0 +1,579 @@
+﻿<skin name="for Live" version="8" width="1920" height="1080" breaklineV="960" comment="Simple skin focused on keeping your audience dancing" author="Atomix Productions" preview="preview.png">
+  <copyright>(c)2021 - Atomix Productions</copyright>
+  <font name="Helvetica"/>
+
+	<group name="class_defines">
+		<define color="background" value="#000000"/>
+
+		<define color="leftdeck" value="#0d86e3"/>
+		<define color="rightdeck" value="#ea0500"/>
+		<define color="deckcolor" value="#0d86e3" deck="left"/>
+		<define color="deckcolor" value="#ff0024" deck="right"/>
+
+		<define color="padcolor1" value="#1c9cff" deck="left"/>
+		<define color="padcolor2" value="#003e5f" deck="left"/>
+		<define color="padcolor1" value="#ff0202" deck="right"/>
+		<define color="padcolor2" value="#3d0101" deck="right"/>
+
+		<define color="decktext" value="#3da4f3" deck="left"/>
+		<define color="decktext" value="#ff3430" deck="right"/>
+		<define color="darktext" value="#d6d6d6"/>
+		<define color="darkertext" value="#a0a0a0"/>
+		<define color="brighttext" value="white"/>
+
+		<define class="panelback" radius="15" color="background" visibility="55%">
+			<pos x="+0" y="+0"/>
+			<size width="370" height="170"/>
+		</define>
+		<define class="bigpad" radius="15">
+			<pos x="+25" y="+25"/>
+			<size width="121" height="121"/>
+			<gradient type="circular" color1="padcolor1" color2="padcolor2"/>
+		</define>
+
+		<define class="knob" classdeck="left">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+				<size width="88" height="88"/>
+				<on x="441" y="187"/>
+				<off x="441" y="187"/>
+				<fader anglemin="-145" anglemax="+145">
+					<size width="0" height="0"/>
+					<pos x="1" y="1"/>
+				</fader>
+				<fill>
+					<off x="441" y="187"/>
+					<on x="241" y="187"/>
+				</fill>
+			</slider>
+			<textzone>
+				<pos x="+20" y="+30"/>
+				<size width="48" height="26"/>
+				<text fontsize="14" color="darktext" weight="" align="center"/>
+			</textzone>
+		</define>
+		<define class="knob" classdeck="right">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+				<size width="88" height="88"/>
+				<on x="441" y="187"/>
+				<off x="441" y="187"/>
+				<fader anglemin="-145" anglemax="+145">
+					<size width="0" height="0"/>
+					<pos x="1" y="1"/>
+				</fader>
+				<fill>
+					<off x="441" y="187"/>
+					<on x="341" y="187"/>
+				</fill>
+			</slider>
+			<textzone>
+				<pos x="+20" y="+30"/>
+				<size width="48" height="26"/>
+				<text fontsize="14" color="darktext" weight="" align="center"/>
+			</textzone>
+		</define>
+
+
+	<define class="knob2">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+				<size width="78" height="78"/>
+				<on x="1087" y="188"/>
+				<off x="1087" y="188"/>
+				<fader anglemin="-145" anglemax="+145">
+					<size width="0" height="0"/>
+					<pos x="1" y="1"/>
+				</fader>
+				<fill>
+					<off x="1087" y="188"/>
+					<on x="905" y="188"/>
+				</fill>
+			</slider>
+			<textzone>
+				<pos x="-10" y="+30+45"/>
+				<size width="78+20" height="26"/>
+				<text fontsize="14" color="darktext" weight="" align="center"/>
+			</textzone>
+		</define>
+
+
+		<define class="horslidergray">
+			<visual visibility="55%">
+				<pos x="+0" y="+0"/>
+				<size width="272" height="28"/>
+				<off color="background" shape="square" radius="14"/>
+			</visual>
+			<slider orientation="horizontal">
+				<pos x="+4" y="+4"/>
+				<size width="272-8" height="28-8"/>
+				<on color="darkertext" shape="square" radius="10"/>
+				<fader>
+					<size width="0" height="0"/>
+					<pos x="0" y="0"/>
+				</fader>
+			</slider>
+		</define>
+		
+		<define class="horslider">
+			<visual visibility="55%">
+				<pos x="+0" y="+0"/>
+				<size width="272" height="28"/>
+				<off color="background" shape="square" radius="14"/>
+			</visual>
+			<slider orientation="horizontal">
+				<pos x="+4" y="+4"/>
+				<size width="272-8" height="28-8"/>
+				<on color="deckcolor" shape="square" radius="10"/>
+				<fader>
+					<size width="0" height="0"/>
+					<pos x="0" y="0"/>
+				</fader>
+			</slider>
+		</define>
+		
+		<define class="ringvisual" type="circle" classdeck="left">
+			<size width="127" height="127"/>
+			<off x="179" y="26"/>
+			<on  x="329" y="26"/>
+		</define>
+		<define class="ringvisual" type="circle" classdeck="right">
+			<size width="127" height="127"/>
+			<off x="179" y="26"/>
+			<on x="479" y="26"/>
+		</define>
+
+		
+		<define class="nexttrackpanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+				<cover >
+					<pos x="+24" y="+24"/>
+					<size width="123" height="123"/>
+					<clipmask x="30" y="157" width="123" height="123"/>
+				    <default x="30" y="14"/>
+				</cover>
+				<textzone>
+				<pos x="+166" y="+42+10"/>
+				<size width="330" height="16"/>
+				<text fontsize="14" align="left" color="darkertext" text="Next Song:"/>
+			</textzone>
+			<textzone group="horizontal" scroll="yes" align="left" >
+				<pos x="+166" y="+42+32"/>
+				<size width="370-166-10" height="22"/>
+				<text fontsize="18" weight="" color="darktext" action="get_artist_before_feat"/>
+				<!-- <text size="18" color="#909090" weight="bold" action="get_featuring_after_artist"/> -->
+			</textzone>
+			<textzone class="textcolorline" group="horizontal" scroll="yes" align="left" >
+				<pos x="+166" y="+42+30+22"/>
+				<size width="370-166-10" height="40"/>
+				<text fontsize="22" color="brighttext" weight="bold" action="get_title_before_remix"/>
+				<!-- <text size="22" color="#909090" weight="bold" action="get_remix_after_title"/> -->
+			</textzone>
+		</define>
+
+		<define class="cuepanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<square class="bigpad"></square>
+			<visual>
+				<pos x="+25+30" y="+25+30"/>
+				<size width="60" height="60"/>
+				<off x="573" y="195" width="60" height="60"/>
+			</visual>
+			<textzone>
+				<pos x="+170" y="+55"/>
+				<size width="160" height="30"/>
+				<text fontsize="22" align="left" weight="bold" color="brighttext" action="cue_name 'active' & param_uppercase"/>
+			</textzone>
+			<textzone >
+				<pos x="+170" y="+55+25"/>
+				<size width="160" height="30"/>
+				<text fontsize="16" align="left" weight="" color="darkertext" text="Cue Point"/>
+			</textzone>
+		</define>
+
+		<define class="samplerpanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<square class="bigpad" visibility="sampler_volume"></square>
+			<square radius="15" visibility="not sampler_volume">
+				<pos x="+25" y="+25"/>
+				<size width="121" height="121"/>
+				<gradient type="circular" color1="#1f1f1f" color2="#8b8b8b"/>
+			</square>
+			<sampleicon slot="active">
+				<pos x="+25+32" y="+25+32"/>
+				<size width="60" height="60"/>
+				<default x="+25+32" y="+25+32"/>
+			</sampleicon>
+			<textzone>
+				<pos x="+170" y="+55"/>
+				<size width="160" height="30"/>
+				<text fontsize="22" align="left" weight="bold" color="brighttext" action="get_sample_name 'active' & param_uppercase"/>
+			</textzone>
+			<textzone >
+				<pos x="+170" y="+55+25"/>
+				<size width="160" height="30"/>
+				<text fontsize="16" align="left" weight="" color="darktext" text="Sampler"/>
+			</textzone>
+		</define>
+
+		<define class="eqpanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<panel class="knob" x="+25" y="+55">
+				<slider action="eq_low" frommiddle="true"/>
+				<textzone><text action="low_label" /></textzone>
+			</panel>
+			<panel class="knob" x="+25+115" y="+55">
+				<slider action="eq_mid" frommiddle="true"/>
+				<textzone><text action="mid_label" /></textzone>
+			</panel>
+			<panel class="knob" x="+25+115+115" y="+55">
+				<slider action="eq_high" frommiddle="true"/>
+				<textzone><text action="high_label" /></textzone>
+			</panel>
+			<textzone>
+				<pos x="+0" y="+11"/>
+				<size width="370" height="34"/>
+				<text fontsize="22" align="center" weight="bold" color="brighttext" text="EQ"/>
+			</textzone>
+			<line  color="darkertext" x="+45" y="+29" width="80" height="2"/>
+			<line  color="darkertext" x="+245" y="+29" width="80" height="2"/>
+		</define>
+
+		<define class="eqpanel_smaller">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<panel class="knob2" x="+25" y="+55">
+				<slider action="eq_low" frommiddle="true"/>
+				<textzone><text action="low_label" /></textzone>
+			</panel>
+			<panel class="knob2" x="+25+115" y="+55">
+				<slider action="eq_mid" frommiddle="true"/>
+				<textzone><text action="mid_label" /></textzone>
+			</panel>
+			<panel class="knob2" x="+25+115+115" y="+55">
+				<slider action="eq_high" frommiddle="true"/>
+				<textzone><text action="high_label" /></textzone>
+			</panel>
+			<textzone>
+				<pos x="+0" y="+11"/>
+				<size width="370" height="34"/>
+				<text fontsize="22" align="center" weight="bold" color="brighttext" text="EQ"/>
+			</textzone>
+			<line  color="darkertext" x="+45" y="+29" width="80" height="2"/>
+			<line  color="darkertext" x="+245" y="+29" width="80" height="2"/>
+		</define>
+	
+		<define class="stemspanel">
+			<group name="stems_pads" visibility="only_stem ? on : off ">
+				<size width="370" height="170"/>
+				<square class="panelback"></square>
+				<square class="bigpad"></square>
+				<visual>
+					<pos x="+25+30-15" y="+25+30-15"/>
+					<size width="90" height="90"/>
+					<off x="681" y="31" width="90" height="90"/>
+				</visual>
+				<textzone>
+					<pos x="+170" y="+55"/>
+					<size width="160" height="30"/>
+					<text fontsize="22" align="left" weight="bold" color="brighttext" text="STEMS"/>
+				</textzone>
+				<textzone >
+					<pos x="+170" y="+55+25"/>
+					<size width="160" height="30"/>
+					<text fontsize="16" align="left" weight="" color="darktext" text="Stem isolation"/>
+				</textzone>
+			 </group>	
+
+			<group name="stems_eq_larger" visibility="off">
+				<size width="370" height="170"/>
+				<square class="panelback"></square>
+				<panel class="knob" x="+25" y="+55">
+					<slider action="eq_low" frommiddle="true"/>
+					<textzone><text action="low_label" /></textzone>
+				</panel>
+				<panel class="knob" x="+25+115" y="+55">
+					<slider action="eq_mid" frommiddle="true"/>
+					<textzone><text action="mid_label" /></textzone>
+				</panel>
+				<panel class="knob" x="+25+115+115" y="+55">
+					<slider action="eq_high" frommiddle="true"/>
+					<textzone><text action="high_label" /></textzone>
+				</panel>
+				<textzone>
+					<pos x="+0" y="+11"/>
+					<size width="370" height="34"/>
+					<text fontsize="22" align="center" weight="bold" color="brighttext" text="STEMS"/>
+				</textzone>
+				<line  color="darkertext" x="+45" y="+29" width="80" height="2"/>
+				<line  color="darkertext" x="+245" y="+29" width="80" height="2"/>
+			</group>
+
+			<group name="stems_eq" visibility="only_stem ? off : setting 'eqmode' != frequency">
+					<size width="370" height="170"/>
+					<square class="panelback"></square>
+					<panel class="knob2" x="+34" y="+55">
+						<slider action="eq_low" frommiddle="true"/>
+						<textzone><text action="low_label" /></textzone>
+					</panel>
+					<panel class="knob2" x="+34+78+34" y="+55">
+						<slider action="eq_mid" frommiddle="true"/>
+						<textzone><text action="mid_label" /></textzone>
+					</panel>
+					<panel class="knob2" x="+34+78+34+78+34" y="+55">
+						<slider action="eq_high" frommiddle="true"/>
+						<textzone><text action="high_label" /></textzone>
+					</panel>
+					<textzone>
+						<pos x="+0" y="+11"/>
+						<size width="370" height="34"/>
+						<text fontsize="22" align="center" weight="bold" color="brighttext" text="STEMS"/>
+					</textzone>
+					<line  color="darkertext" x="+45" y="+29" width="80" height="2"/>
+					<line  color="darkertext" x="+245" y="+29" width="80" height="2"/>
+			</group>
+
+		</define>
+
+
+
+		<define class="looppanel" >
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<visual class="ringvisual" x="+22" y="+22" source="loop_position"></visual>
+			<textzone>
+				<pos x="+22" y="+22"/>
+				<size width="127" height="127"/>
+				<text fontsize="32" align="center" weight="bold" color="brighttext" format="%looppos"/>
+			</textzone>
+			<textzone>
+				<pos x="+170" y="+50"/>
+				<size width="160" height="30"/>
+				<text fontsize="22" align="left" weight="bold" color="brighttext" text="LOOP"/>
+			</textzone>
+			<textzone>
+				<pos x="+170" y="+50+30"/>
+				<size width="160" height="30"/>
+				<text fontsize="16" align="left" weight="" color="darktext" format="%loop beats"/>
+			</textzone>
+		</define>
+
+		<define class="fxpanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<panel class="horslider" x="+49" y="+69">
+				<visual></visual>
+				<slider action="effect_slider 'active'" frommiddle="get_effect_slider_default 'active' 0.5"></slider>
+			</panel>
+			<textzone>
+				<pos x="+0" y="+26"/>
+				<size width="370" height="34"/>
+				<text fontsize="22" align="center" weight="bold" color="brighttext" format="`get_effect_name 'active' & param_uppercase`"/>
+			</textzone>
+			<textzone>
+				<pos x="+0" y="+100"/>
+				<size width="370" height="30"/>
+				<text fontsize="16" align="center" weight="" color="darktext"  format="`get_effect_slider_name 'active' 1` `get_effect_slider_text 'active' 1`"/>
+			</textzone>
+		</define>
+
+		<define class="filterpanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<panel class="horslider" x="+49" y="+69">
+				<visual></visual>
+				<slider action="filter" frommiddle="true"></slider>
+			</panel>
+			<textzone>
+				<pos x="+0" y="+26"/>
+				<size width="370" height="34"/>
+				<text fontsize="22" align="center" weight="bold" color="brighttext" text="FILTER"/>
+			</textzone>
+			<textzone>
+				<pos x="+0" y="+100"/>
+				<size width="370" height="30"/>
+				<text fontsize="16" align="center" weight="" color="darktext" action="filter_label 'clean'"/>
+			</textzone>
+		</define>
+
+		<define class="pad_on" radius="10" classdeck="left">
+			<pos x="+15" y="+15"/>
+			<size width="62" height="62"/>
+			<gradient type="circular" color1="#1c9cff" color2="#003e5f"/>
+		</define>	
+		<define class="pad_on" radius="10" classdeck="right">
+			<pos x="+15" y="+15"/>
+			<size width="62" height="62"/>
+			<gradient type="circular" color1="#ff0202" color2="#3d0101"/>
+		</define>	
+		<define class="pad_off" radius="10">
+			<pos x="+15" y="+15"/>
+			<size width="62" height="62"/> 
+			<gradient type="circular" color1="#202020" color2="#000000"/>  
+		</define>	
+
+		<define class="padspanel">
+			<size width="370" height="170"/>
+			<square class="panelback"></square>
+			<textzone orientation="vertical">>
+				<pos x="+22" y="+0"/>
+				<size width="20" height="170"/>
+				<text fontsize="18" align="center" weight="bold" color="brighttext" action="pad_page & param_uppercase"/>
+			</textzone>
+			<panel class="4x2pads" x="+45" y="+2">
+				<square class="pad_on" visibility="pad_pushed 1 & fadeout 200ms"></square>
+				<square class="pad_off" visibility="not pad_pushed 1"></square>
+				<square class="pad_on" visibility="pad_pushed 2"><pos x="+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 2"><pos x="+15+62+15"/></square>
+				<square class="pad_on" visibility="pad_pushed 3"><pos x="+15+62+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 3"><pos x="+15+62+15+62+15"/></square>
+				<square class="pad_on" visibility="pad_pushed 4"><pos x="+15+62+15+62+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 4"><pos x="+15+62+15+62+15+62+15"/></square>
+
+				<square class="pad_on" visibility="pad_pushed 5"><pos y="+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 5"><pos y="+15+62+15"/></square>
+				<square class="pad_on" visibility="pad_pushed 6"><pos x="+15+62+15" y="+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 6"><pos x="+15+62+15" y="+15+62+15"/></square>
+				<square class="pad_on" visibility="pad_pushed 7"><pos x="+15+62+15+62+15" y="+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 7"><pos x="+15+62+15+62+15" y="+15+62+15"/></square>
+				<square class="pad_on" visibility="pad_pushed 8"><pos x="+15+62+15+62+15+62+15" y="+15+62+15"/></square>
+				<square class="pad_off" visibility="not pad_pushed 8"><pos x="+15+62+15+62+15+62+15" y="+15+62+15"/></square>
+			</panel>
+		</define>
+
+		<define class="action_popups">
+			<stack fadein="200ms" fadeout="500ms">
+				<size width="370" height="170"/>
+				<slot x="+0" y="170+20+170+20+170" />
+				<slot x="+0" y="170+20+170"/>
+				<slot x="+0" y="170"/>
+				<item class="stemspanel" visibility="is_using 'stems' 8000ms"></item>
+				<item class="looppanel" visibility="is_using 'loop' 8000ms"></item>
+				<item class="eqpanel" visibility="is_using 'equalizer' 12000ms"></item> 1000ms
+				<item class="filterpanel" visibility="is_using 'filter' 1000ms"></item>
+				<item class="cuepanel" visibility="is_using 'cue' 1000ms"></item>
+				<item class="samplerpanel" visibility="is_using 'sample' 1000ms 8000ms"></item>
+				<item class="fxpanel" visibility="is_using 'effect' 1000ms 8000ms"></item>
+				<item  class="padspanel" visibility="is_using 'pads' 1000ms"></item>
+				<item class="nexttrackpanel" visibility="is_using 'load' 5000ms"></item>
+			</stack>
+		</define>	
+
+		<define class="jog_circle" visibility="is_audible 'or scratch' &amp; fadeout 1000ms 500ms">
+			<circle color="background" radius="126" visibility="55%">
+				<pos x="+0" y="+0"/>
+				<size width="252" height="252"/>
+			</circle>	
+			<beattunnel depth="4000" color="deckcolor">
+				<pos x="+1" y="+1"/>
+				<size width="252-2" height="252-2"/>
+			</beattunnel>
+			<group name="jogwheel_spinner" visibility="70%">
+				<slider name="dome_spinner" orientation="round" action="get_rotation" x="+0" y="+0" visibility="touchwheel_touch">
+					<size width="252" height="252"/>
+					<fader color="decktext" width="6" height="72" radius="26"/>
+				</slider>
+				<visual name="logo-circlebackground" x="+126-26" y="+126-26" visibility="60%">
+					<size width="52" height="52"/>
+					<off color="background" shape="circle"/>
+				</visual>
+				<visual name="logo-circle" x="+126-26" y="+126-26">
+					<size width="52" height="52"/>
+					<on color="transparent" shape="circle" border_size="9" border="decktext"/>
+					<off color="transparent" shape="circle" border_size="9" border="decktext"/>
+				</visual>
+				<visual name="center-circle" x="+126-8" y="+126-8">
+					<size width="16" height="16"/>
+					<on color="decktext" shape="circle"/>
+					<off color="decktext" shape="circle"/>
+				</visual> 
+				<slider name="inner_spinner"  orientation="round" action="get_rotation" x="+0" y="+0" width="252" height="252">
+					<fader color="background" width="8" height="9" radius="17"/>
+				</slider> 
+			</group>
+			<equalizer x="-50-5" y="-50-5" type="circle" color="deckcolor" type="bar" nb="144" width="0.6" slow="true" bass="middle" mirror="false" visibility="85%">
+				<size width="252+100+10" height="252+100+10" />
+			</equalizer>
+		</define>	
+
+</group>
+
+		<!-- CROSSFADER -->
+		<group name="cf" x="+95" y="750+131-63+20+20">
+			<split name="crossfader" type="horizontal">
+				<pos x="+311+6" y="-60"/>
+				<size width="1920-95-95-311-311-12" height="100+120"/>
+				<left>
+					<blockwave deck="left" blocksize="3" zoom="4" color="leftdeck" visibility="85%" center="left">
+						<pos x="0" y="0" width="1920-95-95-311-311-12" height="100+120"/>
+					</blockwave>
+				</left>
+				<right>
+					<blockwave deck="right" blocksize="3" zoom="4" color="rightdeck" visibility="85%" center="left">
+						<pos x="0" y="0" width="1920-95-95-311-311-12" height="100+120"/>
+					</blockwave>
+				</right>
+			</split>
+			<group name="cfbg" visibility="55%">
+				<square color="background" radius="20" visibility="deck left loaded ? true : deck right loaded">
+					<pos x="+311" y="+10"/>
+					<size width="1920-95-95-311-311+1" height="80"/>
+				</square>
+			</group>
+			<split name="crossfader" type="horizontal">
+				<pos x="+311+6" y="+0"/>
+				<size width="1920-95-95-311-311-12" height="100"/>
+				<left>
+					<textzone group="horizontal" align="center" deck="left" attachX="both">
+						<pos x="20" y="9+15"/>
+						<size width="1920-95-95-311-311+1-40" height="50"/>
+						<text fontsize="30" color="decktext" weight="bold" action="get_artist_before_feat & param_uppercase"/>
+						<text fontsize="30" color="darktext" weight="regular" action="get_featuring_after_artist & param_uppercase"/>
+						<text fontsize="30" color="darkertext" weight="regular" action="get_artist_title_separator"/>
+						<text fontsize="30" color="brighttext" weight="bold" action="get_title_before_remix 'clean' & param_uppercase"/>
+						<text fontsize="30" color="darkertext" weight="regular" action="get_remix_after_title & param_uppercase"/>
+				  </textzone>
+				</left>
+				<right>
+					<textzone group="horizontal" align="center" deck="right" attachX="both">
+						<pos x="20" y="9+15"/>
+						<size width="1920-95-95-311-311+1-40" height="50"/>
+						<text fontsize="30" color="decktext" weight="bold" action="get_artist_before_feat & param_uppercase"/>
+						<text fontsize="30" color="darktext" weight="regular" action="get_featuring_after_artist & param_uppercase"/>
+						<text fontsize="30" color="darkertext" weight="regular" action="get_artist_title_separator"/>
+						<text fontsize="30" color="brighttext" weight="bold" action="get_title_before_remix 'clean' & param_uppercase"/>
+						<text fontsize="30" color="darkertext" weight="regular" action="get_remix_after_title & param_uppercase"/>
+				  </textzone>
+				</right>
+			</split>
+		  <slider action="get_crossfader_result &amp; param_invert" orientation="horizontal" visibility="get_crossfader_result &amp; param_pingpong &amp; param_multiply 10">
+				<pos x="+311+6" y="+0"/>
+				<size width="1920-95-95-311-311-12" height="100"/>
+				<fader>
+				  <pos x="5" y="0"/>
+				  <size width="2" height="100"/>
+				</fader>
+		  </slider>
+	 </group>
+ 	<!-- DECKS -->
+	<group name="leftdeck" x="95" y="0">
+		<deck deck="left">
+			<panel class="jog_circle" x="+185-126-5" y="750+30"></panel>
+			<panel class="action_popups" x="+0" y="+0"></panel>
+		</deck>
+	</group>
+	<group name="rightdeck" x="1920-95" y="0">
+		<deck deck="right">
+			<panel class="jog_circle" x="-185-126+5" y="750+30"></panel>
+			<panel class="action_popups" x="-370" y="+0"></panel>
+		</deck>
+	</group>
+	<logo visibility="not has_logo 'videoskin'">
+		<pos x="1920-32-172" y="32"/>
+		<size width="172" height="43" />
+	</logo>
+</skin>

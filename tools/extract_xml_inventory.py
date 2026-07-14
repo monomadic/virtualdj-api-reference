@@ -48,6 +48,11 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
         ["docs/Pad Page XML.md", "docs/Example Pad XML Pages.md"],
     ),
     (
+        "video_skins",
+        ["examples/VideoSkins/**/*.xml"],
+        ["docs/Skin SDK.md", "docs/Skin Waveforms.md"],
+    ),
+    (
         "samplerbanks",
         ["examples/Samplerbanks/**/*.xml"],
         [],

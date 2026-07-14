@@ -24,6 +24,7 @@ DEFAULT_XML_ROOTS = (
     Path("examples/Pads/Built-In"),
     Path("examples/Skins/Built-In"),
     Path("examples/Samplerbanks/Built-In"),
+    Path("examples/VideoSkins/Built-In"),
 )
 
 

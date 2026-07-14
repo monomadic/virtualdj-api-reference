@@ -2438,8 +2438,8 @@
   "get_effect_slider_default": {
    "tier": "catalog",
    "section": "Effects",
-   "description": "Get effect slider default. Two forms (`Local test` v2026-m b9482): `get_effect_slider_default '<effect>' <n>` returns a normalized 0-1 default as text (`0.5` for Backspin S1); `get_effect_slider_default <slot> <n> <fallback>` is the value-context form built-in skins use in `<slider frommiddle=>` (returned `off` when read as text)",
-   "example": "get_effect_slider_default 'Echo' 1",
+   "description": "Get effect slider default (target + optional index + fallback → normalized 0-1). `'<effect>' <fallback>` reads it as text (`Local test`: `'Backspin' 1`→`0.5`; `Built-in skin`: Broadcast video skin uses `'active' 0.5`). `<slot> <index> <fallback>` is the deck-skin `<slider frommiddle=>` value form (returned `off` as text)",
+   "example": "get_effect_slider_default 'active' 0.5",
    "official": true
   },
   "get_effect_slider_label": {

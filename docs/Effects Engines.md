@@ -1064,19 +1064,19 @@ get_effect_button_count            # Number of buttons in the current context
 | `get_effect_slider_text <slot> <n>` | formatted current value (`0%`, `4 bt`) | Yes — matches GUI value |
 | `get_effect_slider_label_full` / `get_effect_slider_name` | full label (`Strength`, `Length`) | Yes — matches GUI label |
 | `get_effect_slider_label` / `get_effect_slider_shortname` | short label (`STR`, `LEN`) | Yes — short form |
-| `get_effect_slider_default '<effect_name>' <n>` | normalized default `0.5` for Backspin S1 | Yes — genuine default (differs from current `0%`) |
-| `get_effect_slider_default <slot> <n> <fallback>` | `off` in a `name=` text context | Value-context only — see note |
+| `get_effect_slider_default '<effect>' <fallback>` | normalized `0.5` for Backspin (fallback `1` overridden) | Yes — genuine default, readable as text |
+| `get_effect_slider_default <slot> <index> <fallback>` | `off` in a `name=` text context | Value-context only — see note |
 
-`get_effect_slider_default` has two forms:
+`get_effect_slider_default` takes a **target** (an FX slot number, an effect name, or `'active'` for the selected effect), an optional slider index, and a trailing **fallback/centre** value, and returns a normalized `0`-`1` default:
 
-- **`get_effect_slider_default '<effect_name>' <slider_number>`** returns the parameter's default as a normalized `0`-`1` value (confirmed `0.5` for Backspin slider 1 in a pad `name=`). Use this to *read* a default as text/number.
-- **`get_effect_slider_default <slot> <index> <fallback>`** is the form built-in skins use 300+ times inside `<slider frommiddle="…">` — a numeric-value context that positions the slider's centre. It returned `off` when read in a pad `name=` text context, so treat it as value-context-only, not a text readback. It is not broken; the earlier "broken" note was a wrong-argument call (a slot number passed where the effect-name form expects a name).
+- **`get_effect_slider_default '<effect>' <fallback>`** — the effect-name form. Confirmed by both a `Local test` (`get_effect_slider_default 'Backspin' 1` → `0.5`, i.e. a real default, not the `1` fallback) and shipped `Built-in skin` XML: the Broadcast video skin uses `frommiddle="get_effect_slider_default 'active' 0.5"` alongside `effect_slider 'active'` ([examples/VideoSkins/Built-In/broadcast/broadcast.xml:241](../examples/VideoSkins/Built-In/broadcast/broadcast.xml)). The `0.5` there is the fallback, not a slider index.
+- **`get_effect_slider_default <slot> <index> <fallback>`** — the deck-skin form, used 300+ times inside `<slider frommiddle="…">` (also a 2-arg `<slot> <fallback>` variant). It returned `off` when read in a pad `name=` text context, so treat it as value-context-only, not a text readback. It is not broken; the earlier "broken" note was a wrong-argument call (a slot number passed where the effect-name form expects a target name).
 
 Guidance from the above:
 
 - For a GUI-matching parameter label use `get_effect_slider_label_full` (or `get_effect_slider_name`); for a compact label use `get_effect_slider_label` (or `get_effect_slider_shortname`). They are two distinct forms, not aliases.
 - For live values use `get_effect_slider_text`. Counts and `effect_has_*` are safe to drive dynamic panels.
-- To read a default as a value/number, use the effect-name form `get_effect_slider_default '<effect_name>' <n>`; for skin sliders, the slot form in `frommiddle="get_effect_slider_default <slot> <n> <fallback>"` positions the centre.
+- To read a default as a value/number, use the effect-name form `get_effect_slider_default '<effect>' <fallback>` (or `'active'` for the selected effect); for skin sliders, the slot form in `frommiddle="get_effect_slider_default <slot> <index> <fallback>"` positions the centre.
 - `debug` cannot print a computed value: it logs the literal backtick expression (same computed-argument behavior as `loop`/`beatjump`/`phrase_sync`). Read helper strings through a pad/skin `name=`/`text=` interpolation instead.
 
 **Per-effect parameter map** (`Local test`: VirtualDJ `v2026-m b9482`, deck FX slot 1). Growing as effects are swept; absence of a row means "not yet recorded", not "no parameters".

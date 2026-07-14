@@ -2323,6 +2323,52 @@ Source: `Official` ([Skin ResizeZone](https://virtualdj.com/wiki/Skin%20ResizeZo
 
 ---
 
+## Video Skin Elements
+
+These elements are observed only in the built-in **video** skins ([examples/VideoSkins/Built-In/](../examples/VideoSkins/Built-In/README.md)), which share the `<skin>` XML format but render onto the video/broadcast output. They are `Built-in skin`-derived (no official page located); attribute values below are those seen in shipped XML.
+
+### `<gradient>`
+
+A gradient fill primitive, sized by its enclosing `<pos>`/`<size>` (typically inside a `<define>` used as pad/slot artwork).
+
+**Syntax:** `<gradient type="" color1="" color2=""/>`
+
+| Attribute | Value | Source |
+| --- | --- | --- |
+| `type` | Fill shape; `circular` observed (linear likely but unconfirmed) | `Built-in skin` |
+| `color1` / `color2` | Gradient endpoints; hex (`#1c9cff`) or a skin color name (`padcolor1`) | `Built-in skin` |
+
+```xml
+<define class="padgfx">
+  <pos x="+25" y="+25"/>
+  <size width="110" height="110"/>
+  <gradient type="circular" color1="padcolor1" color2="padcolor2"/>
+</define>
+```
+
+(from `examples/VideoSkins/Built-In/broadcast/broadcast.xml`)
+
+### `<sampleicon>`
+
+Displays the icon/artwork of a sampler slot. Takes `<pos>`/`<size>` children.
+
+**Syntax:** `<sampleicon slot="">…</sampleicon>`
+
+| Attribute | Value | Source |
+| --- | --- | --- |
+| `slot` | Target sample slot; `active` (the current/selected sample) observed | `Built-in skin` |
+
+```xml
+<sampleicon slot="active">
+  <pos x="+25+25" y="+25+25"/>
+  <size width="60" height="60"/>
+</sampleicon>
+```
+
+(from `examples/VideoSkins/Built-In/broadcast/broadcast.xml`)
+
+---
+
 ## Global Element Attributes
 
 These attributes can be applied to most elements:

@@ -1,0 +1,173 @@
+<skin name="for Karaoke" version="8" width="1920" height="1080" breaklineV="960" comment="Simple Karaoke skin" author="Atomix Productions" preview="preview.jpg" karaoke="true">
+  <copyright>(c)2018 - Atomix Productions</copyright>
+
+	<font name="Arial" />
+
+<!-- When Karaoke is Idle - Background Music is playing -->
+<panel visibility="is_karaoke_idle ? automix_skip 'pos' : false">
+	
+	<!-- Backgroun Music -->
+	<group x="120" y="880">
+	
+		<square color="#000000" visibility="70%" canstretch="true">
+			<pos x="+0" y="+0"/>
+			<size width="1920-160-120" height="120"/>
+		</square>
+		<equalizer type="bar" nb="16" color="#8a8a89" deck="master" width="0.4" slow="true" bass="middle" mirror="true" canstretch="true">
+			<pos x="+10" y="+8"/>
+			<size width="120" height="104" />
+		</equalizer>
+		<cover source="karaokebackground" >
+			<pos x="+148" y="+8"/>
+			<size width="104" height="104" />
+		</cover>
+		<textzone  >
+			<pos x="+140+120+10" y="+10"/>
+			<size width="1920-160-120-30" height="50" />
+			<text size="42" color="#eeeeee" weight="bold" action="get_karaoke_background_song 'artist' & param_uppercase"/>
+		</textzone>	
+		<textzone group="horizontal" canstretch="true">
+			<pos x="+140+120+10" y="+60"/>
+			<size width="1920-160-120-30" height="50" />
+			<text size="38" color="#eeeeee" weight="bold" action="get_karaoke_background_song 'title' & param_uppercase"/>
+			<text size="38" color="#eeeeee" weight="bold" text=" "/>
+			<text size="38" color="#aaaaaa" weight="bold" action="get_karaoke_background_song 'remix' & param_uppercase"/>
+		</textzone>	
+
+
+	</group>	
+	
+	<!-- Singers List-->
+	<panel x="1920-900-50" y="300" visibility="has_karaoke_next">
+		<square color="black" visibility="50%">
+			<pos x="+0" y="+0"/>
+			<size width="900" height="55" />
+		</square>
+		<textzone>
+			<pos x="+10" y="+0"/>
+			<size width="900-20" height="50" />
+			<text size="36" weight="bold" color="white" text="NEXT SINGERS" localize="true" />
+		</textzone>
+		<square color="black" visibility="100%">
+			<pos x="+0" y="+55"/>
+			<size width="900" height="2" />
+		</square>
+		<square color="white" visibility="100%">
+			<pos x="+0" y="+55+2"/>
+			<size width="900" height="2" />
+		</square>
+	</panel>
+	<panel x="1920-900-50" y="300+80" visibility="has_karaoke_next">
+
+		<square color="black" visibility="50%">
+			<pos x="+0" y="+0"/>
+			<size width="900" height="80" />
+		</square>
+		<textzone>
+			<pos x="+10" y="+0"/>
+			<size width="36" height="40" />
+			<text size="38" color="white" text="#1" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+0"/>
+			<size width="900-70-10" height="40" />
+			<text size="38" color="white" action="get_next_karaoke_song 'singer'" />
+			<text size="38" color="white" text=" - " />
+			<text size="38" color="white" action="get_next_karaoke_song 'title'" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+35"/>
+			<size width="900-70-10" height="35" />
+			<text size="34" color="#aaaaaa" text=" in style of " localize="true" />
+			<text size="34" color="#aaaaaa" action="get_next_karaoke_song 'artist'" />
+		</textzone>
+	</panel>
+	<panel x="1920-900-50" y="300+80+80" visibility="has_karaoke_next 1">
+
+		<square color="black" visibility="50%">
+			<pos x="+0" y="+0"/>
+			<size width="900" height="80" />
+		</square>
+		<textzone>
+			<pos x="+10" y="+0"/>
+			<size width="36" height="40" />
+			<text size="38" color="white" text="#2" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+0"/>
+			<size width="900-70-10" height="40" />
+			<text size="38" color="white" action="get_next_karaoke_song 'singer' 1" />
+			<text size="38" color="white" text=" - " />
+			<text size="38" color="white" action="get_next_karaoke_song 'title' 1" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+35"/>
+			<size width="900-70-10" height="35" />
+			<text size="34" color="#aaaaaa" text=" in style of " />
+			<text size="34" color="#aaaaaa" action="get_next_karaoke_song 'artist' 1" />
+		</textzone>
+	</panel>
+	<panel x="1920-900-50" y="300+80+80+80" visibility="has_karaoke_next 2">
+
+		<square color="black" visibility="50%">
+			<pos x="+0" y="+0"/>
+			<size width="900" height="80" />
+		</square>
+		<textzone>
+			<pos x="+10" y="+0"/>
+			<size width="36" height="40" />
+			<text size="38" color="white" text="#3" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+0"/>
+			<size width="900-70-10" height="40" />
+			<text size="38" color="white" action="get_next_karaoke_song 'singer' 2" />
+			<text size="38" color="white" text=" - " />
+			<text size="38" color="white" action="get_next_karaoke_song 'title' 2" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+35"/>
+			<size width="900-70-10" height="35" />
+			<text size="34" color="#aaaaaa" text=" in style of " />
+			<text size="34" color="#aaaaaa" action="get_next_karaoke_song 'artist' 2" />
+		</textzone>
+	</panel>
+	<panel x="1920-900-50" y="300+80+80+80+80" visibility="has_karaoke_next 3">
+
+		<square color="black" visibility="50%">
+			<pos x="+0" y="+0"/>
+			<size width="900" height="80" />
+		</square>
+		<textzone>
+			<pos x="+10" y="+0"/>
+			<size width="36" height="40" />
+			<text size="38" color="white" text="#4" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+0"/>
+			<size width="900-70-10" height="40" />
+			<text size="38" color="white" action="get_next_karaoke_song 'singer' 3" />
+			<text size="38" color="white" text=" - " />
+			<text size="38" color="white" action="get_next_karaoke_song 'title' 3" />
+		</textzone>
+		<textzone group="horizontal">
+			<pos x="+30+40" y="+35"/>
+			<size width="900-70-10" height="35" />
+			<text size="34" color="#aaaaaa" text=" in style of " />
+			<text size="34" color="#aaaaaa" action="get_next_karaoke_song 'artist' 3" />
+		</textzone>
+	</panel>
+	
+
+
+	
+</panel>
+	
+
+
+	<logo visibility="not has_logo 'videoskin'">
+		<pos x="1920-32-172" y="32"/>
+		<size width="172" height="43" />
+	</logo>
+	
+</skin>

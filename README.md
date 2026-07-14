@@ -10,6 +10,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 - **`examples/Skins/`** — skin examples, copied built-in skins, and build-system demos; GraveRaver is intentionally minimal and only demonstrates the XInclude workflow
 - **`examples/Mappers/`** — real working controller/keyboard mapper XML copied from a local install; ground truth for the mapper format
 - **`examples/Samplerbanks/`** — sampler-bank XML copied from the app bundle (a third XML format alongside skins and pads)
+- **`examples/VideoSkins/`** — built-in video skins (broadcast, karaoke, live) copied from the app bundle; same `<skin>` format as deck skins, rendered onto the video output
 - **`tests/`** — reproducible documentation test harnesses, including pad-page XML fixtures
 
 ## Where to start
