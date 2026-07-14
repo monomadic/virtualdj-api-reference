@@ -1,134 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Reference - FX Introspection Test.xml
-  Manual-test pad page for effect slider/button introspection helpers.
+  Full-slider-map dumper for the native-effect introspection sweep.
 
-  This page is a harness, not proof. Load it in VirtualDJ, press each LOAD pad,
-  observe the labels/counts/queries, press the LOG shift pads, and record the
-  VirtualDJ build plus observed values in:
+  All readers target deck FX slot 1. The 16 main pads live-display, for
+  whatever effect is loaded in slot 1, the effect name, slider/button counts,
+  and every slider's label + current text value + default at once, plus the
+  first four button shortnames. Slider/button pads light (green/cyan) only when
+  that control exists, so the count is visible at a glance.
+
+  FAST SWEEP WORKFLOW (seconds per effect):
+    1. Press the FX SELECT param (or main pad 16) to open the effect popup.
+    2. Pick an effect. All pads update to that effect's map.
+    3. Read the lit slider pads: label = value [default]. Note the count.
+    4. For exact strings (pad labels can truncate), press the matching
+       Shift+DEBUG pads to write precise values to the log.
+    5. Open SHOW GUI and compare returned labels to the visible controls.
+    6. Reopen the popup, pick the next effect, repeat.
+
+  Record the VirtualDJ build and the per-effect slider map in:
     docs/VDJScript Local Test Tracker.md
+  Then promote a per-effect slider table into:
+    docs/Effects Engines.md   (and generic helper behavior into VDJScript Verbs.md)
 
-  Suggested first pass:
-    1. Load Echo, Reverb, BeatGrid, and Flanger into slot 1.
-    2. Observe count, slider label/text/default, and button helper pads.
-    3. Press Shift+Pads 1-16 to log the core and sibling readback helpers.
-    4. Open the effect GUI and compare visible controls against returned labels.
-    5. Repeat on any build where native effects or plugin UI behavior changes.
+  Shift pads 1-4 load canonical effects with preset slider writes, to confirm
+  effect_slider writes land; shift pads 5-14 debug-log exact reader values;
+  shift 15/16 write and reset slider 1.
 
+  Every verb used here is present in docs/vdjscript-verb-index.json.
   Source: Official, Built-in skin, Inference
 -->
 <page name="REF: FX INTROSPECT">
 
-  <pad1 name="LOAD ECHO"
-        color="color 'cyan'"
-        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'echo' ? on : off">
-    effect_select 1 'Echo' &amp; effect_slider 1 1 75% &amp; effect_slider 1 2 50% &amp; effect_active 1 on
-  </pad1>
-
-  <pad2 name="LOAD REVERB"
-        color="color 'cyan'"
-        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'reverb' ? on : off">
-    effect_select 1 'Reverb' &amp; effect_slider 1 1 45% &amp; effect_slider 1 2 50% &amp; effect_active 1 on
-  </pad2>
-
-  <pad3 name="LOAD BEATGRID"
-        color="color 'cyan'"
-        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'beatgrid' ? on : off">
-    effect_select 1 'BeatGrid' &amp; effect_slider 1 1 75% &amp; effect_active 1 on
-  </pad3>
-
-  <pad4 name="LOAD FLANGER"
-        color="color 'cyan'"
-        query="get_effect_name 1 &amp; param_lowercase &amp; param_equal 'flanger' ? on : off">
-    effect_select 1 'Flanger' &amp; effect_slider 1 1 50% &amp; effect_active 1 on
-  </pad4>
-
-  <pad5 name="FX `get_effect_name 1`"
-        color="effect_active 1 ? color 'green' : color 'gray'"
+  <pad1 name="FX:`get_effect_name 1` S`get_effect_slider_count` B`get_effect_button_count`"
+        color="effect_active 1 ? color 'green' : color 'orange'"
         query="effect_active 1 ? on : off">
     effect_active 1
-  </pad5>
+  </pad1>
 
-  <pad6 name="COUNT S:`get_effect_slider_count` B:`get_effect_button_count`"
-        color="color 'white'">
-    debug `get_effect_slider_count` &amp; debug `get_effect_button_count`
-  </pad6>
-
-  <pad7 name="S1 `get_effect_slider_label 1 1`"
+  <pad2 name="S1 `get_effect_slider_label 1 1`=`get_effect_slider_text 1 1` d`get_effect_slider_default 1 1 0.5`"
         color="effect_has_slider 1 1 ? color 'green' : color 'gray'"
         query="effect_has_slider 1 1 ? on : off">
     effect_slider_reset 1 1
-  </pad7>
+  </pad2>
 
-  <pad8 name="S1VAL `get_effect_slider_text 1 1`"
-        color="effect_has_slider 1 1 ? color 'green' : color 'gray'"
-        query="effect_has_slider 1 1 ? on : off">
-    debug `get_effect_slider_text 1 1`
-  </pad8>
-
-  <pad9 name="S2 `get_effect_slider_label 1 2`"
+  <pad3 name="S2 `get_effect_slider_label 1 2`=`get_effect_slider_text 1 2` d`get_effect_slider_default 1 2 0.5`"
         color="effect_has_slider 1 2 ? color 'green' : color 'gray'"
         query="effect_has_slider 1 2 ? on : off">
     effect_slider_reset 1 2
+  </pad3>
+
+  <pad4 name="S3 `get_effect_slider_label 1 3`=`get_effect_slider_text 1 3` d`get_effect_slider_default 1 3 0.5`"
+        color="effect_has_slider 1 3 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 3 ? on : off">
+    effect_slider_reset 1 3
+  </pad4>
+
+  <pad5 name="S4 `get_effect_slider_label 1 4`=`get_effect_slider_text 1 4` d`get_effect_slider_default 1 4 0.5`"
+        color="effect_has_slider 1 4 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 4 ? on : off">
+    effect_slider_reset 1 4
+  </pad5>
+
+  <pad6 name="S5 `get_effect_slider_label 1 5`=`get_effect_slider_text 1 5` d`get_effect_slider_default 1 5 0.5`"
+        color="effect_has_slider 1 5 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 5 ? on : off">
+    effect_slider_reset 1 5
+  </pad6>
+
+  <pad7 name="S6 `get_effect_slider_label 1 6`=`get_effect_slider_text 1 6` d`get_effect_slider_default 1 6 0.5`"
+        color="effect_has_slider 1 6 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 6 ? on : off">
+    effect_slider_reset 1 6
+  </pad7>
+
+  <pad8 name="S7 `get_effect_slider_label 1 7`=`get_effect_slider_text 1 7` d`get_effect_slider_default 1 7 0.5`"
+        color="effect_has_slider 1 7 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 7 ? on : off">
+    effect_slider_reset 1 7
+  </pad8>
+
+  <pad9 name="S8 `get_effect_slider_label 1 8`=`get_effect_slider_text 1 8` d`get_effect_slider_default 1 8 0.5`"
+        color="effect_has_slider 1 8 ? color 'green' : color 'gray'"
+        query="effect_has_slider 1 8 ? on : off">
+    effect_slider_reset 1 8
   </pad9>
 
-  <pad10 name="S2VAL `get_effect_slider_text 1 2`"
-         color="effect_has_slider 1 2 ? color 'green' : color 'gray'"
-         query="effect_has_slider 1 2 ? on : off">
-    debug `get_effect_slider_text 1 2`
-  </pad10>
-
-  <pad11 name="S3 `get_effect_slider_label 1 3`"
-         color="effect_has_slider 1 3 ? color 'green' : color 'gray'"
-         query="effect_has_slider 1 3 ? on : off">
-    effect_slider_reset 1 3
-  </pad11>
-
-  <pad12 name="S3VAL `get_effect_slider_text 1 3`"
-         color="effect_has_slider 1 3 ? color 'green' : color 'gray'"
-         query="effect_has_slider 1 3 ? on : off">
-    debug `get_effect_slider_text 1 3`
-  </pad12>
-
-  <pad13 name="B1 `get_effect_button_shortname 1`"
-         color="effect_has_button 1 ? color 'orange' : color 'gray'"
+  <pad10 name="B1 `get_effect_button_shortname 1`"
+         color="effect_has_button 1 ? color 'cyan' : color 'gray'"
          query="effect_has_button 1 ? on : off">
     effect_button 1 1
-  </pad13>
+  </pad10>
 
-  <pad14 name="B2 `get_effect_button_shortname 2`"
-         color="effect_has_button 2 ? color 'orange' : color 'gray'"
+  <pad11 name="B2 `get_effect_button_shortname 2`"
+         color="effect_has_button 2 ? color 'cyan' : color 'gray'"
          query="effect_has_button 2 ? on : off">
     effect_button 1 2
-  </pad14>
+  </pad11>
 
-  <pad15 name="B3 `get_effect_button_shortname 3`"
-         color="effect_has_button 3 ? color 'orange' : color 'gray'"
+  <pad12 name="B3 `get_effect_button_shortname 3`"
+         color="effect_has_button 3 ? color 'cyan' : color 'gray'"
          query="effect_has_button 3 ? on : off">
     effect_button 1 3
-  </pad15>
+  </pad12>
 
-  <pad16 name="SHOW GUI"
+  <pad13 name="B4 `get_effect_button_shortname 4`"
+         color="effect_has_button 4 ? color 'cyan' : color 'gray'"
+         query="effect_has_button 4 ? on : off">
+    effect_button 1 4
+  </pad13>
+
+  <pad14 name="RESET ALL SLIDERS"
+         color="color 'yellow'">
+    effect_slider_reset 1 1 &amp; effect_slider_reset 1 2 &amp; effect_slider_reset 1 3 &amp; effect_slider_reset 1 4 &amp; effect_slider_reset 1 5 &amp; effect_slider_reset 1 6 &amp; effect_slider_reset 1 7 &amp; effect_slider_reset 1 8
+  </pad14>
+
+  <pad15 name="SHOW GUI"
          color="color 'magenta'">
     effect_show_gui 1
+  </pad15>
+
+  <pad16 name="FX SELECT POPUP"
+         color="color 'white'">
+    effect_select_popup 1
   </pad16>
 
-  <shift_pad1 name="LOG EFFECT" color="color 'cyan'">debug `get_effect_name 1`</shift_pad1>
-  <shift_pad2 name="LOG SCOUNT" color="color 'white'">debug `get_effect_slider_count`</shift_pad2>
-  <shift_pad3 name="LOG BCOUNT" color="color 'white'">debug `get_effect_button_count`</shift_pad3>
-  <shift_pad4 name="LOG DEFAULT1" color="color 'white'">debug `get_effect_slider_default 1 1 0.5`</shift_pad4>
-  <shift_pad5 name="LOG LABEL1" color="color 'green'">debug `get_effect_slider_label 1 1`</shift_pad5>
-  <shift_pad6 name="LOG TEXT1" color="color 'green'">debug `get_effect_slider_text 1 1`</shift_pad6>
-  <shift_pad7 name="LOG HAS S1" color="color 'green'">debug `effect_has_slider 1 1`</shift_pad7>
-  <shift_pad8 name="LOG HAS B1" color="color 'orange'">debug `effect_has_button 1`</shift_pad8>
-  <shift_pad9 name="LOG LABELFULL1" color="color 'green'">debug `get_effect_slider_label_full 1 1`</shift_pad9>
-  <shift_pad10 name="LOG SHORT1" color="color 'green'">debug `get_effect_slider_shortname 1 1`</shift_pad10>
-  <shift_pad11 name="LOG NAME1" color="color 'green'">debug `get_effect_slider_name 1 1`</shift_pad11>
-  <shift_pad12 name="LOG NAMESKIP1" color="color 'green'">debug `get_effect_slider_name_skip_length 1 1`</shift_pad12>
-  <shift_pad13 name="LOG LABELSKIP1" color="color 'green'">debug `get_effect_slider_label_skip_length 1 1`</shift_pad13>
-  <shift_pad14 name="LOG TEXTSKIP1" color="color 'green'">debug `get_effect_slider_text_skip_length 1 1`</shift_pad14>
-  <shift_pad15 name="LOG BNAME1" color="color 'orange'">debug `get_effect_button_name 1`</shift_pad15>
-  <shift_pad16 name="LOG BSHORT1" color="color 'orange'">debug `get_effect_button_shortname 1`</shift_pad16>
+  <shift_pad1 name="LOAD ECHO" color="color 'cyan'">effect_select 1 'Echo' &amp; effect_slider 1 1 75% &amp; effect_slider 1 2 50% &amp; effect_active 1 on</shift_pad1>
+  <shift_pad2 name="LOAD REVERB" color="color 'cyan'">effect_select 1 'Reverb' &amp; effect_slider 1 1 45% &amp; effect_slider 1 2 50% &amp; effect_active 1 on</shift_pad2>
+  <shift_pad3 name="LOAD FLANGER" color="color 'cyan'">effect_select 1 'Flanger' &amp; effect_slider 1 1 50% &amp; effect_active 1 on</shift_pad3>
+  <shift_pad4 name="LOAD BEATGRID" color="color 'cyan'">effect_select 1 'BeatGrid' &amp; effect_slider 1 1 75% &amp; effect_active 1 on</shift_pad4>
+  <shift_pad5 name="DBG NAME" color="color 'white'">debug `get_effect_name 1`</shift_pad5>
+  <shift_pad6 name="DBG COUNTS" color="color 'white'">debug `get_effect_slider_count` &amp; debug `get_effect_button_count`</shift_pad6>
+  <shift_pad7 name="DBG S1 LABEL" color="color 'green'">debug `get_effect_slider_label 1 1`</shift_pad7>
+  <shift_pad8 name="DBG S1 TEXT" color="color 'green'">debug `get_effect_slider_text 1 1`</shift_pad8>
+  <shift_pad9 name="DBG S1 DEFAULT" color="color 'green'">debug `get_effect_slider_default 1 1 0.5`</shift_pad9>
+  <shift_pad10 name="DBG S1 LABELFULL" color="color 'green'">debug `get_effect_slider_label_full 1 1`</shift_pad10>
+  <shift_pad11 name="DBG S1 SHORTNAME" color="color 'green'">debug `get_effect_slider_shortname 1 1`</shift_pad11>
+  <shift_pad12 name="DBG S1 NAME" color="color 'green'">debug `get_effect_slider_name 1 1`</shift_pad12>
+  <shift_pad13 name="DBG B1 NAME" color="color 'cyan'">debug `get_effect_button_name 1`</shift_pad13>
+  <shift_pad14 name="DBG B1 SHORT" color="color 'cyan'">debug `get_effect_button_shortname 1`</shift_pad14>
+  <shift_pad15 name="SET S1 50% (write test)" color="color 'orange'">effect_slider 1 1 50%</shift_pad15>
+  <shift_pad16 name="RESET S1" color="color 'orange'">effect_slider_reset 1 1</shift_pad16>
 
   <param1 name="FX SELECT">effect_select_popup 1</param1>
   <param2 name="SHOW GUI">effect_show_gui 1</param2>
