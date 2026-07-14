@@ -1044,7 +1044,7 @@ For generic FX panels, skins do not need to hardcode every slider and button. Vi
 effect_has_slider 1 1              # Does slot 1 have slider/parameter 1?
 effect_slider 1 1                  # Move/query slot 1 slider 1
 effect_slider_reset 1 1            # Reset slot 1 slider 1 to default
-get_effect_slider_default 1 1 0.5  # Default/center hint (signature/context unresolved — see reliability note below)
+get_effect_slider_default 1 1 0.5  # Slot form: centre/default in a value context (skin frommiddle); see note. Text readback uses the effect-name form below.
 get_effect_slider_label 1 1        # Display label for slot 1 slider 1
 get_effect_slider_text 1 1         # Display formatted current value
 effect_has_button 1                # Does the selected effect expose button 1?
@@ -1064,15 +1064,19 @@ get_effect_button_count            # Number of buttons in the current context
 | `get_effect_slider_text <slot> <n>` | formatted current value (`0%`, `4 bt`) | Yes — matches GUI value |
 | `get_effect_slider_label_full` / `get_effect_slider_name` | full label (`Strength`, `Length`) | Yes — matches GUI label |
 | `get_effect_slider_label` / `get_effect_slider_shortname` | short label (`STR`, `LEN`) | Yes — short form |
-| `get_effect_slider_default` (called `1 1 0.5` in a `name=` text context) | `off` | **Inconclusive — see note** |
+| `get_effect_slider_default '<effect_name>' <n>` | normalized default `0.5` for Backspin S1 | Yes — genuine default (differs from current `0%`) |
+| `get_effect_slider_default <slot> <n> <fallback>` | `off` in a `name=` text context | Value-context only — see note |
 
-`get_effect_slider_default` is unresolved, not confirmed broken. The `off` reading came from calling it as `(slot, index, fallback)` inside a pad `name=` (text) context. Two things were untested: built-in skins ship the same `get_effect_slider_default 1 1 0.5` form but inside a `<slider frommiddle="…">` numeric-value context, and a separate source gives the signature as `[effect_name] [slider_number]` — under which the leading `1` is a non-matching effect name and `off` is an expected miss. Re-test both the effect-name form and a value context before documenting its behavior.
+`get_effect_slider_default` has two forms:
+
+- **`get_effect_slider_default '<effect_name>' <slider_number>`** returns the parameter's default as a normalized `0`-`1` value (confirmed `0.5` for Backspin slider 1 in a pad `name=`). Use this to *read* a default as text/number.
+- **`get_effect_slider_default <slot> <index> <fallback>`** is the form built-in skins use 300+ times inside `<slider frommiddle="…">` — a numeric-value context that positions the slider's centre. It returned `off` when read in a pad `name=` text context, so treat it as value-context-only, not a text readback. It is not broken; the earlier "broken" note was a wrong-argument call (a slot number passed where the effect-name form expects a name).
 
 Guidance from the above:
 
 - For a GUI-matching parameter label use `get_effect_slider_label_full` (or `get_effect_slider_name`); for a compact label use `get_effect_slider_label` (or `get_effect_slider_shortname`). They are two distinct forms, not aliases.
 - For live values use `get_effect_slider_text`. Counts and `effect_has_*` are safe to drive dynamic panels.
-- Reliable default capture regardless of `get_effect_slider_default`: `effect_slider_reset <slot> <n>` then read `get_effect_slider_text`.
+- To read a default as a value/number, use the effect-name form `get_effect_slider_default '<effect_name>' <n>`; for skin sliders, the slot form in `frommiddle="get_effect_slider_default <slot> <n> <fallback>"` positions the centre.
 - `debug` cannot print a computed value: it logs the literal backtick expression (same computed-argument behavior as `loop`/`beatjump`/`phrase_sync`). Read helper strings through a pad/skin `name=`/`text=` interpolation instead.
 
 **Per-effect parameter map** (`Local test`: VirtualDJ `v2026-m b9482`, deck FX slot 1). Growing as effects are swept; absence of a row means "not yet recorded", not "no parameters".

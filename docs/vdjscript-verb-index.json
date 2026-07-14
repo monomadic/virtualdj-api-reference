@@ -2438,8 +2438,8 @@
   "get_effect_slider_default": {
    "tier": "catalog",
    "section": "Effects",
-   "description": "Get effect slider default value. Signature unresolved: built-in skins use `get_effect_slider_default 1 1 0.5` in `<slider frommiddle=>`; another source gives `[effect_name] [slider_number]`. A `1 1 0.5` call in a pad `name=` returned `off` (`Local test` v2026-m b9482) — likely a wrong-arg/context miss, not a defect. For a reliable default, `effect_slider_reset` then `get_effect_slider_text`",
-   "example": "get_effect_slider_default 1",
+   "description": "Get effect slider default. Two forms (`Local test` v2026-m b9482): `get_effect_slider_default '<effect>' <n>` returns a normalized 0-1 default as text (`0.5` for Backspin S1); `get_effect_slider_default <slot> <n> <fallback>` is the value-context form built-in skins use in `<slider frommiddle=>` (returned `off` when read as text)",
+   "example": "get_effect_slider_default 'Echo' 1",
    "official": true
   },
   "get_effect_slider_label": {
