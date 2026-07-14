@@ -7,6 +7,11 @@ guarantee and without inventing syntax along the way.
 This document practices what it preaches: it is short, it states rules instead of restating
 them per section, and it leaves the verbose, structured detail for the few places that earn it.
 
+Status (2026-07-14): not started beyond a partial Phase 0. `tools/extract_verb_index.py` and
+`just verb-index` already generate a staleness-checked per-verb index
+(`docs/vdjscript-verb-index.json`) from the monolith, and `just check` gates it. The
+`VDJScript/` tree (families, contracts, `generated/`) does not exist yet.
+
 ## Why change anything
 
 The reference already works. It has 991/991 official-name coverage, source labels, a coverage
@@ -15,9 +20,11 @@ The problem is **noise and duplication**:
 
 - `VDJScript Verbs.md` is ~244 KB. Answering one verb question means loading or grepping a
   monolith that mixes a curated layer with a still-normalizing broad catalog.
-- The same fact lives in several files. Aliases appear in the Verbs.md alias index, the coverage
-  audit, and would have appeared again in a per-verb index. Surfaces, "needs local test," and
-  examples are similarly scattered. Every duplicate is a place to drift.
+- The same fact lives in several files. Aliases appear in the Verbs.md alias index and again in
+  the coverage audit. Surfaces, "needs local test," and examples are similarly scattered. Every
+  hand-maintained duplicate is a place to drift. (The generated
+  `docs/vdjscript-verb-index.json` is derived output with a `--check` staleness gate, so it is a
+  view, not another duplicate.)
 - There is no single rule for *where a fact is authored* versus *where it is derived*.
 
 So the goal is not "more documentation." It is **one authored home per fact, everything else
@@ -165,11 +172,14 @@ current files, and they prove the parse-shape works before it is depended on.
 Add to the `justfile`:
 
 - `just verbs-index` — regenerate `generated/aliases.md` and `generated/surfaces.md` from the
-  family rows and contract front-matter. Deterministic; no network.
+  family rows and contract front-matter. Deterministic; no network. Extend
+  `tools/extract_verb_index.py` (which already parses the alias index, curated entries, and
+  broad-catalog rows, and already has a `--check` mode) rather than writing a parallel generator.
 - `just signature-gaps` — non-failing report: official names from the coverage audit that have a
   family row, that lack one, aliases that resolve to a real canonical, and contracts still marked
   `needs_test`.
-- Extend `just check` (currently `lint_pads.py` + `check_reference_status.py` + `git diff --check`)
+- Extend `just check` (currently the pad/skin/mapper linters, `extract_verb_index.py --check`,
+  `extract_xml_inventory.py --check`, `check_reference_status.py`, and `git diff --check`)
   with `check_vdjscript_refs.py` that verifies:
   - every official name in the audit appears in a family row or contract,
   - every alias resolves to a canonical that exists,
