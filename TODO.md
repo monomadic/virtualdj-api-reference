@@ -15,11 +15,124 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 ## Ready Tasks
 
-### 1. Author And Load-Test A Minimal Custom Device Definition
+Tasks 1-4 are one FX cluster: they share the same VirtualDJ session, the same deck-FX context, and the same `name=`-interpolation readback technique (proven on v2026-m b9482 — `debug` logs backtick expressions literally, so exact strings must be read via `name=`). Batch them into one local-test session where possible.
+
+### 1. Complete The Per-Effect FX Introspection Sweep
 
 Status: Ready
 
-The mapper reference's device-definition schema is official-doc-derived but never load-tested locally. A `SIMPLE_MIDI` device context already exists in the local install's Mappers folder.
+In progress. Already done (v2026-m b9482): the fixture passed for deck FX slot 1, both overloaded `get_effect_slider_default` forms are resolved, the label/shortname family split is recorded, and the per-effect map in `Effects Engines.md` has its first entry (Backspin). What remains is the mechanical sweep: the rest of the native effects catalog, then the `video` and `transition` targets.
+
+Start here:
+
+- [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md) (per-effect map section)
+
+Read first:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (FX Helpers rows for the established method)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+
+Record results in:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+
+Done when:
+
+- Slider/button counts, labels, defaults, and text readbacks are recorded per native effect in the `Effects Engines.md` map, with build noted.
+- The `video` and `transition` targets get at least one recorded pass each.
+- Generic FX control guidance distinguishes observed behavior from inference.
+
+### 2. Characterize FX Bank Save And Load
+
+Status: Ready
+
+Start here:
+
+- [tests/Pads/Reference - FX Bank Test.xml](tests/Pads/Reference%20-%20FX%20Bank%20Test.xml)
+
+Read first:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+
+Record results in:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+
+Done when:
+
+- Restored effect names, active states, slider values, and deck scope are recorded.
+
+### 3. Separate Release FX From Normal Slot FX
+
+Status: Ready
+
+Start here:
+
+- [tests/Pads/Reference - Release FX Test.xml](tests/Pads/Reference%20-%20Release%20FX%20Test.xml)
+
+Read first:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+
+Record results in:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Usage.md](docs/Effects%20Usage.md)
+
+Done when:
+
+- `effect_releaseslider*` and `is_releasefx` behavior is described separately from normal deck FX controls.
+
+### 4. Keep BeatGrid `effect_command` Plugin-Specific
+
+Status: Ready
+
+Start here:
+
+- [tests/Pads/Reference - BeatGrid Command Test.xml](tests/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml)
+
+Read first:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Native Effects.md](docs/Native%20Effects.md)
+
+Record results in:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+
+Done when:
+
+- Confirmed `effect_command` examples are documented as BeatGrid-specific rather than generic plugin control advice.
+
+### 5. Author And Load-Test A Minimal Custom Device Definition
+
+Status: Ready
+
+The mapper reference's device-definition schema is official-doc-derived but never load-tested locally. A `SIMPLE_MIDI` device context already exists in the local install's Mappers folder. Mappers are one of the repo's named coverage cliffs, so this is the highest-value task outside the FX cluster.
 
 Start here:
 
@@ -30,35 +143,9 @@ Done when:
 
 - A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
 - Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
+- While in the mapper context, the `just check` mapper-lint warnings for `none`, `browser_filter`, and `browser_search` (factory-mapper verb candidates) are probed and either confirmed as real verbs or recorded as unresolved.
 
-### 2. Repeat `dualdeckmode_decks` In A Better Context
-
-Status: Ready
-
-Start here:
-
-- [tests/Pads/Reference - Dual Deck Mode Test.xml](tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Read first:
-
-- [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md)
-- [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
-
-Done when:
-
-- A build, deck/controller context, observed result, and follow-up decision are recorded.
-- The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
-
-### 3. Continue Hidden Button Editor Candidate Probes
+### 6. Continue Hidden Button Editor Candidate Probes
 
 Status: Ready
 
@@ -87,19 +174,21 @@ Done when:
 - Candidate behavior is recorded as pass, partial, failed, or still discovery-only.
 - Catalog-only names stay out of ordinary recommendations unless behavior proof supports promotion.
 
-### 4. Build The FX Introspection Table
+### 7. Repeat `dualdeckmode_decks` In A Better Context
 
-Status: Ready
+Status: Ready, but low expected yield until a concrete context is identified
+
+The first pad-context run (v2026-m b9336) recorded `dualdeckmode` toggling on while current and deck-scoped `dualdeckmode_decks` readbacks stayed false on both decks. The promotion condition is a visible dual-deck pair or controller context (deck pairs 1/3 or 2/4), which realistically means a 4-deck skin setup or a controller. Do not repeat the same pad-context probe; identify the better context first, or treat this as semi-blocked.
 
 Start here:
 
-- [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml)
+- [tests/Pads/Reference - Dual Deck Mode Test.xml](tests/Pads/Reference%20-%20Dual%20Deck%20Mode%20Test.xml)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
 
 Read first:
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+- [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md)
+- [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md)
 
 Record results in:
 
@@ -107,92 +196,12 @@ Record results in:
 
 Promote to:
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
 - [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
 
 Done when:
 
-- Slider/button counts, labels, defaults, text readbacks, and `effect_has_*` behavior are recorded for representative built-in effects.
-- Generic FX control guidance distinguishes observed behavior from inference.
-
-### 5. Characterize FX Bank Save And Load
-
-Status: Ready
-
-Start here:
-
-- [tests/Pads/Reference - FX Bank Test.xml](tests/Pads/Reference%20-%20FX%20Bank%20Test.xml)
-
-Read first:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-
-Done when:
-
-- Restored effect names, active states, slider values, and deck scope are recorded.
-
-### 6. Separate Release FX From Normal Slot FX
-
-Status: Ready
-
-Start here:
-
-- [tests/Pads/Reference - Release FX Test.xml](tests/Pads/Reference%20-%20Release%20FX%20Test.xml)
-
-Read first:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-
-Done when:
-
-- `effect_releaseslider*` and `is_releasefx` behavior is described separately from normal deck FX controls.
-
-### 7. Keep BeatGrid `effect_command` Plugin-Specific
-
-Status: Ready
-
-Start here:
-
-- [tests/Pads/Reference - BeatGrid Command Test.xml](tests/Pads/Reference%20-%20BeatGrid%20Command%20Test.xml)
-
-Read first:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Native Effects.md](docs/Native%20Effects.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
-
-Done when:
-
-- Confirmed `effect_command` examples are documented as BeatGrid-specific rather than generic plugin control advice.
+- A build, deck/controller context, observed result, and follow-up decision are recorded.
+- The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
 
 ## Blocked Or Hardware-Gated
 
@@ -206,5 +215,6 @@ Done when:
 
 ## Parking Lot
 
+- Consolidation plan Phase 0: build the family-row generators/checker described in [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) by extending `tools/extract_verb_index.py`. No VirtualDJ or hardware needed, so it is a good fit for a session without a live install — but the behavior-evidence queue above outranks restructuring.
 - `system`: revisit only if an official example, bundled-resource context, or clearly harmless parameter appears.
 - Skin `visual type` canaries: do after the current no-hardware VDJScript evidence queue unless a skin-specific question makes it urgent.
