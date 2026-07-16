@@ -443,7 +443,7 @@ Dynamic FX controls:
 
 Use this pattern for generic panels where the selected plugin can change. Record effect-specific presets separately.
 
-Current local evidence is not a full introspection table yet. The recorded run for [Reference - FX Introspection Test.xml](../tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml) on VirtualDJ `v2026-m b9336` only confirms that Flanger loaded in deck FX slot 1 and its GUI showed `Strength 50%`, `Speed 8bt`, `Tone n/a`, `Feedback 50%`, and `LFO AMP 40%`. Counts, `effect_has_*` states, button labels, slider labels, defaults, and formatted text readbacks remain unknown until the shift-log pads are recorded.
+Current local evidence is not a full introspection table yet. Recorded passes with [Reference - FX Introspection Test.xml](../tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml) on VirtualDJ `v2026-m b9482` confirm the dynamic control maps for Backspin, Flanger, Echo, Reverb, and Beat Grid. Beat Grid's exact selector name includes a space (`effect_select 1 'Beat Grid'`); the no-space form did not replace the previously selected effect. The full native-effect catalog and the separate `video` and `transition` targets remain to be swept.
 
 Plugin commands:
 

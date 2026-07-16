@@ -1084,7 +1084,18 @@ Guidance from the above:
 | Effect | Sliders (full / short — unit) | Buttons |
 | --- | --- | --- |
 | Backspin | S1 `Strength` / `STR` (%), S2 `Length` / `LEN` (beats) | 0 |
-| Flanger | GUI (labels only, `v2026-m b9336`): `Strength`, `Speed` (beats), `Tone`, `Feedback`, `LFO AMP` | helper counts not captured |
+| Flanger | S1 `Strength` / `STR` (`50%` reset), S2 `Speed` / `LEN` (`8 bt` reset), S3 `Feedback` / `FBCK` (`50%` reset), S4 `LFO Amp` / `LFO` (`50%` reset) | B1 `Tone` / `TONE`, B2 `Phase` / `PHASE` |
+| Echo | S1 `Strength` / `STR` (`52%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Feedback` / `FB` (`52%` reset), S4 `Filter` / `FILT` (`OFF` reset), S5 `Lowpass` / `LP` (`20 Hz` reset), S6 `Highpass` / `HP` (`20000 Hz` reset) | B1 `Reverse` / `REV`, B2 `Freeze` / `FRZ`, B3 `Mute Source` / `MUTE`, B4 `Lock On Max` / `LCK` |
+| Reverb | S1 `Strength` / `STR` (`50%` reset), S2 `Decay` / `DEC` (`50%` reset), S3 `Room Size` / `SIZE` (`50%` reset), S4 `Brightness` / `BRI` (`50.0%` reset) | B1 `Low Cut` / `LOW`, B2 `Hi Cut` / `HI` |
+| Beat Grid | S1 `Slot` / `SLOT` (`Slot 1` reset) | B1 `Mode` / `>>`, B2 `Video` / `VIDEO` |
+
+For Flanger, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `2`; the corresponding four slider pads and two button pads were the only positions reported by `effect_has_*`. The GUI labels matched the helper map, including the non-obvious `Speed` / `LEN` full/short pair. The fixture's by-name default pad was still hardcoded to `Backspin`, so its displayed `0.5` is not evidence for Flanger's normalized default.
+
+For Echo, `get_effect_slider_count` returned `6` and `get_effect_button_count` returned `4`; the corresponding positions matched the visible GUI controls. The GUI supplied the full labels for S2-S6 and B2-B4; the fixture directly confirmed S1 `Strength` / `STR` and B1 `Reverse` / `REV`. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Echo's normalized default.
+
+For Reverb, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `2`; all positions matched the visible GUI controls. The fixture directly confirmed S1 `Strength` / `STR` and B1 `Low Cut` / `LOW`; the GUI supplied the full labels for the remaining controls. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Reverb's normalized default.
+
+For Beat Grid, `get_effect_slider_count` returned `1` and `get_effect_button_count` returned `2`; all positions matched the visible GUI. S1 selects the displayed pattern slot and reset changed its readback from `Slot 3` to `Slot 1`. B1 `Mode` corresponds to the GUI's `SNGL` / `CONT` mode control, and B2 is `Video`. The exact selector name includes a space: `effect_select 1 'Beat Grid'`; the fixture's earlier `'BeatGrid'` call left the previous effect selected. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Beat Grid's normalized default.
 
 Built-in desktop skins use this pattern for slot controls:
 

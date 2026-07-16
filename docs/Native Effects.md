@@ -179,7 +179,7 @@ These examples are known working forms from local reference pad pages and built-
 | Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
 | Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
 | Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| BeatGrid | `effect_select 1 'BeatGrid' & effect_slider 1 1 75%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
+| Beat Grid | `effect_select 1 'Beat Grid' & effect_slider 1 1 75%` | `Local test`: `v2026-m b9482`; the no-space selector `'BeatGrid'` did not replace the previously selected effect |
 
 **PadFX presets:**
 
