@@ -236,5 +236,77 @@ MP4Box \
   -out "$OUT/DIAG-standalone-alac16.m4a" "$W/standalone-alac16.m4a" >/dev/null 2>&1
 print "  ✓ $OUT/DIAG-standalone-alac16.m4a"
 
+# ---------------------------------------------------------------------------
+# TODO task 8 probes — one variable each (see docs/Stem File Format.md)
+# ---------------------------------------------------------------------------
+if command -v mkvpropedit >/dev/null 2>&1; then
+  print "→ Building task-8 probes…"
+
+  # Q1: PCM streams in a sidecar
+  make_lossless_sidecar "DIAG-sidecar-pcm" -c:a pcm_s16le
+  print "  ✓ DIAG-sidecar-pcm (pcm_s16le streams)"
+
+  # Q2: 24-bit FLAC sidecar (16-bit-only limit container-wide or not?)
+  make_lossless_sidecar "DIAG-sidecar-flac24" -c:a flac -sample_fmt s32
+  print "  ✓ DIAG-sidecar-flac24 (24-bit FLAC streams)"
+
+  # Q3: old writing-application version string
+  make_sidecar "DIAG-sidecar-oldver"
+  mkvpropedit "$OUT/DIAG-sidecar-oldver.flac.vdjstems" --edit info \
+    --set "writing-application=VirtualDJ 2025.8800.stems2" >/dev/null
+  print "  ✓ DIAG-sidecar-oldver (stamped VirtualDJ 2025.8800.stems2)"
+
+  # Q4: capitalized role titles
+  ffmpeg -y -loglevel error -i "$W/noise.wav" -c:a flac "$OUT/DIAG-sidecar-case.flac"
+  ffmpeg -y -loglevel error \
+    -i "$W/vocal.wav" -i "$W/hihat.wav" -i "$W/bass.wav" \
+    -i "$W/instruments.wav" -i "$W/kick.wav" \
+    -map 0:a -map 1:a -map 2:a -map 3:a -map 4:a \
+    -c:a aac -b:a 320k -ar 44100 -ac 2 \
+    -disposition:a:0 0 -disposition:a:1 0 -disposition:a:2 0 \
+    -disposition:a:3 0 -disposition:a:4 0 \
+    -metadata:s:a:0 title="Vocal" \
+    -metadata:s:a:1 title="Hihat" \
+    -metadata:s:a:2 title="Bass" \
+    -metadata:s:a:3 title="Instruments" \
+    -metadata:s:a:4 title="Kick" \
+    -f matroska "$OUT/DIAG-sidecar-case.flac.vdjstems"
+  mkvpropedit "$OUT/DIAG-sidecar-case.flac.vdjstems" --edit info \
+    --set "writing-application=VirtualDJ 2026.9336.stems2" >/dev/null
+  print "  ✓ DIAG-sidecar-case (titles Vocal/Hihat/Bass/Instruments/Kick)"
+fi
+
+# Q5: FLAC-in-MP4 standalone
+print "→ Building DIAG-standalone-flacmp4.m4a…"
+for s in kick instruments vocal bass hihat; do
+  ffmpeg -y -loglevel error -i "$W/$s.wav" -c:a flac -strict experimental -f mp4 "$W/$s.flac.mp4"
+done
+ffmpeg -y -loglevel error -i "$W/noise.wav" -c:a flac -strict experimental -f mp4 "$W/mixedf.flac.mp4"
+if ffmpeg -y -loglevel error \
+  -i "$W/kick.flac.mp4" -i "$W/instruments.flac.mp4" -i "$W/vocal.flac.mp4" \
+  -i "$W/bass.flac.mp4" -i "$W/hihat.flac.mp4" -i "$W/mixedf.flac.mp4" \
+  -map 5:a -map 2:a -map 4:a -map 3:a -map 1:a -map 0:a \
+  -c:a copy -strict experimental \
+  -disposition:a:0 default -disposition:a:1 0 -disposition:a:2 0 \
+  -disposition:a:3 0 -disposition:a:4 0 -disposition:a:5 0 \
+  -metadata title="virtualdj" -metadata artist="output" \
+  -brand isom \
+  -f mp4 "$W/standalone-flac.m4a" 2>/dev/null; then
+  MP4Box \
+    -udta "1:type=name" -udta "1:type=name:str=mixed track" \
+    -udta "2:type=name" -udta "2:type=name:str=vocal" \
+    -udta "3:type=name" -udta "3:type=name:str=hihat" \
+    -udta "4:type=name" -udta "4:type=name:str=bass" \
+    -udta "5:type=name" -udta "5:type=name:str=instruments" \
+    -udta "6:type=name" -udta "6:type=name:str=kick" \
+    -itags "$W/itags.txt" \
+    -flat -brand isom:512 -rb mp42 -ab mp41 \
+    -out "$OUT/DIAG-standalone-flacmp4.m4a" "$W/standalone-flac.m4a" >/dev/null 2>&1 \
+    && print "  ✓ $OUT/DIAG-standalone-flacmp4.m4a" \
+    || print "  ⚠ MP4Box could not process FLAC-in-MP4 — probe skipped" >&2
+else
+  print "  ⚠ ffmpeg could not mux FLAC into MP4 — probe skipped" >&2
+fi
+
 print "\nListening key: noise=master · 100Hz=kick/Drums · 200Hz=bass · 400Hz=vocal · 800Hz=instruments · 1600Hz=hihat"
 print "Files in: $OUT"
