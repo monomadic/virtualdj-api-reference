@@ -203,6 +203,53 @@ Done when:
 - A build, deck/controller context, observed result, and follow-up decision are recorded.
 - The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
 
+### 8. Close The Remaining Stem-Format Unknowns
+
+Status: Ready
+
+The July 2026 tone-probe rounds settled the stem-file contracts (sidecar
+writing-application gate, sample-rate matching, FLAC/ALAC sidecars, 16-bit
+ALAC standalones, 4-stem family dead). Five cheap listening probes remain,
+each answerable with the existing harness plus one short VirtualDJ session:
+
+1. PCM sidecar — do `pcm_s16le` streams in the Matroska sidecar play?
+2. Sidecar bit depth — does a 24-bit FLAC sidecar play correctly, or is
+   the 16-bit-only limit (proven for standalone MP4 ALAC) container-wide?
+3. Writing-application version string — does any `VirtualDJ <x>.stems2`
+   value pass (try `2025.8800.stems2`), or must it be current? Does the
+   version affect VirtualDJ regenerating/replacing the sidecar?
+4. Role-title case sensitivity — does a sidecar titled `Vocal`/`Kick`
+   (capitalized) still map correctly?
+5. FLAC-in-MP4 standalone — ffmpeg can mux FLAC into M4A; does VirtualDJ
+   accept it as a stems file, or is standalone lossless ALAC-only?
+
+Extend the harness with one probe file per question (master = white noise,
+stems = the 100/200/400/800/1600 Hz tone ladder, one variable changed per
+file), listen once in VirtualDJ, and record results.
+
+Start here:
+
+- [tests/Stems/make-diagnostic-stems.zsh](tests/Stems/make-diagnostic-stems.zsh)
+
+Read first:
+
+- [docs/Stem File Format.md](docs/Stem%20File%20Format.md) (contracts, acceptance matrix, Known Unknowns)
+
+Record results in:
+
+- [docs/Stem File Format.md](docs/Stem%20File%20Format.md) (acceptance matrix + Known Unknowns)
+
+Promote to:
+
+- [docs/Stem File Format.md](docs/Stem%20File%20Format.md)
+- Local toolchain (`/Users/nom/config/config/zsh/bin/vdjstems-pack`) if any
+  result changes the recommended codecs or adds a new capability
+
+Done when:
+
+- Each of the five questions has a `Local test` row with the VirtualDJ
+  build noted, and the Known Unknowns section lists none of them.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
