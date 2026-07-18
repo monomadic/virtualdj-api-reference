@@ -123,8 +123,11 @@ Practical rules:
 - Keep every stream stereo and start-aligned at timestamp 0.
 - **Match the original file's sample rate** (see next section) — this is a
   playback contract, not a preference.
-- Prefer AAC for VirtualDJ-like sidecars; alternate Matroska codecs need their
-  own local test before being documented as compatible.
+- AAC is what VirtualDJ itself writes, but it is **not required**: `Local
+  test` (2026-07-18, tone probes) confirmed sidecars with **FLAC** streams
+  and with **ALAC** streams both load and play correctly in VirtualDJ 2026.
+  This enables lossless prepared stems and does not appear to be documented
+  anywhere else. FLAC is the natural choice (Matroska-native, smaller).
 
 ## Sample Rate Contract
 
@@ -314,7 +317,7 @@ recipe:
 | Streams | exactly 6, order: `mixed track`, `vocal`, `hihat`, `bass`, `instruments`, `kick` |
 | Track names | per-track `udta` `name` atoms (MP4Box `-udta N:type=name:str=...`) |
 | Disposition | stream 0 (`mixed track`) default; all stems non-default |
-| Codec | AAC-LC 320k or ALAC, 44.1 kHz stereo |
+| Codec | AAC-LC 320k or ALAC, 44.1 kHz stereo. ALAC must be **16-bit (s16p) on every stream** — `Local test` 2026: an s32p master plays stuttery with pitch artifacts; the identical all-s16p file plays perfectly |
 | iTunes tags | `tool=VirtualDJ <version>` (itags) |
 
 `Inference`: The per-track `udta` `name` atoms are the safer role signal in
@@ -380,6 +383,10 @@ a distinct sine, so routing is audible; harness:
 | 4-stem M4A (`All`, `Vocal`, `Instrument`, `Bass`, `Drums` udta names) | **Dead in VirtualDJ 2026** — loads into the deck but plays nothing and detects no stems (an October 2025 local artifact shows this family was previously in local use) |
 | Matroska sidecar, `writing-application=VirtualDJ 2026.9336.stems2` | **Works** — stem pads play the sidecar's tone streams; master plays the original (noise) |
 | Same sidecar, `writing-application=Lavf…` | **Ignored** — original plays, no stems detected; proves the stamp is the acceptance gate |
+| Sidecar with **FLAC** streams (stamped) | **Works** — lossless sidecars are possible; previously undocumented |
+| Sidecar with **ALAC** streams (stamped) | **Works** |
+| Standalone M4A in **ALAC** (stems s16p, master s32p) | **Broken** — loads but playback stutters with pitch artifacts, the same audible signature as a sample-rate mismatch |
+| Standalone M4A in **ALAC, all streams s16p** | **Works** — isolates the failure above to the 32-bit master: VirtualDJ's standalone ALAC playback is 16-bit only |
 
 ## Tagging Notes (MPEG-4 Standalone)
 
@@ -434,8 +441,9 @@ Superseded experiments are parked in `/Users/nom/config/config/zsh/_bin_quaranti
   tested; older corpus files carry `2025.8800.stems2` etc., so a version
   range is clearly tolerated for reading).
 - Whether role-title matching is case-sensitive in every build.
-- Whether Matroska ALAC/FLAC/PCM sidecars are accepted by current VirtualDJ, or
-  whether AAC is required for broad compatibility.
+- Whether PCM sidecars also work (FLAC and ALAC confirmed; PCM untested).
+- Whether sidecar streams above 16-bit are safe (the 16-bit-only limit was
+  proven for standalone MP4 ALAC; FLAC sidecars were tested at 16-bit).
 - Whether VirtualDJ reads the freeform `initialkey` atom from standalone files.
 - What exactly distinguishes the fully-working M4A variant from the
   library-only variant (see the acceptance matrix) — `-brand isom` at the

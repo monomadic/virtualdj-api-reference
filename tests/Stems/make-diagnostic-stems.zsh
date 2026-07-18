@@ -147,5 +147,94 @@ MP4Box \
   -out "$OUT/DIAG-4stem.m4a" "$W/fourstem.m4a" >/dev/null 2>&1
 print "  ✓ $OUT/DIAG-4stem.m4a (Drums tone = 100 Hz kick source)"
 
+# ---------------------------------------------------------------------------
+# Lossless probes: is AAC required, or do ALAC/FLAC variants work?
+# ---------------------------------------------------------------------------
+print "→ Building DIAG-standalone-alac.m4a (ALAC: stems s16p, master s32p)…"
+for s in kick instruments vocal bass hihat; do
+  ffmpeg -y -loglevel error -i "$W/$s.wav" -c:a alac -sample_fmt s16p "$W/$s.alac.m4a"
+done
+ffmpeg -y -loglevel error -i "$W/noise.wav" -c:a alac -sample_fmt s32p "$W/mixed.alac.m4a"
+ffmpeg -y -loglevel error \
+  -i "$W/kick.alac.m4a" -i "$W/instruments.alac.m4a" -i "$W/vocal.alac.m4a" \
+  -i "$W/bass.alac.m4a" -i "$W/hihat.alac.m4a" -i "$W/mixed.alac.m4a" \
+  -map 5:a -map 2:a -map 4:a -map 3:a -map 1:a -map 0:a \
+  -c:a copy \
+  -disposition:a:0 default -disposition:a:1 0 -disposition:a:2 0 \
+  -disposition:a:3 0 -disposition:a:4 0 -disposition:a:5 0 \
+  -metadata title="virtualdj" -metadata artist="output" \
+  -brand isom \
+  "$W/standalone-alac.m4a"
+MP4Box \
+  -udta "1:type=name" -udta "1:type=name:str=mixed track" \
+  -udta "2:type=name" -udta "2:type=name:str=vocal" \
+  -udta "3:type=name" -udta "3:type=name:str=hihat" \
+  -udta "4:type=name" -udta "4:type=name:str=bass" \
+  -udta "5:type=name" -udta "5:type=name:str=instruments" \
+  -udta "6:type=name" -udta "6:type=name:str=kick" \
+  -itags "$W/itags.txt" \
+  -flat -brand isom:512 -rb mp42 -ab mp41 \
+  -out "$OUT/DIAG-standalone-alac.m4a" "$W/standalone-alac.m4a" >/dev/null 2>&1
+print "  ✓ $OUT/DIAG-standalone-alac.m4a"
+
+# Sidecars with lossless codecs (each next to its own noise original,
+# both stamped — the stamp gate is already proven, so codec is the only
+# variable here)
+make_lossless_sidecar() {  # make_lossless_sidecar BASENAME CODEC_ARGS...
+  local base="$1"; shift
+  ffmpeg -y -loglevel error -i "$W/noise.wav" -c:a flac "$OUT/$base.flac"
+  ffmpeg -y -loglevel error \
+    -i "$W/vocal.wav" -i "$W/hihat.wav" -i "$W/bass.wav" \
+    -i "$W/instruments.wav" -i "$W/kick.wav" \
+    -map 0:a -map 1:a -map 2:a -map 3:a -map 4:a \
+    "$@" -ar 44100 -ac 2 \
+    -disposition:a:0 0 -disposition:a:1 0 -disposition:a:2 0 \
+    -disposition:a:3 0 -disposition:a:4 0 \
+    -metadata:s:a:0 title="vocal" \
+    -metadata:s:a:1 title="hihat" \
+    -metadata:s:a:2 title="bass" \
+    -metadata:s:a:3 title="instruments" \
+    -metadata:s:a:4 title="kick" \
+    -f matroska "$OUT/$base.flac.vdjstems"
+  mkvpropedit "$OUT/$base.flac.vdjstems" --edit info \
+    --set "writing-application=VirtualDJ 2026.9336.stems2" >/dev/null
+}
+
+if command -v mkvpropedit >/dev/null 2>&1; then
+  print "→ Building lossless sidecar probes…"
+  make_lossless_sidecar "DIAG-sidecar-alac" -c:a alac -sample_fmt s16p
+  print "  ✓ DIAG-sidecar-alac (ALAC streams, stamped)"
+  make_lossless_sidecar "DIAG-sidecar-flac" -c:a flac
+  print "  ✓ DIAG-sidecar-flac (FLAC streams, stamped)"
+else
+  print "  ⚠ mkvpropedit missing — lossless sidecar probes skipped" >&2
+fi
+
+# All-s16p ALAC standalone: isolates whether the s32p master (not ALAC
+# itself) is what breaks VDJ's standalone ALAC playback.
+print "→ Building DIAG-standalone-alac16.m4a (ALAC, ALL streams s16p)…"
+ffmpeg -y -loglevel error -i "$W/noise.wav" -c:a alac -sample_fmt s16p "$W/mixed16.alac.m4a"
+ffmpeg -y -loglevel error \
+  -i "$W/kick.alac.m4a" -i "$W/instruments.alac.m4a" -i "$W/vocal.alac.m4a" \
+  -i "$W/bass.alac.m4a" -i "$W/hihat.alac.m4a" -i "$W/mixed16.alac.m4a" \
+  -map 5:a -map 2:a -map 4:a -map 3:a -map 1:a -map 0:a \
+  -c:a copy \
+  -disposition:a:0 default -disposition:a:1 0 -disposition:a:2 0 \
+  -disposition:a:3 0 -disposition:a:4 0 -disposition:a:5 0 \
+  -metadata title="virtualdj" -metadata artist="output" \
+  -brand isom \
+  "$W/standalone-alac16.m4a"
+MP4Box \
+  -udta "1:type=name" -udta "1:type=name:str=mixed track" \
+  -udta "2:type=name" -udta "2:type=name:str=vocal" \
+  -udta "3:type=name" -udta "3:type=name:str=hihat" \
+  -udta "4:type=name" -udta "4:type=name:str=bass" \
+  -udta "5:type=name" -udta "5:type=name:str=instruments" \
+  -udta "6:type=name" -udta "6:type=name:str=kick" \
+  -itags "$W/itags.txt" \
+  -flat -brand isom:512 -rb mp42 -ab mp41 \
+  -out "$OUT/DIAG-standalone-alac16.m4a" "$W/standalone-alac16.m4a" >/dev/null 2>&1
+print "  ✓ $OUT/DIAG-standalone-alac16.m4a"
+
 print "\nListening key: noise=master · 100Hz=kick/Drums · 200Hz=bass · 400Hz=vocal · 800Hz=instruments · 1600Hz=hihat"
 print "Files in: $OUT"
