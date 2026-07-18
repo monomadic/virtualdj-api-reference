@@ -33,6 +33,12 @@ All observed VirtualDJ-generated sidecars use five stereo AAC streams. The
 stream `title` tags are part of the role contract; do not treat the file as just
 "any five audio streams in Matroska."
 
+`Local test`: two further contract fields are load-bearing for externally
+generated sidecars: the streams' **sample rate must equal the original
+file's** (see Sample Rate Contract), and the Matroska **`Writing application`
+field must carry VirtualDJ's `<version>.stems2` signature** (see Recreating A
+VirtualDJ-Like Sidecar) — VirtualDJ silently ignores a sidecar without it.
+
 ## Corpus Checked
 
 `Local observation`: On 2026-06-04, the local folder
@@ -115,8 +121,36 @@ Practical rules:
 - Write the role names as stream titles, not only filenames.
 - Clear default dispositions on every audio stream.
 - Keep every stream stereo and start-aligned at timestamp 0.
+- **Match the original file's sample rate** (see next section) — this is a
+  playback contract, not a preference.
 - Prefer AAC for VirtualDJ-like sidecars; alternate Matroska codecs need their
   own local test before being documented as compatible.
+
+## Sample Rate Contract
+
+`Local observation` (2026-07-18): The sidecar's sample rate must equal the
+original file's sample rate. Pairing every non-44.1 kHz sidecar in the corpus
+with its original shows an exact match in all cases:
+
+| Sidecar rate | Original rate | Count observed |
+| ---: | ---: | --- |
+| 48000 | 48000 | all 48 kHz sidecars checked (20+) |
+| 96000 | 96000 | all 96 kHz sidecars checked (5) |
+| 44100 | 44100 | spot-checked sample of 40 |
+| 44100 | 192000 | 1 (VirtualDJ capped it — AAC-LC tops out at 96 kHz) |
+
+`Local test` (2026-07-18, VirtualDJ 2026): an externally generated sidecar
+whose streams were 44.1 kHz against a higher-rate original **loaded and was
+used by VirtualDJ**, but muting stems played the sidecar audio pitch-shifted
+upward and stuttering — consistent with VirtualDJ reading sidecar frames on
+the original file's clock without resampling. The same failure is expected in
+the opposite direction (rate too high → slow/low). Externally generated
+packers must probe the original's rate and encode the sidecar to match,
+capping above 96 kHz at 44.1 kHz per the observed VirtualDJ behavior.
+
+This also resolves part of a prior unknown: VirtualDJ 2026 does accept and
+play externally generated Matroska sidecars (the failure above was rate
+mismatch, not rejection).
 
 `Inference`: The stream titles are safer to treat as required even if a
 particular build also appears to infer roles by order. The local scripts that
@@ -165,7 +199,8 @@ Expected VirtualDJ sidecar shape:
 4|aac|44100|2|kick
 ```
 
-The sample rate may be `44100`, `48000`, or `96000` in the local corpus.
+The sample rate may be `44100`, `48000`, or `96000` in the local corpus, and
+always equals the original file's rate (see Sample Rate Contract above).
 
 Use `mediainfo` when you need Matroska-level fields:
 
@@ -223,14 +258,32 @@ ffmpeg -y \
   -disposition:a:2 0 \
   -disposition:a:3 0 \
   -disposition:a:4 0 \
-  -c:a aac -b:a 320k \
+  -c:a aac -b:a 320k -ar "$orig_rate" \
   -f matroska \
   "$out"
 ```
 
-This does not need to fake VirtualDJ's `Writing application` field. In local
-testing, the meaningful compatibility contract was the sidecar placement,
-Matroska container, five AAC streams, and exact role metadata.
+`$orig_rate` must be the original track's sample rate (probe it with
+`ffprobe`), capped at 44100 above 96 kHz — see Sample Rate Contract.
+
+**The `Writing application` field must then be stamped — this is required.**
+`Local test` (2026-07-18, VirtualDJ 2026, tone-probe A/B): two sidecars that
+were byte-identical except for the Matroska `Writing application` field were
+placed next to identical originals. The one stamped
+`VirtualDJ 2026.9336.stems2` was used by VirtualDJ (stem pads played the
+sidecar streams); the one left as `Lavf…` was silently ignored (VirtualDJ
+treated the track as having no prepared stems). ffmpeg hardcodes `Lavf` in
+this field, so stamp it afterwards:
+
+```sh
+mkvpropedit "$out" --edit info \
+  --set "writing-application=VirtualDJ 2026.9336.stems2"
+```
+
+An earlier revision of this page claimed the field did not need to be faked;
+that claim was wrong and is superseded by the A/B above. The likely purpose
+of the `<version>.stems2` marker is engine-version gating — VirtualDJ can
+tell which stems engine produced a cache and regenerate or ignore stale ones.
 
 ## The Extension Is A Container Contract
 
@@ -246,10 +299,11 @@ section). Never emit an MP4 with a `.vdjstems` extension.
 
 ## Standalone Six-Track M4A
 
-`Local script`: Separately from sidecars, VirtualDJ detects a multi-track
+`Local test` (2026-07-18, VirtualDJ 2026): VirtualDJ detects a multi-track
 MPEG-4/M4A audio file in the library as a stems-capable track. This is a
-community-reverse-engineered format (VirtualDJ 2023-era output); local packer
-scripts in this family produced files VirtualDJ accepted. The observed working
+community-reverse-engineered format (VirtualDJ 2023-era output) and it
+**still works in VirtualDJ 2026** — an acceptance matrix built from one stem
+set confirmed the recipe below loads with working stem pads. The working
 recipe:
 
 | Field | Working value |
@@ -272,6 +326,60 @@ The `mixed track` stream is the full mix, so the file plays as an ordinary
 library track in any player. When packing from separated stems without an
 original mix, sum the unique stems (do not count a drums stem twice if kick and
 hihat were duplicated from it — see the −6 dB rule below).
+
+`Local test` (2026-07-18, VirtualDJ 2026): **the master must be the plain
+unity-gain sum of the five stem streams.** When stems are active, VirtualDJ
+sums the stem tracks at unity gain; a master attenuated relative to that sum
+(e.g. ffmpeg `amix` default 1/n scaling) makes stem playback jump ~12 dB
+louder than master playback the moment any stem is muted. The legacy packer's
+`amix=inputs=5,volume=5` idiom exists precisely to undo amix's scaling;
+`amix=inputs=N:normalize=0` is the modern equivalent.
+
+## Standalone Acceptance Matrix (2026-07-18)
+
+`Local test` (VirtualDJ 2026, macOS): five candidate containers built from
+the same stem set and loaded in VirtualDJ:
+
+| Candidate | Result |
+| --- | --- |
+| Legacy recipe `.m4a` (AAC, itags incl. tempo/key, `-brand isom` on the ffmpeg mux) | **Works** — loads, stem pads function |
+| Same family, minor deltas (no ffmpeg-level `isom` brand, different itags) | Loads from library only; drag-and-drop onto a deck fails; stems work |
+| MP4-era `.vdjstems` (six-stream ALAC MP4, `-inter 500`, mp42 brands) | **Rejected** — unloads the current deck track and loads nothing |
+| Matroska 6-track `.mka` (mixed + 5 titled stems) | Works via drag-and-drop; invisible in the browser (`.mka` not in VirtualDJ's extension list); renamed `.mkv` it appears but is **not** detected as a stems file |
+| Matroska 5-track `.mka`/`.mkv` (exact sidecar shape as a file) | Not treated as stems — plays the first stream (`vocal`) as a normal track |
+
+`Local observation`: There are two stem role vocabularies in local artifacts.
+Besides the five-stem set on this page, an October 2025 local experiment
+(`~/Music/Stems/test-stems/TestTone.vdjstems`, five-stream ALAC MP4) used the
+NI-style **4-stem naming** as udta track names: `All`, `Vocal`, `Instrument`,
+`Bass`, `Drums` — the same set local NI-conversion scripts target. Whether
+the 4-stem M4A family is still recognized by VirtualDJ 2026 is under test
+(`tests/Stems/make-diagnostic-stems.zsh` builds a `DIAG-4stem.m4a` probe).
+
+Notes:
+
+- VirtualDJ's accepted-extensions option (observed default) does not include
+  `.mka`: `mp3,wav,cda,wma,asf,ogg,m4a,aac,aif,aiff,flac,mpc,ape,weba,opus,
+  vdj,vdjcache,vdjedit,vdjsample,mp4,ogm,ogv,avi,mpg,mpeg,wmv,vob,mov,divx,
+  m4v,mkv,flv,webm,vdjcachev,apng`.
+- The `.mka`-drag-drop vs `.mkv`-browser asymmetry for the 6-track Matroska
+  candidate is unexplained; treat Matroska standalones as unreliable and use
+  the M4A recipe.
+- The browser-only vs drag-and-drop difference between the two M4A variants
+  is not yet isolated (candidate deltas: ffmpeg-level `-brand isom`, presence
+  of `INITIALKEY`/`tempo` itags); packers should replicate the fully working
+  variant exactly.
+
+`Local test` (2026-07-18, tone-probe round — master = white noise, each stem
+a distinct sine, so routing is audible; harness:
+`tests/Stems/make-diagnostic-stems.zsh`):
+
+| Probe | Result |
+| --- | --- |
+| 5-stem standalone M4A (working recipe, noise master) | **Confirmed** — master plays the `mixed track` stream; engaging stems switches to the stem streams; each pad maps to its titled stream |
+| 4-stem M4A (`All`, `Vocal`, `Instrument`, `Bass`, `Drums` udta names) | **Dead in VirtualDJ 2026** — loads into the deck but plays nothing and detects no stems (an October 2025 local artifact shows this family was previously in local use) |
+| Matroska sidecar, `writing-application=VirtualDJ 2026.9336.stems2` | **Works** — stem pads play the sidecar's tone streams; master plays the original (noise) |
+| Same sidecar, `writing-application=Lavf…` | **Ignored** — original plays, no stems detected; proves the stamp is the acceptance gate |
 
 ## Tagging Notes (MPEG-4 Standalone)
 
@@ -321,18 +429,19 @@ Superseded experiments are parked in `/Users/nom/config/config/zsh/_bin_quaranti
 
 ## Known Unknowns
 
-- Whether every VirtualDJ 2026 build accepts externally generated Matroska
-  `.vdjstems` files with the same tolerance.
+- Whether the exact `Writing application` version string matters, or any
+  `VirtualDJ <something>.stems2` value passes (only `2026.9336.stems2` was
+  tested; older corpus files carry `2025.8800.stems2` etc., so a version
+  range is clearly tolerated for reading).
 - Whether role-title matching is case-sensitive in every build.
 - Whether Matroska ALAC/FLAC/PCM sidecars are accepted by current VirtualDJ, or
   whether AAC is required for broad compatibility.
-- Whether VirtualDJ stores any recognition state outside the sidecar that affects
-  externally generated files in some library workflows.
-- Whether current 2026 builds still accept the standalone six-track M4A recipe
-  exactly as tabled above (it is sourced from 2023-era reverse engineering plus
-  local acceptance at the time; a fresh in-app acceptance pass with the
-  2026-07 packer output is pending).
 - Whether VirtualDJ reads the freeform `initialkey` atom from standalone files.
+- What exactly distinguishes the fully-working M4A variant from the
+  library-only variant (see the acceptance matrix) — `-brand isom` at the
+  ffmpeg layer and itag differences are the candidates.
+- Why the 6-track Matroska engaged stems when drag-and-dropped as `.mka` but
+  not when browsed as `.mkv`.
 
 ## Sources
 
