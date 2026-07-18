@@ -5697,7 +5697,7 @@ loop_color 1 'yellow'
 - Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`; local pad pages normally use lowercase strings.
 - Stem echo-out forum examples often use a fuller argument list rather than only strength and beat length; keep effect-specific parameter order close to the source example or local test.
 - `padfx` does not provide a documented per-pad ownership namespace. User-provided testing indicates that another pad using the same effect and stem target can alter the active pad-FX parameters for that shared identity.
-- Use `effect_disable_all 'padfx'` as a separate cleanup/reset action. User-provided testing found that chaining it immediately before new `padfx` calls in the same pad can prevent those new pad FX from activating or lighting.
+- Use `effect_disable_all 'padfx'` only as a separate broad cleanup/reset action, and only when clearing other temporary Pad FX is acceptable. User-provided testing found that chaining it immediately before new `padfx` calls in the same pad can prevent those new pad FX from activating or lighting.
 
 ```vdjscript
 padfx 'echo out' 80% 'solostem:vocal'
@@ -5708,12 +5708,23 @@ padfx 'echo out' 80% 1bt 25% 75% 'stemfx:vocal'
 effect_show_gui 'vocals' 'echo' & padfx 'echo' 'stemfx:vocal'
 ```
 
+Safer cleanup shape:
+
+```vdjscript
+# Separate reset/cleanup pad
+effect_disable_all 'padfx'
+
+# Performance pad: start the requested Pad FX directly
+padfx 'echo out' 80% 1bt 'stemfx:vocal' & padfx 'reverb' 75% 'stemfx:vocal'
+```
+
 Sources:
 
 - `Official`: VDJScript verbs appendix
 - `Community`: "How to map specific Fx?", moderator example for `effect_show_gui vocals echo & padfx echo 'stemfx:vocal'`
 - `Built-in pad page`: `pads_stems+fx.xml` uses `padfx "echo out" 80% 1bt "stemfx:vocal"`, `padfx "Reverb" 80% "stemfx:vocal"`, and `padfx "Beat Grid" "stemfx:MeloRhythm"`
 - `Local test`: `examples/Pads/PUSH FX.xml` contains working momentary `padfx` examples for Cut, Flanger, BeatGrid, Echo, Reverb, and Echo Out, including stem-targeted variants
+- `Local test`: user-provided vocal Pad FX chain where inline `effect_disable_all 'padfx'` prevented the following `padfx` calls from activating, while the same chain worked when the inline clear was removed; build not recorded
 
 ## Effects
 
@@ -5726,7 +5737,7 @@ Sources:
 | `effect_list`         | Select/cycle effect list            | `effect_list 1 +1`                |
 | `effect_list_edit`    | Edit an effect list                 | `effect_list_edit 1`              |
 | `effect_active`       | Activate/deactivate                 | `effect_active 1 on`              |
-| `effect_disable_all`  | Disable deck/master effects         | `effect_disable_all`              |
+| `effect_disable_all`  | Disable deck/master effects; with `'padfx'`, clear temporary Pad FX as a broad reset | `effect_disable_all 'padfx'` |
 | `effect_slider`       | Move effect slider                  | `effect_slider 1 2 50%`           |
 | `effect_slider_skip_length` | Move slider while skipping length slider | `effect_slider_skip_length 1 2 50%` |
 | `effect_slider_active` / `effect_slider_activate` | Move slider while activating effect | `effect_slider_active 1` |
@@ -5816,7 +5827,7 @@ FX catalog note:
 - Treat `padfx` and named stem FX slots as volatile, stateful performance targets. They are appropriate when pads should assign their own effect state without becoming the saved deck rack.
 - There is no known one-command persistent-slot equivalent to `padfx 'cut' 90% 0.5bt 50% 'stemfx:vocal'`; use `effect_select` plus explicit `effect_slider`/`effect_button`/`effect_active` steps when a pad intentionally writes FX1-FX6.
 - `effect_bank_save` / `effect_bank_load` are official rack snapshot helpers for deck FX slots 1-6. Treat them as persistent rack helpers. If a pad uses explicit `effect_select` / `effect_slider` / `effect_active` macros to guarantee preset values in FX1-FX6, document that it intentionally reprograms the rack.
-- `effect_disable_all 'padfx'` clears temporary pad FX, but should be documented as a cleanup/reset control rather than an inline initializer before new `padfx` actions.
+- `effect_disable_all 'padfx'` clears temporary Pad FX, but should be documented as a broad cleanup/reset control rather than an inline initializer before new `padfx` actions.
 - `effect_3slots_layout` is a UI/layout helper; built-in and SDK example skins use it to switch between single-FX and multi-FX panels.
 - `effect_select_popup` opens the native selector and is appropriate for right-clicks, parameter buttons, or skin affordances. It is not a read-only selected-name query.
 - `effect_select_toggle` is documented as keeping activation continuity while selecting an effect; use it only when that continuity is deliberate. Use plain `effect_select` for replacement and `effect_select_multi` for multi-effect-per-slot behavior.

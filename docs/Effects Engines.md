@@ -1088,6 +1088,12 @@ Guidance from the above:
 | Echo | S1 `Strength` / `STR` (`52%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Feedback` / `FB` (`52%` reset), S4 `Filter` / `FILT` (`OFF` reset), S5 `Lowpass` / `LP` (`20 Hz` reset), S6 `Highpass` / `HP` (`20000 Hz` reset) | B1 `Reverse` / `REV`, B2 `Freeze` / `FRZ`, B3 `Mute Source` / `MUTE`, B4 `Lock On Max` / `LCK` |
 | Reverb | S1 `Strength` / `STR` (`50%` reset), S2 `Decay` / `DEC` (`50%` reset), S3 `Room Size` / `SIZE` (`50%` reset), S4 `Brightness` / `BRI` (`50.0%` reset) | B1 `Low Cut` / `LOW`, B2 `Hi Cut` / `HI` |
 | Beat Grid | S1 `Slot` / `SLOT` (`Slot 1` reset) | B1 `Mode` / `>>`, B2 `Video` / `VIDEO` |
+| Beat Brake | S1 `Strength` / `STR` (`50%` reset), S2 `Pattern` / `PAT` (`Pat 1` reset), S3 `Bars` / `BARS` (`2 bars` reset), S4 `HPF` / `HPF` (`Off` reset) | B1 `Quantize` / `QUANT` |
+| BrakeStart | S1 `Length` / `LEN` (`2.76 s` reset) | B1 `Restart Play` / `RESTART` |
+| Choppa | S1 `Strength` / `STR` (`100%` reset), S2 `Length` / `LEN` (`Pat 1` reset), S3 `Invert` / `INV` (`Off` reset) | B1 `Quantize` / `QUANT` |
+| Cut | S1 `Strength` / `STR` (`52%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Duty` / `DUTY` (`50%` reset), S4 `Swing` / `SWING` (`0%` reset) | B1 `Low Cut` / `LOW`, B2 `High Cut` / `HIGH`, B3 `Mute Beats` / `INV`, B4 `Video` / `VIDEO` |
+| Cyclone | S1 `Strength` / `STR` (`50%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Delay` / `DELAY` (`203 ms` reset) | 0 |
+| Delay | S1 `Strength` / `STR` (`52%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Swing` / `SWING` (`0%` reset), S4 `LR Ratio` / `LR` (`0%` reset) | B1 `Low Cut` / `LC`, B2 `High Cut` / `HC` |
 
 For Flanger, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `2`; the corresponding four slider pads and two button pads were the only positions reported by `effect_has_*`. The GUI labels matched the helper map, including the non-obvious `Speed` / `LEN` full/short pair. The fixture's by-name default pad was still hardcoded to `Backspin`, so its displayed `0.5` is not evidence for Flanger's normalized default.
 
@@ -1096,6 +1102,18 @@ For Echo, `get_effect_slider_count` returned `6` and `get_effect_button_count` r
 For Reverb, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `2`; all positions matched the visible GUI controls. The fixture directly confirmed S1 `Strength` / `STR` and B1 `Low Cut` / `LOW`; the GUI supplied the full labels for the remaining controls. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Reverb's normalized default.
 
 For Beat Grid, `get_effect_slider_count` returned `1` and `get_effect_button_count` returned `2`; all positions matched the visible GUI. S1 selects the displayed pattern slot and reset changed its readback from `Slot 3` to `Slot 1`. B1 `Mode` corresponds to the GUI's `SNGL` / `CONT` mode control, and B2 is `Video`. The exact selector name includes a space: `effect_select 1 'Beat Grid'`; the fixture's earlier `'BeatGrid'` call left the previous effect selected. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Beat Grid's normalized default.
+
+For Beat Brake, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `1`; the corresponding positions were the only ones reported by `effect_has_*`. The fixture directly confirmed S1 `Strength` / `STR` and B1 `Quantize` / `QUANT`; the GUI supplied the remaining full labels and matched the reset readbacks. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Beat Brake's normalized default.
+
+For BrakeStart, `get_effect_slider_count` returned `1` and `get_effect_button_count` returned `1`; both positions matched the visible GUI. The fixture and GUI agreed on S1 `Length` / `LEN` (`2.76 s` reset) and B1 `Restart Play` / `RESTART`. The selected effect name and popup both use `BrakeStart`, correcting the stale `Break Start` spelling in the native-effects catalog. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for BrakeStart's normalized default.
+
+For Choppa, `get_effect_slider_count` returned `3` and `get_effect_button_count` returned `1`; all positions matched the visible GUI. The controls were S1 `Strength` / `STR` (`100%` reset), S2 `Length` / `LEN` (`Pat 1` reset), S3 `Invert` / `INV` (`Off` reset), and B1 `Quantize` / `QUANT`. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Choppa's normalized default.
+
+For Cut, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `4`; all positions matched the visible GUI. The fixture directly confirmed S1 `Strength` / `STR` and B1 `Low Cut` / `LOW`; the GUI supplied the remaining full labels. The non-obvious B3 mapping is `Mute Beats` / `INV`. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Cut's normalized default.
+
+For Cyclone, `get_effect_slider_count` returned `3` and `get_effect_button_count` returned `0`; all positions matched the visible GUI. The controls were S1 `Strength` / `STR` (`50%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), and S3 `Delay` / `DELAY` (`203 ms` reset). The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Cyclone's normalized default.
+
+For Delay, `get_effect_slider_count` returned `4` and `get_effect_button_count` returned `2`; all positions matched the visible GUI. The controls were S1 `Strength` / `STR` (`52%` reset), S2 `Length` / `LEN` (`1/2 bt` reset), S3 `Swing` / `SWING` (`0%` reset), S4 `LR Ratio` / `LR` (`0%` reset), B1 `Low Cut` / `LC`, and B2 `High Cut` / `HC`. The fixture's by-name default pad remained hardcoded to `Backspin`, so its `0.5` is not evidence for Delay's normalized default.
 
 Built-in desktop skins use this pattern for slot controls:
 

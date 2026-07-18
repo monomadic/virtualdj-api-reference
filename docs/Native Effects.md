@@ -12,7 +12,7 @@ Comprehensive list of all native audio and video effects, video transitions, and
 | **Beat Brake**     | Applies a brake/slowdown effect synchronized to beats  |
 | **BeatGrid**       | Beat-synchronized slicer effect using the beatgrid     |
 | **Brake**          | Simulates slowing down/stopping like a turntable brake |
-| **Break Start**    | Jump start effect for track beginnings                 |
+| **BrakeStart**     | Jump start effect for track beginnings                 |
 | **Flippin Double** | Doubles every beat for rapid-fire transitions          |
 | **Loop Out**       | Creates a loop that fades out                          |
 | **Loop Roll**      | Temporary loop that releases back to original position |
