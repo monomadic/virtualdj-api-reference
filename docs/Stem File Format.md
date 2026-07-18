@@ -124,10 +124,11 @@ Practical rules:
 - **Match the original file's sample rate** (see next section) — this is a
   playback contract, not a preference.
 - AAC is what VirtualDJ itself writes, but it is **not required**: `Local
-  test` (2026-07-18, tone probes) confirmed sidecars with **FLAC** streams
-  and with **ALAC** streams both load and play correctly in VirtualDJ 2026.
-  This enables lossless prepared stems and does not appear to be documented
-  anywhere else. FLAC is the natural choice (Matroska-native, smaller).
+  test` (2026-07-18, tone probes) confirmed sidecars with **FLAC (16- and
+  24-bit)**, **ALAC**, and **PCM** streams all load and play correctly in
+  VirtualDJ 2026. This enables lossless prepared stems and does not appear
+  to be documented anywhere else. FLAC is the natural choice
+  (Matroska-native, smaller); the decoder is evidently plain libavformat.
 
 ## Sample Rate Contract
 
@@ -317,7 +318,7 @@ recipe:
 | Streams | exactly 6, order: `mixed track`, `vocal`, `hihat`, `bass`, `instruments`, `kick` |
 | Track names | per-track `udta` `name` atoms (MP4Box `-udta N:type=name:str=...`) |
 | Disposition | stream 0 (`mixed track`) default; all stems non-default |
-| Codec | AAC-LC 320k or ALAC, 44.1 kHz stereo. ALAC must be **16-bit (s16p) on every stream** — `Local test` 2026: an s32p master plays stuttery with pitch artifacts; the identical all-s16p file plays perfectly |
+| Codec | AAC-LC 320k, ALAC, or FLAC, 44.1 kHz stereo. ALAC must be **16-bit (s16p) on every stream** — `Local test` 2026: an s32p master plays stuttery with pitch artifacts; the identical all-s16p file plays perfectly. FLAC requires the plain `mp4` muxer (ffmpeg `-f mp4 -strict experimental`; the ipod/`.m4a` muxer refuses it) |
 | iTunes tags | `tool=VirtualDJ <version>` (itags) |
 
 `Inference`: The per-track `udta` `name` atoms are the safer role signal in
@@ -387,6 +388,11 @@ a distinct sine, so routing is audible; harness:
 | Sidecar with **ALAC** streams (stamped) | **Works** |
 | Standalone M4A in **ALAC** (stems s16p, master s32p) | **Broken** — loads but playback stutters with pitch artifacts, the same audible signature as a sample-rate mismatch |
 | Standalone M4A in **ALAC, all streams s16p** | **Works** — isolates the failure above to the 32-bit master: VirtualDJ's standalone ALAC playback is 16-bit only |
+| Sidecar with **PCM** (`pcm_s16le`) streams | **Works** |
+| Sidecar with **24-bit FLAC** streams | **Works** — the 16-bit limit applies only to standalone MP4 ALAC, not to the Matroska sidecar |
+| Sidecar stamped **`VirtualDJ 2025.8800.stems2`** (old version) | **Works**, and VirtualDJ did not regenerate or modify the file — the stamp check is version-tolerant |
+| Sidecar with **capitalized titles** (`Vocal`, `Hihat`, …) | **Works** — role matching is case-insensitive (stream order was also canonical, so order-vs-title precedence remains unseparated) |
+| Standalone MP4 with **six FLAC streams** | **Works** — lossless FLAC standalones are possible. Note the mux: ffmpeg's `.m4a`/ipod muxer refuses FLAC; force `-f mp4` (`-strict experimental`), then MP4Box processes it normally |
 
 ## Tagging Notes (MPEG-4 Standalone)
 
@@ -436,14 +442,15 @@ Superseded experiments are parked in `/Users/nom/config/config/zsh/_bin_quaranti
 
 ## Known Unknowns
 
-- Whether the exact `Writing application` version string matters, or any
-  `VirtualDJ <something>.stems2` value passes (only `2026.9336.stems2` was
-  tested; older corpus files carry `2025.8800.stems2` etc., so a version
-  range is clearly tolerated for reading).
-- Whether role-title matching is case-sensitive in every build.
-- Whether PCM sidecars also work (FLAC and ALAC confirmed; PCM untested).
-- Whether sidecar streams above 16-bit are safe (the 16-bit-only limit was
-  proven for standalone MP4 ALAC; FLAC sidecars were tested at 16-bit).
+The July 2026 tone-probe rounds closed every practical question (see the
+acceptance matrix). What remains is minor:
+
+- Role **order vs title precedence** in sidecars: every probe used canonical
+  order AND correct titles, so which one wins on a mismatch is unobserved.
+- Whether some future engine version bump makes VirtualDJ regenerate
+  old-stamped sidecars during library maintenance (the 2025-stamp probe was
+  not modified during normal load/play).
+- Behavior on other platforms (all tests: macOS, VirtualDJ 2026).
 - Whether VirtualDJ reads the freeform `initialkey` atom from standalone files.
 - What exactly distinguishes the fully-working M4A variant from the
   library-only variant (see the acceptance matrix) — `-brand isom` at the

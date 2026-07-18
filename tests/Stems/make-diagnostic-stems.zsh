@@ -237,7 +237,8 @@ MP4Box \
 print "  ✓ $OUT/DIAG-standalone-alac16.m4a"
 
 # ---------------------------------------------------------------------------
-# TODO task 8 probes — one variable each (see docs/Stem File Format.md)
+# Edge-case probes — one variable each; results recorded in the acceptance
+# matrix of docs/Stem File Format.md (all passed, 2026-07-18)
 # ---------------------------------------------------------------------------
 if command -v mkvpropedit >/dev/null 2>&1; then
   print "→ Building task-8 probes…"
