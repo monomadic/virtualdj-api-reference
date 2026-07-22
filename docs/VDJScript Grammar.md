@@ -28,9 +28,14 @@ and not writing script, you can stop after this section.
   `on ? 'A' : 'B'` errors. Neither branch may be empty.
 - **Quote any argument containing a space.** `'Beat Grid'` works, bare `Beat Grid` does
   not. Single and double quotes are equivalent; quotes are optional for single tokens.
-- **`&&` is boolean AND and short-circuits hard**: if the left side is false the whole
-  script returns `no` and a following ternary never runs. Use a plain ternary instead.
+- **`&&` never guards an action.** `cond && do_thing` runs `do_thing` whatever `cond` is.
+  The only guard is a ternary: `cond ? do_thing : nothing`.
+- **Store numbers in variables, never strings.** A string-valued variable cannot be read
+  back (`get_var` returns blank) *or* compared (`var_equal` returns `yes` against
+  everything). Use numeric codes.
 - **Backticks only interpolate in XML attribute contexts**, not everywhere.
+- **There are no comments.** `//`, `#`, `;`, `--`, `/* */` all silently discard the rest of
+  the statement.
 - **Variable prefixes are part of the name.** `mode` and `$mode` are different variables.
   `$` = global, `@` = persists across restarts, bare = deck-local.
 - In XML, `&` must be written `&amp;`.
@@ -43,6 +48,9 @@ and not writing script, you can stop after this section.
 - [Conditionals](#conditionals)
 - [Boolean composition with `&&`](#boolean-composition-with-)
 - [Arguments and quoting](#arguments-and-quoting)
+- [Variables hold numbers, not strings](#variables-hold-numbers-not-strings)
+- [There is no comment syntax](#there-is-no-comment-syntax)
+- [Chains have a silent length ceiling](#chains-have-a-silent-length-ceiling)
 - [Backticks are a surface feature, not a parser feature](#backticks-are-a-surface-feature-not-a-parser-feature)
 - [Variable scope prefixes](#variable-scope-prefixes)
 - [Deck and scope wrappers](#deck-and-scope-wrappers)
@@ -115,12 +123,30 @@ cleanup & cond ? action_a : action_b     # correct: cleanup always runs
 cond ? action_a : action_b & cleanup     # WRONG: cleanup is part of the false branch
 ```
 
+**Each branch takes its whole chain** (`HTTP`). With chains on both sides, the taken branch
+runs all of it and the other runs none — the trailing-chain rule above is specifically
+about a chain that follows the *last* branch, not about chains in general:
+
+```vdjscript
+on  ? set '$a' 1 & set '$b' 1 : set '$c' 1 & set '$d' 1   # -> a=1 b=1, c=0 d=0
+off ? set '$a' 1 & set '$b' 1 : set '$c' 1 & set '$d' 1   # -> a=0 b=0, c=1 d=1
+```
+
 **Nesting associates the standard way** (`Pad`, `HTTP`): `a ? b ? c : d : e` parses as
 `a ? (b ? c : d) : e`, so clamped selection composes safely.
 
 ```vdjscript
 var_equal '$phrase_len' 16 ? phrase_sync 16 : phrase_sync 32
 ```
+
+**`nothing` is the correct null branch for actions** (`HTTP`). A ternary is the only
+construct that actually guards an action:
+
+```vdjscript
+var_equal '$mode' 1 ? do_thing : nothing
+```
+
+In *query* position `nothing` has no value and errors, so this idiom is action-only.
 
 **Branches must be verbs and must not be empty** (`HTTP`):
 
@@ -150,8 +176,21 @@ normally because the false branch is never taken. Do not rely on that.
 | `off ? get_version : get_clock` | `02:15 PM` | plain ternary is fine |
 
 A false *left* operand aborts the whole script and yields `no`; the conditional is
-discarded. A false right operand behaves normally. Unless you have tested the exact shape,
-prefer a plain ternary or a nested one over `&&` in front of a conditional.
+discarded. A false right operand behaves normally.
+
+**In action position `&&` does not guard anything** (`HTTP`). This is the dangerous half:
+
+| Script | `$a` after |
+| --- | --- |
+| `off && set '$a' 1` | **1** |
+| `var_equal '$x' 999 && set '$a' 1` (with `$x`=0, so false) | **1** |
+| `var_equal '$x' 0 && set '$a' 1` (true) | 1 |
+| `var_equal '$x' 999 ? set '$a' 1 : nothing` | 0 |
+
+`&&` in front of an action behaves exactly like `&`: both sides run regardless. Anyone
+writing `condition && action` expecting a guard gets the action unconditionally, with no
+error. **Use a ternary with a `nothing` false branch.** Treat `&&` as a query-composition
+operator only, and prefer a plain ternary even there.
 
 ## Arguments and quoting
 
@@ -170,9 +209,75 @@ get_effect_title Beat Grid      -> ''        <- silently wrong
 The unquoted multi-word case is the trap: it does not error, it returns nothing. Quote
 every string argument as a habit.
 
+That equivalence holds for a string argument being *matched* (an effect name). It does not
+hold for a **value** being stored, where quoting decides the type — see
+[Variables hold numbers, not strings](#variables-hold-numbers-not-strings). `on` and `off`
+are real constants that evaluate to `yes`/`no`; `true` and `false` are **not** — they store
+nothing (`HTTP`).
+
 Argument *matching* is a per-verb matter, not grammar — effect names are case-insensitive
 but not space-insensitive, some verbs require a signed number, some ignore computed
 values. Those live on the verb record: `just get-verb <name>`.
+
+## Variables hold numbers, not strings
+
+A numeric or boolean variable round-trips correctly, and quoting distinguishes the types —
+`5` and `'5'` are different values (`HTTP`):
+
+```
+set '$v' 5    ->  get_var 'yes'/5     var_equal '$v' 5 -> yes    var_equal '$v' '5' -> no
+set '$v' on   ->  get_var yes         var_equal '$v' on -> yes
+```
+
+A **string** variable is effectively write-only. It cannot be read and it cannot be
+compared (`HTTP`, `$v` set to `'apple'`):
+
+| Read attempt | Result |
+| --- | --- |
+| `get_var '$v'` | `''` — blank, as it is in pad labels too (`Pad`) |
+| `var_equal '$v' 'apple'` | `yes` |
+| `var_equal '$v' 'banana'` | `yes` ← wrong |
+| `var_equal '$v' banana` | `yes` ← wrong |
+
+Once a variable holds a string, `var_equal` returns `yes` against *anything*. So a
+string-keyed branch is not just unreadable, it takes the true branch every time and looks
+like it works.
+
+**Store numeric codes and branch on those.** `set '$mode' 2` with
+`var_equal '$mode' 2 ? … : …`, never `set '$mode' 'reverb'`.
+
+`true` and `false` are not constants — `set '$v' true` stores nothing. Use `on`/`off` or
+`1`/`0`.
+
+## There is no comment syntax
+
+Every common comment marker is accepted and **silently discards the rest of the statement**
+(`HTTP` — in each case `$a` was set and `$b` was not):
+
+```vdjscript
+set '$a' 1 // set '$b' 1      set '$a' 1 # set '$b' 1     set '$a' 1 ; set '$b' 1
+set '$a' 1 -- set '$b' 1      set '$a' 1 /*x*/ set '$b' 1
+```
+
+There is no way to annotate script inline. Put explanation in the surrounding XML comment
+(`<!-- … -->`) or in the file that documents the page.
+
+## Chains have a silent length ceiling
+
+A long chain does not truncate — past a certain size **nothing in it runs at all**, first
+statement included, and `execute` still reports success (`HTTP`).
+
+| Chain | Result |
+| --- | --- |
+| 142 `set` statements, 2579 chars | all ran |
+| 152 `set` statements, 2769 chars | **none ran** |
+| 302 cheap statements, 3029 chars | all ran |
+| 402 cheap statements, 4029 chars | **none ran** |
+
+The boundary moves with statement content, so it is neither a pure character count nor a
+pure statement count — treat a few hundred statements as the practical ceiling and do not
+build generated chains near it. Identical behaviour on GET and POST, so it is a VDJScript
+limit and not a URL-length artefact.
 
 ## Backticks are a surface feature, not a parser feature
 
@@ -270,15 +375,18 @@ answers are visibly different — that is why the examples above use `get_versio
 
 Do not guess in these gaps; test and record.
 
-- **Branch extent with chains on both sides**: `play ? a & b : c & d` — whether the true
-  branch takes the whole `a & b`.
-- **`&&` in action (non-query) position** — everything above is query-context evidence.
-- **Operator-lookalike arguments**: verbs or parameters named `on`, `off`, `true`, `false`,
-  `nothing` in argument position, where a constant and a value collide.
-- **Backtick boundaries in nested quoting**: `` param_equal "`get_text 'x'`" "x" ? on : off ``.
-- **`while_pressed` and other trailing modifiers** — placement rules relative to `&` and `?`.
-- **Comment syntax**, if any exists.
-- **Statement count limits** and whether long `&` chains are truncated.
+- **`while_pressed` release behaviour.** It is accepted both trailing and mid-chain, and
+  mid-chain it does not block the rest (`set '$a' 1 while_pressed & set '$b' 1` set both,
+  `HTTP`). What happens on *release* cannot be tested over HTTP — there is no press — so
+  the modifier's actual semantics still need a pad or mapper run.
+- **Backtick boundaries in nested quoting**: `` param_equal "`get_text 'x'`" "x" ? on : off ``
+  — and more usefully, which surfaces interpolate backticks at all, since HTTP does not.
+- **The exact chain ceiling** and what drives it (parse buffer? execution budget?).
+- **Whether `&&`'s query-position short-circuit is deliberate** or a parse artefact — the
+  action-position behaviour suggests `&&` may simply not be a distinct operator.
+- **Operator-lookalike names in verb argument position**, e.g. a verb whose parameter is
+  literally `on`, where a constant and a value collide. `set` is settled; other verbs are not.
+
 
 Recording an answer: put the observation in
 [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md) with the build and

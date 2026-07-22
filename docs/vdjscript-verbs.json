@@ -3,22 +3,22 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 993,
+   "total": 994,
    "by_tier": {
     "alias": 59,
     "catalog": 641,
     "curated": 142,
     "official-name-only": 149,
-    "unofficial": 2
+    "unofficial": 3
    },
    "by_test_status": {
-    "Fail": 1,
-    "Partial": 7,
-    "Pass": 31,
-    "Untested": 954
+    "Fail": 2,
+    "Partial": 9,
+    "Pass": 32,
+    "Untested": 951
    },
    "documented": 764,
-   "tested_pass": 31,
+   "tested_pass": 32,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -6284,14 +6284,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns blank for string-valued variables (matches the earlier pad-label observation), correct for numeric/boolean. Combined with var_equal's string behavior, a string variable is effectively write-only."
+   ],
    "section": "Variables",
    "description": "Get variable value",
    "example": "get_var \"varname\"",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_vdj_folder": {
    "name": "get_vdj_folder",
@@ -12235,14 +12238,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): 'set $v on' stores yes and 'set $v off' stores no, but 'true'/'false' are NOT constants and store nothing. Quoting decides type: 5 and '5' are different values. Storing a string makes the variable unreadable and uncomparable — use numeric codes."
+   ],
    "section": "Variables",
    "description": "Set variable value",
    "example": "set 'varname' 5",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "set_bpm": {
    "name": "set_bpm",
@@ -13780,13 +13786,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): UNSAFE for string-valued variables — once a variable holds a string, var_equal returns 'yes' against every comparand ('apple' vs 'banana' vs bare banana all yes), so a string-keyed branch always takes the true branch and looks like it works. Correct for numeric/boolean values, where quoting is significant: with $v=5, 'var_equal $v 5'=yes but 'var_equal $v \"5\"'=no. Store numeric codes."
+   ],
    "section": "Variables",
    "description": "Check equality",
-   "example": "var_equal '$MyVar' 1 ? action1 : action2"
+   "example": "var_equal '$MyVar' 1 ? action1 : action2",
+   "confidence": "local_test"
   },
   "var_greater": {
    "name": "var_greater",
@@ -14245,6 +14254,22 @@
    "section": "Scratch & Jogwheel",
    "description": "Change wheel mode",
    "example": "wheel_mode +1"
+  },
+  "while_pressed": {
+   "name": "while_pressed",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Partial",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): a trailing modifier, not a verb — accepted both trailing ('set $a 1 while_pressed') and mid-chain, and mid-chain it does not block the rest of the chain (both statements ran). Release behavior is untestable over HTTP (no press/release), so its actual semantics still need a pad or mapper run."
+   ],
+   "confidence": "local_test",
+   "kind": "modifier",
+   "section": "Grammar"
   },
   "yes": {
    "name": "yes",

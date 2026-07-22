@@ -332,3 +332,28 @@ Do not promote these into ordinary user-facing verb guidance until a row has a c
 | Verb | Why local test | Likely surface/context | Suggested minimal repro | VirtualDJ build | Hardware | Result | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | `karaoke_venue_name` | Sparse karaoke helper; source of value and empty-state behavior need confirmation. | Karaoke skin text/query, karaoke options/config. | Set/clear the venue name in karaoke options, display `` `karaoke_venue_name` ``, and record value, fallback text, and whether changes update live. | v2026-m b9336 | None required | Pass | Empty venue returns blank after `KARAOKE:`. Pressing the pad opens the Karaoke menu; Venue Name dialog sets the value; clearing the venue returns to blank. |
+
+## Grammar Battery Over HTTP
+
+VirtualDJ 2026, HTTP control interface, 2026-07-22. Global variables (`$zz_*`) as
+observable side effects: reset to 0, execute the script, read back with `get_var`. This
+reproduces the pad [Grammar Battery](../tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml)
+without a fixture or manual reading. Settled rules are written up in
+[VDJScript Grammar](VDJScript%20Grammar.md); this table is the run record.
+
+| Question | Script | Observed | Result |
+| --- | --- | --- | --- |
+| Branch extent, chains both sides | `on ? set a & set b : set c & set d` | `a=1 b=1 c=0 d=0`; with `off`, `0011` | Pass — each branch takes its whole chain |
+| Trailing `&` binding (cross-surface check) | `on ? set a : set b & set c` | `1000`; with `off`, `0110` | Pass — reproduces the pad result exactly, so the rule is parser-level not surface-level |
+| Leading `&` split (cross-surface check) | `set a & on ? set b : set c` | `1100`; with `off`, `1010` | Pass — reproduces the pad result |
+| `&&` in action position | `off && set a` | `a=1` | **Fail as a guard** — action runs regardless; same for a false `var_equal`. `&&` behaves as `&` here |
+| Correct action guard | `var_equal '$x' 999 ? set a : nothing` | `a=0` when false, `1` when true | Pass — ternary is the only guard; `nothing` is a valid action-position null branch |
+| Constants in value position | `set '$v' on` / `off` / `true` / `false` | `yes` / `no` / `''` / `''` | Pass — `on`/`off` are constants, `true`/`false` are not |
+| String variable readback | `set '$v' 'apple'` then `get_var`/`var_equal` | `get_var`=`''`; `var_equal` = `yes` vs `'apple'`, `'banana'`, bare `banana` | **Fail** — string variables are write-only: unreadable and uncomparable; `var_equal` matches anything |
+| Numeric variable readback | `set '$v' 5` | `var_equal '$v' 5`=yes, `'5'`=no, `7`=no | Pass — quoting is type-significant |
+| Comment syntax | `set a 1 // set b 1`, and `#`, `;`, `--`, `/*x*/` | `a=1 b=0` in all five | Pass (negative) — no comment syntax; every marker silently discards the rest of the statement |
+| Chain length ceiling | 142 vs 152 `set` statements; 302 vs 402 cheap statements | 142 and 302 all ran; 152 and 402 ran **nothing at all**, `execute` still `true` | Partial — a ceiling exists and failure is total, not truncating; boundary moves with statement content. Identical on GET and POST, so not a URL artefact |
+| `while_pressed` placement | `set a 1 while_pressed & set b 1` | `a=1 b=1` | Partial — accepted trailing and mid-chain, does not block the chain; release behavior untestable over HTTP |
+
+Side effect: this run leaves `$zz_*` session globals set. They are session-scoped and clear
+on VirtualDJ restart.
