@@ -196,8 +196,11 @@ def main():
         "installed_reachable_count": len(effects),
         "failed_by_name": failed_by_name,
         "note": "Pass A cycled the enabled/favorites list (effect_select +1). Pass B added "
-                "by-name catalog entries. 'failed_by_name' did not load into an audio deck-FX "
-                "slot (video-only or not installed). Slider text is live value, not reset/default; "
+                "by-name catalog entries. NOTE: slot 1 accepts video effects by name (Blinds, "
+                "Cube, Camera all load and report controls), so this set mixes audio and video "
+                "effects — 'reachable' does not mean 'audio effect'. 'failed_by_name' names did "
+                "not load at all; the reason is unresolved (not installed, or not the selector "
+                "name) and is NOT 'video-only'. Slider text is a live value, not a reset/default; "
                 "labels and counts are state-independent. Names are installed selector names.",
         "effects": effects,
     }

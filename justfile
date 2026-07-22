@@ -73,6 +73,11 @@ verb-index:
 verb *args:
     @python3 tools/verbdb.py {{args}}
 
+# Native effects catalog (swept via the HTTP interface). `just fx <cmd> ...`:
+#   get <effect> | search [term] [--min-sliders=N --has-button=X --format=json] | stats
+fx *args:
+    @python3 tools/fxdb.py {{args}}
+
 lint-skins *paths:
     python3 tools/lint_skins.py {{paths}}
 
@@ -85,6 +90,7 @@ check:
     python3 tools/lint_mappers.py
     python3 tools/extract_verb_index.py --check
     python3 tools/verbdb.py check
+    python3 tools/fxdb.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check

@@ -39,7 +39,8 @@ Remaining:
 - Add richer record fields as needed by contracts (`forms`, `platforms`, `deck_scope`); `put` currently covers the scalar/list fields, nested contract detail is hand-edited in the JSON.
 - Grow the query layer where a real question is awkward to ask (e.g. verbs by evidence source, or by presence of a local-test note).
 - The monolith still holds the authored prose. Retiring it follows the frozen plan's phased, one-family-at-a-time migration; do not delete hand-authored docs ahead of that.
-- Ingest [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json) as queryable effect data (distinct from verb records; see task 1).
+
+Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just fx get|search|stats` answers slider/button questions straight from the sweep artifact, gated by `fxdb.py check` in `just check`. No Markdown copy — same rule as the verb store.
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
@@ -52,7 +53,9 @@ Structural sweep DONE (2026-07-22, VirtualDJ 2026, HTTP interface): [tools/sweep
 Remaining:
 
 - Normalized slider **defaults** (`get_effect_slider_default '<effect>' <fallback>`) and reset-value text — needs a per-slider reset pass; extend the sweep script with a defaults pass.
-- The `video` and `transition` targets (the dump covers audio deck-FX slot 1 only).
+- **Audio-vs-video classification.** Slot 1 accepts video effects by name (`Blinds`, `Cube`, `Camera` all load and report controls), so the 95 swept effects mix both and the sweep cannot currently tell them apart. Find a discriminator (a `video`-target query, or the effect's own metadata) and record it per effect.
+- Resolve why `Brake` and `Shader` do not load under any spelling — reason is unresolved, and "video-only" is ruled out by the video effects that do load.
+- The `video` and `transition` targets (the dump covers deck-FX slot 1 only).
 - **Promotion is deferred to TODO task 0**: the verb-store bootstrap ingests `tests/fx-introspection-dump.json` mechanically instead of hand-writing 95 rows into `Effects Engines.md`. Do not hand-transcribe the dump.
 
 Start here:

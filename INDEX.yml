@@ -47,6 +47,12 @@ fx:
     - docs/Effects Usage.md
     - docs/Effects Engines.md
     - docs/Native Effects.md
+  catalog_data:
+    - tests/fx-introspection-dump.json
+  commands:
+    - just fx get EFFECT
+    - just fx search [--has-button=X --min-sliders=N --format=json]
+    - just fx stats
   fixtures:
     - tests/Pads/Reference - FX Introspection Test.xml
     - tests/Pads/Reference - FX Bank Test.xml
