@@ -2,7 +2,11 @@
 
 This repo is already complete for official VDJScript name searchability. The remaining work is behavior depth: turning official names, bundled-resource hints, shipped XML examples, and local observations into reproducible, source-labeled guidance.
 
-Use this file to choose the next evidence pass. Record detailed run results in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md), then promote stable conclusions into [VDJScript Verbs](VDJScript%20Verbs.md), [VirtualDJ Reference](VirtualDJ%20Reference.md), or the relevant topical file.
+Status (2026-07-22): **frozen snapshot.** The active queue is [TODO.md](../TODO.md); do not
+refresh, reorder, or re-scope this file until a listed area actually completes. It remains
+useful as the map of evidence tiers and hardware gates.
+
+Use this file as background when choosing an evidence pass. Record detailed run results in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md), then promote stable conclusions into [VDJScript Verbs](VDJScript%20Verbs.md), [VirtualDJ Reference](VirtualDJ%20Reference.md), or the relevant topical file.
 
 ## Current Snapshot
 

@@ -12,27 +12,56 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 - Record manual VirtualDJ observations in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md).
 - Promote stable conclusions into the topical docs named by the task.
 - Run `just check` after documentation, fixture, or status edits.
+- `Read first` lists are section-scoped: read only the named rows/sections. Use `just find-verb <name>` for verb lookups instead of opening `docs/VDJScript Verbs.md`.
+- [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) and [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md) are frozen design references. Do not refresh, reorder, or re-scope them; this file is the only active queue.
 
 ## Ready Tasks
 
-Tasks 1-4 are one FX cluster: they share the same VirtualDJ session, the same deck-FX context, and the same `name=`-interpolation readback technique (proven on v2026-m b9482 — `debug` logs backtick expressions literally, so exact strings must be read via `name=`). Batch them into one local-test session where possible.
+### 0. Build The Verb Record Store And `just` Data API
+
+Status: Ready
+
+This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs rewrite cycle with one small record edit plus regeneration, and it lets future agents query verb state without loading the 6,300-line monolith. It executes Phase 0 of [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) (frozen design reference) with one addition: the store is fronted by a stable `just` command surface, so the storage format underneath can change later without retraining agents or editing entrypoint docs.
+
+Shape:
+
+- One record per verb in a structured store (suggested: one small YAML file per verb under `docs/VDJScript/records/`). Fields: union of the existing index keys (`tier`, `section`, `description`, `example`, `aliases`, `kind`, `surfaces`, `canonical`, `official`) and the plan's contract keys (`forms`, `needs_test`, `confidence`, `platforms`, `deck_scope`), plus a test-status field using the tracker vocabulary (`Untested`/`Partial`/`Pass`/`Fail`).
+- Bootstrap the records mechanically from the existing generated index `docs/vdjscript-verb-index.json`, the audit's official-name and `Needs Local Test` lists, and the tracker's status tables — no hand migration of 991 records.
+- A `tools/verbdb.py` (or an extension of `tools/extract_verb_index.py`, which already owns the per-verb record model and merge logic) fronted by `just` recipes: `just verb get <name>`, `just verb put <name> <field>=<value>...`, `just verb next-incomplete`, `just verb stats` (total/complete/incomplete, per tier and per status), `just verb search <term>`.
+- Generation replaces promotion: the same tool regenerates the derived Markdown views (alias index, family rows, coverage counts) so `Record results in` / `Promote to` collapse to `just verb put` + regenerate. Wire a staleness `--check` into `just check`, following the existing `extract_verb_index.py --check` pattern.
+
+Done when:
+
+- Records exist for all official names, bootstrapped from the current index/audit/tracker, and `just verb get/put/next-incomplete/stats/search` work against them.
+- The generated views are byte-stable under `--check` and `just check` stays green.
+- `AGENTS.md` and `INDEX.yml` point verb lookups at the `just verb` surface.
+- Existing hand-authored docs are not deleted in this pass; retiring monolith sections follows the frozen plan's phased migration, one family at a time.
+
+Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
 Status: Ready
 
-In progress. Already done (v2026-m b9482): the fixture passed for deck FX slot 1, both overloaded `get_effect_slider_default` forms are resolved, the label/shortname family split is recorded, and the per-effect map in `Effects Engines.md` has its first entry (Backspin). What remains is the mechanical sweep: the rest of the native effects catalog, then the `video` and `transition` targets.
+Structural sweep DONE (2026-07-22, VirtualDJ 2026, HTTP interface): [tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured slider/button counts, short+full labels, and live value text for all 95 effects reachable into an audio deck-FX slot → [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json). Spot-check reproduced the prior hand map exactly. Finding: the `effect_select +1` cycle is only the enabled subset (63); the full installed set is larger and name-reachable. Both overloaded `get_effect_slider_default` forms were already resolved (v2026-m b9482).
+
+Remaining:
+
+- Normalized slider **defaults** (`get_effect_slider_default '<effect>' <fallback>`) and reset-value text — needs a per-slider reset pass; extend the sweep script with a defaults pass.
+- The `video` and `transition` targets (the dump covers audio deck-FX slot 1 only).
+- **Promotion is deferred to TODO task 0**: the verb-store bootstrap ingests `tests/fx-introspection-dump.json` mechanically instead of hand-writing 95 rows into `Effects Engines.md`. Do not hand-transcribe the dump.
 
 Start here:
 
-- [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml)
+- Regenerate/extend: `python3 tools/sweep_fx_introspection.py` (needs `just vdj-up` green)
+- [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml) (pad-surface checks only)
 - [docs/Effects Engines.md](docs/Effects%20Engines.md) (per-effect map section)
 
 Read first:
 
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (FX Helpers rows for the established method)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (FX Helpers rows only, for the established method)
 - [docs/Effects Usage.md](docs/Effects%20Usage.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+- `just find-verb get_effect_slider_default` and `just find-verb effect_slider` for the verb rows
 
 Record results in:
 
@@ -60,8 +89,8 @@ Start here:
 
 Read first:
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md) (bank save/load rows only — `rg -n effect_bank`)
+- `just find-verb effect_bank_save`
 
 Record results in:
 
@@ -86,7 +115,7 @@ Start here:
 
 Read first:
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md) (release-FX rows only — `rg -n releaseslider`)
 - [docs/Effects Usage.md](docs/Effects%20Usage.md)
 
 Record results in:
@@ -112,7 +141,7 @@ Start here:
 
 Read first:
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
+- [docs/Effects Engines.md](docs/Effects%20Engines.md) (BeatGrid and `effect_command` rows only — `rg -n effect_command`)
 - [docs/Native Effects.md](docs/Native%20Effects.md)
 
 Record results in:
@@ -158,7 +187,7 @@ Read first:
 
 - [docs/Button Editor Catalog Audit.md](docs/Button%20Editor%20Catalog%20Audit.md)
 - [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (hidden-candidate probe table only)
 
 Record results in:
 
@@ -187,8 +216,7 @@ Start here:
 
 Read first:
 
-- [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md)
-- [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md)
+- [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md) (the `dualdeckmode` rows only)
 
 Record results in:
 
@@ -215,6 +243,5 @@ Done when:
 
 ## Parking Lot
 
-- Consolidation plan Phase 0: build the family-row generators/checker described in [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) by extending `tools/extract_verb_index.py`. No VirtualDJ or hardware needed, so it is a good fit for a session without a live install — but the behavior-evidence queue above outranks restructuring.
 - `system`: revisit only if an official example, bundled-resource context, or clearly harmless parameter appears.
 - Skin `visual type` canaries: do after the current no-hardware VDJScript evidence queue unless a skin-specific question makes it urgent.

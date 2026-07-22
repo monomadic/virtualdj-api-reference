@@ -74,6 +74,9 @@ Start here:
 - [Documentation Tests](../tests/README.md)
   Reproducible local test harnesses used to support reference claims.
 
+- [HTTP Control Interface](HTTP%20Control%20Interface.md)
+  Local HTTP execute/query channel for VDJScript: endpoints, verified request/response behavior, gotchas, and the `just vdj-query` / `just vdj-execute` probe workflow. The preferred channel for local-test probes.
+
 - [Application Internals](Application%20Internals.md)
   Low-level macOS-first notes on VirtualDJ paths, databases, caches, stem sidecars, linked tracks, and shell tooling.
 
@@ -93,7 +96,7 @@ Current status:
 - `Undocumented VDJScript Candidates.md` tracks the 37 flag1-hidden non-official compiled taxonomy rows separately from the normal VDJScript API reference.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
-- `Completeness Roadmap.md` is the default place to choose the next evidence pass and keep incomplete areas visible.
+- `Completeness Roadmap.md` is a frozen snapshot of evidence tiers and hardware gates; the active queue is `TODO.md`.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Skin Runtime Findings.md` tracks local skin runtime behavior that should be shared across projects rather than kept in one skin repo.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.

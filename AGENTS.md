@@ -22,12 +22,19 @@ tests/README.md               — documentation test harnesses and reproducible 
 
 For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task.
 
-Search budget:
+## Session efficiency rules
 
-- Read the active task’s listed files, fixtures, and checks before running broad searches.
-- Prefer `INDEX.yml`, `just next-task`, `just find-verb <name>`, and path-scoped `rg` over repo-wide discovery.
-- Use broad repository-wide search only after the task route is insufficient or contradictory.
+Context load is the dominant cost in this repo. These rules outrank thoroughness:
+
+- **Never read the large docs end-to-end.** `docs/VDJScript Verbs.md` (~6,300 lines), `docs/Skin SDK.md` (~2,700 lines), `docs/Effects Engines.md`, `docs/VirtualDJ Reference.md`, and `docs/VDJScript Local Test Tracker.md` are section-addressed references. Read only the section a task names, or extract it with path-scoped `rg`/`awk`.
+- **Look verbs up through the tooling, not the monolith.** Use `just find-verb <name>` and the machine index `docs/vdjscript-verb-index.json` first. Open `VDJScript Verbs.md` only at the specific lines a search hit points to.
+- **Planning docs are frozen.** `docs/VDJScript Reference Consolidation Plan.md` and `docs/Completeness Roadmap.md` are design references, not active state. Do not refresh, reorder, or re-scope them; do not spend turns rewriting planning prose or reordering the TODO queue. `TODO.md` is the only active planning state, and it changes when a task completes or the user asks.
+- **Probe over HTTP first, fixtures second.** When VirtualDJ is running with the network interface enabled (`just vdj-up` to check), read values with `just vdj-query` instead of pad readback. Pad/skin fixtures remain necessary only for surface-specific behavior (rendering, pad context, skin runtime). Batch every probe a live session can carry, and prefer dump-style sweeps over one-question rounds.
+- **Delegate mechanical passes.** Transcribing observed values into tables, promoting settled tracker rows, and lint fixes are cheap-model subagent work; keep the main context for evidence interpretation and ambiguous calls.
+- Prefer `INDEX.yml`, `just next-task`, `just find-verb <name>`, and path-scoped `rg` over repo-wide discovery; broaden only after the task route proves insufficient or contradictory.
 - Keep volatile coverage counts sourced from `docs/Official VDJScript Coverage Audit.md`; do not repeat exact count summaries in entrypoint docs unless the checker intentionally enforces them.
+
+Direction of travel: verb facts are migrating into a structured record store fronted by `just` data recipes (`get`/`put`/`next-incomplete`/`stats`), with the Markdown views generated from it — see the first task in `TODO.md` and `docs/VDJScript Reference Consolidation Plan.md` for the design. Until that lands, the rules above are the interim discipline.
 
 ## What is here
 
@@ -39,6 +46,17 @@ examples/Samplerbanks/            — copied built-in sampler-bank XML (third XM
 tests/                       — documentation test harnesses, including pad XML fixtures
 docs/                   — Markdown documentation
 ```
+
+## Live probe channel: VirtualDJ HTTP interface
+
+When VirtualDJ is running with its network interface enabled, VDJScript can be executed and queried over plain HTTP on `http://localhost/` — no pad fixture or manual readback needed. This is the preferred channel for local-test probes. Full contract, verified behavior, and gotchas: [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md).
+
+- `just vdj-up` — reachability check; run it before planning any live-test work.
+- `just vdj-query 'get_effect_name 1'` — evaluate any VDJScript query; exact result string back. Read-only, use freely for sweeps.
+- `just vdj-execute 'effect_active 1'` — run an action; the body is the verb's own `true`/`false` result (not transport success — `nothing` returns `false`).
+- Unknown verbs return HTTP 200 with an `error:<code>` body; check the body, not the status.
+- Execute only verbs the current task names; never `system` or file/database-touching verbs through this channel.
+- Record HTTP-channel results in the tracker with the build, noting the channel.
 
 ## Key facts for AI agents
 

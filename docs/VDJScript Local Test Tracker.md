@@ -46,6 +46,17 @@ Follow-up:
 ## Test Run Log
 
 ```text
+Date: 2026-07-22
+VirtualDJ build: 2026 (get_version)
+Test asset: HTTP control interface (http://localhost/), tools/sweep_fx_introspection.py -> tests/fx-introspection-dump.json
+Account/deck/hardware state: no hardware; interface enabled; sweep drives deck-FX slot 1
+Steps: Pass A cycled effect_select 1 +1 until the name wrapped (enabled/favorites list). Pass B selected each documented catalog name plus every cycled name by name, using a 'Dump' sentinel park to detect non-loads, and read the introspection helpers (get_effect_name, get_effect_slider_count/button_count, effect_has_slider/button, get_effect_slider_label/label_full/name/text, get_effect_button_shortname) per position.
+Observed result: 95 effects reachable into an audio deck-FX slot and fully mapped (slider/button counts, short+full labels, live value text); 63 of them are in the +1 cycle (enabled list), the rest are name-only. The +1 cycle is a SUBSET of installed effects: Reverb/Flanger/Phaser and others are absent from the cycle but selectable by name. Names that did not load into an audio slot: 'BeatGrid' (wrong spelling; installed name is 'Beat Grid'), 'Brake' (no spelling loaded; video-only or absent), 'Shader' (video-only). Spot-check reproduced the prior hand-built map exactly for Backspin, Flanger (incl. the LEN/Speed pair), Echo, Reverb, Beat Grid, and Cut, confirming the HTTP channel matches pad-fixture readback.
+Tracker rows updated: FX introspection sweep (this entry)
+Follow-up: Structural map (labels/counts) captured for all 95 in the dump. NOT yet captured: normalized slider defaults (get_effect_slider_default) and reset-value text, which need a per-slider reset pass. Promotion of the dump into the per-effect map in Effects Engines.md is deferred to the verb-store bootstrap (TODO task 0), which will ingest tests/fx-introspection-dump.json mechanically rather than by hand.
+```
+
+```text
 Date: 2026-05-23
 VirtualDJ build: v2026-m b9336
 Test asset: Reference - Sparse Helper Tests.xml; shown in VirtualDJ as "Reference - Sparse Helper Tests"

@@ -7,10 +7,15 @@ guarantee and without inventing syntax along the way.
 This document practices what it preaches: it is short, it states rules instead of restating
 them per section, and it leaves the verbose, structured detail for the few places that earn it.
 
-Status (2026-07-14): not started beyond a partial Phase 0. `tools/extract_verb_index.py` and
-`just verb-index` already generate a staleness-checked per-verb index
-(`docs/vdjscript-verb-index.json`) from the monolith, and `just check` gates it. The
-`VDJScript/` tree (families, contracts, `generated/`) does not exist yet.
+Status (2026-07-22): **frozen design reference.** Do not refresh, reorder, or re-scope this
+document; update it only when a phase actually completes. Execution is tracked as the first
+task in `TODO.md`, which promotes Phase 0 with one addition: the record store is fronted by a
+stable `just` data-API surface (`just verb get/put/next-incomplete/stats/search`), so the
+storage format underneath can change without retraining agents. Prior status (2026-07-14):
+not started beyond a partial Phase 0 — `tools/extract_verb_index.py` and `just verb-index`
+already generate a staleness-checked per-verb index (`docs/vdjscript-verb-index.json`) from
+the monolith, and `just check` gates it. The `VDJScript/` tree (families, contracts,
+`generated/`) does not exist yet.
 
 ## Why change anything
 

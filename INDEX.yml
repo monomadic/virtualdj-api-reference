@@ -28,6 +28,14 @@ vdjscript:
     - just needs-test
     - just verb-index
 
+live_probe:
+  primary:
+    - docs/HTTP Control Interface.md
+  commands:
+    - just vdj-up
+    - just vdj-query 'SCRIPT'
+    - just vdj-execute 'SCRIPT'
+
 fx:
   primary:
     - docs/Effects Usage.md

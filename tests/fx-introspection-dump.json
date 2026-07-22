@@ -1,0 +1,4084 @@
+{
+  "source": "HTTP control interface (localhost)",
+  "channel": "execute effect_select (cycle +1 and by-name) + query introspection",
+  "vdj_version": "2026",
+  "slot": 1,
+  "cycle_enabled_count": 63,
+  "cycle_order": [
+    "Backspin",
+    "BrakeStart",
+    "Dump",
+    "Scratch DNA",
+    "VinylBrake",
+    "EQ10",
+    "MergeFX",
+    "Choppa",
+    "Cut",
+    "Mute",
+    "Pan",
+    "Ping Pong",
+    "Pumper",
+    "Stems",
+    "Cyclone",
+    "Delay",
+    "Down Echo",
+    "Ducking Echo",
+    "Echo",
+    "Echo Out",
+    "Helix",
+    "Hold Echo",
+    "Low Cut Echo",
+    "MT Delay",
+    "Up Echo",
+    "Rev Delay",
+    "FDR Filter",
+    "LFO Filter",
+    "Filter",
+    "Filter HP",
+    "Filter LP",
+    "Beat Brake",
+    "Beat Grid",
+    "FDR Roll",
+    "Flippin Double",
+    "Loop Out",
+    "Loop Roll",
+    "Matrix",
+    "Recycler",
+    "Rider",
+    "Riser",
+    "Slicer",
+    "Slip Roll",
+    "Stutter Out",
+    "Distortion",
+    "Enigma Jet",
+    "FDR Ring",
+    "Flanger",
+    "Noise",
+    "Phaser",
+    "Reverb",
+    "Wahwah",
+    "FDR Tone",
+    "Mobius",
+    "Mobius Saw",
+    "Mobius Tri",
+    "Spiral",
+    "FDR Pitch",
+    "Pitch",
+    "Pitch Down",
+    "Pitch Echo",
+    "Scale Down",
+    "Stretch"
+  ],
+  "installed_reachable_count": 95,
+  "failed_by_name": [
+    "BeatGrid",
+    "Brake",
+    "Shader"
+  ],
+  "note": "Pass A cycled the enabled/favorites list (effect_select +1). Pass B added by-name catalog entries. 'failed_by_name' did not load into an audio deck-FX slot (video-only or not installed). Slider text is live value, not reset/default; labels and counts are state-independent. Names are installed selector names.",
+  "effects": [
+    {
+      "effect": "Additive",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Additive"
+        ]
+      }
+    },
+    {
+      "effect": "Backspin",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "0%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "4 bt"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "BackSpin",
+          "Backspin"
+        ]
+      }
+    },
+    {
+      "effect": "Beat Brake",
+      "slider_count": 4,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PAT",
+          "full": "Pattern",
+          "name": "Pattern",
+          "text": "Pat 1"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "BARS",
+          "full": "Bars",
+          "name": "Bars",
+          "text": "2 bars"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "HPF",
+          "full": "HPF",
+          "name": "HPF",
+          "text": "Off"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Beat Brake"
+        ]
+      }
+    },
+    {
+      "effect": "Beat Grid",
+      "slider_count": 1,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SLOT",
+          "full": "Slot",
+          "name": "Slot",
+          "text": "Slot 1"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": ">>"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "VIDEO"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Beat Grid"
+        ]
+      }
+    },
+    {
+      "effect": "Blinds",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "DIR",
+          "full": "Direction",
+          "name": "Direction",
+          "text": "Vertical"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "NB",
+          "full": "Nb Slides",
+          "name": "Nb Slides",
+          "text": "11"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Blinds"
+        ]
+      }
+    },
+    {
+      "effect": "Blur",
+      "slider_count": 1,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "47.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Blur"
+        ]
+      }
+    },
+    {
+      "effect": "Blur Black Bars",
+      "slider_count": 1,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "47.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Blur Black Bars"
+        ]
+      }
+    },
+    {
+      "effect": "Boom",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Boom"
+        ]
+      }
+    },
+    {
+      "effect": "Boom Auto",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "DPT",
+          "full": "Depth",
+          "name": "Depth",
+          "text": "40.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Boom Auto"
+        ]
+      }
+    },
+    {
+      "effect": "BrakeStart",
+      "slider_count": 1,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2.77 s"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "RESTART"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "BrakeStart"
+        ]
+      }
+    },
+    {
+      "effect": "Camera",
+      "slider_count": 5,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "OPAC",
+          "full": "Opacity",
+          "name": "Opacity",
+          "text": "100.0%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "CAM",
+          "full": "Camera",
+          "name": "Camera",
+          "text": "1/2"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "ZOOM",
+          "full": "Zoom",
+          "name": "Zoom",
+          "text": "1.0x"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "CHROMA",
+          "full": "Chroma Key Strength",
+          "name": "Chroma Key Strength",
+          "text": "0.0%"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "SWTCH",
+          "full": "Camera switch speed",
+          "name": "Camera switch speed",
+          "text": "16.4 s"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "RES"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "MORE"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Camera"
+        ]
+      }
+    },
+    {
+      "effect": "Choppa",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "Pat 1"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "INV",
+          "full": "Invert",
+          "name": "Invert",
+          "text": "Off"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Choppa"
+        ]
+      }
+    },
+    {
+      "effect": "Cloud Dissolve",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Cloud Dissolve"
+        ]
+      }
+    },
+    {
+      "effect": "Color Swap",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Color Swap"
+        ]
+      }
+    },
+    {
+      "effect": "Colorize",
+      "slider_count": 5,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "COL",
+          "full": "Color",
+          "name": "Color",
+          "text": "0°"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SAT",
+          "full": "Saturation",
+          "name": "Saturation",
+          "text": "100.0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "OFF"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "BRI",
+          "full": "Brightness",
+          "name": "Brightness",
+          "text": "Default"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Colorize"
+        ]
+      }
+    },
+    {
+      "effect": "Cover",
+      "slider_count": 1,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "FADE",
+          "full": "Fade Time",
+          "name": "Fade Time",
+          "text": "5s"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Cover"
+        ]
+      }
+    },
+    {
+      "effect": "Cube",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Cube"
+        ]
+      }
+    },
+    {
+      "effect": "Cut",
+      "slider_count": 4,
+      "button_count": 4,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "52%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DUTY",
+          "full": "Duty",
+          "name": "Duty",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "R: 00%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HIGH"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "INV"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "VIDEO"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Cut"
+        ]
+      }
+    },
+    {
+      "effect": "Cyclone",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DELAY",
+          "full": "Delay",
+          "name": "Delay",
+          "text": "203 ms"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Cyclone"
+        ]
+      }
+    },
+    {
+      "effect": "Delay",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "85%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LR",
+          "full": "LR Ratio",
+          "name": "LR Ratio",
+          "text": "0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LC"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HC"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Delay"
+        ]
+      }
+    },
+    {
+      "effect": "Distortion",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "00%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "DSM",
+          "full": "Downsample",
+          "name": "Downsample",
+          "text": "16x"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "BIT",
+          "full": "Bitdepth",
+          "name": "Bitdepth",
+          "text": "04 bit"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Distortion"
+        ]
+      }
+    },
+    {
+      "effect": "Doors",
+      "slider_count": 1,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "TRA",
+          "full": "Transparency",
+          "name": "Transparency",
+          "text": "25%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "MIR"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Doors"
+        ]
+      }
+    },
+    {
+      "effect": "Down Echo",
+      "slider_count": 3,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "70.0%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Down Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Drain",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Drain"
+        ]
+      }
+    },
+    {
+      "effect": "Drain Light",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Drain Light"
+        ]
+      }
+    },
+    {
+      "effect": "Droplets",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Droplets"
+        ]
+      }
+    },
+    {
+      "effect": "Ducking Echo",
+      "slider_count": 4,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "33%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "COL",
+          "full": "Color",
+          "name": "Color",
+          "text": "-"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "RVB",
+          "full": "Reverb",
+          "name": "Reverb",
+          "text": "60.2%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Ducking Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Dump",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": false,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Echo",
+      "slider_count": 6,
+      "button_count": 4,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "75%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FB",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "52%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "FILT",
+          "full": "Filter",
+          "name": "Filter",
+          "text": "OFF"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "LP",
+          "full": "Lowpass",
+          "name": "Lowpass",
+          "text": "20 Hz"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "HP",
+          "full": "Highpass",
+          "name": "Highpass",
+          "text": "20000 Hz"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "MUTE"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LCK"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Echo Out",
+      "slider_count": 4,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "80%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "COL",
+          "full": "Color",
+          "name": "Color",
+          "text": "-"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "RVB",
+          "full": "Reverb",
+          "name": "Reverb",
+          "text": "0.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Echo Out"
+        ]
+      }
+    },
+    {
+      "effect": "Enigma Jet",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "40%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "16 bt"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Enigma Jet"
+        ]
+      }
+    },
+    {
+      "effect": "EQ10",
+      "slider_count": 10,
+      "button_count": 8,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "32 Hz",
+          "full": "32 Hz",
+          "name": "32 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "63 Hz",
+          "full": "63 Hz",
+          "name": "63 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "125 Hz",
+          "full": "125 Hz",
+          "name": "125 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "250 Hz",
+          "full": "250 Hz",
+          "name": "250 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "500 Hz",
+          "full": "500 Hz",
+          "name": "500 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "1000 Hz",
+          "full": "1000 Hz",
+          "name": "1000 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 7,
+          "has": "yes",
+          "short": "2000 Hz",
+          "full": "2000 Hz",
+          "name": "2000 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 8,
+          "has": "yes",
+          "short": "4000 Hz",
+          "full": "4000 Hz",
+          "name": "4000 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 9,
+          "has": "yes",
+          "short": "8000 Hz",
+          "full": "8000 Hz",
+          "name": "8000 Hz",
+          "text": "0.0 dB"
+        },
+        {
+          "index": 10,
+          "has": "yes",
+          "short": "16000 Hz",
+          "full": "16000 Hz",
+          "name": "16000 Hz",
+          "text": "0.0 dB"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "RES"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "CHO"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SAV"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "DEL"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "PRE"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "NXT"
+        },
+        {
+          "index": 7,
+          "has": "yes",
+          "short": "SAV"
+        },
+        {
+          "index": 8,
+          "has": "yes",
+          "short": "32dB"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "EQ10"
+        ]
+      }
+    },
+    {
+      "effect": "Extreme Cut",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Extreme Cut"
+        ]
+      }
+    },
+    {
+      "effect": "Fade",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Fade"
+        ]
+      }
+    },
+    {
+      "effect": "FDR Filter",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "TYPE",
+          "full": "Type",
+          "name": "Type",
+          "text": "HP"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "FDR Filter"
+        ]
+      }
+    },
+    {
+      "effect": "FDR Pitch",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "77%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "TYPE",
+          "full": "Type",
+          "name": "Type",
+          "text": "UP"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SCALE",
+          "full": "Scale",
+          "name": "Scale",
+          "text": "OFF"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "FDR Pitch"
+        ]
+      }
+    },
+    {
+      "effect": "FDR Ring",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FREQ",
+          "full": "Freq",
+          "name": "Freq",
+          "text": "2kHz"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "MODE",
+          "full": "Mode",
+          "name": "Mode",
+          "text": "DECR"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "FDR Ring"
+        ]
+      }
+    },
+    {
+      "effect": "FDR Roll",
+      "slider_count": 2,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "38%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HPF",
+          "full": "HPF",
+          "name": "HPF",
+          "text": "Off"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "FDR Roll"
+        ]
+      }
+    },
+    {
+      "effect": "FDR Tone",
+      "slider_count": 5,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "KEY",
+          "full": "Key",
+          "name": "Key",
+          "text": "D"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "TYPE",
+          "full": "Type",
+          "name": "Type",
+          "text": "Sine"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "OCT",
+          "full": "Octave",
+          "name": "Octave",
+          "text": "6"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "SCALE",
+          "full": "Scale",
+          "name": "Scale",
+          "text": "Off"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "FDR Tone"
+        ]
+      }
+    },
+    {
+      "effect": "Filter",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": "OFF"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "RES",
+          "full": "Resonance",
+          "name": "Resonance",
+          "text": "70%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Filter"
+        ]
+      }
+    },
+    {
+      "effect": "Filter HP",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": ">1.4kHz"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "RES",
+          "full": "Resonance",
+          "name": "Resonance",
+          "text": "0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Filter HP"
+        ]
+      }
+    },
+    {
+      "effect": "Filter LP",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": "<20hz"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "RES",
+          "full": "Resonance",
+          "name": "Resonance",
+          "text": "40%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Filter LP"
+        ]
+      }
+    },
+    {
+      "effect": "Fixed Grid",
+      "slider_count": 1,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "BEAT",
+          "full": "Beat Change",
+          "name": "Beat Change",
+          "text": "16 bt"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Fixed Grid"
+        ]
+      }
+    },
+    {
+      "effect": "Flanger",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "8 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LFO",
+          "full": "LFO Amp",
+          "name": "LFO Amp",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "TONE"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PHASE"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Flanger"
+        ]
+      }
+    },
+    {
+      "effect": "Flippin Double",
+      "slider_count": 0,
+      "button_count": 1,
+      "sliders": [],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "VIDEO"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Flippin Double"
+        ]
+      }
+    },
+    {
+      "effect": "Helix",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "TIME",
+          "full": "Time",
+          "name": "Time",
+          "text": "50.0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SPEED",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "50.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Helix"
+        ]
+      }
+    },
+    {
+      "effect": "Hold Echo",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "HPF",
+          "full": "High Pass",
+          "name": "High Pass",
+          "text": "OFF"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Hold Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Karaoke",
+      "slider_count": 1,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "PRES",
+          "full": "Preset",
+          "name": "Preset",
+          "text": "Rob"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "EDIT"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Karaoke"
+        ]
+      }
+    },
+    {
+      "effect": "LFO Filter",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "4 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "RES",
+          "full": "Resonance",
+          "name": "Resonance",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LFO",
+          "full": "LFO Amp",
+          "name": "LFO Amp",
+          "text": "0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "TONE"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PHASE"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "LFO Filter"
+        ]
+      }
+    },
+    {
+      "effect": "Loop Out",
+      "slider_count": 4,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1 bt"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "MODE",
+          "full": "Mode",
+          "name": "Mode",
+          "text": "Step"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "MDP",
+          "full": "Mode Param",
+          "name": "Mode Param",
+          "text": "58.4%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "CNT",
+          "full": "Count",
+          "name": "Count",
+          "text": "8"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STOP"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SLIP"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "VID"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Loop Out"
+        ]
+      }
+    },
+    {
+      "effect": "Loop Roll",
+      "slider_count": 4,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DUTY",
+          "full": "Duty",
+          "name": "Duty",
+          "text": "50.0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "0.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "Video"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Loop Roll"
+        ]
+      }
+    },
+    {
+      "effect": "Lottery",
+      "slider_count": 2,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SPD1",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "1.0 img/s"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SPD2",
+          "full": "Stop",
+          "name": "Stop",
+          "text": "5.0s"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "GO"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "..."
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SHOW"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Lottery"
+        ]
+      }
+    },
+    {
+      "effect": "Low Cut Echo",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "8 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FB",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "21%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Low Cut Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Lyrics",
+      "slider_count": 1,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "PRES",
+          "full": "Preset",
+          "name": "Preset",
+          "text": "Dynamic"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "EDIT"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Lyrics"
+        ]
+      }
+    },
+    {
+      "effect": "Matrix",
+      "slider_count": 3,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50.2%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DUR",
+          "full": "Duration",
+          "name": "Duration",
+          "text": "6 bt"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "34E"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Matrix"
+        ]
+      }
+    },
+    {
+      "effect": "MergeFX",
+      "slider_count": 2,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "< 45%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SLOT",
+          "full": "Slot",
+          "name": "Slot",
+          "text": "Slot 1"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "CANCEL"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LED"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "MergeFX"
+        ]
+      }
+    },
+    {
+      "effect": "Mobius",
+      "slider_count": 3,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "ECHO",
+          "full": "Echo",
+          "name": "Echo",
+          "text": "48.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SAW"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Mobius"
+        ]
+      }
+    },
+    {
+      "effect": "Mobius Saw",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "00%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "ECHO",
+          "full": "Echo",
+          "name": "Echo",
+          "text": "48.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Mobius Saw"
+        ]
+      }
+    },
+    {
+      "effect": "Mobius Tri",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "00%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "ECHO",
+          "full": "Echo",
+          "name": "Echo",
+          "text": "48.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Mobius Tri"
+        ]
+      }
+    },
+    {
+      "effect": "MT Delay",
+      "slider_count": 2,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "4 bt"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "TRAIL"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "MT Delay"
+        ]
+      }
+    },
+    {
+      "effect": "Mute",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "INV",
+          "full": "Invert",
+          "name": "Invert",
+          "text": "Off"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Mute"
+        ]
+      }
+    },
+    {
+      "effect": "Negative",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Negative"
+        ]
+      }
+    },
+    {
+      "effect": "Noise",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": "OFF"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "WET",
+          "full": "Wet/Dry",
+          "name": "Wet/Dry",
+          "text": "100.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Noise"
+        ]
+      }
+    },
+    {
+      "effect": "Pan",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "AMP",
+          "full": "LFO Amp",
+          "name": "LFO Amp",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LFO",
+          "full": "LFO",
+          "name": "LFO",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HIGH"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Pan"
+        ]
+      }
+    },
+    {
+      "effect": "Phaser",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "85%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "64 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "STAGE",
+          "full": "Stage",
+          "name": "Stage",
+          "text": "0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "TONE"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PHASE"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Phaser"
+        ]
+      }
+    },
+    {
+      "effect": "Ping Pong",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "52%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FB",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "52%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "FLT",
+          "full": "Filter",
+          "name": "Filter",
+          "text": "OFF"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Ping Pong"
+        ]
+      }
+    },
+    {
+      "effect": "Pitch",
+      "slider_count": 2,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "71.7%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PITCH",
+          "full": "Pitch",
+          "name": "Pitch",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Pitch"
+        ]
+      }
+    },
+    {
+      "effect": "Pitch Down",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "3/4 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "TAIL",
+          "full": "Tail",
+          "name": "Tail",
+          "text": "5"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Pitch Down"
+        ]
+      }
+    },
+    {
+      "effect": "Pitch Echo",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "PITCH",
+          "full": "Pitch",
+          "name": "Pitch",
+          "text": "00%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Pitch Echo"
+        ]
+      }
+    },
+    {
+      "effect": "Pumper",
+      "slider_count": 4,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "OFF",
+          "full": "Offset",
+          "name": "Offset",
+          "text": "-1/2"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "DPTH",
+          "full": "Depth",
+          "name": "Depth",
+          "text": "-21 dB"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Pumper"
+        ]
+      }
+    },
+    {
+      "effect": "Recycler",
+      "slider_count": 3,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50.2%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "RES",
+          "full": "Resonance",
+          "name": "Resonance",
+          "text": "50.0%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Recycler"
+        ]
+      }
+    },
+    {
+      "effect": "Rev Delay",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "52%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "LR",
+          "full": "LR Ratio",
+          "name": "LR Ratio",
+          "text": "0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LC"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HC"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Rev Delay"
+        ]
+      }
+    },
+    {
+      "effect": "Reverb",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "40%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "DEC",
+          "full": "Decay",
+          "name": "Decay",
+          "text": "50%"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SIZE",
+          "full": "Room Size",
+          "name": "Room Size",
+          "text": "30%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "BRI",
+          "full": "Brightness",
+          "name": "Brightness",
+          "text": "50.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Reverb"
+        ]
+      }
+    },
+    {
+      "effect": "Rider",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "3/4 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "PAT",
+          "full": "Pattern",
+          "name": "Pattern",
+          "text": "MAJOR"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Rider"
+        ]
+      }
+    },
+    {
+      "effect": "Riser",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "3/4 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SPEED",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "7"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Riser"
+        ]
+      }
+    },
+    {
+      "effect": "Scale Down",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SCALE",
+          "full": "Scale",
+          "name": "Scale",
+          "text": "MAJOR"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Scale Down"
+        ]
+      }
+    },
+    {
+      "effect": "Scratch DNA",
+      "slider_count": 1,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SEL",
+          "full": "Select",
+          "name": "Select",
+          "text": "4"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "EDIT"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "MIX"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "QUAN"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Scratch DNA"
+        ]
+      }
+    },
+    {
+      "effect": "Screen Grab",
+      "slider_count": 0,
+      "button_count": 4,
+      "sliders": [],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SEL"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "TRANS"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "WHITE"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "POS"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Screen Grab"
+        ]
+      }
+    },
+    {
+      "effect": "Shake",
+      "slider_count": 2,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "AMO",
+          "full": "Amount",
+          "name": "Amount",
+          "text": "9.1%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FREQ",
+          "full": "Frequency",
+          "name": "Frequency",
+          "text": "4.5%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "AUD"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Shake"
+        ]
+      }
+    },
+    {
+      "effect": "Slicer",
+      "slider_count": 2,
+      "button_count": 10,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STEP",
+          "full": "Step Size",
+          "name": "Step Size",
+          "text": "1/8 bt"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "3/4 bt"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "1"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "2"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "3"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "4"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "5"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "6"
+        },
+        {
+          "index": 7,
+          "has": "yes",
+          "short": "7"
+        },
+        {
+          "index": 8,
+          "has": "yes",
+          "short": "8"
+        },
+        {
+          "index": 9,
+          "has": "yes",
+          "short": "LOCK"
+        },
+        {
+          "index": 10,
+          "has": "yes",
+          "short": "VIDEO"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Slicer"
+        ]
+      }
+    },
+    {
+      "effect": "Slideshow",
+      "slider_count": 3,
+      "button_count": 8,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "29s"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FADE",
+          "full": "Fade",
+          "name": "Fade",
+          "text": "1.4s"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "VLEN",
+          "full": "Video Length",
+          "name": "Video Length",
+          "text": "Full"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "Fold"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SHF"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "VIDEO"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "TRANS"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "SPOS"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "Skip"
+        },
+        {
+          "index": 7,
+          "has": "yes",
+          "short": "PREV"
+        },
+        {
+          "index": 8,
+          "has": "yes",
+          "short": "PAUSE"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Slideshow"
+        ]
+      }
+    },
+    {
+      "effect": "Slip Roll",
+      "slider_count": 4,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1/4 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DUTY",
+          "full": "Duty",
+          "name": "Duty",
+          "text": "50.0%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "SWING",
+          "full": "Swing",
+          "name": "Swing",
+          "text": "31.8%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "Video"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Slip Roll"
+        ]
+      }
+    },
+    {
+      "effect": "Spectral",
+      "slider_count": 2,
+      "button_count": 4,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SIZE",
+          "full": "Minimum Size",
+          "name": "Minimum Size",
+          "text": "40.0%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PAD",
+          "full": "Padding",
+          "name": "Padding",
+          "text": "50.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STRET"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "DYNA"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "SYM"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "HRES"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Spectral"
+        ]
+      }
+    },
+    {
+      "effect": "Spiral",
+      "slider_count": 4,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "100%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "PITCH",
+          "full": "Pitch",
+          "name": "Pitch",
+          "text": "00%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LOW"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "HI"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Spiral"
+        ]
+      }
+    },
+    {
+      "effect": "Stems",
+      "slider_count": 5,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "VOX",
+          "full": "Vocals",
+          "name": "Vocals",
+          "text": "N/A"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "MEL",
+          "full": "Instru",
+          "name": "Instru",
+          "text": "N/A"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "HAT",
+          "full": "HiHat",
+          "name": "HiHat",
+          "text": "N/A"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "KICK",
+          "full": "Kick",
+          "name": "Kick",
+          "text": "N/A"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "BASS",
+          "full": "Bass",
+          "name": "Bass",
+          "text": "N/A"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Stems"
+        ]
+      }
+    },
+    {
+      "effect": "Stretch",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": "50%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Stretch"
+        ]
+      }
+    },
+    {
+      "effect": "Strobe",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "BLACK",
+          "full": "Blackout",
+          "name": "Blackout",
+          "text": "52.3%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Strobe"
+        ]
+      }
+    },
+    {
+      "effect": "Stutter Out",
+      "slider_count": 3,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "59%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PAT",
+          "full": "Pattern",
+          "name": "Pattern",
+          "text": "Pat 1"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "BARS",
+          "full": "Bars",
+          "name": "Bars",
+          "text": "1 bars"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "QUANT"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Stutter Out"
+        ]
+      }
+    },
+    {
+      "effect": "Sweep",
+      "slider_count": 2,
+      "button_count": 0,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "Off"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "PARM",
+          "full": "Param",
+          "name": "Param",
+          "text": "50%"
+        }
+      ],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Sweep"
+        ]
+      }
+    },
+    {
+      "effect": "Text",
+      "slider_count": 1,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SPEED",
+          "full": "Scroll Speed",
+          "name": "Scroll Speed",
+          "text": "30.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SCROL"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "OUTL"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Text"
+        ]
+      }
+    },
+    {
+      "effect": "Title",
+      "slider_count": 4,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position",
+          "name": "Position",
+          "text": "Top"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "DEL",
+          "full": "Delay",
+          "name": "Delay",
+          "text": "10s"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "DUR",
+          "full": "Duration",
+          "name": "Duration",
+          "text": "14s"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "STYL",
+          "full": "Style",
+          "name": "Style",
+          "text": "Headline"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "FONT"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "Cover"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "Remix"
+        }
+      ],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Title"
+        ]
+      }
+    },
+    {
+      "effect": "Up Echo",
+      "slider_count": 3,
+      "button_count": 2,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "70.0%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "2 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FBCK",
+          "full": "Feedback",
+          "name": "Feedback",
+          "text": "50%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "REV"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "FRZ"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Up Echo"
+        ]
+      }
+    },
+    {
+      "effect": "VinylBrake",
+      "slider_count": 4,
+      "button_count": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "1.00x"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "LEN",
+          "full": "Length",
+          "name": "Length",
+          "text": "1 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "ECHO",
+          "full": "Echo",
+          "name": "Echo",
+          "text": "1/16 bt"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "REPEAT",
+          "full": "Repeat",
+          "name": "Repeat",
+          "text": "OFF"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "BPF"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "VinylBrake"
+        ]
+      }
+    },
+    {
+      "effect": "Vocals",
+      "slider_count": 0,
+      "button_count": 0,
+      "sliders": [],
+      "buttons": [],
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": [
+          "Vocals"
+        ]
+      }
+    },
+    {
+      "effect": "Wahwah",
+      "slider_count": 4,
+      "button_count": 3,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "STR",
+          "full": "Strength",
+          "name": "Strength",
+          "text": "89%"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "name": "Speed",
+          "text": "32 bt"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "FREQ",
+          "full": "Frequency",
+          "name": "Frequency",
+          "text": "31.8%"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "WDTH",
+          "full": "Width",
+          "name": "Width",
+          "text": "50.0%"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "LCK"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "SHP"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "PHASE"
+        }
+      ],
+      "reached": {
+        "in_cycle": true,
+        "by_name": true,
+        "name_requests": [
+          "Wahwah"
+        ]
+      }
+    }
+  ]
+}

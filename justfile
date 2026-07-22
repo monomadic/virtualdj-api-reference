@@ -51,6 +51,17 @@ status:
     @printf "\nReady queue:\n"
     @rg -n "^### |^Status: Ready$" TODO.md
 
+vdj-query script:
+    @curl -sS -m 5 -G 'http://localhost/query' --data-urlencode "script={{script}}"; echo
+
+vdj-execute script:
+    @curl -sS -m 5 -G 'http://localhost/execute' --data-urlencode "script={{script}}"; echo
+
+vdj-up:
+    @curl -sS -m 3 -G 'http://localhost/query' --data-urlencode 'script=get_version' >/dev/null 2>&1 \
+      && echo "VirtualDJ HTTP interface reachable on http://localhost/" \
+      || { echo "VirtualDJ HTTP interface NOT reachable (is VirtualDJ running with the network interface enabled?)"; exit 1; }
+
 inventory:
     python3 tools/extract_xml_inventory.py
 

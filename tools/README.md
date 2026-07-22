@@ -15,6 +15,14 @@ Scripts supporting the reference. Two groups: **offline** tools that run against
 
 Regenerate order after editing verb docs or XML corpora: `just verb-index && just inventory && just check`.
 
+## Live probe: running VirtualDJ required
+
+These drive a running VirtualDJ over the [HTTP control interface](../docs/HTTP%20Control%20Interface.md) (`just vdj-up` to check reachability). They change live app state and their output is committed *evidence*, promoted with a `Local test` label — not directly authoritative docs.
+
+| Tool | Does | Output |
+| --- | --- | --- |
+| `sweep_fx_introspection.py` | Cycles + by-name-selects the native deck-FX catalog into slot 1 and reads the introspection helpers (counts, short/full labels, live value text) per slider/button. Non-destructive (no resets). | `tests/fx-introspection-dump.json` |
+
 ## Extraction: local VirtualDJ required
 
 These read `/Applications/VirtualDJ.app` (override with `--app`). They need macOS with Apple Silicon tooling (`nm`, `c++filt`, `otool`, `strings`) and produce *evidence*, which is hand-promoted into the docs with source labels — their output is not directly committed.
