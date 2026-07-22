@@ -26,11 +26,12 @@ vdjscript:
   record_store:
     - docs/vdjscript-verbs.json
   commands:
-    - just verb NAME                # bare name = lookup; `get NAME` is the long form
-    - just verb search TERM [--surface=X --section=X --status=X --format=json]
-    - just verb next-incomplete
-    - just verb stats
-    - just find-verb NAME
+    - just get-verb NAME
+    - just find-verbs TERM [--surface=X --section=X --status=X --format=json]
+    - just put-verb NAME field=value ...
+    - just next-incomplete-verb
+    - just verb-stats
+    - just grep-verb-docs NAME
     - just needs-test
     - just verb-index
 
@@ -50,9 +51,9 @@ fx:
   catalog_data:
     - tests/fx-introspection-dump.json
   commands:
-    - just fx EFFECT                # bare name = lookup
-    - just fx search [--has-button=X --min-sliders=N --format=json]
-    - just fx stats
+    - just get-fx EFFECT
+    - just find-fx [--has-button=X --min-sliders=N --format=json]
+    - just fx-stats
   fixtures:
     - tests/Pads/Reference - FX Introspection Test.xml
     - tests/Pads/Reference - FX Bank Test.xml

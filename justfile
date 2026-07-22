@@ -11,7 +11,8 @@ next-task:
       END { if (seen && ready) printf "%s", block } \
     ' TODO.md
 
-find-verb name:
+# Grep the authored verb prose/examples. For record lookups use `just get-verb`.
+grep-verb-docs name:
     @rg -n --fixed-strings "{{name}}" \
       "docs/VDJScript Verbs.md" \
       "docs/Official VDJScript Coverage Audit.md" \
@@ -68,15 +69,35 @@ inventory:
 verb-index:
     python3 tools/extract_verb_index.py
 
-# Verb record store (docs/vdjscript-verbs.json). `just verb <cmd> ...`:
-#   get <name> | put <name> field=value... | next-incomplete | stats | search <term>
-verb *args:
-    @python3 tools/verbdb.py {{args}}
+# --- verb record store (docs/vdjscript-verbs.json) ---------------------------
+# Flat names on purpose: the argument is always data, never a subcommand, so a
+# verb called `search` or `get` can never be mistaken for a command.
 
-# Native effects catalog (swept via the HTTP interface). `just fx <cmd> ...`:
-#   get <effect> | search [term] [--min-sliders=N --has-button=X --format=json] | stats
-fx *args:
-    @python3 tools/fxdb.py {{args}}
+get-verb name:
+    @python3 tools/verbdb.py get "{{name}}"
+
+find-verbs *args:
+    @python3 tools/verbdb.py search {{args}}
+
+put-verb name *assignments:
+    @python3 tools/verbdb.py put "{{name}}" {{assignments}}
+
+next-incomplete-verb:
+    @python3 tools/verbdb.py next-incomplete
+
+verb-stats:
+    @python3 tools/verbdb.py stats
+
+# --- native effects catalog (swept via the HTTP interface) -------------------
+
+get-fx effect:
+    @python3 tools/fxdb.py get "{{effect}}"
+
+find-fx *args:
+    @python3 tools/fxdb.py search {{args}}
+
+fx-stats:
+    @python3 tools/fxdb.py stats
 
 lint-skins *paths:
     python3 tools/lint_skins.py {{paths}}

@@ -12,7 +12,7 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 - Record manual VirtualDJ observations in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md).
 - Promote stable conclusions into the topical docs named by the task.
 - Run `just check` after documentation, fixture, or status edits.
-- `Read first` lists are section-scoped: read only the named rows/sections. Use `just find-verb <name>` for verb lookups instead of opening `docs/VDJScript Verbs.md`.
+- `Read first` lists are section-scoped: read only the named rows/sections. Use `just grep-verb-docs <name>` for verb lookups instead of opening `docs/VDJScript Verbs.md`.
 - [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) and [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md) are frozen design references. Do not refresh, reorder, or re-scope them; this file is the only active queue.
 
 ## Ready Tasks
@@ -21,17 +21,17 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 Status: Foundation landed (2026-07-22) — generation + migration remain
 
-The store and its query/edit API exist and are wired into `just check`. This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs cycle with one `just verb put`, and lets agents query verb state without loading the 6,300-line monolith.
+The store and its query/edit API exist and are wired into `just check`. This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs cycle with one `just put-verb`, and lets agents query verb state without loading the 6,300-line monolith.
 
 Done in this pass:
 
-- [tools/verbdb.py](tools/verbdb.py) over the authoritative store [docs/vdjscript-verbs.json](docs/vdjscript-verbs.json), fronted by `just verb get/put/next-incomplete/stats/search`. Storage is private behind the API so it can later become one-file-per-verb without retraining agents.
+- [tools/verbdb.py](tools/verbdb.py) over the authoritative store [docs/vdjscript-verbs.json](docs/vdjscript-verbs.json), fronted by `just get-verb / put-verb / find-verbs / next-incomplete-verb / verb-stats`. Storage is private behind the API so it can later become one-file-per-verb without retraining agents.
 - Merge-safe `bootstrap` seeded all 991 records from the index + coverage audit (official names + Needs-Local-Test gap) + tracker status tables. It correctly finds the 19-name gap (17 hardware-blocked → skipped by `next-incomplete`), leaving `dualdeckmode_decks` and `system` as the 2 active items, and auto-detected 7 tracker `Pass` rows.
-- `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the `just verb` surface.
+- `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the flat `just get-verb` / `find-verbs` / `put-verb` commands.
 
 Reports are queries, not files (2026-07-22):
 
-- `just verb search` filters on `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`, with `--format=json` for structured output and `--limit`. A category listing is just an unfiltered query, so **no derived Markdown is written to disk** — nothing can drift, and there is no staleness gate to maintain. An earlier pass generated `docs/VDJScript/generated/*.md` and was reverted for exactly this reason.
+- `just find-verbs` filters on `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`, with `--format=json` for structured output and `--limit`. A category listing is just an unfiltered query, so **no derived Markdown is written to disk** — nothing can drift, and there is no staleness gate to maintain. An earlier pass generated `docs/VDJScript/generated/*.md` and was reverted for exactly this reason.
 - Rule for future work: do not add a generator that writes a Markdown copy of store data. If a view is wanted, add a query or a flag. Building reader-facing documentation is a later phase, driven by findings — not something to design for now.
 
 Remaining:
@@ -40,7 +40,7 @@ Remaining:
 - Grow the query layer where a real question is awkward to ask (e.g. verbs by evidence source, or by presence of a local-test note).
 - The monolith still holds the authored prose. Retiring it follows the frozen plan's phased, one-family-at-a-time migration; do not delete hand-authored docs ahead of that.
 
-Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just fx get|search|stats` answers slider/button questions straight from the sweep artifact, gated by `fxdb.py check` in `just check`. No Markdown copy — same rule as the verb store.
+Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just get-fx / find-fx / fx-stats` answers slider/button questions straight from the sweep artifact, gated by `fxdb.py check` in `just check`. No Markdown copy — same rule as the verb store.
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
@@ -68,7 +68,7 @@ Read first:
 
 - [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (FX Helpers rows only, for the established method)
 - [docs/Effects Usage.md](docs/Effects%20Usage.md)
-- `just find-verb get_effect_slider_default` and `just find-verb effect_slider` for the verb rows
+- `just grep-verb-docs get_effect_slider_default` and `just grep-verb-docs effect_slider` for the verb rows
 
 Record results in:
 
@@ -97,7 +97,7 @@ Start here:
 Read first:
 
 - [docs/Effects Engines.md](docs/Effects%20Engines.md) (bank save/load rows only — `rg -n effect_bank`)
-- `just find-verb effect_bank_save`
+- `just grep-verb-docs effect_bank_save`
 
 Record results in:
 

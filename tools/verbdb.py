@@ -121,7 +121,7 @@ def save_store(store: dict) -> None:
     payload = {
         "_meta": {
             "generated_by": "tools/verbdb.py",
-            "note": "Authoritative per-verb record store. Edit via `just verb put`, "
+            "note": "Authoritative per-verb record store. Edit via `just put-verb`, "
                     "not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
             "counts": counts(store),
         },
@@ -262,7 +262,7 @@ def cmd_get(args):
     msg = f"no record for '{name}'"
     if near:
         msg += "\ndid you mean: " + ", ".join(near)
-    msg += f"\nor try: just verb search {name}"
+    msg += f"\nor try: just find-verbs {name}"
     sys.exit(msg)
 
 
@@ -357,7 +357,7 @@ def cmd_search(args):
     if not terms and not opts:
         sys.exit("search needs a term or a filter (e.g. --surface=Pad, "
                  "--needs-test).\nFor the VDJScript verb named `search`, use: "
-                 "just verb get search")
+                 "just get-verb search")
 
     store = load_store()
     hits = []
@@ -476,8 +476,9 @@ def main(argv):
     if cmd in COMMANDS:
         COMMANDS[cmd](rest)
         return
-    # Not a command: treat a bare argument as a verb lookup, so
-    # `just verb leftdeck` works as well as `just verb get leftdeck`.
+    # Not a command: treat a bare argument as a verb lookup, for direct
+    # `python3 tools/verbdb.py leftdeck` use. The `just` recipes are flat
+    # (get-verb / find-verbs / ...) and always pass an explicit subcommand.
     cmd_get(argv)
 
 

@@ -230,7 +230,7 @@ def main(argv):
     if cmd in COMMANDS:
         COMMANDS[cmd](rest)
         return
-    # Bare argument: treat as an effect lookup (`just fx Echo`).
+    # Bare argument: treat as an effect lookup (`just get-fx Echo`).
     cmd_get(argv)
 
 

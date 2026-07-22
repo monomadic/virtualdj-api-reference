@@ -10,7 +10,7 @@ them per section, and it leaves the verbose, structured detail for the few place
 Status (2026-07-22): **frozen design reference.** Do not refresh, reorder, or re-scope this
 document; update it only when a phase actually completes. Execution is tracked as the first
 task in `TODO.md`, which promotes Phase 0 with one addition: the record store is fronted by a
-stable `just` data-API surface (`just verb get/put/next-incomplete/stats/search`), so the
+stable `just` data-API surface (`just get-verb / put-verb / find-verbs / next-incomplete-verb / verb-stats`), so the
 storage format underneath can change without retraining agents. Prior status (2026-07-14):
 not started beyond a partial Phase 0 — `tools/extract_verb_index.py` and `just verb-index`
 already generate a staleness-checked per-verb index (`docs/vdjscript-verb-index.json`) from
