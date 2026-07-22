@@ -29,10 +29,13 @@ Done in this pass:
 - Merge-safe `bootstrap` seeded all 991 records from the index + coverage audit (official names + Needs-Local-Test gap) + tracker status tables. It correctly finds the 19-name gap (17 hardware-blocked → skipped by `next-incomplete`), leaving `dualdeckmode_decks` and `system` as the 2 active items, and auto-detected 7 tracker `Pass` rows.
 - `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the `just verb` surface.
 
-Remaining (the generation half of "generation replaces promotion"):
+Generation half — DONE (2026-07-22):
 
-- Generate the derived Markdown views FROM the store — alias index, coverage counts, and eventually family rows — so a `just verb put` plus regenerate replaces hand-editing the tracker + topical docs. Add a byte-stable `--check` for each generated view, following the `extract_verb_index.py --check` pattern.
-- Then follow the frozen plan's phased, one-family-at-a-time migration to retire monolith sections. Do not delete hand-authored docs ahead of that.
+- `just verb-views` (`verbdb.py generate`) writes derived Markdown views from the store under [docs/VDJScript/generated/](docs/VDJScript/generated/): `aliases.md` (alias→canonical), `surfaces.md` (surface→verbs), `coverage.md` (live counts + active/blocked/Pass queues). Each is byte-stable under `generate --check`, wired into `just check`. A `just verb put` plus `just verb-views` now replaces hand-editing count prose and index tables.
+
+Remaining:
+
+- Generate the **family rows** view (the plan's Tier-1 compact per-family tables) from the store, then follow the frozen plan's phased, one-family-at-a-time migration to retire the corresponding monolith sections. Do not delete hand-authored docs ahead of that.
 - Add richer record fields as needed by contracts (`forms`, `platforms`, `deck_scope`); `put` currently covers the scalar/list fields, nested contract detail is hand-edited in the JSON.
 - Ingest [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json) into a generated effects-catalog view (this is effect data, distinct from the verb records; see task 1).
 
