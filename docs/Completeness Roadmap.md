@@ -17,7 +17,7 @@ Use this file as background when choosing an evidence pass. Record detailed run 
 | Button Editor hidden candidates | 14 catalog-only names, 21 stricter runtime-string candidates, and 37 flag1-hidden compiled taxonomy rows outside the official appendix | Use [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) to keep them discovery-only until local behavior or stronger source evidence exists. |
 | VDJScript grammar | Resolved: ternary/`&` precedence, nested-ternary associativity, and backtick-argument rules were tested via the Grammar Battery on v2026-m b9482 (2026-07-14) and promoted into [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md) | Re-run [Reference - Grammar Battery Test](../tests/Pads/Reference%20-%20Grammar%20Battery%20Test.xml) only if a new VirtualDJ build changes parsing behavior. |
 | Pad-page examples | Canonical pad pages exist for slot FX, ColorFX, and read-only sampler behavior; container schema documented in [Pad Page XML](Pad%20Page%20XML.md) | Resolve that doc's Open Questions (menu-DSL semantics, `custompadsmode` trigger, `pressure`/`right_click`) with small local probes. |
-| Skin SDK | Broad coverage incl. the waveform family ([Skin Waveforms](Skin%20Waveforms.md)), root-level support elements, and browser styling children; the generated [Skin XML Inventory](Skin%20XML%20Inventory.md) reports zero undocumented elements | Finish `visual type` passes with small canary skins; verify the `Inference`-labeled browser-styling semantics (`<active>` trigger, `<buttons>` under `<plugins>`) with canaries. |
+| Skin SDK | Broad coverage incl. the waveform family ([Skin Waveforms](Skin%20Waveforms.md)), root-level support elements, and browser styling children; the XML element inventory reports zero undocumented elements (`just find-xml-elements --undocumented`) | Finish `visual type` passes with small canary skins; verify the `Inference`-labeled browser-styling semantics (`<active>` trigger, `<buttons>` under `<plugins>`) with canaries. |
 | Mappers | Format rewritten from real files; four working mappers in [examples/Mappers/Local](../examples/Mappers/README.md) gated by `tools/lint_mappers.py`; device-definition schema official-doc-derived | Author a minimal custom MIDI device definition + mapper pair and load-test it (a `SIMPLE_MIDI` device context already exists locally); probe the factory-mapper verb candidates (`browser_filter`, `browser_search`, `none`). |
 | FX behavior | Good slot, ColorFX, PadFX, and stem-FX model notes | Add repeatable FX introspection, bank save/load, release-FX, and plugin-command passes; goal is a per-effect slider table for the native effects catalog. |
 | Application internals and stems | Useful macOS-first notes and stem sidecar format documentation | Convert known unknowns into fixture-backed checks when safe. |
@@ -90,7 +90,7 @@ just check   # pads/skins/mappers linters, verb-index + inventory staleness gate
 After adding or documenting skin/pad XML elements, regenerate the coverage report:
 
 ```sh
-just inventory    # rewrites docs/Skin XML Inventory.md
+just inventory    # refreshes docs/skin-xml-inventory.json
 just verb-index   # rewrites docs/vdjscript-verb-index.json after verb-doc edits
 ```
 

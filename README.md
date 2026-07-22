@@ -27,7 +27,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Choose or maintain a pad page | [examples/Pads/README.md](examples/Pads/README.md) |
 | Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
-| Check skin/pad XML doc coverage | [docs/Skin XML Inventory.md](docs/Skin%20XML%20Inventory.md) (generated; `just inventory`) |
+| Check skin/pad XML doc coverage | `just find-xml-elements --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
 | Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
 | Validate skin/mapper XML | `just lint-skins [paths]` · `just lint-mappers [paths]` · [tools/README.md](tools/README.md) |
 | Run or update a test harness | [tests/README.md](tests/README.md) |
@@ -69,7 +69,7 @@ Unlabeled files are raw material not yet normalized to this standard.
 
 - Current official coverage and local-test gap counts are tracked in [docs/Official VDJScript Coverage Audit.md](docs/Official%20VDJScript%20Coverage%20Audit.md).
 - Active next tasks are tracked in [TODO.md](TODO.md); the broader evidence backlog remains in [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md).
-- Skin SDK coverage is broad; the waveform element family is documented in `docs/Skin Waveforms.md` and remaining element gaps are tracked mechanically in the generated `docs/Skin XML Inventory.md`
+- Skin SDK coverage is broad; the waveform element family is documented in `docs/Skin Waveforms.md` and remaining element gaps are tracked mechanically in `docs/skin-xml-inventory.json` (`just find-xml-elements --undocumented`)
 - Controller mapper XML format: rewritten around the real `<map value="">` + device-definition split, with real working mappers in `examples/Mappers/Local/`; custom device-definition XML is official-doc-derived and not yet load-tested locally
 
 Contributions and corrections welcome.

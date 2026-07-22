@@ -66,6 +66,17 @@ vdj-up:
 inventory:
     python3 tools/extract_xml_inventory.py
 
+# --- skin/pad/mapper XML element inventory ----------------------------------
+
+get-xml-element element:
+    @python3 tools/xmldb.py get "{{element}}"
+
+find-xml-elements *args:
+    @python3 tools/xmldb.py search {{args}}
+
+xml-stats:
+    @python3 tools/xmldb.py stats
+
 verb-index:
     python3 tools/extract_verb_index.py
 

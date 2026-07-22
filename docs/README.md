@@ -52,8 +52,8 @@ Start here:
 - [Skin Waveforms](Skin%20Waveforms.md)
   The waveform/rhythm skin element family: `<rhythmzone>`, `<scratchwave>`, `<songpos>`, `<scratch>`, `<blockwave>`, `<beattunnel>`, their children (`<colors>`, `<grid>`, `<cue>`, `<overlay>`, ...), and how they differ from `visual type="waveform"`.
 
-- [Skin XML Inventory](Skin%20XML%20Inventory.md)
-  Generated element×attribute usage report across built-in/curated skin, pad, samplerbank, and mapper XML, cross-checked against the docs. Regenerate with `just inventory`; do not hand-edit.
+- [Skin XML Inventory (JSON)](skin-xml-inventory.json)
+  Element×attribute usage data across built-in/curated skin, pad, samplerbank, video-skin, and mapper XML, cross-checked against the docs. Refresh with `just inventory`; query with `just get-xml-element <name>`, `just find-xml-elements --undocumented`, `just xml-stats`. Do not hand-edit and do not generate a Markdown copy.
 
 - [VDJScript Verb Index (JSON)](vdjscript-verb-index.json)
   Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.

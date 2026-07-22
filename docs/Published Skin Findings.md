@@ -117,7 +117,7 @@ These were observed in the Denon skin and should be reconciled against the curre
 
 ## Built-In Skin Attribute Typos (Parser Tolerance Evidence)
 
-The generated [Skin XML Inventory](Skin%20XML%20Inventory.md) (regenerate with `just inventory`) surfaced two attribute typos in VirtualDJ's own shipped skins. The built-in skin XML under `examples/Skins/Built-In/` is a verbatim reference copy, so the typos are preserved as-is; they matter here as evidence about how tolerant the skin parser is to unknown attribute names.
+The XML element inventory (`just inventory`, queried with `just find-xml-elements`) surfaced two attribute typos in VirtualDJ's own shipped skins. The built-in skin XML under `examples/Skins/Built-In/` is a verbatim reference copy, so the typos are preserved as-is; they matter here as evidence about how tolerant the skin parser is to unknown attribute names.
 
 Source class: `Built-in skin`.
 
