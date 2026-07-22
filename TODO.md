@@ -44,6 +44,36 @@ Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
+### 0b. Topic Search Across Every Corpus
+
+Status: Ready
+
+The intended agent workflow is: read the grammar summary once, write the program, then
+look up specifics. Lookup currently answers "what does this verb do" but not "show me
+everything about samplers", which is the question an agent actually arrives with. A topic
+search over *all* the data at once — verb records, example pads, skin scaffolds, mapper
+XML, built-in corpora, quirks and undocumented candidates — would often answer the use
+case outright with a real working example, leaving only the delta to look up per verb.
+
+The enabling work is metadata: each searchable item needs enough tagging that a topic
+query can reach it. That tagging is itself good mechanical subagent work.
+
+- Give store records and corpus files topic tags (`sampler`, `stems`, `colorfx`, `mapper`,
+  `waveform`, …), derived where possible rather than hand-assigned — verb `section` and
+  XML element families are already most of the way there.
+- Add a cross-corpus query that returns, for one topic: matching verbs, example pad/skin
+  files that use them, related quirks from the tracker, and any undocumented candidates.
+- Keep it a query — no generated topic pages. Same rule as everywhere else.
+
+Read first:
+
+- [tools/verbdb.py](tools/verbdb.py) and [tools/xmldb.py](tools/xmldb.py) for the existing
+  filter layers to extend.
+
+Done when:
+
+- One command answers a topic question with verbs *and* real file examples.
+
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
 Status: Structural sweep COMPLETE (2026-07-22) — only rendering behavior is left

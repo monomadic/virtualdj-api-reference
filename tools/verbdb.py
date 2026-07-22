@@ -68,11 +68,14 @@ HARDWARE_BLOCKED = {
 }
 
 
-def default_record(name: str) -> dict:
+def default_record(name: str, *, official: bool = True) -> dict:
     return {
+        # `official` defaults True because bootstrap only ever seeds names that
+        # came from the official appendix. A record minted by `put --new` is not
+        # in the index by definition, so it passes official=False.
         "name": name,
-        "tier": "official-name-only",
-        "official": True,
+        "tier": "official-name-only" if official else "unofficial",
+        "official": official,
         "aliases": [],
         "surfaces": [],
         "test_status": "Untested",
@@ -285,11 +288,28 @@ def coerce(field: str, value: str):
 
 
 def cmd_put(args):
+    args = list(args)
+    allow_new = "--new" in args
+    if allow_new:
+        args.remove("--new")
     if len(args) < 2:
-        sys.exit("usage: put <name> field=value [field=value ...]")
+        sys.exit("usage: put <name> field=value [field=value ...] [--new]")
     store = load_store()
     name = args[0]
-    rec = store.get(name) or default_record(name)
+    rec = store.get(name)
+    if rec is None:
+        # Minting a record for an unknown name must be deliberate: otherwise a
+        # typo silently becomes a junk record claiming to be an official verb.
+        if not allow_new:
+            msg = (f"'{name}' has no record and is not in the official index.\n"
+                   "If that is a typo, fix it. If the name is real but unofficial "
+                   "(a scope wrapper, a hidden candidate), record it explicitly:\n"
+                   f"  just put-verb {name} --new field=value ...")
+            near = difflib.get_close_matches(name, list(store), n=5, cutoff=0.6)
+            if near:
+                msg += "\ndid you mean: " + ", ".join(near)
+            sys.exit(msg)
+        rec = default_record(name, official=False)
     for pair in args[1:]:
         if "=" not in pair:
             sys.exit(f"bad assignment '{pair}' (want field=value)")

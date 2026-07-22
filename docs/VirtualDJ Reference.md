@@ -654,6 +654,11 @@ Source: `Official`
 
 ### Tested Grammar Rules
 
+> The full language reference now lives in [VDJScript Grammar](VDJScript%20Grammar.md),
+> which folds these rules together with the later HTTP-channel findings (quoting,
+> `&&` short-circuiting, empty branches, backtick surface-dependence) and lists what is
+> still unknown. Read that first; the rules below are kept as the original pad-run record.
+
 Established by a controlled run of the grammar battery pad page on VirtualDJ `v2026-m b9482` (see [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md) and the 2026-07-14 entry in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md)):
 
 - A trailing `&` chain after a ternary's `:` belongs to the false branch, not the whole statement. In `cond ? a : b & c`, `c` runs only when `cond` is false. Do not place always-run cleanup after a ternary.

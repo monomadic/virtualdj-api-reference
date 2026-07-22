@@ -26,6 +26,7 @@ For “what should I do next?”, maintenance, documentation cleanup, or evidenc
 
 Context load is the dominant cost in this repo. These rules outrank thoroughness:
 
+- **Writing VDJScript? Read the summary of [docs/VDJScript Grammar.md](docs/VDJScript%20Grammar.md) first.** Its "Read this much" section is the whole language in about a dozen lines; the Contents list jumps to a section when you need detail. Grammar is the one thing lookup cannot save you on — the parser reports no syntax errors, so wrong script silently does something else. Not writing script (skin layout, XML structure, file format work)? Skip it.
 - **Never read the large docs end-to-end.** `docs/VDJScript Verbs.md` (~6,300 lines), `docs/Skin SDK.md` (~2,700 lines), `docs/Effects Engines.md`, `docs/VirtualDJ Reference.md`, and `docs/VDJScript Local Test Tracker.md` are section-addressed references. Read only the section a task names, or extract it with path-scoped `rg`/`awk`.
 - **Look verbs up through the tooling, not the monolith.** `just get-verb <name>` is the lookup — it follows aliases and suggests near matches on a miss. `just find-verbs <term>` when you do not know the name. Open `VDJScript Verbs.md` only at the specific lines a search hit points to.
 - **Record verb facts with `just put-verb`, not by hand-editing tables.** A local-test result, confidence, or evidence note goes into the record once (`just put-verb <name> test_status=Pass confidence=local_test evidence="…"`) instead of being promoted into the tracker and topical docs by hand.

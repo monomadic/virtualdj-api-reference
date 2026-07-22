@@ -31,6 +31,9 @@ Start here:
 - [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md)
   Conservative notes for non-official hidden Button Editor taxonomy rows, including evidence streams, probe order, and promotion rules.
 
+- [VDJScript Grammar](VDJScript%20Grammar.md)
+  The language itself: chaining, conditionals, quoting, scope prefixes, and the traps. Read its summary before writing VDJScript; jump via its Contents for detail. Per-verb argument rules are not here — those are `just get-verb <name>`.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 

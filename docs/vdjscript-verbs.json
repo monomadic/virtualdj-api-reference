@@ -3,21 +3,22 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 991,
+   "total": 993,
    "by_tier": {
     "alias": 59,
     "catalog": 641,
     "curated": 142,
-    "official-name-only": 149
+    "official-name-only": 149,
+    "unofficial": 2
    },
    "by_test_status": {
     "Fail": 1,
-    "Partial": 6,
-    "Pass": 28,
-    "Untested": 956
+    "Partial": 7,
+    "Pass": 31,
+    "Untested": 954
    },
    "documented": 764,
-   "tested_pass": 28,
+   "tested_pass": 31,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -124,6 +125,20 @@
    "section": "POI & BPM",
    "description": "Adjust beat grid",
    "example": "adjust_cbg +2"
+  },
+  "all_decks": {
+   "name": "all_decks",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Partial",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): action-only — 'all_decks get_version' returns error:-2147467259, so it cannot wrap a query the way 'deck N' can. Action-position behavior untested."
+   ],
+   "confidence": "local_test"
   },
   "apply_audio_config": {
    "name": "apply_audio_config",
@@ -979,13 +994,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): bare 'browser_sort' returns error:-2147024809 (E_INVALIDARG) while 'browser_sort title' succeeds — one of the few cases where the channel confirms a verb exists, since E_INVALIDARG means recognized-but-wrong-arguments."
+   ],
    "section": "Browser",
    "description": "Sort browser",
-   "example": "browser_sort \"artist\""
+   "example": "browser_sort \"artist\"",
+   "confidence": "local_test"
   },
   "browser_window": {
    "name": "browser_window",
@@ -1724,6 +1742,21 @@
    "section": "System Info",
    "description": "Display the incoming parameter value",
    "example": "debug"
+  },
+  "deck": {
+   "name": "deck",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Pass",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): a deck wrapper prefixes a statement and covers a following conditional ('deck 1 on ? get_version : get_clock' -> 2026). 'deck 1|2|left' all resolve. An out-of-range deck is accepted silently ('deck 99 get_version' -> 2026), consistent with the parser reporting no errors."
+   ],
+   "confidence": "local_test",
+   "note": "scope wrapper; see docs/VDJScript Grammar.md"
   },
   "deck_has_error": {
    "name": "deck_has_error",
@@ -8942,14 +8975,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): indistinguishable from an unknown verb over HTTP — query returns error:-2147467259 and execute returns false, exactly as a bogus name does, bare or with arguments. Also has no query value, so 'cond ? verb : nothing' errors rather than acting as a null branch."
+   ],
    "section": "Flow Control",
    "description": "Do nothing; no-op, not an early return",
    "example": "nothing",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "ns7_platter": {
    "name": "ns7_platter",

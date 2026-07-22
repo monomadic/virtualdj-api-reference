@@ -173,18 +173,21 @@ Working grammar clues from this pass:
 
 ## Grammar Questions To Test
 
-The Button Editor highlighter and hover spans should be used to probe these cases:
+The Button Editor highlighter and hover spans should be used to probe these cases. Five of
+the eight were answered on 2026-07-22 over the [HTTP control interface](HTTP%20Control%20Interface.md);
+the settled rules are written up in [VDJScript Grammar](VDJScript%20Grammar.md) and the
+still-open ones are listed in its *Not yet established* section.
 
-| Question | Test shape |
-| --- | --- |
-| Conditional branch extent | `play ? action_a & action_b : action_c & action_d` |
-| Conditional associativity | `a ? b ? c : d : e` |
-| Empty false branch behavior | `a ? b :` and `a ? b : nothing` |
-| Query chain vs action chain | `a && b ? c : d` compared with `a & b ? c : d` |
-| Parameter tokenization | `effect_stems vocal on`, `effect_stems 'vocal' on`, `effect_stems "vocal" on` |
-| Backtick expression boundaries | ``param_equal "`get_text 'x'`" "x" ? on : off`` |
-| Word/operator ambiguity | verbs or parameters named near constants such as `on`, `off`, `true`, `false`, `nothing` |
-| Deck/scope wrappers | `deck 1 play ? action_a : action_b`, `all_decks play` |
+| Question | Test shape | Status |
+| --- | --- | --- |
+| Conditional branch extent | `play ? action_a & action_b : action_c & action_d` | Open — trailing-chain binding is settled, both-sides is not |
+| Conditional associativity | `a ? b ? c : d : e` | **Answered**: standard, `a ? (b ? c : d) : e` |
+| Empty false branch behavior | `a ? b :` and `a ? b : nothing` | **Answered**: errors when reached; `nothing` has no query value |
+| Query chain vs action chain | `a && b ? c : d` compared with `a & b ? c : d` | **Answered**: `&` separates statements (query returns the first); `&&` is boolean AND that short-circuits destructively on a false left operand |
+| Parameter tokenization | `effect_stems vocal on`, `effect_stems 'vocal' on`, `effect_stems "vocal" on` | **Answered**: all three equivalent for single tokens; quotes mandatory once a value contains a space |
+| Backtick expression boundaries | ``param_equal "`get_text 'x'`" "x" ? on : off`` | Open — but backticks are now known not to substitute in HTTP argument position at all |
+| Word/operator ambiguity | verbs or parameters named near constants such as `on`, `off`, `true`, `false`, `nothing` | Open |
+| Deck/scope wrappers | `deck 1 play ? action_a : action_b`, `all_decks play` | **Answered**: a deck wrapper covers a following conditional; out-of-range decks are accepted silently; `all_decks` is action-only and cannot wrap a query |
 
 For each case, record three layers:
 
