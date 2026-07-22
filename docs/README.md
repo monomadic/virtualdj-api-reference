@@ -59,10 +59,7 @@ Start here:
   Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.
 
 - [VDJScript Verb Record Store (JSON)](vdjscript-verbs.json)
-  Authoritative, hand-editable per-verb records: tier, aliases, surfaces, kind, doc coverage, plus local-test status, confidence, and evidence. Query and edit through the `just verb` API (`get`/`put`/`next-incomplete`/`stats`/`search`) — do not hand-edit the JSON. Seeded from the index, coverage audit, and tracker via `python3 tools/verbdb.py bootstrap`; validated by `just check`.
-
-- [Generated verb views](VDJScript/generated/coverage.md)
-  Read-only Markdown derived from the record store by `just verb-views`: `aliases.md` (alias→canonical), `surfaces.md` (surface→verbs), `coverage.md` (live counts and the active/hardware-blocked/Pass queues). Do not hand-edit; byte-gated by `just check`.
+  Authoritative, hand-editable per-verb records: tier, aliases, surfaces, kind, doc coverage, plus local-test status, confidence, and evidence. Query and edit through the `just verb` API — do not hand-edit the JSON and do not generate Markdown copies of it. `search` filters (`--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`) with `--format=json`, so reports come out of a query on demand rather than a stored listing. Seeded from the index, coverage audit, and tracker via `python3 tools/verbdb.py bootstrap`; validated by `just check`.
 
 - [Tools](../tools/README.md)
   Validator/generator suite (`just check` gates) and the version-pinned binary-extraction pipeline, including the new-VirtualDJ-build refresh procedure.

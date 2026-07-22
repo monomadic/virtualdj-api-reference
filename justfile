@@ -73,10 +73,6 @@ verb-index:
 verb *args:
     @python3 tools/verbdb.py {{args}}
 
-# Regenerate the derived Markdown views under docs/VDJScript/generated/ from the store.
-verb-views:
-    python3 tools/verbdb.py generate
-
 lint-skins *paths:
     python3 tools/lint_skins.py {{paths}}
 
@@ -89,7 +85,6 @@ check:
     python3 tools/lint_mappers.py
     python3 tools/extract_verb_index.py --check
     python3 tools/verbdb.py check
-    python3 tools/verbdb.py generate --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check

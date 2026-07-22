@@ -19,11 +19,6 @@ vdjscript:
   status:
     - docs/Official VDJScript Coverage Audit.md
     - docs/VDJScript Local Test Tracker.md
-    - docs/VDJScript/generated/coverage.md
-  generated_views:
-    - docs/VDJScript/generated/aliases.md
-    - docs/VDJScript/generated/surfaces.md
-    - docs/VDJScript/generated/coverage.md
   candidates:
     - docs/Undocumented VDJScript Candidates.md
   machine_index:
@@ -32,7 +27,7 @@ vdjscript:
     - docs/vdjscript-verbs.json
   commands:
     - just verb get NAME
-    - just verb search TERM
+    - just verb search TERM [--surface=X --section=X --status=X --format=json]
     - just verb next-incomplete
     - just verb stats
     - just find-verb NAME

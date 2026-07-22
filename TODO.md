@@ -29,15 +29,17 @@ Done in this pass:
 - Merge-safe `bootstrap` seeded all 991 records from the index + coverage audit (official names + Needs-Local-Test gap) + tracker status tables. It correctly finds the 19-name gap (17 hardware-blocked → skipped by `next-incomplete`), leaving `dualdeckmode_decks` and `system` as the 2 active items, and auto-detected 7 tracker `Pass` rows.
 - `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the `just verb` surface.
 
-Generation half — DONE (2026-07-22):
+Reports are queries, not files (2026-07-22):
 
-- `just verb-views` (`verbdb.py generate`) writes derived Markdown views from the store under [docs/VDJScript/generated/](docs/VDJScript/generated/): `aliases.md` (alias→canonical), `surfaces.md` (surface→verbs), `coverage.md` (live counts + active/blocked/Pass queues). Each is byte-stable under `generate --check`, wired into `just check`. A `just verb put` plus `just verb-views` now replaces hand-editing count prose and index tables.
+- `just verb search` filters on `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`, with `--format=json` for structured output and `--limit`. A category listing is just an unfiltered query, so **no derived Markdown is written to disk** — nothing can drift, and there is no staleness gate to maintain. An earlier pass generated `docs/VDJScript/generated/*.md` and was reverted for exactly this reason.
+- Rule for future work: do not add a generator that writes a Markdown copy of store data. If a view is wanted, add a query or a flag. Building reader-facing documentation is a later phase, driven by findings — not something to design for now.
 
 Remaining:
 
-- Generate the **family rows** view (the plan's Tier-1 compact per-family tables) from the store, then follow the frozen plan's phased, one-family-at-a-time migration to retire the corresponding monolith sections. Do not delete hand-authored docs ahead of that.
 - Add richer record fields as needed by contracts (`forms`, `platforms`, `deck_scope`); `put` currently covers the scalar/list fields, nested contract detail is hand-edited in the JSON.
-- Ingest [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json) into a generated effects-catalog view (this is effect data, distinct from the verb records; see task 1).
+- Grow the query layer where a real question is awkward to ask (e.g. verbs by evidence source, or by presence of a local-test note).
+- The monolith still holds the authored prose. Retiring it follows the frozen plan's phased, one-family-at-a-time migration; do not delete hand-authored docs ahead of that.
+- Ingest [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json) as queryable effect data (distinct from verb records; see task 1).
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
