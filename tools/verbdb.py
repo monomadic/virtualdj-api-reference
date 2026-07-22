@@ -44,6 +44,12 @@ TRACKER = ROOT / "docs" / "VDJScript Local Test Tracker.md"
 
 TEST_STATUSES = {"Untested", "Partial", "Pass", "Fail", "N/A"}
 LIST_FIELDS = {"aliases", "surfaces", "evidence"}
+# Comma-splittable list fields. `evidence` is excluded on purpose: its entries are
+# prose sentences that contain commas, so one `evidence=` is one entry.
+CSV_FIELDS = {"aliases", "surfaces"}
+# Fields that accumulate instead of replacing, so recording a second observation
+# does not silently discard the first.
+APPEND_FIELDS = {"evidence"}
 BOOL_FIELDS = {"official", "needs_test", "blocked"}
 # Fields settable via `put`. `forms`/nested contract detail are hand-edited in JSON.
 SETTABLE = {
@@ -269,8 +275,10 @@ def cmd_get(args):
 def coerce(field: str, value: str):
     if field in BOOL_FIELDS:
         return value.lower() in {"1", "true", "yes", "on"}
-    if field in LIST_FIELDS:
+    if field in CSV_FIELDS:
         return [v.strip() for v in value.split(",") if v.strip()]
+    if field in LIST_FIELDS:
+        return [value.strip()] if value.strip() else []
     if field == "test_status" and value not in TEST_STATUSES:
         sys.exit(f"test_status must be one of {sorted(TEST_STATUSES)}")
     return value
@@ -288,7 +296,12 @@ def cmd_put(args):
         field, _, value = pair.partition("=")
         if field not in SETTABLE:
             sys.exit(f"field '{field}' not settable; allowed: {sorted(SETTABLE)}")
-        rec[field] = coerce(field, value)
+        new = coerce(field, value)
+        if field in APPEND_FIELDS:
+            kept = [v for v in rec.get(field, []) if v not in new]
+            rec[field] = kept + new
+        else:
+            rec[field] = new
         if field == "needs_test":
             rec["_authored_needs_test"] = True
     store[name] = rec

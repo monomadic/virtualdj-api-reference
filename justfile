@@ -1,5 +1,10 @@
 set shell := ["zsh", "-eu", "-o", "pipefail", "-c"]
 
+# Variadic recipes forward "$@" rather than an interpolated string, so an
+# argument like evidence="... (2026-07-22) ..." survives verbatim instead of
+# being re-split and glob-expanded by the shell.
+set positional-arguments
+
 default:
     @just --list
 
@@ -72,7 +77,7 @@ get-xml-element element:
     @python3 tools/xmldb.py get "{{element}}"
 
 find-xml-elements *args:
-    @python3 tools/xmldb.py search {{args}}
+    @python3 tools/xmldb.py search "$@"
 
 xml-stats:
     @python3 tools/xmldb.py stats
@@ -88,10 +93,10 @@ get-verb name:
     @python3 tools/verbdb.py get "{{name}}"
 
 find-verbs *args:
-    @python3 tools/verbdb.py search {{args}}
+    @python3 tools/verbdb.py search "$@"
 
 put-verb name *assignments:
-    @python3 tools/verbdb.py put "{{name}}" {{assignments}}
+    @python3 tools/verbdb.py put "$@"
 
 next-incomplete-verb:
     @python3 tools/verbdb.py next-incomplete
@@ -105,16 +110,16 @@ get-fx effect:
     @python3 tools/fxdb.py get "{{effect}}"
 
 find-fx *args:
-    @python3 tools/fxdb.py search {{args}}
+    @python3 tools/fxdb.py search "$@"
 
 fx-stats:
     @python3 tools/fxdb.py stats
 
 lint-skins *paths:
-    python3 tools/lint_skins.py {{paths}}
+    python3 tools/lint_skins.py "$@"
 
 lint-mappers *paths:
-    python3 tools/lint_mappers.py {{paths}}
+    python3 tools/lint_mappers.py "$@"
 
 check:
     python3 tools/lint_pads.py

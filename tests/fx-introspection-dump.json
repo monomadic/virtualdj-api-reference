@@ -1,12 +1,10 @@
 {
   "source": "HTTP control interface (localhost)",
-  "channel": "execute effect_select (cycle +1 and by-name) + query introspection",
+  "channel": "read-only get_effect_* name-form introspection + per-target select probes",
   "vdj_version": "2026",
   "slot": 1,
   "cycle_enabled_count": 63,
   "cycle_order": [
-    "Backspin",
-    "BrakeStart",
     "Dump",
     "Scratch DNA",
     "VinylBrake",
@@ -67,59 +65,203 @@
     "Pitch Down",
     "Pitch Echo",
     "Scale Down",
-    "Stretch"
+    "Stretch",
+    "Backspin",
+    "BrakeStart"
   ],
-  "installed_reachable_count": 95,
-  "failed_by_name": [
+  "cycles": {
+    "deck_fx": [
+      "Dump",
+      "Scratch DNA",
+      "VinylBrake",
+      "EQ10",
+      "MergeFX",
+      "Choppa",
+      "Cut",
+      "Mute",
+      "Pan",
+      "Ping Pong",
+      "Pumper",
+      "Stems",
+      "Cyclone",
+      "Delay",
+      "Down Echo",
+      "Ducking Echo",
+      "Echo",
+      "Echo Out",
+      "Helix",
+      "Hold Echo",
+      "Low Cut Echo",
+      "MT Delay",
+      "Up Echo",
+      "Rev Delay",
+      "FDR Filter",
+      "LFO Filter",
+      "Filter",
+      "Filter HP",
+      "Filter LP",
+      "Beat Brake",
+      "Beat Grid",
+      "FDR Roll",
+      "Flippin Double",
+      "Loop Out",
+      "Loop Roll",
+      "Matrix",
+      "Recycler",
+      "Rider",
+      "Riser",
+      "Slicer",
+      "Slip Roll",
+      "Stutter Out",
+      "Distortion",
+      "Enigma Jet",
+      "FDR Ring",
+      "Flanger",
+      "Noise",
+      "Phaser",
+      "Reverb",
+      "Wahwah",
+      "FDR Tone",
+      "Mobius",
+      "Mobius Saw",
+      "Mobius Tri",
+      "Spiral",
+      "FDR Pitch",
+      "Pitch",
+      "Pitch Down",
+      "Pitch Echo",
+      "Scale Down",
+      "Stretch",
+      "Backspin",
+      "BrakeStart"
+    ],
+    "video_fx": [
+      "Karaoke",
+      "Strobe",
+      "Shake",
+      "Spectral",
+      "Negative",
+      "Colorize",
+      "Blur Black Bars",
+      "Blur",
+      "Boom Auto",
+      "Boom",
+      "Slideshow",
+      "Visuals",
+      "Camera",
+      "Cover",
+      "Text",
+      "Screen Grab",
+      "Lyrics"
+    ],
+    "transition": [
+      "Cube",
+      "Color Swap",
+      "Cloud Dissolve",
+      "Blinds",
+      "Additive",
+      "None",
+      "Zoom",
+      "Wipe",
+      "Window Double",
+      "Window",
+      "Warp Speed",
+      "Warp",
+      "Vertical Slide",
+      "Strobo",
+      "Splodge",
+      "Slide",
+      "Shatter",
+      "Sequences",
+      "Scrolling Slice",
+      "Satellite Boom",
+      "Satellite",
+      "Pixelate",
+      "LumaKey",
+      "Grid",
+      "Glass",
+      "Fixed Grid",
+      "Flip 3D",
+      "Flip",
+      "Flat Cube",
+      "Fade",
+      "Extreme Cut",
+      "Droplets",
+      "Drain Light",
+      "Drain",
+      "Doors"
+    ]
+  },
+  "installed_reachable_count": 119,
+  "unresolved_names": [
     "BeatGrid",
-    "Brake",
-    "Shader"
+    "Brake"
   ],
-  "note": "Pass A cycled the enabled/favorites list (effect_select +1). Pass B added by-name catalog entries. NOTE: slot 1 accepts video effects by name (Blinds, Cube, Camera all load and report controls), so this set mixes audio and video effects — 'reachable' does not mean 'audio effect'. 'failed_by_name' names did not load at all; the reason is unresolved (not installed, or not the selector name) and is NOT 'video-only'. Slider text is a live value, not a reset/default; labels and counts are state-independent. Names are installed selector names.",
+  "failed_by_name": [],
+  "note": "Every get_effect_* helper accepts an effect NAME in place of the slot number, so counts, labels, defaults, and value text are read WITHOUT selecting anything; verified identical to the slot form for all title-resolvable effects. get_effect_title '<name>' returns the canonical installed name (case-insensitive, NOT space-insensitive: 'BeatGrid' misses 'Beat Grid') and '' for unknown names -- but it is blind to Stems/Vocals, which select and introspect normally through a slot, so a title miss is re-checked by selecting and those effects are read via 'introspected_via':'select'. 'unresolved_names' did not resolve either way: names this build does not know. 'category' comes from cycle membership, not from loadability: all three selectors accept any installed effect name (video_fx_select 'Echo' really does set the video slot to Echo), so what a target accepts discriminates nothing. The three '+1' cycles are disjoint and are the app's own category assignment, but each is the ENABLED/favorites subset -- an installed effect in no cycle is category-unknown, not uncategorised by the app. Slider 'default' is the normalized reset value (0..1); 'text' is the current live value, not a default. The *_skip_length helpers RE-INDEX rather than blank: 'skip_length_label' at index i is the i-th slider of the list with the length slider removed, so the last entry is always ''. 'length_slider_index' is where that divergence starts -- not always slider 2 (Loop Out and Slideshow put it first) and not always labelled LEN (Phaser and Wahwah label it SPD).",
   "effects": [
     {
       "effect": "Additive",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Additive"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Backspin",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "4 bt"
+          "default": "0.5",
+          "text": "4 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [
+        "BackSpin"
+      ],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
         "name_requests": [
-          "BackSpin",
-          "Backspin"
+          "BackSpin"
         ]
       }
     },
@@ -127,863 +269,1113 @@
       "effect": "Beat Brake",
       "slider_count": 4,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "PAT",
           "full": "Pattern",
-          "name": "Pattern",
-          "text": "Pat 1"
+          "default": "0",
+          "text": "Pat 1",
+          "skip_length_label": "PAT"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "BARS",
           "full": "Bars",
-          "name": "Bars",
-          "text": "2 bars"
+          "default": "0.5",
+          "text": "2 bars",
+          "skip_length_label": "BARS"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "HPF",
           "full": "HPF",
-          "name": "HPF",
-          "text": "Off"
+          "default": "0",
+          "text": "Off",
+          "skip_length_label": "HPF"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Beat Brake"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Beat Grid",
       "slider_count": 1,
       "button_count": 2,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SLOT",
           "full": "Slot",
-          "name": "Slot",
-          "text": "Slot 1"
+          "default": "0",
+          "text": "Slot 1",
+          "skip_length_label": "SLOT"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": ">>"
+          "short": ">>",
+          "full": "Mode"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "VIDEO"
+          "short": "VIDEO",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Beat Grid"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Blinds",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "DIR",
           "full": "Direction",
-          "name": "Direction",
-          "text": "Vertical"
+          "default": "0",
+          "text": "Vertical",
+          "skip_length_label": "DIR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "NB",
           "full": "Nb Slides",
-          "name": "Nb Slides",
-          "text": "11"
+          "default": "0.5",
+          "text": "11",
+          "skip_length_label": "NB"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Blinds"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Blur",
       "slider_count": 1,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "47.0%"
+          "default": "0.47",
+          "text": "47.0%",
+          "skip_length_label": "STR"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Blur"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Blur Black Bars",
       "slider_count": 1,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "47.0%"
+          "default": "0.47",
+          "text": "47.0%",
+          "skip_length_label": "STR"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Blur Black Bars"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Boom",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Boom"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Boom Auto",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 1,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SPD",
           "full": "Speed",
-          "name": "Speed",
-          "text": "1/2 bt"
+          "default": "0.3",
+          "text": "1/2 bt",
+          "skip_length_label": "DPT"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "DPT",
           "full": "Depth",
-          "name": "Depth",
-          "text": "40.0%"
+          "default": "0.4",
+          "text": "40.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Boom Auto"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "BrakeStart",
       "slider_count": 1,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 1,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2.77 s"
+          "default": "0.48",
+          "text": "2.77 s",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "RESTART"
+          "short": "RESTART",
+          "full": "Restart Play"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "BrakeStart"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Camera",
       "slider_count": 5,
       "button_count": 3,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "OPAC",
           "full": "Opacity",
-          "name": "Opacity",
-          "text": "100.0%"
+          "default": "1",
+          "text": "100.0%",
+          "skip_length_label": "OPAC"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "CAM",
           "full": "Camera",
-          "name": "Camera",
-          "text": "1/2"
+          "default": "0",
+          "text": "1/2",
+          "skip_length_label": "CAM"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "ZOOM",
           "full": "Zoom",
-          "name": "Zoom",
-          "text": "1.0x"
+          "default": "0",
+          "text": "1.0x",
+          "skip_length_label": "ZOOM"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "CHROMA",
           "full": "Chroma Key Strength",
-          "name": "Chroma Key Strength",
-          "text": "0.0%"
+          "default": "0",
+          "text": "0.0%",
+          "skip_length_label": "CHROMA"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "SWTCH",
           "full": "Camera switch speed",
-          "name": "Camera switch speed",
-          "text": "16.4 s"
+          "default": "0.47",
+          "text": "16.4 s",
+          "skip_length_label": "SWTCH"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "POS"
+          "short": "POS",
+          "full": "Position"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "RES"
+          "short": "RES",
+          "full": "Resolution"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "MORE"
+          "short": "MORE",
+          "full": "More"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Camera"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Choppa",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "Pat 1"
+          "default": "0",
+          "text": "Pat 1",
+          "skip_length_label": "INV"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "INV",
           "full": "Invert",
-          "name": "Invert",
-          "text": "Off"
+          "default": "0",
+          "text": "Off",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Choppa"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Cloud Dissolve",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Cloud Dissolve"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Color Swap",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Color Swap"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Colorize",
       "slider_count": 5,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 4,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "COL",
           "full": "Color",
-          "name": "Color",
-          "text": "0°"
+          "default": "0",
+          "text": "0°",
+          "skip_length_label": "COL"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "1",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SAT",
           "full": "Saturation",
-          "name": "Saturation",
-          "text": "100.0%"
+          "default": "1",
+          "text": "100.0%",
+          "skip_length_label": "SAT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SPD",
           "full": "Speed",
-          "name": "Speed",
-          "text": "OFF"
+          "default": "0",
+          "text": "OFF",
+          "skip_length_label": "BRI"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "BRI",
           "full": "Brightness",
-          "name": "Brightness",
-          "text": "Default"
+          "default": "0.5",
+          "text": "Default",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Colorize"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Cover",
       "slider_count": 1,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "FADE",
           "full": "Fade Time",
-          "name": "Fade Time",
-          "text": "5s"
+          "default": "0.5",
+          "text": "5s",
+          "skip_length_label": "FADE"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "POS"
+          "short": "POS",
+          "full": "Position"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Cover"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Cube",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Cube"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Cut",
       "slider_count": 4,
       "button_count": 4,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "52%"
+          "default": "0.52",
+          "text": "52%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "DUTY"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DUTY",
           "full": "Duty",
-          "name": "Duty",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "SWING"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "R: 00%"
+          "default": "0.5",
+          "text": "R: 00%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HIGH"
+          "short": "HIGH",
+          "full": "High Cut"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "INV"
+          "short": "INV",
+          "full": "Mute Beats"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "VIDEO"
+          "short": "VIDEO",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Cut"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Cyclone",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.5",
+          "text": "1/2 bt",
+          "skip_length_label": "DELAY"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DELAY",
           "full": "Delay",
-          "name": "Delay",
-          "text": "203 ms"
+          "default": "0.5",
+          "text": "203 ms",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Cyclone"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Delay",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "85%"
+          "default": "0.52",
+          "text": "85%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "SWING"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": "LR"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "LR",
           "full": "LR Ratio",
-          "name": "LR Ratio",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LC"
+          "short": "LC",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HC"
+          "short": "HC",
+          "full": "High Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Delay"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Distortion",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "00%"
+          "default": "0.5",
+          "text": "00%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "DSM",
           "full": "Downsample",
-          "name": "Downsample",
-          "text": "16x"
+          "default": "0",
+          "text": "16x",
+          "skip_length_label": "DSM"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "BIT",
           "full": "Bitdepth",
-          "name": "Bitdepth",
-          "text": "04 bit"
+          "default": "0",
+          "text": "04 bit",
+          "skip_length_label": "BIT"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Distortion"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Doors",
       "slider_count": 1,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "TRA",
           "full": "Transparency",
-          "name": "Transparency",
-          "text": "25%"
+          "default": "0.25",
+          "text": "25%",
+          "skip_length_label": "TRA"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "MIR"
+          "short": "MIR",
+          "full": "Mirror"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Doors"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Down Echo",
       "slider_count": 3,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "70.0%"
+          "default": "0.7",
+          "text": "70.0%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.7",
+          "text": "2 bt",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Down Echo"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Drain",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Drain"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Drain Light",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Drain Light"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Droplets",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Droplets"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Ducking Echo",
       "slider_count": 4,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "33%"
+          "default": "0.8",
+          "text": "33%",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.7",
+          "text": "1/2 bt",
+          "skip_length_label": "COL"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "COL",
           "full": "Color",
-          "name": "Color",
-          "text": "-"
+          "default": "0.5",
+          "text": "-",
+          "skip_length_label": "RVB"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "RVB",
           "full": "Reverb",
-          "name": "Reverb",
-          "text": "60.2%"
+          "default": "0",
+          "text": "60.2%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Ducking Echo"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Dump",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
-        "by_name": false,
+        "by_name": true,
         "name_requests": []
       }
     },
@@ -991,3015 +1383,4293 @@
       "effect": "Echo",
       "slider_count": 6,
       "button_count": 4,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "75%"
+          "default": "0.52",
+          "text": "75%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "FB"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FB",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "52%"
+          "default": "0.52",
+          "text": "52%",
+          "skip_length_label": "FILT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "FILT",
           "full": "Filter",
-          "name": "Filter",
-          "text": "OFF"
+          "default": "0.5",
+          "text": "OFF",
+          "skip_length_label": "LP"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "LP",
           "full": "Lowpass",
-          "name": "Lowpass",
-          "text": "20 Hz"
+          "default": "0",
+          "text": "20 Hz",
+          "skip_length_label": "HP"
         },
         {
           "index": 6,
           "has": "yes",
           "short": "HP",
           "full": "Highpass",
-          "name": "Highpass",
-          "text": "20000 Hz"
+          "default": "1",
+          "text": "20000 Hz",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "MUTE"
+          "short": "MUTE",
+          "full": "Mute Source"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "LCK"
+          "short": "LCK",
+          "full": "Lock On Max"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Echo"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Echo Out",
       "slider_count": 4,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "80%"
+          "default": "0.8",
+          "text": "80%",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1 bt"
+          "default": "0.7",
+          "text": "1 bt",
+          "skip_length_label": "COL"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "COL",
           "full": "Color",
-          "name": "Color",
-          "text": "-"
+          "default": "0.5",
+          "text": "-",
+          "skip_length_label": "RVB"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "RVB",
           "full": "Reverb",
-          "name": "Reverb",
-          "text": "0.0%"
+          "default": "0",
+          "text": "0.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Echo Out"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Enigma Jet",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "40%"
+          "default": "0.7",
+          "text": "40%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "SPD",
           "full": "Speed",
-          "name": "Speed",
-          "text": "16 bt"
+          "default": "0.6",
+          "text": "16 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Enigma Jet"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "EQ10",
       "slider_count": 10,
       "button_count": 8,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "32 Hz",
           "full": "32 Hz",
-          "name": "32 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "32 Hz"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "63 Hz",
           "full": "63 Hz",
-          "name": "63 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "63 Hz"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "125 Hz",
           "full": "125 Hz",
-          "name": "125 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "125 Hz"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "250 Hz",
           "full": "250 Hz",
-          "name": "250 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "250 Hz"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "500 Hz",
           "full": "500 Hz",
-          "name": "500 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "500 Hz"
         },
         {
           "index": 6,
           "has": "yes",
           "short": "1000 Hz",
           "full": "1000 Hz",
-          "name": "1000 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "1000 Hz"
         },
         {
           "index": 7,
           "has": "yes",
           "short": "2000 Hz",
           "full": "2000 Hz",
-          "name": "2000 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "2000 Hz"
         },
         {
           "index": 8,
           "has": "yes",
           "short": "4000 Hz",
           "full": "4000 Hz",
-          "name": "4000 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "4000 Hz"
         },
         {
           "index": 9,
           "has": "yes",
           "short": "8000 Hz",
           "full": "8000 Hz",
-          "name": "8000 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "8000 Hz"
         },
         {
           "index": 10,
           "has": "yes",
           "short": "16000 Hz",
           "full": "16000 Hz",
-          "name": "16000 Hz",
-          "text": "0.0 dB"
+          "default": "0.5",
+          "text": "0.0 dB",
+          "skip_length_label": "16000 Hz"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "RES"
+          "short": "RES",
+          "full": "Reset EQ"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "CHO"
+          "short": "CHO",
+          "full": "Choose preset"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "SAV"
+          "short": "SAV",
+          "full": "Add new preset"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "DEL"
+          "short": "DEL",
+          "full": "Delete current preset"
         },
         {
           "index": 5,
           "has": "yes",
-          "short": "PRE"
+          "short": "PRE",
+          "full": "Previous Preset"
         },
         {
           "index": 6,
           "has": "yes",
-          "short": "NXT"
+          "short": "NXT",
+          "full": "Next Preset"
         },
         {
           "index": 7,
           "has": "yes",
-          "short": "SAV"
+          "short": "SAV",
+          "full": "Save Preset"
         },
         {
           "index": 8,
           "has": "yes",
-          "short": "32dB"
+          "short": "32dB",
+          "full": "32dB Range"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "EQ10"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Extreme Cut",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Extreme Cut"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Fade",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Fade"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "FDR Filter",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "TYPE",
           "full": "Type",
-          "name": "Type",
-          "text": "HP"
+          "default": "0.5",
+          "text": "HP",
+          "skip_length_label": "TYPE"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "FDR Filter"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "FDR Pitch",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "77%"
+          "default": "0.5",
+          "text": "77%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "TYPE",
           "full": "Type",
-          "name": "Type",
-          "text": "UP"
+          "default": "0",
+          "text": "UP",
+          "skip_length_label": "TYPE"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SCALE",
           "full": "Scale",
-          "name": "Scale",
-          "text": "OFF"
+          "default": "0",
+          "text": "OFF",
+          "skip_length_label": "SCALE"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "FDR Pitch"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "FDR Ring",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "FREQ",
           "full": "Freq",
-          "name": "Freq",
-          "text": "2kHz"
+          "default": "0.5",
+          "text": "2kHz",
+          "skip_length_label": "FREQ"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "MODE",
           "full": "Mode",
-          "name": "Mode",
-          "text": "DECR"
+          "default": "1",
+          "text": "DECR",
+          "skip_length_label": "MODE"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "FDR Ring"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "FDR Roll",
       "slider_count": 2,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "38%"
+          "default": "0.5",
+          "text": "38%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "HPF",
           "full": "HPF",
-          "name": "HPF",
-          "text": "Off"
+          "default": "0",
+          "text": "Off",
+          "skip_length_label": "HPF"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "FDR Roll"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "FDR Tone",
       "slider_count": 5,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "KEY",
           "full": "Key",
-          "name": "Key",
-          "text": "D"
+          "default": "0",
+          "text": "D",
+          "skip_length_label": "KEY"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "TYPE",
           "full": "Type",
-          "name": "Type",
-          "text": "Sine"
+          "default": "0",
+          "text": "Sine",
+          "skip_length_label": "TYPE"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "OCT",
           "full": "Octave",
-          "name": "Octave",
-          "text": "6"
+          "default": "0.8",
+          "text": "6",
+          "skip_length_label": "OCT"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "SCALE",
           "full": "Scale",
-          "name": "Scale",
-          "text": "Off"
+          "default": "0",
+          "text": "Off",
+          "skip_length_label": "SCALE"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "FDR Tone"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Filter",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": "OFF"
+          "default": "0.5",
+          "text": "OFF",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "RES",
           "full": "Resonance",
-          "name": "Resonance",
-          "text": "70%"
+          "default": "0.7",
+          "text": "70%",
+          "skip_length_label": "RES"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Filter"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Filter HP",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": ">1.4kHz"
+          "default": "0",
+          "text": ">1.4kHz",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "RES",
           "full": "Resonance",
-          "name": "Resonance",
-          "text": "0%"
+          "default": "0.7",
+          "text": "0%",
+          "skip_length_label": "RES"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Filter HP"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Filter LP",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": "<20hz"
+          "default": "0",
+          "text": "<20hz",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "RES",
           "full": "Resonance",
-          "name": "Resonance",
-          "text": "40%"
+          "default": "0.7",
+          "text": "40%",
+          "skip_length_label": "RES"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Filter LP"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Fixed Grid",
       "slider_count": 1,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "BEAT",
           "full": "Beat Change",
-          "name": "Beat Change",
-          "text": "16 bt"
+          "default": "0.2",
+          "text": "16 bt",
+          "skip_length_label": "BEAT"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Fixed Grid"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Flanger",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Speed",
-          "name": "Speed",
-          "text": "8 bt"
+          "default": "0.75",
+          "text": "8 bt",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "LFO"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "LFO",
           "full": "LFO Amp",
-          "name": "LFO Amp",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "TONE"
+          "short": "TONE",
+          "full": "Tone"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "PHASE"
+          "short": "PHASE",
+          "full": "Phase"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Flanger"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Flat Cube",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Flip",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Flip 3D",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Flippin Double",
       "slider_count": 0,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "VIDEO"
+          "short": "VIDEO",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Flippin Double"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Glass",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Grid",
+      "slider_count": 1,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "ZOOM",
+          "full": "Zoom",
+          "default": "0.25",
+          "text": "3.0",
+          "skip_length_label": "ZOOM"
+        }
+      ],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Helix",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1 bt"
+          "default": "0.5",
+          "text": "1 bt",
+          "skip_length_label": "TIME"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "TIME",
           "full": "Time",
-          "name": "Time",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "SPEED"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SPEED",
           "full": "Speed",
-          "name": "Speed",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "High Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Helix"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Hold Echo",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.5",
+          "text": "1/2 bt",
+          "skip_length_label": "HPF"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "HPF",
           "full": "High Pass",
-          "name": "High Pass",
-          "text": "OFF"
+          "default": "0",
+          "text": "OFF",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Hold Echo"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Karaoke",
       "slider_count": 1,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "PRES",
           "full": "Preset",
-          "name": "Preset",
-          "text": "Rob"
+          "default": "0",
+          "text": "Rob",
+          "skip_length_label": "PRES"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "EDIT"
+          "short": "EDIT",
+          "full": "Edit..."
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Karaoke"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "LFO Filter",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "4 bt"
+          "default": "0.6",
+          "text": "4 bt",
+          "skip_length_label": "RES"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "RES",
           "full": "Resonance",
-          "name": "Resonance",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "LFO"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "LFO",
           "full": "LFO Amp",
-          "name": "LFO Amp",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "TONE"
+          "short": "TONE",
+          "full": "Tone"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "PHASE"
+          "short": "PHASE",
+          "full": "Phase"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "LFO Filter"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Loop Out",
       "slider_count": 4,
       "button_count": 3,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 1,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1 bt"
+          "default": "0.35",
+          "text": "1 bt",
+          "skip_length_label": "MODE"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "MODE",
           "full": "Mode",
-          "name": "Mode",
-          "text": "Step"
+          "default": "0",
+          "text": "Step",
+          "skip_length_label": "MDP"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "MDP",
           "full": "Mode Param",
-          "name": "Mode Param",
-          "text": "58.4%"
+          "default": "0.5",
+          "text": "58.4%",
+          "skip_length_label": "CNT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "CNT",
           "full": "Count",
-          "name": "Count",
-          "text": "8"
+          "default": "0.5",
+          "text": "8",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "STOP"
+          "short": "STOP",
+          "full": "Stop"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "SLIP"
+          "short": "SLIP",
+          "full": "Slip"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "VID"
+          "short": "VID",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Loop Out"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Loop Roll",
       "slider_count": 4,
       "button_count": 3,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.47",
+          "text": "2 bt",
+          "skip_length_label": "DUTY"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DUTY",
           "full": "Duty",
-          "name": "Duty",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "SWING"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "0.0%"
+          "default": "0.5",
+          "text": "0.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "Hi Cut"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "Video"
+          "short": "Video",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Loop Roll"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Lottery",
       "slider_count": 2,
       "button_count": 3,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SPD1",
           "full": "Speed",
-          "name": "Speed",
-          "text": "1.0 img/s"
+          "default": "0.2",
+          "text": "1.0 img/s",
+          "skip_length_label": "SPD1"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "SPD2",
           "full": "Stop",
-          "name": "Stop",
-          "text": "5.0s"
+          "default": "0.5",
+          "text": "5.0s",
+          "skip_length_label": "SPD2"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "GO"
+          "short": "GO",
+          "full": "Start/Stop"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "..."
+          "short": "...",
+          "full": "Files..."
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "SHOW"
+          "short": "SHOW",
+          "full": "Show name"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [],
+      "category": null,
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Lottery"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Low Cut Echo",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.52",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "8 bt"
+          "default": "0.48",
+          "text": "8 bt",
+          "skip_length_label": "FB"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FB",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "21%"
+          "default": "0.52",
+          "text": "21%",
+          "skip_length_label": "SWING"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Low Cut Echo"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "LumaKey",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Lyrics",
       "slider_count": 1,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "PRES",
           "full": "Preset",
-          "name": "Preset",
-          "text": "Dynamic"
+          "default": "0",
+          "text": "Dynamic",
+          "skip_length_label": "PRES"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "EDIT"
+          "short": "EDIT",
+          "full": "Edit..."
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Lyrics"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Matrix",
       "slider_count": 3,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50.2%"
+          "default": "0.5",
+          "text": "50.2%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.5",
+          "text": "1/2 bt",
+          "skip_length_label": "DUR"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DUR",
           "full": "Duration",
-          "name": "Duration",
-          "text": "6 bt"
+          "default": "0.5",
+          "text": "6 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "34E"
+          "short": "34E",
+          "full": "3/4 End"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantized"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Matrix"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "MergeFX",
       "slider_count": 2,
       "button_count": 2,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "< 45%"
+          "default": "0.5",
+          "text": "< 45%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "SLOT",
           "full": "Slot",
-          "name": "Slot",
-          "text": "Slot 1"
+          "default": "0",
+          "text": "Slot 1",
+          "skip_length_label": "SLOT"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "CANCEL"
+          "short": "CANCEL",
+          "full": "Cancel"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "LED"
+          "short": "LED",
+          "full": "LED"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "MergeFX"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Mobius",
       "slider_count": 3,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.75",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.48",
+          "text": "2 bt",
+          "skip_length_label": "ECHO"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "ECHO",
           "full": "Echo",
-          "name": "Echo",
-          "text": "48.0%"
+          "default": "0.48",
+          "text": "48.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "SAW"
+          "short": "SAW",
+          "full": "Saw"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Mobius"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Mobius Saw",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "00%"
+          "default": "0.75",
+          "text": "00%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.48",
+          "text": "2 bt",
+          "skip_length_label": "ECHO"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "ECHO",
           "full": "Echo",
-          "name": "Echo",
-          "text": "48.0%"
+          "default": "0.48",
+          "text": "48.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Mobius Saw"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Mobius Tri",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "00%"
+          "default": "0.75",
+          "text": "00%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "ECHO"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "ECHO",
           "full": "Echo",
-          "name": "Echo",
-          "text": "48.0%"
+          "default": "0.48",
+          "text": "48.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Mobius Tri"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "MT Delay",
       "slider_count": 2,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.75",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "4 bt"
+          "default": "0.48",
+          "text": "4 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "TRAIL"
+          "short": "TRAIL",
+          "full": "Trailing Stop"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "MT Delay"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Mute",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "INV",
           "full": "Invert",
-          "name": "Invert",
-          "text": "Off"
+          "default": "0",
+          "text": "Off",
+          "skip_length_label": "INV"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Mute"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Negative",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Negative"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Noise",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": "OFF"
+          "default": "0.5",
+          "text": "OFF",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "WET",
           "full": "Wet/Dry",
-          "name": "Wet/Dry",
-          "text": "100.0%"
+          "default": "0.3",
+          "text": "100.0%",
+          "skip_length_label": "WET"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Noise"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "None",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Pan",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.65",
+          "text": "2 bt",
+          "skip_length_label": "AMP"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "AMP",
           "full": "LFO Amp",
-          "name": "LFO Amp",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "LFO"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "LFO",
           "full": "LFO",
-          "name": "LFO",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HIGH"
+          "short": "HIGH",
+          "full": "High Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Pan"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Phaser",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "85%"
+          "default": "0.5",
+          "text": "85%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "SPD",
           "full": "Speed",
-          "name": "Speed",
-          "text": "64 bt"
+          "default": "0.7",
+          "text": "64 bt",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STAGE"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "STAGE",
           "full": "Stage",
-          "name": "Stage",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "TONE"
+          "short": "TONE",
+          "full": "Tone"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "PHASE"
+          "short": "PHASE",
+          "full": "Phase"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Phaser"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Ping Pong",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "52%"
+          "default": "0.52",
+          "text": "52%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "FB"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FB",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "52%"
+          "default": "0.52",
+          "text": "52%",
+          "skip_length_label": "FLT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "FLT",
           "full": "Filter",
-          "name": "Filter",
-          "text": "OFF"
+          "default": "0.5",
+          "text": "OFF",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Ping Pong"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Pitch",
       "slider_count": 2,
       "button_count": 2,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "71.7%"
+          "default": "0.5",
+          "text": "71.7%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "PITCH",
           "full": "Pitch",
-          "name": "Pitch",
-          "text": "50%"
+          "default": "0.7",
+          "text": "50%",
+          "skip_length_label": "PITCH"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "Hi Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Pitch"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Pitch Down",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "3/4 bt"
+          "default": "0.5",
+          "text": "3/4 bt",
+          "skip_length_label": "TAIL"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "TAIL",
           "full": "Tail",
-          "name": "Tail",
-          "text": "5"
+          "default": "0.5",
+          "text": "5",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Pitch Down"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Pitch Echo",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.7",
+          "text": "2 bt",
+          "skip_length_label": "PITCH"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "PITCH",
           "full": "Pitch",
-          "name": "Pitch",
-          "text": "00%"
+          "default": "0.5",
+          "text": "00%",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Pitch Echo"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Pixelate",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Pumper",
       "slider_count": 4,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.6",
+          "text": "2 bt",
+          "skip_length_label": "OFF"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "OFF",
           "full": "Offset",
-          "name": "Offset",
-          "text": "-1/2"
+          "default": "0",
+          "text": "-1/2",
+          "skip_length_label": "DPTH"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "DPTH",
           "full": "Depth",
-          "name": "Depth",
-          "text": "-21 dB"
+          "default": "0.5",
+          "text": "-21 dB",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Pumper"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Recycler",
       "slider_count": 3,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50.2%"
+          "default": "0.5",
+          "text": "50.2%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.5",
+          "text": "1/2 bt",
+          "skip_length_label": "RES"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "RES",
           "full": "Resonance",
-          "name": "Resonance",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Recycler"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Rev Delay",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "52%"
+          "default": "0.52",
+          "text": "52%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/2 bt"
+          "default": "0.48",
+          "text": "1/2 bt",
+          "skip_length_label": "SWING"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": "LR"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "LR",
           "full": "LR Ratio",
-          "name": "LR Ratio",
-          "text": "0%"
+          "default": "0.5",
+          "text": "0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LC"
+          "short": "LC",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HC"
+          "short": "HC",
+          "full": "High Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Rev Delay"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Reverb",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "40%"
+          "default": "0.5",
+          "text": "40%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "DEC",
           "full": "Decay",
-          "name": "Decay",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "DEC"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SIZE",
           "full": "Room Size",
-          "name": "Room Size",
-          "text": "30%"
+          "default": "0.5",
+          "text": "30%",
+          "skip_length_label": "SIZE"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "BRI",
           "full": "Brightness",
-          "name": "Brightness",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "BRI"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "Hi Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Reverb"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Rider",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "3/4 bt"
+          "default": "0.5",
+          "text": "3/4 bt",
+          "skip_length_label": "PAT"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "PAT",
           "full": "Pattern",
-          "name": "Pattern",
-          "text": "MAJOR"
+          "default": "0",
+          "text": "MAJOR",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Rider"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Riser",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "3/4 bt"
+          "default": "0.5",
+          "text": "3/4 bt",
+          "skip_length_label": "SPEED"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SPEED",
           "full": "Speed",
-          "name": "Speed",
-          "text": "7"
+          "default": "0.7",
+          "text": "7",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Riser"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Satellite",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Satellite Boom",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Scale Down",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1 bt"
+          "default": "0.7",
+          "text": "1 bt",
+          "skip_length_label": "SCALE"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "SCALE",
           "full": "Scale",
-          "name": "Scale",
-          "text": "MAJOR"
+          "default": "0",
+          "text": "MAJOR",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Scale Down"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Scratch DNA",
       "slider_count": 1,
       "button_count": 3,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SEL",
           "full": "Select",
-          "name": "Select",
-          "text": "4"
+          "default": "0",
+          "text": "4",
+          "skip_length_label": "SEL"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "EDIT"
+          "short": "EDIT",
+          "full": "Editor..."
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "MIX"
+          "short": "MIX",
+          "full": "Over"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "QUAN"
+          "short": "QUAN",
+          "full": "Quantized"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Scratch DNA"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Screen Grab",
       "slider_count": 0,
       "button_count": 4,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "SEL"
+          "short": "SEL",
+          "full": "Select"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "TRANS"
+          "short": "TRANS",
+          "full": "Transparency"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "WHITE"
+          "short": "WHITE",
+          "full": "Auto-White"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "POS"
+          "short": "POS",
+          "full": "Position"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Screen Grab"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Scrolling Slice",
+      "slider_count": 2,
+      "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "default": "0.67",
+          "text": "4 bt",
+          "skip_length_label": "WID"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "WID",
+          "full": "Width",
+          "default": "0.25",
+          "text": "25%",
+          "skip_length_label": ""
+        }
+      ],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Sequences",
+      "slider_count": 1,
+      "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 1,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SPD",
+          "full": "Speed",
+          "default": "0.65",
+          "text": "0.5",
+          "skip_length_label": ""
+        }
+      ],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Shake",
       "slider_count": 2,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "AMO",
           "full": "Amount",
-          "name": "Amount",
-          "text": "9.1%"
+          "default": "0.5",
+          "text": "9.1%",
+          "skip_length_label": "AMO"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "FREQ",
           "full": "Frequency",
-          "name": "Frequency",
-          "text": "4.5%"
+          "default": "0",
+          "text": "4.5%",
+          "skip_length_label": "FREQ"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "AUD"
+          "short": "AUD",
+          "full": "Use Audio"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Shake"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Shatter",
+      "slider_count": 7,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SIZ",
+          "full": "Block Size",
+          "default": "0.1",
+          "text": "10",
+          "skip_length_label": "SIZ"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "ROT",
+          "full": "Rotate Amount",
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "ROT"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "THR",
+          "full": "Vertical Throw Amount",
+          "default": "0.1",
+          "text": "10.0%",
+          "skip_length_label": "THR"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "FAL",
+          "full": "Fall Speed Range",
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "FAL"
+        },
+        {
+          "index": 5,
+          "has": "yes",
+          "short": "MOV",
+          "full": "X Movement Range",
+          "default": "0.3",
+          "text": "30.0%",
+          "skip_length_label": "MOV"
+        },
+        {
+          "index": 6,
+          "has": "yes",
+          "short": "XRA",
+          "full": "Shatter Offset X Range",
+          "default": "0.1",
+          "text": "10.0%",
+          "skip_length_label": "XRA"
+        },
+        {
+          "index": 7,
+          "has": "yes",
+          "short": "YRA",
+          "full": "Shatter Offset Y Range",
+          "default": "0.1",
+          "text": "10.0%",
+          "skip_length_label": "YRA"
+        }
+      ],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Slicer",
       "slider_count": 2,
       "button_count": 10,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STEP",
           "full": "Step Size",
-          "name": "Step Size",
-          "text": "1/8 bt"
+          "default": "0.75",
+          "text": "1/8 bt",
+          "skip_length_label": "STEP"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "3/4 bt"
+          "default": "0.55",
+          "text": "3/4 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "1"
+          "short": "1",
+          "full": "1"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "2"
+          "short": "2",
+          "full": "2"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "3"
+          "short": "3",
+          "full": "3"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "4"
+          "short": "4",
+          "full": "4"
         },
         {
           "index": 5,
           "has": "yes",
-          "short": "5"
+          "short": "5",
+          "full": "5"
         },
         {
           "index": 6,
           "has": "yes",
-          "short": "6"
+          "short": "6",
+          "full": "6"
         },
         {
           "index": 7,
           "has": "yes",
-          "short": "7"
+          "short": "7",
+          "full": "7"
         },
         {
           "index": 8,
           "has": "yes",
-          "short": "8"
+          "short": "8",
+          "full": "8"
         },
         {
           "index": 9,
           "has": "yes",
-          "short": "LOCK"
+          "short": "LOCK",
+          "full": "Lock"
         },
         {
           "index": 10,
           "has": "yes",
-          "short": "VIDEO"
+          "short": "VIDEO",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Slicer"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Slide",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Slideshow",
       "slider_count": 3,
       "button_count": 8,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 1,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "29s"
+          "default": "0.48",
+          "text": "29s",
+          "skip_length_label": "FADE"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "FADE",
           "full": "Fade",
-          "name": "Fade",
-          "text": "1.4s"
+          "default": "0.48",
+          "text": "1.4s",
+          "skip_length_label": "VLEN"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "VLEN",
           "full": "Video Length",
-          "name": "Video Length",
-          "text": "Full"
+          "default": "0",
+          "text": "Full",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "Fold"
+          "short": "Fold",
+          "full": "Select Folder"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "SHF"
+          "short": "SHF",
+          "full": "Shuffle"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "VIDEO"
+          "short": "VIDEO",
+          "full": "Video"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "TRANS"
+          "short": "TRANS",
+          "full": "Transitions"
         },
         {
           "index": 5,
           "has": "yes",
-          "short": "SPOS"
+          "short": "SPOS",
+          "full": "Screen Position"
         },
         {
           "index": 6,
           "has": "yes",
-          "short": "Skip"
+          "short": "Skip",
+          "full": "Skip to Next"
         },
         {
           "index": 7,
           "has": "yes",
-          "short": "PREV"
+          "short": "PREV",
+          "full": "Previous"
         },
         {
           "index": 8,
           "has": "yes",
-          "short": "PAUSE"
+          "short": "PAUSE",
+          "full": "Pause"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Slideshow"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Slip Roll",
       "slider_count": 4,
       "button_count": 3,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1/4 bt"
+          "default": "0.47",
+          "text": "1/4 bt",
+          "skip_length_label": "DUTY"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DUTY",
           "full": "Duty",
-          "name": "Duty",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "SWING"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "SWING",
           "full": "Swing",
-          "name": "Swing",
-          "text": "31.8%"
+          "default": "0.5",
+          "text": "31.8%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "Hi Cut"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "Video"
+          "short": "Video",
+          "full": "Video"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Slip Roll"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Spectral",
       "slider_count": 2,
       "button_count": 4,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SIZE",
           "full": "Minimum Size",
-          "name": "Minimum Size",
-          "text": "40.0%"
+          "default": "0.4",
+          "text": "40.0%",
+          "skip_length_label": "SIZE"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "PAD",
           "full": "Padding",
-          "name": "Padding",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": "PAD"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "STRET"
+          "short": "STRET",
+          "full": "Stretch"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "DYNA"
+          "short": "DYNA",
+          "full": "Dynamic Resize"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "SYM"
+          "short": "SYM",
+          "full": "Symmetrical"
         },
         {
           "index": 4,
           "has": "yes",
-          "short": "HRES"
+          "short": "HRES",
+          "full": "Hi-Res"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Spectral"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Spiral",
       "slider_count": 4,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "100%"
+          "default": "0.5",
+          "text": "100%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.7",
+          "text": "2 bt",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "PITCH"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "PITCH",
           "full": "Pitch",
-          "name": "Pitch",
-          "text": "00%"
+          "default": "0.5",
+          "text": "00%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LOW"
+          "short": "LOW",
+          "full": "Low Cut"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "HI"
+          "short": "HI",
+          "full": "Hi Cut"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Spiral"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Splodge",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Stems",
       "slider_count": 5,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "VOX",
           "full": "Vocals",
-          "name": "Vocals",
-          "text": "N/A"
+          "default": "0.5",
+          "text": "N/A",
+          "skip_length_label": "VOX"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "MEL",
           "full": "Instru",
-          "name": "Instru",
-          "text": "N/A"
+          "default": "0.5",
+          "text": "N/A",
+          "skip_length_label": "MEL"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "HAT",
           "full": "HiHat",
-          "name": "HiHat",
-          "text": "N/A"
+          "default": "0.5",
+          "text": "N/A",
+          "skip_length_label": "HAT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "KICK",
           "full": "Kick",
-          "name": "Kick",
-          "text": "N/A"
+          "default": "0.5",
+          "text": "N/A",
+          "skip_length_label": "KICK"
         },
         {
           "index": 5,
           "has": "yes",
           "short": "BASS",
           "full": "Bass",
-          "name": "Bass",
-          "text": "N/A"
+          "default": "0.5",
+          "text": "N/A",
+          "skip_length_label": "BASS"
         }
       ],
       "buttons": [],
+      "introspected_via": "select",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Stems"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Stretch",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": "50%"
+          "default": "0.49",
+          "text": "50%",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.5",
+          "text": "2 bt",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Stretch"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Strobe",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "yes",
+      "has_beats": "no",
+      "length_slider_index": 1,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.48",
+          "text": "2 bt",
+          "skip_length_label": "BLACK"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "BLACK",
           "full": "Blackout",
-          "name": "Blackout",
-          "text": "52.3%"
+          "default": "0",
+          "text": "52.3%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Strobe"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Strobo",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "Stutter Out",
       "slider_count": 3,
       "button_count": 1,
+      "has_length": "no",
+      "has_beats": "yes",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "59%"
+          "default": "0.5",
+          "text": "59%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "PAT",
           "full": "Pattern",
-          "name": "Pattern",
-          "text": "Pat 1"
+          "default": "0",
+          "text": "Pat 1",
+          "skip_length_label": "PAT"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "BARS",
           "full": "Bars",
-          "name": "Bars",
-          "text": "1 bars"
+          "default": "0.5",
+          "text": "1 bars",
+          "skip_length_label": "BARS"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "QUANT"
+          "short": "QUANT",
+          "full": "Quantize"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Stutter Out"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Sweep",
       "slider_count": 2,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "Off"
+          "default": "0.5",
+          "text": "Off",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "PARM",
           "full": "Param",
-          "name": "Param",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": "PARM"
         }
       ],
       "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [],
+      "category": null,
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Sweep"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Text",
       "slider_count": 1,
       "button_count": 3,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "SPEED",
           "full": "Scroll Speed",
-          "name": "Scroll Speed",
-          "text": "30.0%"
+          "default": "0.3",
+          "text": "30.0%",
+          "skip_length_label": "SPEED"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "POS"
+          "short": "POS",
+          "full": "Position"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "SCROL"
+          "short": "SCROL",
+          "full": "Scroll"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "OUTL"
+          "short": "OUTL",
+          "full": "Outline"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Text"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Title",
       "slider_count": 4,
       "button_count": 3,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "POS",
           "full": "Position",
-          "name": "Position",
-          "text": "Top"
+          "default": "0",
+          "text": "Top",
+          "skip_length_label": "POS"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "DEL",
           "full": "Delay",
-          "name": "Delay",
-          "text": "10s"
+          "default": "0.5",
+          "text": "10s",
+          "skip_length_label": "DEL"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "DUR",
           "full": "Duration",
-          "name": "Duration",
-          "text": "14s"
+          "default": "0.5",
+          "text": "14s",
+          "skip_length_label": "DUR"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "STYL",
           "full": "Style",
-          "name": "Style",
-          "text": "Headline"
+          "default": "0",
+          "text": "Headline",
+          "skip_length_label": "STYL"
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "FONT"
+          "short": "FONT",
+          "full": "Font"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "Cover"
+          "short": "Cover",
+          "full": "Show Cover"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "Remix"
+          "short": "Remix",
+          "full": "Show Remix"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [],
+      "category": null,
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Title"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Up Echo",
       "slider_count": 3,
       "button_count": 2,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "70.0%"
+          "default": "0.7",
+          "text": "70.0%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "2 bt"
+          "default": "0.7",
+          "text": "2 bt",
+          "skip_length_label": "FBCK"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FBCK",
           "full": "Feedback",
-          "name": "Feedback",
-          "text": "50%"
+          "default": "0.5",
+          "text": "50%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "REV"
+          "short": "REV",
+          "full": "Reverse"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "FRZ"
+          "short": "FRZ",
+          "full": "Freeze"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Up Echo"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Vertical Slide",
+      "slider_count": 1,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "DIR",
+          "full": "Direction",
+          "default": "0",
+          "text": "Down",
+          "skip_length_label": "DIR"
+        }
+      ],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     },
     {
       "effect": "VinylBrake",
       "slider_count": 4,
       "button_count": 1,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "1.00x"
+          "default": "0.5",
+          "text": "1.00x",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "LEN",
           "full": "Length",
-          "name": "Length",
-          "text": "1 bt"
+          "default": "0.5",
+          "text": "1 bt",
+          "skip_length_label": "ECHO"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "ECHO",
           "full": "Echo",
-          "name": "Echo",
-          "text": "1/16 bt"
+          "default": "0.5",
+          "text": "1/16 bt",
+          "skip_length_label": "REPEAT"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "REPEAT",
           "full": "Repeat",
-          "name": "Repeat",
-          "text": "OFF"
+          "default": "0.5",
+          "text": "OFF",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "BPF"
+          "short": "BPF",
+          "full": "BPF"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Visuals",
+      "slider_count": 2,
+      "button_count": 4,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "SHADER",
+          "full": "Shader",
+          "default": "0",
+          "text": "",
+          "skip_length_label": "SHADER"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "TRANS",
+          "full": "Transparency",
+          "default": "0",
+          "text": "0.0%",
+          "skip_length_label": "TRANS"
+        }
+      ],
+      "buttons": [
+        {
+          "index": 1,
+          "has": "yes",
+          "short": "POS",
+          "full": "Position"
+        },
+        {
+          "index": 2,
+          "has": "yes",
+          "short": "CHANGE",
+          "full": "AutoChange"
+        },
+        {
+          "index": 3,
+          "has": "yes",
+          "short": "BEATMV",
+          "full": "BeatMove"
+        },
+        {
+          "index": 4,
+          "has": "yes",
+          "short": "COL",
+          "full": "Chroma Color"
+        }
+      ],
+      "introspected_via": "title",
+      "aliases": [
+        "Shader"
+      ],
+      "cycles": [
+        "video_fx"
+      ],
+      "category": "video_fx",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
         "name_requests": [
-          "VinylBrake"
+          "Shader"
         ]
       }
     },
@@ -4007,77 +5677,222 @@
       "effect": "Vocals",
       "slider_count": 0,
       "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
       "sliders": [],
       "buttons": [],
+      "introspected_via": "select",
+      "aliases": [],
+      "cycles": [],
+      "category": null,
       "reached": {
         "in_cycle": false,
         "by_name": true,
-        "name_requests": [
-          "Vocals"
-        ]
+        "name_requests": []
       }
     },
     {
       "effect": "Wahwah",
       "slider_count": 4,
       "button_count": 3,
+      "has_length": "yes",
+      "has_beats": "yes",
+      "length_slider_index": 2,
       "sliders": [
         {
           "index": 1,
           "has": "yes",
           "short": "STR",
           "full": "Strength",
-          "name": "Strength",
-          "text": "89%"
+          "default": "1",
+          "text": "89%",
+          "skip_length_label": "STR"
         },
         {
           "index": 2,
           "has": "yes",
           "short": "SPD",
           "full": "Speed",
-          "name": "Speed",
-          "text": "32 bt"
+          "default": "0.75",
+          "text": "32 bt",
+          "skip_length_label": "FREQ"
         },
         {
           "index": 3,
           "has": "yes",
           "short": "FREQ",
           "full": "Frequency",
-          "name": "Frequency",
-          "text": "31.8%"
+          "default": "0.5",
+          "text": "31.8%",
+          "skip_length_label": "WDTH"
         },
         {
           "index": 4,
           "has": "yes",
           "short": "WDTH",
           "full": "Width",
-          "name": "Width",
-          "text": "50.0%"
+          "default": "0.5",
+          "text": "50.0%",
+          "skip_length_label": ""
         }
       ],
       "buttons": [
         {
           "index": 1,
           "has": "yes",
-          "short": "LCK"
+          "short": "LCK",
+          "full": "Lock"
         },
         {
           "index": 2,
           "has": "yes",
-          "short": "SHP"
+          "short": "SHP",
+          "full": "Shape"
         },
         {
           "index": 3,
           "has": "yes",
-          "short": "PHASE"
+          "short": "PHASE",
+          "full": "Reset Phase"
         }
       ],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "deck_fx"
+      ],
+      "category": "deck_fx",
       "reached": {
         "in_cycle": true,
         "by_name": true,
-        "name_requests": [
-          "Wahwah"
-        ]
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Warp",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Warp Speed",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Window",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Window Double",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Wipe",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
+      }
+    },
+    {
+      "effect": "Zoom",
+      "slider_count": 0,
+      "button_count": 0,
+      "has_length": "no",
+      "has_beats": "no",
+      "length_slider_index": null,
+      "sliders": [],
+      "buttons": [],
+      "introspected_via": "title",
+      "aliases": [],
+      "cycles": [
+        "transition"
+      ],
+      "category": "transition",
+      "reached": {
+        "in_cycle": false,
+        "by_name": true,
+        "name_requests": []
       }
     }
   ]

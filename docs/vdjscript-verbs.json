@@ -1,7 +1,7 @@
 {
  "_meta": {
   "generated_by": "tools/verbdb.py",
-  "note": "Authoritative per-verb record store. Edit via `just verb put`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
+  "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
    "total": 991,
    "by_tier": {
@@ -13,11 +13,11 @@
    "by_test_status": {
     "Fail": 1,
     "Partial": 6,
-    "Pass": 7,
-    "Untested": 977
+    "Pass": 28,
+    "Untested": 956
    },
    "documented": 764,
-   "tested_pass": 7,
+   "tested_pass": 28,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -2585,13 +2585,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`effect_has_beats 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Check effect beat parameter support",
-   "example": "effect_has_beats"
+   "example": "effect_has_beats",
+   "confidence": "local_test"
   },
   "effect_has_button": {
    "name": "effect_has_button",
@@ -2602,11 +2605,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`effect_has_button 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Check if effect has button",
    "example": "effect_has_button 2",
-   "note": "Deck FX slot 1, Backspin (2 sliders / 0 buttons). Reliable and GUI-matching: `get_effect_name`=`Backspin`; `get_effect_slider_count`=2, `get_effect_button_count`=0; `effect_has_slider`/`effect_has_button` lit correctly per position; `get_effect_slider_text`=`0%`/`4 bt` (matches GUI values). Label family splits: `get_effect_slider_label`=`get_effect_slider_shortname`=`STR` (short), while `get_effec"
+   "note": "Deck FX slot 1, Backspin (2 sliders / 0 buttons). Reliable and GUI-matching: `get_effect_name`=`Backspin`; `get_effect_slider_count`=2, `get_effect_button_count`=0; `effect_has_slider`/`effect_has_button` lit correctly per position; `get_effect_slider_text`=`0%`/`4 bt` (matches GUI values). Label family splits: `get_effect_slider_label`=`get_effect_slider_shortname`=`STR` (short), while `get_effec",
+   "confidence": "local_test"
   },
   "effect_has_length": {
    "name": "effect_has_length",
@@ -2614,13 +2620,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`effect_has_length 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Check effect length parameter support",
-   "example": "effect_has_length"
+   "example": "effect_has_length",
+   "confidence": "local_test"
   },
   "effect_has_slider": {
    "name": "effect_has_slider",
@@ -2631,11 +2640,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`effect_has_slider 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Check if effect has slider",
    "example": "effect_has_slider 1 2",
-   "note": "Deck FX slot 1, Backspin (2 sliders / 0 buttons). Reliable and GUI-matching: `get_effect_name`=`Backspin`; `get_effect_slider_count`=2, `get_effect_button_count`=0; `effect_has_slider`/`effect_has_button` lit correctly per position; `get_effect_slider_text`=`0%`/`4 bt` (matches GUI values). Label family splits: `get_effect_slider_label`=`get_effect_slider_shortname`=`STR` (short), while `get_effec"
+   "note": "Deck FX slot 1, Backspin (2 sliders / 0 buttons). Reliable and GUI-matching: `get_effect_name`=`Backspin`; `get_effect_slider_count`=2, `get_effect_button_count`=0; `effect_has_slider`/`effect_has_button` lit correctly per position; `get_effect_slider_text`=`0%`/`4 bt` (matches GUI values). Label family splits: `get_effect_slider_label`=`get_effect_slider_shortname`=`STR` (short), while `get_effec",
+   "confidence": "local_test"
   },
   "effect_list": {
    "name": "effect_list",
@@ -2778,14 +2790,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' walks only the ENABLED/favorites subset (63 of 119 installed on this install), so cycling never reaches the rest; by-name reaches them. By-name matching is stricter than get_effect_title's: it rejects 'Shader' (which title resolves to 'Visuals') and 'BeatGrid' (real name 'Beat Grid'). A name it does not know leaves the slot untouched, which is why sweeps park on a sentinel first."
+   ],
    "section": "Effects",
    "description": "Select effect (deactivate previous)",
    "example": "effect_select 1 \"echo\"",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "effect_select_multi": {
    "name": "effect_select_multi",
@@ -4560,13 +4575,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_button_count 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get number of effect buttons",
-   "example": "get_effect_button_count"
+   "example": "get_effect_button_count",
+   "confidence": "local_test"
   },
   "get_effect_button_name": {
    "name": "get_effect_button_name",
@@ -4574,13 +4592,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_button_name 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get effect button name",
-   "example": "get_effect_button_name 1"
+   "example": "get_effect_button_name 1",
+   "confidence": "local_test"
   },
   "get_effect_button_shortname": {
    "name": "get_effect_button_shortname",
@@ -4588,13 +4609,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_button_shortname 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get compact effect button label",
-   "example": "get_effect_button_shortname 2"
+   "example": "get_effect_button_shortname 2",
+   "confidence": "local_test"
   },
   "get_effect_name": {
    "name": "get_effect_name",
@@ -4616,13 +4640,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_count 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get number of effect sliders",
-   "example": "get_effect_slider_count"
+   "example": "get_effect_slider_count",
+   "confidence": "local_test"
   },
   "get_effect_slider_default": {
    "name": "get_effect_slider_default",
@@ -4630,13 +4657,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): name form `get_effect_slider_default 'Echo' 3` -> 0.52. Captured the normalized 0..1 reset value for every slider of all 119 installed effects; accepts an effect NAME in place of the slot, so no selection is needed."
+   ],
    "section": "Effects",
    "description": "Get effect slider default (target + optional index + fallback → normalized 0-1). `'<effect>' <fallback>` reads it as text (`Local test`: `'Backspin' 1`→`0.5`; `Built-in skin`: Broadcast video skin uses `'active' 0.5`). `<slot> <index> <fallback>` is the deck-skin `<slider frommiddle=>` value form (returned `off` as text)",
-   "example": "get_effect_slider_default 'active' 0.5"
+   "example": "get_effect_slider_default 'active' 0.5",
+   "confidence": "local_test"
   },
   "get_effect_slider_label": {
    "name": "get_effect_slider_label",
@@ -4644,13 +4674,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_label 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get effect slider label",
-   "example": "get_effect_slider_label 1"
+   "example": "get_effect_slider_label 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_label_full": {
    "name": "get_effect_slider_label_full",
@@ -4658,13 +4691,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_label_full 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get full effect slider label",
-   "example": "get_effect_slider_label_full 1"
+   "example": "get_effect_slider_label_full 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_label_skip_length": {
    "name": "get_effect_slider_label_skip_length",
@@ -4672,13 +4708,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): RE-INDEXES rather than blanks — index i returns the i-th slider of the list with the length slider removed, so the final index is always ''. Verified on all 47 length-bearing effects. The length slider is not always index 2 (Loop Out and Slideshow put it first) and not always labelled LEN (Phaser and Wahwah label it SPD)."
+   ],
    "section": "Effects",
    "description": "Get effect slider label while skipping length slider",
-   "example": "get_effect_slider_label_skip_length 1"
+   "example": "get_effect_slider_label_skip_length 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_name": {
    "name": "get_effect_slider_name",
@@ -4686,13 +4725,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_name 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get effect slider name",
-   "example": "get_effect_slider_name 1"
+   "example": "get_effect_slider_name 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_name_skip_length": {
    "name": "get_effect_slider_name_skip_length",
@@ -4700,13 +4742,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): RE-INDEXES rather than blanks — index i returns the i-th slider of the list with the length slider removed, so the final index is always ''. Verified on all 47 length-bearing effects. The length slider is not always index 2 (Loop Out and Slideshow put it first) and not always labelled LEN (Phaser and Wahwah label it SPD)."
+   ],
    "section": "Effects",
    "description": "Get effect slider name while skipping length slider",
-   "example": "get_effect_slider_name_skip_length 1"
+   "example": "get_effect_slider_name_skip_length 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_shortname": {
    "name": "get_effect_slider_shortname",
@@ -4714,13 +4759,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_shortname 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get compact effect slider label",
-   "example": "get_effect_slider_shortname 2"
+   "example": "get_effect_slider_shortname 2",
+   "confidence": "local_test"
   },
   "get_effect_slider_text": {
    "name": "get_effect_slider_text",
@@ -4728,13 +4776,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_text 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+   ],
    "section": "Effects",
    "description": "Get effect slider value text",
-   "example": "get_effect_slider_text 1"
+   "example": "get_effect_slider_text 1",
+   "confidence": "local_test"
   },
   "get_effect_slider_text_skip_length": {
    "name": "get_effect_slider_text_skip_length",
@@ -4742,13 +4793,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): RE-INDEXES rather than blanks — index i returns the i-th slider of the list with the length slider removed, so the final index is always ''. Verified on all 47 length-bearing effects. The length slider is not always index 2 (Loop Out and Slideshow put it first) and not always labelled LEN (Phaser and Wahwah label it SPD)."
+   ],
    "section": "Effects",
    "description": "Get slider text while skipping length slider",
-   "example": "get_effect_slider_text_skip_length 1"
+   "example": "get_effect_slider_text_skip_length 1",
+   "confidence": "local_test"
   },
   "get_effect_string": {
    "name": "get_effect_string",
@@ -4786,13 +4840,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): `get_effect_title '<name>'` returns '<Canonical> - Deck N' for an installed effect and '' for an unknown one, so it resolves a name to its canonical spelling and doubles as an existence probe. Case-insensitive but NOT space-insensitive ('BeatGrid' misses 'Beat Grid'). Resolves the alias Shader->Visuals that effect_select itself rejects. Blind spot: returns '' for Stems and Vocals, which select and introspect normally through a slot."
+   ],
    "section": "Effects",
    "description": "Get effect title",
-   "example": "get_effect_title"
+   "example": "get_effect_title",
+   "confidence": "local_test"
   },
   "get_effects_used": {
    "name": "get_effects_used",
@@ -6245,13 +6302,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns the current selection name for its target. The argument is ignored — passing an effect name does NOT make it report on that effect."
+   ],
    "section": "Effects",
    "description": "Get selected video effect name",
-   "example": "get_videofx_name"
+   "example": "get_videofx_name",
+   "confidence": "local_test"
   },
   "get_videotrans_name": {
    "name": "get_videotrans_name",
@@ -6259,13 +6319,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns the current selection name for its target. The argument is ignored — passing an effect name does NOT make it report on that effect."
+   ],
    "section": "Effects",
    "description": "Get selected video transition name",
-   "example": "get_videotrans_name"
+   "example": "get_videotrans_name",
+   "confidence": "local_test"
   },
   "get_volume": {
    "name": "get_volume",
@@ -13882,13 +13945,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' cycles the enabled video-FX list (17 entries on this install); readback via get_videofx_name. By-name it accepts ANY installed effect name, audio ones included (`video_fx_select 'Echo'` really does set the video slot to Echo), so the selector is not type-restricted and loadability cannot be used to classify an effect."
+   ],
    "section": "Effects",
    "description": "Select video effect",
-   "example": "video_fx_select \"my_plugin\""
+   "example": "video_fx_select \"my_plugin\"",
+   "confidence": "local_test"
   },
   "video_fx_slider": {
    "name": "video_fx_slider",
@@ -14008,13 +14074,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' cycles the enabled transition list (35 entries); readback via get_videotrans_name. 'None' is a valid transition and works as a park value. Like video_fx_select it accepts any installed effect name."
+   ],
    "section": "Effects",
    "description": "Select video transition plugin",
-   "example": "video_transition_select \"fade\""
+   "example": "video_transition_select \"fade\"",
+   "confidence": "local_test"
   },
   "video_transition_slider": {
    "name": "video_transition_slider",

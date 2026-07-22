@@ -50,8 +50,17 @@ Gotchas the table implies:
 - **HTTP status does not signal script validity.** Unknown verbs return 200 with an
   `error:<code>` body. Malformed *requests* (missing `script`) return 4xx. Always check the
   body, not just the status.
+- **This channel cannot prove a verb does not exist.** `error:-2147467259` (`E_FAIL`) means
+  only "this script did not evaluate here". The documented, official verb `nothing` returns
+  exactly the same body as `zzz_not_a_real_verb`, on both endpoints, with or without
+  arguments — because an action-only verb has no query value either way. A different code,
+  `error:-2147024809` (`E_INVALIDARG`), does mean the verb was recognized and the arguments
+  were wrong: bare `browser_sort` returns it while `browser_sort 'title'` succeeds. So
+  `E_INVALIDARG` is positive evidence a verb exists; `E_FAIL` is no evidence either way, and
+  a name that only ever returns `E_FAIL` stays **unresolved**, not disproved.
 - **`false` from `/execute` is not a transport failure.** It is the action's own return value
-  (`nothing` legitimately returns `false`). Treat it as evidence about the verb, not the channel.
+  (`nothing` legitimately returns `false`). Treat it as evidence about the verb, not the
+  channel — and note that a bogus name also returns `false`, so `false` alone proves nothing.
 - **URL-encode the whole script.** Spaces, `&` (action chaining), `?`/`:` (ternaries), and
   quotes must be percent-encoded in GET; `curl -G --data-urlencode 'script=...'` (what the
   `just` recipes use) handles all of it. The `&amp;` escaping rule is XML-only and does not

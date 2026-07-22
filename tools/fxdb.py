@@ -11,7 +11,8 @@ Usage:
     python3 tools/fxdb.py get <effect>
     python3 tools/fxdb.py search [term ...] [--min-sliders=N] [--max-sliders=N]
                                  [--min-buttons=N] [--has-slider=LABEL]
-                                 [--has-button=LABEL] [--in-cycle] [--name-only]
+                                 [--has-button=LABEL] [--category=X] [--has-length]
+                                 [--in-cycle] [--name-only]
                                  [--format=json] [--limit=N]
     python3 tools/fxdb.py stats
     python3 tools/fxdb.py check
@@ -34,35 +35,48 @@ def load() -> dict:
     return json.loads(DUMP.read_text())
 
 
+def squash(s: str) -> str:
+    return s.lower().replace(" ", "")
+
+
 def find(effects: list[dict], name: str) -> dict | None:
     for e in effects:  # exact
         if e["effect"] == name:
             return e
-    low = name.lower().replace(" ", "")
-    for e in effects:  # case/space-insensitive
-        if e["effect"].lower().replace(" ", "") == low:
+    low = squash(name)
+    for e in effects:  # case/space-insensitive, canonical name then aliases
+        if squash(e["effect"]) == low:
+            return e
+    for e in effects:
+        if any(squash(a) == low for a in e.get("aliases", [])):
             return e
     for e in effects:  # substring
-        if low in e["effect"].lower().replace(" ", ""):
+        if low in squash(e["effect"]):
             return e
     return None
 
 
 def fmt_effect(e: dict) -> str:
-    lines = [f"{e['effect']}  (sliders={e['slider_count']} buttons={e['button_count']})"]
-    reached = e.get("reached", {})
-    tags = []
-    if reached.get("in_cycle"):
-        tags.append("in enabled cycle")
-    if reached.get("by_name"):
-        tags.append("name-selectable")
-    if tags:
-        lines.append("  " + ", ".join(tags))
+    head = f"{e['effect']}  (sliders={e['slider_count']} buttons={e['button_count']})"
+    lines = [head]
+    tags = [e.get("category") or "category unknown"]
+    if e.get("aliases"):
+        tags.append("aka " + ", ".join(e["aliases"]))
+    if not e.get("reached", {}).get("in_cycle"):
+        tags.append("not in the deck +1 cycle")
+    if e.get("introspected_via") == "select":
+        tags.append("name-form introspection is blind to this one")
+    lines.append("  " + "; ".join(tags))
+    li = e.get("length_slider_index")
     for s in e.get("sliders", []):
-        lines.append(f"  S{s['index']} {s.get('full','')} / {s.get('short','')}"
-                     f"   (current: {s.get('text','')})")
+        mark = " [length]" if s["index"] == li else ""
+        lines.append(f"  S{s['index']} {s.get('full','')} / {s.get('short','')}{mark}"
+                     f"   default={s.get('default','')}  (current: {s.get('text','')})")
     for b in e.get("buttons", []):
-        lines.append(f"  B{b['index']} {b.get('short','')}")
+        lines.append(f"  B{b['index']} {b.get('full') or b.get('short','')}"
+                     f" / {b.get('short','')}")
+    if li:
+        lines.append(f"  note: the *_skip_length helpers renumber past S{li}")
     return "\n".join(lines)
 
 
@@ -71,6 +85,13 @@ def cmd_get(args):
         sys.exit("usage: get <effect>")
     data = load()
     asked = " ".join(args)
+    # Warn before answering: a name the sweep could not resolve must not be
+    # silently fuzzy-matched to a real effect ('Brake' -> 'Beat Brake' would
+    # otherwise hide that 'Brake' is not a selector name at all).
+    if any(asked.lower() == u.lower() for u in data.get("unresolved_names", [])):
+        print(f"warning: '{asked}' is not a selector name on this build — the sweep "
+              "asked for it and got nothing back. Any match below is a near miss.",
+              file=sys.stderr)
     e = find(data["effects"], asked)
     if e is None:
         names = [x["effect"] for x in data["effects"]]
@@ -78,10 +99,11 @@ def cmd_get(args):
         msg = f"no effect matching '{asked}'"
         if near:
             msg += "\ndid you mean: " + ", ".join(near)
-        failed = data.get("failed_by_name", [])
-        if any(asked.lower() == f.lower() for f in failed):
-            msg += (f"\nnote: '{asked}' is recorded in failed_by_name — it did not "
-                    "load into slot 1 during the sweep")
+        unresolved = data.get("unresolved_names", [])
+        if any(asked.lower() == u.lower() for u in unresolved):
+            msg += (f"\nnote: '{asked}' is in unresolved_names — the sweep asked this "
+                    "build for it and got nothing back, so it is not a selector name "
+                    "on this build (the docs carry it, VirtualDJ does not)")
         sys.exit(msg)
     print(fmt_effect(e))
 
@@ -106,10 +128,10 @@ def cmd_search(args):
                 fmt = val
             elif key == "limit":
                 limit = int(val) if val else 0
-            elif key in {"in-cycle", "name-only"}:
+            elif key in {"in-cycle", "name-only", "has-length"}:
                 opts[key] = True
             elif key in {"min-sliders", "max-sliders", "min-buttons",
-                         "max-buttons", "has-slider", "has-button"}:
+                         "max-buttons", "has-slider", "has-button", "category"}:
                 opts[key] = val
             else:
                 sys.exit(f"unknown option --{key}")
@@ -132,6 +154,10 @@ def cmd_search(args):
             continue
         if "has-button" in opts and not label_hit(e, opts["has-button"], "button"):
             continue
+        if "category" in opts and (e.get("category") or "") != opts["category"]:
+            continue
+        if opts.get("has-length") and not e.get("length_slider_index"):
+            continue
         reached = e.get("reached", {})
         if opts.get("in-cycle") and not reached.get("in_cycle"):
             continue
@@ -151,7 +177,8 @@ def cmd_search(args):
         for e in shown:
             print(f"{e['effect']:<22} sliders={e['slider_count']:<3} "
                   f"buttons={e['button_count']:<3} "
-                  f"{'cycle' if e.get('reached',{}).get('in_cycle') else 'name-only'}")
+                  f"{e.get('category') or '?':<11} "
+                  f"{'in deck cycle' if e.get('reached',{}).get('in_cycle') else ''}")
     note = f"showing {len(shown)} of {len(hits)}" if len(shown) != len(hits) \
         else f"{len(hits)} match(es)"
     print(f"\n{note}", file=sys.stderr)
@@ -162,13 +189,19 @@ def cmd_stats(args):
     effects = data["effects"]
     no_ctrl = [e["effect"] for e in effects
                if not e.get("slider_count") and not e.get("button_count")]
+    by_cat = {}
+    for e in effects:
+        by_cat[e.get("category") or "unknown"] = \
+            by_cat.get(e.get("category") or "unknown", 0) + 1
     print(json.dumps({
         "vdj_version": data.get("vdj_version"),
-        "reachable": len(effects),
-        "in_enabled_cycle": data.get("cycle_enabled_count"),
-        "name_only": len(effects) - sum(
-            1 for e in effects if e.get("reached", {}).get("in_cycle")),
-        "failed_by_name": data.get("failed_by_name", []),
+        "installed": len(effects),
+        "by_category": by_cat,
+        "category_unknown": [e["effect"] for e in effects if not e.get("category")],
+        "enabled_cycle_sizes": {k: len(v) for k, v in (data.get("cycles") or {}).items()},
+        "unresolved_names": data.get("unresolved_names", []),
+        "with_length_slider": sum(1 for e in effects if e.get("length_slider_index")),
+        "aliases": {e["effect"]: e["aliases"] for e in effects if e.get("aliases")},
         "max_sliders": max((e.get("slider_count") or 0 for e in effects), default=0),
         "max_buttons": max((e.get("button_count") or 0 for e in effects), default=0),
         "no_controls": no_ctrl,
@@ -196,6 +229,21 @@ def cmd_check(args):
             listed = len(e.get("sliders" if key == "slider_count" else "buttons", []))
             if listed != e[key]:
                 errors.append(f"{name}: {key}={e[key]} but {listed} entries listed")
+        for s in e.get("sliders", []):
+            if s.get("default") in (None, ""):
+                errors.append(f"{name}: slider {s.get('index')} has no default")
+        # `has_length` and the derived index are independent readings of the same
+        # fact; a disagreement means the sweep misread one of them.
+        if (e.get("has_length") == "yes") != (e.get("length_slider_index") is not None):
+            errors.append(f"{name}: has_length={e.get('has_length')} but "
+                          f"length_slider_index={e.get('length_slider_index')}")
+    cycles = data.get("cycles") or {}
+    for a, b in (("deck_fx", "video_fx"), ("deck_fx", "transition"),
+                 ("video_fx", "transition")):
+        overlap = set(cycles.get(a, [])) & set(cycles.get(b, []))
+        if overlap:
+            errors.append(f"cycles {a}/{b} overlap: {sorted(overlap)} — category "
+                          "assignment is no longer disjoint")
     if errors:
         print("fxdb check FAILED:")
         for err in errors[:20]:
@@ -212,9 +260,10 @@ COMMANDS = {"get": cmd_get, "search": cmd_search, "stats": cmd_stats,
 USAGE = """usage: fxdb.py <command> ... | fxdb.py <effect-name>
 
   <effect-name>          shorthand for `get <effect-name>`
-  get <effect>           control map (spelling-tolerant)
+  get <effect>           control map (spelling-tolerant; resolves aliases)
   search [term] [--min-sliders=N --max-sliders=N --min-buttons=N
                  --max-buttons=N --has-slider=LABEL --has-button=LABEL
+                 --category=deck_fx|video_fx|transition --has-length
                  --in-cycle --name-only --format=json --limit=N]
   stats                  catalog summary
   check                  validate the sweep artifact"""

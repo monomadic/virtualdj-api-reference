@@ -46,44 +46,41 @@ Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
-Status: Ready
+Status: Structural sweep COMPLETE (2026-07-22) — only rendering behavior is left
 
-Structural sweep DONE (2026-07-22, VirtualDJ 2026, HTTP interface): [tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured slider/button counts, short+full labels, and live value text for all 95 effects reachable into an audio deck-FX slot → [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json). Spot-check reproduced the prior hand map exactly. Finding: the `effect_select +1` cycle is only the enabled subset (63); the full installed set is larger and name-reachable. Both overloaded `get_effect_slider_default` forms were already resolved (v2026-m b9482).
+[tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured counts, short+full labels, normalized **defaults**, live value text, and length/beats flags for all **119** installed effects into [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json), plus the enabled cycle for all three targets. Query it with `just get-fx <effect>` / `just find-fx [--category=deck_fx|video_fx|transition] [--has-length]` / `just fx-stats` — do not read the dump and do not hand-transcribe it.
 
-Remaining:
+What the sweep settled:
 
-- Normalized slider **defaults** (`get_effect_slider_default '<effect>' <fallback>`) and reset-value text — needs a per-slider reset pass; extend the sweep script with a defaults pass.
-- **Audio-vs-video classification.** Slot 1 accepts video effects by name (`Blinds`, `Cube`, `Camera` all load and report controls), so the 95 swept effects mix both and the sweep cannot currently tell them apart. Find a discriminator (a `video`-target query, or the effect's own metadata) and record it per effect.
-- Resolve why `Brake` and `Shader` do not load under any spelling — reason is unresolved, and "video-only" is ruled out by the video effects that do load.
-- The `video` and `transition` targets (the dump covers deck-FX slot 1 only).
-- **Promotion is deferred to TODO task 0**: the verb-store bootstrap ingests `tests/fx-introspection-dump.json` mechanically instead of hand-writing 95 rows into `Effects Engines.md`. Do not hand-transcribe the dump.
+- **Introspection is read-only.** Every `get_effect_*` helper accepts an effect *name* where the docs show a slot number (`get_effect_slider_count 'Echo'`, `get_effect_slider_default 'Echo' 3`), returning the same values as the slot form for all 119 title-resolvable effects with no `effect_select` and no state change. This is the cheap way to ask about an effect that is not loaded.
+- **`get_effect_title '<name>'`** returns `'<Canonical> - Deck N'` or `''`, so it resolves a name to its canonical spelling and probes existence. Case-insensitive, *not* space-insensitive. Blind spot: `''` for `Stems` and `Vocals`, which select and introspect fine through a slot — so a title miss must be confirmed by selecting before the name is called unknown.
+- **Audio-vs-video: cycle membership, not loadability.** All three selectors accept any installed effect name (`video_fx_select 'Echo'` really does set the video slot to Echo), so what a target accepts discriminates nothing. The three `+1` cycles *are* disjoint and are the app's own category assignment: 63 deck FX, 17 video FX, 35 transitions. Each is the enabled/favorites subset, so an installed effect in no cycle (`Lottery`, `Sweep`, `Title`, `Vocals`) is category-*unknown*, not uncategorised.
+- **`Brake` and `Shader` resolved.** `Brake` is not a selector name on this build at all — a docs-catalog error; the real ones are `BrakeStart`, `VinylBrake`, `Beat Brake`. `Shader` is an alias for `Visuals`, which loads into a deck slot perfectly well; the original sweep only ever asked for it by the wrong name. `BeatGrid` is likewise a spacing error for `Beat Grid`. Nothing here was ever "video-only".
+- **`*_skip_length` re-indexes, it does not blank.** Index *i* is the *i*-th slider with the length slider removed, so the last index is always empty. Verified on all 47 length-bearing effects; the length slider is not always index 2 and not always labelled `LEN`.
+
+Remaining (rendering behavior, needs video output — not introspection):
+
+- `video_fx_slider`, `video_fx_clear`, `video_transition_slider`, and `deck master` scoping: what they actually render.
+- Whether the 4 category-unknown effects land in a target's list when enabled in the FX list editor.
+- **Promotion stays deferred to TODO task 0**: the data is queried from the artifact, not copied into `Effects Engines.md`. Do not hand-transcribe the dump.
 
 Start here:
 
-- Regenerate/extend: `python3 tools/sweep_fx_introspection.py` (needs `just vdj-up` green)
+- Re-run after a VirtualDJ update: `python3 tools/sweep_fx_introspection.py > tests/fx-introspection-dump.json` (needs `just vdj-up` green)
 - [tests/Pads/Reference - FX Introspection Test.xml](tests/Pads/Reference%20-%20FX%20Introspection%20Test.xml) (pad-surface checks only)
-- [docs/Effects Engines.md](docs/Effects%20Engines.md) (per-effect map section)
 
 Read first:
 
 - [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (FX Helpers rows only, for the established method)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-- `just grep-verb-docs get_effect_slider_default` and `just grep-verb-docs effect_slider` for the verb rows
+- `just get-fx <effect>` instead of [docs/Effects Engines.md](docs/Effects%20Engines.md) for control maps
 
 Record results in:
 
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md)
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md), and `just put-verb <name> test_status=… evidence="…"`
 
 Done when:
 
-- Slider/button counts, labels, defaults, and text readbacks are recorded per native effect in the `Effects Engines.md` map, with build noted.
-- The `video` and `transition` targets get at least one recorded pass each.
+- The remaining video-rendering verbs get at least one recorded pass each.
 - Generic FX control guidance distinguishes observed behavior from inference.
 
 ### 2. Characterize FX Bank Save And Load
@@ -179,7 +176,7 @@ Done when:
 
 - A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
 - Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
-- While in the mapper context, the `just check` mapper-lint warnings for `none`, `browser_filter`, and `browser_search` (factory-mapper verb candidates) are probed and either confirmed as real verbs or recorded as unresolved.
+- While in the mapper context, the `just check` mapper-lint warnings for `none`, `browser_filter`, and `browser_search` (factory-mapper verb candidates) are probed and either confirmed as real verbs or recorded as unresolved. **The HTTP channel has already been tried and cannot settle it** (2026-07-22): all three return `error:-2147467259`/`false`, and so do the official verb `nothing` and a bogus name. Bind them in a scratch keyboard mapper instead.
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 
