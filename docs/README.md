@@ -56,7 +56,10 @@ Start here:
   Generated element×attribute usage report across built-in/curated skin, pad, samplerbank, and mapper XML, cross-checked against the docs. Regenerate with `just inventory`; do not hand-edit.
 
 - [VDJScript Verb Index (JSON)](vdjscript-verb-index.json)
-  Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py`.
+  Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.
+
+- [VDJScript Verb Record Store (JSON)](vdjscript-verbs.json)
+  Authoritative, hand-editable per-verb records: tier, aliases, surfaces, kind, doc coverage, plus local-test status, confidence, and evidence. Query and edit through the `just verb` API (`get`/`put`/`next-incomplete`/`stats`/`search`) — do not hand-edit the JSON. Seeded from the index, coverage audit, and tracker via `python3 tools/verbdb.py bootstrap`; validated by `just check`.
 
 - [Tools](../tools/README.md)
   Validator/generator suite (`just check` gates) and the version-pinned binary-extraction pipeline, including the new-VirtualDJ-build refresh procedure.

@@ -19,23 +19,22 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 ### 0. Build The Verb Record Store And `just` Data API
 
-Status: Ready
+Status: Foundation landed (2026-07-22) — generation + migration remain
 
-This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs rewrite cycle with one small record edit plus regeneration, and it lets future agents query verb state without loading the 6,300-line monolith. It executes Phase 0 of [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) (frozen design reference) with one addition: the store is fronted by a stable `just` command surface, so the storage format underneath can change later without retraining agents or editing entrypoint docs.
+The store and its query/edit API exist and are wired into `just check`. This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs cycle with one `just verb put`, and lets agents query verb state without loading the 6,300-line monolith.
 
-Shape:
+Done in this pass:
 
-- One record per verb in a structured store (suggested: one small YAML file per verb under `docs/VDJScript/records/`). Fields: union of the existing index keys (`tier`, `section`, `description`, `example`, `aliases`, `kind`, `surfaces`, `canonical`, `official`) and the plan's contract keys (`forms`, `needs_test`, `confidence`, `platforms`, `deck_scope`), plus a test-status field using the tracker vocabulary (`Untested`/`Partial`/`Pass`/`Fail`).
-- Bootstrap the records mechanically from the existing generated index `docs/vdjscript-verb-index.json`, the audit's official-name and `Needs Local Test` lists, and the tracker's status tables — no hand migration of 991 records.
-- A `tools/verbdb.py` (or an extension of `tools/extract_verb_index.py`, which already owns the per-verb record model and merge logic) fronted by `just` recipes: `just verb get <name>`, `just verb put <name> <field>=<value>...`, `just verb next-incomplete`, `just verb stats` (total/complete/incomplete, per tier and per status), `just verb search <term>`.
-- Generation replaces promotion: the same tool regenerates the derived Markdown views (alias index, family rows, coverage counts) so `Record results in` / `Promote to` collapse to `just verb put` + regenerate. Wire a staleness `--check` into `just check`, following the existing `extract_verb_index.py --check` pattern.
+- [tools/verbdb.py](tools/verbdb.py) over the authoritative store [docs/vdjscript-verbs.json](docs/vdjscript-verbs.json), fronted by `just verb get/put/next-incomplete/stats/search`. Storage is private behind the API so it can later become one-file-per-verb without retraining agents.
+- Merge-safe `bootstrap` seeded all 991 records from the index + coverage audit (official names + Needs-Local-Test gap) + tracker status tables. It correctly finds the 19-name gap (17 hardware-blocked → skipped by `next-incomplete`), leaving `dualdeckmode_decks` and `system` as the 2 active items, and auto-detected 7 tracker `Pass` rows.
+- `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the `just verb` surface.
 
-Done when:
+Remaining (the generation half of "generation replaces promotion"):
 
-- Records exist for all official names, bootstrapped from the current index/audit/tracker, and `just verb get/put/next-incomplete/stats/search` work against them.
-- The generated views are byte-stable under `--check` and `just check` stays green.
-- `AGENTS.md` and `INDEX.yml` point verb lookups at the `just verb` surface.
-- Existing hand-authored docs are not deleted in this pass; retiring monolith sections follows the frozen plan's phased migration, one family at a time.
+- Generate the derived Markdown views FROM the store — alias index, coverage counts, and eventually family rows — so a `just verb put` plus regenerate replaces hand-editing the tracker + topical docs. Add a byte-stable `--check` for each generated view, following the `extract_verb_index.py --check` pattern.
+- Then follow the frozen plan's phased, one-family-at-a-time migration to retire monolith sections. Do not delete hand-authored docs ahead of that.
+- Add richer record fields as needed by contracts (`forms`, `platforms`, `deck_scope`); `put` currently covers the scalar/list fields, nested contract detail is hand-edited in the JSON.
+- Ingest [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json) into a generated effects-catalog view (this is effect data, distinct from the verb records; see task 1).
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 

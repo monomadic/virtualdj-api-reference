@@ -68,6 +68,11 @@ inventory:
 verb-index:
     python3 tools/extract_verb_index.py
 
+# Verb record store (docs/vdjscript-verbs.json). `just verb <cmd> ...`:
+#   get <name> | put <name> field=value... | next-incomplete | stats | search <term>
+verb *args:
+    @python3 tools/verbdb.py {{args}}
+
 lint-skins *paths:
     python3 tools/lint_skins.py {{paths}}
 
@@ -79,6 +84,7 @@ check:
     python3 tools/lint_skins.py
     python3 tools/lint_mappers.py
     python3 tools/extract_verb_index.py --check
+    python3 tools/verbdb.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
