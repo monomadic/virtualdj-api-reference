@@ -28,6 +28,7 @@ Usage:
 """
 from __future__ import annotations
 
+import difflib
 import json
 import re
 import sys
@@ -232,18 +233,37 @@ def bootstrap(mode: str) -> None:
 # ---- commands ---------------------------------------------------------------
 
 def cmd_get(args):
+    if not args:
+        sys.exit("usage: get <name>")
     store = load_store()
     name = args[0]
     rec = store.get(name)
-    if rec is None:
-        # alias resolution
-        for n, r in store.items():
-            if name in r.get("aliases", []):
-                print(f"# '{name}' is an alias of '{n}'")
-                print(json.dumps(r, indent=1, ensure_ascii=False))
-                return
-        sys.exit(f"no record for '{name}'")
-    print(json.dumps(rec, indent=1, ensure_ascii=False))
+
+    # An alias record carries little but a pointer; follow it to the canonical.
+    if rec is not None and rec.get("tier") == "alias" and rec.get("canonical"):
+        canon = store.get(rec["canonical"])
+        if canon:
+            print(f"# '{name}' is an alias of '{rec['canonical']}'")
+            print(json.dumps(canon, indent=1, ensure_ascii=False))
+            return
+    if rec is not None:
+        print(json.dumps(rec, indent=1, ensure_ascii=False))
+        return
+
+    # not a record name: maybe it is listed as someone's alias
+    for n, r in store.items():
+        if name in r.get("aliases", []):
+            print(f"# '{name}' is an alias of '{n}'")
+            print(json.dumps(r, indent=1, ensure_ascii=False))
+            return
+
+    pool = set(store) | {a for r in store.values() for a in r.get("aliases", [])}
+    near = difflib.get_close_matches(name, sorted(pool), n=5, cutoff=0.6)
+    msg = f"no record for '{name}'"
+    if near:
+        msg += "\ndid you mean: " + ", ".join(near)
+    msg += f"\nor try: just verb search {name}"
+    sys.exit(msg)
 
 
 def coerce(field: str, value: str):
@@ -334,6 +354,11 @@ def cmd_search(args):
         else:
             terms.append(a.lower())
 
+    if not terms and not opts:
+        sys.exit("search needs a term or a filter (e.g. --surface=Pad, "
+                 "--needs-test).\nFor the VDJScript verb named `search`, use: "
+                 "just verb get search")
+
     store = load_store()
     hits = []
     for name, rec in store.items():
@@ -422,16 +447,38 @@ COMMANDS = {
 }
 
 
+USAGE = """usage: verbdb.py <command> ... | verbdb.py <verb-name>
+
+  <verb-name>            shorthand for `get <verb-name>`
+  get <name>             one record (follows aliases)
+  put <name> f=v ...     set fields
+  search [term] [--surface= --section= --tier= --status= --kind=
+                  --needs-test --format=json --limit=N]
+  next-incomplete        next active (non-hardware-blocked) work item
+  stats                  counts by tier / test status
+  check                  validate the store
+  bootstrap [--merge|--force]
+
+Note: `search` is also a VDJScript verb name. Commands win; use
+`verbdb.py get search` for the verb record."""
+
+
 def main(argv):
     if not argv:
-        sys.exit(f"usage: verbdb.py <{'|'.join(list(COMMANDS) + ['bootstrap'])}> ...")
+        sys.exit(USAGE)
     cmd, rest = argv[0], argv[1:]
+    if cmd in {"-h", "--help", "help"}:
+        print(USAGE)
+        return
     if cmd == "bootstrap":
         bootstrap(rest[0] if rest else "")
         return
-    if cmd not in COMMANDS:
-        sys.exit(f"unknown command '{cmd}'")
-    COMMANDS[cmd](rest)
+    if cmd in COMMANDS:
+        COMMANDS[cmd](rest)
+        return
+    # Not a command: treat a bare argument as a verb lookup, so
+    # `just verb leftdeck` works as well as `just verb get leftdeck`.
+    cmd_get(argv)
 
 
 if __name__ == "__main__":

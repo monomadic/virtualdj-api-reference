@@ -26,7 +26,7 @@ vdjscript:
   record_store:
     - docs/vdjscript-verbs.json
   commands:
-    - just verb get NAME
+    - just verb NAME                # bare name = lookup; `get NAME` is the long form
     - just verb search TERM [--surface=X --section=X --status=X --format=json]
     - just verb next-incomplete
     - just verb stats
@@ -50,7 +50,7 @@ fx:
   catalog_data:
     - tests/fx-introspection-dump.json
   commands:
-    - just fx get EFFECT
+    - just fx EFFECT                # bare name = lookup
     - just fx search [--has-button=X --min-sliders=N --format=json]
     - just fx stats
   fixtures:

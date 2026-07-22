@@ -18,6 +18,7 @@ Usage:
 """
 from __future__ import annotations
 
+import difflib
 import json
 import sys
 from pathlib import Path
@@ -69,10 +70,19 @@ def cmd_get(args):
     if not args:
         sys.exit("usage: get <effect>")
     data = load()
-    e = find(data["effects"], " ".join(args))
+    asked = " ".join(args)
+    e = find(data["effects"], asked)
     if e is None:
-        sys.exit(f"no effect matching '{' '.join(args)}'; "
-                 f"try `fxdb.py search {args[0]}`")
+        names = [x["effect"] for x in data["effects"]]
+        near = difflib.get_close_matches(asked, names, n=5, cutoff=0.5)
+        msg = f"no effect matching '{asked}'"
+        if near:
+            msg += "\ndid you mean: " + ", ".join(near)
+        failed = data.get("failed_by_name", [])
+        if any(asked.lower() == f.lower() for f in failed):
+            msg += (f"\nnote: '{asked}' is recorded in failed_by_name — it did not "
+                    "load into slot 1 during the sweep")
+        sys.exit(msg)
     print(fmt_effect(e))
 
 
@@ -199,13 +209,29 @@ COMMANDS = {"get": cmd_get, "search": cmd_search, "stats": cmd_stats,
             "check": cmd_check}
 
 
+USAGE = """usage: fxdb.py <command> ... | fxdb.py <effect-name>
+
+  <effect-name>          shorthand for `get <effect-name>`
+  get <effect>           control map (spelling-tolerant)
+  search [term] [--min-sliders=N --max-sliders=N --min-buttons=N
+                 --max-buttons=N --has-slider=LABEL --has-button=LABEL
+                 --in-cycle --name-only --format=json --limit=N]
+  stats                  catalog summary
+  check                  validate the sweep artifact"""
+
+
 def main(argv):
     if not argv:
-        sys.exit(f"usage: fxdb.py <{'|'.join(COMMANDS)}> ...")
+        sys.exit(USAGE)
     cmd, rest = argv[0], argv[1:]
-    if cmd not in COMMANDS:
-        sys.exit(f"unknown command '{cmd}'")
-    COMMANDS[cmd](rest)
+    if cmd in {"-h", "--help", "help"}:
+        print(USAGE)
+        return
+    if cmd in COMMANDS:
+        COMMANDS[cmd](rest)
+        return
+    # Bare argument: treat as an effect lookup (`just fx Echo`).
+    cmd_get(argv)
 
 
 if __name__ == "__main__":
