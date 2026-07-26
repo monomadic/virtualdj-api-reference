@@ -69,6 +69,7 @@ Children:
 > **End-to-end firing verified** (`Local test`, VirtualDJ 2026, AlphaTheta DDJ-GRV6, 2026-07-27). A minimal two-line mapper for `device="DDJGRV6"` — `<map value="ONINIT" …>` plus `<map value="PLAY_PAUSE" action="set '$v' 1"/>` — was loaded on the real controller; pressing the physical play button set the global, read back `1` over the [HTTP interface](HTTP%20Control%20Interface.md). This is the first local confirmation that the `<map value action>` schema binds and fires on hardware, not just that the format parses.
 
 - `value=""` is the control name declared by the device definition (`PLAY_PAUSE`, `CUE`, `BROWSE`, `LED_PLAY_PAUSE`, …). **The name must match the device definition exactly.** A wrong name binds nothing and fails *silently* — `value="PLAY"` on the DDJ-GRV6 (whose control is `PLAY_PAUSE`) loaded without error and simply never fired (`Local test`, 2026-07-27), consistent with VDJScript's no-error parsing. Crib the exact names from a working mapper for that device (`rg -o 'value="[^"]*"'`), never guess.
+  - **Getting the ground-truth names for a recognized controller: export its factory mapping.** In Settings → Controllers, pick the device, select **Factory default**, and **Save** — VirtualDJ writes the full factory `<mapper>` (every control name + its canonical action) to `Mappers/`. Quirk (`Local test`, DDJ-GRV6, 2026-07-27): saving the *unrenamed* "factory default" was a no-op; you must rename it first (it saved as `AlphaTheta DDJ-GRV6 - factory default copy.xml`). The DDJ-GRV6 export was 293 bindings and linted clean against the verb index. This is a `<mapper>` **only** — it does **not** contain the `<device>` definition (no `<button>`/`<led>`/`note`/`cc`), so it gives you control *names* and canonical actions but not the MIDI address map. Factory play action: `<map value="PLAY_PAUSE" action="pioneer_play"/>`.
 - `action=""` is VDJScript. For buttons it runs on press; for sliders/encoders the moved value is passed to the action implicitly (e.g. `action="volume"`); for LED-out controls the action is evaluated as a *query* whose result drives the LED.
 - The same query rules as skin/pad `query=""` apply to LED bindings, including `blink` (`Local test`: `<map value="DNC_MODE" action="blink 150ms"/>` in the factory DDJ-XP2 mapping).
 
@@ -158,6 +159,8 @@ Relative encoders are handled by the definition layer (`<encoder zero="">`, `<jo
 ### Built-in definitions
 
 Built-in definitions are compiled into `controllers.dat` (app bundle and `~/Library/Application Support/VirtualDJ/Devices/`); they are not inspectable XML (`Local test`). Custom definition XML files go in the `Devices/` folder of the VirtualDJ home directory.
+
+Exporting the **factory mapping** (Factory default → Save, above) does **not** expose the device definition — it writes only the `<mapper>` bindings, with no `<button>`/`<slider>`/`<led>` elements or MIDI addresses (`Local test`, DDJ-GRV6, 2026-07-27). So on a recognized controller the definition layer stays opaque: the mapper gives you the control *names*, but the note/CC map behind them remains compiled. Testing the custom `<device>` definition schema still requires hardware VirtualDJ does *not* recognize (so it must use your XML), or a virtual MIDI port whose messages you inject.
 
 ---
 
