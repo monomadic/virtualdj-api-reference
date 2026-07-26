@@ -2,6 +2,16 @@
 # Keep volatile coverage counts in docs/Official VDJScript Coverage Audit.md,
 # not here.
 
+# Cross-corpus entry point: `just topic <term>` aggregates verbs, effects, XML
+# elements, real example files, docs, and quirks for one topic. Start here for
+# "how do I do X"; the per-topic sections below are for drilling in.
+topic_search:
+  primary:
+    - tools/topic.py
+  commands:
+    - just topic sampler
+    - just topic colorfx [--format=json --limit=N]
+
 tasks:
   queue: TODO.md
   roadmap: docs/Completeness Roadmap.md

@@ -115,6 +115,13 @@ find-fx *args:
 fx-stats:
     @python3 tools/fxdb.py stats
 
+# --- cross-corpus topic search ----------------------------------------------
+# One term -> matching verbs, effects, XML elements, REAL example files, docs,
+# and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
+
+topic *args:
+    @python3 tools/topic.py "$@"
+
 lint-skins *paths:
     python3 tools/lint_skins.py "$@"
 
@@ -128,6 +135,7 @@ check:
     python3 tools/extract_verb_index.py --check
     python3 tools/verbdb.py check
     python3 tools/fxdb.py check
+    python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check

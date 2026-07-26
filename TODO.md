@@ -46,33 +46,31 @@ Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same
 
 ### 0b. Topic Search Across Every Corpus
 
-Status: Ready
+Status: First cut landed (2026-07-26) — coverage tagging remains
 
-The intended agent workflow is: read the grammar summary once, write the program, then
-look up specifics. Lookup currently answers "what does this verb do" but not "show me
-everything about samplers", which is the question an agent actually arrives with. A topic
-search over *all* the data at once — verb records, example pads, skin scaffolds, mapper
-XML, built-in corpora, quirks and undocumented candidates — would often answer the use
-case outright with a real working example, leaving only the delta to look up per verb.
+The done-when is met: `just topic <term>` ([tools/topic.py](tools/topic.py)) answers a topic
+question with matching verbs, effects, and XML elements *and* the real example files that
+use them (grep-verified, ranked by coverage), plus topical docs and local-test quirks. It
+is pure aggregation over the already-gated stores — no artifact, no hand-tagging — deriving
+everything from verb `section`, inventory families, and word-boundary grep. Wired into
+`AGENTS.md`, `INDEX.yml`, and `just check` (cross-store smoke test).
 
-The enabling work is metadata: each searchable item needs enough tagging that a topic
-query can reach it. That tagging is itself good mechanical subagent work.
+Remaining — the metadata layer, which is the part that needs real tagging:
 
-- Give store records and corpus files topic tags (`sampler`, `stems`, `colorfx`, `mapper`,
-  `waveform`, …), derived where possible rather than hand-assigned — verb `section` and
-  XML element families are already most of the way there.
-- Add a cross-corpus query that returns, for one topic: matching verbs, example pad/skin
-  files that use them, related quirks from the tracker, and any undocumented candidates.
+- **Topic reach for name-opaque items.** An item is only found under a topic if the topic
+  appears in its name, section, or a grep of it. That misses families whose topic is not in
+  the element name — searching `waveform` does not surface `rhythmzone`, `scratchwave`,
+  `blockwave`, `beattunnel` (only the doc pointer saves it). These need an explicit topic
+  tag. This is the "rich metadata to each searchable item" idea, and it is good mechanical
+  subagent work: add a `topics: [...]` field to store records and an element→topics map,
+  then have `topic.py` consult it alongside the derived matches.
+- Multi-word terms are treated as one string (`color fx` ≠ `colorfx`); a synonym/alias map
+  would fold those together.
 - Keep it a query — no generated topic pages. Same rule as everywhere else.
 
 Read first:
 
-- [tools/verbdb.py](tools/verbdb.py) and [tools/xmldb.py](tools/xmldb.py) for the existing
-  filter layers to extend.
-
-Done when:
-
-- One command answers a topic question with verbs *and* real file examples.
+- [tools/topic.py](tools/topic.py) — the aggregator to extend with a tag lookup.
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
