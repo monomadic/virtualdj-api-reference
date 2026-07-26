@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 2,
-    "Partial": 9,
-    "Pass": 32,
-    "Untested": 951
+    "Partial": 12,
+    "Pass": 35,
+    "Untested": 945
    },
    "documented": 764,
-   "tested_pass": 32,
+   "tested_pass": 35,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -2378,14 +2378,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): restores slots 1-6 effect selection from bank N. Return value doubles as an existence probe: TRUE when bank N is populated, FALSE when empty (banks 1-3 held user racks and returned true; 4-8 empty returned false). Round-trip verified: scramble via one bank, load another, exact selection returns. Does NOT restore active state (saved with slot1 active, deactivated, loaded -> stayed inactive) or slider values (slider left at its changed value after load when the effect was already selected). So a bank is a rack of effect NAMES, not full slot state. Global across decks."
+   ],
    "section": "Effects",
    "description": "Load deck FX slots 1-6 from bank",
    "example": "effect_bank_load 1",
-   "note": "Fixture writes to effect bank 1, so run in a throwaway profile/session or edit the bank number before testing if bank 1 contains user presets."
+   "note": "Fixture writes to effect bank 1, so run in a throwaway profile/session or edit the bank number before testing if bank 1 contains user presets.",
+   "confidence": "local_test"
   },
   "effect_bank_save": {
    "name": "effect_bank_save",
@@ -2393,14 +2396,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): saves deck-FX slots 1-6 (the effect SELECTION) to persistent bank N; returns true. Tested into empty bank 8. Banks are GLOBAL, not per-deck: a rack saved on deck 1 loaded intact onto deck 2. Stores selection only — active state and slider values are NOT captured (see effect_bank_load). Populated banks survive as the user's presets; do not save over an occupied bank."
+   ],
    "section": "Effects",
    "description": "Save deck FX slots 1-6 to bank",
    "example": "effect_bank_save 1",
-   "note": "Fixture writes to effect bank 1, so run in a throwaway profile/session or edit the bank number before testing if bank 1 contains user presets."
+   "note": "Fixture writes to effect bank 1, so run in a throwaway profile/session or edit the bank number before testing if bank 1 contains user presets.",
+   "confidence": "local_test"
   },
   "effect_beats": {
    "name": "effect_beats",
@@ -2544,14 +2550,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): BeatGrid plugin, deck 1 with a track loaded. effect_command is plugin-instance-scoped, NOT generic — 'effect_command \"get 00\"' returned 'no' with Phaser in slot 1 and 'yes' after loading 'Beat Grid' there. Two forms: bare 'effect_command \"<cmd>\"' targets the loaded plugin; 'effect_command <slot> \"<cmd>\"' takes an UNQUOTED slot number ('effect_command 1 \"get 00\"'=yes, but quoted 'effect_command \"1\" ...'=no). BeatGrid command vocabulary (from built-in Plugin-UI/AFX_beatgrid.xml, confirmed live): 'get RC' queries grid cell at row R col C (hex), 'set RC' toggles it (verified reversible on an editable cell: off->set->on->set->off), 'cur N' is the current-playback-column indicator. Requires a loaded track for grid content. Do NOT document as generic plugin control."
+   ],
    "section": "Effects",
    "description": "Send command to effect/plugin",
    "example": "effect_command",
-   "note": "Built-in plugin UI XML uses these command strings; needs a recorded VirtualDJ result before promoting to `Local test`. Do not generalize beyond BeatGrid."
+   "note": "Built-in plugin UI XML uses these command strings; needs a recorded VirtualDJ result before promoting to `Local test`. Do not generalize beyond BeatGrid.",
+   "confidence": "local_test"
   },
   "effect_disable_all": {
    "name": "effect_disable_all",
@@ -2798,14 +2807,17 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): accepted (execute returns true) but INERT without an armed release FX — 'effect_releaseslider 50%' left the readback at 0 and did not flip is_releasefx. It controls the dedicated release-FX slider, not a deck-FX slot slider (use effect_slider for those). Arming a release FX needs a momentary control this channel cannot drive."
+   ],
    "section": "Effects",
    "description": "Control release-FX slider",
    "example": "effect_releaseslider",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "effect_releaseslider_active": {
    "name": "effect_releaseslider_active",
@@ -2817,15 +2829,18 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): like effect_releaseslider, accepted but inert without an armed release FX ('effect_releaseslider_active 50%' -> true, but is_releasefx stayed no and the slider read 0). The _active variant is meant to move the release slider AND activate the release effect; activation could not be observed over HTTP."
+   ],
    "section": "Effects",
    "description": "Control release-FX slider and activate",
    "example": "effect_releaseslider_active",
    "kind": "Action",
-   "note": "Keep examples conservative until release-FX target selection and active-state behavior are recorded."
+   "note": "Keep examples conservative until release-FX target selection and active-state behavior are recorded.",
+   "confidence": "local_test"
   },
   "effect_select": {
    "name": "effect_select",
@@ -7190,14 +7205,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): the release-FX path is SEPARATE from deck-FX slots 1-6. is_releasefx stayed 'no' with every effect loaded into slot 1, including release-type effects (Backspin, BrakeStart, VinylBrake, Beat Brake) — loading into a numbered slot never arms it. Forms is_releasefx, is_releasefx <slot>, is_releasefx '<effect>' all returned 'no'. It reflects the dedicated release-FX slot's armed state, which over HTTP could not be set (no momentary press/release); full activation needs a pad/mapper surface."
+   ],
    "section": "Effects",
    "description": "Query release-FX slot state",
    "example": "is_releasefx",
-   "note": "Keep examples conservative until release-FX target selection and active-state behavior are recorded."
+   "note": "Keep examples conservative until release-FX target selection and active-state behavior are recorded.",
+   "confidence": "local_test"
   },
   "is_sync": {
    "name": "is_sync",

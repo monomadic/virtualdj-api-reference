@@ -113,7 +113,7 @@ Done when:
 
 ### 2. Characterize FX Bank Save And Load
 
-Status: Ready
+Status: DONE (2026-07-26, HTTP). A bank is a rack of effect SELECTIONS for slots 1-6 — not active state, not slider values, and global across decks. `effect_bank_load` returns true/false as a bank-populated probe. Recorded in the tracker and on `effect_bank_save`/`effect_bank_load` (`just get-verb effect_bank_save`).
 
 Start here:
 
@@ -139,7 +139,7 @@ Done when:
 
 ### 3. Separate Release FX From Normal Slot FX
 
-Status: Ready
+Status: PARTIAL (2026-07-26, HTTP). Confirmed the release-FX path is separate from deck slots 1-6 (`is_releasefx` never flips from loading effects into numbered slots); the release sliders are accepted but inert without an armed release FX, which needs a momentary control HTTP can't drive. Remaining: arm a release FX on a pad/mapper surface and characterize activation. Recorded in the tracker and verb store.
 
 Start here:
 
@@ -165,7 +165,7 @@ Done when:
 
 ### 4. Keep BeatGrid `effect_command` Plugin-Specific
 
-Status: Ready
+Status: DONE (2026-07-26, HTTP). Confirmed plugin-instance-scoped (targets the BeatGrid slot), with a bare form and an unquoted-slot-number form; get/set/cur are BeatGrid's own vocabulary. Recorded as BeatGrid-specific, not generic. See `just get-verb effect_command`.
 
 Start here:
 
