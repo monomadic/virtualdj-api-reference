@@ -35,7 +35,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface + AlphaTheta DDJ-GRV6 hardware, 2026-07-27): mapper special control. Its action fires when the mapper loads (on mapping-select and on app start/device connect) — a minimal mapper with '<map value=\"ONINIT\" action=\"set $v 1\">' set the global, read back 1 over HTTP. Loading a mapping also RESETS $ session globals (an HTTP-set var read blank afterward), so ONINIT is the place to initialize controller state."
+    "VirtualDJ 2026 (HTTP + AlphaTheta DDJ-GRV6, 2026-07-27): mapper special control whose action fires when the mapper loads (controller connect / app start). A minimal mapper with '<map value=\"ONINIT\" action=\"set $v 1\">' set the global, read back 1 over HTTP. Use it to seed controller state on connect. (An earlier note that mapping-load resets $ globals was retracted: it was confounded by two app restarts, which clear session globals regardless.)"
    ],
    "kind": "special-control",
    "section": "Mappers",

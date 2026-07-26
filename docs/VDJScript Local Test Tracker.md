@@ -365,13 +365,14 @@ mapper for `device="DDJGRV6"` bound `ONINIT` and `PLAY_PAUSE` to `set '$var' 1`;
 probes read back over HTTP. Confirms the mapper `<map value action>` schema fires
 on real hardware, and surfaces three operational facts.
 
+> Correction (same session): an earlier draft claimed "loading a mapping resets `$` globals." That was confounded — the test mapping required **two** VirtualDJ restarts (one to make the new file appear, one to load the `PLAY`→`PLAY_PAUSE` edit), and session globals clear on restart regardless. There is no clean evidence a mapping *switch* clears globals; the claim is retracted.
+
 | What | Script / step | Observed | Result |
 | --- | --- | --- | --- |
 | `<map>` binding fires on button press | `<map value="PLAY_PAUSE" action="set '$vdj_maptest_fired' 1"/>`, press play | `$vdj_maptest_fired` 0 → 1 over HTTP | Pass — first local proof a mapper binding executes on hardware |
 | `ONINIT` fires on load | `<map value="ONINIT" action="set '$vdj_maptest_init' 1"/>` | `$vdj_maptest_init` = 1 after load and after restart | Pass |
 | Control name must match exactly | `value="PLAY"` (real name is `PLAY_PAUSE`) | loaded without error, never fired | Pass (negative) — wrong name binds nothing, silently (no-error parsing) |
-| Loading a mapping resets `$` globals | HTTP-set `$vdj_maptest_fired`=0, then select mapping | read back blank afterward | Pass — seed state in `ONINIT`, not before |
-| Edited mapper file needs a restart | edit active mapper, re-select it | monitor still showed the pre-edit binding; **restart** picked it up | Pass — re-select does not reload; switching between different mappings does |
+| New/edited mapper file needs a restart | add a file, then edit it | new file did not appear in the selector until restart; re-selecting after an edit served the cached copy | Pass — VirtualDJ scans `Mappers/` at startup; both new files and in-place edits need a restart (two restarts this session). Switching between mappings it already knows is live. |
 
 Not covered: the custom **device-definition** (`<device>`) schema. The DDJ-GRV6 is
 factory-recognized (compiled `controllers.dat`), so a custom `<device>` XML is not

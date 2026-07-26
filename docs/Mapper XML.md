@@ -78,7 +78,7 @@ Observed in factory and user mappings (`Local test`, [examples/Mappers/Local/](.
 
 | Name | Fires |
 | --- | --- |
-| `ONINIT` | When the mapper loads — on controller connect, on app start, and on mapping-select — used for setup chains (`effect_3slots_layout on`, `setting_setsession …`). Firing HTTP-verified (`Local test`, DDJ-GRV6, 2026-07-27): its action set a global read back as `1`. Note that loading a mapping also **resets `$` session globals**, so `ONINIT` is the right place to seed controller state rather than assuming a prior value survives. |
+| `ONINIT` | When the mapper loads (controller connect / app start) — used for setup chains (`effect_3slots_layout on`, `setting_setsession …`). Firing HTTP-verified (`Local test`, DDJ-GRV6, 2026-07-27): its action set a global read back as `1`. Use it to seed controller state on connect. |
 | `ONEXIT` | When the controller disconnects — used to undo `ONINIT` state |
 | `UNMAPPED` | Fallback for controls with no explicit `<map>` (factory keyboard maps it to `search`) |
 | `SHIFT` | Declares the shift modifier: `<map value="SHIFT" action="shift" />` |
@@ -184,7 +184,7 @@ A physical pad-grid controller typically pairs a mapper (hardware → VDJScript)
 | `~/Library/Application Support/VirtualDJ/Mappers/` | User and factory-saved mappers (XML) |
 | `~/Library/Application Support/VirtualDJ/Devices/` | Custom device definitions (XML) + compiled `controllers.dat` |
 
-**Edit/reload cycle** (`Local test`, 2026-07-27): editing a mapper file that is already the active mapping does **not** hot-reload, and *re-selecting the same mapping does not pick up the change* — VirtualDJ serves a cached copy (the MIDI-learn monitor kept showing the pre-edit binding). A **full VirtualDJ restart** was required to load the edited file. Switching *between different* mappings does apply live; only in-place file edits need the restart. Plan controller-mapping iteration around a restart per change, or edit through the in-app mapper editor instead of the file.
+**Edit/reload cycle** (`Local test`, 2026-07-27): VirtualDJ scans the `Mappers/` folder at startup and caches what it finds. A **newly added** mapper file does not appear in the mapping selector until a restart, and **editing** a file that is already loaded does not hot-reload — re-selecting the same mapping serves the cached copy (the MIDI-learn monitor kept showing the pre-edit binding). A **full VirtualDJ restart** was required both to make the new file appear and, after each edit, to load the change. Switching *between mappings VirtualDJ already knows* applies live; only new files and in-place edits need the restart. Plan file-based mapping iteration around a restart per change, or edit through the in-app mapper editor instead of the file.
 | `/Applications/VirtualDJ.app/Contents/Resources/controllers.dat` | Compiled built-in definitions (binary) |
 
 The v8-era official docs reference `Documents/VirtualDJ/Mappers/`; on this Mac install the live folder is under `Application Support` (`Local test`, 2026-07-12).
