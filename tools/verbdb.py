@@ -149,35 +149,56 @@ def parse_audit_needs_test() -> set[str]:
     return set(re.findall(r"`([^`]+)`", m.group(0)))
 
 
-def parse_tracker_results() -> dict[str, tuple[str, str]]:
-    """Map verb -> (result, note) from the tracker status tables.
+def parse_tracker_results() -> dict[str, dict]:
+    """Map verb -> {result, note, build, hardware} from the tracker status tables.
 
     Verb cells may hold several slash-separated backticked names; each maps to
     the row's result. A later Pass row wins over an earlier non-Pass one.
+
+    The status tables share an 8-column layout ending `… | build | hardware |
+    Result | Notes |`, so build and hardware sit two and one cells left of the
+    result cell. Capturing them keeps the record's provenance (which build, what
+    hardware) instead of discarding it into free-text prose.
     """
     rank = {"Untested": 0, "Partial": 1, "Fail": 1, "N/A": 1, "Pass": 2}
-    out: dict[str, tuple[str, str]] = {}
+    out: dict[str, dict] = {}
     for line in TRACKER.read_text().splitlines():
         if not line.startswith("| `"):
             continue
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if len(cells) < 3:
             continue
-        result = None
-        for c in cells[1:]:
-            if c in TEST_STATUSES:
-                result = c
-                break
-        if result is None:
+        result_idx = next((i for i, c in enumerate(cells[1:], 1)
+                           if c in TEST_STATUSES), None)
+        if result_idx is None:
             continue
-        note = cells[-1] if cells[-1] not in TEST_STATUSES else ""
+        result = cells[result_idx]
+        note = cells[result_idx + 1] if result_idx + 1 < len(cells) else ""
+        # build/hardware are the two cells before result in the standard layout
+        build = cells[result_idx - 2] if result_idx >= 2 else ""
+        hardware = cells[result_idx - 1] if result_idx >= 1 else ""
         names = re.findall(r"`([^`]+)`", cells[0])
         for raw in names:
             name = raw.split()[0]  # strip arg examples like `sampler_loaded 8 'auto'`
             prev = out.get(name)
-            if prev is None or rank[result] >= rank[prev[0]]:
-                out[name] = (result, note)
+            if prev is None or rank[result] >= rank[prev["result"]]:
+                out[name] = {"result": result, "note": note,
+                             "build": build, "hardware": hardware}
     return out
+
+
+def tracker_evidence(row: dict) -> str:
+    """One provenance-carrying evidence sentence from a parsed tracker row."""
+    build = row.get("build") or ""
+    # the build column sometimes carries prose like "build not recorded"
+    where = build if build and build.upper() != "TBD" else "build not recorded"
+    hw = row.get("hardware") or ""
+    tag = f"Local test ({where}"
+    if hw and hw.lower() not in {"none required", "none recorded", "none", ""}:
+        tag += f", hardware: {hw}"
+    tag += ")"
+    note = row.get("note") or ""
+    return f"{tag}: {note}".strip() if note else tag
 
 
 def bootstrap(mode: str) -> None:
@@ -219,12 +240,22 @@ def bootstrap(mode: str) -> None:
         if name in HARDWARE_BLOCKED:
             rec["blocked"] = True
         if name in results:
-            result, note = results[name]
+            row = results[name]
             # never downgrade an authored Pass
             if rec.get("test_status", "Untested") != "Pass":
-                rec["test_status"] = result
-            if note and "note" not in rec:
-                rec["note"] = note[:400]
+                rec["test_status"] = row["result"]
+            if row["note"] and "note" not in rec:
+                rec["note"] = row["note"][:400]
+            # Only an actually-tested row is evidence. A tracker row whose result
+            # is Untested/N/A is a test *plan*, not a result — stamping it
+            # `Local test` would be a false claim. A tested status must then
+            # carry structured evidence + confidence (the `just check` gate),
+            # filled only when empty so a hand-authored entry is never clobbered.
+            if row["result"] in {"Pass", "Fail", "Partial"}:
+                if not rec.get("evidence"):
+                    rec["evidence"] = [tracker_evidence(row)[:400]]
+                if not rec.get("confidence"):
+                    rec["confidence"] = "local_test"
 
         store[name] = rec
 
@@ -447,6 +478,13 @@ def cmd_check(args):
         st = rec.get("test_status", "Untested")
         if st not in TEST_STATUSES:
             errors.append(f"{name}: invalid test_status '{st}'")
+        # A tested status must carry its proof as structured evidence, not just a
+        # free-text note. This is the gate that keeps status and evidence from
+        # drifting apart the way the bootstrap-seeded records once did.
+        if st in {"Pass", "Fail", "Partial"} and not rec.get("evidence"):
+            errors.append(f"{name}: test_status '{st}' but no evidence "
+                          f"(record the proof with `just put-verb {name} "
+                          f"evidence=\"…\"`)")
         canon = rec.get("canonical")
         if canon and canon not in store:
             errors.append(f"{name}: canonical '{canon}' has no record")

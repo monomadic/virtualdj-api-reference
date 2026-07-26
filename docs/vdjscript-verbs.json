@@ -1201,11 +1201,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): Logged in: green `CONNECT: on`; pressing opens menu with `Log out`. Logged out: red `CONNECT: off`; pressing opens CONNECT login dialog."
+   ],
    "section": "Configuration",
    "description": "VirtualDJ account/connect action or query",
    "example": "connect",
-   "note": "Logged in: green `CONNECT: on`; pressing opens menu with `Log out`. Logged out: red `CONNECT: off`; pressing opens CONNECT login dialog."
+   "note": "Logged in: green `CONNECT: on`; pressing opens menu with `Log out`. Logged out: red `CONNECT: off`; pressing opens CONNECT login dialog.",
+   "confidence": "local_test"
   },
   "constant": {
    "name": "constant",
@@ -1767,11 +1770,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): In the pad-page run, `deck_has_error` stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load."
+   ],
    "section": "Loading",
-   "description": "Sparse deck load-error helper; partial user-provided pad test exists",
+   "description": "Sparse deck load-error helper. Query returns on/off (red/off in skin) for the deck's load-error state.",
    "example": "deck_has_error",
-   "note": "In the pad-page run, `deck_has_error` stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load."
+   "note": "In the pad-page run, `deck_has_error` stayed off for normal load/unload states, turned on/red after a deliberately missing file load, scoped to deck 1 while deck 2 stayed off, and cleared after a later successful selected-track load.",
+   "confidence": "local_test"
   },
   "deck_options": {
    "name": "deck_options",
@@ -2025,11 +2031,14 @@
    "test_status": "Partial",
    "needs_test": true,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336, hardware: Optional controller): In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion."
+   ],
    "section": "Deck Management",
    "description": "Dual-deck pair helper for decks 1/3 or 2/4",
    "example": "dualdeckmode_decks",
-   "note": "In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion."
+   "note": "In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion.",
+   "confidence": "local_test"
   },
   "dump": {
    "name": "dump",
@@ -2180,12 +2189,15 @@
    "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+   ],
    "section": "Effects",
    "description": "Activate/deactivate",
    "example": "effect_active 1 on",
    "kind": "Action",
-   "note": "User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+   "note": "User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
+   "confidence": "local_test"
   },
   "effect_arm_active": {
    "name": "effect_arm_active",
@@ -2550,11 +2562,14 @@
    "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (User-provided local result, build not recorded): Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as priva"
+   ],
    "section": "Effects",
    "description": "Disable deck/master effects; with `'padfx'`, clear temporary Pad FX as a broad reset",
    "example": "effect_disable_all 'padfx'",
-   "note": "Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as private per-pad state or an inline initializer. Repeat with `effec"
+   "note": "Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as private per-pad state or an inline initializer. Repeat with `effec",
+   "confidence": "local_test"
   },
   "effect_dock_gui": {
    "name": "effect_dock_gui",
@@ -2849,12 +2864,15 @@
    "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+   ],
    "section": "Effects",
    "description": "Select effect (keep previous)",
    "example": "effect_select_multi 2 \"flanger\"",
    "kind": "Action",
-   "note": "User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+   "note": "User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
+   "confidence": "local_test"
   },
   "effect_select_popup": {
    "name": "effect_select_popup",
@@ -5422,11 +5440,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): In pad text/query/color, `` `get_mixfx_active` `` returned `off`/`on` and matched `effect_mixfx_activate` for Filter and Echo once a track was loaded on deck 1."
+   ],
    "section": "Effects",
    "description": "Get/query Mix FX active state",
    "example": "get_mixfx_active",
-   "note": "In pad text/query/color, `` `get_mixfx_active` `` returned `off`/`on` and matched `effect_mixfx_activate` for Filter and Echo once a track was loaded on deck 1."
+   "note": "In pad text/query/color, `` `get_mixfx_active` `` returned `off`/`on` and matched `effect_mixfx_activate` for Filter and Echo once a track was loaded on deck 1.",
+   "confidence": "local_test"
   },
   "get_nb_multicam": {
    "name": "get_nb_multicam",
@@ -7361,11 +7382,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): Empty venue returns blank after `KARAOKE:`. Pressing the pad opens the Karaoke menu; Venue Name dialog sets the value; clearing the venue returns to blank."
+   ],
    "section": "Karaoke",
    "description": "Karaoke venue-name helper",
    "example": " ",
-   "note": "Empty venue returns blank after `KARAOKE:`. Pressing the pad opens the Karaoke menu; Venue Name dialog sets the value; clearing the venue returns to blank."
+   "note": "Empty venue returns blank after `KARAOKE:`. Pressing the pad opens the Karaoke menu; Venue Name dialog sets the value; clearing the venue returns to blank.",
+   "confidence": "local_test"
   },
   "key": {
    "name": "key",
@@ -9090,11 +9114,14 @@
    "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested."
+   ],
    "section": "Window Control",
    "description": "Open the Stem Creator workflow",
    "example": "open_stem_creator",
-   "note": "Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested."
+   "note": "Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested.",
+   "confidence": "local_test"
   },
   "os2l_button": {
    "name": "os2l_button",
@@ -9491,11 +9518,14 @@
    "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (User-provided local result, build not recorded): Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as priva"
+   ],
    "section": "Pads",
    "description": "Activate named effect",
    "example": "padfx \"echo\" 40% 90%",
-   "note": "Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as private per-pad state or an inline initializer. Repeat with `effec"
+   "note": "Inline `effect_disable_all 'padfx'` before new padfx calls did not activate/light; removing it worked. Another pad using the same effect/stem target can alter the active pad-FX parameters. Conservative guidance is promoted to the `padfx` notes and `effect_disable_all 'padfx'` example: treat cleanup as a separate broad reset, not as private per-pad state or an inline initializer. Repeat with `effec",
+   "confidence": "local_test"
   },
   "padfx_single": {
    "name": "padfx_single",
@@ -11354,12 +11384,15 @@
    "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (8.5.9307 / 18.0.9336): On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware."
+   ],
    "section": "Sampler",
    "description": "Check whether an absolute sampler slot has a sample loaded; do not rely on `\"auto\"` for paged empty-slot checks",
    "example": "sampler_loaded 1",
    "kind": "Query",
-   "note": "On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware."
+   "note": "On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware.",
+   "confidence": "local_test"
   },
   "sampler_loop": {
    "name": "sampler_loop",
@@ -13484,11 +13517,14 @@
    "test_status": "Partial",
    "needs_test": true,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (v2026-m b9336): In the sparse helper pad context, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Still too sparse to promote beyond a conservative note; do not infer from `system_volume` or system VU labels."
+   ],
    "section": "System Info",
    "description": "Sparse official system helper",
    "example": "system",
-   "note": "In the sparse helper pad context, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Still too sparse to promote beyond a conservative note; do not infer from `system_volume` or system VU labels."
+   "note": "In the sparse helper pad context, `` `system` `` returned blank text and pressing `system` produced no visible UI change or new Log Report entry. Still too sparse to promote beyond a conservative note; do not infer from `system_volume` or system VU labels.",
+   "confidence": "local_test"
   },
   "system_volume": {
    "name": "system_volume",
