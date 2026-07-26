@@ -3,28 +3,44 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 994,
+   "total": 995,
    "by_tier": {
     "alias": 59,
     "catalog": 641,
     "curated": 142,
     "official-name-only": 149,
-    "unofficial": 3
+    "unofficial": 4
    },
    "by_test_status": {
     "Fail": 2,
     "Partial": 12,
-    "Pass": 35,
+    "Pass": 36,
     "Untested": 945
    },
    "documented": 764,
-   "tested_pass": 35,
+   "tested_pass": 36,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
   }
  },
  "verbs": {
+  "ONINIT": {
+   "name": "ONINIT",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Pass",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "VirtualDJ 2026 (HTTP interface + AlphaTheta DDJ-GRV6 hardware, 2026-07-27): mapper special control. Its action fires when the mapper loads (on mapping-select and on app start/device connect) — a minimal mapper with '<map value=\"ONINIT\" action=\"set $v 1\">' set the global, read back 1 over HTTP. Loading a mapping also RESETS $ session globals (an HTTP-set var read blank afterward), so ONINIT is the place to initialize controller state."
+   ],
+   "kind": "special-control",
+   "section": "Mappers",
+   "confidence": "local_test"
+  },
   "action_deck": {
    "name": "action_deck",
    "tier": "catalog",

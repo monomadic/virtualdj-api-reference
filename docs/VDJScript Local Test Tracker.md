@@ -357,3 +357,22 @@ without a fixture or manual reading. Settled rules are written up in
 
 Side effect: this run leaves `$zz_*` session globals set. They are session-scoped and clear
 on VirtualDJ restart.
+
+## Mapper Firing (Real Hardware)
+
+VirtualDJ 2026, HTTP interface + AlphaTheta DDJ-GRV6, 2026-07-27. A minimal test
+mapper for `device="DDJGRV6"` bound `ONINIT` and `PLAY_PAUSE` to `set '$var' 1`;
+probes read back over HTTP. Confirms the mapper `<map value action>` schema fires
+on real hardware, and surfaces three operational facts.
+
+| What | Script / step | Observed | Result |
+| --- | --- | --- | --- |
+| `<map>` binding fires on button press | `<map value="PLAY_PAUSE" action="set '$vdj_maptest_fired' 1"/>`, press play | `$vdj_maptest_fired` 0 → 1 over HTTP | Pass — first local proof a mapper binding executes on hardware |
+| `ONINIT` fires on load | `<map value="ONINIT" action="set '$vdj_maptest_init' 1"/>` | `$vdj_maptest_init` = 1 after load and after restart | Pass |
+| Control name must match exactly | `value="PLAY"` (real name is `PLAY_PAUSE`) | loaded without error, never fired | Pass (negative) — wrong name binds nothing, silently (no-error parsing) |
+| Loading a mapping resets `$` globals | HTTP-set `$vdj_maptest_fired`=0, then select mapping | read back blank afterward | Pass — seed state in `ONINIT`, not before |
+| Edited mapper file needs a restart | edit active mapper, re-select it | monitor still showed the pre-edit binding; **restart** picked it up | Pass — re-select does not reload; switching between different mappings does |
+
+Not covered: the custom **device-definition** (`<device>`) schema. The DDJ-GRV6 is
+factory-recognized (compiled `controllers.dat`), so a custom `<device>` XML is not
+exercised. Testing that needs unrecognized hardware or a virtual MIDI port + injection.

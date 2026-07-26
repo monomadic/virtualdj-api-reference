@@ -66,7 +66,9 @@ Children:
 
 ### `<map>` semantics
 
-- `value=""` is the control name declared by the device definition (`PLAY`, `BROWSE`, `LED_DECK_LEFT`, …).
+> **End-to-end firing verified** (`Local test`, VirtualDJ 2026, AlphaTheta DDJ-GRV6, 2026-07-27). A minimal two-line mapper for `device="DDJGRV6"` — `<map value="ONINIT" …>` plus `<map value="PLAY_PAUSE" action="set '$v' 1"/>` — was loaded on the real controller; pressing the physical play button set the global, read back `1` over the [HTTP interface](HTTP%20Control%20Interface.md). This is the first local confirmation that the `<map value action>` schema binds and fires on hardware, not just that the format parses.
+
+- `value=""` is the control name declared by the device definition (`PLAY_PAUSE`, `CUE`, `BROWSE`, `LED_PLAY_PAUSE`, …). **The name must match the device definition exactly.** A wrong name binds nothing and fails *silently* — `value="PLAY"` on the DDJ-GRV6 (whose control is `PLAY_PAUSE`) loaded without error and simply never fired (`Local test`, 2026-07-27), consistent with VDJScript's no-error parsing. Crib the exact names from a working mapper for that device (`rg -o 'value="[^"]*"'`), never guess.
 - `action=""` is VDJScript. For buttons it runs on press; for sliders/encoders the moved value is passed to the action implicitly (e.g. `action="volume"`); for LED-out controls the action is evaluated as a *query* whose result drives the LED.
 - The same query rules as skin/pad `query=""` apply to LED bindings, including `blink` (`Local test`: `<map value="DNC_MODE" action="blink 150ms"/>` in the factory DDJ-XP2 mapping).
 
@@ -76,7 +78,7 @@ Observed in factory and user mappings (`Local test`, [examples/Mappers/Local/](.
 
 | Name | Fires |
 | --- | --- |
-| `ONINIT` | Once when the controller connects — used for setup chains (`effect_3slots_layout on`, `setting_setsession …`) |
+| `ONINIT` | When the mapper loads — on controller connect, on app start, and on mapping-select — used for setup chains (`effect_3slots_layout on`, `setting_setsession …`). Firing HTTP-verified (`Local test`, DDJ-GRV6, 2026-07-27): its action set a global read back as `1`. Note that loading a mapping also **resets `$` session globals**, so `ONINIT` is the right place to seed controller state rather than assuming a prior value survives. |
 | `ONEXIT` | When the controller disconnects — used to undo `ONINIT` state |
 | `UNMAPPED` | Fallback for controls with no explicit `<map>` (factory keyboard maps it to `search`) |
 | `SHIFT` | Declares the shift modifier: `<map value="SHIFT" action="shift" />` |
@@ -181,6 +183,8 @@ A physical pad-grid controller typically pairs a mapper (hardware → VDJScript)
 | --- | --- |
 | `~/Library/Application Support/VirtualDJ/Mappers/` | User and factory-saved mappers (XML) |
 | `~/Library/Application Support/VirtualDJ/Devices/` | Custom device definitions (XML) + compiled `controllers.dat` |
+
+**Edit/reload cycle** (`Local test`, 2026-07-27): editing a mapper file that is already the active mapping does **not** hot-reload, and *re-selecting the same mapping does not pick up the change* — VirtualDJ serves a cached copy (the MIDI-learn monitor kept showing the pre-edit binding). A **full VirtualDJ restart** was required to load the edited file. Switching *between different* mappings does apply live; only in-place file edits need the restart. Plan controller-mapping iteration around a restart per change, or edit through the in-app mapper editor instead of the file.
 | `/Applications/VirtualDJ.app/Contents/Resources/controllers.dat` | Compiled built-in definitions (binary) |
 
 The v8-era official docs reference `Documents/VirtualDJ/Mappers/`; on this Mac install the live folder is under `Application Support` (`Local test`, 2026-07-12).
