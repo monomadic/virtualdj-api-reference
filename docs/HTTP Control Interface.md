@@ -44,6 +44,9 @@ All rows `Local test`, VirtualDJ 2026, 2026-07-22:
 | `execute?script=nothing` | `false` — the body is the verb's own boolean result |
 | `execute?script=nothing & nothing` (encoded `&`) | Chained actions accepted |
 | `query?script=get_bpm 0 ? get_bpm : get_version` | `2026` — full grammar, ternaries work |
+| `execute?script=deck 2 load "<absolute path>"` | `true` — loads that file onto deck 2 directly, no browser selection involved (2026-07-27) |
+| `execute?script=deck 2 load "<nonexistent path>"` | **`true`** — but the deck enters an error state: title reads `Error`, `deck 2 deck_has_error` → `yes` (2026-07-27) |
+| `query?script=deck 2 get_loaded_song "fullpath"` | Absolute path of the loaded file; `"filepath"` returns the folder only, `"filename"` the basename; `"path"`/`"file"` are `E_INVALIDARG` (2026-07-27) |
 
 Gotchas the table implies:
 
@@ -61,6 +64,13 @@ Gotchas the table implies:
 - **`false` from `/execute` is not a transport failure.** It is the action's own return value
   (`nothing` legitimately returns `false`). Treat it as evidence about the verb, not the
   channel — and note that a bogus name also returns `false`, so `false` alone proves nothing.
+- **`true` from `/execute` is not proof of success either.** `deck 2 load "<nonexistent
+  path>"` returns `true` while the deck lands in an error state. Verify outcomes with a
+  follow-up query (`deck_has_error`, `get_loaded_song "fullpath"`), not the execute result.
+- **Out-of-process loading works by path.** `deck N load "<absolute path>"` loads an
+  arbitrary file onto a deck with no browser interaction, which makes external
+  browser/controller frontends viable: read the library from `database.xml`, drive loads
+  and transport over this channel.
 - **URL-encode the whole script.** Spaces, `&` (action chaining), `?`/`:` (ternaries), and
   quotes must be percent-encoded in GET; `curl -G --data-urlencode 'script=...'` (what the
   `just` recipes use) handles all of it. The `&amp;` escaping rule is XML-only and does not

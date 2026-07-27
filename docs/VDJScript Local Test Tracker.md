@@ -46,6 +46,17 @@ Follow-up:
 ## Test Run Log
 
 ```text
+Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
+Test asset: HTTP control interface (http://localhost/), local FLAC file
+Account/deck/hardware state: no hardware; interface enabled; deck 1 loaded and paused, deck 2 empty
+Steps: query deck 1 play / deck 2 loaded for a safe baseline; read deck 1's path via get_loaded_song "fullpath"; execute deck 2 load "<that absolute path>"; read back deck 2 title/fullpath; execute deck 2 load "<nonexistent path>"; read back title and deck 2 deck_has_error; execute deck 2 unload; confirm deck 2 loaded -> no.
+Observed result: load accepts an absolute file path and loads it onto the scoped deck with no browser selection involved — deck 2 title/fullpath matched the requested file. The nonexistent path ALSO returned true from /execute, with the deck landing in an error state (title "Error", deck_has_error yes), so the execute boolean does not signal load success; verify with deck_has_error or get_loaded_song readback. Field names for get_loaded_song: "fullpath" = absolute path, "filepath" = folder only, "filename" = basename, "path"/"file" = E_INVALIDARG. deck 2 unload restored the empty state.
+Tracker rows updated: load verb record (test_status Pass, evidence, note); HTTP Control Interface.md verified table + gotchas.
+Follow-up: untested whether relative paths, netsearch URLs, or non-audio files behave differently; bare load (browser-selection form) not exercised over HTTP.
+```
+
+```text
 Date: 2026-07-22
 VirtualDJ build: 2026 (get_version)
 Test asset: HTTP control interface (http://localhost/), tools/sweep_fx_introspection.py -> tests/fx-introspection-dump.json

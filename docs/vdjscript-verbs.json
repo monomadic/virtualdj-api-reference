@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 2,
     "Partial": 12,
-    "Pass": 36,
-    "Untested": 945
+    "Pass": 37,
+    "Untested": 944
    },
    "documented": 764,
-   "tested_pass": 36,
+   "tested_pass": 37,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -7744,14 +7744,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "HTTP local test 2026-07-27 (VirtualDJ 2026): deck 2 load \"<absolute path>\" loaded the file directly with no browser selection involved (title/fullpath readback confirmed). Bogus path also returned true from /execute but put the deck in an error state (title \"Error\", deck_has_error yes) — check deck_has_error or readback, not the execute result. deck 2 unload restored the empty deck."
+   ],
    "section": "Loading",
    "description": "Load song",
-   "example": "load",
-   "kind": "Action"
+   "example": "deck 2 load \"/path/to/track.flac\"",
+   "kind": "Action",
+   "note": "Accepts an absolute file path argument: load \"/path/file.flac\" loads that file onto the scoped deck, independent of the browser selection. Bare load acts on the browser-selected track. The execute/boolean result does not signal load success — a nonexistent path still returns true and sets deck_has_error."
   },
   "load_deck_set": {
    "name": "load_deck_set",
