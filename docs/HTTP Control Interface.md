@@ -7,8 +7,28 @@ skin or pad context, and returns exact strings with no transcription step.
 
 Verified locally on 2026-07-22 against VirtualDJ 2026 (`get_version` → `2026`) on macOS with
 the interface enabled and listening on `http://localhost/` (port 80). Source labels: rows
-marked `Local test` below were observed directly; the Authorization note is `Official`
-(interface description) and not yet locally exercised.
+marked `Local test` below were observed directly; rows marked `Official` come from the
+official wiki page.
+
+## Provenance (Official)
+
+The interface is the **Network Control plugin** — `GET /` on the running server returns a
+page linking its official documentation:
+[NetworkControlPlugin](https://virtualdj.com/wiki/NetworkControlPlugin.html) (discovered
+2026-07-27 via `GET /`; settings.xml registers it as `internal://Network Control`). Official
+facts from that page, none locally exercised except where noted:
+
+- Requires VirtualDJ 2023+ and a **Pro license**. Aimed at developers.
+- Install: Config → Extensions → Effects → Other → "Network Control". After install it
+  appears in the Master panel's Master Effect drop-down under **Auto-Start**; its cog wheel
+  opens settings.
+- The **port is configurable** in those settings (80 observed locally), as is an optional
+  authentication string.
+- Auth, when a password is set: `Authorization: Bearer <password>` header or a
+  `&bearer=<password>` URL/form parameter. Wrong auth returns an HTTP error code. Locally
+  no password was set and no auth was required.
+- The page documents **exactly two endpoints** — `/query` and `/execute` — for both GET and
+  POST. No event, subscription, or push channel is documented.
 
 Prefer the wrapped recipes over raw `curl` — they URL-encode the script for you:
 
@@ -28,8 +48,27 @@ just vdj-up                            # reachability check
 
 POST accepts the script either raw in the body with `Content-Type: text/plain`, or as a
 `script=` form field with `Content-Type: application/x-www-form-urlencoded`. Both verified.
-POST is documented to use the `Authorization` header; locally, no authentication was required
-for either method (`Official`, untested — revisit if a remote-access password is set).
+Auth (if a password is configured) is `Authorization: Bearer` or `&bearer=` — see Provenance
+above; locally no password was set and no authentication was required for either method.
+
+## No push channel (poll-only)
+
+Probed 2026-07-27, all `Local test`:
+
+- `GET /` returns a static HTML page pointing at the official wiki — no web UI, no asset
+  tree.
+- A WebSocket upgrade request (`Connection: Upgrade`, `Upgrade: websocket`) is **ignored**:
+  the server answers `HTTP/1.0 200` with the same static page, no `101 Switching Protocols`.
+  The server speaks HTTP/1.0, which also rules out SSE-style long-lived chunked responses in
+  practice.
+- `GET /events` → 404. The official page documents only `/query` and `/execute`.
+- `lsof`: the VirtualDJ process has exactly one TCP listener (`*:80`, this plugin) plus its
+  own mDNS socket (UDP 5353), so there is no second hidden control port *on this setup*.
+
+Conclusion: **this channel has no event hooks — state readback is polling `/query`.** Note
+this is a statement about the Network Control plugin only. The VirtualDJ Remote companion
+app is a separate product whose wire protocol is uncharacterized here (see the TODO task on
+shimming it); do not generalize poll-only to Remote without that evidence.
 
 ## Verified behavior
 
@@ -90,5 +129,7 @@ Gotchas the table implies:
 
 ## Security note
 
-While enabled, this is an unauthenticated local control channel for the app. Leave it off when
-not testing, and do not expose port 80 beyond localhost.
+While enabled with no password set, this is an unauthenticated control channel bound to
+**all interfaces** (`*:80` per `lsof`), not just loopback — anyone on the LAN who can reach
+the port can drive the decks. Leave it off when not testing, or set the bearer password in
+the plugin settings if it must stay on.

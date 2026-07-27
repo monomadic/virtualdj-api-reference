@@ -263,6 +263,48 @@ Done when:
 - A build, deck/controller context, observed result, and follow-up decision are recorded.
 - The official local-test status is updated only if the repeat confirms behavior well enough for promotion.
 
+### 8. Characterize The VirtualDJ Remote App Wire Protocol
+
+Status: Ready when the VirtualDJ Remote app (iOS/Android) is on the same LAN — otherwise parked
+
+The Network Control plugin is settled as poll-only (2026-07-27: official page documents only
+`/query`/`/execute`, WebSocket upgrade ignored, `/events` 404 — see
+[docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md)). What remains unknown
+is the **VirtualDJ Remote companion app's** protocol: whether it polls the same HTTP
+channel, uses a push/event stream, or speaks something else entirely. Desktop-side evidence
+so far: the VirtualDJ process listens only on TCP `*:80` plus a UDP 5353 (mDNS) socket, so
+Remote traffic is either on port 80 or on a socket that only opens once a Remote session
+starts.
+
+Two complementary methods, cheapest first:
+
+1. **Passive capture (do first):** connect the real Remote app, then
+   `tcpdump -i any -w remote.pcap host <phone-ip>` on the desktop. Also re-run
+   `lsof -nP -a -p <vdj-pid> -iTCP` during the session to catch any late-opening listener.
+   This alone answers poll-vs-push and names the port/protocol.
+2. **Shim server:** a fake desktop-side server that mimics VirtualDJ well enough for the
+   Remote app to connect (mDNS advertisement of whatever service type the capture reveals +
+   an HTTP/TCP responder on the same port), logging every request the app makes. This maps
+   the full request surface — browser listing, waveform data, hotcue state — beyond what one
+   passive session happens to exercise.
+
+Record results in:
+
+- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
+
+Promote to:
+
+- [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md) (replace the
+  "uncharacterized" caveat in the no-push section)
+- [docs/Application Internals.md](docs/Application%20Internals.md) (Remote Skins section)
+
+Done when:
+
+- The Remote app's transport (port, protocol, discovery mechanism) is recorded, and
+  poll-vs-push is answered with capture evidence.
+- Any endpoints beyond `/query`/`/execute` are enumerated with example request/response
+  pairs, or their absence is confirmed.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.

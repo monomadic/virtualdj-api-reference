@@ -39,6 +39,7 @@ Useful source links for maintaining this repo's VirtualDJ skin, pad, effect, and
 - [Pads Manual](https://www.virtualdj.com/manuals/virtualdj/interface/decks/decksadvanced/pads.html) - Pad pages and pad behavior.
 - [Sampler Manual](https://www.virtualdj.com/manuals/virtualdj/interface/browser/sideview/sampler.html) - Sampler sideview, banks, pages, and drag/drop behavior.
 - [How to Install Plugins and Addons](https://virtualdj.zendesk.com/hc/en-us/articles/360004467797-How-do-I-download-and-install-new-skins-effects-samples-etc) - Official support article for extensions.
+- [Network Control Plugin](https://virtualdj.com/wiki/NetworkControlPlugin.html) - Official page for the HTTP control interface (`/query`/`/execute`, bearer auth, install/config). Discovered via `GET /` on the running interface; see [HTTP Control Interface.md](HTTP%20Control%20Interface.md).
 
 ## Official Forums And Staff Guidance
 

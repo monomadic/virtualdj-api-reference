@@ -48,6 +48,17 @@ Follow-up:
 ```text
 Date: 2026-07-27
 VirtualDJ build: 2026 (get_version)
+Test asset: HTTP control interface channel probe (no VDJScript verbs exercised)
+Account/deck/hardware state: no hardware; interface enabled on port 80
+Steps: GET / on the running interface; send a WebSocket upgrade request (Connection: Upgrade, Upgrade: websocket) to /; GET /events; lsof the VirtualDJ process for all TCP/UDP sockets; fetch the official page GET / linked to.
+Observed result: GET / returns a static HTML page linking https://virtualdj.com/wiki/NetworkControlPlugin.html — official provenance for the interface (Network Control plugin, VDJ 2023+, Pro license, configurable port, Bearer auth). The WS upgrade is ignored (HTTP/1.0 200 with the same static page, no 101); /events is 404; the official page documents only /query and /execute. lsof shows exactly one TCP listener (*:80) plus UDP 5353 (mDNS). Conclusion: the Network Control plugin is poll-only, no event hooks. The VirtualDJ Remote app's protocol remains uncharacterized (TODO task 8).
+Tracker rows updated: none (channel finding, not a verb) — recorded in HTTP Control Interface.md (Provenance + No push channel sections), Resources.md, TODO task 8.
+Follow-up: TODO task 8 — packet-capture a live Remote app session, then shim the desktop side to enumerate the Remote request surface.
+```
+
+```text
+Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
 Test asset: HTTP control interface (http://localhost/), local FLAC file
 Account/deck/hardware state: no hardware; interface enabled; deck 1 loaded and paused, deck 2 empty
 Steps: query deck 1 play / deck 2 loaded for a safe baseline; read deck 1's path via get_loaded_song "fullpath"; execute deck 2 load "<that absolute path>"; read back deck 2 title/fullpath; execute deck 2 load "<nonexistent path>"; read back title and deck 2 deck_has_error; execute deck 2 unload; confirm deck 2 loaded -> no.
