@@ -265,28 +265,34 @@ Done when:
 
 ### 8. Characterize The VirtualDJ Remote App Wire Protocol
 
-Status: Ready when the VirtualDJ Remote app (iOS/Android) is on the same LAN — otherwise parked
+Status: TRANSPORT DONE (2026-07-27, live iOS Remote session) — wire format remains; the
+remaining work needs no phone and no root
 
-The Network Control plugin is settled as poll-only (2026-07-27: official page documents only
-`/query`/`/execute`, WebSocket upgrade ignored, `/events` 404 — see
-[docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md)). What remains unknown
-is the **VirtualDJ Remote companion app's** protocol: whether it polls the same HTTP
-channel, uses a push/event stream, or speaks something else entirely. Desktop-side evidence
-so far: the VirtualDJ process listens only on TCP `*:80` plus a UDP 5353 (mDNS) socket, so
-Remote traffic is either on port 80 or on a socket that only opens once a Remote session
-starts.
+Settled with a live session (socket watcher + `dns-sd` + per-connection `nettop` deltas;
+recorded in the tracker, [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md),
+and [docs/Application Internals.md](docs/Application%20Internals.md) Remote Skins):
 
-Two complementary methods, cheapest first:
+- Remote does **not** use the Network Control HTTP channel; port 80 saw no Remote traffic.
+- Discovery is inverted from the obvious guess: the **phone advertises** Bonjour type
+  `_vdjremote8._tcp` (SRV → phone, port 4243 observed) and listens; **VirtualDJ connects
+  out** to the phone as the TCP client, one persistent connection.
+- Semantics are **event-driven push**: idle seconds carry 0 bytes on that connection; a
+  deck load pushed ~249 KiB desktop→phone in one second with no inbound request; unload
+  ~1.4 KiB; otherwise only sub-KB keepalives.
 
-1. **Passive capture (do first):** connect the real Remote app, then
-   `tcpdump -i any -w remote.pcap host <phone-ip>` on the desktop. Also re-run
-   `lsof -nP -a -p <vdj-pid> -iTCP` during the session to catch any late-opening listener.
-   This alone answers poll-vs-push and names the port/protocol.
-2. **Shim server:** a fake desktop-side server that mimics VirtualDJ well enough for the
-   Remote app to connect (mDNS advertisement of whatever service type the capture reveals +
-   an HTTP/TCP responder on the same port), logging every request the app makes. This maps
-   the full request surface — browser listing, waveform data, hotcue state — beyond what one
-   passive session happens to exercise.
+Remaining: the wire format — framing, handshake, message schema, and what exactly is in the
+big push payloads (metadata/waveform/art? does the remote skin XML transfer at connect?).
+
+Method — **shim the phone side** (the inverted discovery makes this easy and local):
+advertise `_vdjremote8._tcp` from the desktop (`dns-sd -R "shim" _vdjremote8._tcp . 4243`
+or a small Python zeroconf script), listen on the port, and log every byte VirtualDJ sends
+after it auto-connects. No root, no packet capture, no phone required. Drive state changes
+over the HTTP channel (`just vdj-execute`) and correlate pushed messages with known
+actions. Note: with a real phone on the LAN both instances get connections — do wire-format
+sessions with the real Remote app closed to keep the capture clean. The phone→desktop
+direction (what the Remote sends for taps/requests) needs either a replayed handshake good
+enough to keep VirtualDJ talking, or one supervised real-phone session through a
+desktop-side TCP relay bridging phone and VirtualDJ while logging both directions.
 
 Record results in:
 
@@ -294,16 +300,13 @@ Record results in:
 
 Promote to:
 
-- [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md) (replace the
-  "uncharacterized" caveat in the no-push section)
 - [docs/Application Internals.md](docs/Application%20Internals.md) (Remote Skins section)
 
 Done when:
 
-- The Remote app's transport (port, protocol, discovery mechanism) is recorded, and
-  poll-vs-push is answered with capture evidence.
-- Any endpoints beyond `/query`/`/execute` are enumerated with example request/response
-  pairs, or their absence is confirmed.
+- Framing and handshake are described well enough that a third-party client (or fake
+  phone) can hold a session, and the message types seen for common state changes (load,
+  play, hotcue, volume) are catalogued with example payloads.
 
 ## Blocked Or Hardware-Gated
 

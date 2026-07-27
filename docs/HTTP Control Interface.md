@@ -65,10 +65,16 @@ Probed 2026-07-27, all `Local test`:
 - `lsof`: the VirtualDJ process has exactly one TCP listener (`*:80`, this plugin) plus its
   own mDNS socket (UDP 5353), so there is no second hidden control port *on this setup*.
 
-Conclusion: **this channel has no event hooks — state readback is polling `/query`.** Note
-this is a statement about the Network Control plugin only. The VirtualDJ Remote companion
-app is a separate product whose wire protocol is uncharacterized here (see the TODO task on
-shimming it); do not generalize poll-only to Remote without that evidence.
+Conclusion: **this channel has no event hooks — state readback is polling `/query`.** This
+is a statement about the Network Control plugin only. The VirtualDJ Remote companion app
+uses a completely different transport (`Local test` 2026-07-27, live iOS Remote session):
+the phone advertises Bonjour type `_vdjremote8._tcp` (SRV → phone port 4243), VirtualDJ
+connects **out** to the phone as the TCP client, and state flows as **event-driven push**
+over that persistent connection — idle seconds carry 0 bytes, a deck load pushed ~249 KiB
+desktop→phone unprompted. Port 80 is uninvolved. So push exists in the product, just not on
+this channel; the Remote wire format itself is still uncharted (TODO task 8, shimming the
+phone side). Details in [Application Internals.md](Application%20Internals.md) (Remote
+Skins).
 
 ## Verified behavior
 

@@ -48,6 +48,17 @@ Follow-up:
 ```text
 Date: 2026-07-27
 VirtualDJ build: 2026 (get_version)
+Test asset: VirtualDJ Remote app transport probe (iOS Remote app on the LAN; no VDJScript verbs exercised beyond the already-passed deck 2 load/unload)
+Account/deck/hardware state: no hardware; Network Control on port 80; iOS Remote app connected over Wi-Fi; deck 1 loaded/paused, deck 2 empty
+Steps: run a 1 Hz lsof socket watcher on the VirtualDJ process while the Remote app connects; browse mDNS service types and resolve the new instance (dns-sd -B/-L); sample per-second per-connection byte deltas (nettop -d) across idle, deck 2 load "<path>", and deck 2 unload; restore deck 2 empty.
+Observed result: The Remote app does NOT use the Network Control HTTP channel. The phone advertises Bonjour type _vdjremote8._tcp (SRV -> phone:4243); VirtualDJ browses and connects OUT to the phone (desktop is the TCP client, phone is the server) over one persistent TCP connection. Semantics are event-driven push, not polling: idle seconds show 0 B in / 0 B out on that connection; deck 2 load pushed ~249 KiB desktop->phone in one second with 0 B inbound (track metadata/waveform/art payload, unprompted); unload exchanged ~1.4 KiB; only occasional sub-KB keepalives otherwise. Port 80 saw no Remote traffic.
+Tracker rows updated: none (transport finding, not a verb) — recorded in HTTP Control Interface.md, Application Internals.md (Remote Skins), TODO task 8.
+Follow-up: wire format (framing/handshake/message schema) still unknown. TODO task 8 reshaped: shim the PHONE side — advertise _vdjremote8._tcp from the desktop and log what VirtualDJ sends on connect; needs no root and no packet capture.
+```
+
+```text
+Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
 Test asset: HTTP control interface channel probe (no VDJScript verbs exercised)
 Account/deck/hardware state: no hardware; interface enabled on port 80
 Steps: GET / on the running interface; send a WebSocket upgrade request (Connection: Upgrade, Upgrade: websocket) to /; GET /events; lsof the VirtualDJ process for all TCP/UDP sockets; fetch the official page GET / linked to.

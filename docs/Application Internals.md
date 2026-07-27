@@ -167,6 +167,8 @@ Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
 VirtualDJ Remote is the iOS/Android companion app. Official product text describes the Remote as skinnable and using the same skin format as VirtualDJ. Staff forum notes add the practical caveats:
 
+Transport (`Local test`, 2026-07-27, live iOS Remote session observed from the desktop side): the device advertises Bonjour service type `_vdjremote8._tcp` (SRV record pointing at the device, port 4243 observed). VirtualDJ browses for it and connects **out** to the device — the desktop is the TCP client, the device is the server — over one persistent TCP connection. State updates are event-driven push, not polling: idle seconds carried 0 bytes in either direction, and a deck load pushed ~249 KiB desktop→device in one second with no inbound request (track metadata/waveform-scale payload). The Network Control HTTP channel (port 80) is not involved. The wire format (framing, handshake, message schema) is uncharacterized — see TODO task 8 for the phone-side shim plan.
+
 - There is no separate hidden Remote skin SDK.
 - The default Remote skin and forum examples are the main references.
 - Remote skins share the same general structure and elements as desktop skins.
