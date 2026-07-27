@@ -54,6 +54,16 @@ live_probe:
     - just vdj-query 'SCRIPT'
     - just vdj-execute 'SCRIPT'
 
+remote_protocol:
+  primary:
+    - docs/Remote Protocol.md
+  note: >-
+    VirtualDJ Remote companion-app wire protocol (Bonjour _vdjremote8._tcp, port 4243,
+    8JDV framing, VDJScript query subscriptions). Separate from the HTTP interface.
+  commands:
+    - python3 tools/vdjremote_dial.py DEVICE_IP
+    - python3 tools/vdjremote_dial.py --decode tests/vdjremote-opener.bin
+
 fx:
   primary:
     - docs/Effects Usage.md

@@ -265,8 +265,8 @@ Done when:
 
 ### 8. Characterize The VirtualDJ Remote App Wire Protocol
 
-Status: TRANSPORT DONE (2026-07-27, live iOS Remote session) — wire format remains; the
-remaining work needs no phone and no root
+Status: TRANSPORT + WIRE FORMAT DONE (2026-07-27, live iOS Remote session + verified
+impersonation) — only action frames and the subscription vocabulary remain
 
 Settled with a live session (socket watcher + `dns-sd` + per-connection `nettop` deltas;
 recorded in the tracker, [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md),
@@ -280,19 +280,27 @@ and [docs/Application Internals.md](docs/Application%20Internals.md) Remote Skin
   deck load pushed ~249 KiB desktop→phone in one second with no inbound request; unload
   ~1.4 KiB; otherwise only sub-KB keepalives.
 
-Remaining: the wire format — framing, handshake, message schema, and what exactly is in the
-big push payloads (metadata/waveform/art? does the remote skin XML transfer at connect?).
+**Wire format also DONE (2026-07-27)** — see [docs/Remote Protocol.md](docs/Remote%20Protocol.md).
+Framing is `8JDV` + `u32` total length + `u16` type; the device opens with subscription
+frames carrying ordinary VDJScript queries by id, and VirtualDJ pushes typed values
+(`val` float32 / `txt` / `fail`) plus browser folder XML, settings, and selected-folder
+state. Replaying a captured opener is enough to hold a session — no pairing token. Capture
+tool: `python3 tools/vdjremote_dial.py <device-ip>`; reference capture at
+[tests/vdjremote-opener.bin](tests/vdjremote-opener.bin).
 
-Method — **shim the phone side** (the inverted discovery makes this easy and local):
-advertise `_vdjremote8._tcp` from the desktop (`dns-sd -R "shim" _vdjremote8._tcp . 4243`
-or a small Python zeroconf script), listen on the port, and log every byte VirtualDJ sends
-after it auto-connects. No root, no packet capture, no phone required. Drive state changes
-over the HTTP channel (`just vdj-execute`) and correlate pushed messages with known
-actions. Note: with a real phone on the LAN both instances get connections — do wire-format
-sessions with the real Remote app closed to keep the capture clean. The phone→desktop
-direction (what the Remote sends for taps/requests) needs either a replayed handshake good
-enough to keep VirtualDJ talking, or one supervised real-phone session through a
-desktop-side TCP relay bridging phone and VirtualDJ while logging both directions.
+Remaining (each is a discrete probe, all no-hardware except the first):
+
+- **Action frames.** The captured opener is subscription-only; the frames a device sends to
+  play/cue/load/crossfade are unobserved. Needs a real device session with controls being
+  touched — dial the device while it is in use, or relay between desktop and device.
+- **Arbitrary subscriptions.** Only the ~17 queries the captured skin used have been
+  exercised. Edit the subscription frames in a replay and check whether any VDJScript query
+  and any `deck N` scope can be registered. This is the load-bearing question for building
+  an external interface, and it needs nothing but the existing capture.
+- **Undecoded types**: device→desktop `0x09`, `0x0c`, `0x27`, `0x29`, `0x34`; desktop→device
+  `0x2b`, `0x3b`. Sessions work without understanding them (replay reproduces them), so this
+  is lower priority.
+- **Waveform data** has not been located in any frame; check inside the `0x25` ZIP payloads.
 
 Record results in:
 
@@ -300,13 +308,12 @@ Record results in:
 
 Promote to:
 
-- [docs/Application Internals.md](docs/Application%20Internals.md) (Remote Skins section)
+- [docs/Remote Protocol.md](docs/Remote%20Protocol.md)
 
 Done when:
 
-- Framing and handshake are described well enough that a third-party client (or fake
-  phone) can hold a session, and the message types seen for common state changes (load,
-  play, hotcue, volume) are catalogued with example payloads.
+- Action frames are catalogued with example payloads, and the subscription vocabulary is
+  characterized as either "any VDJScript query" or a documented subset.
 
 ## Blocked Or Hardware-Gated
 

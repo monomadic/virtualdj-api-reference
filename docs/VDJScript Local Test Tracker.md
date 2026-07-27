@@ -47,6 +47,17 @@ Follow-up:
 
 ```text
 Date: 2026-07-27
+VirtualDJ build: 2026 (get_version); Remote app build 8515 (iOS)
+Test asset: VirtualDJ Remote wire-protocol capture — tools/vdjremote_dial.py, tests/vdjremote-opener.bin
+Account/deck/hardware state: no DJ hardware; iOS Remote app on the LAN running a custom Remote skin; decks empty
+Steps: (1) advertise a fake device via `dns-sd -R <name> _vdjremote8._tcp . 4243` and listen — VirtualDJ connected and sent 0 bytes across repeated sessions; (2) send 8 candidate openers (newline, text, HTTP, XML, 4 binary framings), one per reconnect — all drew silence; (3) open the Remote app on the device and dial it directly with a plain client socket (the device is the TCP server and speaks first), capturing its 1184-byte opener; (4) decode the frames; (5) replay the captured opener verbatim from the fake device and log what VirtualDJ pushes back.
+Observed result: Framing is `8JDV` (fourcc 'VDJ8' LE) + u32 total length (header included) + u16 message type. The device opens with 49 frames: an XML `<info build= skin= width= height= dpi=>` announcement, panel declarations (playlist/sampler/sidelist/karaoke), and SUBSCRIBE (0x01) + KIND (0x03) pairs registering ordinary VDJScript queries by id with a little-endian fourcc deck scope ('left'/'righ'/zero) — get_artist, get_title, get_bpm, pitch, `deck left volume`, `deck left get_vu_meter`, crossfader, get_status, sampler_used, automix. Replaying that opener verbatim is ACCEPTED by VirtualDJ with no pairing token or challenge: it streamed 6752 bytes in 106 frames. Desktop->device types: 0x05 VALUE (u16 id + kind fourcc — `val` float32, `txt` u32-len+UTF-8, `fail`), 0x25 browser folder XML (large listings as a PKZip containing data.xml), 0x36 settings key/value (50 frames: vinylMode, pitchRange 33.0, skinWaveformType, automixMode...), 0x3f selectfolder XML. Values matched the subscriptions exactly: id=2 get_bpm -> 120.0, id=8 volume -> 1.0, id=1 get_title -> "Drag a song on this deck to load it", id=0 get_artist -> fail.
+Tracker rows updated: none (protocol finding, not a verb) — recorded in docs/Remote Protocol.md, TODO task 8, INDEX.yml, docs/README.md.
+Follow-up: action frames (play/cue/load) unobserved — needs a device session with controls being touched. Whether ARBITRARY VDJScript queries can be subscribed is untested and is the load-bearing question for external interfaces; probe by editing subscription frames in a replay. Undecoded: device 0x09/0x0c/0x27/0x29/0x34, desktop 0x2b/0x3b. Waveform data not located.
+```
+
+```text
+Date: 2026-07-27
 VirtualDJ build: 2026 (get_version)
 Test asset: VirtualDJ Remote app transport probe (iOS Remote app on the LAN; no VDJScript verbs exercised beyond the already-passed deck 2 load/unload)
 Account/deck/hardware state: no hardware; Network Control on port 80; iOS Remote app connected over Wi-Fi; deck 1 loaded/paused, deck 2 empty
