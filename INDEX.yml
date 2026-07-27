@@ -63,6 +63,7 @@ remote_protocol:
   commands:
     - python3 tools/vdjremote_dial.py DEVICE_IP
     - python3 tools/vdjremote_dial.py --decode tests/vdjremote-opener.bin
+    - python3 tools/vdjremote_subscribe.py tests/vdjremote-opener.bin 'left:get_title' 'get_clock'
 
 fx:
   primary:

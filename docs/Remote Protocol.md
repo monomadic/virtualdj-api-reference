@@ -131,6 +131,52 @@ VirtualDJ pushes a typed value whenever it changes. Combined with the browser fo
 this is enough to build an external browser or full alternate interface — the direction the
 [HTTP Control Interface](HTTP%20Control%20Interface.md) cannot serve because it has no push.
 
+## Subscriptions accept arbitrary VDJScript
+
+Probed 2026-07-27 by substituting synthetic SUBSCRIBE frames into a replayed opener (the
+setup/info/panel prefix is reused verbatim; only the subscription block changes). All rows
+`Local test`:
+
+| Subscribed script | Scope | Result |
+| --- | --- | --- |
+| `get_bpm` | `left` | `val 120` |
+| `get_clock` | global | `txt '05:29 PM'` |
+| `get_version` | global | `txt '2026'` |
+| `deck 1 get_bpm`, `deck 2 …`, `deck 3 …` | global | `val 120` each — deck scoping works *inside the script*, not just via the fourcc |
+| `get_effect_name 1` | global | `txt 'Phaser'` — FX introspection is reachable |
+| `get_bpm 0 ? get_bpm : get_version` | global | `txt '2026'` — full grammar, ternaries, same result as the HTTP channel |
+| `deck 1 get_loaded_song 'fullpath'` | global | full path once a track is loaded; `fail` on an empty deck |
+| `zzz_not_a_real_verb` | global | `fail` |
+
+Conclusions:
+
+- **The subscription vocabulary is all of VDJScript**, not a fixed remote-control schema.
+  Queries never used by any Remote skin (`get_version`, `get_effect_name`) work fine.
+- **The KIND frame is a hint, not a request.** Subscribing `get_bpm` twice — once with
+  `kind=0`, once with `kind=1` — returned `val` both times. VirtualDJ picks the value type
+  from the query, so a client must handle whichever kind arrives rather than trusting its
+  own declaration.
+- **`fail` means "no value right now", not "bad query".** `get_loaded_song 'fullpath'`
+  returns `fail` on an empty deck and the real path once loaded — the same query, both
+  outcomes. It is indistinguishable from a bogus verb, exactly like `E_FAIL` on the HTTP
+  channel, so `fail` is never evidence that a verb does not exist.
+
+## Push behavior measured
+
+Live session with state driven over the HTTP interface (2026-07-27, `Local test`):
+
+- **Change-driven, same second.** `deck 1 load "<path>"` produced pushes for `get_title`
+  (`'Body Lang'`), `get_artist` (`'Balanka'`), `get_bpm` (`127.999`), `fullpath` and
+  `filename` within the same second as the HTTP call. Unloading pushed all of them back to
+  the empty-deck values (`get_artist` → `fail`, `get_bpm` → the `120` default).
+- **Continuous where the value is continuous.** With the deck playing, `get_position`
+  streamed at a steady **33–34 pushes per second**; it was silent while paused. So the
+  channel is happy to carry position/meter feeds at UI frame rates without polling.
+- Idle subscriptions cost nothing: `get_clock` pushed once a minute, everything else stayed
+  quiet.
+
+225 pushes were logged in one 75-second session covering load, play, and unload.
+
 ## Reproducing a capture
 
 The device is a plain TCP server that speaks first, so no interception is required — open
@@ -144,21 +190,32 @@ Run `tools/vdjremote_dial.py --decode <file>` on a saved capture to re-print the
 listing. A raw reference capture is stored at
 [tests/vdjremote-opener.bin](../tests/vdjremote-opener.bin).
 
+To subscribe your own queries and watch values arrive — no device needed, since the capture
+supplies the prefix:
+
+```sh
+python3 tools/vdjremote_subscribe.py tests/vdjremote-opener.bin 'left:get_title' 'get_clock' &
+dns-sd -R "iPad" _vdjremote8._tcp . 4243        # any name VirtualDJ already lists
+```
+
+VirtualDJ dials in and starts pushing. If it does not (the device is parked at `(Waiting)`
+in Config → Controllers → Phone/tablet), drop and re-add the `dns-sd` registration — a
+fresh mDNS appearance triggers a redial without touching the UI.
+
 ## Open questions
 
 - **Actions are unobserved.** The captured opener is subscription-only, so the frames a
   device sends to *act* (play, cue, load, crossfade) have not been seen. Capturing them
   needs a real device session with the user touching controls — either a relay between
-  desktop and device, or dialing a device while it is being used.
+  desktop and device, or dialing a device while it is being used. This is the last
+  significant gap: with actions decoded, a third-party client is fully bidirectional.
 - The device→desktop numeric types (`0x09`, `0x0c`, `0x27`, `0x29`, `0x34`) are undecoded,
   as are desktop→device `0x2b` and `0x3b`. They are sent once per deck and look like
   capability/state scaffolding; a session is accepted whether or not they are understood,
   since replay reproduces them verbatim.
-- The subscription vocabulary has only been exercised with the ~17 queries the captured
-  skin happened to use. Whether *arbitrary* VDJScript queries can be subscribed (e.g.
-  `get_position`, custom `deck N` scopes) is untested and is the obvious next probe: edit
-  the subscription frames in the replay and watch what comes back.
 - Waveform data has not been identified in any frame. If it rides this channel it is
   probably inside the `0x25` ZIP payloads or the undecoded blocks.
+- Whether subscriptions can be added or removed *mid-session* (rather than only in the
+  opening burst) is untested; a client that changes views would want this.
 
 See TODO task 8 for the current plan.

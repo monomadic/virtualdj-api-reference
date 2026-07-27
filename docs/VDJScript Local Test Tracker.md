@@ -47,6 +47,17 @@ Follow-up:
 
 ```text
 Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
+Test asset: Remote subscription probe — tools/vdjremote_subscribe.py over tests/vdjremote-opener.bin; state driven via the HTTP interface
+Account/deck/hardware state: no hardware; no phone involved (the captured opener supplies the setup/info/panel prefix); deck 1 empty at start, restored empty at end
+Steps: substitute synthetic SUBSCRIBE/KIND frames into the captured opener; advertise a fake device (`dns-sd -R iPad _vdjremote8._tcp . 4243`) so VirtualDJ dials in; log pushed values. Probe set covered a known-good control, the same query declared under two different KINDs, global queries, `deck 1/2/3` scoping inside the script, quoted arguments, FX introspection, a ternary, and a bogus verb. Then a 75 s session while `deck 1 load "<path>"`, `deck 1 play`, and `deck 1 pause & unload` ran over HTTP.
+Observed result: Subscriptions accept ARBITRARY VDJScript — `get_clock` -> '05:29 PM', `get_version` -> '2026', `get_effect_name 1` -> 'Phaser', `deck 1/2/3 get_bpm` -> 120 each (deck scoping works inside the script, not just via the left/righ fourcc), and `get_bpm 0 ? get_bpm : get_version` -> '2026' (same as the HTTP channel). KIND is a HINT, not a request: `get_bpm` declared kind=0 and kind=1 both returned `val`. `fail` means "no value now", not "bad query" — `deck 1 get_loaded_song 'fullpath'` returned `fail` on an empty deck and the real path once loaded; a bogus verb is indistinguishable, exactly like E_FAIL over HTTP. Push-on-change confirmed with timestamps: the load pushed get_title 'Body Lang', get_artist 'Balanka', get_bpm 127.999, fullpath and filename within the same second as the HTTP call; unload pushed all back to empty-deck values. `get_position` streamed at 33-34 pushes/second while playing and was silent while paused; `get_clock` pushed once a minute. 225 pushes logged in one session.
+Tracker rows updated: none (protocol finding, not a verb) — recorded in docs/Remote Protocol.md and TODO task 8.
+Follow-up: action frames (device->desktop play/cue/load) still unobserved — the last significant gap; needs a real device session with controls being touched. Mid-session subscribe/unsubscribe untested. Note VirtualDJ parks unresponsive devices at "(Waiting)" and stops dialing; dropping and re-adding the dns-sd advert triggers a fresh redial without touching the UI.
+```
+
+```text
+Date: 2026-07-27
 VirtualDJ build: 2026 (get_version); Remote app build 8515 (iOS)
 Test asset: VirtualDJ Remote wire-protocol capture — tools/vdjremote_dial.py, tests/vdjremote-opener.bin
 Account/deck/hardware state: no DJ hardware; iOS Remote app on the LAN running a custom Remote skin; decks empty

@@ -288,15 +288,24 @@ state. Replaying a captured opener is enough to hold a session — no pairing to
 tool: `python3 tools/vdjremote_dial.py <device-ip>`; reference capture at
 [tests/vdjremote-opener.bin](tests/vdjremote-opener.bin).
 
-Remaining (each is a discrete probe, all no-hardware except the first):
+**Subscriptions also DONE (2026-07-27)**: the vocabulary is *all of VDJScript*, not a fixed
+schema. Verified by substituting synthetic SUBSCRIBE frames into a replayed opener —
+`get_version`, `get_effect_name 1`, `deck 3 get_bpm`, and a full ternary all resolved, and
+push-on-change was measured (a load pushed title/artist/BPM/path within the same second;
+`get_position` streamed at 33-34 Hz while playing, silent when paused). KIND is a hint, not
+a request; `fail` means "no value now", not "bad query". Tool:
+`python3 tools/vdjremote_subscribe.py tests/vdjremote-opener.bin 'left:get_title' 'get_clock'`
+paired with a `dns-sd -R` advert.
+
+Remaining:
 
 - **Action frames.** The captured opener is subscription-only; the frames a device sends to
-  play/cue/load/crossfade are unobserved. Needs a real device session with controls being
-  touched — dial the device while it is in use, or relay between desktop and device.
-- **Arbitrary subscriptions.** Only the ~17 queries the captured skin used have been
-  exercised. Edit the subscription frames in a replay and check whether any VDJScript query
-  and any `deck N` scope can be registered. This is the load-bearing question for building
-  an external interface, and it needs nothing but the existing capture.
+  play/cue/load/crossfade are unobserved. This is the last significant gap — with it decoded
+  a third-party client is fully bidirectional (until then, pair subscriptions with the HTTP
+  channel for actions). Needs a real device session with controls being touched: dial the
+  device while it is in use, or relay between desktop and device.
+- **Mid-session subscribe/unsubscribe** is untested — only opening-burst registration has
+  been exercised. A client that switches views needs it.
 - **Undecoded types**: device→desktop `0x09`, `0x0c`, `0x27`, `0x29`, `0x34`; desktop→device
   `0x2b`, `0x3b`. Sessions work without understanding them (replay reproduces them), so this
   is lower priority.

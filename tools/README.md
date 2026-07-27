@@ -27,6 +27,22 @@ These drive a running VirtualDJ over the [HTTP control interface](../docs/HTTP%2
 | --- | --- | --- |
 | `sweep_fx_introspection.py` | Enumerates the enabled cycle for all three targets (deck FX / video FX / transition), resolves every known name to its canonical spelling via `get_effect_title`, then reads counts, short/full labels, normalized defaults, live value text, and length/beats flags per effect. Introspection is read-only — the `get_effect_*` helpers accept an effect *name* in place of the slot, so no selection is needed except for the two names `get_effect_title` is blind to. Restores the video-FX and transition selections it changed. | `tests/fx-introspection-dump.json` |
 
+## Remote protocol: running VirtualDJ, one device for capture
+
+These speak the [VirtualDJ Remote protocol](../docs/Remote%20Protocol.md) — a separate
+channel from the HTTP interface, on Bonjour `_vdjremote8._tcp` / port 4243. Roles are
+inverted: the *device* is the TCP server, so both tools act as a device and VirtualDJ dials
+in. Pair them with an advert (`dns-sd -R "iPad" _vdjremote8._tcp . 4243`, using a name
+VirtualDJ already lists); if it does not dial, drop and re-add the registration.
+
+| Tool | Does | Output |
+| --- | --- | --- |
+| `vdjremote_dial.py` | Dials a real Remote device (which speaks first) and captures its opening handshake, or `--decode`s a saved capture into a frame listing. The only step needing a phone/tablet. | `tests/vdjremote-opener.bin` |
+| `vdjremote_subscribe.py` | Impersonates a device: reuses a capture's setup/info/panel prefix, substitutes your own VDJScript subscriptions, and prints every pushed value. Needs no device. | stdout |
+
+Read-only in practice — subscriptions only observe — but they do hold a live Remote session,
+and VirtualDJ lists the fake device in Config → Controllers → Phone/tablet until removed.
+
 ## Extraction: local VirtualDJ required
 
 These read `/Applications/VirtualDJ.app` (override with `--app`). They need macOS with Apple Silicon tooling (`nm`, `c++filt`, `otool`, `strings`) and produce *evidence*, which is hand-promoted into the docs with source labels — their output is not directly committed.
