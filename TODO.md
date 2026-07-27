@@ -299,11 +299,16 @@ paired with a `dns-sd -R` advert.
 
 Remaining:
 
-- **Action frames.** The captured opener is subscription-only; the frames a device sends to
-  play/cue/load/crossfade are unobserved. This is the last significant gap — with it decoded
-  a third-party client is fully bidirectional (until then, pair subscriptions with the HTTP
-  channel for actions). Needs a real device session with controls being touched: dial the
-  device while it is in use, or relay between desktop and device.
+- **Confirm the reverse action path.** Action frames are now captured device->desktop
+  (2026-07-27): `0x31` carries VDJScript text, `0x02` carries numeric control ids with a
+  begin/update/end phase, `0x26` carries a load path. What is NOT yet confirmed is a fake
+  device *sending* `0x31` and VirtualDJ acting on it — the attempt was blocked by VirtualDJ
+  parking the device and refusing to redial. Rerun `scratchpad send_action.py`-style: hold a
+  device impersonation, send `deck 1 play`, verify via `just vdj-query 'deck 1 play'`. Until
+  then use the HTTP interface for actions.
+- **Map or bypass the `0x02` control id space.** Only four ids are known, all from one
+  device skin (`0xc6` play, `0xc7` cue, `0x41` crossfader, `0x36` volume). Whether the space
+  is global or skin-defined is open — but `0x31` may make it moot for third-party clients.
 - **Mid-session subscribe/unsubscribe** is untested — only opening-burst registration has
   been exercised. A client that switches views needs it.
 - **Undecoded types**: device→desktop `0x09`, `0x0c`, `0x27`, `0x29`, `0x34`; desktop→device

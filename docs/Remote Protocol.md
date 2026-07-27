@@ -131,6 +131,42 @@ VirtualDJ pushes a typed value whenever it changes. Combined with the browser fo
 this is enough to build an external browser or full alternate interface — the direction the
 [HTTP Control Interface](HTTP%20Control%20Interface.md) cannot serve because it has no push.
 
+## Action frames (device → desktop)
+
+Captured 2026-07-27 by impersonating *VirtualDJ* to a real device: dial the device, answer
+its subscriptions with synthesized values so its UI activates, then log what its controls
+produce. (A passive man-in-the-middle relay does not work — the device accepts only one
+session at a time and VirtualDJ auto-connects to it directly, so the relay must claim the
+slot first. Impersonating the desktop side avoids the race entirely.)
+
+| Type | Name (working) | Payload after the u16 type | Meaning |
+| --- | --- | --- | --- |
+| `0x0031` | SCRIPT | `u16 deck`, ASCII VDJScript | **An action expressed as VDJScript text** — `touchwheel_touch on`, `touchwheel +0.00000ms`. |
+| `0x0002` | CONTROL | `u16 control id`, `u32 phase`, optionally `fourcc kind` + value | A skin control event, addressed by *numeric id* rather than script. |
+| `0x0026` | LOAD | `u16 deck`, absolute path | Load a file — the device sends a full filesystem path, e.g. `/Users/…/01. RUMPUS - Up In Here (Extended Mix).flac`. |
+| `0x0014`, `0x0015` | unresolved | `00 00` | Emitted around browser operations; markers of some kind. |
+
+The `0x02` **phase** field is the useful discovery, and it is not a deck number: `1` begins
+the gesture, `0` is a continuous update, `2` ends it. Buttons send only `1` then `2`;
+continuous controls send `1`, a stream of `0` updates each carrying a `val` float32, then
+`2`. Correlated against a scripted press sequence on the device:
+
+```text
+18:12:30  id=0xc6 phase=1 / phase=2     play pressed
+18:12:33  id=0xc6 phase=1 / phase=2     play pressed again (pause)
+18:12:37  id=0xc7 phase=1 / phase=2     cue pressed
+18:12:42  id=0x41 phase=1, ~11x phase=0 (val 0.57…0.74), phase=2    crossfader swept
+18:12:44  id=0x36 phase=1, ~40x phase=0, phase=2                    volume fader swept
+```
+
+So `0xc6` is play, `0xc7` cue, `0x41` crossfader, `0x36` a deck volume fader **on this
+device's skin**. Whether that id space is a fixed VirtualDJ action enumeration or is
+skin-defined is unresolved — do not treat these numbers as portable constants yet.
+
+**For third-party clients the `0x31` SCRIPT frame is the one that matters**: it carries
+arbitrary VDJScript, so a client need not reverse the numeric id space at all. It is also
+how the device sends things with no fixed control id, such as jog-wheel movement.
+
 ## Subscriptions accept arbitrary VDJScript
 
 Probed 2026-07-27 by substituting synthetic SUBSCRIBE frames into a replayed opener (the
@@ -204,11 +240,14 @@ fresh mDNS appearance triggers a redial without touching the UI.
 
 ## Open questions
 
-- **Actions are unobserved.** The captured opener is subscription-only, so the frames a
-  device sends to *act* (play, cue, load, crossfade) have not been seen. Capturing them
-  needs a real device session with the user touching controls — either a relay between
-  desktop and device, or dialing a device while it is being used. This is the last
-  significant gap: with actions decoded, a third-party client is fully bidirectional.
+- **Sending a `0x31` SCRIPT frame to VirtualDJ is not yet confirmed.** Actions have been
+  captured in the device→desktop direction, but the reverse test — a fake device sending
+  `deck 1 play` and VirtualDJ acting on it — has not completed, because VirtualDJ parks
+  unresponsive devices and would not redial during the attempt. Until that runs, treat
+  "a third-party client can drive VirtualDJ over this channel" as *strongly implied but
+  unverified*, and use the HTTP interface for actions.
+- The `0x02` numeric control id space is uncharacterized beyond four ids on one skin
+  (see above), and may be skin-defined rather than global.
 - The device→desktop numeric types (`0x09`, `0x0c`, `0x27`, `0x29`, `0x34`) are undecoded,
   as are desktop→device `0x2b` and `0x3b`. They are sent once per deck and look like
   capability/state scaffolding; a session is accepted whether or not they are understood,
