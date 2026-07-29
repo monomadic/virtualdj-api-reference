@@ -59,13 +59,36 @@ now-decidable question, and it has four outcomes. Apply them in order:
 | 3 | **Does not exist (adjudicated)** | Absent from the structured list, a bare string exists, but every occurrence sits in a demonstrably unrelated context. State the contexts. |
 | 4 | **Undecided** | Absent from the structured list, a bare string exists, and its context is plausibly verb-related. Stays open. |
 
-**Rule 1a — the structured list proves existence but is not a completeness oracle.** It holds
-1,014 names, and it legitimately omits 71 names the HTTP sweep proved real, because aliases
-and variant spellings (`hotcue`, `auto_sync`, `param_greater`, `config`, `on`/`off`/`yes`/`no`,
-`eq_high_slider`, `pitch_slider`, `cue_3button`, `skin_pannel`, `scratchwheel`,
-`effect_slider_slider`) resolve to a canonical class and appear in neither source. **Absence
-from the structured list is never a disproof on its own** — that is what verdict 2's second
-leg is for.
+**Rule 1a — the structured list proves existence but is not a completeness oracle.** It is a
+union of three sources in the app itself (`just binary-verb <name>`, 1,076 names):
+
+| Source | Size | What it is |
+| --- | ---: | --- |
+| `symbol` | 1,012 | mangled `ACTION_<name>` implementation classes — one per canonical verb |
+| `catalog` | 812 | action names VirtualDJ documents in `languages.zip` → `English.xml` `<Actions>` |
+| `table` | 967 | the parser's **alphabetically sorted name table**, recovered as long ascending identifier runs (`action_deck` … `zoom_vertical`). This is the source that carries **aliases** |
+
+The union covers **998 of the 1,007** names the HTTP sweep proved real. The nine it misses —
+`browser`, `config`, `jog`, `no`, `off`, `on`, `preview`, `volume`, `yes` — are all short
+common single words, presumably fast-pathed, and short names are additionally invisible to
+`strings` at its default minimum. Individual sources are each *less* complete: the name table
+omits core verbs (`load`, `loop`, `cue`, `hot_cue`, `nothing`), which is exactly why all three
+are unioned rather than any one trusted. **Absence from the structured list is never a
+disproof on its own** — that is what verdict 2's second leg is for.
+
+**Rule 1h — aliases are derivable, structurally.** A name present in the `table` but with no
+`symbol` of its own cannot be its own implementation, so it must dispatch to another class:
+it is an alias or variant form. That rule recovers **52 of the aliases the store already
+records independently** (from the official appendix) and predicts **11 more**:
+`eq_high_slider`, `eq_low_slider`, `eq_mid_slider`, `eq_med`, `eq_kill_med`,
+`get_hasheadphone`, `jog_wheel`, `pitch_slider`, `scratch_wheel`, `scratch_wheel_touch`,
+`sampler_unload_from_deck`. The 52/63 agreement with an independent source is what makes this
+a derivation rather than name-pattern guessing.
+
+Its limit: it identifies a name **as** an alias, never **which** verb it aliases. Pairing by
+resemblance (`eq_med` → `eq_mid`) is Tier 3 inference no matter how obvious it looks. Pairing
+is settled behaviorally — drive the presumed canonical and check the alias tracks it — or from
+the official appendix, which pairs them explicitly.
 
 **Rule 1b — the string leg is conservative on purpose.** A bare string cannot prove a name is
 a verb: `none` occurs three times in the executable, once amid compiled register-save junk,

@@ -8,14 +8,28 @@ Two structured sources, each meaningful on its own terms:
            implementation.
   catalog  action names documented in `Resources/languages.zip` -> `English.xml`
            `<Actions>`, i.e. the app's own descriptions.
+  table    the parser's alphabetically sorted name table, recovered as the long
+           ascending runs of identifier strings (`action_deck` .. `zoom_vertical`).
+           This is the source that carries ALIASES — `hotcue`, `eq_med`,
+           `skin_pannel`, `lock_pannel`, the `*_slider` family — which the other
+           two omit. A universal binary contains one run per architecture slice.
 
-Membership in either is PROOF the name is a real verb — no HTTP needed.
+Membership in any of the three is PROOF the name is a real verb — no HTTP needed.
+The union covers 998 of the 1,007 names the HTTP sweep proved real.
 
-**It is not a completeness oracle.** Aliases and variant spellings (`hotcue`,
-`auto_sync`, `pitch_slider`, `skin_pannel`, `on`/`off`) are resolved by the
-parser to a canonical class and appear in NEITHER source, so absence from this
-list does not disprove a name. Disproof needs the additional string/context test
-in docs/Undocumented VDJScript Candidates.md.
+**It is still not a completeness oracle.** Nine proven-real names are in none of
+the three sources: `browser`, `config`, `jog`, `no`, `off`, `on`, `preview`,
+`volume`, `yes` — all short, common single words, presumably fast-pathed. The
+name table also omits some core verbs (`load`, `loop`, `cue`, `hot_cue`,
+`nothing`), which is why all three sources are unioned rather than trusting one.
+So absence from this list does not disprove a name; disproof needs the additional
+string/context test in docs/Undocumented VDJScript Candidates.md.
+
+ALIAS DERIVATION: a name in the `table` with no `symbol` of its own cannot be its
+own implementation, so it must be dispatched to another class — i.e. an alias or
+variant form. That rule recovers 52 of the store's independently-recorded aliases
+and predicts 11 more (flagged `alias_candidate`). It identifies a name AS an
+alias; it does not say which verb it aliases. That needs a behavioral test.
 
     python3 tools/extract_binary_verbs.py > tests/binary-verbs.json
     python3 tools/extract_binary_verbs.py --get browser_sort
@@ -39,13 +53,33 @@ ARTIFACT = "tests/binary-verbs.json"
 
 
 def binary_strings() -> str:
-    return subprocess.run(["strings", "-a", "-n", "2", BINARY],
+    # Default minimum length (4). A lower minimum floods the output with 2-3 char
+    # fragments, which breaks the sorted-run detection in table_names() — the runs
+    # stop being verb tables. Short verb names (`no`, `on`, `off`, `yes`, `jog`) are
+    # consequently absent from every source here; they are documented exceptions.
+    return subprocess.run(["strings", "-a", BINARY],
                           capture_output=True, text=True, errors="replace").stdout
 
 
 def symbol_names(raw: str) -> set:
     """Mangled Itanium ABI names embed a length prefix: 19ACTION_browser_sort."""
     return set(re.findall(r"\d+ACTION_([a-z0-9_]+)", raw))
+
+
+def table_names(raw: str) -> set:
+    """Recover the parser's sorted name table as long ascending identifier runs."""
+    ident = re.compile(r"^[a-z][a-z0-9_]{1,40}$")
+    runs, cur = [], []
+    for line in (l.strip() for l in raw.split("\n")):
+        if ident.match(line) and (not cur or line > cur[-1]):
+            cur.append(line)
+        else:
+            if len(cur) >= 200:
+                runs.append(cur)
+            cur = [line] if ident.match(line) else []
+    if len(cur) >= 200:
+        runs.append(cur)
+    return set().union(*runs) if runs else set()
 
 
 def catalog_names() -> set:
@@ -58,21 +92,24 @@ def catalog_names() -> set:
 
 def build() -> dict:
     raw = binary_strings()
-    sym, cat = symbol_names(raw), catalog_names()
+    sym, cat, tbl = symbol_names(raw), catalog_names(), table_names(raw)
     out = {}
-    for name in sorted(sym | cat):
-        sources = []
-        if name in sym:
-            sources.append("symbol")
-        if name in cat:
-            sources.append("catalog")
-        out[name] = {"sources": sources}
+    for name in sorted(sym | cat | tbl):
+        sources = [s for s, members in (("symbol", sym), ("catalog", cat), ("table", tbl))
+                   if name in members]
+        rec = {"sources": sources}
+        # In the parser's table but with no implementation class of its own, so it
+        # must dispatch to another verb: an alias or variant form.
+        if "table" in sources and "symbol" not in sources:
+            rec["alias_candidate"] = True
+        out[name] = rec
     return {
         "summary": {
             "symbol": len(sym),
             "catalog": len(cat),
+            "table": len(tbl),
             "union": len(out),
-            "both": sum(1 for r in out.values() if len(r["sources"]) == 2),
+            "alias_candidates": sum(1 for r in out.values() if r.get("alias_candidate")),
         },
         "verbs": out,
     }
@@ -94,10 +131,11 @@ def cmd_check() -> None:
     verbs, summary = data["verbs"], data["summary"]
     if summary["union"] != len(verbs):
         sys.exit("binary verb list summary does not match verb count")
-    if summary["symbol"] < 900 or summary["catalog"] < 700:
+    if summary["symbol"] < 900 or summary["catalog"] < 700 or summary["table"] < 800:
         sys.exit(f"binary verb extraction looks broken: {summary}")
     print(f"binary verb list check passed: {summary['union']} names "
-          f"({summary['symbol']} symbol, {summary['catalog']} catalog)")
+          f"({summary['symbol']} symbol, {summary['catalog']} catalog, "
+          f"{summary['table']} table, {summary['alias_candidates']} alias candidates)")
 
 
 def main() -> None:

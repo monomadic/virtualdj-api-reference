@@ -256,18 +256,31 @@ that might have tripped a dispatcher — **all returned `E_FAIL` and nothing els
 name has ever produced `E_NOTIMPL`, `E_INVALIDARG`, `E_ACCESSDENIED`, `S_FALSE`, or a value.
 
 **Why the second leg cannot be replaced by structured-list membership.** The structured list
-([tools/extract_binary_verbs.py](../tools/extract_binary_verbs.py), 1,014 names: 1,012
-`ACTION_` classes ∪ 812 catalog entries) proves existence but is **not complete** — it omits
-**71 names the HTTP sweep proved real**, because aliases and variant spellings resolve to a
-canonical class and appear in neither source: `hotcue`, `auto_sync`, `param_greater`,
-`get_constant`, `config`, `browser`, `volume`, `keylock`, `on`/`off`/`yes`/`no`,
-`is_macos`/`is_windows`, the `*_slider` family (`eq_high_slider`, `pitch_slider`,
-`gain_slider`, `filter_slider`, `level_slider`, `crossfader_slider`), the `*_3button` family
-(`cue_3button`, `play_3button`, `stop_3button`), doubled forms (`effect_slider_slider`,
-`video_fx_slider_slider`), and double-n spellings (`skin_pannel`, `skin_pannelgroup`,
-`lock_pannel`). Disproving on structured absence alone would have wrongly killed all 71 — and
-that list is itself a lead: it is probably the real alias surface, against which the store
-currently records only 59 aliases.
+([tools/extract_binary_verbs.py](../tools/extract_binary_verbs.py)) unions three in-app
+sources — 1,012 `ACTION_` implementation classes, 812 language-catalog entries, and the
+parser's 967-entry **alphabetically sorted name table** — for 1,076 names covering 998 of the
+1,007 the HTTP sweep proved real. It still misses nine (`browser`, `config`, `jog`, `no`,
+`off`, `on`, `preview`, `volume`, `yes`: short common words, and short names are invisible to
+`strings` at its default minimum), and each source alone is worse — the name table omits
+`load`, `loop`, `cue`, `hot_cue`, and `nothing`. So structured absence alone would still
+produce false disproofs, and the conservative string leg stays.
+
+**The name table is where the aliases live**, which answers a question the earlier two-source
+list could not. It is recoverable as the long ascending runs of identifier strings
+(`action_deck` … `zoom_vertical`), duplicated once per architecture slice of the universal
+binary, and it contains `hotcue`, `eq_med`, `skin_pannel`, `lock_pannel`, and the whole
+`*_slider` family. From it, aliases are **derivable**: a name in the table with no `ACTION_`
+class of its own cannot be its own implementation, so it dispatches elsewhere. That rule
+recovers 52 of the aliases the store already records from the official appendix — the
+agreement with an independent source is what makes it a derivation — and predicts 11 more:
+`eq_high_slider`, `eq_low_slider`, `eq_mid_slider`, `eq_med`, `eq_kill_med`,
+`get_hasheadphone`, `jog_wheel`, `pitch_slider`, `scratch_wheel`, `scratch_wheel_touch`,
+`sampler_unload_from_deck`. Query any name's sources with `just binary-verb <name>`.
+
+Those 11 are **leads, not aliases yet**: the derivation says a name *is* an alias, never
+*which* verb it aliases. Pairing them by resemblance (`eq_med` → `eq_mid`) is Tier 3 inference
+however obvious it looks; settle it behaviorally (drive the presumed canonical, check the
+alias tracks) or from the official appendix, which pairs aliases explicitly.
 
 **Residual assumption**, stated so a future reader can attack it: a verb whose name is
 assembled at runtime from fragments would leave no whole-name literal and would evade this
