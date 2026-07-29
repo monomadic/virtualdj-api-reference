@@ -472,6 +472,28 @@ def cmd_check(args):
         errors.append(f"{len(missing)} index names missing from store: "
                       f"{sorted(missing)[:5]}...")
 
+    # coverage: every verb-table name has a record, and every record absent
+    # from the verb table must say why it is in a *verb* store at all
+    # (disproven, or a non-verb construct kept for discoverability).
+    table_path = ROOT / "tests" / "verb-table.json"
+    if table_path.exists():
+        table = set(json.loads(table_path.read_text())["verbs"])
+        known = set(store) | {a for r in store.values() for a in r.get("aliases", [])}
+        gap = table - known
+        if gap:
+            errors.append(f"{len(gap)} verb-table names missing from store: "
+                          f"{sorted(gap)[:5]}...")
+        for name in sorted(set(store) - table):
+            rec = store[name]
+            if rec.get("test_status") == "Fail":
+                continue  # disproven names stay, carrying their disproof
+            if rec.get("kind") in {"modifier", "special-control"}:
+                continue  # grammar/mapper constructs, not verbs
+            if "scope wrapper" in (rec.get("note") or ""):
+                continue
+            errors.append(f"{name}: not in the verb table and not marked as a "
+                          f"disproven name or non-verb construct (rule 1b)")
+
     for name, rec in store.items():
         if rec.get("name") != name:
             errors.append(f"{name}: record 'name' mismatch ({rec.get('name')})")

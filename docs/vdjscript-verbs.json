@@ -3,19 +3,19 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 999,
+   "total": 1034,
    "by_tier": {
     "alias": 59,
     "catalog": 642,
     "curated": 142,
     "official-name-only": 149,
-    "unofficial": 7
+    "unofficial": 42
    },
    "by_test_status": {
     "Fail": 6,
     "Partial": 12,
     "Pass": 39,
-    "Untested": 942
+    "Untested": 977
    },
    "documented": 764,
    "tested_pass": 39,
@@ -183,6 +183,22 @@
    "section": "Controllers",
    "description": "Assign controller to deck",
    "example": "deck 1 assign_controller \"CDJ400\" 2"
+  },
+  "assign_related_controller": {
+   "name": "assign_related_controller",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 392, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
   },
   "auto_bpm_transition": {
    "name": "auto_bpm_transition",
@@ -790,6 +806,22 @@
    "blocked": false,
    "evidence": []
   },
+  "browser_colorfilter_edit": {
+   "name": "browser_colorfilter_edit",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 324, flags 256 (Button-Editor-hidden), category browser. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category browser. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
+  },
   "browser_enter": {
    "name": "browser_enter",
    "tier": "curated",
@@ -834,7 +866,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete."
+    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete.",
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): ABSENT. The table is the complete verb set, so absence is disproof (Evidence Standards rule 1b)."
    ],
    "note": "NOT a verb on VirtualDJ 2026. Binary two-part test: no ACTION_browser_filter symbol and no bare string anywhere in the executable; does not autocomplete in the Button Editor; returns E_FAIL over HTTP. Mapper lines using it do nothing. Use clear_search to clear the browser search."
   },
@@ -1014,7 +1047,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete."
+    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete.",
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): ABSENT. The table is the complete verb set, so absence is disproof (Evidence Standards rule 1b)."
    ],
    "note": "NOT a verb on VirtualDJ 2026. Same three-signal disproof as browser_filter (no ACTION_ symbol, no bare string, no Button Editor autocomplete, E_FAIL over HTTP). Use clear_search / edit_search / search_add / search_delete instead."
   },
@@ -1230,6 +1264,21 @@
    "example": "colorfx_slider 50%",
    "kind": "Action"
   },
+  "combine_query": {
+   "name": "combine_query",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 4, flags 256 (Button-Editor-hidden), category flow."
+   ],
+   "note": "Hidden Button Editor verb (flags==256), category flow. Existence proven by verb-table membership; the HTTP sweep could not resolve it (unresolved). Behavior untested.",
+   "section": "Hidden Button Editor"
+  },
   "config": {
    "name": "config",
    "tier": "alias",
@@ -1305,6 +1354,22 @@
    "description": "Assign a mapping to a controller",
    "example": "controller_mapping \"CDJ400\" \"My Mapping\" 2"
   },
+  "controllerscreen_action": {
+   "name": "controllerscreen_action",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 360, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
+  },
   "controllerscreen_deck": {
    "name": "controllerscreen_deck",
    "tier": "catalog",
@@ -1347,6 +1412,22 @@
    "section": "Text Queries",
    "description": "Count down to date/time",
    "example": "countdown '2025/01/01 00:00'"
+  },
+  "crash": {
+   "name": "crash",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 73, flags 256 (Button-Editor-hidden), category system. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category system. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
   },
   "create_list_from_playlist": {
    "name": "create_list_from_playlist",
@@ -2485,6 +2566,22 @@
    "section": "Effects",
    "description": "Set beat parameter across slots/layouts",
    "example": "effect_beats_all"
+  },
+  "effect_beats_sliderindex": {
+   "name": "effect_beats_sliderindex",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 796, flags 256 (Button-Editor-hidden), category plugins. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category plugins. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "effect_bpm_deck": {
    "name": "effect_bpm_deck",
@@ -3747,6 +3844,102 @@
    "blocked": false,
    "evidence": [],
    "canonical": "filter"
+  },
+  "flip_arm": {
+   "name": "flip_arm",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 688, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "flip_get_status": {
+   "name": "flip_get_status",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 690, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "flip_load": {
+   "name": "flip_load",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 689, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "flip_loop": {
+   "name": "flip_loop",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 687, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "flip_play": {
+   "name": "flip_play",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 686, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "flip_record": {
+   "name": "flip_record",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 685, flags 256 (Button-Editor-hidden), category macro. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "font_size": {
    "name": "font_size",
@@ -5613,6 +5806,22 @@
    "description": "Numark waveform data helper",
    "example": "get_numark_waveform"
   },
+  "get_pad_page_name": {
+   "name": "get_pad_page_name",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 719, flags 256 (Button-Editor-hidden), category pads. HTTP existence sweep 2026-07-27: exists, kind needs-args."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category pads. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "needs-args"
+  },
   "get_peak_audio": {
    "name": "get_peak_audio",
    "tier": "official-name-only",
@@ -7050,6 +7259,22 @@
    "description": "Set or jump to cue",
    "example": "hot_cue 1"
   },
+  "hot_cue_stutter": {
+   "name": "hot_cue_stutter",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 434, flags 256 (Button-Editor-hidden), category cues. HTTP existence sweep 2026-07-27: exists, kind needs-args."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category cues. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "needs-args"
+  },
   "hotcue": {
    "name": "hotcue",
    "tier": "alias",
@@ -7178,6 +7403,22 @@
    "section": "System Info",
    "description": "Running on battery",
    "example": "is_battery"
+  },
+  "is_colorfx": {
+   "name": "is_colorfx",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 798, flags 256 (Button-Editor-hidden), category plugins. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category plugins. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "is_fluid": {
    "name": "is_fluid",
@@ -7884,6 +8125,22 @@
    "description": "Pulse when a new song becomes audible",
    "example": "load_pulse_active 1000ms 5000ms"
   },
+  "load_security_shown": {
+   "name": "load_security_shown",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 278, flags 256 (Button-Editor-hidden), category browser. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category browser. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "load_skin": {
    "name": "load_skin",
    "tier": "catalog",
@@ -8472,6 +8729,22 @@
    "description": "Master left/right balance",
    "example": "master_balance 50%"
   },
+  "master_beat_num": {
+   "name": "master_beat_num",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 539, flags 256 (Button-Editor-hidden), category get. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "master_tempo": {
    "name": "master_tempo",
    "tier": "catalog",
@@ -8499,6 +8772,22 @@
    "section": "Volume & Mixing",
    "description": "Master volume",
    "example": "master_volume"
+  },
+  "masterbpm": {
+   "name": "masterbpm",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 506, flags 256 (Button-Editor-hidden), category get. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "masterdeck": {
    "name": "masterdeck",
@@ -8972,6 +9261,38 @@
    "description": "Motorized jogwheel",
    "example": "motorwheel \"move\" +1.0"
   },
+  "motorwheel2": {
+   "name": "motorwheel2",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 401, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "motorwheel3": {
+   "name": "motorwheel3",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 402, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "motorwheel_instant_play": {
    "name": "motorwheel_instant_play",
    "tier": "catalog",
@@ -9082,7 +9403,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-07-27: E_FAIL over HTTP; absent from ACTION_ symbol list and language catalog; all bare-string occurrences adjudicated as unrelated contexts."
+    "Local test 2026-07-27: E_FAIL over HTTP; absent from ACTION_ symbol list and language catalog; all bare-string occurrences adjudicated as unrelated contexts.",
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): ABSENT. The table is the complete verb set, so absence is disproof (Evidence Standards rule 1b)."
    ],
    "note": "NOT a verb on VirtualDJ 2026 (adjudicated). Absent from the structured binary list; its 3 bare-string occurrences are all non-verb contexts (compiled register-save fragments, SQLite internal string pool, a UI category list); no Button Editor autocomplete; E_FAIL over HTTP. `nothing` IS a documented verb (\"Do nothing.\"), so `none` reads as a near-miss for it. Its use as a do-nothing LED placeholder worked only because an unrecognized action silently does nothing."
   },
@@ -9122,6 +9444,22 @@
    "example": "nothing",
    "kind": "Action",
    "confidence": "local_test"
+  },
+  "ns7_get_drift": {
+   "name": "ns7_get_drift",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 426, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "ns7_platter": {
    "name": "ns7_platter",
@@ -9506,6 +9844,22 @@
    "example": "pad_page 1",
    "kind": "Action"
   },
+  "pad_page_favorite": {
+   "name": "pad_page_favorite",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 695, flags 256 (Button-Editor-hidden), category pads. HTTP existence sweep 2026-07-27: exists, kind needs-args."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category pads. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "needs-args"
+  },
   "pad_page_favorite_select": {
    "name": "pad_page_favorite_select",
    "tier": "alias",
@@ -9517,6 +9871,22 @@
    "blocked": false,
    "evidence": [],
    "canonical": "pad_page_select"
+  },
+  "pad_page_insplit": {
+   "name": "pad_page_insplit",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 692, flags 256 (Button-Editor-hidden), category pads. HTTP existence sweep 2026-07-27: exists, kind needs-args."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category pads. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "needs-args"
   },
   "pad_page_select": {
    "name": "pad_page_select",
@@ -9535,6 +9905,22 @@
    "blocked": false,
    "evidence": [],
    "kind": "Action"
+  },
+  "pad_page_split": {
+   "name": "pad_page_split",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 693, flags 256 (Button-Editor-hidden), category pads. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category pads. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "pad_pages": {
    "name": "pad_pages",
@@ -9603,6 +9989,22 @@
    "section": "Pads",
    "description": "Pad pressure amount",
    "example": "pad_pressure 1"
+  },
+  "pad_pressure_switch": {
+   "name": "pad_pressure_switch",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 714, flags 256 (Button-Editor-hidden), category pads. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category pads. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "pad_pushed": {
    "name": "pad_pushed",
@@ -10906,6 +11308,86 @@
    "description": "Open unit full size",
    "example": "rack_solo 'rack1' 'unit1'"
   },
+  "rane_motor_enable": {
+   "name": "rane_motor_enable",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 398, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
+  },
+  "rane_screen_input": {
+   "name": "rane_screen_input",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 840, flags 256 (Button-Editor-hidden), category rane. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category rane. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
+  },
+  "rane_screen_output": {
+   "name": "rane_screen_output",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 841, flags 256 (Button-Editor-hidden), category rane. HTTP existence sweep 2026-07-27: exists, kind action-only."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category rane. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "action-only"
+  },
+  "rane_timecode": {
+   "name": "rane_timecode",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 400, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
+  "rane_timecode_enable": {
+   "name": "rane_timecode_enable",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 399, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "rating": {
    "name": "rating",
    "tier": "curated",
@@ -11489,6 +11971,22 @@
    "section": "Sampler",
    "description": "Check whether a group exists in the current bank",
    "example": "sampler_has_group \"horns\""
+  },
+  "sampler_inputgain": {
+   "name": "sampler_inputgain",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 872, flags 256 (Button-Editor-hidden), category sampler. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category sampler. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "sampler_load_to_deck": {
    "name": "sampler_load_to_deck",
@@ -12397,6 +12895,22 @@
    "description": "Select computer/controller master output",
    "example": "select_master_output"
   },
+  "send_nothing": {
+   "name": "send_nothing",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 427, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "set": {
    "name": "set",
    "tier": "curated",
@@ -12629,6 +13143,22 @@
    "description": "Read/write setting",
    "example": "setting \"jogSensitivityScratch\" 80%",
    "kind": "Dual"
+  },
+  "setting_if_unchanged": {
+   "name": "setting_if_unchanged",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 348, flags 256 (Button-Editor-hidden), category config. HTTP existence sweep 2026-07-27: exists, kind needs-args."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category config. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "needs-args"
   },
   "setting_ismodified": {
    "name": "setting_ismodified",
@@ -13425,6 +13955,22 @@
    "description": "Mute/isolate stem pad",
    "example": "stem_pad 'acapella' on"
   },
+  "stem_volume": {
+   "name": "stem_volume",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 483, flags 256 (Button-Editor-hidden), category equalizer. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category equalizer. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
+  },
   "stems_bleed": {
    "name": "stems_bleed",
    "tier": "curated",
@@ -13760,6 +14306,22 @@
    "section": "Timecode",
    "description": "Hybrid turntable motor-state helper",
    "example": "timecode_motor_enable on"
+  },
+  "timecode_no_jump": {
+   "name": "timecode_no_jump",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 934, flags 256 (Button-Editor-hidden), category timecode. HTTP existence sweep 2026-07-27: exists, kind query."
+   ],
+   "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category timecode. Existence and kind proven; behavior untested.",
+   "section": "Hidden Button Editor",
+   "kind": "query"
   },
   "timecode_options": {
    "name": "timecode_options",

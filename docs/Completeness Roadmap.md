@@ -6,6 +6,17 @@ Status (2026-07-22): **frozen snapshot.** The active queue is [TODO.md](../TODO.
 refresh, reorder, or re-scope this file until a listed area actually completes. It remains
 useful as the map of evidence tiers and hardware gates.
 
+Addendum (2026-07-29) — two listed areas completed since the freeze; read these over the rows
+below rather than the rows themselves:
+
+- **Verb existence is settled.** The verb table extracted from the binary is the complete verb
+  set (1,028 records; `just verb-table <name>`; Evidence Standards rule 1). The "Button Editor
+  hidden candidates" row's counts (14 catalog-only, 21 runtime-string) are superseded: existence
+  for every candidate is now a membership test, and the 37 hidden verbs are all real. What
+  remains open for them is behavior only.
+- The factory-mapper candidates this file queues for probing are resolved: `browser_filter`,
+  `browser_search`, and `none` are **absent from the verb table — not verbs** (rule 1b).
+
 Use this file as background when choosing an evidence pass. Record detailed run results in [VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md), then promote stable conclusions into [VDJScript Verbs](VDJScript%20Verbs.md), [VirtualDJ Reference](VirtualDJ%20Reference.md), or the relevant topical file.
 
 ## Current Snapshot

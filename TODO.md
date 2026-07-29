@@ -208,7 +208,9 @@ Done when:
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 
-Status: Ready
+Status: Ready — reframed 2026-07-29: these are no longer "candidates". All 37 hidden names are
+proven real by verb-table membership (`flags == 256`), every one now has a verb-store record,
+and 34/37 have HTTP-proven kind. What this task probes is **behavior only**.
 
 Start here:
 
@@ -361,7 +363,10 @@ example column is corrected in place.
 
 ### 9b. Remaining Verb-Name Structure Notes
 
-Status: superseded by the verb table; kept because the corroborating sources are still wired
+Status: DONE (2026-07-29) — both "done when" conditions are met: every HTTP-proven name is
+accounted for by a named structure (the verb table covers 1,007/1,007), and every
+structure-found name absent from the store has been added (the 35 hidden verbs, 2026-07-29).
+Kept because the corroborating sources are still wired.
 
 Three structures are extracted so far ([tools/extract_binary_verbs.py](tools/extract_binary_verbs.py),
 1,019 names): 954 `ACTION_` implementation classes, 812 language-catalog entries, and the
@@ -397,6 +402,55 @@ Done when:
 - Any name found in a structure but absent from the store is swept (`just verb-probe`) and
   recorded as a candidate.
 
+### 10. Discover The Full Function Contract Per Verb
+
+Status: Ready (2026-07-29) — the ratified priority now that existence, aliases, hidden flag,
+and categories are settled. Goal: for every verb, the complete calling contract — **query
+return type, accepted argument forms, and undocumented overloads** — established at Tier 1
+where possible and recorded as structured per-verb data, not prose.
+
+Contract fields to establish per verb:
+
+- **Return type in query position**: boolean / float 0..1 / integer / text / none. Two Tier-1
+  instruments, both read-only and safe to run across all 955 verbs:
+  - HTTP `/query` already returns the live value; `tests/verb-existence-sweep.json` already
+    holds a sample value per query verb — classify those first, it is free.
+  - Remote-protocol subscriptions push **typed** VALUE frames (`val` float32 vs `txt` vs
+    `fail`), so one scripted session with `tools/vdjremote_subscribe.py` gives the wire-level
+    type per verb — stronger than parsing HTTP text.
+- **Argument forms**: bare / integer / float / percent / `+`-`-` relative / text / enum
+  keyword / multi-arg. Three evidence streams, cheapest first:
+  1. **Shipped-XML corpus mining** (free, Tier 2, authoritative-for-format): extract every
+     `verb <args>` usage from built-in/official pads, skins, samplerbanks, and factory
+     mappers → observed arg forms per verb. The corpus rule already says shipped files are
+     the authority on what the parser accepts.
+  2. **Official appendix + languages.zip descriptions** (Tier 2 lead): parse the argument
+     documentation into candidate forms.
+  3. **HTTP probe in query position** (Tier 1): for each candidate form, does
+     `verb <form>` resolve or return `E_INVALIDARG`? Query-position probing is
+     side-effect-free; execute-position confirmation only for whitelisted safe verbs, with
+     independent readback (rule 4), never `system`/file/database verbs.
+- **Capability matrix** (execute vs query vs both): the old build's `nm` symbols gave
+  per-class `onExecute`/`onQuery`/`onQueryBool`/`onQueryText`; on this build those survive
+  only as ~230 lambda typeinfos, NOT a full matrix (checked 2026-07-29). Recoverable
+  structurally via **vtable-override extraction** (compare each `ACTION_` class's vtable
+  slots against the base class's defaults; we already parse chained fixups) — worth one
+  attempt because it yields return-type leads for all 954 classes at once. If it resists,
+  the two Tier-1 sweeps above cover the same ground observationally.
+
+Storage: a `tests/verb-contracts.json` artifact + query tool per repo convention, promoted
+into verb-store fields once stable. End state: `just get-verb <name>` answers the whole
+contract — existence, category, aliases, kind, return type, arg forms, behavior notes — in
+one query. (Today `get-verb` does not even show the verb-table facts; wire the join as part
+of this task.)
+
+Done when:
+
+- Every query verb has an observed return type with the observing channel recorded.
+- Every verb has an arg-forms record: observed forms, rejected forms, or `no-args`.
+- Overloads (same verb, distinct arg shapes with distinct behavior) are recorded as such.
+- The store's per-verb record surfaces all of it through `just get-verb`.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
@@ -409,5 +463,10 @@ Done when:
 
 ## Parking Lot
 
+- **HTML reference export for humans** (requested 2026-07-29, deliberately deferred until the
+  contract data exists): generate a static, browsable HTML reference from the verb store +
+  verb table + contracts artifact — one page per verb plus category/alias indexes. Generation
+  only, from the JSON stores (never hand-written HTML copies, same rule as Markdown); becomes
+  worthwhile once task 10 gives the pages real content beyond names.
 - `system`: revisit only if an official example, bundled-resource context, or clearly harmless parameter appears.
 - Skin `visual type` canaries: do after the current no-hardware VDJScript evidence queue unless a skin-specific question makes it urgent.

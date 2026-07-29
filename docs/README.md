@@ -32,7 +32,7 @@ Start here:
   Extracted Button Editor category mapping from the compiled executable tables, including visible/hidden counts and symbol-capability joins.
 
 - [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md)
-  Conservative notes for non-official hidden Button Editor taxonomy rows, including evidence streams, probe order, and promotion rules.
+  Where the **verb table** lives: VirtualDJ's own serialised verb set (1,028 records — name, id, flags, Button Editor category), which decides existence and non-existence outright (`just verb-table <name>`, Evidence Standards rule 1). Also the hidden-verb notes, probe order, and promotion rules.
 
 - [VDJScript Grammar](VDJScript%20Grammar.md)
   The language itself: chaining, conditionals, quoting, scope prefixes, and the traps. Read its summary before writing VDJScript; jump via its Contents for detail. Per-verb argument rules are not here — those are `just get-verb <name>`.
@@ -105,7 +105,7 @@ Current status:
 - `Official VDJScript Coverage Audit.md` tracks official verb coverage depth, missing-name status, and the remaining local-test gap.
 - `Button Editor Catalog Audit.md` tracks the bundled Button Editor action-description catalog and runtime string-table cross-checks.
 - `Button Editor Taxonomy.md` tracks the compiled Button Editor category mapping and metadata join: 37 displayed categories, 918 visible actions, 1028 compiled action items, and exact `ACTION_*` method-symbol coverage.
-- `Undocumented VDJScript Candidates.md` tracks the 37 flag1-hidden non-official compiled taxonomy rows separately from the normal VDJScript API reference.
+- `Undocumented VDJScript Candidates.md` hosts the authoritative verb table (existence, aliases, hidden flag, categories) and tracks the 37 hidden verbs separately from the normal VDJScript API reference.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Completeness Roadmap.md` is a frozen snapshot of evidence tiers and hardware gates; the active queue is `TODO.md`.
@@ -116,8 +116,8 @@ Current status:
 - `Stem File Format.md` is the focused file-format reference for `.vdjstems` sidecars.
 - `Resources.md` is the source index.
 - Current official coverage and local-test gap counts are tracked in `Official VDJScript Coverage Audit.md`.
-- The bundled Button Editor action-description catalog currently has 813 unique action tags across all language files in the local VirtualDJ app, including 14 catalog-only names outside the official appendix; the richer runtime string block adds 21 stricter runtime-only names outside both official and Button Editor catalogs. None of those 35 non-official candidates currently has shipped XML evidence in the copied built-in/official XML roots.
-- The compiled Button Editor taxonomy has 37 displayed categories, 918 visible action items, and 1028 total compiled action items. All 918 visible rows are official audit names; 797 have bundled language descriptions; 770 have exact `ACTION_*` method-symbol matches. The taxonomy is useful as category metadata, but not as behavior proof.
+- **Existence is settled** (2026-07-27): the verb table in the binary is the complete verb set — 1,028 records, 955 distinct verbs, 61 alias groups, 37 editor-hidden names, every one categorised. `just verb-table <name>` answers membership, aliasing, hidden flag, and category in one query. Absence from the table is disproof on the inspected build. The older catalog/string-table counts below it in the history are corroboration only.
+- The compiled Button Editor taxonomy doc remains useful as category *metadata* (and its example column has been corrected against the verb table), but the verb table is the authority; neither is behavior proof.
 - Button Editor syntax highlighting and hover tokenization are now tracked as parser evidence, with `DLGActionWizard::STree`, `customDraw`, `getCurrentWord`, and related symbols as the current binary anchors.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.
 

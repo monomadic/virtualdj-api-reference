@@ -197,14 +197,15 @@ stays valid. The distinction:
 - "`<panel>` accepts a `visibility` attribute" — shipped corpus is authority.
 - "`visibility` re-evaluates dynamically while `condition` does not" — needs Tier 1.
 
-## Tooling status (2026-07-27)
+## Tooling status (2026-07-29)
 
 | Tool | State |
 | --- | --- |
-| `tools/extract_binary_verbs.py` | **Current.** Emits the structured list to `tests/binary-verbs.json`; `just binary-verb <name>`. |
-| `tools/sweep_verb_existence.py` | **Current.** HTTP error-code sweep; `just verb-probe <name>`. |
+| `tools/extract_verb_table.py` | **Authoritative for existence, aliases, hidden flag, and category** (rule 1). Emits `tests/verb-table.json`; `just verb-table <name>`. |
+| `tools/sweep_verb_existence.py` | **Current for kind.** HTTP error-code sweep; `just verb-probe <name>`. Existence questions go to the verb table first; the sweep corroborates and classifies. |
+| `tools/extract_binary_verbs.py` | **Corroboration only** — superseded by the verb table for every question it used to answer (rule 1a). Kept because its three sources (mangled `ACTION_` classes, language catalog, sorted name table) are genuinely different data from the verb table and so can still cross-check it. `just binary-verb <name>`. |
+| `tools/extract_vdjscript_taxonomy.py` | **Stale on this build** (address-pinned) — and reads the *same structures* as `extract_verb_table.py`, so even when it ran it was never an independent check of it (rule 1c2). Its lasting contribution is provenance: it located the tables via `DLGActionWizard`, which is what ties them to the Button Editor. |
 | `tools/extract_vdjscript_symbols.py` | **Stale on this build** — reports 0 `ACTION_*` classes, because the names now survive only as mangled strings and not as `nm`-visible symbols. Do not read its silence as absence. |
-| `tools/extract_vdjscript_taxonomy.py` | **Stale on this build** — address-pinned to VirtualDJ `8.5.9307` / bundle `18.0.9336` and raises on the current binary. The Button Editor autocomplete list it recovered is therefore unavailable; the structured list stands in for it. |
 
 ## Availability of the four Tier-1 channels
 
@@ -227,8 +228,9 @@ claim's wording must make clear which applies.
 | `Official` (manual/wiki/appendix) | 2 | Official *documentation*. Frequently incomplete and occasionally wrong — this repo has caught both. Prove behavior separately. |
 | `Official forum` | 2 | Staff/CTO only. Non-staff replies are Tier 3. |
 | `Built-in app resource`, `Built-in skin`, `Built-in pad page`, `Published skin`, `Published pad page` | 2 | Plus authoritative for format vocabulary (above). |
-| `Binary symbol table`, and catalog entries | **1 for existence** | Structured-list membership proves the name is real (rule 1). Still Tier 2 for behavior. |
-| `Binary compiled table`, `Binary string-table` | 2 | An unstructured string is not evidence of existence (rule 1b); it serves only as the conservative leg of a disproof. |
+| `Verb table` | **1 for existence, aliases, hidden flag, category** | The single membership test (rule 1). Still Tier 2 for behavior. |
+| `Binary symbol table`, and catalog entries | 2 | Corroboration for the verb table (rule 1a). Before the table was found these settled existence; now they only cross-check it. |
+| `Binary compiled table`, `Binary string-table` | 2 | An unstructured string is not evidence of existence. The "conservative leg of a disproof" role is retired — absence from the verb table is disproof by itself (rule 1b). |
 | `Community` | 3 | Record the test it suggests, not the claim. |
 | `Inference` | 3 | Permitted only as explicitly-marked reasoning over Tier-1 facts, never as a finding. Do not let an inference acquire a source label by sitting next to one. |
 
