@@ -255,6 +255,20 @@ names — including family-prefix shapes such as `get_zzzz`, `effect_zzzz`, `bro
 that might have tripped a dispatcher — **all returned `E_FAIL` and nothing else**. No fake
 name has ever produced `E_NOTIMPL`, `E_INVALIDARG`, `E_ACCESSDENIED`, `S_FALSE`, or a value.
 
+**Why the second leg cannot be replaced by structured-list membership.** The structured list
+([tools/extract_binary_verbs.py](../tools/extract_binary_verbs.py), 1,014 names: 1,012
+`ACTION_` classes ∪ 812 catalog entries) proves existence but is **not complete** — it omits
+**71 names the HTTP sweep proved real**, because aliases and variant spellings resolve to a
+canonical class and appear in neither source: `hotcue`, `auto_sync`, `param_greater`,
+`get_constant`, `config`, `browser`, `volume`, `keylock`, `on`/`off`/`yes`/`no`,
+`is_macos`/`is_windows`, the `*_slider` family (`eq_high_slider`, `pitch_slider`,
+`gain_slider`, `filter_slider`, `level_slider`, `crossfader_slider`), the `*_3button` family
+(`cue_3button`, `play_3button`, `stop_3button`), doubled forms (`effect_slider_slider`,
+`video_fx_slider_slider`), and double-n spellings (`skin_pannel`, `skin_pannelgroup`,
+`lock_pannel`). Disproving on structured absence alone would have wrongly killed all 71 — and
+that list is itself a lead: it is probably the real alias surface, against which the store
+currently records only 59 aliases.
+
 **Residual assumption**, stated so a future reader can attack it: a verb whose name is
 assembled at runtime from fragments would leave no whole-name literal and would evade this
 test. Nothing in either calibration set behaves that way, but it cannot be ruled out, so a
@@ -267,7 +281,7 @@ they do **not** autocomplete in the Button Editor, whereas `remote_action` does:
 | --- | --- | --- | --- | --- |
 | `browser_filter` | no | **no** | absent | **Not a verb on this build** |
 | `browser_search` | no | **no** | absent | **Not a verb on this build** |
-| `none` | no | yes | absent | Unresolved — but the string is the English word, so it is no evidence; leaning not-a-verb |
+| `none` | no | yes (3x, all unrelated) | absent | **Not a verb — adjudicated.** See below. |
 | `remote_action` | **yes** | yes | present | Real (control) |
 | `browser_sort` | **yes** | yes | present | Real (control) |
 
@@ -285,8 +299,17 @@ name appearing in a local mapping is not evidence the verb exists.
 The lint warnings themselves are correct — those bindings do nothing — and a mapping meaning
 to clear the browser search should use `clear_search`, which the sweep proves real
 (`E_NOTIMPL`, action-only); the neighbouring `edit_search`, `search_add`, and `search_delete`
-are real too. `none` stays unresolved as a name, though its only observed use is as a
-do-nothing placeholder in LED mappings, where doing nothing is the intent.
+are real too.
+
+`none` is now **disproved by adjudication** rather than left open. It is absent from the
+structured list, and all three of its bare-string occurrences sit in demonstrably non-verb
+contexts: one amid compiled register-save fragments (`AWAVAUATSH`), one inside SQLite's
+internal string pool (beside `flexnum`, `numeric`, and `sub-select returns %d columns -
+expected %d`), and one in a UI category list (beside `custom`, `pads`, `stems`, `sampler`).
+It does not autocomplete in the Button Editor either. Meanwhile `nothing` **is** in the
+language catalog, documented as "Do nothing." — so `none` is best read as a near-miss for
+`nothing`, and its use as a do-nothing LED placeholder worked only because an unrecognized
+action silently does nothing.
 
 Method caveat: this disproves a name **on the inspected build only**, and it is not a claim
 about VDJScript in general — a verb added in a later version would leave traces there and

@@ -3,16 +3,16 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 998,
+   "total": 999,
    "by_tier": {
     "alias": 59,
     "catalog": 642,
     "curated": 142,
     "official-name-only": 149,
-    "unofficial": 6
+    "unofficial": 7
    },
    "by_test_status": {
-    "Fail": 5,
+    "Fail": 6,
     "Partial": 12,
     "Pass": 39,
     "Untested": 942
@@ -9043,6 +9043,20 @@
    "blocked": false,
    "evidence": [],
    "canonical": "false"
+  },
+  "none": {
+   "name": "none",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Fail",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Local test 2026-07-27: E_FAIL over HTTP; absent from ACTION_ symbol list and language catalog; all bare-string occurrences adjudicated as unrelated contexts."
+   ],
+   "note": "NOT a verb on VirtualDJ 2026 (adjudicated). Absent from the structured binary list; its 3 bare-string occurrences are all non-verb contexts (compiled register-save fragments, SQLite internal string pool, a UI category list); no Button Editor autocomplete; E_FAIL over HTTP. `nothing` IS a documented verb (\"Do nothing.\"), so `none` reads as a near-miss for it. Its use as a do-nothing LED placeholder worked only because an unrecognized action silently does nothing."
   },
   "not_played": {
    "name": "not_played",

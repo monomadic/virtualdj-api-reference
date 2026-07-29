@@ -122,6 +122,13 @@ fx-stats:
 verb-probe name:
     @python3 tools/sweep_verb_existence.py --get "{{name}}"
 
+# Structured binary evidence: is this a real verb per the executable itself?
+binary-verb name:
+    @python3 tools/extract_binary_verbs.py --get "{{name}}"
+
+extract-binary-verbs:
+    @python3 tools/extract_binary_verbs.py > tests/binary-verbs.json
+
 sweep-verb-existence:
     @python3 tools/sweep_verb_existence.py > tests/verb-existence-sweep.json
 
@@ -146,6 +153,7 @@ check:
     python3 tools/verbdb.py check
     python3 tools/fxdb.py check
     python3 tools/sweep_verb_existence.py --check
+    python3 tools/extract_binary_verbs.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py

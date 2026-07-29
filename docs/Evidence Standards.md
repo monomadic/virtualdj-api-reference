@@ -45,36 +45,60 @@ plausible-sounding inference, pattern-matching from other DJ software, and anyth
 provenance cannot be stated. Not recorded as a claim. If it suggests a test, record the
 test, not the source.
 
-## Four rules that today's work earned
+## The rules
 
-### 1. The binary can DISPROVE, though it cannot prove
+### 1. Deciding whether a verb exists — the four verdicts
 
-The tiers above are about proving something *works*. Absence is different, and the binary is
-the only instrument we have for it. The calibrated two-part test — no mangled
-`ACTION_<name>` symbol **and** no bare `<name>` string in the executable — is **proof-grade
-for non-existence on the inspected build**, because the parser needs the literal in order to
-dispatch on it. Calibration and caveats: [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md)
-§"Disproving A Name" (no false negatives across 1,007 names for names of ≥4 characters).
+The tiers above grade proof that something *works*. Whether a **name** is real is a separate,
+now-decidable question, and it has four outcomes. Apply them in order:
 
-This is the one asymmetry in the scheme: binary evidence is a Tier-2 *lead* about what
-exists and does something, and Tier-1-grade about what does **not** exist.
+| # | Verdict | Test |
+| --- | --- | --- |
+| 1 | **Exists** | Membership in the structured binary list (`just binary-verb <name>` — a mangled `ACTION_<name>` implementation class, or an entry in the app's own language catalog), **or** an existence code / value from `/query` (`just verb-probe <name>`). Either alone is sufficient. |
+| 2 | **Does not exist** | Absent from the structured list **and** no bare `<name>` string anywhere in the executable. |
+| 3 | **Does not exist (adjudicated)** | Absent from the structured list, a bare string exists, but every occurrence sits in a demonstrably unrelated context. State the contexts. |
+| 4 | **Undecided** | Absent from the structured list, a bare string exists, and its context is plausibly verb-related. Stays open. |
 
-**Verb existence is therefore decidable in both directions** (as of 2026-07-27), which is
-worth stating plainly because it changes how much of this repo can be closed:
+**Rule 1a — the structured list proves existence but is not a completeness oracle.** It holds
+1,014 names, and it legitimately omits 71 names the HTTP sweep proved real, because aliases
+and variant spellings (`hotcue`, `auto_sync`, `param_greater`, `config`, `on`/`off`/`yes`/`no`,
+`eq_high_slider`, `pitch_slider`, `cue_3button`, `skin_pannel`, `scratchwheel`,
+`effect_slider_slider`) resolve to a canonical class and appear in neither source. **Absence
+from the structured list is never a disproof on its own** — that is what verdict 2's second
+leg is for.
 
-- **Exists** — an existence code or a value from `/query`. Sound: 26 invented names,
-  including family-prefix shapes, returned `E_FAIL` and nothing else, so a positive code has
-  never fired for a fake name.
-- **Does not exist** — the binary two-part test. Calibrated against two independent sets of
-  known-real names (1,007 HTTP-proven and 812 from the app's own language catalog) with zero
-  misses for names of ≥4 characters.
-- **Undecided** — `E_FAIL` plus a binary trace. This is a real third state, not a failure of
-  the method: `remote_action` sits here, and so does `none`.
+**Rule 1b — the string leg is conservative on purpose.** A bare string cannot prove a name is
+a verb: `none` occurs three times in the executable, once amid compiled register-save junk,
+once inside SQLite's internal string pool (beside `flexnum` and `sub-select returns %d
+columns`), and once in a UI category list (beside `custom`, `pads`, `stems`). None is a verb
+context, and `nothing` — which *is* in the catalog, documented as "Do nothing." — is almost
+certainly what such a name was reaching for. So the string leg exists to prevent false
+disproofs of aliases, not to grant existence.
 
-Scope discipline: both verdicts are about **the inspected build**, both are about the *name*
-rather than its behavior, and the disproof rests on one stated assumption (that a real verb
-leaves a whole-name literal in the executable). A name of ≤3 characters needs
-`strings -n 2`.
+**Rule 1c — positive HTTP codes are sound.** 26 deliberately invented names, including
+family-prefix shapes (`get_zzzz`, `effect_zzzz`, `browser_zzzz`) chosen to trip a dispatcher,
+all returned `E_FAIL` and nothing else. No fake name has produced `E_NOTIMPL`,
+`E_INVALIDARG`, `E_ACCESSDENIED`, `S_FALSE`, or a value.
+
+**Rule 1d — calibration must use an independently-sourced set.** The disproof was first
+calibrated only against names the HTTP sweep itself proved real, which grades a test against
+its own output. It is now also calibrated against the 812 action names in VirtualDJ's own
+language catalog: **all 812 leave a trace in the executable, zero exceptions.** Recalibrate
+this way whenever the method changes.
+
+**Rule 1e — a verdict is scoped to the inspected build.** Record the build. A verb added
+later leaves traces in that binary, not this one. Names of ≤3 characters need `strings -n 2`
+(the default minimum is 4, which is why `jog`, `no`, `on`, `yes` appear traceless).
+
+**Rule 1f — a verdict is about the name, never the behavior.** See rule 2.
+
+**Rule 1g — the residual assumption, stated so it can be attacked.** All of this assumes a
+real verb leaves a whole-name literal in the executable. A name assembled at runtime from
+fragments would evade every test above. Nothing in either calibration set behaves that way,
+but it is not ruled out.
+
+Method detail and the calibration tables: [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md)
+§"Disproving A Name".
 
 ### 2. Existence, kind, and behavior are three different claims
 
@@ -124,6 +148,15 @@ stays valid. The distinction:
 - "`<panel>` accepts a `visibility` attribute" — shipped corpus is authority.
 - "`visibility` re-evaluates dynamically while `condition` does not" — needs Tier 1.
 
+## Tooling status (2026-07-27)
+
+| Tool | State |
+| --- | --- |
+| `tools/extract_binary_verbs.py` | **Current.** Emits the structured list to `tests/binary-verbs.json`; `just binary-verb <name>`. |
+| `tools/sweep_verb_existence.py` | **Current.** HTTP error-code sweep; `just verb-probe <name>`. |
+| `tools/extract_vdjscript_symbols.py` | **Stale on this build** — reports 0 `ACTION_*` classes, because the names now survive only as mangled strings and not as `nm`-visible symbols. Do not read its silence as absence. |
+| `tools/extract_vdjscript_taxonomy.py` | **Stale on this build** — address-pinned to VirtualDJ `8.5.9307` / bundle `18.0.9336` and raises on the current binary. The Button Editor autocomplete list it recovered is therefore unavailable; the structured list stands in for it. |
+
 ## Availability of the four Tier-1 channels
 
 | Channel | Status |
@@ -145,7 +178,8 @@ claim's wording must make clear which applies.
 | `Official` (manual/wiki/appendix) | 2 | Official *documentation*. Frequently incomplete and occasionally wrong — this repo has caught both. Prove behavior separately. |
 | `Official forum` | 2 | Staff/CTO only. Non-staff replies are Tier 3. |
 | `Built-in app resource`, `Built-in skin`, `Built-in pad page`, `Published skin`, `Published pad page` | 2 | Plus authoritative for format vocabulary (above). |
-| `Binary compiled table`, `Binary symbol table`, `Binary string-table` | 2 | Tier-1-grade for **absence** only, via the two-part test. |
+| `Binary symbol table`, and catalog entries | **1 for existence** | Structured-list membership proves the name is real (rule 1). Still Tier 2 for behavior. |
+| `Binary compiled table`, `Binary string-table` | 2 | An unstructured string is not evidence of existence (rule 1b); it serves only as the conservative leg of a disproof. |
 | `Community` | 3 | Record the test it suggests, not the claim. |
 | `Inference` | 3 | Permitted only as explicitly-marked reasoning over Tier-1 facts, never as a finding. Do not let an inference acquire a source label by sitting next to one. |
 
