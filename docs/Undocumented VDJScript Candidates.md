@@ -109,7 +109,7 @@ for the current low-risk pad-page probes.
 | `get_pad_page_name`, `pad_page_insplit`, `pad_page_favorite`, `pad_page_split` | Pad-page state helpers are low-risk and may improve page tooling. | Normal page, split page, and favorite page readbacks with the exact page names shown in VirtualDJ. |
 | `is_colorfx`, `effect_beats_sliderindex` | Query-only plugin helpers should be safe to observe. | Readbacks while switching normal FX, ColorFX, and beat-length controls. |
 | `masterbpm`, `master_beat_num` | Exact execute/query symbols suggest useful master-deck diagnostics. | Readbacks across master-deck changes, tempo changes, and beatgrid movement; compare with `get_bpm` and `get_beat_num`. |
-| `browser_filter`, `browser_search`, `none` | Used by Atomix-authored factory mappers copied into [examples/Mappers/Local/](../examples/Mappers/README.md) (surfaced by `tools/lint_mappers.py` verb checks), so they demonstrably execute, but none is in the official appendix. **HTTP probe 2026-07-22 (VirtualDJ 2026): still unresolved — the channel cannot answer this question.** All three returned `error:-2147467259` on `query` and `false` on `execute`, bare and with arguments; so did the official verb `nothing` and a deliberately bogus name, so that response is not evidence of absence. See the `E_FAIL` vs `E_INVALIDARG` note in [HTTP Control Interface](HTTP%20Control%20Interface.md). | Needs the mapper surface itself, not the HTTP channel: bind each to a key in a scratch keyboard mapper and observe browser state. For `none`: whether it behaves as an LED-query off/no-op like `nothing`/`off` in the `... : none` fallback position. |
+| ~~`browser_filter`, `browser_search`, `none`~~ | **CLOSED 2026-07-27 — and the premise was wrong.** This row previously read "used by Atomix-authored factory mappers ... so they demonstrably execute". Both halves were false: the files are *personal* local mappings (mis-graded as factory by the `author` attribute, since a customized copy of the default keyboard mapping keeps `author="Atomix Productions"`), and appearing in a mapping never demonstrated execution — an experimental binding runs and silently does nothing. `browser_filter` and `browser_search` are **not verbs** on this build (no `ACTION_` symbol, no bare string, no Button Editor autocomplete); `none` is unresolved. See "Disproving A Name" below. | Nothing further. Use `clear_search` / `edit_search` / `search_add` / `search_delete` for browser search control. |
 
 ## Deferred Probe Queue
 
@@ -249,13 +249,21 @@ they do **not** autocomplete in the Button Editor, whereas `remote_action` does:
 | `remote_action` | **yes** | yes | present | Real (control) |
 | `browser_sort` | **yes** | yes | present | Real (control) |
 
-This retires the `browser_filter` / `browser_search` items from TODO task 5: they are not
-verbs, so the mapper-lint warnings are correct and the mapper lines that use them are
-**silently doing nothing**. A mapping meaning to clear the browser search should use
-`clear_search`, which the sweep proves real (`E_NOTIMPL`, action-only); the neighbouring
-`edit_search`, `search_add`, and `search_delete` are real too. `none` stays unresolved as a
-name, though its only observed use is as a do-nothing placeholder in LED mappings, where
-doing nothing is the intent.
+This retires the `browser_filter` / `browser_search` items from TODO task 5, and the honest
+conclusion is that **they should never have been investigated as candidates at all**. Their
+only provenance was appearing in a personal keyboard mapping on this machine — the kind of
+file that legitimately accumulates experiments and guesses nobody ever claimed worked. They
+were logged here as "factory-mapper verb candidates" because the mappers README graded files
+by their `author` attribute, and that attribute is unreliable: a user-customized copy of the
+default keyboard mapping keeps `author="Atomix Productions"`. That rule is now corrected in
+[examples/Mappers/README.md](../examples/Mappers/README.md), which states plainly that a
+name appearing in a local mapping is not evidence the verb exists.
+
+The lint warnings themselves are correct — those bindings do nothing — and a mapping meaning
+to clear the browser search should use `clear_search`, which the sweep proves real
+(`E_NOTIMPL`, action-only); the neighbouring `edit_search`, `search_add`, and `search_delete`
+are real too. `none` stays unresolved as a name, though its only observed use is as a
+do-nothing placeholder in LED mappings, where doing nothing is the intent.
 
 Method caveat: this disproves a name **on the inspected build only**, and it is not a claim
 about VDJScript in general — a verb added in a later version would leave traces there and
