@@ -18,7 +18,7 @@ documentation; the protocol is undocumented and this is black-box observation.
 | Discovery | The device advertises Bonjour/mDNS service type `_vdjremote8._tcp` (SRV → device host, port 4243 observed). VirtualDJ browses for it. |
 | Port | `4243`, from the `iRemoteDefaultPort` setting in `settings.xml` (configurable). |
 | Device list | `settings.xml` `<vdjRemoteDevices>` is the discovered/paired list by *instance name*; entries appear in Config → Controllers → Phone/tablet with a liveness suffix (`(Waiting)`, `(Not here)`). |
-| Auto-connect | With "Connect automatically" checked, VirtualDJ redials ~5 s after a session ends. After several failed sessions it parks the device at `(Waiting)` and stops until the user clicks Connect. |
+| Auto-connect | Governed by the per-device **"Connect automatically"** checkbox in Config → Controllers → Phone/tablet. Checked: VirtualDJ redials ~5 s after a session ends, and dials on a fresh mDNS appearance. Unchecked: the device sits at `(Waiting)` until someone clicks Connect, no matter how the advert is cycled. |
 | Who speaks first | **The device.** Across 8+ sessions VirtualDJ opened the connection and sent *zero* bytes, holding the socket open for minutes. A fake device that stays silent learns nothing; a fake device must speak first. Eight candidate openers (newline, text, HTTP, XML, four binary framings) all drew silence — the real opener is required. |
 
 Consequence for tooling: any third-party client impersonates a *device* — advertise
@@ -167,6 +167,35 @@ skin-defined is unresolved — do not treat these numbers as portable constants 
 arbitrary VDJScript, so a client need not reverse the numeric id space at all. It is also
 how the device sends things with no fixed control id, such as jog-wheel movement.
 
+### Verified: a fake device can drive VirtualDJ
+
+`Local test`, 2026-07-27. A device impersonator (captured opener prefix + one `get_clock`
+subscription, no real device involved) sent:
+
+```text
+frame(0x31, u16 deck=1 + b"deck 1 play")
+```
+
+Deck 1 was loaded and paused. Within two seconds `deck 1 play` queried over HTTP flipped
+`no` → `yes` and `get_position` began advancing. A second run sent three different kinds of
+action down one session, each confirmed by HTTP readback:
+
+| Action sent as `0x31` | Before | After |
+| --- | --- | --- |
+| `deck 1 pause` | `deck 1 play` = `yes` | `no` |
+| `deck 2 load_next` | `deck 2 loaded` = `no` | `yes` |
+| `crossfader 100%` | `crossfader` = `0.5` | `1` |
+
+Transport, a browser load, and a continuous control all work, so the Remote channel is
+**fully bidirectional for third-party clients**: subscribe to any VDJScript query for typed
+pushes, and send any VDJScript action as a `0x31` frame — one socket, no HTTP interface
+required.
+
+The `u16` before the script mirrors what a real device sends (deck 1 here); a fully
+deck-qualified script such as `deck 1 play` works regardless. Note `play` starts playback
+rather than toggling it — sending it twice left the deck playing — so use the verb whose
+semantics you actually want, exactly as on any other VDJScript surface.
+
 ## Subscriptions accept arbitrary VDJScript
 
 Probed 2026-07-27 by substituting synthetic SUBSCRIBE frames into a replayed opener (the
@@ -234,20 +263,26 @@ python3 tools/vdjremote_subscribe.py tests/vdjremote-opener.bin 'left:get_title'
 dns-sd -R "iPad" _vdjremote8._tcp . 4243        # any name VirtualDJ already lists
 ```
 
-VirtualDJ dials in and starts pushing. If it does not (the device is parked at `(Waiting)`
-in Config → Controllers → Phone/tablet), drop and re-add the `dns-sd` registration — a
-fresh mDNS appearance triggers a redial without touching the UI.
+VirtualDJ dials in and starts pushing. If it does not, check **"Connect automatically"** for
+that device in Config → Controllers → Phone/tablet: with it ticked, dropping and re-adding
+the `dns-sd` registration triggers a redial without touching the UI; with it unticked,
+nothing but a manual Connect click will do.
 
 ## Open questions
 
-- **Sending a `0x31` SCRIPT frame to VirtualDJ is not yet confirmed.** Actions have been
-  captured in the device→desktop direction, but the reverse test — a fake device sending
-  `deck 1 play` and VirtualDJ acting on it — has not completed, because VirtualDJ parks
-  unresponsive devices and would not redial during the attempt. Until that runs, treat
-  "a third-party client can drive VirtualDJ over this channel" as *strongly implied but
-  unverified*, and use the HTTP interface for actions.
 - The `0x02` numeric control id space is uncharacterized beyond four ids on one skin
-  (see above), and may be skin-defined rather than global.
+  (see above), and may be skin-defined rather than global. `0x31` makes this mostly moot
+  for third-party clients.
+- **Reconnect depends on the per-device "Connect automatically" checkbox** in Config →
+  Controllers → Phone/tablet, not on anything the client does. With it ticked, VirtualDJ
+  redials roughly 5 s after a session ends and also dials on a fresh mDNS appearance, so
+  dropping and re-adding the `dns-sd` advert is enough to get a new session unattended.
+  With it unticked, the device sits at `(Waiting)` showing "This device is ready to be
+  connected" and only a manual Connect click will start a session — no amount of
+  re-advertising helps. Check that box before assuming a client is being refused.
+- Mid-session subscribe/unsubscribe is untested; only opening-burst registration has been
+  exercised.
+- Waveform data has not been located in any frame; check inside the `0x25` ZIP payloads.
 - The device→desktop numeric types (`0x09`, `0x0c`, `0x27`, `0x29`, `0x34`) are undecoded,
   as are desktop→device `0x2b` and `0x3b`. They are sent once per deck and look like
   capability/state scaffolding; a session is accepted whether or not they are understood,

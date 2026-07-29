@@ -265,8 +265,8 @@ Done when:
 
 ### 8. Characterize The VirtualDJ Remote App Wire Protocol
 
-Status: TRANSPORT + WIRE FORMAT DONE (2026-07-27, live iOS Remote session + verified
-impersonation) — only action frames and the subscription vocabulary remain
+Status: DONE (2026-07-27) — transport, wire format, subscriptions, and actions are all
+verified in both directions; only minor open questions remain (see end of this task)
 
 Settled with a live session (socket watcher + `dns-sd` + per-connection `nettop` deltas;
 recorded in the tracker, [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md),
@@ -299,13 +299,8 @@ paired with a `dns-sd -R` advert.
 
 Remaining:
 
-- **Confirm the reverse action path.** Action frames are now captured device->desktop
-  (2026-07-27): `0x31` carries VDJScript text, `0x02` carries numeric control ids with a
-  begin/update/end phase, `0x26` carries a load path. What is NOT yet confirmed is a fake
-  device *sending* `0x31` and VirtualDJ acting on it — the attempt was blocked by VirtualDJ
-  parking the device and refusing to redial. Rerun `scratchpad send_action.py`-style: hold a
-  device impersonation, send `deck 1 play`, verify via `just vdj-query 'deck 1 play'`. Until
-  then use the HTTP interface for actions.
+- **Mid-session subscribe/unsubscribe** is untested; only opening-burst registration has
+  been exercised. A client that switches views needs it.
 - **Map or bypass the `0x02` control id space.** Only four ids are known, all from one
   device skin (`0xc6` play, `0xc7` cue, `0x41` crossfader, `0x36` volume). Whether the space
   is global or skin-defined is open — but `0x31` may make it moot for third-party clients.

@@ -47,6 +47,17 @@ Follow-up:
 
 ```text
 Date: 2026-07-27
+VirtualDJ build: 2026 (get_version); Remote app build 8515 (iOS)
+Test asset: Remote action frames — capture in tests/vdjremote-actions.log; reverse test via a device impersonator over tests/vdjremote-opener.bin
+Account/deck/hardware state: no DJ hardware; iOS Remote app on the LAN (default skin) for the capture half; deck 1 loaded and paused for the reverse test, restored empty afterwards
+Steps: (1) impersonate VIRTUALDJ to the real device — dial it, answer its subscriptions with synthesized values so its UI activates — then log every frame while a scripted press sequence was performed (play, play again, cue, crossfader sweep, volume sweep); (2) impersonate a DEVICE to VirtualDJ and send `frame(0x31, u16 deck=1 + "deck 1 play")`, verifying with `deck 1 play` / `get_position` over HTTP.
+Observed result: Three device->desktop action types. 0x31 SCRIPT carries an action as VDJScript TEXT (`touchwheel_touch on`, `touchwheel +0.00000ms`). 0x02 CONTROL carries a u16 numeric control id + u32 PHASE + optional `val` float32, where phase is begin(1)/update(0)/end(2) and NOT a deck number: buttons send 1 then 2, faders send 1, a stream of 0s each carrying a float, then 2. The timed sequence mapped 0xc6 play, 0xc7 cue, 0x41 crossfader, 0x36 volume on that device's skin. 0x26 LOAD carries a u16 deck plus an absolute file path. REVERSE DIRECTION CONFIRMED: sending 0x31 with "deck 1 play" flipped `deck 1 play` from no to yes within ~2 s with get_position advancing. A second run sent three different action kinds down one session, each verified by HTTP readback: `deck 1 pause` (play yes->no), `deck 2 load_next` (loaded no->yes), `crossfader 100%` (0.5->1). So a third-party client can both subscribe and act over this one socket with no HTTP involvement. `play` starts rather than toggles — sending it twice left the deck playing.
+Tracker rows updated: none (protocol finding, not a verb) — recorded in docs/Remote Protocol.md and TODO task 8 (now DONE).
+Follow-up: a passive man-in-the-middle relay does NOT work — the device accepts one session at a time and VirtualDJ auto-connects to it directly; impersonating the desktop side avoids the race. Reconnect behavior is governed by the per-device "Connect automatically" checkbox: ticked, VirtualDJ redials ~5 s after a drop and on a fresh mDNS appearance; unticked, the device sits at "(Waiting)" and only a manual Connect starts a session. Still open: the 0x02 id space beyond four ids, mid-session subscribe/unsubscribe, and where waveform data lives.
+```
+
+```text
+Date: 2026-07-27
 VirtualDJ build: 2026 (get_version)
 Test asset: Remote subscription probe — tools/vdjremote_subscribe.py over tests/vdjremote-opener.bin; state driven via the HTTP interface
 Account/deck/hardware state: no hardware; no phone involved (the captured opener supplies the setup/info/panel prefix); deck 1 empty at start, restored empty at end
