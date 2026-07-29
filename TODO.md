@@ -204,7 +204,7 @@ Done when:
 
 - A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
 - Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
-- While in the mapper context, the `just check` mapper-lint warnings for `none`, `browser_filter`, and `browser_search` (factory-mapper verb candidates) are probed and either confirmed as real verbs or recorded as unresolved. **The HTTP channel has already been tried and cannot settle it** (2026-07-22): all three return `error:-2147467259`/`false`, and so do the official verb `nothing` and a bogus name. Bind them in a scratch keyboard mapper instead.
+- RESOLVED 2026-07-27 for two of the three mapper-lint warnings: `browser_filter` and `browser_search` are **not verbs on this build** — no `ACTION_` symbol and no bare string anywhere in the executable, no Button Editor autocomplete, `E_FAIL` over HTTP. The lint warnings are correct and the mapper lines using them do nothing; `clear_search` is the real verb. `none` remains unresolved (no `ACTION_` symbol and no autocomplete, but "none" is an English word so its presence in the string table proves nothing); its only observed use is as a do-nothing LED placeholder. See the disproof method in [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md).
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 

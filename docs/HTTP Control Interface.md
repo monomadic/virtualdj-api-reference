@@ -125,7 +125,11 @@ Gotchas the table implies:
   (`ERROR_INVALID_PARAMETER`), i.e. `HRESULT_FROM_WIN32(87)` = `E_INVALIDARG`.
 
   So `E_INVALIDARG` and `E_NOTIMPL` both prove existence; `E_FAIL` is no evidence either
-  way, and a name that only ever returns `E_FAIL` stays **unresolved**, not disproved.
+  way, and a name that only ever returns `E_FAIL` stays **unresolved**, not disproved *by
+  this channel*. To actually disprove a name, use the binary two-part test (`ACTION_<name>`
+  symbol, else a bare string) documented in
+  [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md) — it has
+  no false negatives across all 1,007 names this sweep proved real.
   `remote_action` is the worked counterexample: it returns `E_FAIL` on every form tried, yet
   `ACTION_remote_action` is in the binary symbol table and the name autocompletes in the
   Button Editor. `E_FAIL` never disproves a verb.

@@ -3,22 +3,22 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 996,
+   "total": 998,
    "by_tier": {
     "alias": 59,
     "catalog": 642,
     "curated": 142,
     "official-name-only": 149,
-    "unofficial": 4
+    "unofficial": 6
    },
    "by_test_status": {
-    "Fail": 3,
+    "Fail": 5,
     "Partial": 12,
-    "Pass": 38,
-    "Untested": 943
+    "Pass": 39,
+    "Untested": 942
    },
    "documented": 764,
-   "tested_pass": 38,
+   "tested_pass": 39,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -824,6 +824,20 @@
    "evidence": [],
    "kind": "Action"
   },
+  "browser_filter": {
+   "name": "browser_filter",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Fail",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete."
+   ],
+   "note": "NOT a verb on VirtualDJ 2026. Binary two-part test: no ACTION_browser_filter symbol and no bare string anywhere in the executable; does not autocomplete in the Button Editor; returns E_FAIL over HTTP. Mapper lines using it do nothing. Use clear_search to clear the browser search."
+  },
   "browser_folder": {
    "name": "browser_folder",
    "tier": "curated",
@@ -990,6 +1004,20 @@
    "example": "browser_scroll +1",
    "kind": "Action"
   },
+  "browser_search": {
+   "name": "browser_search",
+   "tier": "unofficial",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Fail",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "Local test 2026-07-27: E_FAIL over HTTP, absent from the binary symbol table AND string table, absent from Button Editor autocomplete."
+   ],
+   "note": "NOT a verb on VirtualDJ 2026. Same three-signal disproof as browser_filter (no ACTION_ symbol, no bare string, no Button Editor autocomplete, E_FAIL over HTTP). Use clear_search / edit_search / search_add / search_delete instead."
+  },
   "browser_shortcut": {
    "name": "browser_shortcut",
    "tier": "catalog",
@@ -1075,10 +1103,12 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "HTTP local test 2026-07-27: /query returns E_NOTIMPL, proving the verb exists and is action-only. Not executed."
+   ],
    "section": "Browser",
    "description": "Clear search",
    "example": "clear_search",

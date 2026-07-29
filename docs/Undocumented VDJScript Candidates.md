@@ -222,6 +222,45 @@ Routine-style workflows for Serato-Flip-like behavior, not toward public
 `flip_*` VDJScript verbs. Build a focused Flip harness only after confirming
 the feature state, saved Flip content, and expected licensing/build gates.
 
+## Disproving A Name (2026-07-27)
+
+The HTTP channel can only ever *prove* a name real — `E_FAIL` is silence, not denial. A
+**binary two-part test** closes that gap and can genuinely disprove a name on a given build:
+
+1. Is there a mangled `ACTION_<name>` symbol? (`strings -a <binary> | grep 'ACTION_<name>'`
+   — they appear length-prefixed, e.g. `19ACTION_browser_sort`.)
+2. Failing that, does `<name>` appear as a bare string at all?
+
+Calibration on this build (VirtualDJ 2026): of the **1,007 names the HTTP sweep proved
+real, 934 have an `ACTION_` symbol and 997 appear as a bare string. Only four have
+neither — `jog`, `no`, `on`, `yes` — and all four are ≤3 characters, i.e. below the default
+`strings` minimum; with `-n 2` they appear too.** So for any name of four or more
+characters the test has no false negatives here: a real verb always leaves one of the two
+traces, because the parser needs the literal to dispatch on.
+
+Applied to the three long-standing mapper-lint unknowns, with a third independent signal —
+they do **not** autocomplete in the Button Editor, whereas `remote_action` does:
+
+| Name | `ACTION_` symbol | bare string | Button Editor | Verdict |
+| --- | --- | --- | --- | --- |
+| `browser_filter` | no | **no** | absent | **Not a verb on this build** |
+| `browser_search` | no | **no** | absent | **Not a verb on this build** |
+| `none` | no | yes | absent | Unresolved — but the string is the English word, so it is no evidence; leaning not-a-verb |
+| `remote_action` | **yes** | yes | present | Real (control) |
+| `browser_sort` | **yes** | yes | present | Real (control) |
+
+This retires the `browser_filter` / `browser_search` items from TODO task 5: they are not
+verbs, so the mapper-lint warnings are correct and the mapper lines that use them are
+**silently doing nothing**. A mapping meaning to clear the browser search should use
+`clear_search`, which the sweep proves real (`E_NOTIMPL`, action-only); the neighbouring
+`edit_search`, `search_add`, and `search_delete` are real too. `none` stays unresolved as a
+name, though its only observed use is as a do-nothing placeholder in LED mappings, where
+doing nothing is the intent.
+
+Method caveat: this disproves a name **on the inspected build only**, and it is not a claim
+about VDJScript in general — a verb added in a later version would leave traces there and
+not here. Re-run against the current binary before trusting an old verdict.
+
 ## Existence Sweep (2026-07-27)
 
 `Local test`. [tools/sweep_verb_existence.py](../tools/sweep_verb_existence.py) queried every
