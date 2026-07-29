@@ -110,6 +110,14 @@ Gotchas the table implies:
     `open_stem_creator`, and `rescan_controllers` all return it from `/query`, while
     `zzz_bogus` returns `E_FAIL`. This is the cheapest existence probe the channel offers.
 
+  These are COM **HRESULT**s printed as signed 32-bit integers, not opaque numbers or
+  leaked addresses — VirtualDJ is a Windows-first C++ codebase and carries the convention
+  on macOS. Decode any new one by masking to 32 bits: bit 31 is the severity flag (which is
+  why failures print as large negatives), bits 16-30 are the facility, and the low 16 bits
+  are the code. `0x80004001` = facility 0, code `0x4001` (`E_NOTIMPL`); `0x80004005` =
+  `E_FAIL`; `0x80070057` = facility 7 (`FACILITY_WIN32`) with code 87
+  (`ERROR_INVALID_PARAMETER`), i.e. `HRESULT_FROM_WIN32(87)` = `E_INVALIDARG`.
+
   So `E_INVALIDARG` and `E_NOTIMPL` both prove existence; `E_FAIL` is no evidence either
   way, and a name that only ever returns `E_FAIL` stays **unresolved**, not disproved.
   `remote_action` is the worked counterexample: it returns `E_FAIL` on every form tried, yet
