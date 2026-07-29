@@ -87,9 +87,25 @@ derivation and it retires pairing-by-resemblance: never infer a pairing that the
 
 **Rule 1c2 — Button Editor categories come from the table too.** A `const char *[38]` name
 array sits after the verb table and a non-decreasing `uint8[956]` in `__TEXT,__const` gives the
-category per verb, indexed by `id + 1`. Verified against the live Button Editor list and
-against the independent taxonomy extraction's per-category counts, which it reproduces exactly.
-`just verb-table <name>` reports it. Do not infer a category from `id` proximity — read it.
+category per verb, indexed by `id + 1`. `just verb-table <name>` reports it. Do not infer a
+category from `id` proximity — read it.
+
+*Corrected 2026-07-29.* This was first written as "verified against the **independent** taxonomy
+extraction's per-category counts". That was wrong, and the error is worth keeping visible because
+it is the easiest one to make here: `extract_vdjscript_taxonomy.py` reads **the same three
+structures**, differing only in that it pins virtual addresses where `extract_verb_table.py`
+anchors on a string. Agreement between them is a *reproduction*, not corroboration, and cannot
+confirm the mapping is right. What it does establish, on a genuinely different binary (bundle
+`18.0.9336` → `18.0.9482`, different SHA-256): the table is stable across builds, and the
+anchored locator lands on the same tables the pinned addresses did — including the same index
+offset, since the pinned `category_ids_va` equals the anchored array start + 1.
+
+The **provenance** is inherited from that older work, not established by anchoring:
+`extract_vdjscript_taxonomy.py` found the tables via `DLGActionWizard` references, which is why
+they are the *Button Editor's* categories, and why 38 compiled ids display as 37
+(`DLGActionWizard::link` skips `defines`). An anchored walk proves the structure exists; it says
+nothing about which UI consumes it. The only independent check on the mapping is Tier 1 — reading
+the live Button Editor.
 
 **Rule 1d — the table is not behavior.** It gives name, identity, and canonical-vs-alias, and
 nothing else. Kind and behavior still come from the HTTP sweep and Tier-1 tests (rules 2-3).

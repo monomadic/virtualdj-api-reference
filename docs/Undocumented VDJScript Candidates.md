@@ -264,10 +264,14 @@ It covers **1,007 of 1,007** names the HTTP sweep proved real, so:
 
 The 37 `flags == 256` names are *exactly* this document's flag1-hidden candidate set
 (`flip_*`, `masterbpm`, `master_beat_num`, `stem_volume`, `rane_*`, `pad_page_*`, `crash`,
-`remote_action`, `all_decks`, `send_nothing`, `setting_if_unchanged`, …). That is an
-independent structural confirmation of a set previously derived from the compiled taxonomy
-tables by a now-stale extractor, and it explains what "hidden" means concretely: present and
-dispatchable, but withheld from the editor's browsable category list.
+`remote_action`, `all_decks`, `send_nothing`, `setting_if_unchanged`, …), and it explains what
+"hidden" means concretely: present and dispatchable, but withheld from the editor's browsable
+category list.
+
+*Corrected 2026-07-29* — this originally called that agreement "an independent structural
+confirmation". It is not independent: the now-stale extractor read **these same 16-byte
+records**, differing only in locating them by pinned address. Agreement confirms the anchored
+locator finds the right table, not that the flag reading is right.
 
 `id` is a dense index: **0…954 with no gaps**, one per unique verb, which is why 1,028 records
 yield 955 ids — the 73 alias records reuse their canonical's id. The count also matches the
@@ -294,23 +298,37 @@ audio_inputs, audio_scratch, audio_volumes, automix, browser, config, controller
 deck_select, equalizer, get, karaoke, key, loop, macro, pads, pitch, plugins, poi, prelisten,
 rane, record, sampler, sandbox, sync, text, timecode, video`
 
-Confirmed three ways:
+Checks, with what each is actually worth:
 
-1. **Live UI.** The Button Editor's category list was read off screen and matches the array
-   from index 1 (`flow`) through the last entry (`video`), with `defines` absent — exactly as
-   [Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) said it would be.
-2. **Counts reproduce the independent taxonomy extraction exactly**: `config` 29,
-   `controllers` 75, `cues` 31, `deck_select` 11, `equalizer` 37, `get` 118, `karaoke` 9,
-   `key` 18, `loop` 40, `video` 18 — total 1,028. Those counts came from the compiled
-   taxonomy tables via a different (now stale) extractor, so agreement is not circular.
-3. **Sample verbs**: 125 of 129 verbs named in that doc's per-category samples land in the
-   category the doc gives them.
+1. **Live UI — the only independent one.** The Button Editor's category list was read off screen
+   and matches the array from index 1 (`flow`) through the last entry (`video`), with `defines`
+   absent — exactly as [Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) said it would
+   be. This is Tier 1 and it is the only check here that is independent of the binary structures.
+2. **Counts reproduce [Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) exactly** — all
+   37 categories, total 1,028. *Corrected 2026-07-29:* this was written as "reproduce the
+   independent taxonomy extraction … so agreement is not circular". Wrong on both counts.
+   `extract_vdjscript_taxonomy.py` reads **the same three structures**, only by pinned virtual
+   address instead of by anchor, so this is a reproduction rather than corroboration. It does
+   establish two narrower things, on a genuinely different binary (bundle `18.0.9336` →
+   `18.0.9482`, different SHA-256): the tables are stable across builds, and the anchored walk
+   lands on the same ones — including the same offset, since that tool's pinned
+   `category_ids_va` equals the anchored array start + 1, which is where the `+ 1` above comes
+   from.
+3. **Sample verbs**: 125 of 129 verbs named in that doc's per-category example column land in the
+   category the mapping gives them.
 
-The four that differ are `mute` (mapping says `audio_volumes`, doc `audio`), `silent_cue`
-(`cues` / `audio_controls`), `stems_split` (`audio` / `equalizer`), and `loaded` (`browser` /
-`get`). Since the per-category *counts* match exactly, the mapping is self-consistent and the
-doc's sample column — hand-assembled, and from an older bundle — is the likelier error. Treat
-those four as unresolved rather than assuming either side.
+The four that differed were `mute`, `silent_cue`, `stems_split` and `loaded` — **resolved
+2026-07-29 as errors in that doc**, which has now been corrected in place. The two column kinds
+have different pedigree: the *counts* are extraction output, but the *examples* were typed by
+hand — `category_summary()` emits `visible_examples[:8]` over an alphabetically sorted table, yet
+every row there has exactly 4 entries and several are not alphabetical at all. So the example
+column is an author's illustrative picks and carries no structural weight. The mapping stands:
+`mute` → `audio_volumes`, `silent_cue` → `cues`, `stems_split` → `audio`, `loaded` → `browser`.
+
+**Provenance note.** That these tables are the *Button Editor's* is inherited, not established
+here: the older extractor located them via `DLGActionWizard` references, and
+`DLGActionWizard::link` skipping `defines` is why 38 compiled ids display as 37. An anchored walk
+proves a structure exists; it says nothing about which UI reads it.
 
 Query it per verb with `just verb-table <name>`, which now reports `category` alongside `id`,
 `flags`, and any same-id siblings.

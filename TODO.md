@@ -338,15 +338,26 @@ HTTP-proven names. Existence and non-existence are now a membership test
 Categories are solved too: a `const char *[38]` name array after the verb table, plus a
 non-decreasing `uint8[956]` in `__TEXT,__const` giving the category per verb indexed by
 `id + 1`. Both located structurally, no pinned addresses. Confirmed by the live Button Editor
-list (read off screen, `flow`..`video` with `defines` skipped) and by reproducing the
-independent taxonomy extraction's per-category counts exactly (config 29, controllers 75,
-cues 31, equalizer 37, get 118, loop 40, video 18; total 1,028). See
+list (read off screen, `flow`..`video` with `defines` skipped), and reproducing
+[docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)'s per-category counts
+exactly — all 37 categories, total 1,028. See
 [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
 §Categories.
 
-Residue worth one look later: four verbs where the mapping and the taxonomy doc's hand-written
-sample column disagree — `mute`, `silent_cue`, `stems_split`, `loaded`. The counts match
-exactly, so the doc is the likelier error, but neither side is proven.
+Note (2026-07-29) that the count agreement is a **reproduction, not corroboration**:
+`extract_vdjscript_taxonomy.py` reads the same three structures, only by pinned address instead
+of by anchor. Rule 1c2 in [docs/Evidence Standards.md](docs/Evidence%20Standards.md) now says so.
+The live Button Editor remains the only independent check.
+
+Four-verb residue: RESOLVED as doc error. `mute`, `silent_cue`, `stems_split`, and `loaded` were
+listed under different categories in the taxonomy doc's example column than the mapping gives.
+That column is **hand-written**, not extraction output: the extractor emits
+`visible_examples[:8]` over an alphabetically sorted table, yet every doc row has exactly 4
+entries and four rows are not even alphabetical (`play, pause, stop, silent_cue`;
+`mic, linein, aux_volume, mic_eq_high`; `leftdeck, rightdeck, masterdeck, pfl`;
+`beatjump, clone_deck, dualdeckmode, mute`). The counts column *is* extraction output, so the
+two columns have different pedigree and only the counts carry weight. Mapping stands; the doc's
+example column is corrected in place.
 
 ### 9b. Remaining Verb-Name Structure Notes
 

@@ -21,8 +21,13 @@ name-resemblance guessing required.
 Two further structures give each verb its **Button Editor category**: a
 `const char *[38]` name array sitting after the verb table, and a non-decreasing
 `uint8[distinct_ids + 1]` in `__TEXT,__const` indexed by `id + 1`. Both are located
-structurally, and the resulting per-category counts reproduce the independent
-compiled-taxonomy extraction exactly.
+structurally.
+
+These are the same tables `extract_vdjscript_taxonomy.py` reads by hard-coded address on an
+older build, so its identical per-category counts are a reproduction, not an independent
+check — see rule 1c2 in docs/Evidence Standards.md. That older tool is where the provenance
+comes from: it located them via `DLGActionWizard`, which is why they are the Button Editor's
+categories and why `defines` is compiled but not displayed.
 
 Located by anchoring rather than hard-coded addresses, so it survives builds: find
 a known verb string in `__cstring`, find the record that points at it, then walk

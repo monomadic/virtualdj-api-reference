@@ -131,6 +131,19 @@ Representative joined rows:
 
 `defines` is category id `0`, but `DLGActionWizard::link` skips it when populating the category list. The remaining 37 category ids are displayed.
 
+**The Examples column is hand-written and was partly wrong — the count columns are not.**
+Noted 2026-07-29. The two kinds of column have different pedigree and must not be trusted
+equally:
+
+- **Counts are extraction output.** All 37 rows reproduce exactly under
+  [tools/extract_verb_table.py](../tools/extract_verb_table.py), which reads the same tables by
+  anchor rather than by pinned address on a later build (bundle `18.0.9482`).
+- **Examples were typed by hand.** `category_summary()` emits `visible_examples[:8]` over an
+  alphabetically sorted table, yet every row below has exactly 4 entries and several are not in
+  alphabetical order at all (rows 9, 10, 18). So these are an author's illustrative picks, and
+  four of them named the wrong category. Struck through and corrected below; the verb table is
+  authoritative per rule 1c2 of [Evidence Standards.md](Evidence%20Standards.md).
+
 | ID | Category | Total | Visible | Flag0 Hidden | Flag1 Hidden | Examples |
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | `flow` | 6 | 4 | 0 | 2 | `down`, `isrepeat`, `nothing`, `up` |
@@ -140,8 +153,8 @@ Representative joined rows:
 | 5 | `system` | 21 | 18 | 2 | 1 | `debug`, `get_cpu`, `get_date`, `system` |
 | 6 | `variables` | 13 | 13 | 0 | 0 | `get_var`, `set_var`, `toggle`, `var_equal` |
 | 7 | `window` | 5 | 5 | 0 | 0 | `close`, `maximize`, `show_window` |
-| 8 | `audio` | 24 | 24 | 0 | 0 | `beatjump`, `clone_deck`, `dualdeckmode`, `mute` |
-| 9 | `audio_controls` | 15 | 13 | 2 | 0 | `play`, `pause`, `stop`, `silent_cue` |
+| 8 | `audio` | 24 | 24 | 0 | 0 | `beatjump`, `clone_deck`, `dualdeckmode`, ~~`mute`~~ (`mute` is `audio_volumes`; `stems_split` belongs here) |
+| 9 | `audio_controls` | 15 | 13 | 2 | 0 | `play`, `pause`, `stop`, ~~`silent_cue`~~ (`silent_cue` is `cues`) |
 | 10 | `audio_inputs` | 11 | 10 | 1 | 0 | `mic`, `linein`, `aux_volume`, `mic_eq_high` |
 | 11 | `audio_scratch` | 26 | 18 | 8 | 0 | `jogwheel`, `motorwheel`, `scratch`, `touchwheel` |
 | 12 | `audio_volumes` | 55 | 47 | 8 | 0 | `crossfader`, `gain`, `level`, `master_volume` |
@@ -151,8 +164,8 @@ Representative joined rows:
 | 16 | `controllers` | 75 | 66 | 0 | 9 | `action_deck`, `djc_button`, `os2l_cmd` |
 | 17 | `cues` | 31 | 28 | 2 | 1 | `cue`, `cue_color`, `hot_cue`, `set_cue` |
 | 18 | `deck_select` | 11 | 11 | 0 | 0 | `leftdeck`, `rightdeck`, `masterdeck`, `pfl` |
-| 19 | `equalizer` | 37 | 29 | 7 | 1 | `eq_high`, `eq_kill_low`, `stem`, `stems_split` |
-| 20 | `get` | 118 | 115 | 1 | 2 | `get_album`, `get_bpm`, `get_title`, `loaded` |
+| 19 | `equalizer` | 37 | 29 | 7 | 1 | `eq_high`, `eq_kill_low`, `stem`, ~~`stems_split`~~ (`stems_split` is `audio`) |
+| 20 | `get` | 118 | 115 | 1 | 2 | `get_album`, `get_bpm`, `get_title`, ~~`loaded`~~ (`loaded` is `browser`) |
 | 21 | `karaoke` | 9 | 9 | 0 | 0 | `karaoke`, `karaoke_options`, `karaoke_show` |
 | 22 | `key` | 18 | 17 | 1 | 0 | `get_key`, `key_lock`, `key_match_button`, `set_key` |
 | 23 | `loop` | 40 | 40 | 0 | 0 | `loop`, `loop_roll`, `reloop`, `saved_loop` |
