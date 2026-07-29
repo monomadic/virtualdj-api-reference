@@ -68,10 +68,14 @@ union of three sources in the app itself (`just binary-verb <name>`, 1,076 names
 | `catalog` | 812 | action names VirtualDJ documents in `languages.zip` → `English.xml` `<Actions>` |
 | `table` | 967 | the parser's **alphabetically sorted name table**, recovered as long ascending identifier runs (`action_deck` … `zoom_vertical`). This is the source that carries **aliases** |
 
-The union covers **998 of the 1,007** names the HTTP sweep proved real. The nine it misses —
-`browser`, `config`, `jog`, `no`, `off`, `on`, `preview`, `volume`, `yes` — are all short
-common single words, presumably fast-pathed, and short names are additionally invisible to
-`strings` at its default minimum. Individual sources are each *less* complete: the name table
+The union covers **998 of the 1,007** names the HTTP sweep proved real. The nine it misses are
+`browser`, `config`, `jog`, `no`, `off`, `on`, `preview`, `volume`, `yes`. Five (`jog`, `no`,
+`off`, `on`, `yes`) are under four characters and so invisible to `strings` at its default
+minimum — a tooling limit, not a missing structure. The other four (`browser`, `config`,
+`preview`, `volume`) are long enough to appear and do not, which means **at least one more
+dispatch structure exists that has not been located.** Finding it is tracked as TODO task 9;
+the goal is the exact verb set, at which point the disproof no longer needs its conservative
+string leg. Individual sources are each *less* complete: the name table
 omits core verbs (`load`, `loop`, `cue`, `hot_cue`, `nothing`), which is exactly why all three
 are unioned rather than any one trusted. **Absence from the structured list is never a
 disproof on its own** — that is what verdict 2's second leg is for.
@@ -113,7 +117,7 @@ this way whenever the method changes.
 later leaves traces in that binary, not this one. Names of ≤3 characters need `strings -n 2`
 (the default minimum is 4, which is why `jog`, `no`, `on`, `yes` appear traceless).
 
-**Rule 1f — a verdict is about the name, never the behavior.** See rule 2.
+**Rule 1f — a verdict is about the name, never the behavior.** See rule 3.
 
 **Rule 1g — the residual assumption, stated so it can be attacked.** All of this assumes a
 real verb leaves a whole-name literal in the executable. A name assembled at runtime from
@@ -123,7 +127,34 @@ but it is not ruled out.
 Method detail and the calibration tables: [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md)
 §"Disproving A Name".
 
-### 2. Existence, kind, and behavior are three different claims
+### 2. What counts as a behavioral test
+
+A **behavioral test** is a Tier-1 observation with three parts: read the state, change it
+through the thing under test, read it back independently. All three must be recorded. The
+readback must not come from the same call that made the change (rule 4).
+
+Worked shape, using alias pairing as the example — this **is** reachable at Tier 1, on either
+channel:
+
+- **HTTP:** set the presumed canonical to a distinctive value (`eq_mid 25%`), then query the
+  candidate (`eq_med`). Repeat with two or three *different* values, and drive it from the
+  other side too. Equal readings once could be coincidence — both idle at `0.5` proves
+  nothing; tracking across several distinct values does not.
+- **Network protocol:** subscribe to both names as separate ids in one session and watch the
+  pushes. This is the stronger form: you see both resolve to the same underlying state feed
+  and change in lockstep over time, rather than sampling twice.
+
+Either establishes that two names address the same control. Neither tells you which name is
+canonical — for that, use the implementation evidence (the one with its own `ACTION_` class)
+or the official appendix's own pairing.
+
+**"The appendix"** throughout these docs means the [official VDJScript verbs
+appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html), which
+this repo parses to 991 names including 59 explicitly-paired aliases. It is Tier 2 —
+official *documentation*, incomplete and occasionally wrong — but it is the authority on
+which name Atomix considers canonical.
+
+### 3. Existence, kind, and behavior are three different claims
 
 Do not let one become another. The HTTP error-code sweep proves a name is **real** and
 classifies its **kind** (query / action-only / takes-arguments / context-gated). It says
@@ -133,7 +164,7 @@ observed, so an existence probe must never set it. State the claim you actually 
 > `clear_search` exists and is action-only (`E_NOTIMPL`, HTTP sweep 2026-07-27). Behavior
 > untested.
 
-### 3. A channel's own return value is not a result
+### 4. A channel's own return value is not a result
 
 Proof requires independent readback. Established cases:
 
@@ -146,7 +177,7 @@ Proof requires independent readback. Established cases:
 
 So: send, then **query the state independently**, and record that.
 
-### 4. Provenance must be established independently of the artifact's own metadata
+### 5. Provenance must be established independently of the artifact's own metadata
 
 An artifact's self-description is not evidence about the artifact. A mapper file's
 `author="Atomix Productions"` attribute sits on files whose bindings are entirely

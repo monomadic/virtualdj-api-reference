@@ -324,6 +324,44 @@ Done when:
 - Action frames are catalogued with example payloads, and the subscription vocabulary is
   characterized as either "any VDJScript query" or a documented subset.
 
+### 9. Find The Remaining Verb-Name Structures (Goal: The Exact Verb Set)
+
+Status: Ready — pure binary analysis, no hardware, no live app needed
+
+Three structures are extracted so far ([tools/extract_binary_verbs.py](tools/extract_binary_verbs.py),
+1,019 names): 954 `ACTION_` implementation classes, 812 language-catalog entries, and the
+parser's 967-entry alphabetically sorted name table. Their union covers **998 of the 1,007**
+names the HTTP sweep proved real.
+
+**Four names prove at least one more structure exists**: `browser`, `config`, `preview`, and
+`volume` are real verbs, are ≥4 characters (so `strings` sees them), and appear in none of the
+three sources. (`jog`, `no`, `off`, `on`, `yes` are also missing but are simply under the
+`strings` length floor — use `strings -n 2` for those, and note a low minimum breaks the
+sorted-run detection, so probe them separately.)
+
+Why this is worth doing: the app must match input against a complete set of names, so the sets
+exist in the binary. Recovering all of them yields **the exact verb set — including any
+undiscovered verbs** — which is the strongest possible outcome for this topic, and it lets the
+disproof drop its conservative string leg (see
+[docs/Evidence Standards.md](docs/Evidence%20Standards.md) rule 1a).
+
+Start here:
+
+- Locate `browser` / `config` / `preview` / `volume` occurrences and inspect their
+  neighbourhoods for table structure, as was done to find the sorted name table.
+- The sorted table runs `action_deck` … `zoom_vertical` and omits `load`, `loop`, `cue`,
+  `hot_cue`, `nothing` — so it is a *subset* dispatcher, and whatever holds those five is
+  another candidate structure worth characterizing even though the union already covers them.
+- Both older extractors are stale on this build (`extract_vdjscript_symbols.py` returns 0;
+  `extract_vdjscript_taxonomy.py` is address-pinned) — re-anchoring the taxonomy tables would
+  recover the Button Editor's own category structure, which is a likely home for the strays.
+
+Done when:
+
+- Every HTTP-proven name is accounted for by a named structure, or the residue is explained.
+- Any name found in a structure but absent from the store is swept (`just verb-probe`) and
+  recorded as a candidate.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.

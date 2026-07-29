@@ -62,8 +62,23 @@ def binary_strings() -> str:
 
 
 def symbol_names(raw: str) -> set:
-    """Mangled Itanium ABI names embed a length prefix: 19ACTION_browser_sort."""
-    return set(re.findall(r"\d+ACTION_([a-z0-9_]+)", raw))
+    r"""Extract ACTION_<name> classes using the Itanium ABI *length prefix*.
+
+    A mangled member reads `ZN20ACTION_browser_enter9onExecuteEvE`: the `20` counts
+    exactly the characters of `ACTION_browser_enter`, and `9onExecute` is the next
+    length-prefixed component. A greedy `\d+ACTION_([a-z0-9_]+)` therefore runs past
+    the class name and swallows the following prefix, yielding corrupt names like
+    `browser_enter9on` — 57 of them, every one E_FAIL over HTTP. Honour the count.
+    """
+    out = set()
+    for match in re.finditer(r"(\d+)ACTION_", raw):
+        total = int(match.group(1))
+        if not 8 <= total <= 64:
+            continue
+        name = raw[match.end():match.end() + total - len("ACTION_")]
+        if re.fullmatch(r"[a-z0-9_]+", name):
+            out.add(name)
+    return out
 
 
 def table_names(raw: str) -> set:
