@@ -4,6 +4,9 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Evidence Standards](Evidence%20Standards.md)
+  **Governs every claim in this repository.** What counts as proof (the four live-observation channels) versus a lead (forums, unbacked binary analysis, official example files); the existence/kind/behavior distinction; why a channel's own return value is not a result; and how the existing source labels map onto the tiers. Read before recording a finding.
+
 - [VirtualDJ Reference](VirtualDJ%20Reference.md)
   Method choices, source policy, quirks, and preferred patterns.
 

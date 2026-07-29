@@ -74,7 +74,8 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
 - The pad-page container format is specified in `docs/Pad Page XML.md`; skin waveforms in `docs/Skin Waveforms.md`; the mapper format in `docs/Mapper XML.md` with real mappers in `examples/Mappers/Local/`. `just inventory` refreshes the element-coverage data `docs/skin-xml-inventory.json`; query it with `just get-xml-element <name>` / `just find-xml-elements --undocumented`.
 - `examples/Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript appendix coverage and local-test gap are tracked in `docs/Official VDJScript Coverage Audit.md`.
-- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs and indicate how reliable each claim is.
+- **[docs/Evidence Standards.md](docs/Evidence%20Standards.md) governs every claim in this repo — read it before recording a finding.** Three tiers: only direct observation of the running app (network protocol, HTTP interface, live pad tests, agent driving the window) proves that something *works*; forums, unbacked binary analysis, and official example files are *leads*; everything else is not recorded. Existence, kind, and behavior are separate claims. A channel's own return value is not a result. The binary can disprove a name even though it cannot prove behavior.
+- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs; Evidence Standards maps each onto its tier.
 - Run `python3 tools/check_reference_status.py` after changing coverage counts, fixture inventories, or local reference links.
 
 ## Preferred patterns (quick version)

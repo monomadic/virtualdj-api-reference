@@ -12,6 +12,17 @@ topic_search:
     - just topic sampler
     - just topic colorfx [--format=json --limit=N]
 
+# Evidence policy governs all claims. Read before recording any finding.
+evidence:
+  primary:
+    - docs/Evidence Standards.md
+  note: >-
+    Three tiers: PROOF = direct observation of the running app (network protocol, HTTP
+    interface, live pad tests, agent driving the window). LEADS = staff forums, unbacked
+    binary analysis, official example files. Everything else is not recorded. Existence,
+    kind, and behavior are separate claims; the binary can DISPROVE a name but cannot
+    prove behavior.
+
 tasks:
   queue: TODO.md
   roadmap: docs/Completeness Roadmap.md

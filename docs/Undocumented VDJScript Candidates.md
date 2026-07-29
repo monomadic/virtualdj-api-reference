@@ -86,6 +86,11 @@ Sources:
 
 ## Promotion Rules
 
+These are the candidate-specific application of
+[Evidence Standards.md](Evidence%20Standards.md), which governs the whole repo — read it
+first. Everything on this page is Tier 2 (a lead) until a Tier-1 test records behavior, with
+one exception: the binary two-part test below is proof-grade for **non-existence**.
+
 - `Built-in app resource` evidence can describe a bundled Button Editor action
   hint, but it does not prove runtime behavior.
 - `Binary compiled table` evidence can place a candidate in a category and show
