@@ -236,12 +236,29 @@ The HTTP channel can only ever *prove* a name real — `E_FAIL` is silence, not 
    — they appear length-prefixed, e.g. `19ACTION_browser_sort`.)
 2. Failing that, does `<name>` appear as a bare string at all?
 
-Calibration on this build (VirtualDJ 2026): of the **1,007 names the HTTP sweep proved
-real, 934 have an `ACTION_` symbol and 997 appear as a bare string. Only four have
-neither — `jog`, `no`, `on`, `yes` — and all four are ≤3 characters, i.e. below the default
-`strings` minimum; with `-n 2` they appear too.** So for any name of four or more
-characters the test has no false negatives here: a real verb always leaves one of the two
-traces, because the parser needs the literal to dispatch on.
+Calibrated on this build (VirtualDJ 2026) against **two independent sets of known-real
+names**, with zero misses in either:
+
+| Calibration set | Size | Names with no trace in the executable |
+| --- | --- | --- |
+| Names the HTTP sweep proved real | 1,007 | 4 — `jog`, `no`, `on`, `yes`, all ≤3 chars, i.e. below the default `strings` minimum; with `-n 2` they appear too |
+| Action names documented in VirtualDJ's own language catalog (`Resources/languages.zip`, `English.xml` `<Actions>`) | 812 | **0** |
+
+The second set matters because it is sourced independently of the HTTP channel — it is the
+app's own documentation of its actions — so it is not calibrating the test against its own
+output. For any name of four or more characters the test has **no observed false
+negatives**: a real verb always leaves at least one of the two traces, because the parser
+needs the literal in order to dispatch on it.
+
+The soundness of the *positive* codes was checked the same way: 26 deliberately invented
+names — including family-prefix shapes such as `get_zzzz`, `effect_zzzz`, `browser_zzzz`
+that might have tripped a dispatcher — **all returned `E_FAIL` and nothing else**. No fake
+name has ever produced `E_NOTIMPL`, `E_INVALIDARG`, `E_ACCESSDENIED`, `S_FALSE`, or a value.
+
+**Residual assumption**, stated so a future reader can attack it: a verb whose name is
+assembled at runtime from fragments would leave no whole-name literal and would evade this
+test. Nothing in either calibration set behaves that way, but it cannot be ruled out, so a
+disproof is a claim about *this build's executable*, not about VDJScript in the abstract.
 
 Applied to the three long-standing mapper-lint unknowns, with a third independent signal —
 they do **not** autocomplete in the Button Editor, whereas `remote_action` does:

@@ -59,6 +59,23 @@ dispatch on it. Calibration and caveats: [Undocumented VDJScript Candidates.md](
 This is the one asymmetry in the scheme: binary evidence is a Tier-2 *lead* about what
 exists and does something, and Tier-1-grade about what does **not** exist.
 
+**Verb existence is therefore decidable in both directions** (as of 2026-07-27), which is
+worth stating plainly because it changes how much of this repo can be closed:
+
+- **Exists** — an existence code or a value from `/query`. Sound: 26 invented names,
+  including family-prefix shapes, returned `E_FAIL` and nothing else, so a positive code has
+  never fired for a fake name.
+- **Does not exist** — the binary two-part test. Calibrated against two independent sets of
+  known-real names (1,007 HTTP-proven and 812 from the app's own language catalog) with zero
+  misses for names of ≥4 characters.
+- **Undecided** — `E_FAIL` plus a binary trace. This is a real third state, not a failure of
+  the method: `remote_action` sits here, and so does `none`.
+
+Scope discipline: both verdicts are about **the inspected build**, both are about the *name*
+rather than its behavior, and the disproof rests on one stated assumption (that a real verb
+leaves a whole-name literal in the executable). A name of ≤3 characters needs
+`strings -n 2`.
+
 ### 2. Existence, kind, and behavior are three different claims
 
 Do not let one become another. The HTTP error-code sweep proves a name is **real** and
