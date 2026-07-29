@@ -238,6 +238,20 @@ reported success. A useful local pass needs a current Remote skin, a desktop
 custom button or variable, a Remote-local variable with the same name, and
 before/after readbacks from both sides.
 
+`Local test` 2026-07-27: over the HTTP channel, `remote_action`, `remote_action 1`, and
+`remote_action 'connect'` all return `error:-2147467259` (`E_FAIL`) — the same body as a
+bogus name — so **that channel cannot exercise it**, consistent with the verb being
+context-gated to a Remote skin. This is not evidence against the verb: `ACTION_remote_action`
+is in the binary symbol table and the name autocompletes in the Button Editor. It is instead
+the clearest worked example of why `E_FAIL` never disproves a verb, and it contrasts with
+action-only verbs such as `rescan_controllers`, which return `E_NOTIMPL` and are thereby
+proven to exist (see [HTTP Control Interface.md](HTTP%20Control%20Interface.md)).
+
+It is also **not a device-connection helper**: the forum evidence scopes it to reaching
+desktop-side actions/variables *from* a Remote skin, so it does not connect or wake a
+device. Nothing in VDJScript found so far connects a Remote device — that is the per-device
+"Connect automatically" checkbox, which is not exposed as a `setting` key either.
+
 ### `setting_if_unchanged`
 
 Evidence: `Community`, `Binary compiled table`, `Binary symbol table`.

@@ -3,22 +3,22 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 995,
+   "total": 996,
    "by_tier": {
     "alias": 59,
-    "catalog": 641,
+    "catalog": 642,
     "curated": 142,
     "official-name-only": 149,
     "unofficial": 4
    },
    "by_test_status": {
-    "Fail": 2,
+    "Fail": 3,
     "Partial": 12,
-    "Pass": 37,
-    "Untested": 944
+    "Pass": 38,
+    "Untested": 943
    },
    "documented": 764,
-   "tested_pass": 37,
+   "tested_pass": 38,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -11007,6 +11007,20 @@
    "example": "reloop_exit",
    "kind": "Action"
   },
+  "remote_action": {
+   "name": "remote_action",
+   "tier": "catalog",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Fail",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [
+    "HTTP local test 2026-07-27: remote_action / remote_action 1 / remote_action connect all return error:-2147467259 (E_FAIL)."
+   ],
+   "note": "Real verb (ACTION_remote_action in the binary symbol table; autocompletes in the Button Editor) but NOT reachable over the HTTP channel: bare, numeric-arg, and quoted-arg forms all return E_FAIL, same as a bogus name — presumably context-gated to a Remote skin. Forum evidence scopes it to reaching desktop-side custom buttons/variables FROM a Remote skin; it is not a device-connection helper."
+  },
   "repeat": {
    "name": "repeat",
    "tier": "catalog",
@@ -11098,10 +11112,12 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "HTTP local test 2026-07-27: /query returns error:-2147467263 (E_NOTIMPL), which proves the verb exists but has no query implementation (action-only). Not executed."
+   ],
    "section": "Controllers",
    "description": "Rescan connected controllers",
    "example": "rescan_controllers"

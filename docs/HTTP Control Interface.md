@@ -101,11 +101,26 @@ Gotchas the table implies:
 - **This channel cannot prove a verb does not exist.** `error:-2147467259` (`E_FAIL`) means
   only "this script did not evaluate here". The documented, official verb `nothing` returns
   exactly the same body as `zzz_not_a_real_verb`, on both endpoints, with or without
-  arguments — because an action-only verb has no query value either way. A different code,
-  `error:-2147024809` (`E_INVALIDARG`), does mean the verb was recognized and the arguments
-  were wrong: bare `browser_sort` returns it while `browser_sort 'title'` succeeds. So
-  `E_INVALIDARG` is positive evidence a verb exists; `E_FAIL` is no evidence either way, and
-  a name that only ever returns `E_FAIL` stays **unresolved**, not disproved.
+  arguments — because an action-only verb has no query value either way. Two *other* codes
+  are positive evidence a verb exists:
+  - `error:-2147024809` (`E_INVALIDARG`) — recognized, wrong arguments. Bare `browser_sort`
+    returns it while `browser_sort 'title'` succeeds.
+  - `error:-2147467263` (`E_NOTIMPL`) — recognized, but with no query implementation, i.e.
+    an action-only verb. Verified 2026-07-27: `load`, `unload`, `browser_enter`,
+    `open_stem_creator`, and `rescan_controllers` all return it from `/query`, while
+    `zzz_bogus` returns `E_FAIL`. This is the cheapest existence probe the channel offers.
+
+  So `E_INVALIDARG` and `E_NOTIMPL` both prove existence; `E_FAIL` is no evidence either
+  way, and a name that only ever returns `E_FAIL` stays **unresolved**, not disproved.
+  `remote_action` is the worked counterexample: it returns `E_FAIL` on every form tried, yet
+  `ACTION_remote_action` is in the binary symbol table and the name autocompletes in the
+  Button Editor. `E_FAIL` never disproves a verb.
+- **`setting` reads configuration over this channel**, and validates names: `setting
+  'iRemoteDefaultPort'` → `4243`, while an unknown key returns `E_INVALIDARG`. That makes it
+  a cheap way to test whether a setting name is real. Note not every UI toggle is exposed as
+  a setting — the per-device "Connect automatically" checkbox is reachable through none of
+  the five `*Remote*` keys that exist (`iRemote`, `iRemoteList`, `iRemoteDefaultPort`,
+  `vdjRemoteDevices`, `vdjRemoteIPs`), whose values are identical with the box on and off.
 - **`false` from `/execute` is not a transport failure.** It is the action's own return value
   (`nothing` legitimately returns `false`). Treat it as evidence about the verb, not the
   channel — and note that a bogus name also returns `false`, so `false` alone proves nothing.

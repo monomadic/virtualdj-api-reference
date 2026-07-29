@@ -47,6 +47,17 @@ Follow-up:
 
 ```text
 Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
+Test asset: HTTP control interface — error-code taxonomy and `setting` readability
+Account/deck/hardware state: no hardware; no decks touched (queries only)
+Steps: query known-official ACTION verbs (`load`, `unload`, `browser_enter`, `open_stem_creator`, `rescan_controllers`) and compare their error bodies against `nothing` and a bogus name; query `remote_action` in three forms; read the five `*Remote*` setting keys via `setting '<key>'` with the per-device "Connect automatically" checkbox first off and then on; read four invented setting names; extract `*Remote*` setting names from the binary string table to bound the key list.
+Observed result: NEW existence signal — `error:-2147467263` (`E_NOTIMPL`) is returned by every action-only official verb queried (`load`, `unload`, `browser_enter`, `open_stem_creator`, `rescan_controllers`), while `nothing` and a bogus name return `E_FAIL`. So `E_NOTIMPL` joins `E_INVALIDARG` as positive proof a verb exists, and is the cheapest such probe. `remote_action` returns `E_FAIL` in all three forms despite `ACTION_remote_action` being in the binary symbol table and autocompleting in the Button Editor — the clearest worked example that `E_FAIL` never disproves a verb; it is presumably context-gated to a Remote skin. `setting` works over HTTP and validates names (`setting 'iRemoteDefaultPort'` -> 4243; unknown keys -> `E_INVALIDARG`). The binary yields exactly five valid `*Remote*` keys (iRemote, iRemoteList, iRemoteDefaultPort, vdjRemoteDevices, vdjRemoteIPs) and ALL FIVE read identically with the "Connect automatically" box off and on, so that checkbox is not exposed as a setting and cannot be flipped from VDJScript.
+Tracker rows updated: none (channel finding) — recorded in HTTP Control Interface.md and Undocumented VDJScript Candidates.md.
+Follow-up: `connect` is the VirtualDJ ACCOUNT login button (already recorded), not a device connect; `remote_action` is a Remote-skin helper for reaching desktop actions/variables, not a connect helper. No VDJScript route to connect a Remote device has been found — with the checkbox ticked VirtualDJ dials automatically, which is the practical workaround.
+```
+
+```text
+Date: 2026-07-27
 VirtualDJ build: 2026 (get_version); Remote app build 8515 (iOS)
 Test asset: Remote action frames — capture in tests/vdjremote-actions.log; reverse test via a device impersonator over tests/vdjremote-opener.bin
 Account/deck/hardware state: no DJ hardware; iOS Remote app on the LAN (default skin) for the capture half; deck 1 loaded and paused for the reverse test, restored empty afterwards
