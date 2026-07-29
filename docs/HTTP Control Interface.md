@@ -109,6 +109,12 @@ Gotchas the table implies:
     an action-only verb. Verified 2026-07-27: `load`, `unload`, `browser_enter`,
     `open_stem_creator`, and `rescan_controllers` all return it from `/query`, while
     `zzz_bogus` returns `E_FAIL`. This is the cheapest existence probe the channel offers.
+  - `error:-2147024891` (`E_ACCESSDENIED`) — recognized, but the context it needs is not
+    available here. Returned by 27 track-metadata queries (`get_album`, `get_artist`,
+    `get_bar`, `get_beat_counter`, …) with no track loaded.
+  - `error:1` (`S_FALSE`) — note the **cleared** severity bit: this is a *success* code
+    meaning "evaluated, and the answer is false". Returned by 26 names including
+    `browser_shortcut`, `cue_pos`, and `get_firstbeat`.
 
   These are COM **HRESULT**s printed as signed 32-bit integers, not opaque numbers or
   leaked addresses — VirtualDJ is a Windows-first C++ codebase and carries the convention
@@ -123,6 +129,21 @@ Gotchas the table implies:
   `remote_action` is the worked counterexample: it returns `E_FAIL` on every form tried, yet
   `ACTION_remote_action` is in the binary symbol table and the name autocompletes in the
   Button Editor. `E_FAIL` never disproves a verb.
+- **The whole corpus can be classified in one read-only sweep.**
+  [tools/sweep_verb_existence.py](../tools/sweep_verb_existence.py) sends every name in the
+  verb store (plus backticked candidates from
+  [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md)) as a
+  bare query and buckets the result by code. 1,043 names in ~22 s on 2026-07-27, of which
+  **1,007 are proven to exist**: 652 answer bare (query verbs, with the value captured),
+  186 `E_NOTIMPL` (action-only), 116 `E_INVALIDARG` (takes arguments), 27 context-gated,
+  26 `S_FALSE`, leaving only 36 unresolved. Ask about one name with
+  `just verb-probe <name>`; re-run with `just sweep-verb-existence`.
+
+  What this does and does not establish: it proves the name is **real** and classifies its
+  **kind**, and for query verbs it captures a live sample value. It does not prove behavior,
+  argument contracts, or deck scoping, so it never justifies a `test_status` of `Pass` —
+  that still needs a recorded observation. Treat it as the cheap first pass that tells you
+  which names are worth a real test and what shape that test should take.
 - **`setting` reads configuration over this channel**, and validates names: `setting
   'iRemoteDefaultPort'` → `4243`, while an unknown key returns `E_INVALIDARG`. That makes it
   a cheap way to test whether a setting name is real. Note not every UI toggle is exposed as

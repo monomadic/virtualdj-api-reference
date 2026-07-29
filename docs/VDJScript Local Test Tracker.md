@@ -48,6 +48,17 @@ Follow-up:
 ```text
 Date: 2026-07-27
 VirtualDJ build: 2026 (get_version)
+Test asset: tools/sweep_verb_existence.py -> tests/verb-existence-sweep.json
+Account/deck/hardware state: no hardware; decks empty; read-only (query endpoint only, no /execute)
+Steps: send every name in the verb store plus every backticked identifier from Undocumented VDJScript Candidates.md as a BARE query over the HTTP interface, and bucket each result by HRESULT. 1043 names in ~22 s over one keep-alive connection.
+Observed result: 1007 of 1043 names PROVEN TO EXIST — 652 answered bare (query verbs, sample value captured), 186 E_NOTIMPL (action-only), 116 E_INVALIDARG (takes arguments), 27 E_ACCESSDENIED (context-gated; track-metadata queries with no track loaded), 26 S_FALSE (evaluated false); only 36 unresolved (E_FAIL). Two codes were new this run: E_ACCESSDENIED (0x80070005) and S_FALSE (0x00000001, severity bit CLEAR = success). Of the 47 candidate names not in the store, 34 are proven real, including the whole flip_* family (flip_arm/load/loop/play/record all query-capable returning `no`; flip_get_status returns empty, so it is a string status not a boolean), `masterbpm` (120), `crash` (a REAL action-only verb — do not execute), and five argument-taking names. `master_beat_num` returns RAW IEEE-754 float32 BITS as a decimal integer: successive reads 1078136832/1078243328/1078341632 reinterpret to 3.048/3.073/3.097, a smoothly advancing beat position. `browser_filter`, `browser_search`, and `none` stayed E_FAIL, so TODO task 5's note still stands.
+Tracker rows updated: none directly — the sweep proves existence and kind, NOT behavior, so no test_status was promoted on this evidence. Recorded in HTTP Control Interface.md, Undocumented VDJScript Candidates.md, tools/README.md, INDEX.yml.
+Follow-up: use the sweep to target real tests — `needs-args` names tell you a test must supply arguments, `action-only` names cannot be probed by query at all, and `context-gated` names need the right state loaded first. Next natural step is an argument-shape probe over the 116 E_INVALIDARG names.
+```
+
+```text
+Date: 2026-07-27
+VirtualDJ build: 2026 (get_version)
 Test asset: HTTP control interface — error-code taxonomy and `setting` readability
 Account/deck/hardware state: no hardware; no decks touched (queries only)
 Steps: query known-official ACTION verbs (`load`, `unload`, `browser_enter`, `open_stem_creator`, `rescan_controllers`) and compare their error bodies against `nothing` and a bogus name; query `remote_action` in three forms; read the five `*Remote*` setting keys via `setting '<key>'` with the per-device "Connect automatically" checkbox first off and then on; read four invented setting names; extract `*Remote*` setting names from the binary string table to bound the key list.

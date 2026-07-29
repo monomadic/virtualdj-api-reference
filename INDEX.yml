@@ -53,6 +53,8 @@ live_probe:
     - just vdj-up
     - just vdj-query 'SCRIPT'
     - just vdj-execute 'SCRIPT'
+    - just verb-probe NAME          # does this name exist, and what kind is it?
+    - just sweep-verb-existence     # refresh tests/verb-existence-sweep.json
 
 remote_protocol:
   primary:

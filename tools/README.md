@@ -25,6 +25,7 @@ These drive a running VirtualDJ over the [HTTP control interface](../docs/HTTP%2
 
 | Tool | Does | Output |
 | --- | --- | --- |
+| `sweep_verb_existence.py` | Queries every store name plus the candidates-doc names bare and buckets the HRESULT: a value (query verb), `E_NOTIMPL` (action-only), `E_INVALIDARG` (takes arguments), `E_ACCESSDENIED` (context-gated), `S_FALSE`, or `E_FAIL` (unresolved). Read-only. Proves existence and kind, NOT behavior — never a substitute for a recorded local test. Query it with `just verb-probe <name>`. | `tests/verb-existence-sweep.json` |
 | `sweep_fx_introspection.py` | Enumerates the enabled cycle for all three targets (deck FX / video FX / transition), resolves every known name to its canonical spelling via `get_effect_title`, then reads counts, short/full labels, normalized defaults, live value text, and length/beats flags per effect. Introspection is read-only — the `get_effect_*` helpers accept an effect *name* in place of the slot, so no selection is needed except for the two names `get_effect_title` is blind to. Restores the video-FX and transition selections it changed. | `tests/fx-introspection-dump.json` |
 
 ## Remote protocol: running VirtualDJ, one device for capture

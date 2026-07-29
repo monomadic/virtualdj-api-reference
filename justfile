@@ -115,6 +115,16 @@ find-fx *args:
 fx-stats:
     @python3 tools/fxdb.py stats
 
+# --- verb existence probe (HTTP error-code sweep) ---------------------------
+# Does this name exist, and what kind is it? Answered from the sweep artifact.
+# Re-run the sweep with `just sweep-verb-existence` (needs `just vdj-up`).
+
+verb-probe name:
+    @python3 tools/sweep_verb_existence.py --get "{{name}}"
+
+sweep-verb-existence:
+    @python3 tools/sweep_verb_existence.py > tests/verb-existence-sweep.json
+
 # --- cross-corpus topic search ----------------------------------------------
 # One term -> matching verbs, effects, XML elements, REAL example files, docs,
 # and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
@@ -135,6 +145,7 @@ check:
     python3 tools/extract_verb_index.py --check
     python3 tools/verbdb.py check
     python3 tools/fxdb.py check
+    python3 tools/sweep_verb_existence.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py

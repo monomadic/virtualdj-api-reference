@@ -222,6 +222,48 @@ Routine-style workflows for Serato-Flip-like behavior, not toward public
 `flip_*` VDJScript verbs. Build a focused Flip harness only after confirming
 the feature state, saved Flip content, and expected licensing/build gates.
 
+## Existence Sweep (2026-07-27)
+
+`Local test`. [tools/sweep_verb_existence.py](../tools/sweep_verb_existence.py) queried every
+candidate name bare over the HTTP channel and classified it by HRESULT (see
+[HTTP Control Interface.md](HTTP%20Control%20Interface.md) for the taxonomy). This **proves
+the name exists and classifies its kind**; it does not prove behavior, so nothing here is
+promoted to ordinary guidance on this evidence alone. Query one name with
+`just verb-probe <name>`.
+
+**34 of 47 candidate names are now proven real.** Highlights:
+
+| Name | Verdict | Bare value |
+| --- | --- | --- |
+| `flip_arm`, `flip_load`, `flip_loop`, `flip_play`, `flip_record` | exists, query | `no` |
+| `flip_get_status` | exists, query | *(empty)* |
+| `masterbpm` | exists, query | `120` |
+| `master_beat_num` | exists, query | see the quirk below |
+| `is_colorfx`, `load_security_shown`, `rane_timecode`, `timecode_no_jump` | exists, query | `no` |
+| `pad_pressure_switch` | exists, query | `yes` |
+| `effect_beats_sliderindex` | exists, query | `2` |
+| `sampler_inputgain`, `stem_volume`, `motorwheel2`, `motorwheel3`, `ns7_get_drift` | exists, query | numeric |
+| `crash`, `browser_colorfilter_edit`, `controllerscreen_action`, `assign_related_controller`, `rane_motor_enable`, `rane_screen_input`, `rane_screen_output` | exists, **action-only** (`E_NOTIMPL`) | — |
+| `get_pad_page_name`, `hot_cue_stutter`, `pad_page_favorite`, `pad_page_insplit`, `setting_if_unchanged` | exists, **takes arguments** (`E_INVALIDARG`) | — |
+
+Notes that change how these should be tested:
+
+- **The whole `flip_*` family is real and query-capable**, answering `no` with no Flip
+  content loaded. The blocker for the tracker rows was never whether the verbs exist — it is
+  producing Flip state to observe. `flip_get_status` returns empty rather than `no`, so it is
+  a string status, not a boolean.
+- **`crash` is a real action-only verb.** Do not execute it through this or any channel while
+  probing; it is listed here only so nobody mistakes it for a typo.
+- **`master_beat_num` returns raw IEEE-754 float32 bits as a decimal integer.** Successive
+  reads gave `1078136832`, `1078243328`, `1078341632` — reinterpreting each as little-endian
+  float32 yields `3.048`, `3.073`, `3.097`, a smoothly advancing beat position. A consumer
+  must reinterpret the bits; reading it as an integer is meaningless. (Meanwhile `get_beat_num`
+  returns `E_ACCESSDENIED` with no track loaded, so the two are not interchangeable.)
+- Still unresolved (`E_FAIL`, no evidence either way): `browser_filter`, `browser_search`,
+  `none`, `oninit`, `coverflow`, `combine_query`, plus prose words the extractor picked up
+  (`query`, `syntax`, `taxonomy`, `changelog`, `forum`, `lang`, `execute`). The first three
+  remain exactly as TODO task 5 describes — bind them in a scratch mapper instead.
+
 ### `remote_action`
 
 Evidence: `Official forum`, `Binary compiled table`, `Binary symbol table`.
