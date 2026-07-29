@@ -109,7 +109,7 @@ for the current low-risk pad-page probes.
 | `get_pad_page_name`, `pad_page_insplit`, `pad_page_favorite`, `pad_page_split` | Pad-page state helpers are low-risk and may improve page tooling. | Normal page, split page, and favorite page readbacks with the exact page names shown in VirtualDJ. |
 | `is_colorfx`, `effect_beats_sliderindex` | Query-only plugin helpers should be safe to observe. | Readbacks while switching normal FX, ColorFX, and beat-length controls. |
 | `masterbpm`, `master_beat_num` | Exact execute/query symbols suggest useful master-deck diagnostics. | Readbacks across master-deck changes, tempo changes, and beatgrid movement; compare with `get_bpm` and `get_beat_num`. |
-| ~~`browser_filter`, `browser_search`, `none`~~ | **CLOSED 2026-07-27 — and the premise was wrong.** This row previously read "used by Atomix-authored factory mappers ... so they demonstrably execute". Both halves were false: the files are *personal* local mappings (mis-graded as factory by the `author` attribute, since a customized copy of the default keyboard mapping keeps `author="Atomix Productions"`), and appearing in a mapping never demonstrated execution — an experimental binding runs and silently does nothing. `browser_filter` and `browser_search` are **not verbs** on this build (no `ACTION_` symbol, no bare string, no Button Editor autocomplete); `none` is unresolved. See "Disproving A Name" below. | Nothing further. Use `clear_search` / `edit_search` / `search_add` / `search_delete` for browser search control. |
+| ~~`browser_filter`, `browser_search`, `none`~~ | **CLOSED 2026-07-27 — and the premise was wrong.** This row previously read "used by Atomix-authored factory mappers ... so they demonstrably execute". Both halves were false: the files are *personal* local mappings (mis-graded as factory by the `author` attribute, which sits on files whose bindings are entirely user-written), and appearing in a mapping never demonstrated execution — an experimental binding runs and silently does nothing. `browser_filter` and `browser_search` are **not verbs** on this build (no `ACTION_` symbol, no bare string, no Button Editor autocomplete); `none` is unresolved. See "Disproving A Name" below. | Nothing further. Use `clear_search` / `edit_search` / `search_add` / `search_delete` for browser search control. |
 
 ## Deferred Probe Queue
 
@@ -254,8 +254,9 @@ conclusion is that **they should never have been investigated as candidates at a
 only provenance was appearing in a personal keyboard mapping on this machine — the kind of
 file that legitimately accumulates experiments and guesses nobody ever claimed worked. They
 were logged here as "factory-mapper verb candidates" because the mappers README graded files
-by their `author` attribute, and that attribute is unreliable: a user-customized copy of the
-default keyboard mapping keeps `author="Atomix Productions"`. That rule is now corrected in
+by their `author` attribute, and that attribute does not track who wrote a mapping: the file
+in question carries `author="Atomix Productions"` while its bindings are entirely its owner's
+own work. That rule is now corrected in
 [examples/Mappers/README.md](../examples/Mappers/README.md), which states plainly that a
 name appearing in a local mapping is not evidence the verb exists.
 
