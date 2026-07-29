@@ -227,7 +227,35 @@ Routine-style workflows for Serato-Flip-like behavior, not toward public
 `flip_*` VDJScript verbs. Build a focused Flip harness only after confirming
 the feature state, saved Flip content, and expected licensing/build gates.
 
-## Disproving A Name (2026-07-27)
+## The Verb Table — Existence And Aliases Are Settled (2026-07-27)
+
+VirtualDJ carries its **complete verb table** as a serialised structure: a sorted array of
+16-byte records in `__DATA,__data`, each `{ const char *name; uint32 id; uint32 flags; }`.
+1,028 records on this build at `0x10402d020`, `action_deck` … `zoom_vertical`, extracted by
+[tools/extract_verb_table.py](../tools/extract_verb_table.py) (anchored, not address-pinned).
+Query it with `just verb-table <name>`.
+
+It covers **1,007 of 1,007** names the HTTP sweep proved real, so:
+
+- **Membership proves a name is a verb; absence disproves it.** `browser_filter`,
+  `browser_search`, and `none` are absent → not verbs. `remote_action`, `nothing` (id 0), and
+  `crash` are present → real.
+- **Aliases are stated, not inferred.** Records sharing an `id` are the same verb; `flags == 1`
+  is the alias spelling, `flags == 0` the canonical. 61 alias groups, 73 alias forms. The
+  table gives 13 aliases the store lacks — `browser`, `preview`, `eq_med`, `eq_kill_med`,
+  `eq_high_slider`, `eq_low_slider`, `eq_mid_slider`, `pitch_slider`, `jog_wheel`,
+  `scratch_wheel`, `scratch_wheel_touch`, `get_hasheadphone`, `sampler_unload_from_deck` —
+  each now with its canonical partner named by shared id rather than by resemblance.
+- **35 names in the table are absent from the store**, and they are exactly this document's
+  candidate set (`flip_*`, `masterbpm`, `master_beat_num`, `stem_volume`, `rane_*`,
+  `pad_page_*`, `crash`, `send_nothing`, `setting_if_unchanged`, …). Their existence is no
+  longer in question; only their behavior is.
+
+Everything below this section predates the table. The string/context adjudication it describes
+is **superseded** for existence questions and kept as a record of method, not as the current
+test.
+
+## Disproving A Name — superseded, kept for method (2026-07-27)
 
 The HTTP channel can only ever *prove* a name real — `E_FAIL` is silence, not denial. A
 **binary two-part test** closes that gap and can genuinely disprove a name on a given build:

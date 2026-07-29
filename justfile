@@ -122,7 +122,14 @@ fx-stats:
 verb-probe name:
     @python3 tools/sweep_verb_existence.py --get "{{name}}"
 
-# Structured binary evidence: is this a real verb per the executable itself?
+# AUTHORITATIVE: is this a real verb? Reads VirtualDJ's own verb table.
+verb-table name:
+    @python3 tools/extract_verb_table.py --get "{{name}}"
+
+extract-verb-table:
+    @python3 tools/extract_verb_table.py > tests/verb-table.json
+
+# Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
 
@@ -154,6 +161,7 @@ check:
     python3 tools/fxdb.py check
     python3 tools/sweep_verb_existence.py --check
     python3 tools/extract_binary_verbs.py --check
+    python3 tools/extract_verb_table.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py

@@ -47,85 +47,58 @@ test, not the source.
 
 ## The rules
 
-### 1. Deciding whether a verb exists — the four verdicts
+### 1. Deciding whether a verb exists — the verb table decides it
 
-The tiers above grade proof that something *works*. Whether a **name** is real is a separate,
-now-decidable question, and it has four outcomes. Apply them in order:
+**Superseded 2026-07-27.** The earlier scheme needed four verdicts and a conservative
+string-context leg because no complete name list had been located. One has now been found, so
+existence is a **single membership test**:
 
-| # | Verdict | Test |
-| --- | --- | --- |
-| 1 | **Exists** | Membership in the structured binary list (`just binary-verb <name>` — a mangled `ACTION_<name>` implementation class, or an entry in the app's own language catalog), **or** an existence code / value from `/query` (`just verb-probe <name>`). Either alone is sufficient. |
-| 2 | **Does not exist** | Absent from the structured list **and** no bare `<name>` string anywhere in the executable. |
-| 3 | **Does not exist (adjudicated)** | Absent from the structured list, a bare string exists, but every occurrence sits in a demonstrably unrelated context. State the contexts. |
-| 4 | **Undecided** | Absent from the structured list, a bare string exists, and its context is plausibly verb-related. Stays open. |
+> `just verb-table <name>` — in the table, the name is a verb; absent, it is not.
 
-**Rule 1a — the structured list proves existence but is not a completeness oracle.** It is a
-union of three sources in the app itself (`just binary-verb <name>`, 1,076 names):
+[tools/extract_verb_table.py](../tools/extract_verb_table.py) extracts a genuinely serialised
+structure — a sorted array of 16-byte records in `__DATA,__data` —
 
-| Source | Size | What it is |
-| --- | ---: | --- |
-| `symbol` | 1,012 | mangled `ACTION_<name>` implementation classes — one per canonical verb |
-| `catalog` | 812 | action names VirtualDJ documents in `languages.zip` → `English.xml` `<Actions>` |
-| `table` | 967 | the parser's **alphabetically sorted name table**, recovered as long ascending identifier runs (`action_deck` … `zoom_vertical`). This is the source that carries **aliases** |
+```c
+struct { const char *name; uint32_t id; uint32_t flags; };
+```
 
-The union covers **998 of the 1,007** names the HTTP sweep proved real. The nine it misses are
-`browser`, `config`, `jog`, `no`, `off`, `on`, `preview`, `volume`, `yes`. Five (`jog`, `no`,
-`off`, `on`, `yes`) are under four characters and so invisible to `strings` at its default
-minimum — a tooling limit, not a missing structure. The other four (`browser`, `config`,
-`preview`, `volume`) are long enough to appear and do not, which means **at least one more
-dispatch structure exists that has not been located.** Finding it is tracked as TODO task 9;
-the goal is the exact verb set, at which point the disproof no longer needs its conservative
-string leg. Individual sources are each *less* complete: the name table
-omits core verbs (`load`, `loop`, `cue`, `hot_cue`, `nothing`), which is exactly why all three
-are unioned rather than any one trusted. **Absence from the structured list is never a
-disproof on its own** — that is what verdict 2's second leg is for.
+1,028 records on VirtualDJ 2026 at `0x10402d020`, `action_deck` … `zoom_vertical`. It is
+**complete**: it contains all 1,007 names the HTTP sweep proved real, including the strays
+that defeated every earlier source (`load`, `loop`, `cue`, `hot_cue`, `nothing`, `browser`,
+`config`, `jog`). `nothing` legitimately carries `id == 0`.
 
-**Rule 1h — aliases are derivable, structurally.** A name present in the `table` but with no
-`symbol` of its own cannot be its own implementation, so it must dispatch to another class:
-it is an alias or variant form. That rule recovers **52 of the aliases the store already
-records independently** (from the official appendix) and predicts **11 more**:
-`eq_high_slider`, `eq_low_slider`, `eq_mid_slider`, `eq_med`, `eq_kill_med`,
-`get_hasheadphone`, `jog_wheel`, `pitch_slider`, `scratch_wheel`, `scratch_wheel_touch`,
-`sampler_unload_from_deck`. The 52/63 agreement with an independent source is what makes this
-a derivation rather than name-pattern guessing.
+**Rule 1a — this is a structure, not an adjacency heuristic.** Earlier passes inferred tables
+from `strings` output and from packed sorted blobs in `__cstring`. Both were suggestive only:
+compilers pool literals near each other, so proximity proves nothing. A record array whose
+members are pointers into `__cstring` paired with an id is the real dispatch data. Prefer it
+over every earlier source; `tests/binary-verbs.json` and the sorted-blob findings are
+superseded and kept only as corroboration.
 
-Its limit: it identifies a name **as** an alias, never **which** verb it aliases. Pairing by
-resemblance (`eq_med` → `eq_mid`) is Tier 3 inference no matter how obvious it looks. Pairing
-is settled behaviorally — drive the presumed canonical and check the alias tracks it — or from
-the official appendix, which pairs them explicitly.
+**Rule 1b — absence from the table IS disproof**, on the inspected build, and no longer needs
+a string-context adjudication. Settled cases: `browser_filter`, `browser_search`, and `none`
+are absent, therefore not verbs; `remote_action`, `nothing`, and `crash` are present,
+therefore real.
 
-**Rule 1b — the string leg is conservative on purpose.** A bare string cannot prove a name is
-a verb: `none` occurs three times in the executable, once amid compiled register-save junk,
-once inside SQLite's internal string pool (beside `flexnum` and `sub-select returns %d
-columns`), and once in a UI category list (beside `custom`, `pads`, `stems`). None is a verb
-context, and `nothing` — which *is* in the catalog, documented as "Do nothing." — is almost
-certainly what such a name was reaching for. So the string leg exists to prevent false
-disproofs of aliases, not to grant existence.
+**Rule 1c — aliases are read off the table, not guessed.** Records **sharing an `id` are the
+same verb**; `flags == 1` marks the alias spelling and the canonical carries `flags == 0`
+(`auto_sync`=1 / `smart_play`=0, `config`=1 / `settings`=0, `hotcue`=1 / `hot_cue`=0). 61
+alias groups, 73 alias forms. This retires the "in the table but with no `ACTION_` class"
+derivation and it retires pairing-by-resemblance: never infer a pairing that the table states.
 
-**Rule 1c — positive HTTP codes are sound.** 26 deliberately invented names, including
-family-prefix shapes (`get_zzzz`, `effect_zzzz`, `browser_zzzz`) chosen to trip a dispatcher,
-all returned `E_FAIL` and nothing else. No fake name has produced `E_NOTIMPL`,
-`E_INVALIDARG`, `E_ACCESSDENIED`, `S_FALSE`, or a value.
+**Rule 1d — the table is not behavior.** It gives name, identity, and canonical-vs-alias, and
+nothing else. Kind and behavior still come from the HTTP sweep and Tier-1 tests (rules 2-3).
 
-**Rule 1d — calibration must use an independently-sourced set.** The disproof was first
-calibrated only against names the HTTP sweep itself proved real, which grades a test against
-its own output. It is now also calibrated against the 812 action names in VirtualDJ's own
-language catalog: **all 812 leave a trace in the executable, zero exceptions.** Recalibrate
-this way whenever the method changes.
+**Rule 1e — locate it by anchoring, never by hard-coded address.** The extractor finds a known
+verb string in `__cstring`, finds the record pointing at it, and walks outward while records
+stay valid. That is why it works on a build where `extract_vdjscript_taxonomy.py`, which pins
+virtual addresses, raises. Re-verify the record count after a VirtualDJ update.
 
-**Rule 1e — a verdict is scoped to the inspected build.** Record the build. A verb added
-later leaves traces in that binary, not this one. Names of ≤3 characters need `strings -n 2`
-(the default minimum is 4, which is why `jog`, `no`, `on`, `yes` appear traceless).
+**Rule 1f — a verdict is scoped to the inspected build**, and to the architecture slice read
+(the arm64 slice of the universal binary; the x86_64 slice carries the same table).
 
-**Rule 1f — a verdict is about the name, never the behavior.** See rule 3.
-
-**Rule 1g — the residual assumption, stated so it can be attacked.** All of this assumes a
-real verb leaves a whole-name literal in the executable. A name assembled at runtime from
-fragments would evade every test above. Nothing in either calibration set behaves that way,
-but it is not ruled out.
-
-Method detail and the calibration tables: [Undocumented VDJScript Candidates.md](Undocumented%20VDJScript%20Candidates.md)
-§"Disproving A Name".
+**Rule 1g — corroborate, do not merely trust.** The table agreeing with 1,007/1,007
+HTTP-proven names is what earns it authority here; a future structure claim needs the same
+kind of independent check before it displaces this one.
 
 ### 2. What counts as a behavioral test
 
