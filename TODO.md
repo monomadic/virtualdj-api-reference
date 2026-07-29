@@ -324,9 +324,40 @@ Done when:
 - Action frames are catalogued with example payloads, and the subscription vocabulary is
   characterized as either "any VDJScript query" or a documented subset.
 
-### 9. Find The Remaining Verb-Name Structures (Goal: The Exact Verb Set)
+### 9. Map Verbs To Button Editor Categories
 
-Status: Ready — pure binary analysis, no hardware, no live app needed
+Status: Verb set DONE (2026-07-27) — category membership remains
+
+The exact verb set is settled: [tools/extract_verb_table.py](tools/extract_verb_table.py)
+extracts VirtualDJ's own verb table (1,028 sorted 16-byte records
+`{const char *name; uint32 id; uint32 flags}` at `0x10402d020`), covering 1,007/1,007
+HTTP-proven names. Existence and non-existence are now a membership test
+(`just verb-table <name>`), aliases are read off shared `id`s, and `flags == 256` marks the
+37 Button-Editor-hidden names. 61 alias groups are written into the verb store.
+
+Remaining: **which category each verb belongs to.**
+
+- The category name array is found — `const char *[38]` at `0x104031070`, indices matching
+  [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md).
+- `id` allocation is category-blocked (karaoke 617-619 contiguous, video in the 930s-950s),
+  so a boundary or membership table exists.
+- Two dead ends already tried: the region after the category array holds a 17-name list, not
+  per-category action lists; and deriving boundaries from the taxonomy doc's per-category
+  counts fails because those counts are from bundle `18.0.9336` while the table is VirtualDJ
+  2026 (every tested verb lands below its predicted range, by a non-constant offset).
+- A brute scan for ~38 ascending integers in the id range returns 115 candidates (jump tables
+  and unrelated constants), so anchor instead: find the code that reads the category list, or
+  re-derive the compiled taxonomy table addresses for this build (the old extractor is
+  address-pinned and raises).
+
+Done when:
+
+- Every verb carries a category, or the mapping structure is characterized and any residue
+  explained. Do not state a category from `id` proximity — that is a lead, not a mapping.
+
+### 9b. Remaining Verb-Name Structure Notes
+
+Status: superseded by the verb table; kept because the corroborating sources are still wired
 
 Three structures are extracted so far ([tools/extract_binary_verbs.py](tools/extract_binary_verbs.py),
 1,019 names): 954 `ACTION_` implementation classes, 812 language-catalog entries, and the

@@ -251,6 +251,59 @@ It covers **1,007 of 1,007** names the HTTP sweep proved real, so:
   `pad_page_*`, `crash`, `send_nothing`, `setting_if_unchanged`, …). Their existence is no
   longer in question; only their behavior is.
 
+
+### Record fields
+
+`flags` has three observed values, and the third one matters:
+
+| `flags` | Count | Meaning |
+| ---: | ---: | --- |
+| `0` | 918 | normal, canonical verb |
+| `1` | 73 | **alias spelling**; the canonical sibling shares its `id` and carries `flags == 0` |
+| `256` (`0x100`) | 37 | **hidden from the Button Editor list** — the "flag1-hidden" bit |
+
+The 37 `flags == 256` names are *exactly* this document's flag1-hidden candidate set
+(`flip_*`, `masterbpm`, `master_beat_num`, `stem_volume`, `rane_*`, `pad_page_*`, `crash`,
+`remote_action`, `all_decks`, `send_nothing`, `setting_if_unchanged`, …). That is an
+independent structural confirmation of a set previously derived from the compiled taxonomy
+tables by a now-stale extractor, and it explains what "hidden" means concretely: present and
+dispatchable, but withheld from the editor's browsable category list.
+
+`id` is a dense index: **0…954 with no gaps**, one per unique verb, which is why 1,028 records
+yield 955 ids — the 73 alias records reuse their canonical's id. The count also matches the
+954 `ACTION_` implementation classes, so `id` is almost certainly the index into that handler
+array.
+
+### Categories: array found, per-verb mapping NOT yet solved
+
+The Button Editor's **category name array** is a plain `const char *[38]` at `0x104031070`
+in `__DATA,__data`, immediately after the verb table:
+
+`defines, flow, param, repeat, skin, system, variables, window, audio, audio_controls,
+audio_inputs, audio_scratch, audio_volumes, automix, browser, config, controllers, cues,
+deck_select, equalizer, get, karaoke, key, loop, macro, pads, pitch, plugins, poi, prelisten,
+rane, record, sampler, sandbox, sync, text, timecode, video`
+
+Its indices agree exactly with the category ids in
+[Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) (15 `config`, 19 `equalizer`,
+20 `get`, 37 `video`), and `defines` at index 0 is the one the editor skips.
+
+**What is not established: which category each verb belongs to.** Two things are known and
+neither closes it:
+
+- `id` allocation is clearly **category-blocked** — `karaoke`/`karaoke_options`/`karaoke_show`
+  are 617/618/619, video verbs cluster in the 930s-950s, cues in the 430s.
+- Deriving boundaries arithmetically from the taxonomy doc's per-category counts **fails**:
+  every tested verb lands below its predicted range, and not by a constant offset. The doc's
+  counts come from build `8.5.9307`/`18.0.9336` while this table is VirtualDJ 2026, so the
+  arithmetic is unsound across builds even though both total 1,028.
+
+Next step is the boundary or membership table itself: a brute scan for ~38 ascending integers
+in the id range returned 115 candidates (jump tables and unrelated constants), so it needs
+anchoring like the verb table did — find a reference from the code that reads the category
+list, or re-derive the compiled taxonomy table addresses for this build. Until then, do not
+state a verb's category from `id` proximity; it is a lead, not a mapping.
+
 Everything below this section predates the table. The string/context adjudication it describes
 is **superseded** for existence questions and kept as a record of method, not as the current
 test.
