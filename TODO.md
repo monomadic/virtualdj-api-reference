@@ -326,7 +326,7 @@ Done when:
 
 ### 9. Map Verbs To Button Editor Categories
 
-Status: Verb set DONE (2026-07-27) — category membership remains
+Status: DONE (2026-07-27) — verb set, aliases, hidden flag, and categories all extracted
 
 The exact verb set is settled: [tools/extract_verb_table.py](tools/extract_verb_table.py)
 extracts VirtualDJ's own verb table (1,028 sorted 16-byte records
@@ -335,25 +335,18 @@ HTTP-proven names. Existence and non-existence are now a membership test
 (`just verb-table <name>`), aliases are read off shared `id`s, and `flags == 256` marks the
 37 Button-Editor-hidden names. 61 alias groups are written into the verb store.
 
-Remaining: **which category each verb belongs to.**
+Categories are solved too: a `const char *[38]` name array after the verb table, plus a
+non-decreasing `uint8[956]` in `__TEXT,__const` giving the category per verb indexed by
+`id + 1`. Both located structurally, no pinned addresses. Confirmed by the live Button Editor
+list (read off screen, `flow`..`video` with `defines` skipped) and by reproducing the
+independent taxonomy extraction's per-category counts exactly (config 29, controllers 75,
+cues 31, equalizer 37, get 118, loop 40, video 18; total 1,028). See
+[docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
+§Categories.
 
-- The category name array is found — `const char *[38]` at `0x104031070`, indices matching
-  [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md).
-- `id` allocation is category-blocked (karaoke 617-619 contiguous, video in the 930s-950s),
-  so a boundary or membership table exists.
-- Two dead ends already tried: the region after the category array holds a 17-name list, not
-  per-category action lists; and deriving boundaries from the taxonomy doc's per-category
-  counts fails because those counts are from bundle `18.0.9336` while the table is VirtualDJ
-  2026 (every tested verb lands below its predicted range, by a non-constant offset).
-- A brute scan for ~38 ascending integers in the id range returns 115 candidates (jump tables
-  and unrelated constants), so anchor instead: find the code that reads the category list, or
-  re-derive the compiled taxonomy table addresses for this build (the old extractor is
-  address-pinned and raises).
-
-Done when:
-
-- Every verb carries a category, or the mapping structure is characterized and any residue
-  explained. Do not state a category from `id` proximity — that is a lead, not a mapping.
+Residue worth one look later: four verbs where the mapping and the taxonomy doc's hand-written
+sample column disagree — `mute`, `silent_cue`, `stems_split`, `loaded`. The counts match
+exactly, so the doc is the likelier error, but neither side is proven.
 
 ### 9b. Remaining Verb-Name Structure Notes
 

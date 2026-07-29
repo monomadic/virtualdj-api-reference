@@ -85,6 +85,12 @@ same verb**; `flags == 1` marks the alias spelling and the canonical carries `fl
 alias groups, 73 alias forms. This retires the "in the table but with no `ACTION_` class"
 derivation and it retires pairing-by-resemblance: never infer a pairing that the table states.
 
+**Rule 1c2 — Button Editor categories come from the table too.** A `const char *[38]` name
+array sits after the verb table and a non-decreasing `uint8[956]` in `__TEXT,__const` gives the
+category per verb, indexed by `id + 1`. Verified against the live Button Editor list and
+against the independent taxonomy extraction's per-category counts, which it reproduces exactly.
+`just verb-table <name>` reports it. Do not infer a category from `id` proximity — read it.
+
 **Rule 1d — the table is not behavior.** It gives name, identity, and canonical-vs-alias, and
 nothing else. Kind and behavior still come from the HTTP sweep and Tier-1 tests (rules 2-3).
 

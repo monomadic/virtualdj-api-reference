@@ -274,35 +274,46 @@ yield 955 ids — the 73 alias records reuse their canonical's id. The count als
 954 `ACTION_` implementation classes, so `id` is almost certainly the index into that handler
 array.
 
-### Categories: array found, per-verb mapping NOT yet solved
+### Categories — solved
 
-The Button Editor's **category name array** is a plain `const char *[38]` at `0x104031070`
-in `__DATA,__data`, immediately after the verb table:
+Two structures, both located without hard-coded addresses:
+
+| Structure | Where | Shape |
+| --- | --- | --- |
+| Category names | `__DATA,__data` (immediately after the verb table) | `const char *[38]`, anchored on a member name |
+| Category per verb | `__TEXT,__const` | `uint8[956]`, non-decreasing, values `0..37`; **index with `id + 1`** |
+
+`category = names[byid[verb.id + 1]]`. Ids are allocated in category order, which is what makes
+the byte array non-decreasing and lets it be found structurally: it is the only run of exactly
+`distinct_ids + 1` non-decreasing bytes that uses all 38 category values.
+
+The 38 names, in index order — index 0 `defines` is the one the Button Editor skips:
 
 `defines, flow, param, repeat, skin, system, variables, window, audio, audio_controls,
 audio_inputs, audio_scratch, audio_volumes, automix, browser, config, controllers, cues,
 deck_select, equalizer, get, karaoke, key, loop, macro, pads, pitch, plugins, poi, prelisten,
 rane, record, sampler, sandbox, sync, text, timecode, video`
 
-Its indices agree exactly with the category ids in
-[Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) (15 `config`, 19 `equalizer`,
-20 `get`, 37 `video`), and `defines` at index 0 is the one the editor skips.
+Confirmed three ways:
 
-**What is not established: which category each verb belongs to.** Two things are known and
-neither closes it:
+1. **Live UI.** The Button Editor's category list was read off screen and matches the array
+   from index 1 (`flow`) through the last entry (`video`), with `defines` absent — exactly as
+   [Button Editor Taxonomy.md](Button%20Editor%20Taxonomy.md) said it would be.
+2. **Counts reproduce the independent taxonomy extraction exactly**: `config` 29,
+   `controllers` 75, `cues` 31, `deck_select` 11, `equalizer` 37, `get` 118, `karaoke` 9,
+   `key` 18, `loop` 40, `video` 18 — total 1,028. Those counts came from the compiled
+   taxonomy tables via a different (now stale) extractor, so agreement is not circular.
+3. **Sample verbs**: 125 of 129 verbs named in that doc's per-category samples land in the
+   category the doc gives them.
 
-- `id` allocation is clearly **category-blocked** — `karaoke`/`karaoke_options`/`karaoke_show`
-  are 617/618/619, video verbs cluster in the 930s-950s, cues in the 430s.
-- Deriving boundaries arithmetically from the taxonomy doc's per-category counts **fails**:
-  every tested verb lands below its predicted range, and not by a constant offset. The doc's
-  counts come from build `8.5.9307`/`18.0.9336` while this table is VirtualDJ 2026, so the
-  arithmetic is unsound across builds even though both total 1,028.
+The four that differ are `mute` (mapping says `audio_volumes`, doc `audio`), `silent_cue`
+(`cues` / `audio_controls`), `stems_split` (`audio` / `equalizer`), and `loaded` (`browser` /
+`get`). Since the per-category *counts* match exactly, the mapping is self-consistent and the
+doc's sample column — hand-assembled, and from an older bundle — is the likelier error. Treat
+those four as unresolved rather than assuming either side.
 
-Next step is the boundary or membership table itself: a brute scan for ~38 ascending integers
-in the id range returned 115 candidates (jump tables and unrelated constants), so it needs
-anchoring like the verb table did — find a reference from the code that reads the category
-list, or re-derive the compiled taxonomy table addresses for this build. Until then, do not
-state a verb's category from `id` proximity; it is a lead, not a mapping.
+Query it per verb with `just verb-table <name>`, which now reports `category` alongside `id`,
+`flags`, and any same-id siblings.
 
 Everything below this section predates the table. The string/context adjudication it describes
 is **superseded** for existence questions and kept as a record of method, not as the current

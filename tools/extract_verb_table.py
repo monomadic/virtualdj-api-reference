@@ -15,6 +15,15 @@ and `flags == 1` marks the alias/secondary spelling while the canonical carries
 `flags == 0` (`auto_sync`=1 / `smart_play`=0, `config`=1 / `settings`=0). No
 name-resemblance guessing required.
 
+`flags` also carries the Button-Editor-hidden bit: 0 normal, 1 alias spelling,
+256 hidden from the editor's browsable list (37 names, the "flag1-hidden" set).
+
+Two further structures give each verb its **Button Editor category**: a
+`const char *[38]` name array sitting after the verb table, and a non-decreasing
+`uint8[distinct_ids + 1]` in `__TEXT,__const` indexed by `id + 1`. Both are located
+structurally, and the resulting per-category counts reproduce the independent
+compiled-taxonomy extraction exactly.
+
 Located by anchoring rather than hard-coded addresses, so it survives builds: find
 a known verb string in `__cstring`, find the record that points at it, then walk
 outward while records stay valid. Note `nothing` legitimately has `id == 0`.
@@ -30,6 +39,7 @@ import sys
 BINARY = "/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ"
 ARTIFACT = "tests/verb-table.json"
 ANCHOR = "hot_cue"          # any verb certain to be in the table
+CAT_ANCHOR = "audio_scratch"  # a distinctive Button Editor category name
 ARM64 = 0x0100000C
 RECORD = 16
 
@@ -96,6 +106,59 @@ def build() -> dict:
             return None
         return {"name": name, "id": vid, "flags": flags}
 
+    def find_string(text):
+        k = cblob.find(b"\0" + text.encode() + b"\0")
+        return cseg[2] + k + 1 if k >= 0 else None
+
+    def category_names():
+        """const char *[38] in __DATA,__data — located by anchoring on a member."""
+        addr = find_string(CAT_ANCHOR)
+        if addr is None:
+            return []
+        for i in range(0, len(dblob) - 8, 8):
+            if struct.unpack_from("<Q", dblob, i)[0] == addr:
+                lo = hi = i
+                while lo - 8 >= 0:
+                    s = string_at(struct.unpack_from("<Q", dblob, lo - 8)[0])
+                    if s and s.replace("_", "").isalpha() and s.islower():
+                        lo -= 8
+                    else:
+                        break
+                while hi + 8 < len(dblob):
+                    s = string_at(struct.unpack_from("<Q", dblob, hi + 8)[0])
+                    if s and s.replace("_", "").isalpha() and s.islower():
+                        hi += 8
+                    else:
+                        break
+                return [string_at(struct.unpack_from("<Q", dblob, j)[0])
+                        for j in range(lo, hi + 8, 8)]
+        return []
+
+    def category_of_id(n_ids, n_cats):
+        """uint8[n_ids+1] in __TEXT,__const: non-decreasing, one entry per id.
+
+        Found structurally, not by address: ids are allocated in category order, so
+        the array is non-decreasing, exactly n_ids+1 long, and uses every category.
+        Index with id+1.
+        """
+        tconst = next((s for s in secs if s[0] == "__TEXT" and s[1] == "__const"), None)
+        if not tconst:
+            return None
+        blob = data[base + tconst[4]: base + tconst[4] + tconst[3]]
+        want, limit = n_ids + 1, n_cats - 1
+        i = 0
+        while i < len(blob):
+            run, prev = 0, -1
+            j = i
+            while j < len(blob) and blob[j] <= limit and blob[j] >= prev:
+                prev = blob[j]
+                run += 1
+                j += 1
+            if run == want and len(set(blob[i:j])) == n_cats:
+                return list(blob[i:j])
+            i = j + 1 if j > i else i + 1
+        return None
+
     anchor_addr = None
     needle = b"\0" + ANCHOR.encode() + b"\0"
     k = cblob.find(needle)
@@ -122,6 +185,19 @@ def build() -> dict:
     for r in recs:
         by_id.setdefault(r["id"], []).append(r["name"])
     groups = {str(k): sorted(v) for k, v in by_id.items() if len(v) > 1}
+
+    cats = category_names()
+    cat_by_id = category_of_id(len(by_id), len(cats)) if cats else None
+    verbs = {}
+    for r in recs:
+        rec = {"id": r["id"], "flags": r["flags"]}
+        if cat_by_id and r["id"] + 1 < len(cat_by_id):
+            rec["category"] = cats[cat_by_id[r["id"] + 1]]
+        verbs[r["name"]] = rec
+    counts = {}
+    for rec in verbs.values():
+        if "category" in rec:
+            counts[rec["category"]] = counts.get(rec["category"], 0) + 1
     return {
         "summary": {
             "address": hex(dseg[2] + start),
@@ -129,10 +205,15 @@ def build() -> dict:
             "distinct_ids": len(by_id),
             "alias_groups": len(groups),
             "alias_forms": sum(1 for r in recs if r["flags"] == 1),
+            "hidden": sum(1 for r in recs if r["flags"] == 256),
+            "categories": len(cats),
+            "categorised": sum(1 for r in verbs.values() if "category" in r),
             "sorted": [r["name"] for r in recs] == sorted(r["name"] for r in recs),
         },
+        "categories": cats,
+        "category_counts": counts,
         "alias_groups": groups,
-        "verbs": {r["name"]: {"id": r["id"], "flags": r["flags"]} for r in recs},
+        "verbs": verbs,
     }
 
 
@@ -160,8 +241,11 @@ def cmd_check() -> None:
         sys.exit(f"verb table extraction looks wrong: {s}")
     if len(data["verbs"]) != s["records"]:
         sys.exit("verb table summary does not match record count")
+    if s.get("categorised", 0) != s["records"]:
+        sys.exit(f"category mapping incomplete: {s.get('categorised')}/{s['records']}")
     print(f"verb table check passed: {s['records']} records @ {s['address']}, "
-          f"{s['alias_groups']} alias groups, {s['alias_forms']} alias forms")
+          f"{s['alias_groups']} alias groups, {s['alias_forms']} alias forms, "
+          f"{s['hidden']} hidden, {s['categories']} categories")
 
 
 def main() -> None:
