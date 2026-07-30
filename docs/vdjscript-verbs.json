@@ -13,9 +13,9 @@
    },
    "by_test_status": {
     "Fail": 6,
-    "Partial": 12,
+    "Partial": 14,
     "Pass": 39,
-    "Untested": 977
+    "Untested": 975
    },
    "documented": 764,
    "tested_pass": 39,
@@ -1408,7 +1408,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP, 2026-07-30): bare returns a plausible millisecond countdown (13314212, decreasing ~1000/s). An unparseable text argument returns a large stable negative (-1785418588) that decodes as neither a sane int nor float — a garbage/uninitialised path rather than a pointer leak."
+   ],
    "section": "Text Queries",
    "description": "Count down to date/time",
    "example": "countdown '2025/01/01 00:00'"
@@ -4799,10 +4801,12 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "VirtualDJ 2026 (HTTP, 2026-07-30): BARE FORM RETURNS A POINTER-SHAPED VALUE, not an analysis result: 147167840 = 0x8c59a60, stable within a session but different in an earlier session (152394336 = 0x9155a60) — magnitude, intra-run stability and inter-run variance are all consistent with the low 32 bits of a heap pointer, though that is not proven. With a numeric argument it behaves as a comparison predicate ('get_deck_analysis 1' -> 1, '2' -> 0, '99' -> 0), matching the documented get_decks pattern. An unparseable text argument falls back to the bare (leaking) path."
+   ]
   },
   "get_deck_color": {
    "name": "get_deck_color",
@@ -8739,11 +8743,12 @@
    "official": false,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 539, flags 256 (Button-Editor-hidden), category get. HTTP existence sweep 2026-07-27: exists, kind query."
+    "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 539, flags 256 (Button-Editor-hidden), category get. HTTP existence sweep 2026-07-27: exists, kind query.",
+    "VirtualDJ 2026 (HTTP, 2026-07-30): BARE FORM RETURNS FLOAT BITS AS INT32 (type punning). Bare returns e.g. 1065869312 = 0x3f87e000; reinterpreting those bits as IEEE754 float32 gives 1.06, and successive samples decode to 1.06 -> 2.27 -> 3.49 -> 4.70, i.e. +1.21 beats per 0.6s, which matches the deck's live 118.66 BPM (1.98 beats/s) exactly. So the underlying value is a float beat counter rendered through an int path. With an argument the correct path is used: 'master_beat_num 5' returns 0.8. Hidden verb (flags==256)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",

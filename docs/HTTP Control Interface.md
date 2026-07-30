@@ -181,6 +181,36 @@ Gotchas the table implies:
 4. Record results in [VDJScript Local Test Tracker.md](VDJScript%20Local%20Test%20Tracker.md)
    with the build and the note that the run used the HTTP interface.
 
+## Return values are typed underneath, rendered as text here
+
+VDJScript queries are typed at the implementation level — the `ACTION_` vtable carries a
+generic `onQuery` (a variant: bool, number and text all flow through it) plus a specialized
+text query, and the Remote protocol pushes the distinction on the wire as `val` float32 vs
+`txt`. This channel flattens all of that to a text body, so the type must be recovered by
+observation: `just verb-return-type <name>` (334 bool / 145 int / 68 float / 4 percent /
+72 text across the 652 query verbs).
+
+### Three verbs whose bare form returns raw internals (2026-07-30)
+
+Found by sweeping all 768 query/needs-args verbs across four argument forms
+(bare, `1`, `999999`, `"zz"`) and flagging returns above 1,000,000.
+
+| Verb | Bare form returns | What it actually is |
+| --- | --- | --- |
+| `master_beat_num` | `1065869312` | **float32 bits rendered through an int path.** Those bits decode to `1.06`, and successive samples give 1.06 → 2.27 → 3.49 → 4.70 — **+1.21 beats per 0.6 s, matching the deck's live 118.66 BPM (1.98 beats/s) exactly.** `master_beat_num 5` uses the correct path and returns `0.8`. |
+| `get_deck_analysis` | `147167840` (`0x8c59a60`) | **Pointer-shaped**, not an analysis value: stable within a session, different in an earlier one (`0x9155a60`). Magnitude, intra-run stability and inter-run variance all fit the low 32 bits of a heap pointer — consistent with, but not proof of, a pointer. With a numeric argument it is a proper comparison predicate (`1` → `1`, `2` → `0`), the documented `get_decks` pattern. |
+| `countdown` | `13314212` | Legitimate (milliseconds, decreasing ~1000/s). Only an *unparseable text* argument misbehaves, returning a stable `-1785418588` that decodes as neither a sane int nor float — a garbage path, not a leak. |
+
+**No return value is a pointer derived from an argument.** The sweep found zero cases where
+an argument *value* produced a pointer-magnitude result; all three anomalies live in the
+bare/unrecognized-argument fallback path. Note that unparseable text arguments fall back to
+the bare path rather than erroring — the same silent-fallback behavior that makes keyword
+arguments unconfirmable by error code.
+
+Practical impact is low — this channel already executes arbitrary VDJScript, so a leaked
+heap address adds little — but treat both bare forms as **unusable for their apparent
+purpose** and prefer the argument forms.
+
 ## Security note
 
 While enabled with no password set, this is an unauthenticated control channel bound to
