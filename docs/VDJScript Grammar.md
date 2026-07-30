@@ -56,7 +56,7 @@ and not writing script, you can stop after this section.
 - [Arguments and quoting](#arguments-and-quoting)
 - [Variables hold numbers, not strings](#variables-hold-numbers-not-strings)
 - [There is no comment syntax](#there-is-no-comment-syntax)
-- [Chains have a silent length ceiling](#chains-have-a-silent-length-ceiling)
+- [Chains stop after exactly 255 statements](#chains-stop-after-exactly-255-statements)
 - [Backticks are a surface feature, not a parser feature](#backticks-are-a-surface-feature-not-a-parser-feature)
 - [Variable scope prefixes](#variable-scope-prefixes)
 - [Deck and scope wrappers](#deck-and-scope-wrappers)
@@ -418,38 +418,46 @@ set '$a' 1 -- set '$b' 1      set '$a' 1 /*x*/ set '$b' 1
 There is no way to annotate script inline. Put explanation in the surrounding XML comment
 (`<!-- … -->`) or in the file that documents the page.
 
-## Chains have a silent length ceiling
+## Chains stop after exactly 255 statements
 
-A long chain does not truncate — past a certain size **nothing in it runs at all**, first
-statement included, and `execute` still reports success (`HTTP`).
+**A chain executes its first 255 statements and silently drops the rest.** `/execute` returns
+`false` when that happens, so the truncation *is* reported. `HTTP` over **POST**, 2026-07-30,
+with per-statement readback (`set '$cN' 1`, then querying each `$cN`):
 
-| Chain | Result |
-| --- | --- |
-| 142 `set` statements, 2579 chars | all ran |
-| 152 `set` statements, 2769 chars | **none ran** |
-| 302 cheap statements, 3029 chars | all ran |
-| 402 cheap statements, 4029 chars | **none ran** |
+| Statements sent | `execute` | Statements that ran |
+| ---: | --- | ---: |
+| 254 | `true` | 254 |
+| 255 | `true` | 255 |
+| 256 | `false` | **255** |
+| 300 (4689 chars) | `false` | **255** |
+| 400 (6289 chars) | `false` | **255** |
+| 500 (7889 chars) | `false` | **255** |
 
-The boundary moves with statement content, so it is neither a pure character count nor a
-pure statement count — treat a few hundred statements as the practical ceiling and do not
-build generated chains near it. Identical behaviour on GET and POST, so it is a VDJScript
-limit and not a URL-length artefact.
+255 = 2^8 − 1, and it is a **statement count, not a size**: three chains of 4689, 6289 and 7889
+characters all cut at exactly the same statement. Keep generated chains under 255, and check
+`execute`'s return value if you are anywhere near it.
 
-**Sharpened 2026-07-30** (`HTTP`, binary search with readback on `$c1`). For a fixed statement
-shape the boundary is exact and reproducible:
+Two *separate* transport limits sit above this and are easy to mistake for it:
 
-| Chain | Runs | Fails |
-| --- | --- | --- |
-| `set '$cN' 1 & …` | 172 statements, **2641 chars** | 173 statements, **2657 chars** |
-| the same wrapped in `on ? … : nothing` | 171 statements, **2640 chars** | 172 statements, **2656 chars** |
+- **GET has a URL-length limit around 2650 characters.** Past it the connection is reset before
+  VirtualDJ sees the script, so nothing runs — for transport reasons, not language reasons.
+- **POST bodies fail somewhere above ~9500 characters** with a connection reset.
 
-Both shapes fail at the same character count, and wrapping in a ternary costs exactly one
-statement of budget — consistent with a character or token budget rather than a statement count.
-It is still not a *universal* character limit, since the 302-statement row above ran at 3029
-chars with cheaper statements; the budget evidently depends on what each statement costs to
-parse. Note the earlier caution about generated chains stands, and note too that a chain wrapped
-in a conditional only runs at all if the condition is genuinely boolean-true — see
-[A verb's value and its truth are different channels](#a-verbs-value-and-its-truth-are-different-channels).
+### Correction (2026-07-30) — this section was wrong in four ways
+
+The previous version said a long chain runs **nothing at all** including the first statement,
+that `execute` **reports success** anyway, that the boundary was **neither** a character count
+nor a statement count, and that GET and POST behaved **identically**. All four were artefacts of
+testing over GET: past ~2650 characters the request never arrived, which looks exactly like
+"nothing ran". Over POST the real behaviour is visible — partial execution, a `false` return,
+and a clean 255-statement cutoff.
+
+A same-day attempt to "sharpen" the ceiling to 172 statements / 2641 characters was the same
+mistake once more, and is withdrawn: 2641 characters is where the **GET URL limit** falls for
+that statement shape, not where VDJScript stops.
+
+Lesson worth keeping: when a channel and a language limit can produce the same symptom,
+distinguish them before measuring — here, by re-running over a different transport.
 
 ## Backticks are a surface feature, not a parser feature
 

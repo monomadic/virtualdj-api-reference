@@ -215,22 +215,21 @@ Then walk the cursor toward the tail and find the first statement that stops rep
 is a **parse** limit; if the hint keeps reporting past the runtime's cutoff, it is an
 **execution** limit. That distinction is currently unknown.
 
-**A second, better signal: the blue current-statement highlight.** Clicking inside a statement
-gives it a blue background. It follows the cursor (observed moving across A→B→C→D in the
-branch-extent series), so it marks the statement the editor believes the cursor is in — *not*,
-as first supposed, the statement whose value is returned, which would have stayed on the first
-statement of a chain. **Past some chain depth, statements stop turning blue at all** and render
-as plain text, in **both** the Button Editor and the Controllers keyboard mapper — so it is a
-parser property, not a quirk of one dialog.
+**The blue current-statement highlight — investigated and withdrawn as an instrument.**
+Clicking inside a statement gives it a blue background, and it follows the cursor (observed
+moving across A→B→C→D in the branch-extent series), so it marks where the editor thinks the
+cursor is — *not*, as first supposed, the statement whose value is returned, which would have
+stayed on the first statement of a chain.
 
-That makes it the instrument the hint line cannot be, because it survives long pastes. **The
-open measurement**: paste a chain whose statements carry their own index
-(`set '$c1' 1 & set '$c2' 1 & …`), walk the cursor along it, and record the first index that
-does not go blue. Compare against the runtime ceiling measured the same day — 172 statements /
-2641 chars for that exact statement shape
-([Chains have a silent length ceiling](VDJScript%20Grammar.md#chains-have-a-silent-length-ceiling)).
-If the blue stops at ~172 the ceiling is a **parse** limit; if it stops earlier the editor has
-its own lower budget; if it continues past 172 the runtime limit is an **execution** budget.
+In a long paste the highlight *appears* to stop, which looked like a measurable parse boundary
+and was briefly written up here as one. It is **a rendering bug**: the highlight is drawn
+offset from the actual cursor position and clipped at the box edges, so the statement is still
+being recognised — the marker is simply drawn in the wrong place. Not a parse signal, and not
+usable for measuring anything. Retracted 2026-07-30.
+
+The ceiling question it was meant to answer has since been settled directly over HTTP instead:
+execution stops after exactly 255 statements, with partial results and a `false` return — see
+[Chains stop after exactly 255 statements](VDJScript%20Grammar.md#chains-stop-after-exactly-255-statements).
 
 **The hint line is blocked by the UI** (`Local test`, 2026-07-30). It survives a chain of roughly
 55 statements, but once the pasted script fills the Action box the box expands and **the hint

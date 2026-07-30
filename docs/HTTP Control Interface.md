@@ -181,6 +181,21 @@ Gotchas the table implies:
 4. Record results in [VDJScript Local Test Tracker.md](VDJScript%20Local%20Test%20Tracker.md)
    with the build and the note that the run used the HTTP interface.
 
+## GET has a URL-length limit; POST does not
+
+`Local test` 2026-07-30. Scripts longer than roughly **2,650 characters** sent as
+`GET /execute?script=…` are refused at the transport layer — the connection is reset and
+VirtualDJ never sees the script. The same script over `POST` runs normally.
+
+This matters beyond convenience: it produces a symptom identical to a VDJScript failure
+(nothing runs, no error), and it caused a documented language rule to be wrong for months —
+see [Chains stop after exactly 255 statements](VDJScript%20Grammar.md#chains-stop-after-exactly-255-statements).
+**Use POST for any generated or long script**, and treat "nothing happened" over GET as a
+transport question first.
+
+POST bodies have their own, much higher ceiling: above roughly 9,500 characters the connection
+is reset as well.
+
 ## Return values are typed underneath, rendered as text here
 
 VDJScript queries are typed at the implementation level — the `ACTION_` vtable carries a
