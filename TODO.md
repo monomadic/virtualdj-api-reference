@@ -420,18 +420,25 @@ Contract fields to establish per verb:
   observation claims type. Remaining sub-legs: the 29 all-empty verbs need richer contexts,
   and the Remote-protocol typed sweep (`val` float32 vs `txt` VALUE frames) would confirm
   wire-level types independently of HTTP text rendering.
-- **Argument forms**: bare / integer / float / percent / `+`-`-` relative / text / enum
-  keyword / multi-arg. Three evidence streams, cheapest first:
-  1. **Shipped-XML corpus mining** (free, Tier 2, authoritative-for-format): extract every
-     `verb <args>` usage from built-in/official pads, skins, samplerbanks, and factory
-     mappers → observed arg forms per verb. The corpus rule already says shipped files are
-     the authority on what the parser accepts.
-  2. **Official appendix + languages.zip descriptions** (Tier 2 lead): parse the argument
-     documentation into candidate forms.
-  3. **HTTP probe in query position** (Tier 1): for each candidate form, does
-     `verb <form>` resolve or return `E_INVALIDARG`? Query-position probing is
-     side-effect-free; execute-position confirmation only for whitelisted safe verbs, with
-     independent readback (rule 4), never `system`/file/database verbs.
+- **Argument forms — binary-first (reprioritized 2026-07-30, partially DONE)**. The
+  E_INVALIDARG method fingerprint landed in the contracts artifact: **436 verbs demand an
+  argument somewhere, 114/116 agreement with the sweep's needs-args kind, and 301
+  bare-answering query verbs flagged as taking OPTIONAL arguments** — the
+  undocumented-overload queue (`summary.optional_arg_queries`), invisible to the bare sweep.
+  `method_strings` recovers per-method keywords (`loaded` → `opposite`, `get_time` →
+  `short`). Remaining streams for the *forms and types*:
+  1. **Argument types from the binary — open lead**: param access is inlined so helper-call
+     fingerprinting failed; the route is naming `__stubs` targets via the chained-fixups
+     import table (strcmp/strtod-class calls), plus a two-level string scan for keyword
+     vocabularies.
+  2. **HTTP probe in query position** (Tier 1): for each candidate form, does
+     `verb <form>` resolve or return `E_INVALIDARG`? Start with the 301 optional-arg
+     queries and the recovered keywords. Query-position probing is side-effect-free;
+     execute-position confirmation only for whitelisted safe verbs, with independent
+     readback (rule 4), never `system`/file/database verbs.
+  3. **Shipped-XML corpus mining + appendix parsing** (Tier 2): demoted to corroboration of
+     actually-used forms — the binary and the probes discover; the corpus confirms
+     parser-accepted usage.
 - **Capability matrix: DONE (2026-07-29)** — the vtable-override extraction worked on the
   first attempt. [tools/extract_action_contracts.py](tools/extract_action_contracts.py) walks
   the surviving RTTI (name → typeinfo → vtable) and emits

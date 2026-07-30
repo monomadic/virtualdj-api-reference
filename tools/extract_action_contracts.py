@@ -29,6 +29,19 @@ Three layers of contract fall out, all serialised data:
    slot 5's membership skews to argument-taking verbs, slot 7's to
    menu/options providers, and slots 8/9 are a near-identical pair
    (probably press/release — surviving lambda names mention `onUp`).
+3. **Method-body fingerprints** — light static analysis of each verb's own
+   overridden methods (addresses known exactly from the vtable):
+   - `arg_demand_slots`: slots whose method materializes E_INVALIDARG
+     (0x80070057, a MOVZ/MOVK pair; callees followed one BL level). A method
+     that can demand an argument takes one. Reproduces 108/110 of the
+     HTTP-proven needs-args verbs, and — invisible to the bare-query sweep —
+     flags query verbs that answer bare but validate an OPTIONAL argument.
+   - `method_strings`: per-slot string references recovered by decoding
+     ADRP/ADD pairs (format strings, enum keywords, UI labels).
+   Param *types* are not extractable this way yet: param access is inlined
+   (no shared helper call discriminates text-arg from numeric-arg verbs), and
+   library calls land in __stubs, outside the scanned __text range. Types
+   remain a Tier-1 probe job.
 3. **Vtable length** — extension interfaces (sliders: ~22 slots vs 12) are
    visible as extra slots.
 
@@ -176,6 +189,78 @@ def build() -> dict:
             out.append(t)
         return out
 
+    # --- method-body analysis helpers (light arm64 decoding) ------------------
+    text_lo, text_hi = text[2], text[2] + text[3]
+
+    def body(fn, max_insns=4000):
+        off = base + text[4] + (fn - text_lo)
+        out = []
+        for k in range(max_insns):
+            if off + k * 4 + 4 > base + text[4] + text[3]:
+                break
+            w = struct.unpack_from("<I", data, off + k * 4)[0]
+            out.append((fn + k * 4, w))
+            if w == 0xD65F03C0 and k > 2:  # RET
+                break
+        return out
+
+    def bl_targets(insns):
+        out = []
+        for pc, w in insns:
+            if (w & 0xFC000000) == 0x94000000:  # BL
+                imm = w & 0x03FFFFFF
+                if imm & (1 << 25):
+                    imm -= 1 << 26
+                t = pc + imm * 4
+                if text_lo <= t < text_hi:
+                    out.append(t)
+        return out
+
+    def has_invalidarg(insns):
+        # E_INVALIDARG 0x80070057 as MOVZ w?,#0x57 + MOVK w?,#0x8007,lsl#16
+        mz = any((w & 0xFFFFFFE0) == 0x52800AE0 for _, w in insns)
+        mk = any((w & 0xFFFFFFE0) == 0x72B000E0 for _, w in insns)
+        return mz and mk
+
+    cstr_secs = [(s, data[base + s[4]: base + s[4] + s[3]])
+                 for s in secs if s[1] in ("__cstring",) or
+                 (s[0] == "__TEXT" and s[1] == "__const")]
+
+    def cstr(vm):
+        for s, blob in cstr_secs:
+            i = vm - s[2]
+            if 0 <= i < len(blob):
+                e = blob.find(b"\0", i)
+                if e > i:
+                    try:
+                        return blob[i:e].decode()
+                    except UnicodeDecodeError:
+                        return None
+        return None
+
+    def string_refs(insns, cap=16):
+        pages, out = {}, []
+        for pc, w in insns:
+            if (w & 0x9F000000) == 0x90000000:  # ADRP
+                immlo = (w >> 29) & 3
+                immhi = (w >> 5) & 0x7FFFF
+                imm = (immhi << 2) | immlo
+                if imm & (1 << 20):
+                    imm -= 1 << 21
+                pages[w & 31] = (pc & ~0xFFF) + (imm << 12)
+            elif (w & 0xFF800000) == 0x91000000:  # ADD imm
+                rn = (w >> 5) & 31
+                if rn in pages:
+                    imm12 = (w >> 10) & 0xFFF
+                    if (w >> 22) & 1:
+                        imm12 <<= 12
+                    s = cstr(pages[rn] + imm12)
+                    if s and 1 < len(s) < 48 and s.isprintable() and s not in out:
+                        out.append(s)
+                        if len(out) >= cap:
+                            break
+        return out
+
     # the shared root: IAction's own typeinfo + vtable give the default slots
     ia_ti = None
     for i in range(0, len(dblob) - 8, 8):
@@ -241,9 +326,35 @@ def build() -> dict:
                     return f
         return None
 
+    def analyze_methods(cls):
+        """arg-demand fingerprint + string refs for the class's own methods."""
+        vt = vt_addr[cls]
+        demands, strings = [], {}
+        for slot in over[cls]:
+            w = dword(vt + slot * 8)
+            if w is None:
+                continue
+            fn = w & MASK
+            if not (text_lo <= fn < text_hi):
+                continue
+            b = body(fn)
+            hit = has_invalidarg(b)
+            if not hit:
+                for t in list(dict.fromkeys(bl_targets(b)))[:10]:
+                    if has_invalidarg(body(t, 800)):
+                        hit = True
+                        break
+            if hit:
+                demands.append(slot)
+            ss = string_refs(b)
+            if ss:
+                strings[str(slot)] = ss
+        return demands, strings
+
     out_verbs = {}
     for vid, cls in class_of_id.items():
         ov = over[cls]
+        demands, mstrings = analyze_methods(cls)
         rec = {
             "class": cls,
             "base": chain[cls][0] if chain.get(cls) else None,
@@ -255,7 +366,10 @@ def build() -> dict:
             "queries": slot_of["query"] in ov,
             "query_text": slot_of["query_text"] in ov,
             "extended_interface": nslots[cls] > len(root_slots),
+            "arg_demand_slots": demands,
         }
+        if mstrings:
+            rec["method_strings"] = mstrings
         fam = family(cls)
         if fam:
             rec["family"] = fam
@@ -264,7 +378,8 @@ def build() -> dict:
 
     # agreement with the HTTP existence sweep (kind is Tier-1)
     sweep = json.load(open(SWEEP))["verbs"]
-    agree = {"query": [0, 0], "action-only": [0, 0]}
+    agree = {"query": [0, 0], "action-only": [0, 0], "needs-args": [0, 0]}
+    optional_args = []
     for name, s in sweep.items():
         rec = out_verbs.get(name)
         if not rec or s.get("status") != "exists":
@@ -274,10 +389,16 @@ def build() -> dict:
             agree["query"][1] += 1
             if rec["queries"] or rec["query_text"] or rec["extended_interface"]:
                 agree["query"][0] += 1
+            if rec["arg_demand_slots"]:
+                optional_args.append(name)
         elif k == "action-only":
             agree["action-only"][1] += 1
             if rec["executes"]:
                 agree["action-only"][0] += 1
+        elif k == "needs-args":
+            agree["needs-args"][1] += 1
+            if rec["arg_demand_slots"]:
+                agree["needs-args"][0] += 1
 
     from collections import Counter
     fams = Counter(r.get("family", "plain") for r in
@@ -293,6 +414,9 @@ def build() -> dict:
             "iaction_slots": len(root_slots),
             "slot_labels": slot_of,
             "families": dict(fams),
+            "arg_demand_verbs": sum(1 for vid in class_of_id
+                                    if out_verbs[ids[vid][0]]["arg_demand_slots"]),
+            "optional_arg_queries": sorted(optional_args),
             "sweep_agreement": {
                 k: {"agree": a, "total": t,
                     "rate": round(a / t, 4) if t else None}
@@ -327,6 +451,9 @@ def cmd_check() -> None:
     for kind, st in s["sweep_agreement"].items():
         if st["total"] and st["rate"] is not None and st["rate"] < 0.85:
             errs.append(f"sweep agreement for {kind} too low: {st}")
+    if s.get("arg_demand_verbs", 0) < 100:
+        errs.append(f"arg-demand fingerprint looks broken: "
+                    f"{s.get('arg_demand_verbs')} verbs")
     if errs:
         sys.exit("action contracts check FAILED:\n  - " + "\n  - ".join(errs))
     ag = {k: v["rate"] for k, v in s["sweep_agreement"].items()}

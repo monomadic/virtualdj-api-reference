@@ -372,6 +372,24 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   menu-openers — slot 7 is very likely the options-menu provider — and `get_hwnd` is the
   Windows-only stray. Lead: calibrate slot 7 with a pad-fixture menu test.
 
+- **Method-body fingerprints (2026-07-30).** Each verb's own overridden methods (exact
+  addresses from the vtable) get a light static-analysis pass:
+  - `arg_demand_slots` — slots whose method materializes `E_INVALIDARG` (0x80070057 as a
+    MOVZ/MOVK pair, callees followed one BL level). A method that can demand an argument
+    takes one. Agreement with the sweep's needs-args kind: **114/116** (misses:
+    `browsed_song`, `color` — deeper call chains). 436 verbs demand an argument somewhere,
+    and **301 of them are query verbs that answer bare** — optional arguments the bare-query
+    sweep is structurally blind to. That list (`summary.optional_arg_queries`) is the
+    undocumented-overload probe queue.
+  - `method_strings` — per-slot string references (ADRP/ADD decoding): format strings, enum
+    keywords, UI labels. Example finds: `get_time`'s `short` keyword and time formats;
+    `loaded`'s query method references `opposite` (an argument keyword no other source
+    shows); `pad_page`'s page-name vocabulary.
+  - What this canNOT do yet: argument **types**. Param access is inlined (no shared helper
+    call discriminates text-arg from numeric-arg classes) and library calls land in
+    `__stubs`, outside the scanned range. Types stay a Tier-1 probe job; the `__stubs`
+    import-naming route is the open lead.
+
 Reading caveat: the capability booleans (`executes`, `queries`, `query_text`) describe the
 **base** slots only; a slider's value path lives in its extended interface, so read `family`
 and `extended_interface` together with them.
