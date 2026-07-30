@@ -58,6 +58,9 @@ Start here:
 - [Skin Waveforms](Skin%20Waveforms.md)
   The waveform/rhythm skin element family: `<rhythmzone>`, `<scratchwave>`, `<songpos>`, `<scratch>`, `<blockwave>`, `<beattunnel>`, their children (`<colors>`, `<grid>`, `<cue>`, `<overlay>`, ...), and how they differ from `visual type="waveform"`.
 
+- [Plugin SDK](Plugin%20SDK.md)
+  VirtualDJ's C++ native-code extension point — and the boundary where VDJScript return values are still typed (`GetInfo` → `double`, `GetStringInfo` → text, `SendCommand` → execute). Interface hierarchy, `VDJPARAM_*` parameter model and the `[autoparams]` manifest that all 173 built-in plugins use, plugin UI models, loading, and the interfaces present in the binary that the public headers never declare. The headers themselves are third-party and deliberately not vendored here.
+
 - [Skin XML Inventory (JSON)](skin-xml-inventory.json)
   Element×attribute usage data across built-in/curated skin, pad, samplerbank, video-skin, and mapper XML, cross-checked against the docs. Refresh with `just inventory`; query with `just get-xml-element <name>`, `just find-xml-elements --undocumented`, `just xml-stats`. Do not hand-edit and do not generate a Markdown copy.
 

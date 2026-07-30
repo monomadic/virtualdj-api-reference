@@ -133,6 +133,19 @@ skin_runtime:
     - tests/Skins/PlaceholderConditionTest/README.md
     - tests/Skins/PlaceholderConditionTest/skin.xml
 
+plugin_sdk:
+  primary:
+    - docs/Plugin SDK.md
+  note: >-
+    C++ native-code extension point, and the boundary where VDJScript results are
+    still typed: GetInfo -> double, GetStringInfo -> text, SendCommand -> execute.
+    Also the VDJPARAM_* model and the [autoparams] manifest used by all 173
+    built-in plugins. Headers are third-party and NOT vendored (no license grant);
+    fetch to vendor/, which is gitignored.
+  related:
+    - docs/HTTP Control Interface.md
+    - docs/Undocumented VDJScript Candidates.md
+
 skin_sdk:
   primary:
     - docs/Skin SDK.md

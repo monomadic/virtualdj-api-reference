@@ -216,6 +216,7 @@ stays valid. The distinction:
 | HTTP control interface | Available and cheap. Preferred first instrument. Requires the Network Control plugin enabled and a Pro license. |
 | Network protocol | Available; needs a Bonjour advert and, for capture, one real device. Reconnects depend on the per-device "Connect automatically" checkbox. |
 | Live pad tests | Available; needs a fixture installed and a human to read the UI. |
+| Introspection plugin (planned) | **Not built yet.** A read-only C++ plugin calling `GetInfo`/`GetStringInfo` would be a fifth Tier-1 channel reading *native* types and raw HRESULTs, without the text flattening the HTTP channel imposes — see [Plugin SDK.md](Plugin%20SDK.md). Nothing may be claimed from it until it exists and records build + context like any other Tier-1 run. |
 | Agent driving the window | **Method is valid but not wired up in this environment** — no screen-control tooling is present, so UI-only steps (clicking Connect in Config → Controllers, reading a dialog) currently have to be delegated to the user. Anything blocked on this is `Untested`, not `Blocked`. |
 
 ## Mapping the existing source labels
