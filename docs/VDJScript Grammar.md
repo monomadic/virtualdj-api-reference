@@ -240,19 +240,48 @@ normally because the false branch is never taken. Do not rely on that.
 
 ## Boolean composition with `&&`
 
-`&&` is boolean AND over queries, and it binds tighter than `?`, so `a && b ? c : d` uses
-`a && b` as the condition. But it **short-circuits destructively** (`HTTP`):
+**Corrected 2026-07-30 — `&&` is not a distinct operator, and it does not bind into a
+conditional.** The previous version of this section said "`&&` is boolean AND over queries, and
+it binds tighter than `?`, so `a && b ? c : d` uses `a && b` as the condition", and read
+`off && on ? get_version : get_clock` returning `no` as "the ternary never ran". Both were
+wrong. They were inferred from returned values alone — exactly the mistake
+[Evidence Standards](Evidence%20Standards.md) rule 4 warns about — and two independent checks
+refute them.
 
-| Script | Result | |
+**Structure** (Button Editor parse hint): in `get_version && get_bpm ? get_text "A" : get_text
+"B"` the guard for the true branch is `get_bpm` — *not* `get_version && get_bpm`. Replacing
+`&&` with `&` gives byte-identical guards. The condition is only the statement immediately
+before the `?`.
+
+**Behaviour** (`HTTP`, action position with independent readback — the ternary *does* run):
+
+| Script | `$a` | `$b` | |
+| --- | --- | --- | --- |
+| `off && on ? set '$a' 1 : set '$b' 1` | **1** | 0 | true branch taken — condition is `on` |
+| `off &  on ? set '$a' 1 : set '$b' 1` | **1** | 0 | identical to `&&` |
+| `on  && on ? set '$a' 1 : set '$b' 1` | **1** | 0 | |
+| `off && off ? set '$a' 1 : set '$b' 1` | 0 | **1** | false branch — condition is `off` |
+
+So a false left operand does **not** abort anything. `off && on ? …` takes the *true* branch,
+because the condition is `on`.
+
+### What `&&` actually changes: which statement's value a query returns
+
+`&` and `&&` are both statement separators. They differ only in the value a *query* reports
+(`HTTP`, with `on`→`yes` and `off`→`no` bare):
+
+| Script | Returns | Rule |
 | --- | --- | --- |
-| `on && on ? get_version : get_clock` | `2026` | true branch |
-| `on && off ? get_version : get_clock` | `02:15 PM` | false branch, as expected |
-| `off && on ? get_version : get_clock` | `no` | **ternary never ran** |
-| `off && off ? get_version : get_clock` | `no` | **ternary never ran** |
-| `off ? get_version : get_clock` | `02:15 PM` | plain ternary is fine |
+| `on  & on ? get_version : get_clock` | `yes` | `&` always reports the **first** statement |
+| `off & on ? get_version : get_clock` | `no` | " |
+| `on  && on ? get_version : get_clock` | `2026` | `&&` with a **true** left reports the **right** |
+| `on  && off ? get_version : get_clock` | `06:48 AM` | " (ternary took its false branch) |
+| `off && on ? get_version : get_clock` | `no` | `&&` with a **false** left reports the **left** |
+| `off && off ? get_version : get_clock` | `no` | " |
 
-A false *left* operand aborts the whole script and yields `no`; the conditional is
-discarded. A false right operand behaves normally.
+That is short-circuit AND semantics applied to the **reported value only** — false-left reports
+the left, true-left reports the right — while both statements execute either way. It is a
+value-selection rule, not a guard, and it never reaches into a following conditional.
 
 **In action position `&&` does not guard anything** (`HTTP`). This is the dangerous half:
 
@@ -265,8 +294,11 @@ discarded. A false right operand behaves normally.
 
 `&&` in front of an action behaves exactly like `&`: both sides run regardless. Anyone
 writing `condition && action` expecting a guard gets the action unconditionally, with no
-error. **Use a ternary with a `nothing` false branch.** Treat `&&` as a query-composition
-operator only, and prefer a plain ternary even there.
+error. **Use a ternary with a `nothing` false branch.**
+
+This row was always right, and it is now the general case rather than the exception: `&&`
+never guards anything, in any position. **Treat `&&` as `&` with a different value-reporting
+rule, and use a ternary whenever you mean "only if".**
 
 ## Arguments and quoting
 
@@ -458,8 +490,11 @@ Do not guess in these gaps; test and record.
 - **Backtick boundaries in nested quoting**: `` param_equal "`get_text 'x'`" "x" ? on : off ``
   — and more usefully, which surfaces interpolate backticks at all, since HTTP does not.
 - **The exact chain ceiling** and what drives it (parse buffer? execution budget?).
-- **Whether `&&`'s query-position short-circuit is deliberate** or a parse artefact — the
-  action-position behaviour suggests `&&` may simply not be a distinct operator.
+- ~~**Whether `&&`'s query-position short-circuit is deliberate** or a parse artefact~~ —
+  **answered 2026-07-30**: `&&` is not a distinct operator structurally (identical parse to
+  `&`, and identical action-position behaviour with readback). It only changes which
+  statement's value a query reports. See
+  [Boolean composition with `&&`](#boolean-composition-with-).
 - **Operator-lookalike names in verb argument position**, e.g. a verb whose parameter is
   literally `on`, where a constant and a value collide. `set` is settled; other verbs are not.
 

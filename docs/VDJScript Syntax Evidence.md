@@ -147,6 +147,42 @@ conditions, so the composition is legible but not maximally explicit. Repeating 
 distinct conditions (say `get_version ? … : get_bpm ? … : …`, expecting
 `not get_version & get_bpm`) would remove any residual doubt about which term comes from where.
 
+### Further results from the guard hint (all `Local test`, 2026-07-30)
+
+**Deck/scope wrappers are part of the guard.** `deck 1 get_version ? …` reports
+`condition: deck 1 get_version`, negating to `condition: not deck 1 get_version`. Chained with
+a second scope, the guards compose with the scope intact:
+
+```vdjscript
+deck 1 get_version ? get_text "A" : deck 2 get_version ? get_text "B" : get_text "C"
+```
+
+→ A: `deck 1 get_version` · B: `not deck 1 get_version & deck 2 get_version` ·
+C: `not deck 1 get_version & not deck 2 get_version`. So a deck wrapper binds into the
+condition it precedes, and deck-scoped else-if ladders read exactly as written — useful for
+mapper authors, where mis-scoped conditionals are a common bug.
+
+**Backticks are not expanded, and do not terminate a quoted argument.** The guard shows the
+backticked text **verbatim**, unresolved:
+
+| Script | Guard (true branch) |
+| --- | --- |
+| ``get_text "`get_bpm`" ? …`` | ``get_text "`get_bpm`"`` |
+| ``param_equal "`get_bpm` X" "Y" ? …`` | ``param_equal "`get_bpm` X" "Y"`` |
+
+In the second, the trailing ` X` stays **inside** the same quoted argument and `"Y"` remains a
+separate second argument. So a closing backtick does not end the argument — the quotes do. This
+corroborates [Backticks are a surface feature, not a parser
+feature](VDJScript%20Grammar.md#backticks-are-a-surface-feature-not-a-parser-feature) and
+answers the *backtick boundaries in nested quoting* gap: the parser sees one quoted string and
+never interprets its contents.
+
+**Operator-lookalike words in argument position stay arguments.** `set '$a' on ? …` reports
+`condition: set '$a' on` — the whole verb-plus-arguments expression is the condition, with `on`
+absorbed as `set`'s argument rather than read as a constant. `get_text "on" ? …` likewise reports
+`condition: get_text "on"`. Two side notes: a ternary condition may be an *action* verb (`set`),
+and the negated forms are `not set '$a' on` / `not get_text "on"`.
+
 **Reproduction note.** The hint is easy to miss: it is low-contrast grey beneath the Action box,
 appears only for the construct under the cursor, and is transient. Click precisely inside the
 statement and read immediately.
@@ -352,8 +388,9 @@ still-open ones are listed in its *Not yet established* section.
 | Empty false branch behavior | `a ? b :` and `a ? b : nothing` | **Answered**: errors when reached; `nothing` has no query value |
 | Query chain vs action chain | `a && b ? c : d` compared with `a & b ? c : d` | **Answered**: `&` separates statements (query returns the first); `&&` is boolean AND that short-circuits destructively on a false left operand |
 | Parameter tokenization | `effect_stems vocal on`, `effect_stems 'vocal' on`, `effect_stems "vocal" on` | **Answered**: all three equivalent for single tokens; quotes mandatory once a value contains a space |
-| Backtick expression boundaries | ``param_equal "`get_text 'x'`" "x" ? on : off`` | Open — but backticks are now known not to substitute in HTTP argument position at all |
-| Word/operator ambiguity | verbs or parameters named near constants such as `on`, `off`, `true`, `false`, `nothing` | Open |
+| Backtick expression boundaries | ``param_equal "`get_bpm` X" "Y" ? …`` | **Answered 2026-07-30 (parse hint)**: the guard shows the backticked text verbatim and unresolved, the trailing ` X` stays inside the same quoted argument, and `"Y"` remains a separate argument. Quotes delimit arguments; backticks do not |
+| Word/operator ambiguity | `set '$a' on ? …`, `get_text "on" ? …` | **Answered 2026-07-30 (parse hint)**: `on` in argument position is absorbed as an argument — the guard is the whole `set '$a' on` expression, not a constant comparison. Still open for a verb whose *parameter name* collides with a constant |
+| `&&` — a real operator? | `get_version && get_bpm ? get_text "A" : get_text "B"` vs the same with `&` | **Answered 2026-07-30**: no. Byte-identical guards (`get_bpm`), and identical action-position behaviour under HTTP readback. `&&` only changes which statement's value a *query* reports. Rewritten in [VDJScript Grammar](VDJScript%20Grammar.md#boolean-composition-with-) |
 | Deck/scope wrappers | `deck 1 play ? action_a : action_b`, `all_decks play` | **Answered**: a deck wrapper covers a following conditional; out-of-range decks are accepted silently; `all_decks` is action-only and cannot wrap a query |
 
 For each case, record three layers:
