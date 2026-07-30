@@ -92,8 +92,43 @@ is the instrument of choice for every open ternary-binding question below — br
 chained-vs-nested `else if`, and backtick boundaries — because those are exactly the cases the
 runtime cannot answer (a query returns only the first statement's value).
 
-Open: the full label vocabulary is unknown (`condition:` is the only one observed so far), as is
-whether every construct gets a hint or only some.
+**What the hint actually reports: the effective guard condition, not the branch name.**
+Moving the cursor through all four statements of
+
+```vdjscript
+get_version ? get_text "A" & get_text "B" : get_text "C" & get_text "D"
+```
+
+gives (`Local test`, 2026-07-30, four screenshots):
+
+| Cursor in | Hint line |
+| --- | --- |
+| `get_text "A"` | `condition: get_version` |
+| `get_text "B"` | `condition: get_version` |
+| `get_text "C"` | `condition: not get_version` |
+| `get_text "D"` | `condition: not get_version` |
+
+The editor **negates the condition for the false side** rather than labelling the branch. So the
+mental model VirtualDJ itself uses is: *every statement carries a guard, and the hint tells you
+that guard.* Any statement's execution condition can be read directly, which is a far more
+useful primitive than a branch label — and for nested or chained ternaries it should compose
+into a compound guard, making binding directly legible.
+
+**This case also validates the instrument itself.** Both-sides branch binding was already
+settled behaviorally over HTTP by variable readback
+([VDJScript Grammar](VDJScript%20Grammar.md#conditionals): `a=1 b=1 c=0 d=0` when true,
+`a=0 b=0 c=1 d=1` when false). The parse hint reports exactly the same structure. That is the
+first direct comparison between the **editor's** parser and the **runtime's** behavior, and they
+agree — which partially answers the standing caveat that the two had never been shown to be the
+same code. One agreement is not proof they always agree, but it is the first evidence that hint
+output can be trusted about the runtime, and it raises the value of the hint for the questions
+HTTP *cannot* reach.
+
+**Reproduction note.** The hint is easy to miss: it is low-contrast grey beneath the Action box,
+appears only for the construct under the cursor, and is transient. Click precisely inside the
+statement and read immediately.
+
+Open: whether labels other than `condition:` exist, and whether every construct produces a hint.
 
 **This makes the editor a syntax-validation channel.** A construct can be checked for
 *structural acceptance* by typing it and reading the colouring, with no execution and no side
@@ -287,7 +322,7 @@ still-open ones are listed in its *Not yet established* section.
 
 | Question | Test shape | Status |
 | --- | --- | --- |
-| Conditional branch extent | `play ? action_a & action_b : action_c & action_d` | Open — trailing-chain binding is settled, both-sides is not. **Now cheaply probeable**: the highlighter colours true/false branches differently (above), so the branch extent is directly visible — type it and read where green ends and red begins |
+| Conditional branch extent | `get_version ? get_text "A" & get_text "B" : get_text "C" & get_text "D"` | **Answered — and this row was stale.** [VDJScript Grammar](VDJScript%20Grammar.md#conditionals) settled it over HTTP with variable readback (`a=1 b=1 c=0 d=0` / `a=0 b=0 c=1 d=1`). The parse hint **independently corroborates**: A/B report `condition: get_version`, C/D report `condition: not get_version` |
 | **Chained ternaries** (community confusion point) | `a ? b : c ? d : e`, then `a ? b ? c : d : e`, then a 4-deep chain | Open — and the highlighter is the right instrument. Associativity was answered for the *nested* form over HTTP, but the **chained** form (`else-if` style) is what trips people up in practice, and branch-role colouring shows directly which `:` binds to which `?` without executing anything. Run the chain lengths in order and record where the colouring stops making sense |
 | Does the editor flag an unknown verb? | `zzz_bogus ? get_text "A" : get_text "B"` vs a real head verb | **Answered 2026-07-30: no.** `get_version`, `zzz_bogus` and `browser_filter` render identically. The highlighter parses shape, not vocabulary — it colours a well-formed ternary built entirely from nonexistent verbs. The editor is a **grammar instrument, not a linter** |
 | Conditional associativity | `a ? b ? c : d : e` | **Answered**: standard, `a ? (b ? c : d) : e` |

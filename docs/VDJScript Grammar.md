@@ -25,7 +25,8 @@ and not writing script, you can stop after this section.
   reports. See [the correction below](#correction-2026-07-30-never-reports-describes-the-runtime-not-the-application).)
 - `&` **separates statements**, it is not "and". `a & b` runs both.
 - **Never put cleanup after a ternary.** In `cond ? a : b & c`, the `& c` belongs to the
-  *false branch*. Put unconditional actions first: `c & cond ? a : b`.
+  *false branch*. Put unconditional actions first: `c & cond ? a : b`. Each branch takes its
+  whole chain, on both sides — see [Conditionals](#conditionals).
 - **Ternary branches must be verbs**, not literals. `on ? get_version : get_clock` works;
   `on ? 'A' : 'B'` errors. Neither branch may be empty.
 - **Quote any argument containing a space.** `'Beat Grid'` works, bare `Beat Grid` does
@@ -181,6 +182,12 @@ about a chain that follows the *last* branch, not about chains in general:
 on  ? set '$a' 1 & set '$b' 1 : set '$c' 1 & set '$d' 1   # -> a=1 b=1, c=0 d=0
 off ? set '$a' 1 & set '$b' 1 : set '$c' 1 & set '$d' 1   # -> a=0 b=0, c=1 d=1
 ```
+
+Corroborated independently by the Button Editor's parse hint (`Local test`, 2026-07-30): with
+the cursor in each statement of `get_version ? get_text "A" & get_text "B" : get_text "C" &
+get_text "D"`, the editor reports `condition: get_version` for A and B, and `condition: not
+get_version` for C and D. VirtualDJ's own model is a **per-statement guard**, negated on the
+false side — see [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md).
 
 **Nesting associates the standard way** (`Pad`, `HTTP`): `a ? b ? c : d : e` parses as
 `a ? (b ? c : d) : e`, so clamped selection composes safely.
