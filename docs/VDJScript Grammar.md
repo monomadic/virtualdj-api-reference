@@ -19,8 +19,10 @@ distinction is not pedantic.
 Enough to write correct VDJScript. If you are only editing skin layout or XML structure
 and not writing script, you can stop after this section.
 
-- **Nothing you write will be reported as a syntax error.** Wrong script silently does
-  something else. Assume nothing; test it.
+- **The runtime will never report a syntax error.** Wrong script silently does something
+  else. Assume nothing; test it. (The *editor* is a different story — it autocompletes real
+  verbs and colours ternary branches by role, so it validates far more than the runtime
+  reports. See [the correction below](#correction-2026-07-30-never-reports-describes-the-runtime-not-the-application).)
 - `&` **separates statements**, it is not "and". `a & b` runs both.
 - **Never put cleanup after a ternary.** In `cond ? a : b & c`, the `& c` belongs to the
   *false branch*. Put unconditional actions first: `c & cond ? a : b`.
@@ -77,10 +79,42 @@ Only the leading verb is checked: `zzz_bogus & get_version` errors, while
 `get_version & zzz_bogus` returns `2026` — the bogus second statement is dropped in
 silence.
 
-Consequences: you cannot lint VDJScript by feeding it to VirtualDJ, a working script is no
-evidence that its syntax is right, and a typo in a verb argument produces a no-op rather
-than a complaint. `tools/lint_mappers.py` resolves leading verbs against the verb index
-precisely because the app will not.
+Consequences: a working script is no evidence that its syntax is right, and a typo in a verb
+argument produces a no-op rather than a complaint. `tools/lint_mappers.py` resolves leading
+verbs against the verb index precisely because the *runtime* will not.
+
+### Correction (2026-07-30): "never reports" describes the runtime, not the application
+
+The heading above, and the summary line "nothing you write will be reported as a syntax
+error", were written from HTTP and mapper evidence only — the execution path. They are
+accurate about that path and every example above still holds. But they were too broad about
+**VirtualDJ as a whole**, and the distinction matters:
+
+> VirtualDJ **validates considerably more than it reports.** There are two parsing surfaces.
+
+| Surface | Behavior |
+| --- | --- |
+| **Runtime** (HTTP, mappers, pads, skins) | Lenient by design. Head verb checked; argument junk discarded; the verb runs. Reports almost nothing. |
+| **Editor** (Button Editor / mapper Action box) | Validating. Autocomplete offers only real verbs — all 955 canonical, aliases excluded — and the highlighter colours ternary **structure**, giving the condition, true branch and false branch distinct colours. |
+
+The editor could not colour branches by role unless a structural parser were running as you
+type. So the app is not ignorant of malformed script; the failure to *tell you* is a property
+of the execution surface, not a limit of VirtualDJ's knowledge. Junk in argument position is
+recognised and discarded, not unnoticed.
+
+The practical advice is unchanged — **test everything, because the runtime will not complain**
+— but one earlier consequence was wrong and is withdrawn: *"you cannot lint VDJScript by
+feeding it to VirtualDJ."* You cannot lint it by **executing** it. You may well be able to lint
+it by **typing it into the Button Editor and reading the colours**, with no execution and no
+side effects. See [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md).
+
+**Not yet established, and the test that settles it:** we know autocomplete *offers* only real
+verbs, which is not the same as *flagging* a bad one already typed. Type `zzz_bogus ? play :
+stop` into the Action box and see whether the bogus head verb is coloured differently from a
+real one. If it is, the editor is a genuine linter for verb existence as well as structure; if
+it is not, the editor validates shape only. Until that is run, treat editor colouring as a lead
+(rule 3) — it shows what the *highlighter* accepts, and the highlighter has not been shown to
+be the same code as the runtime parser.
 
 Error bodies, when you do get one, are coarse — see the
 [HTTP doc](HTTP%20Control%20Interface.md) for the `E_FAIL` vs `E_INVALIDARG` split. `E_FAIL`
