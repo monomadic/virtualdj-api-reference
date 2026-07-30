@@ -39,6 +39,9 @@ SWEEP = "tests/verb-existence-sweep.json"
 CONTRACTS = "tests/action-contracts.json"
 ARTIFACT = "tests/verb-return-types.json"
 CONTEXTS = ["{v}", "deck 1 {v}", "deck 2 {v}"]
+# A verb's VALUE and its BOOLEAN TRUTH are independent channels: `get_version`
+# answers 2026 yet is false in a conditional. Probe the boolean separately.
+TRUTH_PROBE = "{v} ? get_text 'T' : get_text 'F'"
 BOOL_WORDS = {"yes", "no", "on", "off", "true", "false"}
 
 
@@ -115,6 +118,25 @@ def sweep() -> dict:
             "samples": samples,
             "agreement": reconcile(observed, c),
         }
+        # boolean truth in ternary-condition position — NOT derivable from the value
+        path = "/query?" + urllib.parse.urlencode(
+            {"script": TRUTH_PROBE.format(v=name)})
+        for attempt in (1, 2):
+            try:
+                conn.request("GET", path)
+                tb = conn.getresponse().read().decode(errors="replace").strip()
+                break
+            except (http.client.HTTPException, OSError):
+                conn.close()
+                conn = http.client.HTTPConnection(HOST, PORT, timeout=10)
+                if attempt == 2:
+                    tb = "error:transport"
+        if tb in ("T", "F"):
+            rec["boolean_truth"] = tb == "T"
+            first = next(iter(samples.values()), "")
+            if tb == "F" and first not in ("", "0", "0.0", "no", "off", "false"):
+                # the trap: a value that reads as true, in a verb that is not
+                rec["truthiness_trap"] = True
         if c:
             rec["structural"] = {k: c[k] for k in ("queries", "query_text")}
             if "family" in c:
@@ -124,6 +146,8 @@ def sweep() -> dict:
     from collections import Counter
     types = Counter(r["observed_type"] for r in out.values())
     agrees = Counter(r["agreement"] for r in out.values())
+    truth = [r for r in out.values() if "boolean_truth" in r]
+    traps = sorted(n for n, r in out.items() if r.get("truthiness_trap"))
     typed = sum(n for t, n in types.items() if t not in ("untyped", "mixed"))
     denom = agrees["agree"] + agrees["conflict"]
     return {
@@ -135,6 +159,10 @@ def sweep() -> dict:
             "agreement_rate": round(agrees["agree"] / denom, 4) if denom else None,
             "conflicts": sorted(n for n, r in out.items()
                                 if r["agreement"] == "conflict"),
+            "boolean_probed": len(truth),
+            "boolean_true": sum(1 for r in truth if r["boolean_truth"]),
+            "truthiness_traps": len(traps),
+            "truthiness_trap_verbs": traps,
         },
         "verbs": out,
     }
@@ -160,7 +188,9 @@ def cmd_check():
         sys.exit("return-type sweep check FAILED:\n  - " + "\n  - ".join(errs))
     print(f"return-type sweep check passed: {s['query_verbs']} query verbs, "
           f"{s['typed']} typed {s['observed_types']}, "
-          f"agreement {s['agreement_rate']} ({len(s['conflicts'])} conflicts)")
+          f"agreement {s['agreement_rate']} ({len(s['conflicts'])} conflicts), "
+          f"boolean-true {s.get('boolean_true')}/{s.get('boolean_probed')}, "
+          f"{s.get('truthiness_traps')} truthiness traps")
 
 
 def main():

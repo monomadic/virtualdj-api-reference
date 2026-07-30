@@ -213,7 +213,16 @@ get_version ? get_text "1" & get_text "2" & … & get_text "40" : nothing
 Then walk the cursor toward the tail and find the first statement that stops reporting
 `condition: get_version`. If the hint gives out at the same length the runtime does, the ceiling
 is a **parse** limit; if the hint keeps reporting past the runtime's cutoff, it is an
-**execution** limit. That distinction is currently unknown and is worth one careful run.
+**execution** limit. That distinction is currently unknown.
+
+**Blocked by the UI, though** (`Local test`, 2026-07-30). The hint survives a chain of roughly
+55 statements, but once the pasted script fills the Action box the box expands and **the hint
+line is no longer displayed at all** — it is pushed out of view rather than reporting anything
+different. Since the documented runtime ceiling is ~142-152 `set` statements, the interesting
+region is exactly where the instrument goes blind. Also note the condition must be genuinely
+boolean-true or the whole chain sits in the untaken branch — use `on ?`, not `get_version ?`
+(see [A verb's value and its truth are different
+channels](VDJScript%20Grammar.md#a-verbs-value-and-its-truth-are-different-channels)).
 
 **This makes the editor a syntax-validation channel.** A construct can be checked for
 *structural acceptance* by typing it and reading the colouring, with no execution and no side

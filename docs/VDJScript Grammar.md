@@ -29,6 +29,9 @@ and not writing script, you can stop after this section.
   whole chain, on both sides — see [Conditionals](#conditionals).
 - **Ternary branches must be verbs**, not literals. `on ? get_version : get_clock` works;
   `on ? 'A' : 'B'` errors. Neither branch may be empty.
+- **A verb's value is not its truth.** `get_version` reports `2026` and is *false* as a
+  condition; no slider verb is ever true. 171 of 652 query verbs are traps — check with
+  `just verb-return-type <name>` before using one as a condition.
 - **Quote any argument containing a space.** `'Beat Grid'` works, bare `Beat Grid` does
   not. Single and double quotes are equivalent; quotes are optional for single tokens.
 - **`&&` never guards an action.** `cond && do_thing` runs `do_thing` whatever `cond` is.
@@ -164,6 +167,51 @@ The `set` runs unconditionally, then the ternary evaluates independently.
 ```vdjscript
 query ? true_branch : false_branch
 ```
+
+### A verb's value and its truth are different channels
+
+**This is the biggest trap in the language and it is invisible from the value.** A condition
+asks a *boolean* question. It does **not** mean "the value is non-zero" or "the value is
+non-empty". `HTTP`, 2026-07-30:
+
+```
+get_version                                 -> 2026
+get_version ? get_text 'T' : get_text 'F'   -> F      # returns 2026, but is FALSE
+```
+
+Swept across all 652 query verbs: **only 106 are boolean-true** in condition position, and
+**171 return a value that reads as true while the verb is false**. The pattern is systematic:
+
+| Observed return type | boolean-true |
+| --- | --- |
+| `float` | **0 / 68** |
+| `percent` | **0 / 4** |
+| `text` | 2 / 72 |
+| `int` | 35 / 145 |
+| `bool` | 68 / 334 (the rest are genuinely off at rest) |
+
+By implementation family, **no slider verb is ever boolean-true (0 / 71)**. So `volume` → `1`,
+`pitch` → `0.5`, `zoom` → `0.53`, `stem_color` → `white` are all **false** as conditions.
+
+```vdjscript
+volume ? action_a : action_b        # WRONG: volume reports 1, but this always takes action_b
+get_bpm ? action_a : action_b       # WRONG: same trap
+```
+
+Use a verb that is boolean by design (`loaded`, `is_*`, `has_*`, toggles), or make the
+comparison explicit:
+
+```vdjscript
+param_bigger 'volume' 0.5 ? action_a : action_b
+var_equal '$mode' 1 ? action_a : action_b
+```
+
+Check any verb before using it as a condition — `just verb-return-type <name>` reports
+`boolean_truth` alongside the value, and flags `truthiness_trap` for the 171.
+
+This follows from the typing model in [Plugin SDK](Plugin%20SDK.md): the host exposes a numeric
+channel and a text channel, and the boolean a conditional consumes is a third question that most
+value-reporting verbs simply do not answer — defaulting to false.
 
 **A trailing chain binds to the false branch** (`Pad`). In `cond ? a : b & c`, `c` runs only
 when `cond` is false — observed `a=1 b=0 c=0` when true, `a=0 b=1 c=1` when false. This is
