@@ -430,13 +430,17 @@ Contract fields to establish per verb:
      `verb <form>` resolve or return `E_INVALIDARG`? Query-position probing is
      side-effect-free; execute-position confirmation only for whitelisted safe verbs, with
      independent readback (rule 4), never `system`/file/database verbs.
-- **Capability matrix** (execute vs query vs both): the old build's `nm` symbols gave
-  per-class `onExecute`/`onQuery`/`onQueryBool`/`onQueryText`; on this build those survive
-  only as ~230 lambda typeinfos, NOT a full matrix (checked 2026-07-29). Recoverable
-  structurally via **vtable-override extraction** (compare each `ACTION_` class's vtable
-  slots against the base class's defaults; we already parse chained fixups) — worth one
-  attempt because it yields return-type leads for all 954 classes at once. If it resists,
-  the two Tier-1 sweeps above cover the same ground observationally.
+- **Capability matrix: DONE (2026-07-29)** — the vtable-override extraction worked on the
+  first attempt. [tools/extract_action_contracts.py](tools/extract_action_contracts.py) walks
+  the surviving RTTI (name → typeinfo → vtable) and emits
+  [tests/action-contracts.json](tests/action-contracts.json): 955 classes ↔ 955 ids as a
+  checked bijection, capability matrix (execute / bool / number / text query) with slot
+  meanings calibrated from HTTP-proven verbs, family taxonomy from the class hierarchy
+  (100 toggles, 56 sliders), and context mixins. Sweep agreement 652/652 (query) and
+  181/186 (action-only); the 5 outliers surfaced a lead — slot 7 is probably the
+  options-menu provider (`browser_export`, `*_options` override only it). Gated in
+  `just check`; query with `just verb-contract <name>`. See the Candidates doc §Contract
+  structure.
 
 Storage: a `tests/verb-contracts.json` artifact + query tool per repo convention, promoted
 into verb-store fields once stable. End state: `just get-verb <name>` answers the whole

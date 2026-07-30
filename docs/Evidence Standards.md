@@ -202,6 +202,7 @@ stays valid. The distinction:
 | Tool | State |
 | --- | --- |
 | `tools/extract_verb_table.py` | **Authoritative for existence, aliases, hidden flag, and category** (rule 1). Emits `tests/verb-table.json`; `just verb-table <name>`. |
+| `tools/extract_action_contracts.py` | **Current for contract structure** (Tier 2): per-verb implementation class via the RTTI graph (a checked 955/955 bijection with verb-table ids), capability matrix from vtable overrides (slot meanings calibrated against HTTP-proven verbs at build time), family from the class hierarchy. Predicts; Tier-1 sweeps confirm. `just verb-contract <name>`. |
 | `tools/sweep_verb_existence.py` | **Current for kind.** HTTP error-code sweep; `just verb-probe <name>`. Existence questions go to the verb table first; the sweep corroborates and classifies. |
 | `tools/extract_binary_verbs.py` | **Corroboration only** — superseded by the verb table for every question it used to answer (rule 1a). Kept because its three sources (mangled `ACTION_` classes, language catalog, sorted name table) are genuinely different data from the verb table and so can still cross-check it. `just binary-verb <name>`. |
 | `tools/extract_vdjscript_taxonomy.py` | **Stale on this build** (address-pinned) — and reads the *same structures* as `extract_verb_table.py`, so even when it ran it was never an independent check of it (rule 1c2). Its lasting contribution is provenance: it located the tables via `DLGActionWizard`, which is what ties them to the Button Editor. |

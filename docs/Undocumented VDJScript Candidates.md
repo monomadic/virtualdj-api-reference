@@ -333,6 +333,42 @@ proves a structure exists; it says nothing about which UI reads it.
 Query it per verb with `just verb-table <name>`, which now reports `category` alongside `id`,
 `flags`, and any same-id siblings.
 
+### Contract structure — the ACTION_ classes (2026-07-29)
+
+The verb table settles existence; the **RTTI graph** behind it yields each verb's contract
+skeleton. The symbol table is stripped on this build, but every `ACTION_` class's
+typeinfo-name string, `std::type_info` object, and vtable survive in
+`__TEXT,__const` / `__DATA_CONST,__const`, and the chain resolves completely:
+
+- **955 classes ↔ 955 distinct verb ids, a checked bijection** — every id matches exactly one
+  class via `ACTION_<spelling>`, no leftovers in either direction. The class-per-verb model is
+  now structural fact, not inference from mangled strings.
+- **The base-class hierarchy is a contract taxonomy**: `IActionSwitch` → toggle (100 verbs
+  incl. subclass chains), `IActionSlider`/`IActionSlider2` → continuous 0..1 (56),
+  `IParamValuesAction` → enum-keyword args, `IActionCue`/`IActionPad`/`IActionSavedLoop`/… →
+  family contracts; multiple-inheritance mixins (`IActionPlugin` 35, `IActionSampler` 24)
+  scope a verb's context.
+- **The vtable override matrix is the capability matrix.** Comparing each class's slots to
+  `IAction`'s defaults, with slot meanings calibrated from HTTP-proven verbs (never
+  hard-coded): slot 2 onExecute, 3 onQueryBool, 4 onQueryText, 5 onQuery-number. Extension
+  interfaces show as vtable length (sliders: ~22 slots vs 12).
+- **Independent-check quality**: agreement with the Tier-1 HTTP sweep is **652/652 (100%)**
+  for query verbs and 181/186 (97.3%) for action-only. The two derivations share nothing —
+  one reads compiled vtables, the other probed a live instance — so this is real
+  corroboration, of exactly the kind rule 1g demands.
+- The five action-only "disagreements" are a finding, not noise: `browser_export`,
+  `cues_options`, `loop_options`, `timecode_options` override **only slot 7** and are all
+  menu-openers — slot 7 is very likely the options-menu provider — and `get_hwnd` is the
+  Windows-only stray. Lead: calibrate slot 7 with a pad-fixture menu test.
+
+Reading caveat: the four capability booleans describe the **base** slots only. A slider's
+numeric value path lives in its extended interface, so `query_number` can be false on a verb
+that plainly returns a number (`crossfader`: `query_number=false`, `family=slider`,
+`vtable_len=22`). Read `family` and `extended_interface` together with the slot flags.
+
+Artifact: `tests/action-contracts.json`; query with `just verb-contract <name>`. Tier 2:
+it predicts capability, return type, and family — Tier-1 probes confirm behavior (rule 3).
+
 Everything below this section predates the table. The string/context adjudication it describes
 is **superseded** for existence questions and kept as a record of method, not as the current
 test.

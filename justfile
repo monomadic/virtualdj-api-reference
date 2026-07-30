@@ -129,6 +129,13 @@ verb-table name:
 extract-verb-table:
     @python3 tools/extract_verb_table.py > tests/verb-table.json
 
+# STRUCTURAL CONTRACT: capability, query return type, family from ACTION_ RTTI.
+verb-contract name:
+    @python3 tools/extract_action_contracts.py --get "{{name}}"
+
+extract-action-contracts:
+    @python3 tools/extract_action_contracts.py > tests/action-contracts.json
+
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
@@ -162,6 +169,7 @@ check:
     python3 tools/sweep_verb_existence.py --check
     python3 tools/extract_binary_verbs.py --check
     python3 tools/extract_verb_table.py --check
+    python3 tools/extract_action_contracts.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
