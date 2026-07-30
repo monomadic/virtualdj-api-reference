@@ -6397,7 +6397,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP, 2026-07-30): accepts a trailing argument — bare returns one time mode (286667) while ANY argument, including an unrecognized word, returns another (161780, matching 'elapsed'/'short'). Distinguishing 'short' from fallback needs value-format comparison; unknown args are silently defaulted, never E_INVALIDARG."
+   ],
    "section": "Get (Query Actions)",
    "description": "Elapsed time",
    "example": "get_time \"remain\" \"short\"",
@@ -8164,7 +8166,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP, 2026-07-30): binary method_strings shows the query method references 'opposite'; probing found unknown args are silently ignored ('loaded bogusword' → yes), so confirming 'loaded opposite' needs discriminating state (exactly one deck loaded)."
+   ],
    "section": "Loading",
    "description": "Check if loaded",
    "example": "loaded"

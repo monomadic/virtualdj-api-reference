@@ -431,11 +431,14 @@ Contract fields to establish per verb:
      fingerprinting failed; the route is naming `__stubs` targets via the chained-fixups
      import table (strcmp/strtod-class calls), plus a two-level string scan for keyword
      vocabularies.
-  2. **HTTP probe in query position** (Tier 1): for each candidate form, does
-     `verb <form>` resolve or return `E_INVALIDARG`? Start with the 301 optional-arg
-     queries and the recovered keywords. Query-position probing is side-effect-free;
-     execute-position confirmation only for whitelisted safe verbs, with independent
-     readback (rule 4), never `system`/file/database verbs.
+  2. **HTTP probe in query position** (Tier 1): start with the 301 optional-arg queries and
+     the recovered keywords. **Method note (2026-07-30, probed live)**: optional-arg verbs
+     silently ignore unknown arguments (`loaded bogusword` → `yes`), so error codes cannot
+     confirm a form — probes must compare VALUES across forms in a state where they would
+     differ (e.g. `loaded opposite` with exactly one deck loaded). `get_time` demonstrated
+     the pattern: bare returns one mode, any argument switches to another. Query-position
+     probing is side-effect-free; execute-position confirmation only for whitelisted safe
+     verbs, with independent readback (rule 4), never `system`/file/database verbs.
   3. **Shipped-XML corpus mining + appendix parsing** (Tier 2): demoted to corroboration of
      actually-used forms — the binary and the probes discover; the corpus confirms
      parser-accepted usage.
