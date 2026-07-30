@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 14,
-    "Pass": 39,
-    "Untested": 975
+    "Pass": 40,
+    "Untested": 974
    },
    "documented": 764,
-   "tested_pass": 39,
+   "tested_pass": 40,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -6937,13 +6937,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "VirtualDJ 2026 (HTTP, 2026-07-30): bare form returns E_INVALIDARG (argument required); 'handshake \"nonce\"' returns exactly 128 bytes of NON-UTF8 binary — a 1024-bit RSA block. Byte-identical for a repeated nonce (deterministic, so no random padding) and completely different for another nonce. Matches the bundled catalog description: a plugin passes any string, decrypts the result with VirtualDJ's handshake public key, and checks it matches. NOTE: reachable over the HTTP control channel, so that channel is a signing oracle for the handshake key — a shim host can proxy a plugin's challenge to a real VirtualDJ. See docs/Plugin SDK.md."
+   ],
    "section": "System Info",
    "description": "Developer plugin environment handshake",
-   "example": "handshake 'nonce'"
+   "example": "handshake 'nonce'",
+   "kind": "Query"
   },
   "has_aux": {
    "name": "has_aux",

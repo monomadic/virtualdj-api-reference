@@ -79,6 +79,18 @@ a string-context adjudication. Settled cases: `browser_filter`, `browser_search`
 are absent, therefore not verbs; `remote_action`, `nothing`, and `crash` are present,
 therefore real.
 
+*Scope, added 2026-07-30 — do plugins add verbs?* No, so the table stays complete. The plugin
+SDK offers **no verb-registration call** — every entry point is `DeclareParameter` and its
+typed wrappers — and plugin capability reaches VDJScript through existing verbs that take a
+name or index (`effect_select`, `effect_slider`, `effect_command`). Every plugin-related name
+in the table is a built-in verb *for* plugins (`handshake`, `get_plugindeck`, `pluginsongpos`,
+`show_pluginpage`), and with two online-source plugins installed the table carries no
+vendor-specific name. Native plugins are compiled in, so their contributions are already
+present. Read the rule as **complete for a stock VirtualDJ plus any plugin using the public
+API**: the public headers are a known subset of the live interface, so an internal
+registration path is not excluded by header evidence alone. See
+[Plugin SDK.md](Plugin%20SDK.md).
+
 **Rule 1c — aliases are read off the table, not guessed.** Records **sharing an `id` are the
 same verb**; `flags == 1` marks the alias spelling and the canonical carries `flags == 0`
 (`auto_sync`=1 / `smart_play`=0, `config`=1 / `settings`=0, `hotcue`=1 / `hot_cue`=0). 61

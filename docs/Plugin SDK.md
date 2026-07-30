@@ -157,6 +157,71 @@ use, not a claim.)
 `SETPREVIEW` 0x20 · `POSITION_NOSLIP` 0x40 · `ALWAYSPREFADER` 0x80 · `ALWAYSPOSTFADER` 0x100 ·
 `EPHEMERAL` 0x200 (do not save/load params from the ini).
 
+## Can a plugin add VDJScript verbs? No — it extends the *argument* namespace
+
+This matters for [Evidence Standards](Evidence%20Standards.md) rule 1b, which treats absence
+from the verb table as disproof: if plugins could register verbs, the table would only be the
+built-in set.
+
+**The public SDK has no verb-registration call.** Every registration entry point it offers is a
+parameter declaration — `DeclareParameter` plus its thirteen typed wrappers. There is no
+`DeclareAction`, `RegisterVerb`, `AddCommand`, or equivalent, in any of the four headers.
+
+Instead, plugin capability is surfaced through **existing verbs that take a name or index**:
+
+| A plugin adds | Reached from VDJScript by |
+| --- | --- |
+| An effect (DSP / video FX / transition) | `effect_select "Blur"`, `effect_slider`, `effect_button` — by name or slot index |
+| Effect-specific commands | `effect_command` — *"send a command to this effect"* |
+| Declared parameters | the effect slider/button verbs, by id |
+| An online source | browser entries, not verbs |
+
+Consistent with that, every plugin-related name in the verb table is a **built-in verb for
+plugins**, not a verb from one: `handshake`, `get_plugindeck`, `pluginsongpos`,
+`show_pluginpage`, `effect_command`. And with two Beatport online-source plugins installed on
+the test machine, the table contains no `beatport`/`tidal`/`soundcloud`/`deezer`/`spotify`
+name at all.
+
+**Scope limit, stated honestly.** This is evidence about the *public* SDK and the stock app.
+Native plugins are compiled into the binary, so anything they contribute is already in the
+table. But the public headers are a known subset of the live interface (see the internal
+interfaces above), so an internal registration path cannot be ruled out from headers alone.
+Rule 1b should be read as: **complete for a stock VirtualDJ plus any plugin using the public
+API.** The test that would settle the rest is a built plugin probing for an undocumented
+registration path — queued with the introspection plugin.
+
+## `handshake` — the plugin-authenticity mechanism, and an oracle
+
+`handshake` is a real verb (verb table id 84, category `system`) and it autocompletes in
+VirtualDJ's editor. The bundled catalog documents it (`Official`, `languages.zip`):
+
+> Perform an encrypted handshake to ensure that this plugin is currently being called by a real
+> VirtualDJ environment. Call this passing any string, decrypt the result using VirtualDJ's
+> handshake public key, and check that it matches what you passed.
+
+Observed over HTTP (`Local test`, VirtualDJ 2026, 2026-07-30):
+
+| Call | Result |
+| --- | --- |
+| `handshake` (bare) | `E_INVALIDARG` — argument required |
+| `handshake 'nonce'` | **exactly 128 bytes of binary** (not UTF-8), i.e. a 1024-bit RSA block |
+| same nonce, repeated | **byte-identical** — deterministic, so no random padding |
+| different nonce | completely different 128 bytes |
+
+So a plugin verifies it is talking to genuine VirtualDJ by having it sign a challenge with a
+private key the plugin checks against a bundled public key.
+
+**Worth knowing before building a shim.** Because `handshake` is reachable through the HTTP
+control channel, any process that can reach that port can have VirtualDJ sign arbitrary
+challenges — a signing oracle. A fake host could therefore relay a plugin's challenge to a real
+VirtualDJ and return a valid response, which is precisely the attack the handshake exists to
+prevent. This is directly relevant to the shim-server work in
+[VDJScript Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md): a shim that needs to
+satisfy a plugin's handshake can proxy it, rather than needing the key. Recorded as an
+architectural observation about local software on the tester's own machine; the practical
+exposure is bounded by the same thing that bounds the whole channel — see the security note in
+[HTTP Control Interface](HTTP%20Control%20Interface.md).
+
 ## Plugin user interfaces
 
 `OnGetUserInterface` fills `TVdjPluginInterface8`, whose `Type` selects one of three models:
