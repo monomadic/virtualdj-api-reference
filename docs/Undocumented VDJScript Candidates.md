@@ -385,10 +385,23 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
     keywords, UI labels. Example finds: `get_time`'s `short` keyword and time formats;
     `loaded`'s query method references `opposite` (an argument keyword no other source
     shows); `pad_page`'s page-name vocabulary.
-  - What this canNOT do yet: argument **types**. Param access is inlined (no shared helper
-    call discriminates text-arg from numeric-arg classes) and library calls land in
-    `__stubs`, outside the scanned range. Types stay a Tier-1 probe job; the `__stubs`
-    import-naming route is the open lead.
+  - `keyword_candidates` — **259 verbs**. `__stubs` calls are now named through DYSYMTAB's
+    indirect symbol table (this build is classic `LC_DYLD_INFO_ONLY`, not chained fixups), so
+    a method that references string literals *and* calls `_strcasecmp`/`_memcmp`/… is
+    matching its argument against keywords. This recovers real, undocumented enum arguments:
+    `get_time short`, `loaded opposite`, `get_bpm absolute|ghost|all`, `browser_window
+    browser|sampler|automix|sidelist|karaoke|playlist|remixes`, `sampler_group_volume
+    all|dual|locked|touchrelative`.
+  - What this canNOT do: argument **types**. The `__stubs` route was tried and failed for
+    typing — param access is inlined, and the library calls a verb makes describe what it
+    *does* with an argument, not how it fetches one (`_strcasecmp` shows up in numeric-arg
+    verbs like `goto` too). Types stay a Tier-1 probe job.
+
+**Keywords are a discovery channel, not a confirmation one.** Probed live 2026-07-30:
+optional-arg verbs silently ignore unrecognized words — `browser_window bogus` answers
+exactly as `browser_window sidelist`, and `get_bpm` returned `128` for every keyword on an
+idle deck. So a keyword is confirmed only by preparing state where the forms *would* differ
+(`get_bpm ghost` vs `absolute` needs a pitched deck), never by an error code.
 
 Reading caveat: the capability booleans (`executes`, `queries`, `query_text`) describe the
 **base** slots only; a slider's value path lives in its extended interface, so read `family`

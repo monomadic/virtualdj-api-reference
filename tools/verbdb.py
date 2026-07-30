@@ -272,29 +272,72 @@ def bootstrap(mode: str) -> None:
 
 # ---- commands ---------------------------------------------------------------
 
+def joined_view(name: str, rec: dict) -> dict:
+    """One-stop contract answer: join the extraction/observation artifacts at
+    read time (never copied into the store — the artifacts stay authoritative).
+    Missing artifacts degrade silently to the bare store record."""
+    out = dict(rec)
+
+    def artifact(path):
+        try:
+            return json.load(open(ROOT / path))
+        except (OSError, json.JSONDecodeError):
+            return None
+
+    table = artifact("tests/verb-table.json")
+    if table:
+        t = table["verbs"].get(name)
+        if t:
+            siblings = [n for n, r in table["verbs"].items()
+                        if r["id"] == t["id"] and n != name]
+            out["verb_table"] = {**t, "canonical_spelling": t["flags"] != 1,
+                                 "editor_hidden": t["flags"] == 256,
+                                 **({"same_id_as": siblings} if siblings else {})}
+        else:
+            out["verb_table"] = {"present": False,
+                                 "meaning": "NOT a verb on this build (rule 1b)"}
+    contracts = artifact("tests/action-contracts.json")
+    if contracts and name in contracts["verbs"]:
+        out["contract"] = contracts["verbs"][name]
+    sweep = artifact("tests/verb-existence-sweep.json")
+    if sweep and name in sweep["verbs"]:
+        s = sweep["verbs"][name]
+        out["http_probe"] = {k: s[k] for k in ("status", "kind") if k in s}
+    rtypes = artifact("tests/verb-return-types.json")
+    if rtypes and name in rtypes["verbs"]:
+        r = rtypes["verbs"][name]
+        out["observed_return"] = {"type": r["observed_type"],
+                                  "sample": next(iter(r["samples"].values()), None)}
+    return out
+
+
 def cmd_get(args):
     if not args:
-        sys.exit("usage: get <name>")
+        sys.exit("usage: get <name> [--raw]")
+    raw = "--raw" in args
+    args = [a for a in args if a != "--raw"]
     store = load_store()
     name = args[0]
     rec = store.get(name)
+    view = (lambda n, r: r) if raw else joined_view
 
     # An alias record carries little but a pointer; follow it to the canonical.
     if rec is not None and rec.get("tier") == "alias" and rec.get("canonical"):
         canon = store.get(rec["canonical"])
         if canon:
             print(f"# '{name}' is an alias of '{rec['canonical']}'")
-            print(json.dumps(canon, indent=1, ensure_ascii=False))
+            print(json.dumps(view(rec["canonical"], canon), indent=1,
+                             ensure_ascii=False))
             return
     if rec is not None:
-        print(json.dumps(rec, indent=1, ensure_ascii=False))
+        print(json.dumps(view(name, rec), indent=1, ensure_ascii=False))
         return
 
     # not a record name: maybe it is listed as someone's alias
     for n, r in store.items():
         if name in r.get("aliases", []):
             print(f"# '{name}' is an alias of '{n}'")
-            print(json.dumps(r, indent=1, ensure_ascii=False))
+            print(json.dumps(view(n, r), indent=1, ensure_ascii=False))
             return
 
     pool = set(store) | {a for r in store.values() for a in r.get("aliases", [])}

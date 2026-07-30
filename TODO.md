@@ -427,10 +427,15 @@ Contract fields to establish per verb:
   undocumented-overload queue (`summary.optional_arg_queries`), invisible to the bare sweep.
   `method_strings` recovers per-method keywords (`loaded` → `opposite`, `get_time` →
   `short`). Remaining streams for the *forms and types*:
-  1. **Argument types from the binary — open lead**: param access is inlined so helper-call
-     fingerprinting failed; the route is naming `__stubs` targets via the chained-fixups
-     import table (strcmp/strtod-class calls), plus a two-level string scan for keyword
-     vocabularies.
+  1. **Argument keywords — DONE (2026-07-30)**; **types — closed as not-extractable.**
+     `__stubs` are now named via DYSYMTAB's indirect symbol table (this build is classic
+     `LC_DYLD_INFO_ONLY`, not chained fixups), so methods that compare an argument against
+     literals are detectable: **259 verbs carry `keyword_candidates`**, recovering
+     undocumented enums (`get_bpm absolute|ghost`, `browser_window sidelist|karaoke|…`,
+     `loaded opposite`, `get_time short`, `sampler_group_volume touchrelative|locked`).
+     Argument *types* were attempted through the same route and do not survive: param access
+     is inlined, and a verb's library calls describe what it does with an argument, not how
+     it fetches one (`_strcasecmp` appears in numeric-arg verbs). Types are a Tier-1 job.
   2. **HTTP probe in query position** (Tier 1): start with the 301 optional-arg queries and
      the recovered keywords. **Method note (2026-07-30, probed live)**: optional-arg verbs
      silently ignore unknown arguments (`loaded bogusword` → `yes`), so error codes cannot
@@ -454,11 +459,10 @@ Contract fields to establish per verb:
   `just check`; query with `just verb-contract <name>`. See the Candidates doc §Contract
   structure.
 
-Storage: a `tests/verb-contracts.json` artifact + query tool per repo convention, promoted
-into verb-store fields once stable. End state: `just get-verb <name>` answers the whole
-contract — existence, category, aliases, kind, return type, arg forms, behavior notes — in
-one query. (Today `get-verb` does not even show the verb-table facts; wire the join as part
-of this task.)
+Storage: **DONE (2026-07-30)** — `just get-verb <name>` joins the store record with the verb
+table, the structural contract, the HTTP existence probe, and the observed return type at
+read time (`--raw` for the bare record). Artifacts stay authoritative; nothing is copied into
+the store, so a re-extraction is picked up without a migration.
 
 Done when:
 

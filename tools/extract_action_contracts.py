@@ -38,21 +38,32 @@ Three layers of contract fall out, all serialised data:
      flags query verbs that answer bare but validate an OPTIONAL argument.
    - `method_strings`: per-slot string references recovered by decoding
      ADRP/ADD pairs (format strings, enum keywords, UI labels).
-   Param *types* are not extractable this way yet: param access is inlined
-   (no shared helper call discriminates text-arg from numeric-arg verbs), and
-   library calls land in __stubs, outside the scanned __text range. Types
+   - `keyword_candidates`: literals from a method that ALSO calls a
+     string-comparison (`_strcasecmp`, `_memcmp`, …, named through the
+     indirect symbol table) — i.e. the verb matches its argument against
+     keywords. Finds real, undocumented enum arguments: `get_time short`,
+     `loaded opposite`, `get_bpm absolute|ghost`, `browser_window sidelist`.
+   Param *types* are NOT extractable this way: param access is inlined, and
+   the library calls a verb makes describe what it does with an argument, not
+   how it fetches one (`_strcasecmp` appears in numeric-arg verbs too). Types
    remain a Tier-1 probe job.
-3. **Vtable length** — extension interfaces (sliders: ~22 slots vs 12) are
+4. **Vtable length** — extension interfaces (sliders: ~22 slots vs 12) are
    visible as extra slots.
+
+Keyword candidates are a DISCOVERY channel, not a confirmation: probed live,
+optional-arg verbs silently ignore unrecognized words (`browser_window bogus`
+answers the same as `browser_window sidelist`), so confirming a keyword needs
+prepared state where the forms would differ, never an error code.
 
 The class<->verb join is a checked bijection: every one of the 955 distinct ids
 matches exactly one class via `ACTION_<spelling>`, no class is left over, and no
-id matches under two spellings. Chained-fixup pointers are decoded by masking to
-the low 40 bits, which carries the unslid vmaddr on this image layout (verified:
-955/955 name pointers resolve).
+id matches under two spellings. Pointers are decoded by masking to the low 40
+bits, which carries the unslid vmaddr on this image layout (verified: 955/955
+name pointers resolve). This build uses classic LC_DYLD_INFO_ONLY, so __stubs
+are named through DYSYMTAB's indirect symbol table.
 
-This is Tier-2 structural evidence: it predicts capability, return type, and
-family; Tier-1 sweeps confirm behavior. Located by anchoring, never by address.
+This is Tier-2 structural evidence: it predicts capability and family;
+Tier-1 sweeps confirm behavior and supply concrete types. Located by anchoring, never by address.
 
     python3 tools/extract_action_contracts.py > tests/action-contracts.json
     python3 tools/extract_action_contracts.py --get hot_cue
@@ -192,6 +203,51 @@ def build() -> dict:
     # --- method-body analysis helpers (light arm64 decoding) ------------------
     text_lo, text_hi = text[2], text[2] + text[3]
 
+    # __stubs naming, via SYMTAB + DYSYMTAB's indirect symbol table (this build
+    # uses classic LC_DYLD_INFO_ONLY, not chained fixups)
+    ncmds = struct.unpack_from("<I", data, base + 16)[0]
+    o, symoff = base + 32, None
+    indirectsymoff = nindirect = stroff = None
+    for _ in range(ncmds):
+        cmd, size = struct.unpack_from("<II", data, o)
+        if cmd == 0x2:
+            symoff, _nsyms, stroff, _ss = struct.unpack_from("<4I", data, o + 8)
+        elif cmd == 0xB:
+            indirectsymoff, nindirect = struct.unpack_from("<II", data, o + 56)
+        o += size
+    stubs = next((s for s in secs if s[1] == "__stubs"), None)
+    stub_res1 = stub_ent = None
+    if stubs:
+        o = base + 32
+        for _ in range(ncmds):
+            cmd, size = struct.unpack_from("<II", data, o)
+            if cmd == 0x19:
+                soff = o + 72
+                for _s in range(struct.unpack_from("<I", data, o + 64)[0]):
+                    if data[soff:soff + 16].rstrip(b"\0") == b"__stubs":
+                        stub_res1 = struct.unpack_from("<I", data, soff + 68)[0]
+                        stub_ent = struct.unpack_from("<I", data, soff + 72)[0]
+                    soff += 80
+            o += size
+
+    def stub_name(vm):
+        if not stubs or symoff is None or indirectsymoff is None or not stub_ent:
+            return None
+        i = (vm - stubs[2]) // stub_ent
+        k = (stub_res1 or 0) + i
+        if not (0 <= i < stubs[3] // stub_ent) or not (0 <= k < nindirect):
+            return None
+        idx = struct.unpack_from("<I", data, base + indirectsymoff + k * 4)[0]
+        if idx in (0x40000000, 0x80000000):
+            return None
+        p = base + symoff + idx * 16
+        strx = struct.unpack_from("<I", data, p)[0]
+        q = base + stroff + strx
+        e = data.find(b"\0", q)
+        return data[q:e].decode(errors="replace")
+
+    STRCMP = {"_strcasecmp", "_strncasecmp", "_strcmp", "_strncmp", "_memcmp"}
+
     def body(fn, max_insns=4000):
         off = base + text[4] + (fn - text_lo)
         out = []
@@ -205,16 +261,23 @@ def build() -> dict:
         return out
 
     def bl_targets(insns):
-        out = []
+        """(local __text targets, names of __stubs library calls)"""
+        local, lib = [], []
+        s_lo = stubs[2] if stubs else 0
+        s_hi = s_lo + (stubs[3] if stubs else 0)
         for pc, w in insns:
             if (w & 0xFC000000) == 0x94000000:  # BL
                 imm = w & 0x03FFFFFF
                 if imm & (1 << 25):
                     imm -= 1 << 26
                 t = pc + imm * 4
-                if text_lo <= t < text_hi:
-                    out.append(t)
-        return out
+                if s_lo <= t < s_hi:
+                    nm = stub_name(t)
+                    if nm:
+                        lib.append(nm)
+                elif text_lo <= t < text_hi:
+                    local.append(t)
+        return local, lib
 
     def has_invalidarg(insns):
         # E_INVALIDARG 0x80070057 as MOVZ w?,#0x57 + MOVK w?,#0x8007,lsl#16
@@ -327,9 +390,9 @@ def build() -> dict:
         return None
 
     def analyze_methods(cls):
-        """arg-demand fingerprint + string refs for the class's own methods."""
+        """arg-demand fingerprint, string refs, and keyword candidates."""
         vt = vt_addr[cls]
-        demands, strings = [], {}
+        demands, strings, keywords = [], {}, []
         for slot in over[cls]:
             w = dword(vt + slot * 8)
             if w is None:
@@ -338,23 +401,32 @@ def build() -> dict:
             if not (text_lo <= fn < text_hi):
                 continue
             b = body(fn)
+            local, lib = bl_targets(b)
+            callees = list(dict.fromkeys(local))[:10]
             hit = has_invalidarg(b)
-            if not hit:
-                for t in list(dict.fromkeys(bl_targets(b)))[:10]:
-                    if has_invalidarg(body(t, 800)):
-                        hit = True
-                        break
+            compares = any(x in STRCMP for x in lib)
+            ss = string_refs(b)
+            for t in callees:
+                cb = body(t, 800)
+                if not hit and has_invalidarg(cb):
+                    hit = True
+                if not compares:
+                    _l, clib = bl_targets(cb)
+                    compares = compares or any(x in STRCMP for x in clib)
             if hit:
                 demands.append(slot)
-            ss = string_refs(b)
             if ss:
                 strings[str(slot)] = ss
-        return demands, strings
+            if compares:
+                keywords += [s for s in ss
+                             if 2 < len(s) < 24 and s.replace("_", "").isalnum()
+                             and not s.startswith("ACTION")]
+        return demands, strings, sorted(set(keywords))
 
     out_verbs = {}
     for vid, cls in class_of_id.items():
         ov = over[cls]
-        demands, mstrings = analyze_methods(cls)
+        demands, mstrings, keywords = analyze_methods(cls)
         rec = {
             "class": cls,
             "base": chain[cls][0] if chain.get(cls) else None,
@@ -370,6 +442,8 @@ def build() -> dict:
         }
         if mstrings:
             rec["method_strings"] = mstrings
+        if keywords:
+            rec["keyword_candidates"] = keywords
         fam = family(cls)
         if fam:
             rec["family"] = fam
@@ -417,6 +491,8 @@ def build() -> dict:
             "arg_demand_verbs": sum(1 for vid in class_of_id
                                     if out_verbs[ids[vid][0]]["arg_demand_slots"]),
             "optional_arg_queries": sorted(optional_args),
+            "keyword_verbs": sum(1 for vid in class_of_id
+                                 if out_verbs[ids[vid][0]].get("keyword_candidates")),
             "sweep_agreement": {
                 k: {"agree": a, "total": t,
                     "rate": round(a / t, 4) if t else None}
@@ -454,12 +530,16 @@ def cmd_check() -> None:
     if s.get("arg_demand_verbs", 0) < 100:
         errs.append(f"arg-demand fingerprint looks broken: "
                     f"{s.get('arg_demand_verbs')} verbs")
+    if s.get("keyword_verbs", 0) < 50:
+        errs.append(f"keyword detection looks broken (stub naming?): "
+                    f"{s.get('keyword_verbs')} verbs")
     if errs:
         sys.exit("action contracts check FAILED:\n  - " + "\n  - ".join(errs))
     ag = {k: v["rate"] for k, v in s["sweep_agreement"].items()}
     print(f"action contracts check passed: {s['classes']} classes / "
           f"{s['distinct_ids']} ids (bijection), slots {s['slot_labels']}, "
-          f"families {s['families']}, sweep agreement {ag}")
+          f"families {s['families']}, {s['arg_demand_verbs']} arg-demanding, "
+          f"{s['keyword_verbs']} with keywords, sweep agreement {ag}")
 
 
 def main() -> None:
