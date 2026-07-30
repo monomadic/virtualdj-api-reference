@@ -124,6 +124,29 @@ same code. One agreement is not proof they always agree, but it is the first evi
 output can be trusted about the runtime, and it raises the value of the hint for the questions
 HTTP *cannot* reach.
 
+**Guards accumulate — which settles chained ternaries.** For
+
+```vdjscript
+get_version ? get_text "A" : get_version ? get_text "B" : get_text "C"
+```
+
+the hint gives `not get_version & get_version` inside B, and
+`not get_version & not get_version` inside C. Each nesting level contributes a term: "past the
+previous branch" plus "this ternary's own condition". So `a ? b : c ? d : e` is right-associative
+and behaves as a true **else-if ladder** — the form the community most often gets wrong, now
+readable rather than inferred. Promoted into
+[VDJScript Grammar](VDJScript%20Grammar.md#conditionals).
+
+> **The `&` in a hint is not the `&` of VDJScript.** In the hint it denotes logical
+> conjunction; in the language `&` is a *statement separator* and `&&` is boolean AND. Hint text
+> is a description of a guard, not a pasteable script — copying `not get_version & get_version`
+> into an Action box would mean two statements, not a conjunction.
+
+Worth one more probe when convenient: the test above uses the *same* expression for both
+conditions, so the composition is legible but not maximally explicit. Repeating it with two
+distinct conditions (say `get_version ? … : get_bpm ? … : …`, expecting
+`not get_version & get_bpm`) would remove any residual doubt about which term comes from where.
+
 **Reproduction note.** The hint is easy to miss: it is low-contrast grey beneath the Action box,
 appears only for the construct under the cursor, and is transient. Click precisely inside the
 statement and read immediately.
@@ -323,7 +346,7 @@ still-open ones are listed in its *Not yet established* section.
 | Question | Test shape | Status |
 | --- | --- | --- |
 | Conditional branch extent | `get_version ? get_text "A" & get_text "B" : get_text "C" & get_text "D"` | **Answered — and this row was stale.** [VDJScript Grammar](VDJScript%20Grammar.md#conditionals) settled it over HTTP with variable readback (`a=1 b=1 c=0 d=0` / `a=0 b=0 c=1 d=1`). The parse hint **independently corroborates**: A/B report `condition: get_version`, C/D report `condition: not get_version` |
-| **Chained ternaries** (community confusion point) | `a ? b : c ? d : e`, then `a ? b ? c : d : e`, then a 4-deep chain | Open — and the highlighter is the right instrument. Associativity was answered for the *nested* form over HTTP, but the **chained** form (`else-if` style) is what trips people up in practice, and branch-role colouring shows directly which `:` binds to which `?` without executing anything. Run the chain lengths in order and record where the colouring stops making sense |
+| **Chained ternaries** (community confusion point) | `a ? b : c ? d : e` | **Answered 2026-07-30 (parse hint): a true else-if ladder.** Right-associative, guards accumulate — B reports `not get_version & get_version`, C reports `not get_version & not get_version`. Written up in [VDJScript Grammar](VDJScript%20Grammar.md#conditionals). Still open: whether a 4+-deep chain keeps composing, and whether the runtime agrees (the ladder has not had a behavioral run) |
 | Does the editor flag an unknown verb? | `zzz_bogus ? get_text "A" : get_text "B"` vs a real head verb | **Answered 2026-07-30: no.** `get_version`, `zzz_bogus` and `browser_filter` render identically. The highlighter parses shape, not vocabulary — it colours a well-formed ternary built entirely from nonexistent verbs. The editor is a **grammar instrument, not a linter** |
 | Conditional associativity | `a ? b ? c : d : e` | **Answered**: standard, `a ? (b ? c : d) : e` |
 | Empty false branch behavior | `a ? b :` and `a ? b : nothing` | **Answered**: errors when reached; `nothing` has no query value |

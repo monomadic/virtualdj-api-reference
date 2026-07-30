@@ -189,6 +189,25 @@ get_text "D"`, the editor reports `condition: get_version` for A and B, and `con
 get_version` for C and D. VirtualDJ's own model is a **per-statement guard**, negated on the
 false side — see [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md).
 
+**Chaining gives you `else if`** (`Local test`, Button Editor parse hint, 2026-07-30).
+`a ? b : c ? d : e` is right-associative — `a ? b : (c ? d : e)` — and the guards accumulate
+exactly as an else-if ladder should. Reading the editor's per-statement guard for
+
+```vdjscript
+get_version ? get_text "A" : get_version ? get_text "B" : get_text "C"
+```
+
+gives `get_version` for A, `not get_version & get_version` for B, and
+`not get_version & not get_version` for C. So the chain works the way you would hope, and
+this is the idiom for multi-way selection:
+
+```vdjscript
+var_equal '$mode' 1 ? do_one : var_equal '$mode' 2 ? do_two : do_default
+```
+
+Note this is the *chained* form (a ternary in the **false** branch). It is distinct from
+nesting a ternary in the **true** branch, below, and the two are frequently confused.
+
 **Nesting associates the standard way** (`Pad`, `HTTP`): `a ? b ? c : d : e` parses as
 `a ? (b ? c : d) : e`, so clamped selection composes safely.
 
