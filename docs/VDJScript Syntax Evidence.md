@@ -54,6 +54,17 @@ The same verb (`get_text`) is coloured differently on either side of the `:`, so
 encodes **position in the ternary**, not lexical class. The editor is therefore parsing
 structure, not lexing tokens — which upgrades the earlier "owns a token/span model" reading.
 
+Two layers are in play, visible together: **background** carries the branch role (neutral
+condition / green true / red false) while **foreground** carries token type — quoted string
+literals keep their own colour inside either branch. So the highlighter runs a lexer *and* a
+structural parser.
+
+**It does not know the verb set.** Three scripts differing only in head verb — `get_version`,
+`zzz_bogus`, `browser_filter` — render identically (`Local test`, 2026-07-30, screenshots). A
+ternary built entirely from nonexistent verbs colours perfectly. Autocomplete has the verb list;
+the highlighter does not. That makes this a **grammar-mapping instrument, not a linter**, and it
+is why `tools/lint_mappers.py` still has a job.
+
 **This makes the editor a syntax-validation channel.** A construct can be checked for
 *structural acceptance* by typing it and reading the colouring, with no execution and no side
 effects — useful for exactly the open questions in *Grammar Questions To Test* below
@@ -248,7 +259,7 @@ still-open ones are listed in its *Not yet established* section.
 | --- | --- | --- |
 | Conditional branch extent | `play ? action_a & action_b : action_c & action_d` | Open — trailing-chain binding is settled, both-sides is not. **Now cheaply probeable**: the highlighter colours true/false branches differently (above), so the branch extent is directly visible — type it and read where green ends and red begins |
 | **Chained ternaries** (community confusion point) | `a ? b : c ? d : e`, then `a ? b ? c : d : e`, then a 4-deep chain | Open — and the highlighter is the right instrument. Associativity was answered for the *nested* form over HTTP, but the **chained** form (`else-if` style) is what trips people up in practice, and branch-role colouring shows directly which `:` binds to which `?` without executing anything. Run the chain lengths in order and record where the colouring stops making sense |
-| Does the editor flag an unknown verb? | `zzz_bogus ? play : stop` vs `play ? play : stop` | Open — decides whether the editor is a linter for **verb existence** as well as structure. Autocomplete not *offering* a name is not the same as the editor *flagging* one already typed |
+| Does the editor flag an unknown verb? | `zzz_bogus ? get_text "A" : get_text "B"` vs a real head verb | **Answered 2026-07-30: no.** `get_version`, `zzz_bogus` and `browser_filter` render identically. The highlighter parses shape, not vocabulary — it colours a well-formed ternary built entirely from nonexistent verbs. The editor is a **grammar instrument, not a linter** |
 | Conditional associativity | `a ? b ? c : d : e` | **Answered**: standard, `a ? (b ? c : d) : e` |
 | Empty false branch behavior | `a ? b :` and `a ? b : nothing` | **Answered**: errors when reached; `nothing` has no query value |
 | Query chain vs action chain | `a && b ? c : d` compared with `a & b ? c : d` | **Answered**: `&` separates statements (query returns the first); `&&` is boolean AND that short-circuits destructively on a false left operand |

@@ -102,19 +102,35 @@ type. So the app is not ignorant of malformed script; the failure to *tell you* 
 of the execution surface, not a limit of VirtualDJ's knowledge. Junk in argument position is
 recognised and discarded, not unnoticed.
 
-The practical advice is unchanged — **test everything, because the runtime will not complain**
-— but one earlier consequence was wrong and is withdrawn: *"you cannot lint VDJScript by
-feeding it to VirtualDJ."* You cannot lint it by **executing** it. You may well be able to lint
-it by **typing it into the Button Editor and reading the colours**, with no execution and no
-side effects. See [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md).
+The practical advice is unchanged: **test everything, because the runtime will not complain.**
 
-**Not yet established, and the test that settles it:** we know autocomplete *offers* only real
-verbs, which is not the same as *flagging* a bad one already typed. Type `zzz_bogus ? play :
-stop` into the Action box and see whether the bogus head verb is coloured differently from a
-real one. If it is, the editor is a genuine linter for verb existence as well as structure; if
-it is not, the editor validates shape only. Until that is run, treat editor colouring as a lead
-(rule 3) — it shows what the *highlighter* accepts, and the highlighter has not been shown to
-be the same code as the runtime parser.
+**"You cannot lint VDJScript by feeding it to VirtualDJ" stands — tested 2026-07-30.** This
+sentence was briefly withdrawn on the theory that the editor might flag unknown verbs. It does
+not. `Local test` (Button Editor, screenshots), three scripts differing only in the head verb:
+
+```vdjscript
+get_version    ? get_text "A" : get_text "B"   <- real verb
+zzz_bogus      ? get_text "A" : get_text "B"   <- nonsense
+browser_filter ? get_text "A" : get_text "B"   <- proven not a verb (rule 1b)
+```
+
+All three render **identically** — same head-verb colour, same green true branch, same red false
+branch. The highlighter parses *shape*, not vocabulary: it will happily colour a well-formed
+ternary built entirely from verbs that do not exist.
+
+So the two surfaces divide like this, and neither lints:
+
+| Component | Knows the verb set | Validates structure |
+| --- | --- | --- |
+| Autocomplete | **yes** — offers exactly the 955 canonical verbs | n/a |
+| Highlighter | **no** | **yes** — colours ternary branches by role |
+| Runtime | head verb only | no — junk in argument position is discarded |
+
+`tools/lint_mappers.py` therefore remains necessary, and its reason is now sharper: *no* surface
+in VirtualDJ will tell you a verb is fake once you have typed it. What the highlighter *is* good
+for is mapping grammar — see
+[VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md), where branch-role colouring is
+being used to settle ternary binding questions that the runtime cannot answer.
 
 Error bodies, when you do get one, are coarse — see the
 [HTTP doc](HTTP%20Control%20Interface.md) for the `E_FAIL` vs `E_INVALIDARG` split. `E_FAIL`
