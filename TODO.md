@@ -411,13 +411,15 @@ where possible and recorded as structured per-verb data, not prose.
 
 Contract fields to establish per verb:
 
-- **Return type in query position**: boolean / float 0..1 / integer / text / none. Two Tier-1
-  instruments, both read-only and safe to run across all 955 verbs:
-  - HTTP `/query` already returns the live value; `tests/verb-existence-sweep.json` already
-    holds a sample value per query verb — classify those first, it is free.
-  - Remote-protocol subscriptions push **typed** VALUE frames (`val` float32 vs `txt` vs
-    `fail`), so one scripted session with `tools/vdjremote_subscribe.py` gives the wire-level
-    type per verb — stronger than parsing HTTP text.
+- **Return type in query position: HTTP leg DONE (2026-07-30)** —
+  [tools/sweep_return_types.py](tools/sweep_return_types.py) sampled all 652 query verbs in
+  three read-only contexts against live VirtualDJ: 623 typed (334 bool / 145 int / 68 float /
+  4 percent / 72 text), 0 capability conflicts vs the structural matrix, gated in
+  `just check`, queried with `just verb-return-type <name>`. It also refuted the first slot
+  labeling: slot 3 is a generic variant query, not onQueryBool — structure claims capability,
+  observation claims type. Remaining sub-legs: the 29 all-empty verbs need richer contexts,
+  and the Remote-protocol typed sweep (`val` float32 vs `txt` VALUE frames) would confirm
+  wire-level types independently of HTTP text rendering.
 - **Argument forms**: bare / integer / float / percent / `+`-`-` relative / text / enum
   keyword / multi-arg. Three evidence streams, cheapest first:
   1. **Shipped-XML corpus mining** (free, Tier 2, authoritative-for-format): extract every

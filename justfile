@@ -136,6 +136,13 @@ verb-contract name:
 extract-action-contracts:
     @python3 tools/extract_action_contracts.py > tests/action-contracts.json
 
+# OBSERVED TYPE: what a query verb actually returns over HTTP (Tier 1).
+verb-return-type name:
+    @python3 tools/sweep_return_types.py --get "{{name}}"
+
+sweep-return-types:
+    @python3 tools/sweep_return_types.py > tests/verb-return-types.json
+
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
@@ -170,6 +177,7 @@ check:
     python3 tools/extract_binary_verbs.py --check
     python3 tools/extract_verb_table.py --check
     python3 tools/extract_action_contracts.py --check
+    python3 tools/sweep_return_types.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py

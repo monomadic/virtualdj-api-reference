@@ -350,8 +350,19 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   scope a verb's context.
 - **The vtable override matrix is the capability matrix.** Comparing each class's slots to
   `IAction`'s defaults, with slot meanings calibrated from HTTP-proven verbs (never
-  hard-coded): slot 2 onExecute, 3 onQueryBool, 4 onQueryText, 5 onQuery-number. Extension
-  interfaces show as vtable length (sliders: ~22 slots vs 12).
+  hard-coded): slot 2 onExecute, 3 the **generic onQuery** (a variant — bool, number, and
+  text all flow through it; ~160 classes override only this slot yet answer typed values),
+  4 the specialized text query. Extension interfaces show as vtable length (sliders: ~22
+  slots vs 12). *Corrected 2026-07-30:* slot 3 was first labeled onQueryBool and 5
+  onQuery-number; the return-type sweep refuted that within the hour — the structure claims
+  capability, the sweep claims concrete type.
+- **Slot leads, unlabeled but with suggestive membership** (the old build's symbols name the
+  method pool: `onQuery`, `onQueryBool` (46 classes then), `onQueryText`,
+  `onQueryController`, `onQueryBoolController`, `onTooltip`, plus `onUp` in surviving lambda
+  names): slot 5 (107 members) skews to argument-taking verbs (`beatjump`, `browser_sort`,
+  `get_time`); slot 7 (94) to menu/options providers (`add_list`, `browser_enter`,
+  `*_options`, which override *only* it); slots 8/9 are a near-identical 222/233 pair
+  (`auto_*` toggles, sliders) — probably press/release.
 - **Independent-check quality**: agreement with the Tier-1 HTTP sweep is **652/652 (100%)**
   for query verbs and 181/186 (97.3%) for action-only. The two derivations share nothing —
   one reads compiled vtables, the other probed a live instance — so this is real
@@ -361,13 +372,25 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   menu-openers — slot 7 is very likely the options-menu provider — and `get_hwnd` is the
   Windows-only stray. Lead: calibrate slot 7 with a pad-fixture menu test.
 
-Reading caveat: the four capability booleans describe the **base** slots only. A slider's
-numeric value path lives in its extended interface, so `query_number` can be false on a verb
-that plainly returns a number (`crossfader`: `query_number=false`, `family=slider`,
-`vtable_len=22`). Read `family` and `extended_interface` together with the slot flags.
+Reading caveat: the capability booleans (`executes`, `queries`, `query_text`) describe the
+**base** slots only; a slider's value path lives in its extended interface, so read `family`
+and `extended_interface` together with them.
 
 Artifact: `tests/action-contracts.json`; query with `just verb-contract <name>`. Tier 2:
-it predicts capability, return type, and family — Tier-1 probes confirm behavior (rule 3).
+it predicts capability and family — for the **concrete return type**, use the Tier-1
+return-type sweep below; Tier-1 probes confirm behavior (rule 3).
+
+### Observed return types — the HTTP sweep (2026-07-30)
+
+[tools/sweep_return_types.py](../tools/sweep_return_types.py) sampled every one of the 652
+HTTP-answering query verbs in three read-only contexts (bare, `deck 1`, `deck 2`) against
+live VirtualDJ 2026 and classified the answers: **334 bool, 145 int, 68 float, 4 percent,
+72 text; 623/652 typed** (29 answered empty in all three contexts — likely
+context-dependent). Reconciliation with the structural matrix: 0 conflicts — every typed
+answer came from a class that structurally can query. This artifact
+(`tests/verb-return-types.json`, `just verb-return-type <name>`) is the **authority for a
+verb's rendered type**; single-machine idle-state Tier 1, so it proves a verb *can* return
+the recorded type, not that it always does.
 
 Everything below this section predates the table. The string/context adjudication it describes
 is **superseded** for existence questions and kept as a record of method, not as the current

@@ -19,8 +19,16 @@ Three layers of contract fall out, all serialised data:
 2. **Vtable override matrix** — which slots a class overrides versus `IAction`'s
    defaults gives its capabilities. Slot meanings are CALIBRATED at build time
    from verbs whose kind is HTTP-proven, never hard-coded: `clear_search`
-   (action-only) pins onExecute, `loaded` (bool query) pins onQueryBool,
-   `get_title` pins onQueryText, `get_time` pins onQuery-number.
+   (action-only) pins onExecute, `loaded` (query) pins the generic onQuery, and
+   `get_title`'s extra override pins the specialized text query. The generic
+   query slot returns a variant — bools, numbers, AND text all flow through it
+   (the return-type sweep proved this: ~160 classes override only the generic
+   slot yet answer with ints/floats/text) — so this tool claims capability, not
+   concrete type. Concrete types are Tier-1 observation:
+   tests/verb-return-types.json. The remaining slots are recorded raw; leads:
+   slot 5's membership skews to argument-taking verbs, slot 7's to
+   menu/options providers, and slots 8/9 are a near-identical pair
+   (probably press/release — surviving lambda names mention `onUp`).
 3. **Vtable length** — extension interfaces (sliders: ~22 slots vs 12) are
    visible as extra slots.
 
@@ -50,9 +58,8 @@ ARM64 = 0x0100000C
 MASK = 0xFFFFFFFFFF  # chained fixups: low 40 bits carry the unslid vmaddr
 CALIBRATION = {  # verb -> what its HTTP-proven kind pins (see build())
     "clear_search": "execute",
-    "loaded": "query_bool",
+    "loaded": "query",
     "get_title": "query_text",
-    "get_time": "query_number",
 }
 FAMILY_BASES = {
     "IActionSwitch": "toggle",
@@ -211,20 +218,17 @@ def build() -> dict:
     unmatched = sorted(set(vt_addr) - set(class_of_id.values()))
 
     # calibrate slot meanings from HTTP-proven kinds — never hard-coded
-    labels = {}
     pin = {v: sorted(set(over[class_of_id[verbs[v]["id"]]]) & set(range(len(root_slots))))
            for v in CALIBRATION}
-    labels[CALIBRATION["clear_search"]] = (pin["clear_search"][0], pin["clear_search"])
-    labels[CALIBRATION["loaded"]] = (pin["loaded"][0], pin["loaded"])
-    ex, qb = labels["execute"][0], labels["query_bool"][0]
-    rest = [s for s in pin["get_title"] if s not in (ex, qb)]
-    labels["query_text"] = (rest[0], pin["get_title"])
-    rest = [s for s in pin["get_time"] if s not in (ex, qb, labels["query_text"][0])]
-    labels["query_number"] = (rest[0], pin["get_time"])
-    slot_of = {k: v[0] for k, v in labels.items()}
-    if len(set(slot_of.values())) != 4 or \
-       len(pin["clear_search"]) != 1 or len(pin["loaded"]) != 1:
-        raise SystemExit(f"slot calibration ambiguous: {labels}")
+    if len(pin["clear_search"]) != 1 or len(pin["loaded"]) != 1:
+        raise SystemExit(f"slot calibration ambiguous: {pin}")
+    slot_of = {"execute": pin["clear_search"][0], "query": pin["loaded"][0]}
+    rest = [s for s in pin["get_title"] if s not in slot_of.values()]
+    if len(rest) != 1:
+        raise SystemExit(f"slot calibration ambiguous: {pin}")
+    slot_of["query_text"] = rest[0]
+    if len(set(slot_of.values())) != 3:
+        raise SystemExit(f"slot calibration collided: {slot_of}")
 
     def family(nm, seen=None):
         seen = seen or set()
@@ -248,8 +252,7 @@ def build() -> dict:
             "vtable_len": nslots[cls],
             "overridden_slots": ov,
             "executes": slot_of["execute"] in ov,
-            "query_bool": slot_of["query_bool"] in ov,
-            "query_number": slot_of["query_number"] in ov,
+            "queries": slot_of["query"] in ov,
             "query_text": slot_of["query_text"] in ov,
             "extended_interface": nslots[cls] > len(root_slots),
         }
@@ -269,7 +272,7 @@ def build() -> dict:
         k = s.get("kind")
         if k == "query":
             agree["query"][1] += 1
-            if rec["query_bool"] or rec["query_number"] or rec["query_text"]:
+            if rec["queries"] or rec["query_text"] or rec["extended_interface"]:
                 agree["query"][0] += 1
         elif k == "action-only":
             agree["action-only"][1] += 1
@@ -288,7 +291,7 @@ def build() -> dict:
             "double_matched_ids": double,
             "unmatched_classes": unmatched,
             "iaction_slots": len(root_slots),
-            "slot_labels": {k: v[0] for k, v in labels.items()},
+            "slot_labels": slot_of,
             "families": dict(fams),
             "sweep_agreement": {
                 k: {"agree": a, "total": t,
@@ -319,7 +322,7 @@ def cmd_check() -> None:
     if s["orphan_ids"] or s["double_matched_ids"] or s["unmatched_classes"]:
         errs.append(f"orphans={s['orphan_ids'][:5]} doubles={s['double_matched_ids'][:5]} "
                     f"unmatched={s['unmatched_classes'][:5]}")
-    if len(set(s["slot_labels"].values())) != 4:
+    if len(set(s["slot_labels"].values())) != 3:
         errs.append(f"slot calibration collided: {s['slot_labels']}")
     for kind, st in s["sweep_agreement"].items():
         if st["total"] and st["rate"] is not None and st["rate"] < 0.85:
