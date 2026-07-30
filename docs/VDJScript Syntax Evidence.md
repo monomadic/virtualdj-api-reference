@@ -65,6 +65,36 @@ ternary built entirely from nonexistent verbs colours perfectly. Autocomplete ha
 the highlighter does not. That makes this a **grammar-mapping instrument, not a linter**, and it
 is why `tools/lint_mappers.py` still has a job.
 
+### The editor reports its parse in words — a parse-tree reader (2026-07-30)
+
+`Local test` (Button Editor, screenshot). Below the Action box, a **hint line names the
+structural role of the span under the cursor**, in VirtualDJ's own vocabulary. With the cursor
+inside `param_equal` in:
+
+```vdjscript
+param_equal "`get_text 'A'`" "A" ? get_text "B" : get_text "C"
+```
+
+the editor displays:
+
+```
+condition: param_equal "`get_text 'A'`" "A"
+```
+
+This is qualitatively better than the colouring. Colour shows *that* a structure model exists;
+this line shows **what the parser thinks the structure is**, labelled with the parser's own term
+(`condition:`), and it delimits the span — here confirming that the whole backticked argument
+list belongs to the condition.
+
+**Method**: place the cursor in a construct and read the label; no execution, no side effects,
+and the answer is the parser's own account rather than an inference from an observed value. This
+is the instrument of choice for every open ternary-binding question below — branch extent,
+chained-vs-nested `else if`, and backtick boundaries — because those are exactly the cases the
+runtime cannot answer (a query returns only the first statement's value).
+
+Open: the full label vocabulary is unknown (`condition:` is the only one observed so far), as is
+whether every construct gets a hint or only some.
+
 **This makes the editor a syntax-validation channel.** A construct can be checked for
 *structural acceptance* by typing it and reading the colouring, with no execution and no side
 effects — useful for exactly the open questions in *Grammar Questions To Test* below
