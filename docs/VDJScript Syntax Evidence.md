@@ -65,7 +65,13 @@ ternary built entirely from nonexistent verbs colours perfectly. Autocomplete ha
 the highlighter does not. That makes this a **grammar-mapping instrument, not a linter**, and it
 is why `tools/lint_mappers.py` still has a job.
 
-### The editor reports its parse in words — a parse-tree reader (2026-07-30)
+### The editor reports the guard of the statement under the cursor (2026-07-30)
+
+*Scoped 2026-07-30.* This section was first written as "a parse-tree reader". It is narrower
+than that: the hint appears **only for statements that carry a guard**. A plain unconditional
+chain — `get_text "x" & get_text "x"` — produces no hint line at all, with the cursor in either
+statement. So it reports conditional guards, not parse roles in general, and it is silent about
+any construct outside a conditional.
 
 `Local test` (Button Editor, screenshot). Below the Action box, a **hint line names the
 structural role of the span under the cursor**, in VirtualDJ's own vocabulary. With the cursor
@@ -187,7 +193,27 @@ and the negated forms are `not set '$a' on` / `not get_text "on"`.
 appears only for the construct under the cursor, and is transient. Click precisely inside the
 statement and read immediately.
 
-Open: whether labels other than `condition:` exist, and whether every construct produces a hint.
+**Not every construct produces a hint — answered 2026-07-30.** `get_text "x" & get_text "x"`
+(no conditional) shows no hint line for either statement. Unguarded statements have nothing to
+report, which is consistent with the per-statement-guard model and confirms the feature is a
+*guard* display rather than a general structural annotation.
+
+Still open: whether any label other than `condition:` exists. Every observation so far —
+ternaries, chained ladders, deck scopes, backticked arguments — has used `condition:`.
+
+**Consequence for the chain-ceiling probe.** A bare `&` chain cannot be measured with this
+instrument, because unguarded statements are silent. To use the hint on
+[the chain ceiling](VDJScript%20Grammar.md#chains-have-a-silent-length-ceiling), put the chain
+*inside* a conditional so every statement carries a guard:
+
+```vdjscript
+get_version ? get_text "1" & get_text "2" & … & get_text "40" : nothing
+```
+
+Then walk the cursor toward the tail and find the first statement that stops reporting
+`condition: get_version`. If the hint gives out at the same length the runtime does, the ceiling
+is a **parse** limit; if the hint keeps reporting past the runtime's cutoff, it is an
+**execution** limit. That distinction is currently unknown and is worth one careful run.
 
 **This makes the editor a syntax-validation channel.** A construct can be checked for
 *structural acceptance* by typing it and reading the colouring, with no execution and no side
