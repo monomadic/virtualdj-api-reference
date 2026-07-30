@@ -34,6 +34,72 @@ is rendered as separate colored spans. The observed split separates at least:
 
 This strongly suggests the editor owns a token/span model, not just a plain text box. It does not yet prove whether the highlighter is driven by the full runtime parser or by a parallel lightweight parser.
 
+### Confirmed: the highlighter is ternary-**aware**, not just token-coloured (2026-07-30)
+
+`Local test` (VirtualDJ 2026 `v2026-m b9482`, Button Editor, screenshot). Typing:
+
+```vdjscript
+hot_cue ? get_text "hi" : get_text "no"
+```
+
+renders with **branch-role colouring, not per-token-type colouring**:
+
+| Span | Rendering |
+| --- | --- |
+| `hot_cue` | condition — blue/violet |
+| `get_text "hi"` | **true branch — green** |
+| `get_text "no"` | **false branch — red** |
+
+The same verb (`get_text`) is coloured differently on either side of the `:`, so the colour
+encodes **position in the ternary**, not lexical class. The editor is therefore parsing
+structure, not lexing tokens — which upgrades the earlier "owns a token/span model" reading.
+
+**This makes the editor a syntax-validation channel.** A construct can be checked for
+*structural acceptance* by typing it and reading the colouring, with no execution and no side
+effects — useful for exactly the open questions in *Grammar Questions To Test* below
+(branch extent, backtick boundaries, word/operator ambiguity), several of which are hard to
+settle over HTTP because a query returns only the first statement's value. Caveat: this shows
+what the **highlighter** accepts. Whether the highlighter and the runtime parser are the same
+code is still unproven, so a colouring result is a lead that still needs a Tier-1 behavioral
+run to become a claim (rule 3).
+
+## Autocomplete is bound to the canonical verb set — 955, not 1,028
+
+`Local test` (VirtualDJ 2026 `v2026-m b9482`, Button Editor and Controllers→Keyboard mapper,
+screenshots, 2026-07-30). The Action box completes a typed prefix and filters the Action list.
+Two probes settle which list it is bound to:
+
+| Typed | Result | What it proves |
+| --- | --- | --- |
+| `remote` | completes to **`remote_action`** in both the Button Editor and the mapper | Editor-**hidden** verbs (`flags == 256`) *are* in the autocomplete set, even though they are absent from the browsable Category→Action list |
+| `hotc` | **matches nothing.** (`hot` alone matches `hot_cue`; adding the `c` deselects it) | The alias spelling `hotcue` (`flags == 1`) is **not in the set**. `hotc` is a prefix of `hotcue` but not of `hot_cue`, so if the alias were present it would have matched |
+
+That is exactly the shape of the verb table's identity model, arrived at from a completely
+different direction:
+
+```
+918 canonical (flags 0) + 37 editor-hidden (flags 256) = 955 = distinct verb ids
+                                    73 alias spellings (flags 1) = excluded
+```
+
+**One autocomplete entry per distinct `id`.** The live UI and the compiled table agree on the
+955/73 split, which is independent corroboration of the alias model in
+[Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) (Evidence
+Standards rule 1g) — the binary says two records share an id; the editor shows one of them.
+
+Matching is ordinary **prefix** matching — which is what makes the `hotc` probe a clean disproof
+rather than an inference. `hot` selects `hot_cue`; typing the `c` deselects it, because no verb
+in the set begins with `hotc`. The alias `hotcue` would have been the one entry that did.
+
+### Using it as a discovery instrument
+
+Walking the alphabet in this box would enumerate the runtime verb set without touching the
+binary, and it is Tier 1 (agent driving the window). Its limits, now measured rather than
+assumed: it yields **names only** — no `id`, no alias grouping, no category, no capability — and
+it omits the 73 alias spellings. It is best used as what it just did: an independent spot-check
+on the table, and the one channel that would catch a runtime-registered verb if such a thing
+existed (see [Plugin SDK](Plugin%20SDK.md) — the public SDK has no way to register one).
+
 ## Binary Anchors
 
 The arm64 symbol table exposes a cluster around the Button Editor and action parser:
@@ -180,7 +246,7 @@ still-open ones are listed in its *Not yet established* section.
 
 | Question | Test shape | Status |
 | --- | --- | --- |
-| Conditional branch extent | `play ? action_a & action_b : action_c & action_d` | Open — trailing-chain binding is settled, both-sides is not |
+| Conditional branch extent | `play ? action_a & action_b : action_c & action_d` | Open — trailing-chain binding is settled, both-sides is not. **Now cheaply probeable**: the highlighter colours true/false branches differently (above), so the branch extent is directly visible — type it and read where green ends and red begins |
 | Conditional associativity | `a ? b ? c : d : e` | **Answered**: standard, `a ? (b ? c : d) : e` |
 | Empty false branch behavior | `a ? b :` and `a ? b : nothing` | **Answered**: errors when reached; `nothing` has no query value |
 | Query chain vs action chain | `a && b ? c : d` compared with `a & b ? c : d` | **Answered**: `&` separates statements (query returns the first); `&&` is boolean AND that short-circuits destructively on a false left operand |

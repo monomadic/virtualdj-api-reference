@@ -274,7 +274,15 @@ records**, differing only in locating them by pinned address. Agreement confirms
 locator finds the right table, not that the flag reading is right.
 
 `id` is a dense index: **0…954 with no gaps**, one per unique verb, which is why 1,028 records
-yield 955 ids — the 73 alias records reuse their canonical's id. The count also matches the
+yield 955 ids — the 73 alias records reuse their canonical's id.
+
+**Confirmed live, from the other direction (2026-07-30).** The Button Editor's autocomplete
+holds exactly one entry per distinct `id`: typing `remote` completes to `remote_action` (an
+editor-*hidden* `flags == 256` verb, absent from the browsable category list), while `hotc`
+produces no alias entry — it filters to the canonical `hot_cue`. So the live UI's set is
+918 canonical + 37 hidden = **955**, with the 73 alias spellings excluded, matching the compiled
+table's identity model precisely. Details and screenshots in
+[VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md). The count also matches the
 954 `ACTION_` implementation classes, so `id` is almost certainly the index into that handler
 array.
 
