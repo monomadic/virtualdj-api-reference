@@ -215,7 +215,24 @@ Then walk the cursor toward the tail and find the first statement that stops rep
 is a **parse** limit; if the hint keeps reporting past the runtime's cutoff, it is an
 **execution** limit. That distinction is currently unknown.
 
-**Blocked by the UI, though** (`Local test`, 2026-07-30). The hint survives a chain of roughly
+**A second, better signal: the blue current-statement highlight.** Clicking inside a statement
+gives it a blue background. It follows the cursor (observed moving across A→B→C→D in the
+branch-extent series), so it marks the statement the editor believes the cursor is in — *not*,
+as first supposed, the statement whose value is returned, which would have stayed on the first
+statement of a chain. **Past some chain depth, statements stop turning blue at all** and render
+as plain text, in **both** the Button Editor and the Controllers keyboard mapper — so it is a
+parser property, not a quirk of one dialog.
+
+That makes it the instrument the hint line cannot be, because it survives long pastes. **The
+open measurement**: paste a chain whose statements carry their own index
+(`set '$c1' 1 & set '$c2' 1 & …`), walk the cursor along it, and record the first index that
+does not go blue. Compare against the runtime ceiling measured the same day — 172 statements /
+2641 chars for that exact statement shape
+([Chains have a silent length ceiling](VDJScript%20Grammar.md#chains-have-a-silent-length-ceiling)).
+If the blue stops at ~172 the ceiling is a **parse** limit; if it stops earlier the editor has
+its own lower budget; if it continues past 172 the runtime limit is an **execution** budget.
+
+**The hint line is blocked by the UI** (`Local test`, 2026-07-30). It survives a chain of roughly
 55 statements, but once the pasted script fills the Action box the box expands and **the hint
 line is no longer displayed at all** — it is pushed out of view rather than reporting anything
 different. Since the documented runtime ceiling is ~142-152 `set` statements, the interesting

@@ -435,6 +435,22 @@ pure statement count — treat a few hundred statements as the practical ceiling
 build generated chains near it. Identical behaviour on GET and POST, so it is a VDJScript
 limit and not a URL-length artefact.
 
+**Sharpened 2026-07-30** (`HTTP`, binary search with readback on `$c1`). For a fixed statement
+shape the boundary is exact and reproducible:
+
+| Chain | Runs | Fails |
+| --- | --- | --- |
+| `set '$cN' 1 & …` | 172 statements, **2641 chars** | 173 statements, **2657 chars** |
+| the same wrapped in `on ? … : nothing` | 171 statements, **2640 chars** | 172 statements, **2656 chars** |
+
+Both shapes fail at the same character count, and wrapping in a ternary costs exactly one
+statement of budget — consistent with a character or token budget rather than a statement count.
+It is still not a *universal* character limit, since the 302-statement row above ran at 3029
+chars with cheaper statements; the budget evidently depends on what each statement costs to
+parse. Note the earlier caution about generated chains stands, and note too that a chain wrapped
+in a conditional only runs at all if the condition is genuinely boolean-true — see
+[A verb's value and its truth are different channels](#a-verbs-value-and-its-truth-are-different-channels).
+
 ## Backticks are a surface feature, not a parser feature
 
 `` `verb` `` evaluates and substitutes **in XML attribute string/colour contexts**. It is
