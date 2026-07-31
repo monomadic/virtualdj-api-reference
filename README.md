@@ -36,6 +36,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 | Build or study a skin | [docs/Skin SDK.md](docs/Skin%20SDK.md) · [docs/Skin Runtime Findings.md](docs/Skin%20Runtime%20Findings.md) · [examples/Skins/README.md](examples/Skins/README.md) · [examples/Skins/ModularSkeleton/](examples/Skins/ModularSkeleton/) |
 | Work with effects | [docs/Effects Usage.md](docs/Effects%20Usage.md) · [docs/Native Effects.md](docs/Native%20Effects.md) |
 | Map a controller or keyboard | [docs/Mapper XML.md](docs/Mapper%20XML.md) |
+| Write a native plugin, or understand where VDJScript results are still typed | [docs/Plugin SDK.md](docs/Plugin%20SDK.md) |
 | Understand macOS paths and databases | [docs/Application Internals.md](docs/Application%20Internals.md) |
 | Inspect or create `.vdjstems` sidecars | [docs/Stem File Format.md](docs/Stem%20File%20Format.md) |
 
@@ -106,17 +107,26 @@ rather than assembled from documentation.
   official-doc-derived and still not load-tested.
 - The **VirtualDJ Remote** wire protocol is decoded and proven bidirectional
   ([docs/Remote Protocol.md](docs/Remote%20Protocol.md)).
-- The **plugin SDK** is now documented ([docs/Plugin SDK.md](docs/Plugin%20SDK.md)) — it is the
-  boundary where VDJScript results are still typed, and it explains why the HTTP channel
-  flattens them.
+- The **plugin SDK** is now documented ([docs/Plugin SDK.md](docs/Plugin%20SDK.md)): interface
+  hierarchy, the `VDJPARAM_*` model and the `[autoparams]` manifest all 173 built-in plugins
+  use, plugin UI models, and the interfaces present in the binary that the public headers never
+  declare. It is the boundary where VDJScript results are still typed — `GetInfo` → `double`,
+  `GetStringInfo` → text — which is both *why* the HTTP channel flattens them and the basis of
+  the next session's primary plan below. Headers are third-party with no license grant, so they
+  are fetched to a gitignored `vendor/` rather than committed.
 
 ### Recommended next steps
 
-1. **Build the read-only introspection plugin.** The SDK exposes `GetInfo` → `double` and
-   `GetStringInfo` → text as separate typed calls, so a plugin reads *native* types and raw
-   HRESULTs with no text flattening — a fifth Tier-1 channel needing neither the Network
-   Control plugin nor a Pro license. It would settle the `master_beat_num` float-bits defect
-   in one call and make the 301-verb optional-argument queue tractable at loop speed.
+1. **Build the read-only introspection plugin — this is the primary plan**
+   ([TODO.md](TODO.md) task 10a, with the full build plan and constraints). Both existing
+   instruments are at their limits: the binary cannot yield argument *types*, and HTTP
+   flattens every result to text. The plugin SDK sits at the boundary where results are still
+   typed — `GetInfo` → `double` and `GetStringInfo` → text are separate calls — so a plugin
+   reads native types and raw HRESULTs directly. It settles the `master_beat_num` float-bits
+   defect in one call, produces a definitive per-verb type-path map, makes the 301-verb
+   optional-argument queue tractable at loop speed, and is a fifth Tier-1 channel needing
+   neither the Network Control plugin nor a Pro license. Headers are fetched to a gitignored
+   `vendor/`, never committed — Atomix grants no redistribution license.
 2. **Probe the 217 verbs whose keyword arguments no documentation mentions.** Note the
    constraint found the hard way: unknown arguments are *silently ignored*, so confirmation
    needs prepared state where forms would differ — never an error code.

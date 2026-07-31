@@ -459,6 +459,55 @@ Contract fields to establish per verb:
   `just check`; query with `just verb-contract <name>`. See the Candidates doc §Contract
   structure.
 
+### 10a. THE PRIMARY REMAINING APPROACH — a read-only introspection plugin
+
+Status: **Ready, and the main plan for the rest of task 10.** Everything above was extracted
+from the binary or observed through HTTP; both are now at their limits for the questions that
+remain. The C++ plugin interface is the instrument that clears them, and it is documented in
+[docs/Plugin SDK.md](docs/Plugin%20SDK.md).
+
+Why it is the right instrument, not just another one:
+
+```cpp
+virtual HRESULT SendCommand(const char *command)=0;                            // execute
+virtual HRESULT GetInfo(const char *command, double *result)=0;                // numeric query
+virtual HRESULT GetStringInfo(const char *command, void *result, int size)=0;  // text query
+```
+
+- **Native types, no flattening.** HTTP renders everything to text, which is why return types
+  had to be recovered by observation and why `master_beat_num` shows float bits as an integer.
+  A plugin reads the `double` directly — and calling `GetInfo` on it settles in one call
+  whether that defect is in the core or in HTTP's rendering path.
+- **A definitive type-path map.** Calling both `GetInfo` and `GetStringInfo` on each of the
+  955 verbs, and reading the raw HRESULTs, says exactly which channel each verb answers on —
+  no inference from rendered strings.
+- **Throughput.** The 301-verb optional-argument queue and the 259 keyword sets need hundreds
+  of probes each; in-process that is a loop, over HTTP it is hundreds of round-trips.
+- **Different prerequisites.** No Network Control plugin, no Pro license — a fifth Tier-1
+  channel, which [docs/Evidence Standards.md](docs/Evidence%20Standards.md) already lists as
+  planned and explicitly forbids claiming anything from until it exists.
+
+Plan:
+
+1. Build the minimal plugin read-only: `GetInfo`/`GetStringInfo` sweeps only, **no
+   `SendCommand`**, so loading it cannot change state. Execute-position testing comes later
+   behind an explicit switch.
+2. Emit the same artifact shape as the existing sweeps (`tests/…json` + a `just` query) so it
+   joins `just get-verb` for free.
+3. First three experiments: `master_beat_num` via `GetInfo`; the both-channels type map; then
+   the optional-argument queue, remembering that unknown arguments are **silently ignored**
+   (rule from 2026-07-30), so probes must compare values in prepared state, never error codes.
+
+Prerequisites and constraints:
+
+- SDK headers are **not** vendored — no license grant exists. Fetch to `vendor/` (gitignored);
+  see the `.gitignore` entry and [docs/Plugin SDK.md](docs/Plugin%20SDK.md).
+- Xcode build, macOS arm64. The community examples build under Xcode 14.3 / macOS 13.3.
+- Open question to resolve while building: the shipped `beatport16_vdj` bundle exports no
+  `DllGetClassObject`, so a second loading path may exist. A built test plugin settles it.
+- Also worth probing from inside: whether an *internal* verb-registration path exists, which
+  is the one scope limit on Evidence Standards rule 1b.
+
 Storage: **DONE (2026-07-30)** — `just get-verb <name>` joins the store record with the verb
 table, the structural contract, the HTTP existence probe, and the observed return type at
 read time (`--raw` for the bare record). Artifacts stay authoritative; nothing is copied into
