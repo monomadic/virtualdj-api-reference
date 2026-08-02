@@ -162,7 +162,14 @@ def gather(term: str, limit: int) -> dict:
     # example files we surface are ones that actually use this topic.
     needles = [v["name"] for v in verbs[:40]] + [e for _, e, _ in elements[:20]]
     files = grep_files(needles)
-    ranked_files = sorted(files.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    # Quarantine/ holds personal/local-authorship examples (see
+    # examples/Mappers/README.md, examples/Pads/README.md) — real usage, but
+    # not official or curated, so they rank behind everything else instead of
+    # crowding out reference examples.
+    ranked_files = sorted(
+        files.items(),
+        key=lambda kv: ("/Quarantine/" in kv[0], -len(kv[1]), kv[0]),
+    )
 
     return {
         "topic": term,
@@ -214,7 +221,8 @@ def report(g: dict) -> None:
         for path, needles in g["example_files"][:lim]:
             shown = ", ".join(sorted(needles)[:5])
             more = f" +{len(needles)-5}" if len(needles) > 5 else ""
-            print(f"  {path}")
+            tag = "  [quarantined: personal/local]" if "/Quarantine/" in path else ""
+            print(f"  {path}{tag}")
             print(f"      uses: {shown}{more}")
         if len(g["example_files"]) > lim:
             print(f"  … {len(g['example_files'])-lim} more files")

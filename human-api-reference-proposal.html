@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VDJScript Reference</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f7f9;
+      --surface: #ffffff;
+      --surface-subtle: #f1f1f5;
+      --text: #1b1b22;
+      --muted: #6d6c78;
+      --faint: #9897a1;
+      --border: #e5e4ea;
+      --purple: #7147d7;
+      --purple-soft: #eee8fc;
+      --pink: #d73d86;
+      --pink-soft: #fbe7f1;
+      --teal: #087f74;
+      --teal-soft: #def4f0;
+      --amber: #a45f0e;
+      --amber-soft: #fbeedb;
+      --blue: #256f9c;
+      --blue-soft: #e2f0f8;
+      --shadow: 0 18px 50px rgba(35, 30, 54, .08);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111116;
+        --surface: #19191f;
+        --surface-subtle: #222229;
+        --text: #f2f1f5;
+        --muted: #b2b0bb;
+        --faint: #777681;
+        --border: #303038;
+        --purple: #b79af7;
+        --purple-soft: #302747;
+        --pink: #f08ab9;
+        --pink-soft: #402337;
+        --teal: #75d8cd;
+        --teal-soft: #173936;
+        --amber: #efbd76;
+        --amber-soft: #40301c;
+        --blue: #8ac8eb;
+        --blue-soft: #203644;
+        --shadow: 0 18px 50px rgba(0, 0, 0, .28);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body { margin: 0; color: var(--text); background: var(--bg); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    code { font-family: var(--mono); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    .bar {
+      display: grid;
+      grid-template-columns: auto minmax(260px, 620px) auto;
+      align-items: center;
+      gap: 28px;
+      min-height: 66px;
+      padding: 10px clamp(18px, 3vw, 42px);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .mark { width: 27px; height: 27px; border-radius: 8px; background: linear-gradient(140deg, var(--purple), var(--pink)); box-shadow: 0 6px 18px color-mix(in srgb, var(--purple) 28%, transparent); }
+    .brand strong { font-family: var(--mono); font-size: 13px; letter-spacing: -.025em; }
+    .brand small { margin-left: 7px; color: var(--faint); font-size: 11px; }
+
+    .search { position: relative; width: 100%; }
+    .search svg { position: absolute; left: 14px; top: 50%; width: 17px; color: var(--faint); transform: translateY(-50%); }
+    .search input { width: 100%; height: 42px; padding: 0 74px 0 42px; border: 1px solid var(--border); border-radius: 12px; outline: 0; background: var(--bg); }
+    .search input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px color-mix(in srgb, var(--purple) 16%, transparent); background: var(--surface); }
+    .search kbd { position: absolute; right: 11px; top: 50%; padding: 2px 7px; border: 1px solid var(--border); border-radius: 6px; color: var(--faint); background: var(--surface-subtle); font: 11px var(--sans); transform: translateY(-50%); }
+
+    .count { justify-self: end; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .count strong { color: var(--text); font-family: var(--mono); }
+
+    .page { max-width: 1220px; margin: 0 auto; padding: 30px clamp(18px, 3vw, 42px) 70px; }
+    .tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .filter { padding: 6px 11px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); background: transparent; font-size: 12px; }
+    .filter:hover { color: var(--text); background: var(--surface); }
+    .filter[aria-pressed="true"] { color: #fff; border-color: var(--purple); background: linear-gradient(115deg, var(--purple), color-mix(in srgb, var(--purple) 68%, var(--pink))); }
+    .tool-divider { width: 1px; height: 22px; margin: 0 2px; background: var(--border); }
+    .category-select { height: 32px; padding: 0 28px 0 10px; border: 1px solid var(--border); border-radius: 9px; color: var(--muted); background: var(--surface); font-size: 12px; }
+    .result-total { margin-left: auto; color: var(--faint); font-size: 12px; }
+
+    .workspace { display: grid; grid-template-columns: minmax(280px, .72fr) minmax(480px, 1.28fr); border: 1px solid var(--border); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+    .results { min-width: 0; border-right: 1px solid var(--border); }
+    .result {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 17px;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      text-align: left;
+    }
+    .result:last-child { border-bottom: 0; }
+    .result:hover { background: var(--surface-subtle); }
+    .result[aria-selected="true"] { background: linear-gradient(90deg, var(--purple-soft), transparent); box-shadow: inset 3px 0 var(--purple); }
+    .result code { display: block; overflow: hidden; text-overflow: ellipsis; color: var(--text); font-size: 13px; font-weight: 700; }
+    .result p { margin: 4px 0 0; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .result-category { color: var(--faint); font-family: var(--mono); font-size: 10px; }
+    .result-tags { display: flex; align-items: flex-end; gap: 5px; flex-direction: column; }
+
+    .type { align-self: start; padding: 3px 7px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+    .type.action { color: var(--purple); background: var(--purple-soft); }
+    .type.query { color: var(--blue); background: var(--blue-soft); }
+    .type.dual { color: var(--pink); background: var(--pink-soft); }
+    .property { padding: 3px 7px; border: 1px solid var(--border); border-radius: 999px; color: var(--muted); background: var(--surface); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    .property.hidden { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 25%, var(--border)); background: var(--amber-soft); }
+    .property.undocumented { color: var(--pink); border-color: color-mix(in srgb, var(--pink) 22%, var(--border)); background: var(--pink-soft); }
+
+    .empty { padding: 40px 20px; color: var(--muted); text-align: center; }
+    .detail { min-width: 0; padding: clamp(25px, 4vw, 50px); }
+    .eyebrow { margin: 0 0 10px; color: var(--faint); font-size: 11px; letter-spacing: .09em; text-transform: uppercase; }
+    .title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .title h1 { margin: 0; font: 700 clamp(26px, 4vw, 40px)/1.1 var(--mono); letter-spacing: -.045em; }
+    .description { max-width: 680px; margin: 12px 0 24px; color: var(--muted); font-size: 15px; }
+
+    .contracts { display: grid; gap: 7px; margin-bottom: 24px; }
+    .contracts-label { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 7px; }
+    .contracts-label strong { color: var(--faint); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+    .contracts-label span { color: var(--faint); font-size: 10px; }
+    .contract-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(68px, auto) 112px; align-items: center; gap: 11px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-subtle); }
+    .contract-row code { overflow-wrap: anywhere; color: var(--text); font-size: 12px; }
+    .contract-arrow { color: var(--faint); font-family: var(--mono); }
+    .contract-result { color: var(--purple); font-family: var(--mono); font-size: 12px; font-weight: 700; }
+    .contract-meta { display: flex; align-items: flex-end; gap: 3px; flex-direction: column; color: var(--muted); font-size: 9px; text-align: right; }
+    .contract-mode { color: var(--text); font-size: 10px; font-weight: 700; }
+    .contract-source.observed, .contract-source.local { color: var(--teal); }
+    .contract-source.curated { color: var(--blue); }
+    .contract-source.structural { color: var(--amber); }
+    .contract-source.unresolved { color: var(--pink); }
+    .no-contract { padding: 13px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); background: var(--surface-subtle); font-size: 12px; }
+
+    .examples { display: grid; gap: 7px; }
+    .examples-label { margin: 0 0 7px; color: var(--faint); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .example { display: grid; grid-template-columns: 105px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 11px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-subtle); }
+    .example-label { color: var(--muted); font-size: 10px; }
+    .example code { overflow-wrap: anywhere; font-size: 14px; }
+    .no-example { padding: 13px; border: 1px dashed var(--border); border-radius: 10px; color: var(--muted); background: var(--surface-subtle); font-size: 12px; }
+    .copy { flex: 0 0 auto; padding: 5px 8px; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); background: var(--surface); font-size: 11px; }
+    .copy:hover { color: var(--text); }
+
+    .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin: 25px 0; }
+    .fact span { display: block; margin-bottom: 6px; color: var(--faint); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .fact strong { display: block; font-size: 12px; font-weight: 600; }
+    .surfaces { display: flex; gap: 5px; flex-wrap: wrap; }
+    .surface { padding: 3px 7px; border-radius: 6px; color: var(--teal); background: var(--teal-soft); font-size: 10px; font-weight: 700; }
+
+    .signal { display: flex; align-items: flex-start; gap: 10px; padding: 12px 13px; border-radius: 10px; background: var(--surface-subtle); }
+    .signal-dot { flex: 0 0 auto; width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px var(--teal-soft); }
+    .signal.caveat .signal-dot { background: var(--amber); box-shadow: 0 0 0 4px var(--amber-soft); }
+    .signal.partial .signal-dot { background: var(--amber); box-shadow: 0 0 0 4px var(--amber-soft); }
+    .signal.unverified .signal-dot { background: var(--faint); box-shadow: 0 0 0 4px color-mix(in srgb, var(--faint) 16%, transparent); }
+    .signal strong { display: block; font-size: 12px; }
+    .signal p { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+
+    details { margin-top: 20px; border-top: 1px solid var(--border); }
+    summary { padding-top: 16px; color: var(--muted); font-size: 12px; cursor: pointer; }
+    .technical { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 18px; margin-top: 14px; }
+    .technical div { display: grid; grid-template-columns: 90px 1fr; gap: 9px; font-size: 11px; }
+    .technical dt { color: var(--faint); }
+    .technical dd { margin: 0; overflow-wrap: anywhere; font-family: var(--mono); }
+
+    @media (max-width: 780px) {
+      .bar { grid-template-columns: 1fr auto; gap: 12px; }
+      .search { grid-column: 1 / -1; grid-row: 2; }
+      .brand small { display: none; }
+      .workspace { grid-template-columns: 1fr; }
+      .results { border-right: 0; border-bottom: 1px solid var(--border); }
+      .result p { white-space: normal; }
+      .facts { grid-template-columns: 1fr; gap: 12px; }
+      .example { grid-template-columns: 1fr auto; }
+      .example-label { grid-column: 1 / -1; }
+      .contract-row { grid-template-columns: minmax(0, 1fr) auto minmax(64px, auto); }
+      .contract-meta { grid-column: 1 / -1; align-items: flex-start; flex-direction: row; text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="brand"><span class="mark" aria-hidden="true"></span><strong>VDJScript</strong><small>Reference</small></div>
+    <label class="search">
+      <span class="sr-only">Search verbs</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <input id="search" type="search" placeholder="Search verbs">
+      <kbd>/</kbd>
+    </label>
+    <div class="count"><strong>1,034</strong> verbs</div>
+  </header>
+
+  <main class="page">
+    <div class="tools" aria-label="Result filters">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="filter" type="button" data-filter="Action" aria-pressed="false">Actions</button>
+      <button class="filter" type="button" data-filter="Query" aria-pressed="false">Queries</button>
+      <button class="filter" type="button" data-filter="Dual" aria-pressed="false">Dual</button>
+      <span class="tool-divider" aria-hidden="true"></span>
+      <label><span class="sr-only">Category</span><select class="category-select" id="category"><option value="all">All categories</option></select></label>
+      <button class="filter" type="button" data-property="hidden" aria-pressed="false">Hidden</button>
+      <button class="filter" type="button" data-property="undocumented" aria-pressed="false">Undocumented</button>
+      <span class="result-total" id="resultTotal"></span>
+    </div>
+
+    <section class="workspace">
+      <div class="results" id="results" aria-label="Verb results"></div>
+      <article class="detail" id="detail" aria-live="polite"></article>
+    </section>
+  </main>
+
+  <script>
+    const records = [
+      { name: "sampler_loaded", kind: "Query", section: "Sampler", description: "Check whether an absolute sampler slot has a sample loaded.", contracts: [{ call: "sampler_loaded <slot:int>", result: "bool", mode: "Query", source: "HTTP observed", sourceClass: "observed" }, { call: "sampler_loaded <slot:int> 'auto'", result: "bool", mode: "Query", source: "Local caveat", sourceClass: "local" }], examples: [{ label: "Absolute slot", code: "sampler_loaded 1" }, { label: "Page 2 · pad 8", code: "sampler_loaded 16" }], surfaces: ["Pad", "Skin query", "Text"], status: "caveat", statusLabel: "Known caveat", note: "The auto argument was unreliable for paged empty-slot checks on the recorded builds.", returns: "bool · yes", aliases: "None", id: "856", category: "sampler", contract: "ACTION_sampler_loaded", evidence: "Local test · 8.5.9307 / 18.0.9336", hidden: false, documented: true },
+      { name: "sampler_pad", kind: "Dual", section: "Sampler", description: "Trigger the visible sampler pad slot or return its label in display contexts.", contracts: [{ call: "sampler_pad <pad:int>", result: "nothing", mode: "Action", source: "Curated form", sourceClass: "curated" }, { call: "sampler_pad <pad:int>", result: "bool", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }, { call: "sampler_pad <pad:int>", result: "text", mode: "Display", source: "Curated form", sourceClass: "curated" }], examples: [{ label: "Visible pad", code: "sampler_pad 1" }], surfaces: ["Pad", "Button", "Skin action", "Skin query", "Text"], status: "unverified", statusLabel: "Behavior untested", note: "Name, implementation shape, and HTTP return are known; functional behavior is not yet independently verified.", returns: "bool · no", aliases: "None", id: "852", category: "sampler", contract: "ACTION_sampler_pad", evidence: "No behavior evidence", hidden: false, documented: true },
+      { name: "sampler_color", kind: "Query", section: "Sampler", description: "Get the color of the visible sampler pad slot.", contracts: [{ call: "sampler_color <pad:int>", result: "text", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }], examples: [{ label: "Visible pad", code: "sampler_color 1" }], surfaces: ["Pad", "Skin query", "Text"], status: "unverified", statusLabel: "Behavior untested", note: "The HTTP-facing text value is observed; functional behavior is not yet independently verified.", returns: "text · #4D94F6", aliases: "None", id: "857", category: "sampler", contract: "ACTION_sampler_color", evidence: "No behavior evidence", hidden: false, documented: true },
+      { name: "sampler_pad_page", kind: "Dual", section: "Sampler", description: "Change or query the current eight-pad sampler window.", contracts: [{ call: "sampler_pad_page <signed-step:int>", result: "nothing", mode: "Action", source: "Curated form", sourceClass: "curated" }, { call: "sampler_pad_page", result: "text", mode: "Display", source: "Structural", sourceClass: "structural" }], examples: [{ label: "Next window", code: "sampler_pad_page +1" }], surfaces: ["Pad", "Button", "Skin action", "Skin query", "Text"], status: "unverified", statusLabel: "Behavior untested", note: "The HTTP probe classifies this as action-only; the contract exposes a separate text slot.", returns: "action-only", aliases: "None", id: "854", category: "sampler", contract: "ACTION_sampler_pad_page", evidence: "No behavior evidence", hidden: false, documented: true },
+      { name: "effect_active", kind: "Action", section: "Effects", description: "Activate or deactivate an effect slot.", contracts: [{ call: "effect_active <slot:int> <state:bool>", result: "nothing", mode: "Action", source: "Curated form", sourceClass: "curated" }, { call: "effect_active <slot:int>", result: "bool", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }], examples: [{ label: "Activate slot 1", code: "effect_active 1 on" }], surfaces: ["Mapper", "Button", "Pad", "Skin action", "Skin query"], status: "partial", statusLabel: "Partially verified", note: "Observed on vocal-slot pads; repeat on a recorded build for fixture-grade evidence.", returns: "bool · no", aliases: "effect_activate", id: "741", category: "plugins", contract: "ACTION_effect_active", evidence: "Local result · build not recorded", hidden: false, documented: true },
+      { name: "beatjump", kind: "Action", section: "Deck management", description: "Jump beats; use a signed argument.", contracts: [{ call: "beatjump <beats:signed-number>", result: "nothing", mode: "Action", source: "Local form", sourceClass: "local" }, { call: "beatjump", result: "int", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }], examples: [{ label: "Forward 4", code: "beatjump +4" }, { label: "Back 4", code: "beatjump -4" }], surfaces: [], status: "unverified", statusLabel: "Behavior untested", note: "The description records the signed-argument finding, but the per-verb status remains untested.", returns: "int · 1", aliases: "None", id: "123", category: "audio", contract: "ACTION_beatjump", evidence: "Description cites v2026-m b9482", hidden: false, documented: true },
+      { name: "loop", kind: "Action", section: "Loops", description: "Set or remove a loop.", contracts: [{ call: "loop <beats:number>", result: "nothing", mode: "Action", source: "Curated form", sourceClass: "curated" }, { call: "loop", result: "bool", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }], examples: [{ label: "Four beats", code: "loop 4" }], surfaces: ["Mapper", "Button", "Pad", "Skin action"], status: "unverified", statusLabel: "Behavior untested", note: "Name, implementation shape, and HTTP return are known; functional behavior is not yet independently verified.", returns: "bool · no", aliases: "None", id: "643", category: "loop", contract: "ACTION_loop", evidence: "No behavior evidence", hidden: false, documented: true },
+      { name: "pitch", kind: "Action", section: "Key & pitch", description: "Set pitch.", contracts: [{ call: "pitch <value:percent>", result: "nothing", mode: "Action", source: "Curated form", sourceClass: "curated" }, { call: "pitch", result: "float", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }], examples: [{ label: "Set pitch", code: "pitch 112%" }], surfaces: ["Mapper", "Button", "Pad", "Skin action"], status: "unverified", statusLabel: "Behavior untested", note: "Name, aliases, implementation shape, and HTTP return are known; functional behavior is not yet independently verified.", returns: "float · 0.5", aliases: "pitch2, pitch2_slider, pitch_slider", id: "720", category: "pitch", contract: "ACTION_pitch", evidence: "Binary-table identity", hidden: false, documented: true },
+      { name: "auto_cue", kind: "Dual", section: "Unassigned", description: "", contracts: [{ call: "auto_cue", result: "bool", mode: "HTTP query", source: "HTTP observed", sourceClass: "observed" }, { call: "auto_cue <value>", result: "nothing", mode: "Action", source: "Structural candidate", sourceClass: "structural" }], examples: [], surfaces: [], status: "unverified", statusLabel: "Behavior untested", note: "The official name and structural contract are recorded, but no authored description or example exists yet.", returns: "bool · yes", aliases: "None", id: "341", category: "config", contract: "ACTION_auto_cue", evidence: "No behavior evidence", hidden: false, documented: false },
+      { name: "remote_action", kind: "Action", section: "Unassigned", description: "", contracts: [{ call: "remote_action <arguments...>", result: "unknown", mode: "Remote skin", source: "Unresolved", sourceClass: "unresolved" }], examples: [], surfaces: [], status: "caveat", statusLabel: "Context-gated", note: "HTTP forms returned E_FAIL; available evidence scopes it to a Remote-skin context.", returns: "HTTP unresolved", aliases: "None", id: "61", category: "skin", contract: "ACTION_remote_action", evidence: "HTTP local test · 2026-07-27", hidden: true, documented: false }
+    ];
+
+    const state = { query: "", filter: "all", category: "all", property: "all", selected: "sampler_loaded" };
+    const results = document.getElementById("results");
+    const detail = document.getElementById("detail");
+    const total = document.getElementById("resultTotal");
+    const categorySelect = document.getElementById("category");
+
+    [...new Set(records.map(record => record.category))].sort().forEach(category => {
+      const option = document.createElement("option");
+      option.value = category;
+      option.textContent = category;
+      categorySelect.append(option);
+    });
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, character => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", "\"":"&quot;"})[character]);
+    }
+
+    function visibleRecords() {
+      const query = state.query.trim().toLowerCase();
+      return records.filter(record => {
+        const matchesText = !query || [record.name, record.description, record.section, record.category, ...record.surfaces].join(" ").toLowerCase().includes(query);
+        const matchesKind = state.filter === "all" || record.kind === state.filter;
+        const matchesCategory = state.category === "all" || record.category === state.category;
+        const matchesProperty = state.property === "all" || (state.property === "hidden" ? record.hidden : !record.documented);
+        return matchesText && matchesKind && matchesCategory && matchesProperty;
+      });
+    }
+
+    function renderResults() {
+      const visible = visibleRecords();
+      total.textContent = `${visible.length} prototype result${visible.length === 1 ? "" : "s"}`;
+      if (!visible.length) {
+        results.innerHTML = '<div class="empty">No prototype matches</div>';
+        detail.innerHTML = '<div class="empty">Try a broader search</div>';
+        return;
+      }
+      if (!visible.some(record => record.name === state.selected)) state.selected = visible[0].name;
+      results.innerHTML = visible.map(record => {
+        const propertyBadges = `${record.hidden ? '<span class="property hidden" title="Hidden from the Button Editor list">Hidden</span>' : ''}${!record.documented ? '<span class="property undocumented" title="No authored description in the store">Undocumented</span>' : ''}`;
+        const description = record.description || "No authored description";
+        return `<button class="result" type="button" data-record="${escapeHtml(record.name)}" aria-selected="${record.name === state.selected}"><span><code>${escapeHtml(record.name)}</code><span class="result-category">${escapeHtml(record.category)}</span><p>${escapeHtml(description)}</p></span><span class="result-tags"><span class="type ${record.kind.toLowerCase()}">${escapeHtml(record.kind)}</span>${propertyBadges}</span></button>`;
+      }).join("");
+      results.querySelectorAll("[data-record]").forEach(button => button.addEventListener("click", () => {
+        state.selected = button.dataset.record;
+        renderResults();
+        renderDetail();
+      }));
+    }
+
+    function renderDetail() {
+      const visible = visibleRecords();
+      const record = visible.find(item => item.name === state.selected) || visible[0];
+      if (!record) return;
+      const surfaceHtml = record.surfaces.length ? record.surfaces.map(surface => `<span class="surface">${escapeHtml(surface)}</span>`).join("") : '<span style="color:var(--muted);font-size:11px">Not catalogued</span>';
+      const propertyHtml = `${record.hidden ? '<span class="property hidden" title="Hidden from the Button Editor list">Hidden</span>' : ''}${!record.documented ? '<span class="property undocumented" title="No authored description in the store">Undocumented</span>' : ''}`;
+      const contractHtml = record.contracts.length ? record.contracts.map(signature => `<div class="contract-row"><code>${escapeHtml(signature.call)}</code><span class="contract-arrow">→</span><span class="contract-result">${escapeHtml(signature.result)}</span><span class="contract-meta"><span class="contract-mode">${escapeHtml(signature.mode)}</span><span class="contract-source ${escapeHtml(signature.sourceClass)}">${escapeHtml(signature.source)}</span></span></div>`).join("") : '<div class="no-contract">No callable contract recorded</div>';
+      const exampleHtml = record.examples.length ? record.examples.map((example, index) => `<div class="example"><span class="example-label">${escapeHtml(example.label)}</span><code>${escapeHtml(example.code)}</code><button class="copy" type="button" data-example="${index}">Copy</button></div>`).join("") : '<div class="no-example">No example recorded</div>';
+      detail.innerHTML = `
+        <p class="eyebrow">${escapeHtml(record.section)} · ${escapeHtml(record.category)}</p>
+        <div class="title"><h1>${escapeHtml(record.name)}</h1><span class="type ${record.kind.toLowerCase()}">${escapeHtml(record.kind)}</span>${propertyHtml}</div>
+        <p class="description">${escapeHtml(record.description || "No authored description yet.")}</p>
+        <div class="contracts-label"><strong>Contracts</strong><span>${record.contracts.length} form${record.contracts.length === 1 ? "" : "s"}</span></div><div class="contracts">${contractHtml}</div>
+        <p class="examples-label">Examples</p><div class="examples">${exampleHtml}</div>
+        <div class="facts">
+          <div class="fact"><span>Use in</span><div class="surfaces">${surfaceHtml}</div></div>
+          <div class="fact"><span>Category</span><strong><code>${escapeHtml(record.category)}</code></strong></div>
+          <div class="fact"><span>HTTP return</span><strong><code>${escapeHtml(record.returns)}</code></strong></div>
+          <div class="fact"><span>Aliases</span><strong><code>${escapeHtml(record.aliases)}</code></strong></div>
+        </div>
+        <div class="signal ${escapeHtml(record.status)}"><span class="signal-dot" aria-hidden="true"></span><div><strong>${escapeHtml(record.statusLabel)}</strong><p>${escapeHtml(record.note)}</p></div></div>
+        <details><summary>Technical details</summary><dl class="technical">
+          <div><dt>Table id</dt><dd>${escapeHtml(record.id)}</dd></div>
+          <div><dt>Category</dt><dd>${escapeHtml(record.category)}</dd></div>
+          <div><dt>Contract</dt><dd>${escapeHtml(record.contract)}</dd></div>
+          <div><dt>Evidence</dt><dd>${escapeHtml(record.evidence)}</dd></div>
+          <div><dt>Editor hidden</dt><dd>${record.hidden ? "yes" : "no"}</dd></div>
+          <div><dt>Documented</dt><dd>${record.documented ? "yes" : "no"}</dd></div>
+        </dl></details>`;
+      detail.querySelectorAll("[data-example]").forEach(button => button.addEventListener("click", async event => {
+        const example = record.examples[Number(button.dataset.example)];
+        try { await navigator.clipboard.writeText(example.code); event.currentTarget.textContent = "Copied"; }
+        catch { event.currentTarget.textContent = "Select"; }
+      }));
+    }
+
+    document.getElementById("search").addEventListener("input", event => {
+      state.query = event.target.value;
+      renderResults();
+      renderDetail();
+    });
+    document.querySelectorAll("[data-filter]").forEach(button => button.addEventListener("click", () => {
+      state.filter = button.dataset.filter;
+      document.querySelectorAll("[data-filter]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+      renderResults();
+      renderDetail();
+    }));
+    categorySelect.addEventListener("change", event => {
+      state.category = event.target.value;
+      renderResults();
+      renderDetail();
+    });
+    document.querySelectorAll("[data-property]").forEach(button => button.addEventListener("click", () => {
+      state.property = state.property === button.dataset.property ? "all" : button.dataset.property;
+      document.querySelectorAll("[data-property]").forEach(item => item.setAttribute("aria-pressed", String(item.dataset.property === state.property)));
+      renderResults();
+      renderDetail();
+    }));
+    document.addEventListener("keydown", event => {
+      if (event.key === "/" && document.activeElement.tagName !== "INPUT") {
+        event.preventDefault();
+        document.getElementById("search").focus();
+      }
+    });
+
+    renderResults();
+    renderDetail();
+  </script>
+</body>
+</html>

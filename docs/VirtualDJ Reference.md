@@ -206,7 +206,7 @@ Recommended runnable pad-page examples:
 - [Reference - ColorFX.xml](../examples/Pads/Reference%20-%20ColorFX.xml)
   Canonical filter and ColorFX selection patterns using the current verbs.
 
-- [Reference - Page Aware Sampler.xml](../examples/Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml)
   Legacy page-aware sampler labels, colors, and actions retained for comparison with newer sampler findings.
 
 - [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml)
@@ -1188,7 +1188,7 @@ Practical rule:
 - visible sampler-pad UI: page-aware
 - fixed sampler-slot utility controls: absolute
 
-Use [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../examples/Pads/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
+Use [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
 
 Source: `Official`, `Local test`, `Inference`
 
@@ -1416,20 +1416,20 @@ Community forum examples cited for method choices:
 
 Repo examples:
 
-- [32 Samples.xml](../examples/Pads/32%20Samples.xml)
-- [AUTO CUES.xml](../examples/Pads/AUTO%20CUES.xml)
-- [COLOR FX.xml](../examples/Pads/COLOR%20FX.xml)
-- [CUE.xml](../examples/Pads/CUE.xml)
-- [CUE 16.xml](../examples/Pads/CUE%2016.xml)
-- [CUE SCAN.xml](../examples/Pads/CUE%20SCAN.xml)
-- [PLAY 16.xml](../examples/Pads/PLAY%2016.xml)
-- [PUSH FX.xml](../examples/Pads/PUSH%20FX.xml)
+- [32 Samples.xml](../examples/Pads/Quarantine/32%20Samples.xml)
+- [AUTO CUES.xml](../examples/Pads/Quarantine/AUTO%20CUES.xml)
+- [COLOR FX.xml](../examples/Pads/Quarantine/COLOR%20FX.xml)
+- [CUE.xml](../examples/Pads/Quarantine/CUE.xml)
+- [CUE 16.xml](../examples/Pads/Quarantine/CUE%2016.xml)
+- [CUE SCAN.xml](../examples/Pads/Quarantine/CUE%20SCAN.xml)
+- [PLAY 16.xml](../examples/Pads/Quarantine/PLAY%2016.xml)
+- [PUSH FX.xml](../examples/Pads/Quarantine/PUSH%20FX.xml)
 - [Reference - Slot FX.xml](../examples/Pads/Reference%20-%20Slot%20FX.xml)
 - [Reference - ColorFX.xml](../examples/Pads/Reference%20-%20ColorFX.xml)
-- [Reference - Page Aware Sampler.xml](../examples/Pads/Reference%20-%20Page%20Aware%20Sampler.xml)
-- [SAMPLER.xml](../examples/Pads/SAMPLER.xml)
-- [SAMPLER SIMPLE.xml](../examples/Pads/SAMPLER%20SIMPLE.xml)
-- [TRANSPORT.xml](../examples/Pads/TRANSPORT.xml)
+- [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml)
+- [SAMPLER.xml](../examples/Pads/Quarantine/SAMPLER.xml)
+- [SAMPLER SIMPLE.xml](../examples/Pads/Quarantine/SAMPLER%20SIMPLE.xml)
+- [TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml)
 - [Built-in skins](../examples/Skins/Built-In/README.md)
 - [ModularSkeleton README](../examples/Skins/ModularSkeleton/README.md)
 - [ModularSkeleton built skin](../examples/Skins/ModularSkeleton/build/skin.xml)

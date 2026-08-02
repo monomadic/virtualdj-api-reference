@@ -50,6 +50,37 @@ back a `double` here, that coercion is almost certainly in the **rendering** pat
 engine. A plugin calling `GetInfo("master_beat_num", &d)` settles it in one call — see
 [TODO.md](../TODO.md) task 10.
 
+### What the SDK does *not* contain: any verb information at all
+
+Worth stating plainly, because the headers look like they should be a reference and are not.
+Checked mechanically 2026-07-30 against the 1,028-name verb table: across all 32 KB of unique
+header text, **not one verb name appears as a verb**. Sixteen names match as ordinary English
+in comments and C++ parameter names — `// the crossfader moves continuously…`,
+`float *volume` in `OnTransformPosition`, `// load and unload a plugin`,
+`OnSearch(const char* search, …)` — and that is the entire overlap.
+
+This is structural rather than an omission. The command parameter is opaque:
+
+```cpp
+virtual HRESULT GetInfo(const char *command, double *result)=0;
+```
+
+The SDK defines **how to ask** — calling convention, type channels, HRESULT contract — and says
+nothing about **what may be asked**. The vocabulary lives entirely inside VirtualDJ, which is
+why the verb set had to be extracted from the binary
+([Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md) §verb table)
+rather than read out of a header.
+
+Consequences worth keeping straight:
+
+- The **plugin is not a discovery instrument for verbs.** It is for *types and behaviour* that
+  only exist at runtime. Existence, aliases, categories and capability are already settled from
+  the binary.
+- Verb questions *can* be answered with no VirtualDJ present — from this repo's committed
+  artifacts (`tests/verb-table.json`, `action-contracts.json`, `verb-return-types.json`,
+  `verb-existence-sweep.json`, all read by `just get-verb <name>`). Producing them requires the
+  app; consuming them does not.
+
 ## Provenance, and why the headers are not in this repo
 
 | Fact | Detail |

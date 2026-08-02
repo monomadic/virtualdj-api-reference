@@ -2658,7 +2658,7 @@ Preferred usage:
 Quirk:
 
 - treat the target slot as absolute unless you have build-specific proof otherwise. The current official docs show fixed slot numbers and do not document a page-aware `"auto"` form for `sampler_assign`.
-- The current stock/local sampler page in this repo uses `drop="sampler_assign <slot>"`; see [SAMPLER SIMPLE.xml](../examples/Pads/SAMPLER%20SIMPLE.xml).
+- The current stock/local sampler page in this repo uses `drop="sampler_assign <slot>"`; see [SAMPLER SIMPLE.xml](../examples/Pads/Quarantine/SAMPLER%20SIMPLE.xml).
 
 Sources:
 

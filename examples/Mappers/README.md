@@ -41,11 +41,20 @@ The DDJ-GRV6 **Factory Default** file below holds VirtualDJ's shipped mapping fo
 | File | Device | Maps | Author | Notes |
 | --- | --- | --- | --- | --- |
 | [Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml](Local/Pioneer%20DDJ-XP2%20-%20Pioneer%20DDJ-XP2.xml) | `DDJXP2` | 617 | Atomix | Factory mapping for a pad controller; `ONINIT`, `SHIFT`, `LED_*`, `DNC_*` idioms |
-| [AKAI APC Mini MK2 - Custom Mapping.xml](Local/AKAI%20APC%20Mini%20MK2%20-%20Custom%20Mapping.xml) | `APCMINI2` | 301 | (unreliable tag) | Grid controller, named "Custom Mapping"; mode switching via global variables + `refresh_controller`. Treat as user-authored. |
-| [KEYBOARD - DeathDisco Keybindings v2025.12.xml](Local/KEYBOARD%20-%20DeathDisco%20Keybindings%20v2025.12.xml) | `KEYBOARD` | 204 | tagged Atomix, **written by the user** | **Personal keybindings**, confirmed by their author; the Atomix tag is not meaningful here. Useful for key-name idiom (`ALT+1`, `RIGHT ALT`, `UNMAPPED` fallback) — NOT for verb evidence; it contains experimental bindings such as `browser_filter`/`browser_search`, which are not verbs. |
-| [AlphaTheta DDJ-GRV6 - DeathDisco DDJ-GRV6 v1.xml](Local/AlphaTheta%20DDJ-GRV6%20-%20DeathDisco%20DDJ-GRV6%20v1.xml) | `DDJGRV6` | 293 | (user) | User-authored; heavy `ONINIT`/`ONEXIT` setup, `setting_setsession`, `effect_clone` |
 | [AlphaTheta DDJ-GRV6 - Factory Default.xml](Local/AlphaTheta%20DDJ-GRV6%20-%20Factory%20Default.xml) | `DDJGRV6` | 293 | Atomix (factory, no tag) | Shipped factory mapping, exported via Factory default → Save (see note above); `PLAY_PAUSE → pioneer_play`, `pioneer_*`/`padshift`/`touchwheel`/`wheel_mode` hardware idioms; mapper firing HTTP-verified on this hardware (`docs/VDJScript Local Test Tracker.md` §Mapper Firing) |
 
 Observed special `value=""` names across these files: `ONINIT`, `ONEXIT`, `UNMAPPED`, `SHIFT`, `DNC_MODE`, `DNC_LOADED`, plus `SHIFT_`-prefixed and `LED_`-prefixed control names.
 
 Do not hand-edit these copies. Refresh from the live Mappers folder when useful, then review the diff.
+
+## Quarantine/
+
+Personal/local-authorship mapper files, moved out of `Local/` so the ground-truth table above stays official-only (Atomix factory mappings and factory-default exports). These remain real, useful evidence for *format* idioms (key-name syntax, control-name conventions, `ONINIT`/`ONEXIT` structure) but **never for verb existence** — see the warning above: a personal mapping legitimately contains experiments and guesses that were never claimed to work.
+
+| File | Device | Maps | Notes |
+| --- | --- | --- | --- |
+| [AKAI APC Mini MK2 - Custom Mapping.xml](Quarantine/AKAI%20APC%20Mini%20MK2%20-%20Custom%20Mapping.xml) | `APCMINI2` | 301 | Grid controller, named "Custom Mapping"; mode switching via global variables + `refresh_controller`. User-authored. |
+| [KEYBOARD - DeathDisco Keybindings v2025.12.xml](Quarantine/KEYBOARD%20-%20DeathDisco%20Keybindings%20v2025.12.xml) | `KEYBOARD` | 204 | **Personal keybindings**, confirmed by their author; the Atomix author tag is not meaningful here. Useful for key-name idiom (`ALT+1`, `RIGHT ALT`, `UNMAPPED` fallback). Contains experimental bindings such as `browser_filter`/`browser_search`, which are not verbs — the mapper-lint warnings on this file are expected personal-authorship artifacts, not reference defects. |
+| [AlphaTheta DDJ-GRV6 - DeathDisco DDJ-GRV6 v1.xml](Quarantine/AlphaTheta%20DDJ-GRV6%20-%20DeathDisco%20DDJ-GRV6%20v1.xml) | `DDJGRV6` | 293 | User-authored; heavy `ONINIT`/`ONEXIT` setup, `setting_setsession`, `effect_clone`. |
+
+`tools/lint_mappers.py` still recurses into this folder (`examples/Mappers/**/*.xml`), so structural/verb warnings here remain visible — they are just not evidence-grade.

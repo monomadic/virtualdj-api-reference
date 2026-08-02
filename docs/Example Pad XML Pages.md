@@ -43,7 +43,7 @@ Keep these limits in mind:
 - The current official docs show `sampler_assign` with explicit slot numbers and do not document a page-aware `"auto"` form.
 - `sampler_pad_page` is the official pager for the visible `1-8`, `9-16`, `17-24`, and later windows, but you should not assume `drop="sampler_assign 1"` follows that pager automatically.
 - If you want page-aware drag targets, map each visible pad to the correct absolute slot yourself, or verify build-specific behavior before relying on it.
-- The current stock/local sampler page in this repo uses this exact pattern in [SAMPLER SIMPLE.xml](../examples/Pads/SAMPLER%20SIMPLE.xml).
+- The current stock/local sampler page in this repo uses this exact pattern in [SAMPLER SIMPLE.xml](../examples/Pads/Quarantine/SAMPLER%20SIMPLE.xml).
 - The target bank must be unlocked for samples to be added by drag-and-drop.
 
 ## Sampler Utility Page

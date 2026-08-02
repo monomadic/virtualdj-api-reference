@@ -45,7 +45,7 @@ Attribute survey across all 45 files found exactly two root attributes. No other
 
 Distribution details:
 
-- Both attributes together: [AUTO CUES.xml](../examples/Pads/AUTO%20CUES.xml) (`name="AUTO CUES" shortname="Remix"`), [Phrase Jump.xml](../examples/Pads/Phrase%20Jump.xml), [pads_scratchbank.xml](../examples/Pads/Built-In/pads_scratchbank.xml) — attribute order is not significant.
+- Both attributes together: [AUTO CUES.xml](../examples/Pads/Quarantine/AUTO%20CUES.xml) (`name="AUTO CUES" shortname="Remix"`), [Phrase Jump.xml](../examples/Pads/Quarantine/Phrase%20Jump.xml), [pads_scratchbank.xml](../examples/Pads/Built-In/pads_scratchbank.xml) — attribute order is not significant.
 - `shortname` only: [pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml) (`shortname="HC"`), pads_loop_roll, pads_manual_loop, pads_remix_points, pads_saved_loops.
 - No attributes at all: 10 of the 17 built-in pages (e.g. [pads_sampler.xml](../examples/Pads/Built-In/pads_sampler.xml), [pads_stems.xml](../examples/Pads/Built-In/pads_stems.xml)). Shipped pages get their display name from VirtualDJ's own resources, so they can omit both. Custom local pages should always set `name`. Source: `Built-in pad page`, `Inference`.
 
@@ -63,11 +63,11 @@ One element per pad position. Element **text content is the VDJScript action** e
 | --- | --- | --- | --- | --- |
 | `name` | Text; backtick segments are evaluated as VDJScript | Pad label. | `name="`cue_display 1`"` ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml)) | `Built-in pad page` |
 | `color` | VDJScript color expression | Pad color. See [Color Values](#color-values). | `color="sampler_color 1"` ([pads_sampler.xml](../examples/Pads/Built-In/pads_sampler.xml)) | `Built-in pad page` |
-| `query` | VDJScript query | Lit/active state, separate from `color`; resolves to on/off/blink states. | `query="not masterdeck ? is_sync ? true : blink 500ms"` ([TRANSPORT.xml](../examples/Pads/TRANSPORT.xml)); `query="... ? blink 1bt : on : off"` ([SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml)) | `Built-in pad page`, `Local test` |
+| `query` | VDJScript query | Lit/active state, separate from `color`; resolves to on/off/blink states. | `query="not masterdeck ? is_sync ? true : blink 500ms"` ([TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml)); `query="... ? blink 1bt : on : off"` ([SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml)) | `Built-in pad page`, `Local test` |
 | `autodim` | `false`, `true`, `query` | Controls automatic dimming of inactive pads; see below. | `autodim="query"` ([pads_stems.xml](../examples/Pads/Built-In/pads_stems.xml)) | `Built-in pad page`, `Inference` |
 | `drop` | VDJScript action | Executed when a file is dragged and dropped onto the pad. Only assignment verbs observed. | `drop="sampler_assign 1"` ([pads_sampler.xml](../examples/Pads/Built-In/pads_sampler.xml)); `drop="scratchbank_assign 1"` ([pads_scratchbank.xml](../examples/Pads/Built-In/pads_scratchbank.xml)) | `Built-in pad page` |
-| `pressure` | VDJScript action receiving a value | Velocity/pressure handler for pressure-capable controller pads. | `pressure="sampler_velocity 1"` ([pads_sampler_velocity.xml](../examples/Pads/Built-In/pads_sampler_velocity.xml)); `pressure="... sampler_volume_nogroup 1 '4x4x1'"` ([32 Samples.xml](../examples/Pads/32%20Samples.xml)) | `Built-in pad page` |
-| `right_click` | VDJScript action | Explicit right-click action. Observed **only** in the local page [FX-SLOTS.xml](../examples/Pads/FX-SLOTS.xml) (`right_click="effect_select 1"`), never in a built-in page. The stock right-click/shift behavior is the `<shift_padN>` layer (the manual describes right-click as the shift trigger), so treat this attribute as unverified until locally tested. | `right_click="effect_select 1"` ([FX-SLOTS.xml](../examples/Pads/FX-SLOTS.xml)) | `Inference` |
+| `pressure` | VDJScript action receiving a value | Velocity/pressure handler for pressure-capable controller pads. | `pressure="sampler_velocity 1"` ([pads_sampler_velocity.xml](../examples/Pads/Built-In/pads_sampler_velocity.xml)); `pressure="... sampler_volume_nogroup 1 '4x4x1'"` ([32 Samples.xml](../examples/Pads/Quarantine/32%20Samples.xml)) | `Built-in pad page` |
+| `right_click` | VDJScript action | Explicit right-click action. Observed **only** in the local page [FX-SLOTS.xml](../examples/Pads/Quarantine/FX-SLOTS.xml) (`right_click="effect_select 1"`), never in a built-in page. The stock right-click/shift behavior is the `<shift_padN>` layer (the manual describes right-click as the shift trigger), so treat this attribute as unverified until locally tested. | `right_click="effect_select 1"` ([FX-SLOTS.xml](../examples/Pads/Quarantine/FX-SLOTS.xml)) | `Inference` |
 
 No other pad attributes exist in the surveyed files.
 
@@ -75,9 +75,9 @@ No other pad attributes exist in the surveyed files.
 
 Observed values and distribution:
 
-- `autodim="false"` — 9 files, both shipped and curated (all 32 pad entries of [pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml); most of [TRANSPORT.xml](../examples/Pads/TRANSPORT.xml), [PLAY 16.xml](../examples/Pads/PLAY%2016.xml), [AUTO CUES.xml](../examples/Pads/AUTO%20CUES.xml), [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml), [CUE-EDIT.xml](../examples/Pads/CUE-EDIT.xml), [Phrase Jump.xml](../examples/Pads/Phrase%20Jump.xml)).
+- `autodim="false"` — 9 files, both shipped and curated (all 32 pad entries of [pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml); most of [TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml), [PLAY 16.xml](../examples/Pads/Quarantine/PLAY%2016.xml), [AUTO CUES.xml](../examples/Pads/Quarantine/AUTO%20CUES.xml), [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml), [CUE-EDIT.xml](../examples/Pads/Quarantine/CUE-EDIT.xml), [Phrase Jump.xml](../examples/Pads/Quarantine/Phrase%20Jump.xml)).
 - `autodim="query"` — 3 built-in files only: [pads_stems.xml](../examples/Pads/Built-In/pads_stems.xml), [pads_stems+fx.xml](../examples/Pads/Built-In/pads_stems+fx.xml), [pads_cueloop.xml](../examples/Pads/Built-In/pads_cueloop.xml). In the stems pages it accompanies static colors (`color="color 'green'"`) on toggle-style actions (`stem_pad 'vocal'`).
-- `autodim="true"` — one file: [TRANSPORT.xml](../examples/Pads/TRANSPORT.xml) pads 9-11 (KEY/BEAT/PHRASE sync pads, which also define `query=""`).
+- `autodim="true"` — one file: [TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml) pads 9-11 (KEY/BEAT/PHRASE sync pads, which also define `query=""`).
 
 Interpretation (`Inference`, unconfirmed): by default VirtualDJ dims a pad whose state reads inactive; `false` disables dimming so the `color` expression shows at full brightness, and `query` ties the dim state to the pad's `query=""` result rather than the action's own state. Exact default behavior is an [open question](#open-questions).
 
@@ -85,7 +85,7 @@ Interpretation (`Inference`, unconfirmed): by default VirtualDJ dims a pad whose
 
 Same shape as `<padN>`: text content is the action, triggered by shift or right-click (`Official` manual: right-clicking pads triggers the alternate function). Observed range 1-16.
 
-Attributes observed on shift pads: `name`, `color`, `autodim`, `query`, `right_click` (the last again only in [FX-SLOTS.xml](../examples/Pads/FX-SLOTS.xml)). `drop` and `pressure` were never observed on a shift pad.
+Attributes observed on shift pads: `name`, `color`, `autodim`, `query`, `right_click` (the last again only in [FX-SLOTS.xml](../examples/Pads/Quarantine/FX-SLOTS.xml)). `drop` and `pressure` were never observed on a shift pad.
 
 ```xml
 <shift_pad1 name="DELETE" color="has_cue 1 ? color 'white'" autodim="false">delete_cue 1</shift_pad1>
@@ -97,7 +97,7 @@ Give shifted pads their own `color=""`; skins may read shifted colors separately
 
 ## Parameters: `<param1>`, `<param2>`
 
-The two per-page parameter slots shown next to the pads ("Each pad page offers up to 2 configurable parameters" — `Official`). Text content is the action; on encoder-style use the incoming value is testable with `param_bigger 0 ? ... : ...` for direction (many files, e.g. [AUTO CUES.xml](../examples/Pads/AUTO%20CUES.xml): `param_bigger 0 ? goto_cue +1 remix : goto_cue -1 remix`).
+The two per-page parameter slots shown next to the pads ("Each pad page offers up to 2 configurable parameters" — `Official`). Text content is the action; on encoder-style use the incoming value is testable with `param_bigger 0 ? ... : ...` for direction (many files, e.g. [AUTO CUES.xml](../examples/Pads/Quarantine/AUTO%20CUES.xml): `param_bigger 0 ? goto_cue +1 remix : goto_cue -1 remix`).
 
 **No `<param3>` or higher exists in any of the 45 files.**
 
@@ -108,7 +108,7 @@ The two per-page parameter slots shown next to the pads ("Each pad page offers u
 | `query` | param2 (1) | Separate query expression; single occurrence. | `<param2 name="`sampler_pad_page`" query="sampler_pad_page">sampler_pad_page</param2>` ([pads_sampler.xml](../examples/Pads/Built-In/pads_sampler.xml)) | `Built-in pad page` |
 | `tooltip` | param1 (1) | Tooltip text; `[value]` appears to substitute the current value. Single occurrence. | `<param1 name="..." tooltip="[value]">...</param1>` ([pads_stems.xml](../examples/Pads/Built-In/pads_stems.xml)) | `Built-in pad page`, `Inference` |
 
-A parameter can be empty: [AUTO CUES.xml](../examples/Pads/AUTO%20CUES.xml) has `<param1></param1>` with no attributes, matching the manual's note that some pages leave Parameter 1 empty.
+A parameter can be empty: [AUTO CUES.xml](../examples/Pads/Quarantine/AUTO%20CUES.xml) has `<param1></param1>` with no attributes, matching the manual's note that some pages leave Parameter 1 empty.
 
 ## Menu: `<menu>`
 
@@ -119,10 +119,10 @@ Observed line forms:
 | Form | Meaning | Evidence | Source |
 | --- | --- | --- | --- |
 | `` `verb` `` (whole menu is one backtick line) | Delegate the entire menu to a built-in options verb. | `` `sampler_options` `` in 7 sampler pages ([pads_sampler.xml](../examples/Pads/Built-In/pads_sampler.xml), [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml), …); `` `loop_pad_mode` `` in [pads_loop.xml](../examples/Pads/Built-In/pads_loop.xml) | `Built-in pad page`, `Inference` |
-| `Label =[action]` | Plain menu item: click executes the action. Labels ending in `...` open editors/dialogs. | `Edit CUEs and POIs... =[edit_poi]` ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml)); `Info... =[os2l_info]` ([pads_dmx.xml](../examples/Pads/Built-In/pads_dmx.xml)); `PUSH FX =[pad_page "PUSH FX"]` ([COLOR FX.xml](../examples/Pads/COLOR%20FX.xml)) | `Built-in pad page`, `Inference` |
+| `Label =[action]` | Plain menu item: click executes the action. Labels ending in `...` open editors/dialogs. | `Edit CUEs and POIs... =[edit_poi]` ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml)); `Info... =[os2l_info]` ([pads_dmx.xml](../examples/Pads/Built-In/pads_dmx.xml)); `PUSH FX =[pad_page "PUSH FX"]` ([COLOR FX.xml](../examples/Pads/Quarantine/COLOR%20FX.xml)) | `Built-in pad page`, `Inference` |
 | `Label +[action]` | Checkable menu item: the action is both *queried* for the checked state and *executed* on click. | `Read-only (Lock) +[lock_cues]`, `Smart Cue +[smart_cue]` ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml)); `Auto Sync +[cue_loop_autosync]` ([pads_cueloop.xml](../examples/Pads/Built-In/pads_cueloop.xml)) | `Built-in pad page`, `Inference` |
-| `Parent >> Child +[action]` | Submenu: repeated `Parent >>` prefixes group children under one submenu. Behaves like a radio group when the children are variants of one setting. | `Display mode >> Name +[cue_display 'name']` and four siblings ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml), [pads_saved_loops.xml](../examples/Pads/Built-In/pads_saved_loops.xml)); `Quantize >> Bar +[quantize_setcue on & setting 'globalQuantize' 4]` ([CUE.xml](../examples/Pads/CUE.xml)) | `Built-in pad page`, `Inference` |
-| `-` (alone on a line) | Separator. | [pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml), [pads_saved_loops.xml](../examples/Pads/Built-In/pads_saved_loops.xml), [CUE.xml](../examples/Pads/CUE.xml) | `Built-in pad page` |
+| `Parent >> Child +[action]` | Submenu: repeated `Parent >>` prefixes group children under one submenu. Behaves like a radio group when the children are variants of one setting. | `Display mode >> Name +[cue_display 'name']` and four siblings ([pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml), [pads_saved_loops.xml](../examples/Pads/Built-In/pads_saved_loops.xml)); `Quantize >> Bar +[quantize_setcue on & setting 'globalQuantize' 4]` ([CUE.xml](../examples/Pads/Quarantine/CUE.xml)) | `Built-in pad page`, `Inference` |
+| `-` (alone on a line) | Separator. | [pads_hotcues.xml](../examples/Pads/Built-In/pads_hotcues.xml), [pads_saved_loops.xml](../examples/Pads/Built-In/pads_saved_loops.xml), [CUE.xml](../examples/Pads/Quarantine/CUE.xml) | `Built-in pad page` |
 
 Additional observations:
 
@@ -140,7 +140,7 @@ Additional observations:
 
   This is the strongest evidence that `+[...]` is queried for checked state and executed on click. Source: `Built-in pad page`, `Inference`.
 
-- **Leading whitespace appears tolerated:** [COLOR FX.xml](../examples/Pads/COLOR%20FX.xml) indents its second menu line (`    SELECT =[filter_selectcolorfx]`) and the page works as a local page.
+- **Leading whitespace appears tolerated:** [COLOR FX.xml](../examples/Pads/Quarantine/COLOR%20FX.xml) indents its second menu line (`    SELECT =[filter_selectcolorfx]`) and the page works as a local page.
 - Only one submenu level (`A >> B`) is ever observed; deeper nesting is untested.
 
 ## Alternate Layout: `<custompadsmode nb="4">`
@@ -171,11 +171,11 @@ Interpretation (`Inference`): an alternate definition used when the host UI/cont
 | Form | Example | Files | Source |
 | --- | --- | --- | --- |
 | `color 'name'` / `color "name"` | `color 'green'`, `color "red"` | 29 files | `Built-in pad page` |
-| `color name` (unquoted argument) | `color white`, `color pink` | [PLAY 16.xml](../examples/Pads/PLAY%2016.xml), [TRANSPORT.xml](../examples/Pads/TRANSPORT.xml) | `Local test` (working local pages) |
-| Bare name as the whole attribute | `color="blue"` | [TRANSPORT.xml](../examples/Pads/TRANSPORT.xml) pad15 | `Local test` |
+| `color name` (unquoted argument) | `color white`, `color pink` | [PLAY 16.xml](../examples/Pads/Quarantine/PLAY%2016.xml), [TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml) | `Local test` (working local pages) |
+| Bare name as the whole attribute | `color="blue"` | [TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml) pad15 | `Local test` |
 | `color '#RRGGBB'` (hex, both cases) | `color '#FF3B30'`, `color '#2bd976'` | 8 files | `Built-in pad page` ([pads_stems+fx.xml](../examples/Pads/Built-In/pads_stems+fx.xml) uses `color '#3D619C'`), `Local test` |
 | `dim` | `sampler_loaded 1 ? sampler_color 1 : dim` | 5 sampler pages | `Local test` (equivalent to `constant 0.1` per the verbs table) |
-| `blink <interval>` wrapper | `blink 1bt ? cue_color 1 : color 'black'` ([CUE.xml](../examples/Pads/CUE.xml)); `blink 500ms` in `query` ([TRANSPORT.xml](../examples/Pads/TRANSPORT.xml)) | 2 color files + query uses | `Built-in pad page` ([pads_manual_loop.xml](../examples/Pads/Built-In/pads_manual_loop.xml) uses bare `blink ?`), `Local test` |
+| `blink <interval>` wrapper | `blink 1bt ? cue_color 1 : color 'black'` ([CUE.xml](../examples/Pads/Quarantine/CUE.xml)); `blink 500ms` in `query` ([TRANSPORT.xml](../examples/Pads/Quarantine/TRANSPORT.xml)) | 2 color files + query uses | `Built-in pad page` ([pads_manual_loop.xml](../examples/Pads/Built-In/pads_manual_loop.xml) uses bare `blink ?`), `Local test` |
 | `on` / `off` / `true` | terminal branches in `query=""` | many | `Built-in pad page`, `Local test` |
 | State verbs returning colors | `cue_color 1`, `cue_color 1 remix`, `sampler_color 1`, `sampler_color 1 "auto"`, `get_sample_color 1`, `loop_color 1`, `stem_color 'vocal'`, `keycue_pad_color 1`, `beatjump_pad 1 'color'`, `effect_stems_color`, `scratchbank_load_to_deck 1` | most built-ins | `Built-in pad page` |
 
@@ -189,8 +189,8 @@ The `pad_page 'NAME'` verb switches the deck's active pad page; the target strin
 
 Observed switching idioms:
 
-- From a **menu item**: `PUSH FX =[pad_page "PUSH FX"]` ([COLOR FX.xml](../examples/Pads/COLOR%20FX.xml))
-- From a **parameter**: `<param1 name="PAD FX">pad_page "COLOR FX"</param1>` ([FX-SLOTS.xml](../examples/Pads/FX-SLOTS.xml))
+- From a **menu item**: `PUSH FX =[pad_page "PUSH FX"]` ([COLOR FX.xml](../examples/Pads/Quarantine/COLOR%20FX.xml))
+- From a **parameter**: `<param1 name="PAD FX">pad_page "COLOR FX"</param1>` ([FX-SLOTS.xml](../examples/Pads/Quarantine/FX-SLOTS.xml))
 
 Generic two-page pattern using only these observed idioms:
 
@@ -214,7 +214,7 @@ Generic two-page pattern using only these observed idioms:
 </page>
 ```
 
-For paging *within* one file (a single page that shows different content per sub-page), the observed patterns are internal variables ([32 Samples.xml](../examples/Pads/32%20Samples.xml): `cycle 'sam_page' 4` with `var 'sam_page' N ? ...` branches; [PLAY 16.xml](../examples/Pads/PLAY%2016.xml): `var_equal 'hcpage' ...`) or, for the sampler, the official `sampler_pad_page` pager (see [VirtualDJ Reference — Read-Only Multi-Page Sampler Pages](VirtualDJ%20Reference.md#read-only-multi-page-sampler-pages)). Source: `Local test`, `Built-in pad page`.
+For paging *within* one file (a single page that shows different content per sub-page), the observed patterns are internal variables ([32 Samples.xml](../examples/Pads/Quarantine/32%20Samples.xml): `cycle 'sam_page' 4` with `var 'sam_page' N ? ...` branches; [PLAY 16.xml](../examples/Pads/Quarantine/PLAY%2016.xml): `var_equal 'hcpage' ...`) or, for the sampler, the official `sampler_pad_page` pager (see [VirtualDJ Reference — Read-Only Multi-Page Sampler Pages](VirtualDJ%20Reference.md#read-only-multi-page-sampler-pages)). Source: `Local test`, `Built-in pad page`.
 
 ## Samplerbank XML (Related Third Format)
 
@@ -240,7 +240,7 @@ Source: `Built-in app resource`.
 - **Whole-menu backtick lines.** `` `sampler_options` `` and `` `loop_pad_mode` `` replace the entire menu body. Whether any verb can expand to a menu this way, or only dedicated options verbs, is unknown.
 - **`>>` nesting depth.** Only one level (`Display mode >> Name`) is observed; `A >> B >> C` is untested.
 - **`<custompadsmode>` trigger.** Only `nb="4"` observed, only in built-ins. When VirtualDJ selects this block over the main pad set (4-pad controller layouts? split pages?) and whether other `nb` values are honored is unverified.
-- **`right_click=""` attribute support.** Present only in the local [FX-SLOTS.xml](../examples/Pads/FX-SLOTS.xml), alongside `shift_padN` elements in the same file. Whether VirtualDJ actually reads this attribute (vs. it being inert author intent) needs a local test.
+- **`right_click=""` attribute support.** Present only in the local [FX-SLOTS.xml](../examples/Pads/Quarantine/FX-SLOTS.xml), alongside `shift_padN` elements in the same file. Whether VirtualDJ actually reads this attribute (vs. it being inert author intent) needs a local test.
 - **`tooltip="[value]"` substitution.** Single occurrence ([pads_stems.xml](../examples/Pads/Built-In/pads_stems.xml)); the `[value]` placeholder semantics are assumed, not verified.
 - **`shortname` display context.** Which layouts prefer `shortname` over the filename stem / `name` is not documented.
 - **Pad index ceiling.** 16 is the maximum observed and matches the manual's 16-pad mode; whether indexes above 16 parse is untested.
