@@ -117,11 +117,12 @@ rather than assembled from documentation.
 
 ### Recommended next steps
 
-1. **Invert the verb-index dependency** ([TODO.md](TODO.md) task 11) — `extract_verb_index.py`
-   still parses the 6,300-line `VDJScript Verbs.md` to build the index, which was correct when
-   prose was the best evidence and is backwards now that the verb table decides existence. That
-   parser is what makes the frozen consolidation plan's later phases expensive, and it should be
-   retargeted at the artifacts *before* another artifact joins the set.
+1. **Build the verb index from the artifacts, not from prose** ([TODO.md](TODO.md) task 11) —
+   `extract_verb_index.py` still parses the 6,300-line `VDJScript Verbs.md` to produce
+   `vdjscript-verb-index.json`, so where the prose and the extracted evidence disagree, the
+   prose wins silently and nothing gates it. The reconciliation diff is the real prize: every
+   discrepancy is either a documented claim the artifacts contradict, or a curated fact the
+   store has no field for.
 2. **Build the state-fixture harness and argument prober** ([TODO.md](TODO.md) task 10b) —
    the cheap unblock, Python over the existing HTTP channel. The blocker on argument forms is
    not the channel but *prepared state*: unknown arguments are silently ignored
