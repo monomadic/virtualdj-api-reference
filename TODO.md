@@ -459,14 +459,46 @@ Contract fields to establish per verb:
   `just check`; query with `just verb-contract <name>`. See the Candidates doc §Contract
   structure.
 
-### 10a. THE PRIMARY REMAINING APPROACH — a read-only introspection plugin
+### 10a. A read-only introspection plugin — the only instrument for four questions
 
-Status: **Ready, and the main plan for the rest of task 10.** Everything above was extracted
-from the binary or observed through HTTP; both are now at their limits for the questions that
-remain. The C++ plugin interface is the instrument that clears them, and it is documented in
-[docs/Plugin SDK.md](docs/Plugin%20SDK.md).
+Status: **Ready.** Revised 2026-08-11 after re-reading the full `IVdjCallbacks8` surface; the
+earlier framing of this task ("faster verb prober") undersold it in one direction and oversold
+it in another, and both are corrected below.
 
-Why it is the right instrument, not just another one:
+**What it is genuinely the only channel for.** These have no HTTP, Remote, binary or XML
+equivalent — not a speedup, an access path that does not otherwise exist:
+
+```cpp
+HRESULT GetSongBuffer(int pos, int nb, short **buffer);   // PCM of the loaded song, any position
+HRESULT OnProcessSamples(float *buffer, int nb);          // the live audio stream
+void    OnKey(const char *ch, int vkey, int modifiers, int flag, int scancode);
+bool    OnMouseDown/Up/Move(int x, int y, int buttons, int keyModifiers);
+HRESULT GetTexture(EVdjVideoEngine, int deck, void **texture, TVertex **vertices);
+HRESULT DrawDeck(int deck, TVertex *vertices);
+HRESULT OnTransformPosition(double *songPos, double *videoPos, float *volume, float *srcVolume);
+// plus VDJINTERFACE_SKIN: the plugin supplies skin XML at runtime
+```
+
+Mapped onto this repo's three standing cliffs:
+
+- **Waveforms.** [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) is reverse-engineered from
+  skin XML and observed rendering. `GetSongBuffer` returns the sample data VirtualDJ itself
+  draws from, at arbitrary positions; `OnProcessSamples` gives the live stream. That is the
+  input side of every `<scratchwave>` / `<blockwave>` / `<beattunnel>` question.
+- **Mappers.** `OnKey` exposes VirtualDJ's own input model — virtual key, modifier mask,
+  scancode, plus a `flag` that is a **candidate for press/release** (unverified; confirm from
+  inside). `while_pressed` and the whole down/up half of the mapper contract are currently
+  "not established" precisely because **HTTP has no press**. This is the first channel that
+  might carry one.
+- **Skins.** `VDJINTERFACE_SKIN` takes a skin XML buffer at runtime. Today, testing a skin
+  hypothesis costs an edit-file-and-restart cycle; this makes it a loop, against a 2,600-line
+  SDK doc with open `visibility` / `condition` questions.
+
+Additionally, there is **no push channel anywhere else in the repo** — HTTP and Remote are both
+pull-only from our side. `OnParameter(int id)`, `OnKey` and the sample callbacks are events,
+which is the only way to observe *when* something changes rather than sampling for it.
+
+**What it does for verb signatures specifically — a real but narrower win.**
 
 ```cpp
 virtual HRESULT SendCommand(const char *command)=0;                            // execute
@@ -474,18 +506,24 @@ virtual HRESULT GetInfo(const char *command, double *result)=0;                /
 virtual HRESULT GetStringInfo(const char *command, void *result, int size)=0;  // text query
 ```
 
-- **Native types, no flattening.** HTTP renders everything to text, which is why return types
-  had to be recovered by observation and why `master_beat_num` shows float bits as an integer.
-  A plugin reads the `double` directly — and calling `GetInfo` on it settles in one call
-  whether that defect is in the core or in HTTP's rendering path.
-- **A definitive type-path map.** Calling both `GetInfo` and `GetStringInfo` on each of the
-  955 verbs, and reading the raw HRESULTs, says exactly which channel each verb answers on —
-  no inference from rendered strings.
-- **Throughput.** The 301-verb optional-argument queue and the 259 keyword sets need hundreds
-  of probes each; in-process that is a loop, over HTTP it is hundreds of round-trips.
+- **The HRESULT is returned separately from the value.** HTTP collapses both into one response
+  body, so any case where the status code carries information the value does not is invisible
+  to us today. That is exactly the silent-fallback problem: `loaded opposite` and
+  `loaded bogusword` return the same value over HTTP, but may differ in HRESULT. **This is the
+  one place the plugin can discriminate a recognized keyword from an ignored one**, and it is
+  worth an early experiment — but it is a hypothesis, not a known result.
+- **Native types, no flattening.** Settles the `master_beat_num` float-bits defect in one call
+  (core defect vs HTTP rendering), and calling both `GetInfo` and `GetStringInfo` per verb
+  yields a definitive type-path map rather than one inferred from rendered strings.
 - **Different prerequisites.** No Network Control plugin, no Pro license — a fifth Tier-1
   channel, which [docs/Evidence Standards.md](docs/Evidence%20Standards.md) already lists as
   planned and explicitly forbids claiming anything from until it exists.
+
+**What it does NOT solve, stated plainly.** Throughput is not the bottleneck — the 2026-07-30
+sweeps ran ~3,000 HTTP probes in minutes. And apart from the HRESULT channel above, argument
+forms still need **prepared state** where forms would produce different values; a plugin
+supplies no state a fixture harness cannot. See 10b, which is cheaper and should not wait on
+this.
 
 Plan:
 
@@ -494,9 +532,13 @@ Plan:
    behind an explicit switch.
 2. Emit the same artifact shape as the existing sweeps (`tests/…json` + a `just` query) so it
    joins `just get-verb` for free.
-3. First three experiments: `master_beat_num` via `GetInfo`; the both-channels type map; then
-   the optional-argument queue, remembering that unknown arguments are **silently ignored**
-   (rule from 2026-07-30), so probes must compare values in prepared state, never error codes.
+3. First experiments, in order: **the HRESULT discrimination test** (a known-good keyword vs a
+   nonsense one on the same verb — if the codes differ, the entire 217-verb undocumented
+   keyword queue becomes mechanically decidable, and that single result is what determines how
+   much the plugin is worth); `master_beat_num` via `GetInfo`; the both-channels type map.
+4. Then the cliff work, which is the larger prize: `GetSongBuffer` against a known file to
+   ground [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md); `OnKey` logging to establish the
+   press/release model for [docs/Mapper XML.md](docs/Mapper%20XML.md).
 
 Prerequisites and constraints:
 
@@ -519,6 +561,37 @@ Done when:
 - Every verb has an arg-forms record: observed forms, rejected forms, or `no-args`.
 - Overloads (same verb, distinct arg shapes with distinct behavior) are recorded as such.
 - The store's per-verb record surfaces all of it through `just get-verb`.
+
+### 10b. State-fixture harness + argument prober (do this first — it is the cheap unblock)
+
+Status: **Ready, and cheaper than 10a.** Python over the existing HTTP channel; no build
+toolchain, no SDK, no new evidence tier. Added 2026-08-11.
+
+The blocker for argument forms is not the channel, it is **prepared state**. Unknown arguments
+are silently ignored (`loaded bogusword` → `yes`), so a form can only be confirmed by comparing
+values across forms **in a state where the forms would disagree**. `loaded opposite` is
+meaningless with both decks empty — which is how the decks sat for most of 2026-07-30's
+session, and why 301 optional-arg verbs are still unprobed.
+
+Plan:
+
+1. **Fixture layer.** Named states, each set up and torn down over HTTP execute, each asserting
+   its own preconditions before probes run: `one_deck_loaded`, `both_decks_loaded`,
+   `deck2_playing`, `loop_active`, `fx_slot_1_on`, `sampler_slot_loaded`, `stems_active`. Fail
+   loudly if setup does not verify — a probe against an unestablished state is worse than none.
+2. **Prober.** For each verb in `summary.optional_arg_queries` (301) crossed with its
+   `keyword_candidates` (259 verbs, 217 undocumented), sample bare vs each keyword vs a
+   nonsense control, in every fixture. Record: value-differs-from-bare, value-differs-from-
+   nonsense-control. **The nonsense control is the whole design** — a keyword that behaves
+   differently from garbage is recognized; one that matches garbage is not.
+3. Emit `tests/verb-arg-forms.json` in the existing artifact shape, gated in `just check`,
+   joined by `just get-verb`.
+
+Constraint: query position only. Execute-position confirmation is whitelist-only with
+independent readback (rule 4), and never `system` / file / database verbs.
+
+Done when the 217 undocumented keyword sets are each classified recognized / ignored /
+state-dependent, with the fixture that decided it recorded alongside.
 
 ## Blocked Or Hardware-Gated
 

@@ -117,19 +117,22 @@ rather than assembled from documentation.
 
 ### Recommended next steps
 
-1. **Build the read-only introspection plugin — this is the primary plan**
-   ([TODO.md](TODO.md) task 10a, with the full build plan and constraints). Both existing
-   instruments are at their limits: the binary cannot yield argument *types*, and HTTP
-   flattens every result to text. The plugin SDK sits at the boundary where results are still
-   typed — `GetInfo` → `double` and `GetStringInfo` → text are separate calls — so a plugin
-   reads native types and raw HRESULTs directly. It settles the `master_beat_num` float-bits
-   defect in one call, produces a definitive per-verb type-path map, makes the 301-verb
-   optional-argument queue tractable at loop speed, and is a fifth Tier-1 channel needing
-   neither the Network Control plugin nor a Pro license. Headers are fetched to a gitignored
-   `vendor/`, never committed — Atomix grants no redistribution license.
-2. **Probe the 217 verbs whose keyword arguments no documentation mentions.** Note the
-   constraint found the hard way: unknown arguments are *silently ignored*, so confirmation
-   needs prepared state where forms would differ — never an error code.
+1. **Build the state-fixture harness and argument prober** ([TODO.md](TODO.md) task 10b) —
+   the cheap unblock, Python over the existing HTTP channel. The blocker on argument forms is
+   not the channel but *prepared state*: unknown arguments are silently ignored
+   (`loaded bogusword` → `yes`), so a form is only confirmable by comparing it against both
+   bare and a **nonsense control** in a state where they would disagree. That settles the
+   217 undocumented keyword sets and the 301-verb optional-argument queue.
+2. **Build the read-only introspection plugin** ([TODO.md](TODO.md) task 10a). Its value is
+   *not* verb throughput — the 2026-07-30 sweeps ran ~3,000 HTTP probes in minutes. It is the
+   only channel for things nothing else reaches: `GetSongBuffer` and `OnProcessSamples` give
+   the actual PCM behind every waveform element; `OnKey(ch, vkey, modifiers, flag, scancode)`
+   is the first channel that may expose press/release, which HTTP structurally cannot;
+   `VDJINTERFACE_SKIN` turns skin testing from edit-and-restart into a loop. For verbs
+   specifically, one real edge: `GetInfo` returns an **HRESULT separately from the value**,
+   which HTTP flattens — the one way to tell a recognized keyword from an ignored one. Headers
+   are fetched to a gitignored `vendor/`, never committed — Atomix grants no redistribution
+   license.
 3. **Behavior for ~940 verbs is still untested.** Existence, kind, category, capability and
    return type are settled; what a verb *does* mostly is not.
 4. **Audit the remaining `Inference` and `Community` labels** against
