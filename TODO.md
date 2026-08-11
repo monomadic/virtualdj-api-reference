@@ -607,6 +607,56 @@ independent readback (rule 4), and never `system` / file / database verbs.
 Done when the 217 undocumented keyword sets are each classified recognized / ignored /
 state-dependent, with the fixture that decided it recorded alongside.
 
+### 11. Invert The Verb-Index Dependency (finishes Phase 0 of the frozen plan)
+
+Status: **Ready, and it should land before 10b.** Raised 2026-08-11 when the "should the
+monolith become `verbs/<category>/<verb>.md`?" question came up again.
+
+**That question is already settled**, in
+[docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md)
+(frozen; do not re-scope it). The answer there is **families — ~12-20 authored files — not
+one file per verb**, and the reasoning still holds: per-verb Markdown is 955 files of mostly
+derived content, category is a Button Editor UI concern rather than a stable key, and 61 alias
+groups would each need duplication. Per-verb *pages* belong in the HTML export in the Parking
+Lot: generated at build time, never checked in. Nothing about the structure needs redeciding.
+
+What *has* changed since the plan was frozen is the direction the data flows, and that is a
+genuine blocker the plan could not have anticipated:
+
+```
+today:   docs/VDJScript Verbs.md  ──parsed by──>  extract_verb_index.py  ──>  vdjscript-verb-index.json
+wanted:  store + verb-table + contracts  ──────>  extract_verb_index.py  ──>  vdjscript-verb-index.json
+```
+
+Phase 0 says "add the generators against the *existing* `VDJScript Verbs.md`", which was right
+when hand-authored prose was the best evidence available. It is now backwards: the verb table
+**decides existence outright**, and four artifacts carry contract data the monolith has never
+held. Parsing prose to build an index that a JSON join could produce directly means the
+6,300-line file is load-bearing for tooling, which is exactly what makes every later phase
+expensive — you cannot delete a family's rows while a parser depends on their shape.
+
+Plan:
+
+1. Rewrite [tools/extract_verb_index.py](tools/extract_verb_index.py) to build
+   `docs/vdjscript-verb-index.json` from the store + `verb-table.json` + `action-contracts.json`
+   + `verb-return-types.json`, not from Markdown. Keep the output schema byte-identical at first
+   so `lint_mappers.py` and `verbdb.py bootstrap` are unaffected — **prove the inversion with a
+   no-diff commit**, then extend the schema separately.
+2. Diff old vs new output and reconcile every discrepancy before switching. Each one is either a
+   monolith row the artifacts disagree with (a real correction to record) or a curated fact with
+   no artifact home (which names a missing store field). Do not silently take either side.
+3. Only then retarget the catalog tables. With tooling off the monolith, the 1,175 table rows are
+   pure duplication of the store and can be dropped in favour of `just find-verbs` — family by
+   family, per the frozen plan's Phase 1 gate. **The ~1,000 lines of curated prose stay
+   hand-authored**; they are the part no artifact can produce, and the standing rule against
+   generated Markdown copies is unchanged.
+
+Ordering note: 10b adds a fifth artifact to the join. Doing this first means it joins one
+generator; doing it after means reconciling a Markdown parser against it as well.
+
+Done when `just verb-index` reads no Markdown, `just check` is green, and the discrepancy
+reconciliation from step 2 is recorded.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
