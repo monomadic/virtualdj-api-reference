@@ -584,7 +584,21 @@ Plan:
    nonsense control, in every fixture. Record: value-differs-from-bare, value-differs-from-
    nonsense-control. **The nonsense control is the whole design** — a keyword that behaves
    differently from garbage is recognized; one that matches garbage is not.
-3. Emit `tests/verb-arg-forms.json` in the existing artifact shape, gated in `just check`,
+3. **Multiple tail tokens.** Nothing established so far says whether a verb accepts *more than
+   one* token in its tail (`get_time short absolute`, `get_bpm absolute ghost`) — the
+   `E_INVALIDARG` fingerprint only reports "demands an argument somewhere", and every probe run
+   to date has been single-token. Add a cross-product pass over each verb's recovered
+   `keyword_candidates`: bare, each token alone, each ordered pair, and a pair with one nonsense
+   member. Four outcomes to distinguish per pair — both recognized, first wins, last wins, pair
+   rejected entirely. Cheap to fold in here; expensive to retrofit once the artifact shape is
+   fixed, so **design `verb-arg-forms.json` for a token list from the start, not a single
+   `argument` string**.
+
+   This matters more than it looks: `GetInfo(const char *command, …)` takes the whole command as
+   **one string**, so there is no ABI-level parameter list anywhere — each `ACTION_` class parses
+   its own tail. "Signature" for a VDJScript verb therefore means *the grammar of its tail*, and
+   token count is the first unknown of that grammar.
+4. Emit `tests/verb-arg-forms.json` in the existing artifact shape, gated in `just check`,
    joined by `just get-verb`.
 
 Constraint: query position only. Execute-position confirmation is whitelist-only with
