@@ -497,12 +497,32 @@ three leads closed, details in the tracker:
   and 21 needing **implicit defaults HTTP supplies and a plugin call does not**
   (`get_effect_slider_name 1 1` → `Strength`).
 
-Still open: the **browser readers** (`get_browsed_folder` answers over HTTP, stays silent on
-this channel even with an argument — a browser context is the guess, untested); the ~227
-**execute-capable keyword verbs**, excluded from the keyword sweep by choice, which need a
-decision about probing state-selecting keywords in query position; and everything in the "only
-channel for" list below (`GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`), none of which this
-read-only build touches.
+Fourth and fifth captures, 2026-08-15 (`-remaining`, `-late`), closing both remaining items:
+
+- **The silent browser readers were startup timing, not a missing plugin context.** `OnLoad`
+  fires while VirtualDJ is still starting. The plugin now sweeps an optional second list ~40s
+  after load, and all six `get_browsed_folder*` verbs answer there with nothing else changed.
+  **Method rule: an `E_INVALIDARG` from a load-time probe means "not available now", not "no
+  such form"** — re-take negatives from the delayed sweep before recording them. Song-level
+  readers (`get_browsed_comment|composer|song`) stay silent even late; a highlighted song is
+  the next variable.
+- **The execute-capable keyword verbs are swept**: 1,126 probes over 217 verbs, query position
+  only, 10 excluded outright (file/config/system families, listed in the tracker). 51 pairs
+  confirmed by HRESULT over 25 verbs, 36 more by value over 27 — full enum sets recovered for
+  `crossfader_curve`, `maximize`, `loop_adjust`, `browser_scroll`, `cue_display`,
+  `auto_bpm_transition_options`, `djc_button_select`. Reproduce with
+  `just plugin-keyword-report remaining`.
+- **Probing execute-capable verbs in query position changed no state**: all 217 bare verbs
+  shared with the baseline returned byte-identical values afterwards, HTTP agreeing. One idle
+  session's evidence, not a general proof.
+- **Host callbacks work off the main thread** — the delayed sweep runs on a detached timer
+  thread and completed cleanly. Undocumented in the SDK; one session's evidence.
+
+Still open: the **605 idle-state-indistinguishable keyword pairs**, which need prepared state
+(a loaded track, a highlighted song) rather than a new channel — that is 10b's territory, not
+this task's; the **song-level browser readers**; and everything in the "only channel for" list
+below (`GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`), none of which this read-only build
+touches. Those three are now the whole remaining value of 10a.
 
 Ergonomic note for whoever continues: **each capture costs a VirtualDJ restart**, because the
 sweep runs at plugin load. Three restarts got the above. If iteration gets heavy, a watcher

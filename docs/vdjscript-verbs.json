@@ -1031,7 +1031,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (2026-08-15, query position): 'top' and 'bottom' are confirmed keywords (S_OK + bool; 'top' was on), an unrecognized argument gives E_INVALIDARG."
+   ],
    "section": "Browser",
    "description": "Scroll songs/folders",
    "example": "browser_scroll +1",
@@ -1498,7 +1500,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (2026-08-15, query position): confirmed enum — 'scratch' (active on this machine), 'custom', 'cut', 'disabled', 'full', 'smooth' each answer S_OK with a bool, while an unrecognized argument answers E_INVALIDARG. Bare form returns the numeric curve value (0.99 over HTTP)."
+   ],
    "section": "Volume & Mixing",
    "description": "Crossfader curve",
    "example": "crossfader_curve \"scratch\""
@@ -4436,7 +4440,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel (2026-08-15): STARTUP TIMING, not a missing context. Silent (E_INVALIDARG) when swept during plugin load, answers normally ('All Tracks') when swept 40s later in the same session. The whole get_browsed_folder_* family behaves this way. A negative result from a load-time probe is not evidence the form is unsupported."
+   ]
   },
   "get_browsed_folder_icon": {
    "name": "get_browsed_folder_icon",
@@ -8305,7 +8311,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (2026-08-15, query position): 'move' and 'out' are confirmed keywords (S_OK + bool); an unrecognized argument gives E_INVALIDARG."
+   ],
    "section": "Loops",
    "description": "Adjust loop with jog",
    "example": "loop_adjust 'move'"
@@ -8898,7 +8906,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (2026-08-15, query position): confirmed enum — 'fullscreen' (on), 'maximized', 'original', 'windowed' answer S_OK with a bool; an unrecognized argument answers E_INVALIDARG. Reads window state; probing did not change it."
+   ],
    "section": "Window Control",
    "description": "Maximize/fullscreen/windowed",
    "example": "maximize 'fullscreen'"

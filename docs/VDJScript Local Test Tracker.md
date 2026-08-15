@@ -565,3 +565,63 @@ What the 50 actually are:
 Still unexplained inside that last group: the browser readers (`get_browsed_folder` →
 `All Files` over HTTP) stay silent on the plugin channel even with an argument. A browser
 context that HTTP evaluation has and a plugin call lacks is the obvious guess — untested.
+
+### Delayed Sweep And The Execute-Capable Keyword Verbs (2026-08-15)
+
+Two more captures in one restart, from a plugin build that also sweeps a second
+list ~40s *after* load (`tests/plugin-introspection-{remaining,late}.json`).
+
+**The silent browser verbs were a STARTUP-TIMING artifact, not a missing plugin
+context.** `OnLoad` fires while VirtualDJ is still starting, so a subsystem that
+has not initialized is indistinguishable from a verb that never answers. Swept
+again 40 seconds later, with no other change, six browser readers came alive:
+
+| Verb | At load | 40s later |
+| --- | --- | --- |
+| `get_browsed_folder` | silent | `All Tracks` |
+| `get_browsed_folder_path` | silent | `filters:/All Tracks.vdjfolder` |
+| `get_browsed_folder_icon` | silent | `8` |
+| `get_browsed_folder_scrollpos` | silent | `0` |
+| `get_browsed_folder_scrollsize` | silent | `29` |
+| `get_browsed_folder_tab` | silent | `1` |
+
+**Method consequence:** an `E_INVALIDARG` from this channel means "not available
+*now*", not "no such form". Any negative result taken at load time is suspect,
+and should be re-taken from the delayed sweep before being recorded.
+
+Still silent at 40s: the song-level readers (`get_browsed_comment`,
+`get_browsed_composer`, `get_browsed_song`) and the effect/controller readers.
+The song-level three answer over HTTP with a song highlighted, so a *selection*,
+not just an initialized browser, is the next thing to vary.
+
+**Execute-capable keyword verbs, query position only.** 1,126 probes over 217
+verbs (10 excluded outright — the file/config/system families:
+`auto_cue`, `broadcast_message`, `browsed_file_analyze`, `browsed_file_rename`,
+`debug`, `effect_bank_save`, `play_mode`, `setting_if_unchanged`,
+`setting_ismodified`, `system`). Run the split with
+`just plugin-keyword-report remaining [--verbose]`.
+
+| Outcome | Pairs | Verbs |
+| --- | ---: | ---: |
+| Confirmed by HRESULT | 51 | 25 |
+| Confirmed by value | 36 | 27 |
+| Indistinguishable in idle state | 605 | — |
+
+Confirmed enum sets include `crossfader_curve` (`scratch` active, plus `custom`,
+`cut`, `disabled`, `full`, `smooth`), `maximize`
+(`fullscreen`/`maximized`/`original`/`windowed`), `loop_adjust` (`move`, `out`),
+`browser_scroll` (`top`, `bottom`), `cue_display` (`num`, `number`),
+`auto_bpm_transition_options` (`autostart`, `length`, `loop`, `master_tempo`),
+`font_size` (`big`), and `djc_button_select` (`deck1`-`deck4`, `deckA`, `deckB`).
+
+**Safety check on probing execute-capable verbs in query position: no state
+changed.** All 217 bare verbs common to this capture and the load-time baseline
+returned byte-identical values afterwards (0 differences), and HTTP readback
+agreed. Combined with the plugin containing no `SendCommand` call, that is two
+independent reasons the sweep was read-only — but it is evidence from one idle
+session, not a proof for every verb.
+
+**Also proven incidentally: the host callbacks are safe to call from a
+non-main thread.** The delayed sweep runs on a detached timer thread and
+completed 55 probes with no crash, hang, or visible misbehaviour. Undocumented
+in the SDK; one session's evidence.

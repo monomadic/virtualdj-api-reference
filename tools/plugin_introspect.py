@@ -323,6 +323,51 @@ def cmd_leads_report(args):
                   f"{bogus['text']!r}")
 
 
+def cmd_keyword_report(args):
+    """Three-way split of every keyword against its nonsense control.
+
+    The point of the nonsense control is that an unrecognized argument is
+    *silently ignored* (established over HTTP, 2026-07-30), so a keyword cannot
+    be confirmed by asking whether it errors. It is confirmed by differing from
+    a word that is definitely not a keyword, on the same verb, in the same state.
+    """
+    p = json.load(open(args.capture))["probes"]
+    contracts = json.load(open(CONTRACTS))["verbs"]
+
+    hr, val, inert = [], [], []
+    for n, r in sorted(contracts.items()):
+        control = p.get(f"{n} {BOGUS}")
+        if not r.get("keyword_candidates") or control is None:
+            continue
+        for kw in r["keyword_candidates"]:
+            rec = p.get(f"{n} {kw}")
+            if rec is None:
+                continue
+            if (rec["numeric_hresult"], rec["text_hresult"]) != \
+               (control["numeric_hresult"], control["text_hresult"]):
+                hr.append((n, kw, rec, control))
+            elif (rec.get("numeric"), rec["text"]) != \
+                 (control.get("numeric"), control["text"]):
+                val.append((n, kw, rec, control))
+            else:
+                inert.append((n, kw))
+
+    total = len(hr) + len(val) + len(inert)
+    verbs = {n for n, _, _, _ in hr} | {n for n, _, _, _ in val} | {n for n, _ in inert}
+    print(f"{args.capture}: {total} keyword/nonsense pairs over {len(verbs)} verbs")
+    print(f"  confirmed by HRESULT : {len(hr):4}  ({len({n for n,_,_,_ in hr})} verbs)")
+    print(f"  confirmed by value   : {len(val):4}  ({len({n for n,_,_,_ in val})} verbs)")
+    print(f"  indistinguishable    : {len(inert):4}  (NOT disproof — an idle app "
+          f"gives most keywords nothing to vary)")
+    if args.verbose:
+        for label, rows in (("HRESULT", hr), ("VALUE", val)):
+            for n, kw, rec, control in rows:
+                print(f"  [{label}] {n} {kw!r}: "
+                      f"{rec['numeric_hresult']}/{rec['text_hresult']} {rec['text'][:20]!r}"
+                      f"  vs nonsense {control['numeric_hresult']}/"
+                      f"{control['text_hresult']} {control['text'][:20]!r}")
+
+
 def cmd_check():
     if not os.path.exists(ARTIFACT):
         print("plugin introspection check skipped: no capture yet "
@@ -363,6 +408,12 @@ def main():
     coll = sub.add_parser("collect", help="normalize results.json to stdout")
     coll.add_argument("--late", action="store_true", help="read results-late.json")
     coll.set_defaults(func=cmd_collect)
+    kwr = sub.add_parser("keyword-report",
+                         help="confirm keywords against their nonsense controls")
+    kwr.add_argument("--capture", default=LEADS_ARTIFACT)
+    kwr.add_argument("--verbose", action="store_true")
+    kwr.set_defaults(func=cmd_keyword_report)
+
     sub.add_parser("leads-report",
                    help="analyze the follow-up capture").set_defaults(
         func=cmd_leads_report)

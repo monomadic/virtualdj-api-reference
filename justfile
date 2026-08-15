@@ -226,3 +226,7 @@ check:
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
+
+# Confirm argument keywords against their nonsense controls in any capture.
+plugin-keyword-report capture *args:
+    @python3 tools/plugin_introspect.py keyword-report --capture "tests/plugin-introspection-{{capture}}.json" {{args}}

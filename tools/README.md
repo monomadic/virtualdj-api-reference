@@ -61,6 +61,15 @@ Atomix SDK headers under `vendor/` — deliberately not vendored, see
 Order: `just plugin-build --install` → restart VirtualDJ → `just plugin-prepare` → restart
 again (the sweep runs at plugin load) → `just plugin-status` → `just plugin-collect`.
 
+Two things that bite. **Each capture costs a VirtualDJ restart**, because the sweep runs when
+the plugin loads. And **a load-time probe can be too early**: `OnLoad` fires while VirtualDJ is
+still starting, so an uninitialized subsystem (the browser) answers `E_INVALIDARG` exactly as a
+nonexistent form would. Use `prepare --late` to write `probes-late.txt`, which the plugin
+sweeps again ~40s after load from a timer thread, and re-take any negative there before
+believing it. `prepare --remaining` emits the execute-capable keyword verbs (query position
+only, unsafe families excluded and printed); `just plugin-keyword-report <capture>` splits
+every keyword against its nonsense control.
+
 ## Extraction: local VirtualDJ required
 
 These read `/Applications/VirtualDJ.app` (override with `--app`). They need macOS with Apple Silicon tooling (`nm`, `c++filt`, `otool`, `strings`) and produce *evidence*, which is hand-promoted into the docs with source labels — their output is not directly committed.
