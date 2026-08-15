@@ -4390,7 +4390,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel (2026-08-15): 'red'/'green'/'blue' are colour-COMPONENT selectors, returning 243/198/211 where the bare/unknown-argument form returns the hex string '#F3C6D3' — the same three bytes. An unrecognized argument falls back to the hex form rather than erroring."
+   ]
   },
   "get_browsed_comment": {
    "name": "get_browsed_comment",
@@ -5059,7 +5061,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_name 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): accepts an effect NAME where the docs show a slot number (`get_effect_slider_name 'Echo' 1`). Verified identical to the slot form for all 119 title-resolvable effects, with no effect_select and no state change — this is the cheap way to introspect an effect you have not loaded.",
+    "Plugin channel (2026-08-15): the bare form answers over HTTP ('Strength') but NOT through a plugin's GetInfo/GetStringInfo (E_INVALIDARG/S_FALSE). Explicit arguments work on both: 'get_effect_slider_name 1 1' and \"get_effect_slider_name 'Blur' 1\" both return 'Strength'. So HTTP's evaluation path supplies a default slot/index that a plugin call does not — an implicit-default difference, not a deck-context one."
    ],
    "section": "Effects",
    "description": "Get effect slider name",
@@ -5602,7 +5605,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel (2026-08-15): ARGUMENT TRAP. Real names discriminate (home -> off, pro -> on, plus -> on, cuaudio/cukaraoke/cuvideo -> off), but an unrecognized argument ('zzznotakeyword') also returns ON with S_OK. Do not use get_license as an existence probe for a licence name; a true answer does not mean the name is real."
+   ]
   },
   "get_limiter": {
    "name": "get_limiter",
@@ -7561,7 +7566,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (VDJIntrospect, VirtualDJ 2026 b18.0.9583, 2026-08-15): takes a keyword; all ten binary-recovered keywords (cue, effect, equalizer, filter, load, loop, loopsize, pads, sample, stems) answer S_OK with a bool. An UNRECOGNIZED keyword answers E_NOTIMPL on GetInfo — so this verb's HRESULT discriminates real keywords from nonsense, which HTTP cannot see (both render alike)."
+   ],
    "section": "Skin Control",
    "description": "Query whether a feature was recently used",
    "example": "is_using 'filter' 1000ms"
@@ -8751,7 +8758,8 @@
    "blocked": false,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 539, flags 256 (Button-Editor-hidden), category get. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "VirtualDJ 2026 (HTTP, 2026-07-30): BARE FORM RETURNS FLOAT BITS AS INT32 (type punning). Bare returns e.g. 1065869312 = 0x3f87e000; reinterpreting those bits as IEEE754 float32 gives 1.06, and successive samples decode to 1.06 -> 2.27 -> 3.49 -> 4.70, i.e. +1.21 beats per 0.6s, which matches the deck's live 118.66 BPM (1.98 beats/s) exactly. So the underlying value is a float beat counter rendered through an int path. With an argument the correct path is used: 'master_beat_num 5' returns 0.8. Hidden verb (flags==256)."
+    "VirtualDJ 2026 (HTTP, 2026-07-30): BARE FORM RETURNS FLOAT BITS AS INT32 (type punning). Bare returns e.g. 1065869312 = 0x3f87e000; reinterpreting those bits as IEEE754 float32 gives 1.06, and successive samples decode to 1.06 -> 2.27 -> 3.49 -> 4.70, i.e. +1.21 beats per 0.6s, which matches the deck's live 118.66 BPM (1.98 beats/s) exactly. So the underlying value is a float beat counter rendered through an int path. With an argument the correct path is used: 'master_beat_num 5' returns 0.8. Hidden verb (flags==256).",
+    "Plugin channel (VDJIntrospect, VirtualDJ 2026 b18.0.9583, 2026-08-15): GetInfo returns S_OK with the double 1083943558.0 exactly — the float32 bit pattern 0x409baa86 (= 4.8646) reinterpreted as an integer. The defect is in the CORE, not HTTP rendering; consumers must reinterpret the int32 bits as float32."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -9226,7 +9234,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel (2026-08-15): ARGUMENT TRAP, same shape as get_license — 'external' returns off, but an unrecognized argument returns ON with S_OK. Not a safe probe for a mode name."
+   ],
    "section": "Deck Management",
    "description": "Query internal vs external mixer mode",
    "example": "mixermode 'internal'"

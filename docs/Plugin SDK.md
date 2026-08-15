@@ -44,11 +44,38 @@ same three-way split (Evidence Standards rule 1g):
 | slot 3 — generic query (the variant) | `GetInfo` → `double *` |
 | slot 4 — specialized text query | `GetStringInfo` → buffer |
 
-It also localises a known defect. `master_beat_num` returns float32 *bits* through an integer
-path over HTTP ([HTTP Control Interface](HTTP%20Control%20Interface.md)); since the core hands
-back a `double` here, that coercion is almost certainly in the **rendering** path, not the
-engine. A plugin calling `GetInfo("master_beat_num", &d)` settles it in one call — see
-[TODO.md](../TODO.md) task 10.
+**Corrected by measurement (`Local test`, plugin channel, 2026-08-15).** Calling both
+callbacks on all 1,028 verbs partitions the result exactly, and the slot 3/slot 4 split above
+is not what happens:
+
+- **Slot 3 backs *both* callbacks** — 594 of the 599 text answers, and every numeric answer.
+  `GetStringInfo` is mostly the variant rendered as text.
+- **Slot 5 is a fallback label provider.** Of the 174 verbs that do not override slot 3,
+  exactly 5 answer text and all 5 override slot 5 — `stop_button` → `"■"`,
+  `scratchbank_load` → `"Bank A"`, `sampler_pad_page` → `"1 to 8"`. The other 169 answer
+  nothing. Every text answer in the capture therefore comes from slot 3 or slot 5, with no
+  remainder.
+- **Slot 4's role is unproven.** All 85 of its text-answering verbs also override slot 3, so
+  it explains nothing on its own.
+
+Two operational facts from the same capture. `E_INVALIDARG` is the numeric channel's "wrong
+channel, ask the other one" code and `S_FALSE` is the text channel's; **VirtualDJ writes
+`0.0` to `*result` even when it returns an error**, so the HRESULT is the answer and a raw
+`0` is meaningless without it. And because the HRESULT arrives separately from the value, this
+channel can tell a **recognized argument from an ignored one** — `is_using cue` answers
+`S_OK`/`off` where `is_using zzznotakeyword` answers `E_NOTIMPL` — which HTTP structurally
+cannot. See the tracker's Plugin Channel section.
+
+It also localised a known defect — and then **refuted the guess about it**. `master_beat_num`
+returns float32 *bits* through an integer path over HTTP
+([HTTP Control Interface](HTTP%20Control%20Interface.md)), and this page previously reasoned
+that since the core hands back a `double`, the coercion was "almost certainly in the rendering
+path, not the engine." Wrong. `GetInfo("master_beat_num", &d)` on VirtualDJ 2026 (bundle
+`18.0.9583`, `Local test` via the plugin channel, 2026-08-15) returns `S_OK` with `d` holding
+**exactly `1083943558.0`** — the int32 reading of float32 bits `0x409baa86` (= `4.8646`),
+already punned before it reaches any channel. The defect is in the **core**; HTTP was rendering
+a broken number faithfully. Consumers of this verb must reinterpret the int32 bits as float32
+on either channel.
 
 ### What the SDK does *not* contain: any verb information at all
 
@@ -280,7 +307,25 @@ with `CLSID_VdjPlugin8` plus a per-type IID (`IID_IVdjPluginBasic8`, `IID_IVdjPl
 `IID_IVdjPluginVideoTransitionMultiDeck8`). The host string `DllGetClassObject` does appear in
 the VirtualDJ binary.
 
-**Open question — do not assume the documented path is the only one.** The bundled
+**RESOLVED for the documented path (`Local test`, plugin channel, 2026-08-15).** A bundle
+exporting `DllGetClassObject` and answering `CLSID_VdjPlugin8` + `IID_IVdjPluginBasic8` loads
+and runs on VirtualDJ 2026 (bundle `18.0.9583`), from
+`~/Library/Application Support/VirtualDJ/PluginsMacArm/AutoStart/`, **ad-hoc signed**. The host
+type-probes by calling the same export repeatedly, once per interface, in this order:
+
+1. `IID_IVdjPluginDsp8`
+2. `IID_IVdjPluginBuffer8`
+3. `IID_IVdjPluginVideoFx8`
+4. `IID_IVdjPluginVideoTransition8`
+5. `IID_IVdjPluginVideoTransitionMultiDeck8`
+6. `IID_IVdjPluginBasic8` — accepted here, after which probing stopped
+
+So a plugin declares its type by *which IID it accepts*, not by any manifest. Because probing
+stops at the first acceptance, the positions of `IID_IVdjPluginStartStop8` and
+`IID_IVdjPluginOnlineSource` in the order are unknown — a plugin that declines everything would
+reveal the full list.
+
+**Still open — the second path.** The bundled
 `beatport16_vdj.bundle` (an online-source plugin) exports 11,303 symbols and **none** is
 `DllGetClassObject`, nor does it contain any SDK GUID as raw bytes. Nor do those GUID byte
 sequences appear in the host binary — consistent with the compiler materialising constant GUIDs
@@ -309,8 +354,12 @@ depend on it), which makes it a reasonable foundation to build tooling against.
 
 ## Use in this repo
 
-A read-only introspection plugin is queued as the next instrument for
-[TODO.md](../TODO.md) task 10, because it can do what the HTTP channel structurally cannot:
+A read-only introspection plugin is the next instrument for [TODO.md](../TODO.md) task 10 —
+built and offline-verified 2026-08-15 ([tools/plugin/](../tools/plugin/), `just plugin-build`),
+though not yet loaded into VirtualDJ, so nothing below is claimed as observed. Two build facts
+worth recording: **Xcode is not needed** (Command Line Tools `clang++` produces a loadable
+signed bundle), and VirtualDJ ships with `com.apple.security.cs.disable-library-validation`, so
+an ad-hoc signature suffices. It can do what the HTTP channel structurally cannot:
 
 - call `GetInfo` and `GetStringInfo` on each of the 955 verbs and read **native types plus raw
   HRESULTs**, giving a definitive per-verb type-path map instead of one inferred from rendered

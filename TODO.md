@@ -461,9 +461,78 @@ Contract fields to establish per verb:
 
 ### 10a. A read-only introspection plugin — the only instrument for four questions
 
-Status: **Ready.** Revised 2026-08-11 after re-reading the full `IVdjCallbacks8` surface; the
-earlier framing of this task ("faster verb prober") undersold it in one direction and oversold
-it in another, and both are corrected below.
+Status: **The channel is OPEN (2026-08-15).** The plugin builds, loads, and has returned its
+first full capture: 1,028 verbs × both query callbacks, in `tests/plugin-introspection.json`
+(`just plugin-probe <name>`). See the tracker's "Plugin Channel (VDJIntrospect)" section for
+the evidence table. Headline results:
+
+- **The documented `DllGetClassObject` path is live.** VirtualDJ type-probes with six IIDs in
+  order (Dsp, Buffer, VideoFx, VideoTransition, VideoTransitionMultiDeck, then Basic) and stops
+  at the first accepted one. Ad-hoc signing suffices; Xcode is not required.
+- **`master_beat_num` is settled: the float-bits defect is in the CORE.** `GetInfo` hands back
+  the double `1083943558.0` — the int32 reinterpretation of float32 `4.8646` — so HTTP was
+  faithfully rendering an already-broken number. This was the first named experiment; it is
+  done.
+- **A definitive channel map**: 532 verbs answer on both callbacks, 67 text-only, 11
+  numeric-only, 418 on neither, agreeing with the HTTP sweep's kinds (181/181 action-only).
+  `E_INVALIDARG` is the numeric channel's "wrong channel" code; the text side says `S_FALSE`.
+  Caveat: VirtualDJ writes `0.0` to `*result` even on `E_INVALIDARG`, so the HRESULT is the
+  answer, not the value.
+
+Follow-up captures, 2026-08-15 (`tests/plugin-introspection-{leads,controls}.json`) — all
+three leads closed, details in the tracker:
+
+- **The HRESULT keyword-discrimination hypothesis is CONFIRMED.** 26 of 165 keyword/nonsense
+  pairs differ by HRESULT (`is_using zzznotakeyword` → `E_NOTIMPL`; `action_deck`,
+  `device_side`, `get_ns7_platter` → `E_INVALIDARG`), 14 more by value. **This is the method
+  for the keyword queue** — it needs no prepared state, unlike value comparison. Two argument
+  traps found: `get_license` and `mixermode` return `on` for nonsense arguments.
+- **Slot 5 is the label provider** (`stop_button` → `"■"`), and **slot 3 backs both
+  callbacks**; slot 4's role is unproven. Exact partition, no remainder — the slot table in
+  [docs/Plugin SDK.md](docs/Plugin%20SDK.md) is corrected.
+- **Deck context was the wrong explanation** for the 50 silent query verbs, proven with a
+  control (`deck 1 get_bpm` → `120`, so the prefix does work; `left get_bpm` fails — the
+  `deck` scope word is required). They are 27 verbs HTTP also answered empty (the plugin
+  channel distinguishes "no value" from "empty value"; HTTP cannot), 7 wanting an argument,
+  and 21 needing **implicit defaults HTTP supplies and a plugin call does not**
+  (`get_effect_slider_name 1 1` → `Strength`).
+
+Still open: the **browser readers** (`get_browsed_folder` answers over HTTP, stays silent on
+this channel even with an argument — a browser context is the guess, untested); the ~227
+**execute-capable keyword verbs**, excluded from the keyword sweep by choice, which need a
+decision about probing state-selecting keywords in query position; and everything in the "only
+channel for" list below (`GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`), none of which this
+read-only build touches.
+
+Ergonomic note for whoever continues: **each capture costs a VirtualDJ restart**, because the
+sweep runs at plugin load. Three restarts got the above. If iteration gets heavy, a watcher
+thread re-sweeping when `probes.txt` changes would remove that — at the cost of calling the
+host callbacks off the main thread, which is untested.
+
+Revised 2026-08-11 after re-reading the full `IVdjCallbacks8` surface; the earlier framing of
+this task ("faster verb prober") undersold it in one direction and oversold it in another, and
+both are corrected below.
+
+Landed 2026-08-15 — plan steps 1 and 2, minus the host:
+
+- [tools/plugin/VDJIntrospect.cpp](tools/plugin/VDJIntrospect.cpp) builds and ad-hoc signs with
+  **Command Line Tools `clang++` — Xcode is not required** (`just plugin-build --install`), and
+  VirtualDJ carries `com.apple.security.cs.disable-library-validation`, so a self-signed bundle
+  is loadable. It reads a probe list at load and records, per probe, both HRESULTs, the raw
+  `double` with its bit pattern, and the text buffer. Read-only by construction: the source
+  contains no `SendCommand` call at all.
+- An offline harness with a fake `IVdjCallbacks8` proved the sweep, the JSON escaping (binary
+  answers survive), the once-guard, and GUID negotiation. The python side
+  ([tools/plugin_introspect.py](tools/plugin_introspect.py): `prepare`/`status`/`collect`/
+  `--get`/`--check`, gated in `just check` with an explicit skip until the first capture)
+  round-trips that harness capture.
+- Untested is everything needing the host: whether VirtualDJ loads it, from which folder
+  (`AutoStart` is the first guess; override with `VDJ_PLUGIN_SUBDIR=`), and via which IID. The
+  plugin answers for both published IIDs and logs every `DllGetClassObject` call, so a failed
+  load is still diagnosable — and that log is the evidence for the second-loading-path question
+  in [docs/Plugin SDK.md](docs/Plugin%20SDK.md).
+- Next step is manual: install, restart VirtualDJ, `just plugin-prepare`, restart,
+  `just plugin-status`.
 
 **What it is genuinely the only channel for.** These have no HTTP, Remote, binary or XML
 equivalent — not a speedup, an access path that does not otherwise exist:

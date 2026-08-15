@@ -465,3 +465,103 @@ on real hardware, and surfaces three operational facts.
 Not covered: the custom **device-definition** (`<device>`) schema. The DDJ-GRV6 is
 factory-recognized (compiled `controllers.dat`), so a custom `<device>` XML is not
 exercised. Testing that needs unrecognized hardware or a virtual MIDI port + injection.
+
+## Plugin Channel (VDJIntrospect)
+
+VirtualDJ 2026 (bundle `18.0.9583`), macOS arm64, 2026-08-15. First capture from the
+fifth Tier-1 channel: a read-only plugin ([tools/plugin/VDJIntrospect.cpp](../tools/plugin/VDJIntrospect.cpp))
+calling `GetInfo` and `GetStringInfo` on all 1,028 verb-table names, bare, in query
+position only — the plugin contains no `SendCommand` call. Idle app, no track loaded,
+crossfader centred. Artifact `tests/plugin-introspection.json`; query with
+`just plugin-probe <name>`.
+
+| What | Script / step | Observed | Result |
+| --- | --- | --- | --- |
+| The documented loading path is live | drop an ad-hoc-signed bundle exporting `DllGetClassObject` into `PluginsMacArm/AutoStart/`, restart | VirtualDJ called it 6 times with `CLSID_VdjPlugin8`, type-probing in order: `IVdjPluginDsp8`, `IVdjPluginBuffer8`, `IVdjPluginVideoFx8`, `IVdjPluginVideoTransition8`, `IVdjPluginVideoTransitionMultiDeck8`, then `IVdjPluginBasic8` — accepted, `OnLoad` fired | Pass — SDK's COM path works on this build; probing stops at the first accepted IID (`IVdjPluginStartStop8` and `IVdjPluginOnlineSource` were never reached, so their position in the order is unknown) |
+| Ad-hoc signature is sufficient | `codesign --sign -`, no Developer ID | loaded | Pass — VirtualDJ carries `com.apple.security.cs.disable-library-validation` |
+| Xcode is not required | Command Line Tools `clang++ -bundle` | loaded | Pass |
+| `master_beat_num` float-bits defect is in the CORE, not HTTP rendering | `GetInfo("master_beat_num", &d)` | `S_OK`, `d = 1083943558.0` exactly (bits `0x41d026eaa1800000`) — the double holds the *integer*. Reinterpreting `0x409baa86` as float32 gives `4.8646` | Pass — settles the open question: the coercion happens before the value reaches either channel, so HTTP was faithfully rendering an already-broken number. Consumers must reinterpret the int32 bits as float32. |
+| The two channels answer with distinct, informative codes | both calls per verb | `GetInfo`: `S_OK` ×543 / `E_INVALIDARG` ×485. `GetStringInfo`: `S_OK` ×599 / `S_FALSE` ×429. No other code appeared | Pass — "wrong channel" is `E_INVALIDARG` on the numeric side and `S_FALSE` (not an error) on the text side |
+| Channel map over all 1,028 names | classify by which call returned `S_OK` | both 532, text-only 67, numeric-only 11, neither 418 | Pass — booleans answer on both (`play` → `0.0` / `"off"`), so the numeric channel gives native 0/1 for the 334 HTTP-"bool" verbs |
+| Agreement with the HTTP existence sweep | join on the sweep's `kind` | 181/181 `action-only` and 113/116 `needs-args` answered on neither channel; all 602 answering names are HTTP `query` verbs | Pass — the channels agree on kind |
+
+Caveat on the numeric channel: VirtualDJ writes `0.0` to `*result` even when it returns
+`E_INVALIDARG`, so **the HRESULT, not the value, is the answer** — a raw `0` is
+indistinguishable from a real zero without it.
+
+Leads, not conclusions:
+
+- **50 HTTP `query` verbs answered on neither plugin channel** (e.g. browser/deck-scoped
+  names). Most likely a context difference — HTTP `/query` evaluates with a deck context
+  a plugin's bare call lacks — but that is untested. Re-probe with `deck 1 …` prefixes.
+- **5 `action-only` and 3 `needs-args` verbs returned text**, which the HTTP sweep could
+  not see.
+- The **HRESULT keyword-discrimination hypothesis** (does `loaded opposite` differ from
+  `loaded bogusword` in HRESULT where the value is identical?) is NOT tested here — this
+  capture is bare verbs only. It needs an argument-bearing probe list.
+
+### Follow-Up Captures (2026-08-15, same build and session)
+
+Three leads from the bare-verb capture, chased with two further probe lists
+(`tests/plugin-introspection-leads.json`, `-controls.json`; `just plugin-probe <probe>`
+finds a record in any capture).
+
+**Lead A — argument keywords are distinguishable by HRESULT. Hypothesis CONFIRMED.**
+165 keyword/nonsense pairs over the 62 keyword-bearing verbs whose contract says
+`executes: false` (execute-capable verbs were deliberately excluded: query position is
+side-effect-free in this repo's model, but `browser_window sampler` is not worth
+betting that on). Each binary-recovered keyword was paired with `zzznotakeyword` on the
+same verb.
+
+| Outcome | Count | Example |
+| --- | ---: | --- |
+| HRESULT differs | 26 | `is_using cue` → `S_OK`/`off`; `is_using zzznotakeyword` → **`E_NOTIMPL`**/`S_FALSE` |
+| Value differs only | 14 | `get_cpu audio` → `0`; nonsense → `0.01` |
+| Indistinguishable | 125 | — |
+
+Two discriminator shapes: **`E_NOTIMPL`** on the numeric channel (all ten `is_using`
+keywords) and **`E_INVALIDARG`** (`action_deck left|right`, `device_side`,
+`get_ns7_platter on_instant|off_instant|rpm`). `get_browsed_color` corroborates itself:
+`red`/`green`/`blue` return `243`/`198`/`211` where nonsense falls back to the hex string
+`#F3C6D3` — the same three bytes, so the keywords are component selectors.
+
+**Do not read the 125 as disproof.** The app was idle with no track loaded; most of those
+keywords had nothing to vary. Absence of discrimination in an unprepared state is not
+evidence the keyword is unrecognized.
+
+Two **argument traps** — a nonsense argument answering confidently and wrongly:
+
+| Probe | Real keyword | Nonsense argument |
+| --- | --- | --- |
+| `get_license` | `home` → `off`, `pro` → `on` | `get_license zzznotakeyword` → **`on`** |
+| `mixermode` | `external` → `off` | `mixermode zzznotakeyword` → **`on`** |
+
+Neither is a safe existence probe for a license or a mode name.
+
+**Lead B — the eight action verbs that returned text are LABEL PROVIDERS, and they
+identify vtable slot 5.** `stop_button` → `"■"`, `scratchbank_load` → `"Bank A"`,
+`sampler_pad_page` → `"1 to 8"`, `sideview_sort` → `"Original Sort Order"`. Cross-tabbing
+the whole capture against `tests/action-contracts.json` partitions it exactly: of the 174
+verbs that do **not** override slot 3, precisely 5 answer text and **all 5 override slot
+5**; the other 169 answer nothing. All 599 text answers in the capture come from a verb
+overriding slot 3 (594) or slot 5 (5), with no remainder. So slot 3 backs *both* callbacks
+and slot 5 is a fallback label provider. Slot 4's role is **not** established — all 85 of
+its text-answering verbs also override slot 3, so it explains nothing on its own.
+
+**Lead C — deck context was the wrong explanation. REFUTED, with a control.** All 100
+`deck 1 …` / `deck 2 …` re-probes of the 50 silent query verbs returned
+`E_INVALIDARG`/`S_FALSE`. A control batch proves the prefix itself works on this channel
+(`deck 1 get_bpm` → `120`, `deck left get_bpm` → `120`), so the negative is real. Note
+`left get_bpm` **fails** — the `deck` scope word is required here.
+
+What the 50 actually are:
+
+| Group | Count | Evidence |
+| --- | ---: | --- |
+| HTTP answered empty too — no divergence | 27 | The plugin channel reports "no value" as `E_INVALIDARG`; HTTP renders it as `""`, indistinguishable from a real empty answer. **The plugin channel separates the two; HTTP cannot.** |
+| Wanted an argument | 7 | `get_constant 1` → `1`, `sampler_group_name 1` → `Drums`, `effect_beats 1` → `64 bt` |
+| Real divergence: HTTP has a value, plugin silent | 21 | Mostly effect-slider readers, and it is about **implicit defaults, not context**: `get_effect_slider_name` is silent bare but `get_effect_slider_name 1 1` and `get_effect_slider_name 'Blur' 1` both return `Strength`. HTTP's evaluation path supplies a default slot/index that a plugin call does not. |
+
+Still unexplained inside that last group: the browser readers (`get_browsed_folder` →
+`All Files` over HTTP) stay silent on the plugin channel even with an argument. A browser
+context that HTTP evaluation has and a plugin call lacks is the obvious guess — untested.
