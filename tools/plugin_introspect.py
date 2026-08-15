@@ -35,6 +35,12 @@ WORKDIR = os.path.expanduser(
     "~/Library/Application Support/VirtualDJ/VDJIntrospect")
 PROBES = os.path.join(WORKDIR, "probes.txt")
 RESULTS = os.path.join(WORKDIR, "results.json")
+# The delayed second sweep: same plugin, run from a timer thread ~40s after load
+# instead of during it. Its reason for existing is that `OnLoad` fires while
+# VirtualDJ is still starting up, so anything not yet initialized (the browser)
+# looks like it does not answer at all.
+LATE_PROBES = os.path.join(WORKDIR, "probes-late.txt")
+LATE_RESULTS = os.path.join(WORKDIR, "results-late.json")
 LOG = os.path.join(WORKDIR, "plugin.log")
 
 # Signed 32-bit HRESULTs, as the plugin writes them.
@@ -104,15 +110,61 @@ def leads_probes():
     return out, len(silent), len(pure)
 
 
+# Excluded from the execute-capable keyword sweep. Query position is
+# side-effect-free in this repo's model and `GetInfo` maps to the query slot, but
+# these are the families where being wrong about that is expensive rather than
+# merely annoying. Exclusions are printed, never silent.
+UNSAFE_CATEGORIES = {"system", "config", "record"}
+UNSAFE_NAMES = {"broadcast_message", "browsed_file_analyze", "browsed_file_rename",
+                "effect_bank_save", "system"}
+
+
+def remaining_keyword_probes():
+    """The execute-capable half of the keyword queue.
+
+    The 62 pure-query verbs were swept first because they carry no risk at all.
+    These 227 also declare an execute path, so each is probed only in query
+    position, and the file/config/system families are dropped outright.
+    """
+    contracts = json.load(open(CONTRACTS))["verbs"]
+    table = json.load(open(VERB_TABLE))["verbs"]
+
+    probes, skipped = [], []
+    for n in sorted(contracts):
+        r = contracts[n]
+        if not r.get("keyword_candidates") or not r.get("executes"):
+            continue
+        if table.get(n, {}).get("category") in UNSAFE_CATEGORIES or n in UNSAFE_NAMES:
+            skipped.append(n)
+            continue
+        probes.append(n)
+        probes.extend(f"{n} {kw}" for kw in r["keyword_candidates"])
+        probes.append(f"{n} {BOGUS}")
+    return probes, skipped
+
+
 def cmd_prepare(args):
+    target = LATE_PROBES if args.late else PROBES
+
+    if args.remaining:
+        probes, skipped = remaining_keyword_probes()
+        os.makedirs(WORKDIR, exist_ok=True)
+        with open(target, "w") as f:
+            f.write("# VDJIntrospect — execute-capable keyword verbs, query position only.\n")
+            f.write("\n".join(probes) + "\n")
+        print(f"wrote {len(probes)} probes to {target}")
+        print(f"EXCLUDED {len(skipped)} verbs (file/config/system families): "
+              f"{', '.join(skipped)}")
+        return
+
     if args.leads:
         probes, n_silent, n_kw = leads_probes()
         os.makedirs(WORKDIR, exist_ok=True)
-        with open(PROBES, "w") as f:
+        with open(target, "w") as f:
             f.write("# VDJIntrospect lead probes — deck context + keyword discrimination.\n")
             for probe, why in probes:
                 f.write(f"{probe}\n")
-        print(f"wrote {len(probes)} lead probes to {PROBES} "
+        print(f"wrote {len(probes)} lead probes to {target} "
               f"({n_silent} silent query verbs × 3 forms, "
               f"{n_kw} pure-query keyword verbs)")
         print("Restart VirtualDJ, then: just plugin-collect-leads")
@@ -126,12 +178,12 @@ def cmd_prepare(args):
             names = names[:args.limit]
 
     os.makedirs(WORKDIR, exist_ok=True)
-    with open(PROBES, "w") as f:
+    with open(target, "w") as f:
         f.write("# VDJIntrospect probe list — one query-position script per line.\n")
         f.write("# Written by tools/plugin_introspect.py; '#' comments are skipped.\n")
         for n in names:
             f.write(n + "\n")
-    print(f"wrote {len(names)} probes to {PROBES}")
+    print(f"wrote {len(names)} probes to {target}")
     print("Restart VirtualDJ — the sweep runs when the plugin loads.")
 
 
@@ -152,8 +204,8 @@ def cmd_status(args):
             print("  " + line)
 
 
-def collect():
-    raw = json.load(open(RESULTS))
+def collect(late=False):
+    raw = json.load(open(LATE_RESULTS if late else RESULTS))
     out, channels = {}, {}
 
     for rec in raw["probes"]:
@@ -198,7 +250,7 @@ def collect():
 
 
 def cmd_collect(args):
-    print(json.dumps(collect(), indent=1, sort_keys=True))
+    print(json.dumps(collect(args.late), indent=1, sort_keys=True))
 
 
 def cmd_get(name):
@@ -298,14 +350,19 @@ def main():
     prep = sub.add_parser("prepare", help="write the plugin's probe list")
     prep.add_argument("--verbs", help="comma-separated probes instead of every verb")
     prep.add_argument("--limit", type=int, help="first N verbs only")
+    prep.add_argument("--remaining", action="store_true",
+                      help="execute-capable keyword verbs (query position only)")
+    prep.add_argument("--late", action="store_true",
+                      help="write probes-late.txt: swept 40s AFTER load instead of during it")
     prep.add_argument("--leads", action="store_true",
                       help="follow-up list: deck context + keyword discrimination")
     prep.set_defaults(func=cmd_prepare)
 
     sub.add_parser("status", help="show the plugin workdir").set_defaults(
         func=cmd_status)
-    sub.add_parser("collect", help="normalize results.json to stdout").set_defaults(
-        func=cmd_collect)
+    coll = sub.add_parser("collect", help="normalize results.json to stdout")
+    coll.add_argument("--late", action="store_true", help="read results-late.json")
+    coll.set_defaults(func=cmd_collect)
     sub.add_parser("leads-report",
                    help="analyze the follow-up capture").set_defaults(
         func=cmd_leads_report)

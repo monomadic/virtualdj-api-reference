@@ -11,7 +11,7 @@
 //   * It never calls SendCommand(). The call is not present in this file, so
 //     no probe list, however malformed, can reach execute position.
 //   * GetInfo() and GetStringInfo() are query-position only.
-//   * It reads one input file and writes two output files, both under its own
+//   * It reads its probe lists and writes its results and log under its own
 //     working directory. It touches nothing else on disk.
 //
 // Execute-position testing, if it ever happens, belongs in a separate plugin
@@ -32,6 +32,10 @@
 #include <string>
 #include <vector>
 #include <ctime>
+#include <atomic>
+#include <chrono>
+#include <memory>
+#include <thread>
 #include <sys/stat.h>
 #include <pwd.h>
 #include <unistd.h>
@@ -46,8 +50,12 @@
 //////////////////////////////////////////////////////////////////////////
 // Working directory: ~/Library/Application Support/VirtualDJ/VDJIntrospect/
 //
-//   probes.txt   input  — one probe string per line; '#' comments, blanks skipped
-//   results.json output — one record per probe
+//   probes.txt      input  — one probe string per line; '#' comments, blanks skipped
+//   results.json    output — one record per probe
+//   probes-late.txt input  — optional; if present, swept again 40s AFTER load, so
+//                            late-initializing subsystems (the browser) get a fair
+//                            chance to answer
+//   results-late.json output — the delayed run
 //   plugin.log   output — append-only lifecycle log (also written when there is
 //                         no probes.txt, so a failed load is still diagnosable)
 
@@ -159,9 +167,19 @@ static void JsonString(FILE *f, const std::string &s)
 
 //////////////////////////////////////////////////////////////////////////
 
+// Shared with the delayed-sweep thread. The thread outlives nothing on purpose:
+// it checks `alive` (cleared in the destructor) before touching `cb`, so an
+// unload during the wait ends the sweep instead of using a dead pointer.
+struct TLateState
+{
+    std::atomic<bool> alive{true};
+    IVdjCallbacks8 *cb = NULL;
+};
+
 class CVDJIntrospect : public IVdjPluginStartStop8
 {
 public:
+    ~CVDJIntrospect();
     HRESULT VDJ_API OnLoad();
     HRESULT VDJ_API OnGetPluginInfo(TVdjPluginInfo8 *info);
     HRESULT VDJ_API OnStart();
@@ -169,8 +187,9 @@ public:
 
 private:
     bool m_swept = false;
+    std::shared_ptr<TLateState> m_late;
     void RunSweep(const char *trigger);
-    std::vector<std::string> ReadProbes(bool *found);
+    void StartLateSweep();
 };
 
 HRESULT VDJ_API CVDJIntrospect::OnGetPluginInfo(TVdjPluginInfo8 *info)
@@ -209,12 +228,12 @@ HRESULT VDJ_API CVDJIntrospect::OnStop()
 // the interface VirtualDJ negotiated and the folder the bundle sits in — an open
 // question this build is meant to answer. The once-flag keeps it to one run, and
 // the log records which trigger won.
-std::vector<std::string> CVDJIntrospect::ReadProbes(bool *found)
+static std::vector<std::string> ReadProbeFile(const char *leaf, bool *found)
 {
     std::vector<std::string> probes;
     *found = false;
 
-    FILE *f = fopen(WorkPath("probes.txt").c_str(), "r");
+    FILE *f = fopen(WorkPath(leaf).c_str(), "r");
     if (!f) return probes;
     *found = true;
 
@@ -230,21 +249,22 @@ std::vector<std::string> CVDJIntrospect::ReadProbes(bool *found)
     return probes;
 }
 
-void CVDJIntrospect::RunSweep(const char *trigger)
+// One sweep, parameterised by file pair so the load-time and delayed runs share
+// every line of it. `cb` is passed explicitly rather than read from the plugin
+// object, because the delayed run happens on another thread.
+static void SweepFiles(IVdjCallbacks8 *cb, const char *inLeaf, const char *outLeaf,
+                       const char *trigger)
 {
-    if (m_swept) { Log("sweep already done, %s ignored", trigger); return; }
-
     bool found = false;
-    std::vector<std::string> probes = ReadProbes(&found);
+    std::vector<std::string> probes = ReadProbeFile(inLeaf, &found);
     if (!found)
     {
-        Log("no probes.txt in %s — nothing to do (plugin loaded cleanly)", WorkDir().c_str());
+        Log("no %s in %s — nothing to do", inLeaf, WorkDir().c_str());
         return;
     }
-    m_swept = true;
 
-    FILE *out = fopen(WorkPath("results.json").c_str(), "w");
-    if (!out) { Log("ERROR: cannot write results.json"); return; }
+    FILE *out = fopen(WorkPath(outLeaf).c_str(), "w");
+    if (!out) { Log("ERROR: cannot write %s", outLeaf); return; }
 
     time_t now = time(NULL);
     struct tm tm_utc;
@@ -262,7 +282,7 @@ void CVDJIntrospect::RunSweep(const char *trigger)
     // The host's own version, read through the same channel being characterized.
     char version[512];
     version[0] = 0;
-    HRESULT vhr = GetStringInfo("get_version", version, (int)sizeof(version));
+    HRESULT vhr = cb->GetStringInfo("get_version", version, (int)sizeof(version));
     fprintf(out, "  \"host_version\": ");
     JsonString(out, std::string(version));
     fprintf(out, ",\n  \"host_version_hresult\": %ld,\n", (long)(int32_t)vhr);
@@ -277,11 +297,11 @@ void CVDJIntrospect::RunSweep(const char *trigger)
         // must not be reported as having answered 0.
         double value = -123456789.0;
         const double sentinel = value;
-        HRESULT numeric_hr = GetInfo(probe.c_str(), &value);
+        HRESULT numeric_hr = cb->GetInfo(probe.c_str(), &value);
 
         char text[8192];
         memset(text, 0, sizeof(text));
-        HRESULT text_hr = GetStringInfo(probe.c_str(), text, (int)sizeof(text));
+        HRESULT text_hr = cb->GetStringInfo(probe.c_str(), text, (int)sizeof(text));
 
         // Length by scan, not strlen: an answer may legitimately contain NULs
         // (handshake returns a 128-byte RSA block).
@@ -312,7 +332,48 @@ void CVDJIntrospect::RunSweep(const char *trigger)
     fprintf(out, "  ]\n}\n");
     fclose(out);
 
-    Log("sweep done via %s: %zu probes -> results.json", trigger, probes.size());
+    Log("sweep done via %s: %zu probes -> %s", trigger, probes.size(), outLeaf);
+}
+
+void CVDJIntrospect::RunSweep(const char *trigger)
+{
+    if (m_swept) { Log("sweep already done, %s ignored", trigger); return; }
+    m_swept = true;
+    SweepFiles(cb, "probes.txt", "results.json", trigger);
+    StartLateSweep();
+}
+
+// The delayed sweep exists because OnLoad fires while VirtualDJ is still starting
+// up: anything not yet initialized (the browser, notably) is indistinguishable
+// from a verb that never answers. Opt-in by the presence of probes-late.txt, so
+// an ordinary capture never spawns a thread.
+//
+// UNPROVEN: the SDK says nothing about calling the host callbacks off the main
+// thread. This is the experiment that finds out. The shared state lets an unload
+// during the wait cancel the sweep rather than use a freed `cb`.
+void CVDJIntrospect::StartLateSweep()
+{
+    bool found = false;
+    ReadProbeFile("probes-late.txt", &found);
+    if (!found) return;
+
+    m_late = std::make_shared<TLateState>();
+    m_late->cb = cb;
+
+    std::shared_ptr<TLateState> state = m_late;
+    std::thread([state]() {
+        std::this_thread::sleep_for(std::chrono::seconds(40));
+        if (!state->alive) { Log("late sweep cancelled — plugin unloaded during wait"); return; }
+        Log("late sweep starting (40s after load)");
+        SweepFiles(state->cb, "probes-late.txt", "results-late.json", "late");
+    }).detach();
+
+    Log("late sweep armed");
+}
+
+CVDJIntrospect::~CVDJIntrospect()
+{
+    if (m_late) m_late->alive = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
