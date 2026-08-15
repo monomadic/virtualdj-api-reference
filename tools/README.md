@@ -44,6 +44,23 @@ VirtualDJ already lists); if it does not dial, drop and re-add the registration.
 Read-only in practice — subscriptions only observe — but they do hold a live Remote session,
 and VirtualDJ lists the fake device in Config → Controllers → Phone/tablet until removed.
 
+## Plugin channel: a read-only plugin loaded into VirtualDJ
+
+The fifth Tier-1 channel (TODO task 10a). HTTP renders every answer to text; the C++ plugin
+interface does not, so `GetInfo` (a `double`) and `GetStringInfo` (a UTF-8 buffer) are asked
+separately and **which channel a verb answers on is observed, with raw HRESULTs**. Needs the
+Atomix SDK headers under `vendor/` — deliberately not vendored, see
+[Plugin SDK](../docs/Plugin%20SDK.md) and `.gitignore`.
+
+| Tool | Does | Output |
+| --- | --- | --- |
+| `plugin/VDJIntrospect.cpp` | The plugin itself. Reads a probe list at load, calls both query callbacks per probe, writes the raw capture. **Read-only by construction: the source contains no `SendCommand` call at all**, so no probe list can reach execute position. Logs every `DllGetClassObject` negotiation, which is itself evidence for the open second-loading-path question. | `~/Library/Application Support/VirtualDJ/VDJIntrospect/{results.json,plugin.log}` |
+| `plugin/build.sh` | Builds and ad-hoc signs `build/VDJIntrospect.bundle`; `--install` copies it into the plugin folder. Command Line Tools `clang++` is enough — **no Xcode required**. | `build/VDJIntrospect.bundle` |
+| `plugin_introspect.py` | `prepare` writes the probe list from the verb table; `status` shows the workdir and log tail; `collect` normalizes the raw capture (naming HRESULTs, classifying the answering channel); `--get`/`--check` query and gate it. `--check` passes with an explicit skip until the first capture exists. | `tests/plugin-introspection.json` |
+
+Order: `just plugin-build --install` → restart VirtualDJ → `just plugin-prepare` → restart
+again (the sweep runs at plugin load) → `just plugin-status` → `just plugin-collect`.
+
 ## Extraction: local VirtualDJ required
 
 These read `/Applications/VirtualDJ.app` (override with `--app`). They need macOS with Apple Silicon tooling (`nm`, `c++filt`, `otool`, `strings`) and produce *evidence*, which is hand-promoted into the docs with source labels — their output is not directly committed.

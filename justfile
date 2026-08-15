@@ -153,6 +153,49 @@ extract-binary-verbs:
 sweep-verb-existence:
     @python3 tools/sweep_verb_existence.py > tests/verb-existence-sweep.json
 
+# --- plugin channel: native typed queries (task 10a) -------------------------
+# A read-only C++ plugin asks GetInfo/GetStringInfo directly, so return types are
+# observed rather than inferred from HTTP's rendered text. Needs the Atomix SDK
+# headers under vendor/ (not vendored here — see docs/Plugin SDK.md).
+#
+#   just plugin-build --install   # build + drop into VirtualDJ's plugin folder
+#   (restart VirtualDJ)
+#   just plugin-prepare           # write the probe list
+#   (restart VirtualDJ — the sweep runs at plugin load)
+#   just plugin-status            # confirm it ran
+#   just plugin-collect           # normalize the capture into tests/
+
+plugin-build *args:
+    @tools/plugin/build.sh "$@"
+
+plugin-prepare *args:
+    @python3 tools/plugin_introspect.py prepare "$@"
+
+plugin-status:
+    @python3 tools/plugin_introspect.py status
+
+plugin-collect:
+    @python3 tools/plugin_introspect.py collect > tests/plugin-introspection.json
+    @python3 tools/plugin_introspect.py --check
+
+# Follow-up capture: deck context for the silent query verbs, and each recovered
+# keyword paired with a nonsense control on the same verb.
+plugin-prepare-leads:
+    @python3 tools/plugin_introspect.py prepare --leads
+
+# Any other capture: `just plugin-collect-as controls` -> tests/plugin-introspection-controls.json
+plugin-collect-as name:
+    @python3 tools/plugin_introspect.py collect > "tests/plugin-introspection-{{name}}.json"
+    @echo "wrote tests/plugin-introspection-{{name}}.json"
+
+plugin-collect-leads:
+    @python3 tools/plugin_introspect.py collect > tests/plugin-introspection-leads.json
+    @python3 tools/plugin_introspect.py leads-report
+
+# OBSERVED NATIVE TYPE: which channel a verb answers on, and with what.
+plugin-probe name:
+    @python3 tools/plugin_introspect.py --get "{{name}}"
+
 # --- cross-corpus topic search ----------------------------------------------
 # One term -> matching verbs, effects, XML elements, REAL example files, docs,
 # and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
@@ -178,6 +221,7 @@ check:
     python3 tools/extract_verb_table.py --check
     python3 tools/extract_action_contracts.py --check
     python3 tools/sweep_return_types.py --check
+    python3 tools/plugin_introspect.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
