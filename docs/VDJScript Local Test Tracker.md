@@ -679,7 +679,7 @@ corpora all stop at metadata.
 | --- | --- | --- |
 | Buffer layout | At `pos 0` the leading samples are `[2, 3, 4, 4, 1, 6]`; at `pos 1` they are `[4, 4, 1, 6, 0, 5]` — the same data shifted by **two** shorts, not one | `pos` counts **stereo frames**, and the buffer is **interleaved L/R `short`** |
 | Channel split | At `pos 44100` the even/odd RMS are `2726` vs `1122`, with leading samples `[1710, -159, 1763, -173, …]` alternating loud/quiet | Confirms interleaving independently: the two parities are two channels, not noise |
-| Negative position | `pos -1` returns **`S_OK`** with `[0, 0, 2, 3, 4, 4]` — two zero shorts, then the `pos 0` data | Zero-padded, not rejected. One frame of silence = two shorts, corroborating the frame reading a third time |
+| Negative position | `pos -1` returns **`S_OK`** with `[0, 0, 2, 3, 4, 4]` — two zero shorts, then the `pos 0` data | **Corrected below (pointer capture): this is an unchecked out-of-bounds read, not padding.** The returned pointer is 4 bytes *before* the buffer; those zeros are whatever precedes it in the heap |
 | Past the end | `pos 999999999` → `E_FAIL` | Bounded |
 | Determinism | The same `(pos, nb)` twice gives an identical hash | No streaming/decode drift between calls |
 | Content | RMS `2.6` at the start, `5512` two seconds in | Real audio, and the track begins with near-silence |
@@ -706,3 +706,48 @@ has no press**. `OnKey` is the first channel that might carry one, and its `flag
 parameter is a candidate for press/release. This capture proves only that the
 struct is *offered* to a plugin like ours — wiring up the callbacks and pressing
 keys is the next build, not a finding yet.
+
+### `GetSongBuffer` Fully Characterized (2026-08-15)
+
+Same track and session, using the trigger loop to run eight further captures in a
+couple of minutes — no restarts. The refinement that settled everything was
+recording the **returned pointer address** per request: if the addresses are a
+linear function of `pos`, the byte step *is* the unit, with nothing left to infer.
+
+**It is a direct pointer into one contiguous, fully decoded buffer.** Across
+`pos` 0 → 441,000 the address advances by **exactly 4.00 bytes per unit of
+`pos`**, with no deviation:
+
+```
+pos      0:        +4 bytes from pos -1     pos   4096:    +16388 bytes
+pos      1:        +8 bytes                 pos  44100:   +176404 bytes
+pos      2:       +12 bytes                 pos  88200:   +352804 bytes
+pos      3:       +16 bytes                 pos 441000:  +1764004 bytes
+```
+
+So `buffer = base + 4 × pos`. **No copy, no decode-on-demand, no streaming**: the
+entire track is resident as PCM and this hands out interior pointers.
+
+| Property | Value | How it was established |
+| --- | --- | --- |
+| `pos` unit | **stereo frame** (4 bytes: interleaved L/R `int16`) | 4.00 bytes per unit, exactly, over 441,000 units |
+| `nb` unit | **stereo frames too** — same unit as `pos` | At the last valid frame `L`, `nb=1` succeeds and `nb=2` fails; at `L-100`, `nb=101` succeeds and `nb=200` fails. The check is `pos + nb ≤ total_frames` |
+| Sample rate | **44,100 Hz** | Cross-check, not assumption: `get_time 'total'` = 306,046 ms predicts frame 13,496,629, and that is exactly where the audio stops (RMS 4.4 → 0.5 → 0.0) |
+| Buffer length | 13,562,187 frames ≈ **54 MB** for this 5-minute track | Bisected the `E_FAIL` boundary: frame 13,562,186 valid, 13,562,187 fails |
+| Tail | Digital silence (`rms` exactly 0, `max` 0) past the song end | ~65,558 frames of padding — within ms-rounding of exactly 2^16 frames, so a 64Ki allocation slack is the likely explanation |
+
+**Bounds are checked at the top only — `pos` is NOT checked for negatives.**
+`pos = -1` returns `S_OK` and a pointer 4 bytes *before* the buffer. The zeros
+seen there are adjacent heap memory, not padding; the earlier "zero-padded"
+reading in the section above is corrected. **A negative `pos` is an
+out-of-bounds read and a caller must not use one.**
+
+Why this matters for [Skin Waveforms](Skin%20Waveforms.md): peak/RMS data for the
+whole track, at any zoom, is computable directly and immediately — the audio is
+already in memory, and reading it is pointer arithmetic. That is the input side
+this repo has never had.
+
+Also noted: `get_totaltime` and `get_length` are **not verbs** on this build
+(`E_FAIL` over HTTP). Track length comes from `get_time 'total'` in ms. That also
+explains the `get_totaltime` = 0 recorded in the previous capture — it was never
+a verb, so the reading was meaningless, not a defect.

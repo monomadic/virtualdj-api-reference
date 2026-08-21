@@ -154,6 +154,30 @@ class IVdjPlugin8
 `OnTransformPosition` and the online-source interface are worth noting for this repo: they
 expose song position and browser/source integration at a level VDJScript does not reach.
 
+### `GetSongBuffer` — characterized (`Local test`, 2026-08-15)
+
+```cpp
+virtual HRESULT GetSongBuffer(int pos, int nb, short **buffer)=0;
+```
+
+Undocumented in every header beyond that signature; measured on VirtualDJ 2026
+(bundle `18.0.9583`), and the full evidence is in the
+[Local Test Tracker](VDJScript%20Local%20Test%20Tracker.md).
+
+- **`pos` and `nb` both count stereo frames.** A frame is 4 bytes: interleaved
+  left/right `int16`.
+- **It returns an interior pointer, not a copy**: `buffer = base + 4 × pos`, holding
+  exactly over hundreds of thousands of frames. The whole track is decoded and
+  resident (~54 MB for five minutes), so reading any part of it is free.
+- **Sample rate is 44,100 Hz**, established by cross-check rather than assumption.
+- **The buffer runs past the song**, silence-padded by roughly 2^16 frames.
+- **Bounds are checked at the top only.** `pos + nb` beyond the buffer gives
+  `E_FAIL`, but a **negative `pos` is accepted and returns a pointer before the
+  buffer** — an out-of-bounds read. Clamp it yourself.
+
+Track length is not available as `get_totaltime` or `get_length` (neither is a verb
+on this build); use `get_time 'total'`, in milliseconds.
+
 ### Interfaces in the binary that the public SDK never declares
 
 Typeinfo names present in `/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ` but absent
