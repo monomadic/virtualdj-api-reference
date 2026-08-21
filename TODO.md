@@ -540,9 +540,22 @@ Still open, and now clearly bounded:
 2. **`get_browsed_comment|composer|song`, `get_sample_info`** — likeliest reading is that this
    track carries no comment/composer tag, so `E_INVALIDARG` means "no value". Needs a track
    known to have one.
-3. **The untouched half of the SDK** — `GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`. A
-   different plugin build, not another probe list, and the one that reaches the repo's three
-   standing cliffs (waveforms, mappers, skins). **This is now the highest-value work in 10a.**
+3. **The untouched half of the SDK.** `GetSongBuffer` is now **DONE** — fully characterized
+   2026-08-15 (frames, interleaved stereo, interior pointers into one resident decoded buffer,
+   44.1 kHz), which is the input side of the waveform cliff.
+
+   `OnKey` is **attempted and unresolved**. Two plugin types were built and tested — a basic
+   `AutoStart` plugin and an active Sound Effect with a visible panel — and neither receives
+   anything through `IVdjVideoMouseCallbacks8`, though the slot is accepted every time. The
+   interface name is the best remaining explanation: its `(x, y)` coordinates want a *video*
+   surface. The last candidate is a video FX plugin, which needs video output.
+
+   Worth knowing before spending more on it: the plugin *lifecycle* question is settled as a
+   by-product. A recognised functional type is driven (`OnStart`, `OnProcessSamples`,
+   `OnParameter` all fire); a basic plugin is loaded and left alone. So "get a surface, get
+   input" has been tested twice and failed twice, and video FX is the only shape left.
+
+   `VDJINTERFACE_SKIN` is still untouched.
 
 Ergonomic note for whoever continues: **each capture costs a VirtualDJ restart**, because the
 sweep runs at plugin load. Three restarts got the above. If iteration gets heavy, a watcher

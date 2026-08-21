@@ -842,3 +842,54 @@ plugin VirtualDJ actually drives, not merely loads. Ordered by intrusiveness:
 
 Until one of those lands, the mapper contract's down/up half stays exactly where
 it was: **not established**, and `while_pressed` remains undocumented behaviour.
+
+### A Recognised Plugin Type IS Driven — And `OnKey` Still Does Not Fire (2026-08-15)
+
+The same source built as a Sound Effect (`VDJIntrospectFX`, installed to
+`PluginsMacArm/SoundEffect/`), selected on deck 1 and switched on, with its
+parameter panel open.
+
+**VirtualDJ called INTO the plugin for the first time.** The headless lifecycle
+recorded earlier is a property of the *plugin type*, not of the SDK:
+
+| Callback | Basic, in `AutoStart/` | Sound Effect, active on a deck |
+| --- | --- | --- |
+| `OnGetPluginInfo`, `OnLoad` | yes | yes |
+| `OnStart` | never | **yes** |
+| `OnProcessSamples` | n/a | **yes** |
+| `OnParameter` | never | **yes** — `id=0 (switch=1)` when the panel switch was toggled |
+| `OnGetUserInterface` | never | never (the default UI is built from declared parameters) |
+
+So a plugin VirtualDJ recognises as a functional type gets driven; one that
+answers only to `IVdjPluginBasic8` is loaded and left alone.
+
+**`SampleRate = 44100`, straight from the host** — an independent confirmation of
+the rate that `GetSongBuffer`'s frame arithmetic implied, arriving through a
+different interface. The DSP header's own note that *"samples are stereo, so you
+need to process up to `buffer[2*nb]`"* corroborates the frame convention a third
+time. First audio buffer: `nb=512` frames.
+
+`SongBpm = 22050` with `SongPosBeats = 0.000` while the deck was not playing.
+The header defines `SongBpm` as *samples between two consecutive beats*, and
+22050 samples at 44,100 Hz is exactly 0.5 s — i.e. 120 BPM, not the loaded
+track's 129. Read as an idle default rather than the song's tempo; untested.
+
+**Key and mouse events still never arrive.** `keylog.jsonl` was never created,
+with the effect active, its panel open, focus outside any text field, keys
+pressed and the panel's switch clicked. `mouseCallbacks` was installed on every
+instantiation.
+
+That is now a **two-type negative**: neither a basic `AutoStart` plugin nor an
+active audio effect with a visible panel receives anything through
+`IVdjVideoMouseCallbacks8`. The interface's name remains the best explanation —
+its `(x, y)` coordinates suggest a *video* surface, which neither of these builds
+has.
+
+**Remaining route, and the honest cost.** A video FX plugin
+(`IID_IVdjPluginVideoFx8`) owns a rendered surface by definition, and is the last
+untried candidate. It needs video output to exercise and appears in the video
+effect list. Until then:
+
+- `OnKey` is **untested**, not refuted, on the only surface it plausibly serves.
+- `while_pressed` and the down/up half of the mapper contract remain
+  **not established**, exactly as before this line of work started.
