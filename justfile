@@ -235,3 +235,8 @@ plugin-keyword-report capture *args:
 # Set the app up by hand first (load a track, highlight a song), then trigger.
 plugin-go:
     @python3 tools/plugin_introspect.py go
+
+# Collect the delayed/triggered capture: `just plugin-collect-late prepared`
+plugin-collect-late name:
+    @python3 tools/plugin_introspect.py collect --late > "tests/plugin-introspection-{{name}}.json"
+    @echo "wrote tests/plugin-introspection-{{name}}.json"

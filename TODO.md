@@ -518,11 +518,31 @@ Fourth and fifth captures, 2026-08-15 (`-remaining`, `-late`), closing both rema
 - **Host callbacks work off the main thread** — the delayed sweep runs on a detached timer
   thread and completed cleanly. Undocumented in the SDK; one session's evidence.
 
-Still open: the **605 idle-state-indistinguishable keyword pairs**, which need prepared state
-(a loaded track, a highlighted song) rather than a new channel — that is 10b's territory, not
-this task's; the **song-level browser readers**; and everything in the "only channel for" list
-below (`GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`), none of which this read-only build
-touches. Those three are now the whole remaining value of 10a.
+Sixth capture, 2026-08-15 (`-prepared`) — taken through a **trigger loop** rather than a
+restart, which is the ergonomic fix for this whole task: the plugin's thread now polls for a
+trigger file, so `just plugin-go` re-sweeps in ~1s while VirtualDJ keeps running. Set the app
+up by hand, then ask for a capture.
+
+- **`loaded opposite` is confirmed** — with one deck loaded it returns `off` where nonsense
+  returns `on`. This was the case named on 2026-07-30 as needing prepared state, and it is the
+  proof that the *value* test works where error codes cannot.
+- 25 more pairs confirmed over 12 verbs, including `get_key pioneer|rane|roland|harmonic`
+  (controller key notations: 14, 13, 2, 02A vs a default `Ebm`), `get_loaded_song_color
+  red|green|blue`, `get_position loopin|loopout`, and `get_song_event`.
+- **Browser readers are state-gated, not unsupported**: `get_browsed_key`,
+  `get_browsed_filepath` and `sidereco_song` answer once a song is *highlighted*.
+
+Still open, and now clearly bounded:
+
+1. **705 keyword pairs still indistinguishable.** Not disproof — each needs the specific state
+   its own verb reacts to. This is per-verb work with a fixture, not another sweep, and the
+   trigger loop makes each attempt cheap.
+2. **`get_browsed_comment|composer|song`, `get_sample_info`** — likeliest reading is that this
+   track carries no comment/composer tag, so `E_INVALIDARG` means "no value". Needs a track
+   known to have one.
+3. **The untouched half of the SDK** — `GetSongBuffer`, `OnKey`, `VDJINTERFACE_SKIN`. A
+   different plugin build, not another probe list, and the one that reaches the repo's three
+   standing cliffs (waveforms, mappers, skins). **This is now the highest-value work in 10a.**
 
 Ergonomic note for whoever continues: **each capture costs a VirtualDJ restart**, because the
 sweep runs at plugin load. Three restarts got the above. If iteration gets heavy, a watcher

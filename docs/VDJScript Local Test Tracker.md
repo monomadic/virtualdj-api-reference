@@ -625,3 +625,45 @@ session, not a proof for every verb.
 non-main thread.** The delayed sweep runs on a detached timer thread and
 completed 55 probes with no crash, hang, or visible misbehaviour. Undocumented
 in the SDK; one session's evidence.
+
+### Prepared-State Capture (2026-08-15)
+
+Taken through the plugin's trigger loop rather than a restart: with VirtualDJ
+already running, a track was loaded and playing on deck 1 (`Salt on my lips`,
+129 BPM) and a *different* song highlighted in the browser (`No Bite`), then
+`just plugin-go` re-swept 1,240 probes in about a second
+(`tests/plugin-introspection-prepared.json`). The controls confirm the state took
+— `loaded` on, `play` on, `get_title` and `get_browsed_title` differing — so a
+null result here cannot be blamed on the setup.
+
+**`loaded opposite` is confirmed, by the value test HTTP could not run.** With
+exactly one deck loaded, `loaded opposite` returns `off` where
+`loaded zzznotakeyword` returns `on`. This is the case
+[TODO.md](../TODO.md) task 10 named in 2026-07-30 as needing prepared state, and
+it behaves exactly as predicted: the keyword is silently ignored, so only a state
+where the two forms *must* disagree can prove it.
+
+New enums confirmed only with state (25 pairs over 12 verbs):
+
+| Verb | Keywords | Observed |
+| --- | --- | --- |
+| `get_key` | `pioneer`, `rane`, `roland`, `harmonic` | controller-specific key notations — `14`, `13`, `2`, `02A`, against a default text of `Ebm` |
+| `get_loaded_song_color` | `red`, `green`, `blue` | `243`/`198`/`211` vs the `#F3C6D3` hex fallback — the same component-selector shape as `get_browsed_color` |
+| `get_position` | `loopin`, `loopout` | `0` vs `0.1` bare |
+| `get_song_event` | `hasbeats`, `remaining`, `volume`, `volume_end`, `next` | `S_OK` where nonsense gives `E_INVALIDARG`; `next` also differs in value (`B4-93` vs `bB4-53`) |
+| `get_time_msf` | `absolute` | `0` vs `3` |
+| `get_crossfader_result` | `full` | `0.5` vs `0` |
+| `get_ns7_platter`, `get_denon_platter` | `on_normal`, `off_normal`, `reverse`, `speed`, `speedup` | answer `S_OK` with no hardware attached |
+
+**The song-level browser readers are partly explained.** With a song highlighted,
+`get_browsed_key` (`G#`), `get_browsed_filepath`, and `sidereco_song` answer,
+having been silent both at load and in the idle delayed sweep. Still silent:
+`get_browsed_comment`, `get_browsed_composer`, `get_browsed_song`,
+`get_sample_info` — and for comment/composer the likeliest reading is simply that
+this track has no such tag, i.e. `E_INVALIDARG` here means "no value", not "no
+such form". Untested: a track known to carry a comment.
+
+705 of 730 pairs remain indistinguishable. That is **not** disproof and the
+number should not be read as one: it means this particular state gave those
+keywords nothing to vary. Each needs the specific state its own verb reacts to,
+which is per-verb work, not another sweep.

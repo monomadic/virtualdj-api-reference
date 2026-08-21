@@ -4541,7 +4541,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel (2026-08-15): needs a HIGHLIGHTED song in the browser — silent (E_INVALIDARG) both at plugin load and in an idle delayed sweep, answers 'G#' once a song is highlighted. Browser readers are state-gated, not unsupported."
+   ]
   },
   "get_browsed_scrollpos": {
    "name": "get_browsed_scrollpos",
@@ -5441,7 +5443,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel, prepared state (2026-08-15): confirmed argument enum for controller-specific key notation — 'pioneer' -> 14, 'rane' -> 13, 'roland' -> 2, 'harmonic' -> 02A, against a bare/unknown-argument default of 'Ebm'. Unknown arguments fall back to the default text rather than erroring."
+   ],
    "section": "Get (Query Actions)",
    "description": "Song key",
    "example": "get_key \"musical\""
@@ -5652,7 +5656,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel, prepared state (2026-08-15): 'red'/'green'/'blue' are colour-COMPONENT selectors (243/198/211) where the bare or unknown-argument form returns the hex string '#F3C6D3'. Same shape as get_browsed_color."
+   ]
   },
   "get_loop": {
    "name": "get_loop",
@@ -5977,7 +5983,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Plugin channel, prepared state (2026-08-15): 'loopin' and 'loopout' are confirmed keywords, returning loop boundary positions (0) distinct from the bare playback position (0.1)."
+   ],
    "section": "Get (Query Actions)",
    "description": "Song position",
    "example": "get_position"
@@ -6342,7 +6350,9 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Plugin channel, prepared state (2026-08-15): 'hasbeats', 'remaining', 'volume', 'volume_end' and 'next' are confirmed keywords (S_OK where an unrecognized argument gives E_INVALIDARG); 'next' also returns a different event (B4-93) from the bare form (bB4-53)."
+   ]
   },
   "get_songlength": {
    "name": "get_songlength",
@@ -8187,7 +8197,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP, 2026-07-30): binary method_strings shows the query method references 'opposite'; probing found unknown args are silently ignored ('loaded bogusword' → yes), so confirming 'loaded opposite' needs discriminating state (exactly one deck loaded)."
+    "VirtualDJ 2026 (HTTP, 2026-07-30): binary method_strings shows the query method references 'opposite'; probing found unknown args are silently ignored ('loaded bogusword' → yes), so confirming 'loaded opposite' needs discriminating state (exactly one deck loaded).",
+    "Plugin channel, PREPARED STATE (2026-08-15): 'opposite' CONFIRMED. With exactly one deck loaded, 'loaded opposite' returns off while 'loaded zzznotakeyword' returns on — the value test that HTTP could not run, because an unrecognized argument is silently ignored and both forms render alike in an idle app."
    ],
    "section": "Loading",
    "description": "Check if loaded",
