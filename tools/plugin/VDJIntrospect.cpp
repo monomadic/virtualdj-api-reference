@@ -409,6 +409,16 @@ public:
     HRESULT VDJ_API OnStop();
     HRESULT VDJ_API OnGetUserInterface(TVdjPluginInterface8 *pluginInterface);
     HRESULT VDJ_API OnParameter(int id);
+    HRESULT VDJ_API OnGetParameterString(int id, char *outParam, int outParamSize);
+
+    // Declared parameters. Every one of the 173 shipped native_*.ini manifests
+    // declares parameters, and parameters are what give a plugin a settings
+    // panel — so this is the test of whether "headless" is inherent to this
+    // plugin type or just a consequence of declaring nothing. Values are read by
+    // VirtualDJ, never written by us.
+    enum { ID_PROBE_SWITCH = 0, ID_PROBE_SLIDER = 1 };
+    int m_probe_switch = 0;
+    float m_probe_slider = 0.5f;
 
 private:
     bool m_swept = false;
@@ -453,6 +463,16 @@ HRESULT VDJ_API CVDJIntrospect::OnGetPluginInfo(TVdjPluginInfo8 *info)
 HRESULT VDJ_API CVDJIntrospect::OnLoad()
 {
     Log("OnLoad  version=%s pid=%d", VDJINTROSPECT_VERSION, (int)getpid());
+
+    // Declared during OnLoad, as the SDK requires. If VirtualDJ starts calling
+    // OnParameter or OnGetUserInterface after this, the UI path is open and the
+    // headless lifecycle was self-inflicted.
+    HRESULT hr_sw = DeclareParameterSwitch(&m_probe_switch, ID_PROBE_SWITCH,
+                                           "Probe Switch", "Probe", false);
+    HRESULT hr_sl = DeclareParameterSlider(&m_probe_slider, ID_PROBE_SLIDER,
+                                           "Probe Slider", "Slide", 0.5f);
+    Log("DeclareParameterSwitch -> %ld, DeclareParameterSlider -> %ld",
+        (long)(int32_t)hr_sw, (long)(int32_t)hr_sl);
     RunSweep("OnLoad");
     return S_OK;
 }
@@ -469,8 +489,18 @@ HRESULT VDJ_API CVDJIntrospect::OnGetUserInterface(TVdjPluginInterface8 *pluginI
 
 HRESULT VDJ_API CVDJIntrospect::OnParameter(int id)
 {
-    Log("OnParameter id=%d", id);
+    Log("OnParameter id=%d (switch=%d slider=%.3f)",
+        id, m_probe_switch, m_probe_slider);
     return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospect::OnGetParameterString(int id, char *outParam, int outParamSize)
+{
+    // Called when VirtualDJ wants a label for a parameter — i.e. when something
+    // is actually displaying it. That makes this a second, independent signal
+    // that a UI exists, separate from OnGetUserInterface.
+    Log("OnGetParameterString id=%d — something is DISPLAYING this parameter", id);
+    return E_NOTIMPL;
 }
 
 HRESULT VDJ_API CVDJIntrospect::OnStart()
