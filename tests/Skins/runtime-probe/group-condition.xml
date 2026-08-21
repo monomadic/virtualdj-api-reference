@@ -1,0 +1,33 @@
+<!-- Canary 2c: <group> nesting and condition="" with NO <define> anywhere, to say
+     whether the crash seen with class-instantiated groups belongs to the group,
+     to the condition, or to <define> bodies that contain a whole nested element.
+     Row 3 must NOT render; if rows 2 and 3 both render the condition was ignored. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <textzone>
+        <size width="204" height="16"/><pos x="8" y="8"/>
+        <text font="arial" size="12" weight="bold" color="#FFFFFF" align="left" format="0 control"/>
+    </textzone>
+
+    <group>
+        <textzone>
+            <size width="204" height="16"/><pos x="8" y="30"/>
+            <text font="arial" size="12" weight="bold" color="#00CCFF" align="left" format="1 group plain"/>
+        </textzone>
+    </group>
+
+    <group condition="param_equal 'yes' 'yes'">
+        <textzone>
+            <size width="204" height="16"/><pos x="8" y="52"/>
+            <text font="arial" size="12" weight="bold" color="#00FF88" align="left" format="2 cond TRUE"/>
+        </textzone>
+    </group>
+
+    <group condition="param_equal 'no' 'yes'">
+        <textzone>
+            <size width="204" height="16"/><pos x="8" y="74"/>
+            <text font="arial" size="12" weight="bold" color="#FF3366" align="left" format="3 cond FALSE (should not appear)"/>
+        </textzone>
+    </group>
+
+</Skin>

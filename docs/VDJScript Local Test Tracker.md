@@ -858,10 +858,18 @@ recorded earlier is a property of the *plugin type*, not of the SDK:
 | `OnStart` | never | **yes** |
 | `OnProcessSamples` | n/a | **yes** |
 | `OnParameter` | never | **yes** — `id=0 (switch=1)` when the panel switch was toggled |
-| `OnGetUserInterface` | never | never (the default UI is built from declared parameters) |
+| `OnGetUserInterface` | never | never observed — **but see the retraction below** |
 
 So a plugin VirtualDJ recognises as a functional type gets driven; one that
 answers only to `IVdjPluginBasic8` is loaded and left alone.
+
+> **Retraction (2026-08-22).** The `OnGetUserInterface` / Sound Effect cell above
+> read "never (the default UI is built from declared parameters)". That was not a
+> measurement. `CVDJIntrospectFX` did not override `OnGetUserInterface` at all in
+> that build, so it inherited the header's default and logged nothing — the
+> instrument could not have recorded the call even if it happened. The parenthetical
+> explanation was an inference dressed as an observation. It **is** called on a
+> Sound Effect; see "A Plugin Can Supply Skin XML At Runtime" below.
 
 **`SampleRate = 44100`, straight from the host** — an independent confirmation of
 the rate that `GetSongBuffer`'s frame arithmetic implied, arriving through a
@@ -893,3 +901,139 @@ effect list. Until then:
 - `OnKey` is **untested**, not refuted, on the only surface it plausibly serves.
 - `while_pressed` and the down/up half of the mapper contract remain
   **not established**, exactly as before this line of work started.
+
+---
+
+### A Plugin Can Supply Skin XML At Runtime — And That Makes Skin Testing A Loop (2026-08-22)
+
+Build: VirtualDJ 2026 (`get_version` → `2026`), macOS arm64. Instrument:
+`VDJIntrospectSkin.bundle`, the same source built with
+`tools/plugin/build.sh --skin --install` (Sound Effect + `-DVDJINTROSPECT_SKIN`),
+installed to `PluginsMacArm/SoundEffect/`. Context: no track loaded on any deck;
+the effect selected on deck 1 and switched on; its panel opened with
+`deck 1 effect_show_gui 'VDJIntrospectSkin'` over the
+[HTTP interface](HTTP%20Control%20Interface.md). The plugin itself sends no
+commands — every state change below came from HTTP or from the GUI by hand.
+
+**`OnGetUserInterface` is called, and `VDJINTERFACE_SKIN` renders.** The first
+call arrived the moment the effect's GUI was shown — never at load, never while
+the effect was merely active. The plugin returned `S_OK` with
+`Type = VDJINTERFACE_SKIN`, an XML buffer and a PNG buffer, and VirtualDJ drew
+the panel. This is the first `Local test` evidence that the documented runtime
+skin path in [Plugin SDK](Plugin%20SDK.md) §Plugin user interfaces is live.
+
+Everything in the probe skin rendered on the first attempt:
+
+| Element | Served | Rendered |
+| --- | --- | --- |
+| `<textzone><text format="PROBE REV 1"/>` | literal | `PROBE REV 1` |
+| `format="deck=`get_deck`"` | backtick-interpolated VDJScript | `deck=1` |
+| `<text action="get_effect_slider_text 1"/>` | query action | `50.0%` |
+| `<button action="effect active">` with `<selected y="+200"/>` | sprite offset | drew from the `+200` band of the served PNG |
+| `<Skin width="220" height="200">` | panel size | honoured |
+
+So a plugin panel evaluates VDJScript exactly as a skin does — backticks in
+`format=""`, `action=""` on a `<text>`, and sprite-sheet state offsets all work
+against a PNG that exists only in memory.
+
+**It is called again on every panel open, which is the whole point.** Call #2
+arrived after `skin.xml` was edited on disk and the panel closed and re-opened;
+the log recorded the new byte count and the panel showed the new content, with no
+rebuild and no restart. Because the plugin re-reads both files inside
+`OnGetUserInterface` rather than baking them into the bundle the way the SDK
+example does, the edit→observe cycle is now:
+
+```sh
+just plugin-skin-prepare <some.xml>   # write skin.xml + skin.png
+just plugin-skin-reload               # close + re-open the panel
+just plugin-skin-log                  # confirm VirtualDJ asked again
+```
+
+That replaces a VirtualDJ restart per skin edit, which is what made the skin
+questions expensive in the first place.
+
+#### The surface is a FLAT element list — `<group>` renders nothing
+
+Measured with a control row that must always appear, so "nothing rendered" is
+distinguishable from "the panel never opened":
+
+| Construct | Result |
+| --- | --- |
+| Top-level `<textzone>`, `<button>` | renders |
+| `<group>` containing a `<textzone>` | **contents dropped**, no crash |
+| `<group condition="...">` containing a `<textzone>` | contents dropped |
+| `<define>` whose body is `<size>/<pos>/<text>` (property children) | renders |
+| `<define>` whose body is a whole nested `<textzone>` | **contents dropped**, no crash |
+
+A `<define>` body is spliced in as *property* children of the call-site element.
+Give it a complete nested element and that element is silently discarded. The
+same is true of `<group>`. Whether this is specific to the plugin-panel surface
+or is also true of a full deck skin is **untested** — do not generalise it to
+deck skins from this evidence.
+
+#### Starred placeholders: the star is required, and it does work in conditions
+
+This settles the open question at [Skin SDK](Skin%20SDK.md) §`<define>`, which
+recorded the condition behaviour as "still unclear, should be tested per pattern".
+Each canary rendered one define twice, once with a value that should pass its test
+and once with a value that should fail, so a condition that is *ignored* (both
+rows appear) is distinguishable from one that is *evaluated* (exactly one appears).
+
+| Canary | Placeholder | Context | Result |
+| --- | --- | --- | --- |
+| `placeholder-text.xml` | `val=X` (unstarred) | `format="1 u-text [VAL]"` | **not substituted** — rendered the literal `[VAL]` |
+| `placeholder-text.xml` | `*val=X` (starred) | `format="2 s-text [VAL]"` | substituted |
+| `placeholder-text-attr.xml` | `val=X` (unstarred) | `text="1 u [VAL]"` | **not substituted** — literal `[VAL]` |
+| `placeholder-text-attr.xml` | `*val=X` (starred) | `text="2 s [VAL]"` | substituted |
+| `visibility-condition.xml` | none (literal control) | `visibility="param_equal 'yes' 'yes'"` / `'no' 'yes'` | true row shown, false row hidden — the condition really is evaluated |
+| `visibility-condition.xml` | `*val` (starred) | `visibility="param_equal '[VAL]' 'yes'"` on the `<define>` tag | **substituted and evaluated** — `val="yes"` row shown, `val="no"` row hidden |
+
+Two further things fell out of the same run: a starred placeholder substitutes
+into a *numeric* attribute (`<pos y="[Y]">` placed each row at its own height),
+and **element attributes written on the `<define>` tag are forwarded to the
+instantiated element** — that is how `visibility` reached the `<textzone>`.
+
+The narrow claim: **in a plugin-supplied runtime skin, a named placeholder must be
+starred to substitute at all** — in `format=""`, in `text=""`, in a numeric
+attribute, and in a `visibility=""` condition alike; and once substituted into a
+condition, the resulting expression is genuinely evaluated rather than pasted.
+
+This sharpens, and partly contradicts, the existing note that built-in skins "use
+many unstarred placeholders in ordinary pass-through contexts, including
+`text="[TEXT]"`". Unstarred `text="[TEXT]"` did **not** substitute here. The two
+observations can both be true — this is a plugin panel, not a deck skin, and the
+built-in usage is a `Built-in skin` reading rather than a rendering test — so the
+existing note is kept and qualified rather than replaced. Settling it for deck
+skins needs the same canary run as a real skin.
+
+#### Hazard: `<group class="...">` crashes VirtualDJ
+
+Two separate skins that instantiated a visual class onto a `<group>` element —
+`<group class="s_cond" val="yes"/>`, the define body being
+`<group condition="param_equal '[VAL]' 'yes'">` around a `<textzone>` — took
+VirtualDJ down within about a second of the panel opening. Both times it
+relaunched itself as `VirtualDJ recover`; both times the plugin had already
+logged the `OnGetUserInterface` call, so the XML was served and the crash is on
+VirtualDJ's side of the handoff.
+
+The star is not the trigger: one crashing skin used `*val`, the other `val`. The
+two components were then separated, and each is safe on its own — a plain
+`<group>` renders nothing without crashing, and a `<define>` body containing a
+nested element renders nothing without crashing. What is left is the combination:
+**a visual class instantiated on a `<group>`**. Two occurrences, one build; the
+mechanism is unknown.
+
+Operational note: after a crash-recovery relaunch, VirtualDJ held the Network
+Control listener open on port 80 without accepting connections — `netstat` showed
+`LISTEN`, `connect()` timed out, and toggling the plugin off and on did not clear
+it. A full quit and relaunch did. Budget for that when a skin under test kills the
+app.
+
+#### What this channel cannot answer
+
+The panel is a plugin surface, not a deck. `<scratchwave>`, `<songpos>`,
+`<rhythmzone>` and the rest of the waveform family have no deck to bind to here,
+so the stacked-`<size condition="">` question at
+[Skin Waveforms](Skin%20Waveforms.md) §Open Questions is **not reachable through
+this instrument** and stays open. That is a bounded negative, not a failure: it
+names the fixture the question actually needs, which is a real skin.

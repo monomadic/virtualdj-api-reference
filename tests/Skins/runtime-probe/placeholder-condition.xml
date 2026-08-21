@@ -1,0 +1,58 @@
+<!-- Canary 2: separate the attribute kinds. The repo's note says built-in skins
+     use unstarred placeholders happily in text="[TEXT]" pass-through, while the
+     starred form is what the SDK describes for math. Canary 1 showed format=""
+     needs the star. This one puts the same value through text="", and through a
+     condition="" on a wrapping <group>, starred and unstarred, with a
+     should-not-fire control so a row that renders unconditionally is visible. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <define class="U_TXT" placeholders="val=DEFAULTED">
+        <size width="204" height="14"/><pos x="8" y="26"/>
+        <text font="arial" size="11" weight="bold" color="#00CCFF" align="left" text="[VAL]"/>
+    </define>
+    <define class="S_TXT" placeholders="*val=DEFAULTED">
+        <size width="204" height="14"/><pos x="8" y="44"/>
+        <text font="arial" size="11" weight="bold" color="#00FF88" align="left" text="[VAL]"/>
+    </define>
+
+    <define class="U_COND" placeholders="val=zzz">
+        <group condition="param_equal '[VAL]' 'yes'">
+            <textzone>
+                <size width="204" height="14"/><pos x="8" y="66"/>
+                <text font="arial" size="11" weight="bold" color="#00CCFF" align="left"
+                      format="3 u-cond FIRED"/>
+            </textzone>
+        </group>
+    </define>
+    <define class="S_COND" placeholders="*val=zzz">
+        <group condition="param_equal '[VAL]' 'yes'">
+            <textzone>
+                <size width="204" height="14"/><pos x="8" y="84"/>
+                <text font="arial" size="11" weight="bold" color="#00FF88" align="left"
+                      format="4 s-cond FIRED"/>
+            </textzone>
+        </group>
+    </define>
+    <define class="S_COND_N" placeholders="*val=zzz">
+        <group condition="param_equal '[VAL]' 'yes'">
+            <textzone>
+                <size width="204" height="14"/><pos x="8" y="102"/>
+                <text font="arial" size="11" weight="bold" color="#FF3366" align="left"
+                      format="5 s-cond-NO FIRED (should not appear)"/>
+            </textzone>
+        </group>
+    </define>
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="8"/>
+        <text font="arial" size="11" weight="bold" color="#FFFFFF" align="left"
+              format="0 control"/>
+    </textzone>
+
+    <textzone class="u_txt" val="1 u-text PASSED"/>
+    <textzone class="s_txt" val="2 s-text PASSED"/>
+    <group class="u_cond" val="yes"/>
+    <group class="s_cond" val="yes"/>
+    <group class="s_cond_n" val="no"/>
+
+</Skin>

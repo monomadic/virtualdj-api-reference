@@ -1,0 +1,28 @@
+<!-- Canary 2a: the same question as canary 1 but through text="" instead of
+     format="". Structurally identical to canary 1 (which rendered cleanly) so
+     that any difference is the attribute and nothing else. No conditions and no
+     <group> here — those are isolated in 2b. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <define class="U_TXT" placeholders="val=DEFAULTED">
+        <size width="204" height="16"/>
+        <pos x="8" y="30"/>
+        <text font="arial" size="12" weight="bold" color="#00CCFF" align="left" text="1 u [VAL]"/>
+    </define>
+
+    <define class="S_TXT" placeholders="*val=DEFAULTED">
+        <size width="204" height="16"/>
+        <pos x="8" y="52"/>
+        <text font="arial" size="12" weight="bold" color="#00FF88" align="left" text="2 s [VAL]"/>
+    </define>
+
+    <textzone>
+        <size width="204" height="16"/>
+        <pos x="8" y="8"/>
+        <text font="arial" size="12" weight="bold" color="#FFFFFF" align="left" text="0 control"/>
+    </textzone>
+
+    <textzone class="u_txt" val="PASSED"/>
+    <textzone class="s_txt" val="PASSED"/>
+
+</Skin>

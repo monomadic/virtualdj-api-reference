@@ -1,0 +1,31 @@
+<!-- Canary 1: do <define> visual classes and named placeholders work at all in a
+     plugin-supplied runtime skin, and does an UNSTARRED placeholder substitute
+     inside a plain text/format attribute? Row 0 is the control: if it is the only
+     row that renders, <define> itself is unavailable here. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <define class="U_TEXT" placeholders="val=DEFAULTED">
+        <size width="204" height="16"/>
+        <pos x="8" y="30"/>
+        <text font="arial" size="12" weight="bold" color="#00CCFF" align="left"
+              format="1 u-text [VAL]"/>
+    </define>
+
+    <define class="S_TEXT" placeholders="*val=DEFAULTED">
+        <size width="204" height="16"/>
+        <pos x="8" y="52"/>
+        <text font="arial" size="12" weight="bold" color="#00FF88" align="left"
+              format="2 s-text [VAL]"/>
+    </define>
+
+    <textzone>
+        <size width="204" height="16"/>
+        <pos x="8" y="8"/>
+        <text font="arial" size="12" weight="bold" color="#FFFFFF" align="left"
+              format="0 control (no define)"/>
+    </textzone>
+
+    <textzone class="u_text" val="PASSED"/>
+    <textzone class="s_text" val="PASSED"/>
+
+</Skin>

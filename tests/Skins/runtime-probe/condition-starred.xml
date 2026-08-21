@@ -1,0 +1,30 @@
+<!-- Canary 2b: does a STARRED placeholder substitute inside condition=""? This is
+     the pattern the Skin SDK's own canary uses. Two instances of one define: the
+     'yes' instance should render, the 'no' instance must not — so a condition that
+     is ignored entirely (both rows visible) is distinguishable from one that
+     evaluates (exactly one row). Only the starred form is exercised here; the
+     unstarred form is deliberately left to its own run. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <define class="S_COND" placeholders="*val=zzz,*y=30,*tag=?">
+        <group condition="param_equal '[VAL]' 'yes'">
+            <textzone>
+                <size width="204" height="16"/>
+                <pos x="8" y="[Y]"/>
+                <text font="arial" size="12" weight="bold" color="#00FF88" align="left"
+                      format="[TAG] FIRED"/>
+            </textzone>
+        </group>
+    </define>
+
+    <textzone>
+        <size width="204" height="16"/>
+        <pos x="8" y="8"/>
+        <text font="arial" size="12" weight="bold" color="#FFFFFF" align="left"
+              format="0 control"/>
+    </textzone>
+
+    <group class="s_cond" val="yes" y="30" tag="1 yes"/>
+    <group class="s_cond" val="no"  y="52" tag="2 no"/>
+
+</Skin>

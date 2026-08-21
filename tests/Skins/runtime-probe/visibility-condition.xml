@@ -1,0 +1,36 @@
+<!-- Canary 2d: <group> turned out to render nothing here, so test the conditional
+     mechanism this surface does support — visibility="" on the element itself,
+     which is what the SDK's own FX_GUI.xml uses. Rows 1/2 use a literal condition
+     as the control; rows 3/4 put a STARRED placeholder inside that condition via
+     an attribute on the <define> tag. Rows 2 and 4 must not appear: if 1 and 2
+     both render the condition was ignored, and if 3 and 4 both render the
+     placeholder never reached it. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <define class="S_VIS" placeholders="*val=zzz,*y=30,*tag=?"
+            visibility="param_equal '[VAL]' 'yes'">
+        <size width="204" height="16"/>
+        <pos x="8" y="[Y]"/>
+        <text font="arial" size="12" weight="bold" color="#00FF88" align="left"
+              format="[TAG]"/>
+    </define>
+
+    <textzone>
+        <size width="204" height="16"/><pos x="8" y="8"/>
+        <text font="arial" size="12" weight="bold" color="#FFFFFF" align="left" format="0 control"/>
+    </textzone>
+
+    <textzone visibility="param_equal 'yes' 'yes'">
+        <size width="204" height="16"/><pos x="8" y="30"/>
+        <text font="arial" size="12" weight="bold" color="#00CCFF" align="left" format="1 lit TRUE"/>
+    </textzone>
+
+    <textzone visibility="param_equal 'no' 'yes'">
+        <size width="204" height="16"/><pos x="8" y="52"/>
+        <text font="arial" size="12" weight="bold" color="#FF3366" align="left" format="2 lit FALSE (should not appear)"/>
+    </textzone>
+
+    <textzone class="s_vis" val="yes" y="74" tag="3 star TRUE"/>
+    <textzone class="s_vis" val="no"  y="96" tag="4 star FALSE (should not appear)"/>
+
+</Skin>
