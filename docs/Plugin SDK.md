@@ -221,6 +221,16 @@ Custom HttpPort 1=50000000             ; native_Network Control.ini
 SString Auth 2=
 ```
 
+**Slider values are integers on a 0–4096 scale** (`Local test`, 2026-08-15). Decoded from
+a plugin of our own: `DeclareParameterSlider(..., 0.5f)` wrote `Slider Probe Slider 1=2048`,
+and 2048 = 4096 / 2. That decodes every shipped manifest — `native_Blur.ini`'s
+`Strength 0=1925` is 47 %, not 1925 of anything. A written-down default in an `.ini` is
+therefore readable as a fraction, which is what the FX catalog reports.
+
+**`VDJFLAG_EPHEMERAL` (0x200) really does suppress the file.** Same session, two builds: the
+AutoStart build set the flag and left no `.ini` beside it; the Sound Effect build did not set
+it and VirtualDJ wrote one on removal. An accidental natural experiment, but a clean one.
+
 **This is the same framework VirtualDJ is built with.** 173 `native_*.ini` manifests ship in
 `~/Library/Application Support/VirtualDJ/PluginsMacArm/` — Blur, Backspin, Beat Grid, Slicer,
 Ableton Link and Network Control all declare parameters this way. Type-name frequency across
