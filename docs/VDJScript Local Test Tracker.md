@@ -752,25 +752,39 @@ Also noted: `get_totaltime` and `get_length` are **not verbs** on this build
 explains the `get_totaltime` = 0 recorded in the previous capture — it was never
 a verb, so the reading was meaningless, not a defect.
 
-### `OnKey` Does Not Reach A Basic Plugin (2026-08-15, negative result)
+### `OnKey` — First Attempt Was INVALID (2026-08-15)
+
+> **Retracted the same day.** This section first recorded a clean negative
+> result: callbacks installed, no events delivered. It was confounded. The keys
+> were typed while **the browser's search input had focus**, so VirtualDJ
+> consumed them as text entry — they would never reach plugin routing whether or
+> not such routing exists. The test measured the search box, not the interface.
+> A re-test with focus outside any text field is required before anything is
+> concluded. The original observations are kept below for the record.
 
 The extended info struct is offered and the callbacks are accepted — the log
-records `mouseCallbacks installed` on every load — but **no key or mouse event
-was ever delivered**. `keylog.jsonl` was never created, with VirtualDJ focused
-and keys pressed.
+records `mouseCallbacks installed` on every load — but no key or mouse event was
+delivered **in that invalid run**. `keylog.jsonl` was never created.
 
 The likely reason is in the interface's own name: `IVdjVideoMouseCallbacks8`. Its
 mouse coordinates are `(x, y)` pairs, which only mean something relative to a
 surface the plugin renders. A plugin with no video output and no window has no
 such surface, so there is probably nothing to route events to.
 
-**What this negative does and does not establish:**
+**What the invalid run establishes: nothing about `OnKey`.** Keys going to a
+focused text field is ordinary application behaviour and says nothing about
+whether VirtualDJ routes input to plugins. Note the mouse clicks logged nothing
+either, which is *not* explained by the search-field confound and remains a
+genuine (if single) observation.
 
-- It **does** establish that installing `mouseCallbacks` from a plain
-  `IVdjPluginBasic8` in `AutoStart/` is not sufficient to receive input.
-- It **does not** establish that `OnKey` never fires, that its `flag` parameter
-  is not press/release, or that a plugin cannot see key events. Those remain
-  open, and the mapper contract's down/up half remains unestablished.
+Re-test method — the confound is the method note worth keeping:
+
+1. Take focus out of every text input first (press `Esc`, or click a deck or
+   waveform area). A focused search box eats keystrokes before anything else
+   sees them.
+2. Prefer keys bound to VirtualDJ shortcuts, which prove the app is receiving
+   them as commands rather than as text.
+3. Click on non-interactive chrome for the mouse half.
 
 Two routes remain untried, in increasing intrusiveness:
 
