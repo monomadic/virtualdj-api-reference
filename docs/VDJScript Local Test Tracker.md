@@ -751,3 +751,37 @@ Also noted: `get_totaltime` and `get_length` are **not verbs** on this build
 (`E_FAIL` over HTTP). Track length comes from `get_time 'total'` in ms. That also
 explains the `get_totaltime` = 0 recorded in the previous capture — it was never
 a verb, so the reading was meaningless, not a defect.
+
+### `OnKey` Does Not Reach A Basic Plugin (2026-08-15, negative result)
+
+The extended info struct is offered and the callbacks are accepted — the log
+records `mouseCallbacks installed` on every load — but **no key or mouse event
+was ever delivered**. `keylog.jsonl` was never created, with VirtualDJ focused
+and keys pressed.
+
+The likely reason is in the interface's own name: `IVdjVideoMouseCallbacks8`. Its
+mouse coordinates are `(x, y)` pairs, which only mean something relative to a
+surface the plugin renders. A plugin with no video output and no window has no
+such surface, so there is probably nothing to route events to.
+
+**What this negative does and does not establish:**
+
+- It **does** establish that installing `mouseCallbacks` from a plain
+  `IVdjPluginBasic8` in `AutoStart/` is not sufficient to receive input.
+- It **does not** establish that `OnKey` never fires, that its `flag` parameter
+  is not press/release, or that a plugin cannot see key events. Those remain
+  open, and the mapper contract's down/up half remains unestablished.
+
+Two routes remain untried, in increasing intrusiveness:
+
+1. **A plugin with a user interface** (`VDJINTERFACE_SKIN` or
+   `VDJINTERFACE_DIALOG` from `OnGetUserInterface`). Gives the plugin a real
+   surface without touching audio or video.
+2. **A video FX plugin** (`IID_IVdjPluginVideoFx8`), which owns a rendered
+   surface by definition. More intrusive: it appears in the effect list and needs
+   video output to test.
+
+Instrumentation added for the next load: `OnGetUserInterface` and `OnParameter`
+now log when called. Whether VirtualDJ ever *asks* a basic AutoStart plugin for a
+UI distinguishes "we were never offered a surface" from "we were offered one and
+declined it", which decides between the two routes above.

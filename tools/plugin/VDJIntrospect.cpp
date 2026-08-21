@@ -407,6 +407,8 @@ public:
     HRESULT VDJ_API OnGetPluginInfo(TVdjPluginInfo8 *info);
     HRESULT VDJ_API OnStart();
     HRESULT VDJ_API OnStop();
+    HRESULT VDJ_API OnGetUserInterface(TVdjPluginInterface8 *pluginInterface);
+    HRESULT VDJ_API OnParameter(int id);
 
 private:
     bool m_swept = false;
@@ -452,6 +454,22 @@ HRESULT VDJ_API CVDJIntrospect::OnLoad()
 {
     Log("OnLoad  version=%s pid=%d", VDJINTROSPECT_VERSION, (int)getpid());
     RunSweep("OnLoad");
+    return S_OK;
+}
+
+// Which lifecycle callbacks does a basic AutoStart plugin actually receive? The
+// keylog came back empty even though mouseCallbacks was installed, and the
+// difference between "VirtualDJ never asks us anything" and "it asks, but never
+// routes input" decides whether a UI-bearing or video plugin would fare better.
+HRESULT VDJ_API CVDJIntrospect::OnGetUserInterface(TVdjPluginInterface8 *pluginInterface)
+{
+    Log("OnGetUserInterface called — VirtualDJ IS asking this plugin for a UI");
+    return E_NOTIMPL;   // decline: no UI, same as before
+}
+
+HRESULT VDJ_API CVDJIntrospect::OnParameter(int id)
+{
+    Log("OnParameter id=%d", id);
     return S_OK;
 }
 
