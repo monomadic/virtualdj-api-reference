@@ -404,7 +404,7 @@ Unresolved items; do not treat any of these as documented behavior.
 10. **Stem colors (`colorVocal` etc.) on scratchwave/songpos.** Official (2021+), zero local usage — the built-in skins presumably get stem coloring from app settings rather than skin XML. Unverified.
 11. **`<blockwave>` / `<beattunnel>` behavior.** Official pages only; the 2018 video skins that used blockwave are not among this repo's copies, so nothing has been cross-checked.
 12. **`<rhythmzone center="">`** — official only, never used in shipped XML.
-13. **`<size condition="...">` stacking** inside scratchwave (Pro.xml ~lines 5822-5823): the first matching conditional size appears to win, consistent with the repo's conditional-structure notes in [Skin SDK](Skin%20SDK.md) §Conditional Structure vs Visibility, but this specific element's behavior is untested.
+13. **`<size condition="...">` stacking** inside scratchwave (Pro.xml ~lines 5822-5823): the first matching conditional size appears to win, consistent with the repo's conditional-structure notes in [Skin SDK](Skin%20SDK.md) §Conditional Structure vs Visibility, but this specific element's behavior is untested. **Not reachable through the runtime-skin plugin loop** (`Local test`, 2026-08-22): that loop renders a plugin *panel*, which has no deck to bind a `<scratchwave>` to, so the waveform family cannot be instantiated there at all. `condition=""` itself was confirmed to evaluate in that surface — the untested part is specifically the stacking rule on this element, and settling it needs a real deck skin as the fixture.
 
 ---
 

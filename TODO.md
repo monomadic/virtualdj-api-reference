@@ -555,7 +555,26 @@ Still open, and now clearly bounded:
    `OnParameter` all fire); a basic plugin is loaded and left alone. So "get a surface, get
    input" has been tested twice and failed twice, and video FX is the only shape left.
 
-   `VDJINTERFACE_SKIN` is still untouched.
+   `VDJINTERFACE_SKIN` is **DONE, and it paid off** (2026-08-22). A Sound Effect built with
+   `tools/plugin/build.sh --skin --install` returns `VDJINTERFACE_SKIN` from
+   `OnGetUserInterface`; VirtualDJ calls it when the effect's GUI is shown, and calls it
+   **again on every panel open**. The plugin serves `skin.xml` / `skin.png` from disk rather
+   than from bundle resources, so a skin edit costs a panel re-open instead of a restart:
+   `just plugin-skin-prepare <xml>` → `just plugin-skin-reload` → `just plugin-skin-log`.
+   Everything rendered — backtick VDJScript, `action=""` queries, `visibility=""` conditions,
+   `<define>` classes, sprite offsets against an in-memory PNG.
+
+   First results off the new loop, all in the tracker: **starred placeholders are required**
+   to substitute at all (in `format=""`, `text=""`, numeric attributes *and* conditions), and a
+   starred placeholder inside a condition is genuinely evaluated — which closes the "still
+   unclear, should be tested per pattern" note in [Skin SDK](docs/Skin%20SDK.md). The panel
+   surface is a **flat element list**: `<group>` renders nothing. And `<group class="...">`
+   **crashes VirtualDJ** — twice, reproducibly enough to be worth a warning, mechanism unknown.
+
+   What the loop cannot reach: the waveform family. A plugin panel has no deck, so
+   `<scratchwave>` and the stacked-`<size condition="">` question in
+   [Skin Waveforms](docs/Skin%20Waveforms.md) need a real deck skin as the fixture. That is the
+   next skin task, and it is now a well-specified one.
 
 Ergonomic note for whoever continues: **each capture costs a VirtualDJ restart**, because the
 sweep runs at plugin load. Three restarts got the above. If iteration gets heavy, a watcher
@@ -817,4 +836,9 @@ reconciliation is recorded.
   only, from the JSON stores (never hand-written HTML copies, same rule as Markdown); becomes
   worthwhile once task 10 gives the pages real content beyond names.
 - `system`: revisit only if an official example, bundled-resource context, or clearly harmless parameter appears.
-- Skin `visual type` canaries: do after the current no-hardware VDJScript evidence queue unless a skin-specific question makes it urgent.
+- Skin `visual type` canaries: **partly overtaken** (2026-08-22). The placeholder half is answered
+  for a plugin-panel surface by the runtime-skin loop (task 10a) — starred is required, and works
+  in conditions. What is left is the same canary run against a *real deck skin*, to say whether
+  the plugin panel and a deck skin share the rule; the fixtures are ready in
+  `tests/Skins/runtime-probe/`. Do that with the waveform questions, since both now want the same
+  fixture.

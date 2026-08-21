@@ -327,6 +327,29 @@ exposure is bounded by the same thing that bounds the whole channel — see the 
 The skin path is the interesting one for this repo: a plugin hands VirtualDJ an XML buffer and
 an image buffer, so plugin GUIs and skins share a rendering vocabulary.
 
+**VERIFIED (`Local test`, VirtualDJ 2026, macOS arm64, 2026-08-22).** The skin path works, and
+the vocabulary really is shared. Instrument: `tools/plugin/build.sh --skin --install`.
+
+- **When it is called.** On a Sound Effect, `OnGetUserInterface` fires when the effect's GUI is
+  shown (`deck 1 effect_show_gui '<bundle name>'`) — not at load, and not merely because the
+  effect is active. A plugin VirtualDJ gives no surface to is never asked.
+- **It is called again on every panel open.** So the XML need not be a bundle resource the way
+  the SDK example builds it: read it from disk inside the call and a skin edit costs a panel
+  re-open rather than a rebuild and a restart. That is what `just plugin-skin-prepare` /
+  `just plugin-skin-reload` / `just plugin-skin-log` drive.
+- **What renders.** Backtick-interpolated VDJScript in `format=""`, `action=""` on a `<text>`,
+  `visibility=""` conditions, `<define>` visual classes with starred placeholders, and
+  sprite-sheet state offsets (`<selected y="+200"/>`) against a PNG that exists only in memory.
+- **The surface is a flat element list.** `<group>` renders nothing — its children are dropped —
+  and so is a `<define>` body containing a whole nested element, because a define body is
+  spliced in as *property* children (`<size>`, `<pos>`, `<text>`) of the call-site element.
+  Whether a full deck skin behaves the same way is untested.
+- **Buffer lifetime.** `Xml` is a borrowed `const char *` and `ImageBuffer`/`ImageSize` a raw
+  pointer and length. The SDK never says when the host is done reading them, so hold them for
+  the plugin instance's lifetime; do not free them when the call returns.
+- **Hazard.** `<group class="...">` — a visual class instantiated onto a `<group>` — crashed
+  VirtualDJ twice, after the XML had been served. See the [tracker](VDJScript%20Local%20Test%20Tracker.md).
+
 ## Loading, and one open question
 
 The documented entry point is COM-style class-object negotiation:

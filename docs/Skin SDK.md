@@ -450,7 +450,31 @@ Do not list pass-through element attributes such as `action` or `query` in a vis
 
 Official built-in skins also use many unstarred placeholders in ordinary pass-through contexts, including `action="[ACTION]"`, `text="[TEXT]"`, `source="[SOURCECOLOR]"`, `visibility="[ACTION1]"`, and `scroll="[ACTION2]"`. Do not assume every placeholder inside a VDJScript-bearing attribute must be starred.
 
-**Starred placeholders in conditions:** The official SDK describes starred placeholders primarily around math. Local canary tests suggest some condition/boolean-expression uses also need starred placeholders, but the exact behavior is still unclear and should be tested per pattern.
+**Starred placeholders in conditions:** The official SDK describes starred placeholders primarily around math. In a **plugin-supplied runtime skin** this is now settled by rendering test (`Local test`, VirtualDJ 2026, macOS, 2026-08-22): the star is required for a named placeholder to substitute *at all*, and a starred placeholder substituted into a condition is genuinely evaluated, not merely pasted.
+
+The canary rendered one `<define>` twice — once with a value that should pass its own test, once with a value that should fail — so an *ignored* condition (both rows visible) is distinguishable from an *evaluated* one (exactly one row visible):
+
+```xml
+<define class="S_VIS" placeholders="*val=zzz,*y=30,*tag=?"
+        visibility="param_equal '[VAL]' 'yes'">
+    <size width="204" height="16"/>
+    <pos x="8" y="[Y]"/>
+    <text font="arial" size="12" color="#00FF88" format="[TAG]"/>
+</define>
+
+<textzone class="s_vis" val="yes" y="74" tag="3 star TRUE"/>
+<textzone class="s_vis" val="no"  y="96" tag="4 star FALSE"/>   <!-- did not render -->
+```
+
+Three things this also establishes, same run:
+
+- The star works in a **numeric** attribute (`<pos y="[Y]">` placed each row at its own height), not only in a math expression.
+- **Element attributes written on the `<define>` tag are forwarded to the instantiated element** — that is how `visibility` reached the `<textzone>`.
+- Unstarred placeholders stayed literal in `format=""` *and* in `text=""`, rendering the characters `[VAL]` on screen.
+
+That last point sits against the paragraph above, which reads unstarred `text="[TEXT]"` out of shipped skins. Both can hold: this canary is a plugin panel, not a deck skin, and the shipped-skin reading is `Built-in skin` provenance rather than a rendering test. Treat the star as required unless you have rendered the unstarred form yourself in the surface you are targeting. Settling it for deck skins needs the same canary run as a real skin — see the tracker's [runtime-skin section](VDJScript%20Local%20Test%20Tracker.md) and the fixtures in `tests/Skins/runtime-probe/`.
+
+> **Hazard, same run:** instantiating a visual class onto a `<group>` — `<group class="my_class" .../>` — crashed VirtualDJ outright, twice, within a second of the panel opening, on both the starred and unstarred forms. A plain `<group>` and a `<define>` body containing a nested element are each safe on their own. Two occurrences, one build, mechanism unknown.
 
 Unstarred string placeholder values may not substitute in some text or condition forms:
 
