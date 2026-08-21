@@ -78,7 +78,8 @@ nm -gU "$BUNDLE/Contents/MacOS/$NAME" | grep DllGetClassObject || {
     print -u2 "error: DllGetClassObject not exported"; exit 1
 }
 
-if [[ "${1-}" == "--install" ]]; then
+# Flags may arrive in any order (`--dsp --install`), so scan all of them.
+if [[ " $* " == *" --install "* ]]; then
     if [[ ! -d "$PLUGIN_DIR" ]]; then
         print -u2 "error: $PLUGIN_DIR does not exist"
         exit 1
