@@ -799,3 +799,46 @@ Instrumentation added for the next load: `OnGetUserInterface` and `OnParameter`
 now log when called. Whether VirtualDJ ever *asks* a basic AutoStart plugin for a
 UI distinguishes "we were never offered a surface" from "we were offered one and
 declined it", which decides between the two routes above.
+
+### The Basic AutoStart Plugin Lifecycle Is Headless (2026-08-15)
+
+Re-test after the invalid run, with `OnGetUserInterface` and `OnParameter`
+instrumented. Across every load of a plain `IVdjPluginBasic8` in
+`PluginsMacArm/AutoStart/`, VirtualDJ calls **exactly two** of the plugin's
+methods:
+
+| Callback | Called? |
+| --- | --- |
+| `OnGetPluginInfo` | yes — once, with `VDJFLAG_EXTENSION1` set |
+| `OnLoad` | yes — once |
+| `OnGetUserInterface` | **never** (0 calls) |
+| `OnParameter` | **never** (0 calls) |
+| `OnStart` / `OnStop` | never (we hold `IID_IVdjPluginBasic8`, not StartStop) |
+| mouse / key callbacks | never, despite `mouseCallbacks` being accepted |
+
+So this plugin type is a **headless service**: it is handed the host callbacks
+and left alone. Everything this channel has produced came from calls the plugin
+makes *outward* (`GetInfo`, `GetStringInfo`, `GetSongBuffer`), never from
+VirtualDJ calling *in*.
+
+That explains the input silence without needing the earlier
+video-surface argument: VirtualDJ never offers this plugin a user interface at
+all, so there is no surface, no focus, and nothing to route `(x, y)` events to.
+Accepting the `mouseCallbacks` slot is necessary but nowhere near sufficient.
+
+**Consequence for the press/release question.** `OnKey` remains the only
+candidate channel in reach, and it is still untested — but reaching it needs a
+plugin VirtualDJ actually drives, not merely loads. Ordered by intrusiveness:
+
+1. **Declare a parameter.** The 173 shipped `native_*.ini` manifests show every
+   first-party plugin declaring parameters, and parameters are what give a plugin
+   a settings panel. If declaring one makes `OnParameter`/`OnGetUserInterface`
+   fire, the UI path opens with no audio or video involvement. Cheapest test of
+   whether "headless" is inherent to the type or a consequence of declaring
+   nothing.
+2. **A video FX plugin** (`IID_IVdjPluginVideoFx8`), which owns a rendered
+   surface by definition — the interface is called `IVdjVideoMouseCallbacks8`
+   for a reason. Intrusive: it appears in the effect list and needs video output.
+
+Until one of those lands, the mapper contract's down/up half stays exactly where
+it was: **not established**, and `while_pressed` remains undocumented behaviour.
