@@ -41,6 +41,8 @@ RESULTS = os.path.join(WORKDIR, "results.json")
 # looks like it does not answer at all.
 LATE_PROBES = os.path.join(WORKDIR, "probes-late.txt")
 LATE_RESULTS = os.path.join(WORKDIR, "results-late.json")
+SONGBUFFER = os.path.join(WORKDIR, "songbuffer.txt")
+SONGBUFFER_RESULTS = os.path.join(WORKDIR, "results-songbuffer.json")
 GO = os.path.join(WORKDIR, "go.txt")
 LOG = os.path.join(WORKDIR, "plugin.log")
 
@@ -197,6 +199,57 @@ def prepared_state_probes():
     probes += ["get_title", "get_artist", "get_bpm", "loaded", "get_filepath",
                "get_browsed_folder", "play"]
     return probes, len(inert)
+
+
+# Position/length pairs chosen so the UNITS fall out of the data rather than an
+# assumption. Nothing documents whether `pos` counts samples, frames, or
+# milliseconds, so the list deliberately includes:
+#   * the same span twice (determinism / caching)
+#   * spans offset by 1 and by nb (overlap tells us the step size)
+#   * 44100 and 1000 (one second, if the unit is samples or ms respectively)
+#   * a position past any plausible song length (bounds behaviour)
+#   * nb=1 (the smallest legal ask)
+SONGBUFFER_REQUESTS = [
+    (0, 1024), (0, 1024), (1, 1024), (512, 1024), (1024, 1024),
+    (1000, 1024), (44100, 1024), (88200, 1024), (441000, 1024),
+    (0, 1), (0, 2), (0, 4096),
+    (-1, 1024), (999999999, 1024),
+]
+
+
+def cmd_songbuffer(args):
+    os.makedirs(WORKDIR, exist_ok=True)
+    with open(SONGBUFFER, "w") as f:
+        f.write("# GetSongBuffer probe: '<pos> <nb>' per line. Read-only.\n")
+        for pos, nb in SONGBUFFER_REQUESTS:
+            f.write(f"{pos} {nb}\n")
+    print(f"wrote {len(SONGBUFFER_REQUESTS)} requests to {SONGBUFFER}")
+    print("Load a track, then: just plugin-go")
+
+
+def cmd_songbuffer_report(args):
+    d = json.load(open(SONGBUFFER_RESULTS))
+    print(f"song: {d['song_title']!r}  totaltime={d['get_totaltime']} "
+          f"position={d['get_position']} bpm={d['get_bpm']}")
+    print(f"{'pos':>11} {'nb':>5} {'hresult':>13} {'rms':>10} {'even/odd':>15}  head")
+    for r in d["requests"]:
+        if r["hresult"] != 0 or r["buffer_null"]:
+            print(f"{r['pos']:>11} {r['nb']:>5} {hresult_name(r['hresult']):>13} "
+                  f"{'null' if r['buffer_null'] else '':>10}")
+            continue
+        even = "-" if r["rms_even"] is None else f"{r['rms_even']:.1f}"
+        odd = "-" if r["rms_odd"] is None else f"{r['rms_odd']:.1f}"
+        print(f"{r['pos']:>11} {r['nb']:>5} {'S_OK':>13} {r['rms']:>10.1f} "
+              f"{even:>7}/{odd:<7} {r['head'][:6]}")
+
+    ok = [r for r in d["requests"] if r["hresult"] == 0 and not r["buffer_null"]]
+    by_hash = {}
+    for r in ok:
+        by_hash.setdefault(r["hash"], []).append((r["pos"], r["nb"]))
+    print("\nidentical buffers (same hash) — this is what pins the units:")
+    for h, rs in by_hash.items():
+        if len(rs) > 1:
+            print(f"  {h}: {rs}")
 
 
 def cmd_go(args):
@@ -483,6 +536,12 @@ def main():
         func=cmd_status)
     sub.add_parser("go", help="trigger a re-sweep of the delayed list, no restart").set_defaults(
         func=cmd_go)
+    sub.add_parser("songbuffer",
+                   help="write the GetSongBuffer request list").set_defaults(
+        func=cmd_songbuffer)
+    sub.add_parser("songbuffer-report",
+                   help="read the GetSongBuffer capture").set_defaults(
+        func=cmd_songbuffer_report)
     coll = sub.add_parser("collect", help="normalize results.json to stdout")
     coll.add_argument("--late", action="store_true", help="read results-late.json")
     coll.set_defaults(func=cmd_collect)

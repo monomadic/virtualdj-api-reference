@@ -29,6 +29,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cstdint>
+#include <cmath>
 #include <string>
 #include <vector>
 #include <ctime>
@@ -169,6 +170,123 @@ static void JsonString(FILE *f, const std::string &s)
 }
 
 //////////////////////////////////////////////////////////////////////////
+// GetSongBuffer — the PCM of the loaded song, at any position.
+//
+// This callback has no equivalent on any other channel: HTTP, Remote, the binary
+// and the XML corpora all stop at metadata. It is the input side of every
+// waveform question in docs/Skin Waveforms.md.
+//
+// Nothing about its units is documented — whether `pos` and `nb` count samples,
+// frames, or milliseconds, whether the buffer is mono or interleaved stereo, and
+// who owns the memory. So the probe does not assume: it asks for the same span at
+// deliberately overlapping positions and records enough per request (leading
+// samples, min/max, RMS, a hash, and an even/odd channel comparison) to settle
+// the units offline, from the data rather than from a guess.
+//
+// Read-only: GetSongBuffer is a getter, and nothing here writes through the
+// returned pointer.
+
+struct TBufferRequest { int pos; int nb; };
+
+static std::vector<std::string> ReadProbeFile(const char *leaf, bool *found);
+
+static void SweepSongBuffer(IVdjCallbacks8 *cb, const char *outLeaf)
+{
+    bool found = false;
+    std::vector<std::string> lines = ReadProbeFile("songbuffer.txt", &found);
+    if (!found) return;
+
+    std::vector<TBufferRequest> reqs;
+    for (size_t i = 0; i < lines.size(); i++)
+    {
+        int pos = 0, nb = 0;
+        if (sscanf(lines[i].c_str(), "%d %d", &pos, &nb) != 2) continue;
+        // Cap the span: the host may return fewer samples than asked without
+        // saying so, and a huge nb would turn that into an overread.
+        if (nb < 1) nb = 1;
+        if (nb > 4096) nb = 4096;
+        reqs.push_back({pos, nb});
+    }
+    if (reqs.empty()) return;
+
+    FILE *out = fopen(WorkPath(outLeaf).c_str(), "w");
+    if (!out) { Log("ERROR: cannot write %s", outLeaf); return; }
+
+    time_t now = time(NULL);
+    struct tm tm_utc;
+    gmtime_r(&now, &tm_utc);
+    char stamp[32];
+    strftime(stamp, sizeof(stamp), "%Y-%m-%dT%H:%M:%SZ", &tm_utc);
+
+    char title[512]; title[0] = 0;
+    cb->GetStringInfo("get_title", title, (int)sizeof(title));
+    char filepath[1024]; filepath[0] = 0;
+    cb->GetStringInfo("get_filepath", filepath, (int)sizeof(filepath));
+    double totaltime = -1, songpos = -1, bpm = -1;
+    cb->GetInfo("get_totaltime", &totaltime);
+    cb->GetInfo("get_position", &songpos);
+    cb->GetInfo("get_bpm", &bpm);
+
+    fprintf(out, "{\n  \"tool\": \"VDJIntrospect\",\n  \"probe\": \"GetSongBuffer\",\n");
+    fprintf(out, "  \"tool_version\": \"%s\",\n", VDJINTROSPECT_VERSION);
+    fprintf(out, "  \"captured_utc\": \"%s\",\n", stamp);
+    fprintf(out, "  \"song_title\": "); JsonString(out, std::string(title));
+    fprintf(out, ",\n  \"song_filepath\": "); JsonString(out, std::string(filepath));
+    fprintf(out, ",\n  \"get_totaltime\": %.17g", totaltime);
+    fprintf(out, ",\n  \"get_position\": %.17g", songpos);
+    fprintf(out, ",\n  \"get_bpm\": %.17g", bpm);
+    fprintf(out, ",\n  \"requests\": [\n");
+
+    for (size_t i = 0; i < reqs.size(); i++)
+    {
+        short *buffer = NULL;
+        HRESULT hr = cb->GetSongBuffer(reqs[i].pos, reqs[i].nb, &buffer);
+
+        fprintf(out, "    {\"pos\": %d, \"nb\": %d, \"hresult\": %ld, \"buffer_null\": %s",
+                reqs[i].pos, reqs[i].nb, (long)(int32_t)hr, buffer ? "false" : "true");
+
+        if (hr == S_OK && buffer)
+        {
+            long long sum = 0, sumsq = 0, sumsq_even = 0, sumsq_odd = 0;
+            int mn = 32767, mx = -32768;
+            uint64_t hash = 1469598103934665603ULL;   // FNV-1a
+            for (int k = 0; k < reqs[i].nb; k++)
+            {
+                short v = buffer[k];
+                sum += v;
+                sumsq += (long long)v * v;
+                if (k & 1) sumsq_odd += (long long)v * v; else sumsq_even += (long long)v * v;
+                if (v < mn) mn = v;
+                if (v > mx) mx = v;
+                hash = (hash ^ (uint16_t)v) * 1099511628211ULL;
+            }
+            fprintf(out, ", \"min\": %d, \"max\": %d", mn, mx);
+            fprintf(out, ", \"mean\": %.6f", (double)sum / reqs[i].nb);
+            fprintf(out, ", \"rms\": %.6f", sqrt((double)sumsq / reqs[i].nb));
+            // If the buffer is interleaved stereo these two differ far less than
+            // if it is mono; either way the numbers are recorded, not judged here.
+            // `null` rather than a NaN when the span is too short to have both
+            // parities — NaN is not valid JSON and would poison the artifact.
+            int n_even = (reqs[i].nb + 1) / 2, n_odd = reqs[i].nb / 2;
+            if (n_even > 0) fprintf(out, ", \"rms_even\": %.6f", sqrt((double)sumsq_even / n_even));
+            else            fprintf(out, ", \"rms_even\": null");
+            if (n_odd > 0)  fprintf(out, ", \"rms_odd\": %.6f", sqrt((double)sumsq_odd / n_odd));
+            else            fprintf(out, ", \"rms_odd\": null");
+            fprintf(out, ", \"hash\": \"0x%016llx\"", (unsigned long long)hash);
+            fprintf(out, ", \"head\": [");
+            for (int k = 0; k < 16 && k < reqs[i].nb; k++)
+                fprintf(out, "%s%d", k ? ", " : "", buffer[k]);
+            fprintf(out, "]");
+        }
+        fprintf(out, "}%s\n", (i + 1 < reqs.size()) ? "," : "");
+    }
+
+    fprintf(out, "  ]\n}\n");
+    fclose(out);
+    Log("song-buffer probe done: %zu requests -> %s", reqs.size(), outLeaf);
+}
+
+//////////////////////////////////////////////////////////////////////////
 
 // Shared with the delayed-sweep thread. The thread outlives nothing on purpose:
 // it checks `alive` (cleared in the destructor) before touching `cb`, so an
@@ -202,6 +320,15 @@ HRESULT VDJ_API CVDJIntrospect::OnGetPluginInfo(TVdjPluginInfo8 *info)
     info->Description = "Read-only VDJScript query introspection. Never sends commands.";
     info->Version     = VDJINTROSPECT_VERSION;
     info->Bitmap      = NULL;
+    // Does VirtualDJ pass the EXTENDED info struct to a plain plugin? If it sets
+    // VDJFLAG_EXTENSION1 (0x10) on the way in, the struct is really a
+    // TVdjPluginInfo8_Extension1 and carries a mouseCallbacks slot — the only
+    // documented route to OnKey, and therefore to press/release, which the mapper
+    // contract still lacks. Log-only here; wiring it up is a separate build.
+    Log("OnGetPluginInfo incoming Flags=0x%x extension1=%s",
+        (unsigned)info->Flags, (info->Flags & 0x10) ? "YES" : "no");
+
+    info->PluginName  = "VDJIntrospect";
     // EPHEMERAL: declare no parameters and keep no .ini beside the bundle.
     info->Flags       = 0x200;
     return S_OK;
@@ -390,6 +517,7 @@ void CVDJIntrospect::StartLateSweep()
 
             Log("trigger seen — sweeping");
             SweepFiles(state->cb, "probes-late.txt", "results-late.json", "trigger");
+            SweepSongBuffer(state->cb, "results-songbuffer.json");
         }
         Log("trigger loop ended");
     }).detach();

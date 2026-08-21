@@ -240,3 +240,12 @@ plugin-go:
 plugin-collect-late name:
     @python3 tools/plugin_introspect.py collect --late > "tests/plugin-introspection-{{name}}.json"
     @echo "wrote tests/plugin-introspection-{{name}}.json"
+
+# GetSongBuffer: the raw PCM of the loaded song, at any position. No other
+# channel exposes it — this is the input side of the waveform questions.
+# Needs a track loaded; `just plugin-songbuffer` then `just plugin-go`.
+plugin-songbuffer:
+    @python3 tools/plugin_introspect.py songbuffer
+
+plugin-songbuffer-report:
+    @python3 tools/plugin_introspect.py songbuffer-report
