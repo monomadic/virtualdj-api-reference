@@ -667,3 +667,42 @@ such form". Untested: a track known to carry a comment.
 number should not be read as one: it means this particular state gave those
 keywords nothing to vary. Each needs the specific state its own verb reacts to,
 which is per-verb work, not another sweep.
+
+### `GetSongBuffer` — First PCM Capture (2026-08-15)
+
+VirtualDJ 2026 (bundle `18.0.9583`), track `Salt on my lips` loaded on deck 1.
+14 requests through the plugin's trigger loop. **This is the first time anything
+in this repo has read decoded audio** — HTTP, Remote, the binary and the XML
+corpora all stop at metadata.
+
+| What | Observed | Reading |
+| --- | --- | --- |
+| Buffer layout | At `pos 0` the leading samples are `[2, 3, 4, 4, 1, 6]`; at `pos 1` they are `[4, 4, 1, 6, 0, 5]` — the same data shifted by **two** shorts, not one | `pos` counts **stereo frames**, and the buffer is **interleaved L/R `short`** |
+| Channel split | At `pos 44100` the even/odd RMS are `2726` vs `1122`, with leading samples `[1710, -159, 1763, -173, …]` alternating loud/quiet | Confirms interleaving independently: the two parities are two channels, not noise |
+| Negative position | `pos -1` returns **`S_OK`** with `[0, 0, 2, 3, 4, 4]` — two zero shorts, then the `pos 0` data | Zero-padded, not rejected. One frame of silence = two shorts, corroborating the frame reading a third time |
+| Past the end | `pos 999999999` → `E_FAIL` | Bounded |
+| Determinism | The same `(pos, nb)` twice gives an identical hash | No streaming/decode drift between calls |
+| Content | RMS `2.6` at the start, `5512` two seconds in | Real audio, and the track begins with near-silence |
+
+`nb`'s unit is **not** established: the probe reads `nb` shorts and never faulted
+up to 4096, which is consistent with `nb` counting either frames (twice as many
+shorts available as read) or shorts exactly. Do not assume it matches `pos`.
+
+Note `get_totaltime` returned `0` for a loaded, playing track on this channel —
+unexplained, and worth a separate look before anything relies on it.
+
+### The Extended Plugin-Info Struct Is Offered (2026-08-15)
+
+`OnGetPluginInfo` is called with `Flags=0x10` (`VDJFLAG_EXTENSION1`) on entry,
+for an ordinary non-video plugin. Per the SDK header that means the struct passed
+is really a `TVdjPluginInfo8_Extension1`, carrying a `mouseCallbacks` slot for
+`IVdjVideoMouseCallbacks8` — whose members are `OnMouseDown`/`OnMouseUp`/
+`OnMouseMove` and **`OnKey(const char *ch, int vkey, int modifiers, int flag,
+int scancode)`**.
+
+Why this matters beyond plugins: `while_pressed` and the whole down/up half of
+the mapper contract are recorded as "not established" precisely because **HTTP
+has no press**. `OnKey` is the first channel that might carry one, and its `flag`
+parameter is a candidate for press/release. This capture proves only that the
+struct is *offered* to a plugin like ours — wiring up the callbacks and pressing
+keys is the next build, not a finding yet.

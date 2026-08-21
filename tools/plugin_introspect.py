@@ -210,10 +210,17 @@ def prepared_state_probes():
 #   * a position past any plausible song length (bounds behaviour)
 #   * nb=1 (the smallest legal ask)
 SONGBUFFER_REQUESTS = [
-    (0, 1024), (0, 1024), (1, 1024), (512, 1024), (1024, 1024),
-    (1000, 1024), (44100, 1024), (88200, 1024), (441000, 1024),
-    (0, 1), (0, 2), (0, 4096),
-    (-1, 1024), (999999999, 1024),
+    # Unit probes: consecutive positions, so the pointer delta per step IS the
+    # unit. Kept at a musically quiet part of the track or not, it does not
+    # matter — these are about addresses, not content.
+    (0, 1024), (0, 1024), (1, 1024), (2, 1024), (3, 1024),
+    (512, 1024), (1024, 1024), (1000, 1024),
+    # Span probe: does a request at pos+nb start where pos's buffer ended?
+    (2048, 1024), (0, 4096), (4096, 16),
+    # Content probes: one second in, two seconds in, ten seconds in.
+    (44100, 1024), (88200, 1024), (441000, 1024),
+    # Edges.
+    (0, 1), (0, 2), (-1, 1024), (999999999, 1024),
 ]
 
 
@@ -241,6 +248,18 @@ def cmd_songbuffer_report(args):
         odd = "-" if r["rms_odd"] is None else f"{r['rms_odd']:.1f}"
         print(f"{r['pos']:>11} {r['nb']:>5} {'S_OK':>13} {r['rms']:>10.1f} "
               f"{even:>7}/{odd:<7} {r['head'][:6]}")
+
+    # Pointer deltas: the decisive read on units.
+    ptrs = {r["pos"]: int(r["ptr"], 16) for r in d["requests"] if r.get("ptr")}
+    if len(ptrs) > 1:
+        base_pos = min(ptrs)
+        base = ptrs[base_pos]
+        print("\npointer deltas from pos=%d (bytes, and shorts):" % base_pos)
+        for pos in sorted(ptrs):
+            db = ptrs[pos] - base
+            step = pos - base_pos
+            per = f"  = {db / step:.1f} bytes per pos unit" if step else ""
+            print(f"  pos {pos:>11}: {db:>+12} bytes  ({db // 2:>+8} shorts){per}")
 
     ok = [r for r in d["requests"] if r["hresult"] == 0 and not r["buffer_null"]]
     by_hash = {}

@@ -245,6 +245,13 @@ static void SweepSongBuffer(IVdjCallbacks8 *cb, const char *outLeaf)
         fprintf(out, "    {\"pos\": %d, \"nb\": %d, \"hresult\": %ld, \"buffer_null\": %s",
                 reqs[i].pos, reqs[i].nb, (long)(int32_t)hr, buffer ? "false" : "true");
 
+        // The POINTER settles what the head samples only imply. If successive
+        // positions return addresses into one persistent decoded buffer, the
+        // byte delta per unit of `pos` is the unit — no inference needed. (The
+        // absolute value is ASLR noise; only differences within a run mean
+        // anything, which is why every request records it.)
+        if (buffer) fprintf(out, ", \"ptr\": \"0x%016llx\"", (unsigned long long)(uintptr_t)buffer);
+
         if (hr == S_OK && buffer)
         {
             long long sum = 0, sumsq = 0, sumsq_even = 0, sumsq_odd = 0;
@@ -276,6 +283,13 @@ static void SweepSongBuffer(IVdjCallbacks8 *cb, const char *outLeaf)
             fprintf(out, ", \"head\": [");
             for (int k = 0; k < 16 && k < reqs[i].nb; k++)
                 fprintf(out, "%s%d", k ? ", " : "", buffer[k]);
+            fprintf(out, "]");
+            // The tail lets a later request's head be matched against an earlier
+            // request's end, which is how the span length gets checked.
+            fprintf(out, ", \"tail\": [");
+            for (int k = (reqs[i].nb > 16 ? reqs[i].nb - 16 : 0); k < reqs[i].nb; k++)
+                fprintf(out, "%s%d", (k == (reqs[i].nb > 16 ? reqs[i].nb - 16 : 0)) ? "" : ", ",
+                        buffer[k]);
             fprintf(out, "]");
         }
         fprintf(out, "}%s\n", (i + 1 < reqs.size()) ? "," : "");
