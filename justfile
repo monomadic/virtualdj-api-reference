@@ -249,3 +249,7 @@ plugin-songbuffer:
 
 plugin-songbuffer-report:
     @python3 tools/plugin_introspect.py songbuffer-report
+
+# OnKey/mouse events — the only channel that might carry press vs release.
+plugin-keylog:
+    @python3 tools/plugin_introspect.py keylog

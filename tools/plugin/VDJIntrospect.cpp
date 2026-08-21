@@ -38,6 +38,7 @@
 #include <memory>
 #include <thread>
 #include <sys/stat.h>
+#include <sys/time.h>
 #include <pwd.h>
 #include <unistd.h>
 
@@ -168,6 +169,93 @@ static void JsonString(FILE *f, const std::string &s)
     JsonEscape(f, s.data(), s.size());
     fputc('"', f);
 }
+
+//////////////////////////////////////////////////////////////////////////
+// OnKey / mouse callbacks — the only channel that might carry PRESS vs RELEASE.
+//
+// `while_pressed` and the whole down/up half of the mapper contract are recorded
+// as "not established" in docs/Mapper XML.md for one reason: HTTP has no press.
+// It can only ask "is it playing?", never "was this button just pushed?". This
+// interface is the first thing in reach that is event-driven, and `OnKey`'s
+// undocumented `flag` parameter is the candidate for the press/release bit.
+//
+// Reached via the EXTENDED info struct: VirtualDJ sets VDJFLAG_EXTENSION1 on the
+// way into OnGetPluginInfo (confirmed on this build, 2026-08-15), which means the
+// pointer is really a TVdjPluginInfo8_Extension1 carrying a mouseCallbacks slot.
+//
+// SAFETY: every handler returns false — "not handled". Returning true would
+// SWALLOW the input, and a plugin that eats the user's keystrokes and clicks is
+// exactly the kind of side effect this plugin promises not to have. The mouse
+// handlers exist only because the interface requires them; they record nothing
+// but a count, so ordinary mouse movement cannot flood the log.
+
+static void LogEvent(const char *json_body)
+{
+    mkdir(WorkDir().c_str(), 0755);
+    FILE *f = fopen(WorkPath("keylog.jsonl").c_str(), "a");
+    if (!f) return;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    fprintf(f, "{\"t\": %ld.%06d, %s}\n", (long)tv.tv_sec, (int)tv.tv_usec, json_body);
+    fclose(f);
+}
+
+struct CVDJMouseKeys : public IVdjVideoMouseCallbacks8
+{
+    std::atomic<int> moves{0};
+
+    bool OnMouseMove(int x, int y, int buttons, int keyModifiers)
+    {
+        // Counted, not logged: a move handler that wrote a line per event would
+        // produce megabytes and tell us nothing new.
+        moves++;
+        return false;
+    }
+
+    bool OnMouseDown(int x, int y, int buttons, int keyModifiers)
+    {
+        char buf[256];
+        snprintf(buf, sizeof(buf),
+                 "\"event\": \"mousedown\", \"x\": %d, \"y\": %d, "
+                 "\"buttons\": %d, \"modifiers\": %d, \"moves_so_far\": %d",
+                 x, y, buttons, keyModifiers, moves.load());
+        LogEvent(buf);
+        return false;
+    }
+
+    bool OnMouseUp(int x, int y, int buttons, int keyModifiers)
+    {
+        char buf[256];
+        snprintf(buf, sizeof(buf),
+                 "\"event\": \"mouseup\", \"x\": %d, \"y\": %d, "
+                 "\"buttons\": %d, \"modifiers\": %d",
+                 x, y, buttons, keyModifiers);
+        LogEvent(buf);
+        return false;
+    }
+
+    void OnKey(const char *ch, int vkey, int modifiers, int flag, int scancode)
+    {
+        // `ch` is undocumented as to encoding and lifetime, so it is escaped as
+        // bytes rather than trusted as a C string beyond a bounded length.
+        std::string text;
+        if (ch) for (int i = 0; i < 16 && ch[i]; i++) text.push_back(ch[i]);
+
+        FILE *f = fopen(WorkPath("keylog.jsonl").c_str(), "a");
+        if (!f) return;
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        fprintf(f, "{\"t\": %ld.%06d, \"event\": \"key\", \"ch\": ",
+                (long)tv.tv_sec, (int)tv.tv_usec);
+        JsonString(f, text);
+        fprintf(f, ", \"ch_null\": %s", ch ? "false" : "true");
+        fprintf(f, ", \"vkey\": %d, \"modifiers\": %d, \"flag\": %d, \"scancode\": %d}\n",
+                vkey, modifiers, flag, scancode);
+        fclose(f);
+    }
+};
+
+static CVDJMouseKeys g_mousekeys;
 
 //////////////////////////////////////////////////////////////////////////
 // GetSongBuffer — the PCM of the loaded song, at any position.
@@ -329,22 +417,34 @@ private:
 
 HRESULT VDJ_API CVDJIntrospect::OnGetPluginInfo(TVdjPluginInfo8 *info)
 {
+    // Does VirtualDJ pass the EXTENDED info struct to a plain plugin? If it sets
+    // VDJFLAG_EXTENSION1 (0x10) on the way in, the struct is really a
+    // TVdjPluginInfo8_Extension1 and carries a mouseCallbacks slot — the only
+    // documented route to OnKey, and therefore to press/release, which the mapper
+    // contract still lacks. Answered YES on this build, so the callbacks below
+    // are installed rather than merely logged.
+    Log("OnGetPluginInfo incoming Flags=0x%x extension1=%s",
+        (unsigned)info->Flags, (info->Flags & 0x10) ? "YES" : "no");
+
+    // Claim the mouse/key callbacks when the extended struct is offered. This is
+    // the whole point of the build: see the OnKey block above.
+    bool extended = (info->Flags & 0x10) != 0;
+    if (extended)
+    {
+        TVdjPluginInfo8_Extension1 *ext = (TVdjPluginInfo8_Extension1 *)info;
+        ext->mouseCallbacks = &g_mousekeys;
+        Log("mouseCallbacks installed — OnKey events will land in keylog.jsonl");
+    }
+
     info->PluginName  = "VDJIntrospect";
     info->Author      = "virtualdj-api-reference";
     info->Description = "Read-only VDJScript query introspection. Never sends commands.";
     info->Version     = VDJINTROSPECT_VERSION;
     info->Bitmap      = NULL;
-    // Does VirtualDJ pass the EXTENDED info struct to a plain plugin? If it sets
-    // VDJFLAG_EXTENSION1 (0x10) on the way in, the struct is really a
-    // TVdjPluginInfo8_Extension1 and carries a mouseCallbacks slot — the only
-    // documented route to OnKey, and therefore to press/release, which the mapper
-    // contract still lacks. Log-only here; wiring it up is a separate build.
-    Log("OnGetPluginInfo incoming Flags=0x%x extension1=%s",
-        (unsigned)info->Flags, (info->Flags & 0x10) ? "YES" : "no");
-
-    info->PluginName  = "VDJIntrospect";
-    // EPHEMERAL: declare no parameters and keep no .ini beside the bundle.
-    info->Flags       = 0x200;
+    // EPHEMERAL (0x200): declare no parameters, keep no .ini. The EXTENSION1 bit
+    // is preserved rather than cleared — VirtualDJ set it to describe the struct
+    // it passed, so overwriting it would be answering a question it did not ask.
+    info->Flags       = 0x200 | (extended ? 0x10 : 0);
     return S_OK;
 }
 

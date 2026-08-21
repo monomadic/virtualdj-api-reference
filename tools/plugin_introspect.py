@@ -43,6 +43,7 @@ LATE_PROBES = os.path.join(WORKDIR, "probes-late.txt")
 LATE_RESULTS = os.path.join(WORKDIR, "results-late.json")
 SONGBUFFER = os.path.join(WORKDIR, "songbuffer.txt")
 SONGBUFFER_RESULTS = os.path.join(WORKDIR, "results-songbuffer.json")
+KEYLOG = os.path.join(WORKDIR, "keylog.jsonl")
 GO = os.path.join(WORKDIR, "go.txt")
 LOG = os.path.join(WORKDIR, "plugin.log")
 
@@ -269,6 +270,58 @@ def cmd_songbuffer_report(args):
     for h, rs in by_hash.items():
         if len(rs) > 1:
             print(f"  {h}: {rs}")
+
+
+def cmd_keylog(args):
+    """Read the OnKey/mouse capture and look for the press/release bit.
+
+    The question this exists to answer: does anything in an OnKey event
+    distinguish a key going DOWN from the same key coming UP? If it does, this is
+    the first channel in the repo that carries press/release, which is what
+    `while_pressed` and the down/up half of the mapper contract have always
+    lacked.
+    """
+    if not os.path.exists(KEYLOG):
+        sys.exit(f"no {KEYLOG} — has the new build loaded, and were keys pressed "
+                 f"with VirtualDJ focused?")
+    events = [json.loads(line) for line in open(KEYLOG) if line.strip()]
+    keys = [e for e in events if e.get("event") == "key"]
+    mouse = [e for e in events if e.get("event", "").startswith("mouse")]
+
+    print(f"{len(events)} events: {len(keys)} key, {len(mouse)} mouse")
+    if mouse:
+        print("\nmouse:")
+        for e in mouse[-10:]:
+            print(f"  {e['event']:10} x={e.get('x')} y={e.get('y')} "
+                  f"buttons={e.get('buttons')} modifiers={e.get('modifiers')}")
+    if not keys:
+        return
+
+    print(f"\n{'time':>14}  {'ch':<8} {'vkey':>5} {'mods':>5} {'flag':>6} {'scan':>5}")
+    t0 = keys[0]["t"]
+    for e in keys:
+        print(f"{e['t'] - t0:>14.3f}  {e['ch']!r:<8} {e['vkey']:>5} "
+              f"{e['modifiers']:>5} {e['flag']:>6} {e['scancode']:>5}")
+
+    # Per (vkey, scancode), how many distinct flag values? Two events for one
+    # physical keypress with differing flags is the press/release signal.
+    by_key = {}
+    for e in keys:
+        by_key.setdefault((e["vkey"], e["scancode"]), []).append(e["flag"])
+    print("\nflag values seen per key:")
+    verdict = False
+    for (vkey, scan), flags in sorted(by_key.items()):
+        distinct = sorted(set(flags))
+        if len(distinct) > 1:
+            verdict = True
+        print(f"  vkey={vkey:<5} scancode={scan:<5} events={len(flags):<4} "
+              f"distinct flags={distinct}")
+    print("\n" + ("PRESS/RELEASE: a key produced MORE THAN ONE flag value — "
+                  "that difference is the candidate signal."
+                  if verdict else
+                  "No key produced more than one flag value in this capture. "
+                  "Either only one edge is delivered, or the distinguishing "
+                  "field is elsewhere — not disproof on its own."))
 
 
 def cmd_go(args):
@@ -555,6 +608,8 @@ def main():
         func=cmd_status)
     sub.add_parser("go", help="trigger a re-sweep of the delayed list, no restart").set_defaults(
         func=cmd_go)
+    sub.add_parser("keylog",
+                   help="read the OnKey/mouse capture").set_defaults(func=cmd_keylog)
     sub.add_parser("songbuffer",
                    help="write the GetSongBuffer request list").set_defaults(
         func=cmd_songbuffer)
