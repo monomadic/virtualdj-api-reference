@@ -29,6 +29,13 @@
 // none of them, so it is loaded but never listed and never given a surface.
 // Being a real effect is the cheapest way to acquire one; a video FX plugin is
 // the alternative and needs video output.
+//
+// -DVDJINTROSPECT_SKIN layers onto the DSP build: the effect then answers
+// OnGetUserInterface with VDJINTERFACE_SKIN, handing VirtualDJ a skin XML buffer
+// and a PNG. The buffers are re-read FROM DISK on every call rather than baked
+// into the bundle, because that is the whole point — if VirtualDJ asks more than
+// once, editing skin.xml and re-opening the panel replaces the restart-per-edit
+// cycle that makes skin questions expensive. Still read-only: no SendCommand.
 #ifdef VDJINTROSPECT_DSP
 #include "vdjDsp8.h"
 #else
@@ -733,12 +740,24 @@ public:
     HRESULT VDJ_API OnStop();
     HRESULT VDJ_API OnProcessSamples(float *buffer, int nb);
     HRESULT VDJ_API OnParameter(int id);
+#ifdef VDJINTROSPECT_SKIN
+    HRESULT VDJ_API OnGetUserInterface(TVdjPluginInterface8 *pluginInterface);
+#endif
 
     int m_probe_switch = 0;
     float m_probe_slider = 0.5f;
 
 private:
     bool m_logged_first_buffer = false;
+#ifdef VDJINTROSPECT_SKIN
+    // The served buffers must outlive the call: TVdjPluginInterface8 takes a
+    // borrowed `const char*` and a raw pointer/size, and the SDK never says when
+    // VirtualDJ is done reading them. Holding them as members means they live as
+    // long as the plugin instance, which is the only lifetime we can guarantee.
+    std::string m_xml;
+    std::vector<unsigned char> m_png;
+    int m_ui_calls = 0;
+#endif
 };
 
 HRESULT VDJ_API CVDJIntrospectFX::OnGetPluginInfo(TVdjPluginInfo8 *info)
@@ -753,7 +772,11 @@ HRESULT VDJ_API CVDJIntrospectFX::OnGetPluginInfo(TVdjPluginInfo8 *info)
         Log("[FX] mouseCallbacks installed");
     }
 
+#ifdef VDJINTROSPECT_SKIN
+    info->PluginName  = "VDJIntrospect Skin";
+#else
     info->PluginName  = "VDJIntrospect FX";
+#endif
     info->Author      = "virtualdj-api-reference";
     info->Description = "Read-only introspection probe. Audio passthrough — does not alter sound.";
     info->Version     = VDJINTROSPECT_VERSION;
@@ -802,6 +825,79 @@ HRESULT VDJ_API CVDJIntrospectFX::OnProcessSamples(float *buffer, int nb)
     }
     return S_OK;   // touch nothing
 }
+
+#ifdef VDJINTROSPECT_SKIN
+// Read a whole file into a byte vector. Returns false if it is not there, which
+// is a normal state (nothing prepared yet) rather than an error.
+static bool ReadWholeFile(const std::string &path, std::vector<unsigned char> &out)
+{
+    FILE *f = fopen(path.c_str(), "rb");
+    if (!f) return false;
+    fseek(f, 0, SEEK_END);
+    long n = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    if (n < 0) { fclose(f); return false; }
+    out.resize((size_t)n);
+    size_t got = n > 0 ? fread(out.data(), 1, (size_t)n, f) : 0;
+    fclose(f);
+    out.resize(got);
+    return true;
+}
+
+// The measurement. Three things are being asked at once:
+//
+//   1. Is OnGetUserInterface called AT ALL on a Sound Effect? Every previous
+//      build logged the call and it never fired, but those were plugin types
+//      VirtualDJ never gave a surface to.
+//   2. If it is called, is it called MORE THAN ONCE — once per panel open, or
+//      once per instance? Only the former turns skin testing into a loop.
+//   3. Does a skin XML supplied this way actually render?
+//
+// The XML is re-read from disk each time so that (2), if true, is immediately
+// usable. A missing file is served as a built-in placeholder rather than a
+// failure, so the first run answers (1) without needing anything prepared.
+static const char *kFallbackSkinXml =
+    "<Skin name=\"VDJIntrospectSkin\" version=\"8\" width=\"220\" height=\"200\">\n"
+    "  <textzone>\n"
+    "    <size width=\"200\" height=\"16\"/>\n"
+    "    <pos x=\"10\" y=\"10\"/>\n"
+    "    <text font=\"arial\" size=\"13\" weight=\"bold\" color=\"white\" align=\"left\"\n"
+    "          format=\"NO skin.xml PREPARED\"/>\n"
+    "  </textzone>\n"
+    "</Skin>\n";
+
+HRESULT VDJ_API CVDJIntrospectFX::OnGetUserInterface(TVdjPluginInterface8 *pluginInterface)
+{
+    m_ui_calls++;
+
+    std::vector<unsigned char> xml;
+    bool have_xml = ReadWholeFile(WorkPath("skin.xml"), xml);
+    if (have_xml)
+        m_xml.assign((const char *)xml.data(), xml.size());
+    else
+        m_xml = kFallbackSkinXml;
+
+    bool have_png = ReadWholeFile(WorkPath("skin.png"), m_png);
+
+    pluginInterface->Type        = VDJINTERFACE_SKIN;
+    pluginInterface->Xml         = m_xml.c_str();
+    pluginInterface->ImageBuffer = have_png && !m_png.empty() ? (void *)m_png.data() : NULL;
+    pluginInterface->ImageSize   = have_png ? (int)m_png.size() : 0;
+
+    Log("[SKIN] OnGetUserInterface CALL #%d — serving VDJINTERFACE_SKIN "
+        "xml=%s(%zu bytes) png=%s(%zu bytes)",
+        m_ui_calls,
+        have_xml ? "skin.xml" : "built-in fallback", m_xml.size(),
+        have_png ? "skin.png" : "NONE", m_png.size());
+
+    // Record the served XML's first line, so a rendered panel can be matched to
+    // the exact revision that produced it without guessing.
+    size_t eol = m_xml.find('\n');
+    Log("[SKIN]   first line: %s", m_xml.substr(0, eol == std::string::npos ? m_xml.size() : eol).c_str());
+
+    return S_OK;
+}
+#endif
 #endif
 
 extern "C" VDJ_EXPORT HRESULT VDJ_API DllGetClassObject(const GUID &rclsid, const GUID &riid, void **ppObject)

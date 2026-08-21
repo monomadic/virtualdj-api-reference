@@ -3,6 +3,8 @@
 #
 #   tools/plugin/build.sh            # build to build/VDJIntrospect.bundle
 #   tools/plugin/build.sh --install  # build, then copy into VirtualDJ's plugin folder
+#   tools/plugin/build.sh --dsp      # the Sound Effect variant
+#   tools/plugin/build.sh --skin     # Sound Effect + custom skin interface
 #
 # Needs the Atomix SDK headers, which this repo does not vendor. Put a copy under
 # vendor/ (see .gitignore and docs/Plugin SDK.md); any directory containing
@@ -19,9 +21,19 @@ DEFINES=()
 # It installs into SoundEffect/ so VirtualDJ files it under Extensions > Effects:
 # the Extensions list is organised by functional type, and a plugin that is no
 # recognised type is loaded but never listed.
-if [[ "${1-}" == "--dsp" || "${2-}" == "--dsp" ]]; then
+if [[ " $* " == *" --dsp "* ]]; then
     NAME="VDJIntrospectFX"
     DEFINES=(-DVDJINTROSPECT_DSP)
+    SUBDIR_DEFAULT="SoundEffect"
+fi
+# --skin is the DSP build plus a custom skin interface: the effect answers
+# OnGetUserInterface with VDJINTERFACE_SKIN and serves skin.xml/skin.png from the
+# working dir. Separate bundle NAME because the bundle filename is the plugin's
+# identity to VirtualDJ, not the declared PluginName — so this can sit beside the
+# plain FX build and be told apart in the effects list.
+if [[ " $* " == *" --skin "* ]]; then
+    NAME="VDJIntrospectSkin"
+    DEFINES=(-DVDJINTROSPECT_DSP -DVDJINTROSPECT_SKIN)
     SUBDIR_DEFAULT="SoundEffect"
 fi
 BUILD="$REPO/build"

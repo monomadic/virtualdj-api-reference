@@ -222,6 +222,7 @@ check:
     python3 tools/extract_action_contracts.py --check
     python3 tools/sweep_return_types.py --check
     python3 tools/plugin_introspect.py --check
+    python3 tools/plugin_skin.py --check
     python3 tools/topic.py check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
@@ -246,6 +247,28 @@ plugin-collect-late name:
 # Needs a track loaded; `just plugin-songbuffer` then `just plugin-go`.
 plugin-songbuffer:
     @python3 tools/plugin_introspect.py songbuffer
+
+# --- runtime skin loop (task 10a follow-on) ---------------------------------
+# The Sound Effect build made with `tools/plugin/build.sh --skin --install`
+# answers OnGetUserInterface with VDJINTERFACE_SKIN and serves these two files
+# fresh on every call, so a skin edit costs a panel re-open, not a restart:
+#
+#   just plugin-skin-prepare              # write skin.png + the probe skin.xml
+#   just plugin-skin-prepare tests/Skins/runtime-probe/my.xml
+#   just plugin-skin-reload               # close + re-open the panel (needs HTTP)
+#   just plugin-skin-log                  # how many times VirtualDJ asked
+plugin-skin-prepare *xml:
+    @python3 tools/plugin_skin.py prepare {{ if xml == "" { "" } else { "--xml " + xml } }}
+
+plugin-skin-log:
+    @python3 tools/plugin_skin.py log
+
+# Toggling the panel is what makes VirtualDJ re-ask for the XML.
+plugin-skin-reload:
+    @curl -sS -m 6 -G 'http://localhost/execute' --data-urlencode "script=deck 1 effect_show_gui 'VDJIntrospectSkin'" >/dev/null
+    @sleep 1
+    @curl -sS -m 6 -G 'http://localhost/execute' --data-urlencode "script=deck 1 effect_show_gui 'VDJIntrospectSkin'" >/dev/null
+    @echo 'panel re-opened; run `just plugin-skin-log` to see the new call'
 
 plugin-songbuffer-report:
     @python3 tools/plugin_introspect.py songbuffer-report
