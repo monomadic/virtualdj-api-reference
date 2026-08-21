@@ -61,8 +61,10 @@ Atomix SDK headers under `vendor/` — deliberately not vendored, see
 Order: `just plugin-build --install` → restart VirtualDJ → `just plugin-prepare` → restart
 again (the sweep runs at plugin load) → `just plugin-status` → `just plugin-collect`.
 
-Two things that bite. **Each capture costs a VirtualDJ restart**, because the sweep runs when
-the plugin loads. And **a load-time probe can be too early**: `OnLoad` fires while VirtualDJ is
+Two things that bite. **A capture costs a VirtualDJ restart only the first time** — after the
+delayed sweep runs, the plugin keeps a trigger loop alive, so `just plugin-go` re-sweeps
+`probes-late.txt` within ~2s with no restart. That is what makes prepared-state work practical:
+set the app up by hand (load a track, highlight a song), then trigger. And **a load-time probe can be too early**: `OnLoad` fires while VirtualDJ is
 still starting, so an uninitialized subsystem (the browser) answers `E_INVALIDARG` exactly as a
 nonexistent form would. Use `prepare --late` to write `probes-late.txt`, which the plugin
 sweeps again ~40s after load from a timer thread, and re-take any negative there before

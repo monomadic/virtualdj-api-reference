@@ -56,6 +56,9 @@
 //                            late-initializing subsystems (the browser) get a fair
 //                            chance to answer
 //   results-late.json output — the delayed run
+//   go.txt          input  — touch it (`just plugin-go`) and the delayed list is
+//                            swept again within ~2s, no restart needed; this is
+//                            how prepared-state captures are taken
 //   plugin.log   output — append-only lifecycle log (also written when there is
 //                         no probes.txt, so a failed load is still diagnosable)
 
@@ -362,10 +365,33 @@ void CVDJIntrospect::StartLateSweep()
 
     std::shared_ptr<TLateState> state = m_late;
     std::thread([state]() {
-        std::this_thread::sleep_for(std::chrono::seconds(40));
+        // One automatic run, late enough that startup-initialized subsystems
+        // (the browser) are up. This is the capture that proved the silent
+        // browser readers were a timing artifact.
+        for (int i = 0; i < 40 && state->alive; i++)
+            std::this_thread::sleep_for(std::chrono::seconds(1));
         if (!state->alive) { Log("late sweep cancelled — plugin unloaded during wait"); return; }
         Log("late sweep starting (40s after load)");
         SweepFiles(state->cb, "probes-late.txt", "results-late.json", "late");
+
+        // Then stay available: re-sweep whenever a trigger file appears. This is
+        // what makes prepared-state work possible — set up the app by hand (load
+        // a track, highlight a song), then ask for a capture — and it removes the
+        // restart that every previous capture cost.
+        Log("trigger loop armed — `just plugin-go` re-sweeps without a restart");
+        while (state->alive)
+        {
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            if (!state->alive) break;
+
+            struct stat st;
+            if (stat(WorkPath("go.txt").c_str(), &st) != 0) continue;
+            unlink(WorkPath("go.txt").c_str());
+
+            Log("trigger seen — sweeping");
+            SweepFiles(state->cb, "probes-late.txt", "results-late.json", "trigger");
+        }
+        Log("trigger loop ended");
     }).detach();
 
     Log("late sweep armed");

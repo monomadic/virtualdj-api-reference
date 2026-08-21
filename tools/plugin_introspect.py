@@ -41,6 +41,7 @@ RESULTS = os.path.join(WORKDIR, "results.json")
 # looks like it does not answer at all.
 LATE_PROBES = os.path.join(WORKDIR, "probes-late.txt")
 LATE_RESULTS = os.path.join(WORKDIR, "results-late.json")
+GO = os.path.join(WORKDIR, "go.txt")
 LOG = os.path.join(WORKDIR, "plugin.log")
 
 # Signed 32-bit HRESULTs, as the plugin writes them.
@@ -143,8 +144,81 @@ def remaining_keyword_probes():
     return probes, skipped
 
 
+def prepared_state_probes():
+    """Everything that an idle app could not answer.
+
+    Two groups, both waiting on app state rather than on a better channel:
+
+    1. Keyword pairs that came back indistinguishable. Most keywords select
+       between things that are all inert with no track loaded, so the nonsense
+       control matched them by default. Re-asked with real state, a recognized
+       keyword has something to differ about.
+    2. The song-level browser readers, which stayed silent even in the delayed
+       sweep. They answer over HTTP with a song highlighted, so a *selection* is
+       the variable, not initialization.
+    """
+    contracts = json.load(open(CONTRACTS))["verbs"]
+    table = json.load(open(VERB_TABLE))["verbs"]
+
+    inert = {}
+    for path in ("tests/plugin-introspection-leads.json",
+                 "tests/plugin-introspection-remaining.json"):
+        if not os.path.exists(path):
+            continue
+        p = json.load(open(path))["probes"]
+        for n, r in contracts.items():
+            control = p.get(f"{n} {BOGUS}")
+            if not r.get("keyword_candidates") or control is None:
+                continue
+            for kw in r["keyword_candidates"]:
+                rec = p.get(f"{n} {kw}")
+                if rec is None:
+                    continue
+                same = (rec["numeric_hresult"], rec["text_hresult"],
+                        rec.get("numeric"), rec["text"]) == \
+                       (control["numeric_hresult"], control["text_hresult"],
+                        control.get("numeric"), control["text"])
+                if same and n not in UNSAFE_NAMES and \
+                        table.get(n, {}).get("category") not in UNSAFE_CATEGORIES:
+                    inert.setdefault(n, []).append(kw)
+
+    probes = []
+    for n in sorted(inert):
+        probes.append(n)
+        probes.extend(f"{n} {kw}" for kw in inert[n])
+        probes.append(f"{n} {BOGUS}")
+
+    # Still-silent browser readers, and controls that prove the prepared state
+    # actually took (a loaded deck, a highlighted song) so a null result cannot
+    # be blamed on the setup.
+    probes += ["get_browsed_comment", "get_browsed_composer", "get_browsed_song",
+               "get_browsed_artist", "get_browsed_title", "get_browsed_key",
+               "get_browsed_filepath", "get_sample_info", "sidereco_song"]
+    probes += ["get_title", "get_artist", "get_bpm", "loaded", "get_filepath",
+               "get_browsed_folder", "play"]
+    return probes, len(inert)
+
+
+def cmd_go(args):
+    os.makedirs(WORKDIR, exist_ok=True)
+    open(GO, "w").close()
+    print(f"triggered — the plugin sweeps {LATE_PROBES} within ~2s "
+          f"(no restart). Then: just plugin-collect --late")
+
+
 def cmd_prepare(args):
     target = LATE_PROBES if args.late else PROBES
+
+    if args.prepared_state:
+        probes, n_verbs = prepared_state_probes()
+        os.makedirs(WORKDIR, exist_ok=True)
+        with open(target, "w") as f:
+            f.write("# VDJIntrospect — needs prepared state (track loaded, song highlighted).\n")
+            f.write("\n".join(probes) + "\n")
+        print(f"wrote {len(probes)} probes to {target} "
+              f"({n_verbs} verbs whose keywords were indistinguishable when idle, "
+              f"plus browser readers and state controls)")
+        return
 
     if args.remaining:
         probes, skipped = remaining_keyword_probes()
@@ -395,6 +469,8 @@ def main():
     prep = sub.add_parser("prepare", help="write the plugin's probe list")
     prep.add_argument("--verbs", help="comma-separated probes instead of every verb")
     prep.add_argument("--limit", type=int, help="first N verbs only")
+    prep.add_argument("--prepared-state", action="store_true",
+                      help="what an idle app could not answer: inert keywords + browser readers")
     prep.add_argument("--remaining", action="store_true",
                       help="execute-capable keyword verbs (query position only)")
     prep.add_argument("--late", action="store_true",
@@ -405,6 +481,8 @@ def main():
 
     sub.add_parser("status", help="show the plugin workdir").set_defaults(
         func=cmd_status)
+    sub.add_parser("go", help="trigger a re-sweep of the delayed list, no restart").set_defaults(
+        func=cmd_go)
     coll = sub.add_parser("collect", help="normalize results.json to stdout")
     coll.add_argument("--late", action="store_true", help="read results-late.json")
     coll.set_defaults(func=cmd_collect)

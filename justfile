@@ -230,3 +230,8 @@ check:
 # Confirm argument keywords against their nonsense controls in any capture.
 plugin-keyword-report capture *args:
     @python3 tools/plugin_introspect.py keyword-report --capture "tests/plugin-introspection-{{capture}}.json" {{args}}
+
+# Re-sweep the delayed probe list right now, without restarting VirtualDJ.
+# Set the app up by hand first (load a track, highlight a song), then trigger.
+plugin-go:
+    @python3 tools/plugin_introspect.py go
