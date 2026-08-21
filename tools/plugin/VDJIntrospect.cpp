@@ -22,7 +22,18 @@
 //
 //////////////////////////////////////////////////////////////////////////
 
+// Two builds from one source. The default is the headless AutoStart probe. With
+// -DVDJINTROSPECT_DSP it becomes a Sound Effect instead — which matters because
+// VirtualDJ's Extensions list is organised by *functional type* (Skins, Effects,
+// Samples, Pads, Other), and a plugin that answers only to IVdjPluginBasic8 is
+// none of them, so it is loaded but never listed and never given a surface.
+// Being a real effect is the cheapest way to acquire one; a video FX plugin is
+// the alternative and needs video output.
+#ifdef VDJINTROSPECT_DSP
+#include "vdjDsp8.h"
+#else
 #include "vdjPlugin8.h"
+#endif
 
 #include <cstdarg>
 #include <cstdio>
@@ -700,6 +711,99 @@ CVDJIntrospect::~CVDJIntrospect()
 // (docs/Plugin SDK.md, "Loading, and one open question"), and the log is the
 // evidence either way.
 
+#ifdef VDJINTROSPECT_DSP
+//////////////////////////////////////////////////////////////////////////
+// Sound Effect build.
+//
+// The audio path is a strict PASSTHROUGH: OnProcessSamples does not write to the
+// buffer, so enabling this effect cannot alter what the audience hears. It exists
+// to be a plugin VirtualDJ recognises as a type — with a panel, and therefore a
+// surface that key and mouse events might reach.
+//
+// It does NOT run the verb sweeps: an effect is instantiated per deck and per
+// enable, and re-running a 1,100-probe sweep on each of those would be both
+// pointless and slow.
+
+class CVDJIntrospectFX : public IVdjPluginDsp8
+{
+public:
+    HRESULT VDJ_API OnLoad();
+    HRESULT VDJ_API OnGetPluginInfo(TVdjPluginInfo8 *info);
+    HRESULT VDJ_API OnStart();
+    HRESULT VDJ_API OnStop();
+    HRESULT VDJ_API OnProcessSamples(float *buffer, int nb);
+    HRESULT VDJ_API OnParameter(int id);
+
+    int m_probe_switch = 0;
+    float m_probe_slider = 0.5f;
+
+private:
+    bool m_logged_first_buffer = false;
+};
+
+HRESULT VDJ_API CVDJIntrospectFX::OnGetPluginInfo(TVdjPluginInfo8 *info)
+{
+    Log("[FX] OnGetPluginInfo incoming Flags=0x%x extension1=%s",
+        (unsigned)info->Flags, (info->Flags & 0x10) ? "YES" : "no");
+
+    bool extended = (info->Flags & 0x10) != 0;
+    if (extended)
+    {
+        ((TVdjPluginInfo8_Extension1 *)info)->mouseCallbacks = &g_mousekeys;
+        Log("[FX] mouseCallbacks installed");
+    }
+
+    info->PluginName  = "VDJIntrospect FX";
+    info->Author      = "virtualdj-api-reference";
+    info->Description = "Read-only introspection probe. Audio passthrough — does not alter sound.";
+    info->Version     = VDJINTROSPECT_VERSION;
+    info->Bitmap      = NULL;
+    info->Flags       = extended ? 0x10 : 0;
+    return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospectFX::OnLoad()
+{
+    Log("[FX] OnLoad");
+    DeclareParameterSwitch(&m_probe_switch, 0, "Probe Switch", "Probe", false);
+    DeclareParameterSlider(&m_probe_slider, 1, "Probe Slider", "Slide", 0.5f);
+    return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospectFX::OnStart()
+{
+    // SampleRate is handed to us by the host — an independent check on the
+    // 44,100 Hz figure that GetSongBuffer's frame arithmetic implied.
+    Log("[FX] OnStart  SampleRate=%d SongBpm=%d SongPosBeats=%.3f",
+        SampleRate, SongBpm, SongPosBeats);
+    return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospectFX::OnStop()
+{
+    Log("[FX] OnStop");
+    return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospectFX::OnParameter(int id)
+{
+    Log("[FX] OnParameter id=%d (switch=%d slider=%.3f) — VirtualDJ called IN",
+        id, m_probe_switch, m_probe_slider);
+    return S_OK;
+}
+
+HRESULT VDJ_API CVDJIntrospectFX::OnProcessSamples(float *buffer, int nb)
+{
+    if (!m_logged_first_buffer)
+    {
+        m_logged_first_buffer = true;
+        Log("[FX] first audio buffer: nb=%d SampleRate=%d (PASSTHROUGH, buffer untouched)",
+            nb, SampleRate);
+    }
+    return S_OK;   // touch nothing
+}
+#endif
+
 extern "C" VDJ_EXPORT HRESULT VDJ_API DllGetClassObject(const GUID &rclsid, const GUID &riid, void **ppObject)
 {
     bool clsid_ok = memcmp(&rclsid, &CLSID_VdjPlugin8, sizeof(GUID)) == 0;
@@ -711,11 +815,20 @@ extern "C" VDJ_EXPORT HRESULT VDJ_API DllGetClassObject(const GUID &rclsid, cons
         FormatGuid(riid).c_str(), IIDName(riid),
         (clsid_ok && (basic || startstop)) ? " ACCEPTED" : " declined");
 
+#ifdef VDJINTROSPECT_DSP
+    bool dsp = memcmp(&riid, &IID_IVdjPluginDsp8, sizeof(GUID)) == 0;
+    if (clsid_ok && dsp)
+    {
+        *ppObject = (void *)(IVdjPluginDsp8 *)new CVDJIntrospectFX();
+        return NO_ERROR;
+    }
+#else
     if (clsid_ok && (basic || startstop))
     {
         *ppObject = (void *)(IVdjPlugin8 *)new CVDJIntrospect();
         return NO_ERROR;
     }
+#endif
 
     return CLASS_E_CLASSNOTAVAILABLE;
 }

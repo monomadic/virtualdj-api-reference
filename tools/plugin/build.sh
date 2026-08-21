@@ -14,6 +14,16 @@ set -eu -o pipefail
 
 REPO="${0:a:h:h:h}"
 NAME="VDJIntrospect"
+DEFINES=()
+# --dsp builds the Sound Effect variant instead of the headless AutoStart probe.
+# It installs into SoundEffect/ so VirtualDJ files it under Extensions > Effects:
+# the Extensions list is organised by functional type, and a plugin that is no
+# recognised type is loaded but never listed.
+if [[ "${1-}" == "--dsp" || "${2-}" == "--dsp" ]]; then
+    NAME="VDJIntrospectFX"
+    DEFINES=(-DVDJINTROSPECT_DSP)
+    SUBDIR_DEFAULT="SoundEffect"
+fi
 BUILD="$REPO/build"
 BUNDLE="$BUILD/$NAME.bundle"
 PLUGIN_DIR="$HOME/Library/Application Support/VirtualDJ/PluginsMacArm"
@@ -21,11 +31,15 @@ PLUGIN_DIR="$HOME/Library/Application Support/VirtualDJ/PluginsMacArm"
 # Network Control). Which folder actually loads a basic/start-stop plugin is one
 # of the things this build settles; override with VDJ_PLUGIN_SUBDIR= to retry
 # elsewhere without editing this script.
-SUBDIR="${VDJ_PLUGIN_SUBDIR-AutoStart}"
+SUBDIR="${VDJ_PLUGIN_SUBDIR-${SUBDIR_DEFAULT-AutoStart}}"
 
 SDK="${VDJ_SDK-}"
 if [[ -z "$SDK" ]]; then
-    SDK="$(find "$REPO/vendor" -name vdjPlugin8.h -print -quit 2>/dev/null || true)"
+    # The DSP build needs vdjDsp8.h beside vdjPlugin8.h, so anchor on whichever
+    # header this variant actually requires.
+    ANCHOR=vdjPlugin8.h
+    [[ -n "${DEFINES[*]}" ]] && ANCHOR=vdjDsp8.h
+    SDK="$(find "$REPO/vendor" -name "$ANCHOR" -print -quit 2>/dev/null || true)"
     SDK="${SDK:h}"
 fi
 if [[ -z "$SDK" || ! -f "$SDK/vdjPlugin8.h" ]]; then
@@ -37,7 +51,7 @@ print "SDK headers: $SDK"
 
 rm -rf "$BUNDLE"
 mkdir -p "$BUNDLE/Contents/MacOS"
-cp "$REPO/tools/plugin/Info.plist" "$BUNDLE/Contents/Info.plist"
+sed "s/VDJIntrospect/$NAME/g" "$REPO/tools/plugin/Info.plist" > "$BUNDLE/Contents/Info.plist"
 
 clang++ \
     -std=c++17 \
@@ -48,8 +62,9 @@ clang++ \
     -O2 \
     -Wall \
     -I "$SDK" \
+    "${DEFINES[@]}" \
     -framework CoreFoundation \
-    "$REPO/tools/plugin/$NAME.cpp" \
+    "$REPO/tools/plugin/VDJIntrospect.cpp" \
     -o "$BUNDLE/Contents/MacOS/$NAME"
 
 # Ad-hoc signature. VirtualDJ carries com.apple.security.cs.disable-library-validation,
