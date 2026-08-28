@@ -19,16 +19,22 @@ Three layers of contract fall out, all serialised data:
 2. **Vtable override matrix** — which slots a class overrides versus `IAction`'s
    defaults gives its capabilities. Slot meanings are CALIBRATED at build time
    from verbs whose kind is HTTP-proven, never hard-coded: `clear_search`
-   (action-only) pins onExecute, `loaded` (query) pins the generic onQuery, and
-   `get_title`'s extra override pins the specialized text query. The generic
-   query slot returns a variant — bools, numbers, AND text all flow through it
-   (the return-type sweep proved this: ~160 classes override only the generic
-   slot yet answer with ints/floats/text) — so this tool claims capability, not
-   concrete type. Concrete types are Tier-1 observation:
-   tests/verb-return-types.json. The remaining slots are recorded raw; leads:
-   slot 5's membership skews to argument-taking verbs, slot 7's to
-   menu/options providers, and slots 8/9 are a near-identical pair
-   (probably press/release — surviving lambda names mention `onUp`).
+   (action-only) pins onExecute, `loaded` (query) pins the generic onQuery,
+   `get_title`'s extra override pins the bool query, and `effect_bpm_deck`'s
+   pins the text query. The generic query slot returns a variant — bools,
+   numbers, AND text all flow through it (the return-type sweep proved this:
+   ~160 classes override only the generic slot yet answer with ints/floats/text)
+   — so this tool claims capability, not concrete type. Concrete types are
+   Tier-1 observation: tests/verb-return-types.json.
+
+   *Corrected 2026-08-29:* `query_text` used to be calibrated from `get_title`,
+   which pins slot 4 — the BOOL query, not the text one. 127 verbs carried the
+   wrong flag. The unstripped bundle 18.0.9246 names every slot
+   (tests/action-vtables-9246.json, tools/extract_action_vtables.py) and settles
+   the whole 12-slot layout, so the old raw-slot leads are now retired: 2
+   onExecute, 3 onQuery, 4 onQueryBool, 5 onQueryText, 6 onTooltip, 7 onUp,
+   8 onSaveState, 9 onLoadState, 10/11 push/popSaveState (never overridden).
+   Slots 8/9 were guessed as press/release; press/release is really 2 + 7.
 3. **Method-body fingerprints** — light static analysis of each verb's own
    overridden methods (addresses known exactly from the vtable):
    - `arg_demand_slots`: slots whose method materializes E_INVALIDARG
@@ -83,7 +89,8 @@ MASK = 0xFFFFFFFFFF  # chained fixups: low 40 bits carry the unslid vmaddr
 CALIBRATION = {  # verb -> what its HTTP-proven kind pins (see build())
     "clear_search": "execute",
     "loaded": "query",
-    "get_title": "query_text",
+    "get_title": "query_bool",
+    "effect_bpm_deck": "query_text",
 }
 FAMILY_BASES = {
     "IActionSwitch": "toggle",
@@ -371,11 +378,12 @@ def build() -> dict:
     if len(pin["clear_search"]) != 1 or len(pin["loaded"]) != 1:
         raise SystemExit(f"slot calibration ambiguous: {pin}")
     slot_of = {"execute": pin["clear_search"][0], "query": pin["loaded"][0]}
-    rest = [s for s in pin["get_title"] if s not in slot_of.values()]
-    if len(rest) != 1:
-        raise SystemExit(f"slot calibration ambiguous: {pin}")
-    slot_of["query_text"] = rest[0]
-    if len(set(slot_of.values())) != 3:
+    for verb, kind in (("get_title", "query_bool"), ("effect_bpm_deck", "query_text")):
+        rest = [s for s in pin[verb] if s not in slot_of.values()]
+        if len(rest) != 1:
+            raise SystemExit(f"slot calibration ambiguous: {pin}")
+        slot_of[kind] = rest[0]
+    if len(set(slot_of.values())) != 4:
         raise SystemExit(f"slot calibration collided: {slot_of}")
 
     def family(nm, seen=None):
@@ -436,6 +444,7 @@ def build() -> dict:
             "overridden_slots": ov,
             "executes": slot_of["execute"] in ov,
             "queries": slot_of["query"] in ov,
+            "query_bool": slot_of["query_bool"] in ov,
             "query_text": slot_of["query_text"] in ov,
             "extended_interface": nslots[cls] > len(root_slots),
             "arg_demand_slots": demands,
@@ -461,7 +470,8 @@ def build() -> dict:
         k = s.get("kind")
         if k == "query":
             agree["query"][1] += 1
-            if rec["queries"] or rec["query_text"] or rec["extended_interface"]:
+            if (rec["queries"] or rec["query_bool"] or rec["query_text"]
+                    or rec["extended_interface"]):
                 agree["query"][0] += 1
             if rec["arg_demand_slots"]:
                 optional_args.append(name)
@@ -522,7 +532,7 @@ def cmd_check() -> None:
     if s["orphan_ids"] or s["double_matched_ids"] or s["unmatched_classes"]:
         errs.append(f"orphans={s['orphan_ids'][:5]} doubles={s['double_matched_ids'][:5]} "
                     f"unmatched={s['unmatched_classes'][:5]}")
-    if len(set(s["slot_labels"].values())) != 3:
+    if len(set(s["slot_labels"].values())) != 4:
         errs.append(f"slot calibration collided: {s['slot_labels']}")
     for kind, st in s["sweep_agreement"].items():
         if st["total"] and st["rate"] is not None and st["rate"] < 0.85:

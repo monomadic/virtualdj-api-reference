@@ -1,17 +1,17 @@
 {
  "summary": {
-  "arg_demand_verbs": 436,
-  "classes": 955,
+  "arg_demand_verbs": 431,
+  "classes": 958,
   "distinct_ids": 955,
   "double_matched_ids": [],
   "families": {
-   "plain": 799,
+   "plain": 798,
    "slider": 56,
    "toggle": 100
   },
   "iaction_slots": 12,
-  "ids_with_class": 955,
-  "keyword_verbs": 259,
+  "ids_with_class": 954,
+  "keyword_verbs": 260,
   "optional_arg_queries": [
    "apply_audio_config",
    "auto_cue",
@@ -170,7 +170,6 @@
    "masterdeck",
    "masterdeck_auto",
    "match_key",
-   "maximize",
    "mic",
    "mic2_volume",
    "mic_eq_high",
@@ -315,11 +314,14 @@
    "zoom_scratch",
    "zoom_vertical"
   ],
-  "orphan_ids": [],
+  "orphan_ids": [
+   105
+  ],
   "slot_labels": {
    "execute": 2,
    "query": 3,
-   "query_text": 4
+   "query_bool": 4,
+   "query_text": 5
   },
   "sweep_agreement": {
    "action-only": {
@@ -328,9 +330,9 @@
     "total": 186
    },
    "needs-args": {
-    "agree": 114,
-    "rate": 0.9828,
-    "total": 116
+    "agree": 112,
+    "rate": 0.9739,
+    "total": 115
    },
    "query": {
     "agree": 652,
@@ -338,13 +340,16 @@
     "total": 652
    }
   },
-  "unmatched_classes": []
+  "unmatched_classes": [
+   "ACTION_goto_beat_in_bar",
+   "ACTION_karaoke_clear",
+   "ACTION_repeat_start_fade",
+   "ACTION_shoutout"
+  ]
  },
  "verbs": {
   "action_deck": {
-   "arg_demand_slots": [
-    3
-   ],
+   "arg_demand_slots": [],
    "base": "IAction",
    "class": "ACTION_action_deck",
    "executes": false,
@@ -364,6 +369,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -380,6 +386,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -395,6 +402,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -410,6 +418,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -432,6 +441,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -447,6 +457,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -463,6 +474,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -481,6 +493,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -499,6 +512,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -517,6 +531,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -533,6 +548,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -552,7 +568,8 @@
     "13": [
      "source_original",
      "target_original",
-     "target_current"
+     "target_current",
+     "t {}"
     ]
    },
    "mixins": [],
@@ -565,12 +582,12 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
   "auto_bpm_transition_options": {
    "arg_demand_slots": [
-    2,
     3
    ],
    "base": "IAction",
@@ -606,6 +623,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -622,7 +640,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "auto_crossfader": {
@@ -638,7 +657,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "auto_cue": {
@@ -674,7 +694,8 @@
     14
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 15
   },
   "auto_match_bpm": {
@@ -696,6 +717,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -718,6 +740,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -740,6 +763,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -762,6 +786,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -773,7 +798,6 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "config",
      "Auto Match BPM",
      ": ",
      "ON",
@@ -783,7 +807,6 @@
      "Auto Pitch Lock"
     ],
     "6": [
-     "config",
      "Auto Match BPM",
      ": ",
      "ON",
@@ -793,7 +816,6 @@
      "Auto Pitch Lock"
     ],
     "7": [
-     "config",
      "Auto Match BPM",
      "Auto Match KEY",
      "Auto Sync on Play",
@@ -807,6 +829,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -832,6 +855,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -862,6 +886,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -876,6 +901,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -898,6 +924,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -920,6 +947,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -948,6 +976,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -974,6 +1003,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1025,7 +1055,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "backspin": {
@@ -1039,6 +1070,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1053,6 +1085,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1064,7 +1097,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "DBInfoE3$_0"
+     "wn7onTouchEiiiE3$_1FvP7DLGItemiPvEEE"
     ]
    },
    "mixins": [],
@@ -1072,6 +1105,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1100,6 +1134,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -1132,6 +1167,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -1145,7 +1181,6 @@
    "extended_interface": false,
    "method_strings": {
     "5": [
-     "config",
      "Page",
      " {}"
     ]
@@ -1157,7 +1192,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "beatjump_select": {
@@ -1173,8 +1209,7 @@
    ],
    "method_strings": {
     "3": [
-     "pioneer",
-     "teEvEUlbE_NS_9allocatorIS3_EEFvbEEE"
+     "pioneer"
     ],
     "5": [
      "+{}",
@@ -1190,6 +1225,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -1212,6 +1248,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -1226,6 +1263,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1240,6 +1278,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1262,6 +1301,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -1289,6 +1329,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -1321,7 +1362,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "broadcast": {
@@ -1341,6 +1383,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -1365,6 +1408,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1375,17 +1419,13 @@
    "executes": true,
    "extended_interface": false,
    "keyword_candidates": [
-    "drift",
     "fluid",
-    "multi",
     "variable"
    ],
    "method_strings": {
     "2": [
      "fluid",
-     "variable",
-     "multi",
-     "drift"
+     "variable"
     ]
    },
    "mixins": [],
@@ -1393,6 +1433,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1411,6 +1452,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1425,6 +1467,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1440,6 +1483,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1454,6 +1498,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1465,18 +1510,15 @@
    "extended_interface": false,
    "keyword_candidates": [
     "ContextMenu",
-    "Rename",
-    "config"
+    "Rename"
    ],
    "method_strings": {
     "2": [
-     "config",
      "Enter new filename:",
      "ContextMenu",
      "Rename"
     ],
     "7": [
-     "config",
      "Enter new filename:",
      "ContextMenu",
      "Rename"
@@ -1488,6 +1530,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1502,6 +1545,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1511,6 +1555,10 @@
    "class": "ACTION_browsed_song",
    "executes": true,
    "extended_interface": false,
+   "keyword_candidates": [
+    "karaoke",
+    "video"
+   ],
    "method_strings": {
     "2": [
      "karaoke",
@@ -1523,6 +1571,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1540,6 +1589,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1570,6 +1620,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -1584,6 +1635,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1599,6 +1651,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1613,6 +1666,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1635,6 +1689,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1657,6 +1712,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1679,6 +1735,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1694,6 +1751,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1718,6 +1776,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1733,6 +1792,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1803,6 +1863,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1822,6 +1883,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1836,6 +1898,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1850,17 +1913,20 @@
    "keyword_candidates": [
     "bottom",
     "browser",
+    "parent",
     "top"
    ],
    "method_strings": {
     "2": [
      "top",
-     "browser",
-     "bottom"
+     "bottom",
+     "parent",
+     "browser"
     ],
     "3": [
      "top",
-     "bottom"
+     "bottom",
+     "parent"
     ]
    },
    "mixins": [],
@@ -1869,6 +1935,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1884,7 +1951,6 @@
      ".m3u"
     ],
     "6": [
-     "config",
      "Shortcut to '%s'",
      "Drag a folder here to set a shortcut button"
     ]
@@ -1897,7 +1963,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "browser_sort": {
@@ -1916,7 +1983,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "browser_window": {
@@ -1941,10 +2009,10 @@
     "2": [
      "browser",
      "sampler",
+     "remixes",
      "automix",
      "sidelist",
      "karaoke",
-     "remixes",
      "playlist"
     ],
     "3": [
@@ -1963,6 +2031,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -1993,6 +2062,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -2007,6 +2077,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2026,6 +2097,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2056,6 +2128,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2086,6 +2159,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2101,6 +2175,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2116,7 +2191,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "color_mix": {
@@ -2130,6 +2206,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2151,6 +2228,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -2210,6 +2288,7 @@
     22
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 23
   },
@@ -2228,6 +2307,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -2244,6 +2324,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2256,13 +2337,11 @@
    "method_strings": {
     "2": [
      "credential",
-     "config",
      "Log out"
     ],
     "6": [
      "credential",
      "infinity",
-     "config",
      "License: PRO Infinity",
      "Click to connect"
     ]
@@ -2274,6 +2353,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2288,6 +2368,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2305,6 +2386,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2339,6 +2421,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2353,6 +2436,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2371,6 +2455,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2389,6 +2474,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2411,7 +2497,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "crash": {
@@ -2425,6 +2512,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2439,6 +2527,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2453,6 +2542,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2471,6 +2561,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2528,13 +2619,13 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "crossfader_curve": {
    "arg_demand_slots": [
-    2,
-    3
+    2
    ],
    "base": "IAction",
    "class": "ACTION_crossfader_curve",
@@ -2575,6 +2666,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2597,6 +2689,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -2639,6 +2732,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -2696,7 +2790,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "cue": {
@@ -2707,7 +2802,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "_18NS_9allocatorIS3_EEFvP7DLGItemiPvEEE"
+     "iPvEEE"
     ]
    },
    "mixins": [],
@@ -2717,6 +2812,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2756,7 +2852,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "cue_action": {
@@ -2774,6 +2871,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2813,7 +2911,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "cue_color": {
@@ -2839,7 +2938,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "cue_countdown": {
@@ -2863,6 +2963,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2888,7 +2989,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "cue_countup": {
@@ -2912,6 +3014,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2930,6 +3033,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -2969,7 +3073,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "cue_loop": {
@@ -3000,6 +3105,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3022,6 +3128,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3036,7 +3143,6 @@
    "family": "toggle",
    "method_strings": {
     "5": [
-     "config",
      "Hold",
      "On/off"
     ]
@@ -3052,7 +3158,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "cue_name": {
@@ -3062,13 +3169,11 @@
    "executes": true,
    "extended_interface": false,
    "keyword_candidates": [
-    "active",
-    "config"
+    "active"
    ],
    "method_strings": {
     "5": [
      "active",
-     "config",
      "N/A"
     ]
    },
@@ -3080,7 +3185,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "cue_play": {
@@ -3096,6 +3202,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3106,19 +3213,15 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "beats",
     "min",
     "msec",
-    "mseconly",
     "sec"
    ],
    "method_strings": {
     "3": [
      "min",
      "sec",
-     "msec",
-     "mseconly",
-     "beats"
+     "msec"
     ]
    },
    "mixins": [],
@@ -3126,6 +3229,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3144,6 +3248,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3160,6 +3265,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3171,7 +3277,6 @@
    "extended_interface": false,
    "method_strings": {
     "7": [
-     "config",
      "Edit CUEs and POIs...",
      "Read-only (Lock)",
      "Smart Cue",
@@ -3189,6 +3294,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3221,7 +3327,8 @@
     7
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "custom_button_edit": {
@@ -3239,6 +3346,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3265,6 +3373,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3287,6 +3396,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3297,6 +3407,7 @@
    "executes": true,
    "extended_interface": true,
    "keyword_candidates": [
+    "Problem",
     "drawing",
     "remote_init_status"
    ],
@@ -3315,8 +3426,9 @@
     ],
     "3": [
      "remote_init_status",
-     "Bit: ",
-     "drawing"
+     "drawing",
+     "Problem",
+     "Bit: "
     ]
    },
    "mixins": [
@@ -3330,6 +3442,7 @@
     14
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 15
   },
@@ -3344,6 +3457,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3356,11 +3470,10 @@
    "keyword_candidates": [
     "ContextMenu",
     "PitchRange",
-    "config"
+    "PlayPause"
    ],
    "method_strings": {
     "2": [
-     "config",
      "Auto Match BPM",
      "Auto Match KEY",
      "Auto Sync on Play",
@@ -3375,10 +3488,10 @@
      "50%",
      "100%",
      "ContextMenu",
-     "PitchRange"
+     "PitchRange",
+     "PlayPause"
     ],
     "7": [
-     "config",
      "Auto Match BPM",
      "Auto Match KEY",
      "Auto Sync on Play",
@@ -3393,7 +3506,8 @@
      "50%",
      "100%",
      "ContextMenu",
-     "PitchRange"
+     "PitchRange",
+     "PlayPause"
     ]
    },
    "mixins": [],
@@ -3402,6 +3516,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3420,6 +3535,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3436,6 +3552,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3462,6 +3579,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3476,6 +3594,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3500,7 +3619,6 @@
      "popup"
     ],
     "6": [
-     "config",
      "Total time",
      "Total time (with pitch)",
      "Elapsed time",
@@ -3524,7 +3642,8 @@
     14
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 15
   },
   "djc_button": {
@@ -3543,6 +3662,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -3558,6 +3678,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3591,6 +3712,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3622,6 +3744,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3644,6 +3767,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3668,6 +3792,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3702,6 +3827,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3718,6 +3844,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3732,6 +3859,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3754,6 +3882,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3772,6 +3901,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -3803,6 +3933,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3817,6 +3948,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3826,11 +3958,20 @@
    "class": "ACTION_edit_comment",
    "executes": true,
    "extended_interface": false,
+   "keyword_candidates": [
+    "browser"
+   ],
+   "method_strings": {
+    "2": [
+     "browser"
+    ]
+   },
    "mixins": [],
    "overridden_slots": [
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3845,6 +3986,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3859,6 +4001,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3879,6 +4022,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3893,13 +4037,13 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
   "effect_3slots_layout": {
    "arg_demand_slots": [
-    2,
-    13
+    2
    ],
    "base": "IActionSwitch",
    "class": "ACTION_effect_3slots_layout",
@@ -3926,6 +4070,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -3946,6 +4091,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3966,6 +4112,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -3996,6 +4143,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4023,7 +4171,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_arm_bpm": {
@@ -4045,6 +4194,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4060,6 +4210,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4076,7 +4227,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_arm_select_popup": {
@@ -4092,7 +4244,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_arm_slider": {
@@ -4124,6 +4277,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -4143,6 +4297,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4162,6 +4317,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4181,6 +4337,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4209,6 +4366,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4224,6 +4382,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4250,6 +4409,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4276,6 +4436,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4305,7 +4466,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_beats_all": {
@@ -4332,7 +4494,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_beats_sliderindex": {
@@ -4356,6 +4519,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4379,7 +4543,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_bpm_deck_tap": {
@@ -4400,7 +4565,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_button": {
@@ -4426,13 +4592,12 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
   "effect_clone": {
-   "arg_demand_slots": [
-    2
-   ],
+   "arg_demand_slots": [],
    "base": "IAction",
    "class": "ACTION_effect_clone",
    "executes": true,
@@ -4452,6 +4617,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4469,7 +4635,6 @@
    "extended_interface": false,
    "keyword_candidates": [
     "OFF",
-    "config",
     "smallrange"
    ],
    "method_strings": {
@@ -4481,7 +4646,6 @@
     ],
     "6": [
      "{}: {}",
-     "config",
      "OFF"
     ]
    },
@@ -4494,6 +4658,7 @@
     6
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -4553,6 +4718,7 @@
     22
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 23
   },
@@ -4570,6 +4736,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4596,6 +4763,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4622,6 +4790,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -4633,7 +4802,6 @@
    "extended_interface": false,
    "keyword_candidates": [
     "auto",
-    "auto_off",
     "aux",
     "master",
     "mic",
@@ -4644,9 +4812,7 @@
      "master",
      "mic",
      "aux",
-     "sampler",
-     "auto",
-     "auto_off"
+     "sampler"
     ],
     "4": [
      "master",
@@ -4663,7 +4829,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "effect_fxsendreturndeck_multi": {
@@ -4705,6 +4872,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -4727,6 +4895,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -4743,6 +4912,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4759,6 +4929,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4775,6 +4946,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4791,6 +4963,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4820,13 +4993,12 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
   "effect_list_edit": {
-   "arg_demand_slots": [
-    2
-   ],
+   "arg_demand_slots": [],
    "base": "IAction",
    "class": "ACTION_effect_list_edit",
    "executes": true,
@@ -4849,6 +5021,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -4859,16 +5032,13 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "config",
     "none"
    ],
    "method_strings": {
     "5": [
-     "config",
      "MIX FX"
     ],
     "7": [
-     "config",
      "none"
     ]
    },
@@ -4879,7 +5049,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_mixfx_activate": {
@@ -4895,7 +5066,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_mixfx_select": {
@@ -4912,7 +5084,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_releaseslider": {
@@ -4971,6 +5144,7 @@
     22
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 23
   },
@@ -5030,6 +5204,7 @@
     22
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 23
   },
@@ -5067,6 +5242,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -5106,6 +5282,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -5143,6 +5320,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -5180,6 +5358,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -5204,6 +5383,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5264,7 +5444,8 @@
     22
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 23
   },
   "effect_slider_activate": {
@@ -5284,6 +5465,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5304,6 +5486,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5320,6 +5503,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5378,7 +5562,8 @@
     22
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 23
   },
   "effect_slider_slider": {
@@ -5438,7 +5623,8 @@
     22
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 23
   },
   "effect_stems": {
@@ -5479,7 +5665,8 @@
     9
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "effect_stems_color": {
@@ -5493,6 +5680,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5516,6 +5704,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5540,6 +5729,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5551,7 +5741,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "$_0"
+     "eIFlRKNS_4pairIfP7SDBInfoEES7_EEE"
     ]
    },
    "mixins": [],
@@ -5559,6 +5749,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -5581,6 +5772,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5603,6 +5795,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5625,6 +5818,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5647,6 +5841,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5701,7 +5896,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_high_freq": {
@@ -5752,7 +5948,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_high_slider": {
@@ -5806,7 +6003,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_kill_high": {
@@ -5828,6 +6026,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5850,6 +6049,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5872,6 +6072,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5894,6 +6095,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -5948,7 +6150,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_low_freq": {
@@ -5999,7 +6202,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_low_slider": {
@@ -6053,7 +6257,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_med": {
@@ -6107,7 +6312,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_mid": {
@@ -6161,7 +6367,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_mid_freq": {
@@ -6212,7 +6419,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_mid_slider": {
@@ -6266,7 +6474,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "eq_mode": {
@@ -6276,15 +6485,9 @@
    "executes": true,
    "extended_interface": false,
    "keyword_candidates": [
-    "EZRemix",
-    "Frequency",
-    "ModernEQ",
-    "config",
     "deck",
-    "eqMode",
     "ezRemix",
     "frequency",
-    "help",
     "modernEq",
     "stems"
    ],
@@ -6292,19 +6495,9 @@
     "2": [
      "frequency",
      "ezRemix",
-     "deck",
      "modernEq",
      "stems",
-     "eqMode",
-     "help",
-     "config",
-     "Frequency",
-     "EZRemix",
-     "ModernEQ",
-     "5 knobs (Stems)",
-     "Dual (Frequency inside)",
-     "Dual (Frequency outside)",
-     "Show..."
+     "deck"
     ],
     "4": [
      "frequency",
@@ -6319,7 +6512,8 @@
     4
    ],
    "queries": false,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "eq_reset": {
@@ -6334,6 +6528,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6356,6 +6551,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6371,6 +6567,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6390,6 +6587,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6412,6 +6610,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6434,6 +6633,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6455,6 +6655,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6484,6 +6685,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6505,6 +6707,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6526,6 +6729,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6547,6 +6751,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6568,6 +6773,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6589,6 +6795,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6610,6 +6817,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6624,6 +6832,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6688,7 +6897,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "file_info": {
@@ -6702,6 +6912,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6762,7 +6973,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "filter_activate": {
@@ -6793,6 +7005,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6825,6 +7038,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6848,6 +7062,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6872,6 +7087,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6932,7 +7148,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "flip_arm": {
@@ -6954,6 +7171,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -6968,6 +7186,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -6983,6 +7202,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7005,6 +7225,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -7028,7 +7249,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "flip_record": {
@@ -7044,7 +7266,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "font_size": {
@@ -7071,6 +7294,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7127,7 +7351,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "gain_label": {
@@ -7190,7 +7415,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "gain_relative": {
@@ -7206,6 +7432,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7262,7 +7489,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "gemini_waveform_zoomlevel": {
@@ -7276,6 +7504,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7290,6 +7519,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7304,6 +7534,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7318,6 +7549,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7332,6 +7564,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7357,6 +7590,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7383,6 +7617,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7414,6 +7649,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7433,6 +7669,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7447,6 +7684,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7462,6 +7700,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7476,6 +7715,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7490,6 +7730,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7506,6 +7747,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7520,6 +7762,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7536,6 +7779,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7550,6 +7794,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7564,6 +7809,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7578,6 +7824,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7593,7 +7840,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_beat_num": {
@@ -7607,6 +7855,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7621,6 +7870,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7635,6 +7885,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7649,6 +7900,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7672,7 +7924,6 @@
      "all"
     ],
     "6": [
-     "config",
      "Original BPM: ",
      "{}{:.2f}",
      "Local BPM: ",
@@ -7688,7 +7939,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_bpm_match": {
@@ -7711,6 +7963,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -7725,6 +7978,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7739,6 +7993,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7758,6 +8013,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7781,6 +8037,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7807,6 +8064,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7821,6 +8079,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7835,6 +8094,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7849,6 +8109,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7863,6 +8124,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7877,6 +8139,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7891,6 +8154,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7905,6 +8169,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7919,6 +8184,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7933,6 +8199,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7947,6 +8214,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7961,6 +8229,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7975,6 +8244,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -7989,6 +8259,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8003,6 +8274,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8017,6 +8289,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8033,6 +8306,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8053,7 +8327,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_browsed_title": {
@@ -8067,6 +8342,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8086,6 +8362,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8100,6 +8377,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8127,6 +8405,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8141,6 +8420,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8155,6 +8435,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8169,6 +8450,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8193,6 +8475,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8215,6 +8498,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8229,6 +8513,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8260,6 +8545,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8282,6 +8568,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8296,6 +8583,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8312,6 +8600,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8338,6 +8627,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8365,6 +8655,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -8385,7 +8676,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_deck_color": {
@@ -8407,6 +8699,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8434,6 +8727,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -8448,6 +8742,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8462,6 +8757,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8478,6 +8774,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8509,6 +8806,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8525,6 +8823,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8541,6 +8840,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8557,6 +8857,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8573,6 +8874,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8585,7 +8887,6 @@
    "method_strings": {
     "3": [
      "(S) ",
-     "config",
      "None"
     ]
    },
@@ -8596,6 +8897,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8612,6 +8914,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8628,6 +8931,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8645,7 +8949,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_effect_slider_label_full": {
@@ -8661,6 +8966,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8678,7 +8984,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_effect_slider_name": {
@@ -8700,6 +9007,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8722,6 +9030,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8744,6 +9053,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8766,6 +9076,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8788,6 +9099,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8811,6 +9123,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8833,6 +9146,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8849,6 +9163,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8863,6 +9178,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8883,6 +9199,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8897,6 +9214,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8911,6 +9229,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8925,6 +9244,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8939,6 +9259,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8953,6 +9274,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -8979,14 +9301,14 @@
      "browser",
      "cover",
      "loaded",
-     "browsed",
      "waveform",
-     "cuepoints",
      "folders",
+     "main",
      "files",
      "empty",
-     "main",
-     " - "
+     " - ",
+     "cuepoints",
+     "browsed"
     ]
    },
    "mixins": [],
@@ -8994,6 +9316,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9008,10 +9331,12 @@
    ],
    "method_strings": {
     "2": [
-     "nogrid"
+     "nogrid",
+     "DropDown7onTouchEiiiE3$_1FvP7DLGItemiPvEEE"
     ],
     "3": [
-     "nogrid"
+     "nogrid",
+     "DropDown7onTouchEiiiE3$_1FvP7DLGItemiPvEEE"
     ]
    },
    "mixins": [],
@@ -9020,6 +9345,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9034,6 +9360,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9048,6 +9375,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9062,6 +9390,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9076,6 +9405,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9090,6 +9420,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9104,6 +9435,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9118,6 +9450,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9132,6 +9465,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9146,6 +9480,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9160,6 +9495,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9171,11 +9507,20 @@
    "class": "ACTION_get_karaoke_background_song",
    "executes": false,
    "extended_interface": false,
+   "keyword_candidates": [
+    "title_remix"
+   ],
+   "method_strings": {
+    "3": [
+     "title_remix"
+    ]
+   },
    "mixins": [],
    "overridden_slots": [
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9190,7 +9535,6 @@
     "musical",
     "original",
     "pioneer",
-    "rane",
     "roland"
    ],
    "method_strings": {
@@ -9199,8 +9543,7 @@
      "roland",
      "pioneer",
      "harmonic",
-     "musical",
-     "rane"
+     "musical"
     ]
    },
    "mixins": [],
@@ -9208,6 +9551,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9222,6 +9566,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9253,7 +9598,8 @@
     9
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_key_modifier_text": {
@@ -9290,7 +9636,8 @@
     9
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_leftdeck": {
@@ -9304,6 +9651,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9318,6 +9666,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9343,7 +9692,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_level_left": {
@@ -9363,6 +9713,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9377,6 +9728,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9391,6 +9743,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9405,6 +9758,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9425,6 +9779,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9439,6 +9794,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9451,23 +9807,13 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "controllers",
-    "cuaudio",
-    "cukaraoke",
-    "cuvideo",
-    "home",
     "plus",
     "pro"
    ],
    "method_strings": {
     "3": [
      "pro",
-     "plus",
-     "controllers",
-     "home",
-     "cuaudio",
-     "cukaraoke",
-     "cuvideo"
+     "plus"
     ]
    },
    "mixins": [],
@@ -9475,6 +9821,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9500,6 +9847,7 @@
     6
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -9540,6 +9888,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -9566,6 +9915,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9587,7 +9937,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_loop_in_time": {
@@ -9601,6 +9952,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9615,6 +9967,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9629,6 +9982,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9650,6 +10004,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9664,6 +10019,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9683,6 +10039,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9699,6 +10056,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9711,26 +10069,12 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "off",
-    "off_instant",
-    "off_normal",
-    "on_instant",
-    "on_normal",
-    "reverse",
-    "rpm",
-    "speed"
+    "off"
    ],
    "method_strings": {
     "3": [
      "on",
-     "off",
-     "on_instant",
-     "on_normal",
-     "off_instant",
-     "off_normal",
-     "reverse",
-     "speed",
-     "rpm"
+     "off"
     ]
    },
    "mixins": [],
@@ -9738,6 +10082,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9747,11 +10092,17 @@
    "class": "ACTION_get_numark_beatgrid",
    "executes": false,
    "extended_interface": false,
+   "method_strings": {
+    "3": [
+     "tor8onCreateEvE3$_2FvP7DLGItemiPvEEE"
+    ]
+   },
    "mixins": [],
    "overridden_slots": [
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9763,13 +10114,11 @@
    "extended_interface": false,
    "keyword_candidates": [
     "DNC_JOGROT",
-    "GItemiPvEEE",
     "noshape"
    ],
    "method_strings": {
     "3": [
      "noshape",
-     "GItemiPvEEE",
      "DNC_SONGPOS{}",
      "DNC_JOGROT"
     ]
@@ -9779,6 +10128,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9793,8 +10143,7 @@
    ],
    "method_strings": {
     "3": [
-     "NS7",
-     "it9onThread1EvE3$_0NS_9allocatorIS3_EEFviEEE"
+     "NS7"
     ]
    },
    "mixins": [],
@@ -9802,6 +10151,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9818,6 +10168,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9844,6 +10195,7 @@
     6
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -9858,6 +10210,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9893,10 +10246,10 @@
      "selectdeckmode"
     ],
     "3": [
-     "browser",
      "rx3",
-     "cover",
      "rev7",
+     "browser",
+     "cover",
      "waveform",
      "waveform_nexus",
      "scratchwave",
@@ -9914,6 +10267,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9923,16 +10277,12 @@
    "class": "ACTION_get_pioneer_loop_display",
    "executes": false,
    "extended_interface": false,
-   "method_strings": {
-    "3": [
-     "er_loop_display"
-    ]
-   },
    "mixins": [],
    "overridden_slots": [
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9947,6 +10297,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9961,6 +10312,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9983,6 +10335,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -9997,6 +10350,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10018,7 +10372,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_position": {
@@ -10043,6 +10398,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10057,6 +10413,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10071,6 +10428,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10085,6 +10443,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10099,6 +10458,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10113,6 +10473,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10127,6 +10488,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10141,6 +10503,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10160,6 +10523,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10174,6 +10538,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10189,6 +10554,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10204,6 +10570,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10219,6 +10586,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10238,7 +10606,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_sample_info": {
@@ -10273,7 +10642,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_sample_name": {
@@ -10291,6 +10661,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10309,6 +10680,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10323,6 +10695,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10337,6 +10710,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10351,6 +10725,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10365,6 +10740,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10379,6 +10755,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10394,7 +10771,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_saved_loop": {
@@ -10426,7 +10804,6 @@
      "name"
     ],
     "6": [
-     "config",
      "Name: ",
      "Position: ",
      "Length: ",
@@ -10442,7 +10819,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_scratch_direction": {
@@ -10456,6 +10834,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10470,6 +10849,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10484,6 +10864,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10510,6 +10891,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10523,7 +10905,6 @@
     "current",
     "hasbeats",
     "next",
-    "remaining",
     "volume",
     "volume_end"
    ],
@@ -10533,8 +10914,7 @@
      "next",
      "hasbeats",
      "volume",
-     "volume_end",
-     "remaining"
+     "volume_end"
     ],
     "5": [
      "-{}"
@@ -10546,7 +10926,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_songlength": {
@@ -10560,6 +10941,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10576,6 +10958,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10591,6 +10974,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10607,6 +10991,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10633,7 +11018,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_hour": {
@@ -10648,7 +11034,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_min": {
@@ -10663,7 +11050,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_ms": {
@@ -10678,7 +11066,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_msf": {
@@ -10701,7 +11090,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_sec": {
@@ -10716,7 +11106,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_time_sign": {
@@ -10731,7 +11122,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "get_timecode_quality": {
@@ -10745,6 +11137,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10773,7 +11166,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "get_title_artist": {
@@ -10798,6 +11192,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10809,18 +11204,16 @@
    "extended_interface": false,
    "keyword_candidates": [
     "DragToStart",
-    "Hidden",
     "clean",
     "msg"
    ],
    "method_strings": {
     "3": [
      "clean",
+     " - ",
      "netsearch://sp",
      "msg",
-     "DragToStart",
-     " - ",
-     "Hidden"
+     "DragToStart"
     ]
    },
    "mixins": [],
@@ -10828,6 +11221,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10844,10 +11238,10 @@
    ],
    "method_strings": {
     "3": [
+     " - ",
      "msg",
      "DragToStart",
-     "Hidden",
-     " - "
+     "Hidden"
     ]
    },
    "mixins": [],
@@ -10855,6 +11249,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10877,6 +11272,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10899,6 +11295,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10921,6 +11318,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10943,6 +11341,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10957,7 +11356,6 @@
      "name",
      "credential",
      "email",
-     "config",
      "not logged in"
     ]
    },
@@ -10966,6 +11364,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10982,6 +11381,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -10996,6 +11396,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11015,6 +11416,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11032,6 +11434,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -11046,6 +11449,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11060,6 +11464,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11074,6 +11479,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11094,6 +11500,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11114,6 +11521,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11128,6 +11536,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11142,6 +11551,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11162,6 +11572,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11176,6 +11587,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11190,6 +11602,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11201,7 +11614,6 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "config",
      "Zipcode or Address",
      "Get some food..."
     ]
@@ -11211,6 +11623,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11235,26 +11648,7 @@
     9
    ],
    "queries": false,
-   "query_text": false,
-   "vtable_len": 12
-  },
-  "goto_bar": {
-   "arg_demand_slots": [
-    2,
-    3
-   ],
-   "base": "IActionTemporaryPlay",
-   "class": "ACTION_goto_bar",
-   "executes": true,
-   "extended_interface": false,
-   "mixins": [],
-   "overridden_slots": [
-    2,
-    3,
-    8,
-    9
-   ],
-   "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11273,6 +11667,7 @@
     9
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11287,6 +11682,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11301,6 +11697,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11317,6 +11714,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11331,6 +11729,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11353,6 +11752,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11369,6 +11769,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11383,6 +11784,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11397,7 +11799,6 @@
    "family": "toggle",
    "method_strings": {
     "13": [
-     "config",
      "Zipcode or Address",
      "Get some food..."
     ]
@@ -11413,6 +11814,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11427,6 +11829,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11443,6 +11846,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11459,6 +11863,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11473,6 +11878,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11500,6 +11906,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11522,6 +11929,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11536,6 +11944,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11550,6 +11959,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11564,6 +11974,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11587,7 +11998,6 @@
      "N/A"
     ],
     "6": [
-     "config",
      "Stems not allowed",
      "Stems loading",
      "Stems ready"
@@ -11600,7 +12010,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "has_system_volume": {
@@ -11614,6 +12025,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11628,6 +12040,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11658,6 +12071,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11680,6 +12094,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11702,6 +12117,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11724,6 +12140,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11775,7 +12192,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "high_label": {
@@ -11789,6 +12207,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11811,6 +12230,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -11827,6 +12247,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11850,6 +12271,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11873,6 +12295,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11896,6 +12319,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -11948,6 +12372,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12000,6 +12425,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12028,6 +12454,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12054,6 +12481,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12068,6 +12496,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12087,6 +12516,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12101,6 +12531,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12124,6 +12555,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12140,6 +12572,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12154,6 +12587,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12168,6 +12602,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12182,6 +12617,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12196,6 +12632,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12210,6 +12647,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12224,6 +12662,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12240,6 +12679,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12254,6 +12694,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12266,8 +12707,6 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "ON_key_lock",
-    "abZone",
     "cue",
     "effect",
     "equalizer",
@@ -12276,7 +12715,6 @@
     "load",
     "loop",
     "loopsize",
-    "pads",
     "sample",
     "stems"
    ],
@@ -12285,16 +12723,14 @@
      "inaudible",
      "filter",
      "stems",
-     "ON_key_lock",
      "equalizer",
      "loop",
+     "sEngine7onTimerEvE3$_0FvP7DLGItemiPvEEE",
      "loopsize",
      "cue",
      "sample",
      "effect",
-     "load",
-     "pads",
-     "abZone"
+     "load"
     ]
    },
    "mixins": [],
@@ -12302,6 +12738,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12324,6 +12761,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12338,6 +12776,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12352,6 +12791,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12365,7 +12805,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "pleEditor8onCreateEvE4$_15"
+     "onCreateEvE4$_23"
     ]
    },
    "mixins": [],
@@ -12374,6 +12814,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12387,7 +12828,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "pleEditor8onCreateEvE4$_15"
+     "onCreateEvE4$_23"
     ]
    },
    "mixins": [],
@@ -12396,6 +12837,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12409,7 +12851,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "pleEditor8onCreateEvE4$_15"
+     "onCreateEvE4$_23"
     ]
    },
    "mixins": [],
@@ -12418,6 +12860,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12430,6 +12873,10 @@
    "executes": true,
    "extended_interface": true,
    "family": "toggle",
+   "keyword_candidates": [
+    "Off",
+    "karaoke"
+   ],
    "method_strings": {
     "13": [
      "Karaoke:",
@@ -12448,6 +12895,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12470,6 +12918,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12498,6 +12947,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12517,7 +12967,6 @@
     "None",
     "StartKaraoke",
     "automix",
-    "config",
     "none",
     "sidelist"
    ],
@@ -12534,11 +12983,11 @@
      "KaraokeBackgroundNone",
      "none",
      "KaraokeBackground",
-     "config",
      "None",
      "Default",
      "Image/Video files...",
-     "Video Output"
+     "Video Output",
+     " ("
     ]
    },
    "mixins": [],
@@ -12546,6 +12995,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12568,6 +13018,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12583,6 +13034,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12610,6 +13062,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12632,6 +13085,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12670,6 +13124,7 @@
     9
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -12696,7 +13151,6 @@
     ],
     "7": [
      "{:+} - {}{}",
-     "config",
      "exact match",
      " ({})",
      "compatible",
@@ -12716,6 +13170,7 @@
     9
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -12735,6 +13190,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12770,6 +13226,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12786,6 +13243,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12812,7 +13270,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "keycue_pad_color": {
@@ -12828,6 +13287,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12850,6 +13310,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12863,7 +13324,6 @@
    "extended_interface": false,
    "method_strings": {
     "5": [
-     "config",
      "Page",
      "{} {}"
     ]
@@ -12874,7 +13334,8 @@
     5
    ],
    "queries": false,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "keylock": {
@@ -12896,6 +13357,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -12924,6 +13386,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12935,7 +13398,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "leftdeck"
+     "leftdeck{}"
     ]
    },
    "mixins": [],
@@ -12944,6 +13407,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12970,6 +13434,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -12985,6 +13450,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13041,7 +13507,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "level_slider": {
@@ -13097,7 +13564,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "levelfader_curve": {
@@ -13119,6 +13587,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13142,6 +13611,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13164,6 +13634,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13181,6 +13652,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13192,7 +13664,6 @@
    "extended_interface": false,
    "keyword_candidates": [
     "InvalidFile",
-    "config",
     "deck",
     "deckset",
     "error",
@@ -13205,7 +13676,6 @@
    ],
    "method_strings": {
     "2": [
-     "config",
      "Load Deck Set",
      "/Deck Sets/",
      "XML File (*.xml)|*.xml",
@@ -13227,6 +13697,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13246,6 +13717,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13268,6 +13740,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13286,6 +13759,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13303,6 +13777,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13317,6 +13792,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13335,6 +13811,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13357,6 +13834,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13375,6 +13853,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13393,6 +13872,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13415,6 +13895,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13435,6 +13916,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13455,6 +13937,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13469,6 +13952,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13490,13 +13974,13 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
   "loop_adjust": {
    "arg_demand_slots": [
-    2,
-    3
+    2
    ],
    "base": "IAction",
    "class": "ACTION_loop_adjust",
@@ -13525,6 +14009,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13547,6 +14032,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13562,6 +14048,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13581,7 +14068,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "loop_delete": {
@@ -13596,6 +14084,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13614,6 +14103,7 @@
     9
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13629,6 +14119,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13647,6 +14138,7 @@
     9
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13672,6 +14164,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13690,6 +14183,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13707,6 +14201,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13722,6 +14217,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13740,6 +14236,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13751,7 +14248,6 @@
    "extended_interface": false,
    "method_strings": {
     "7": [
-     "config",
      "Smart Loop",
      "Forward",
      "Backward",
@@ -13766,6 +14262,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13783,6 +14280,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13807,7 +14305,8 @@
     9
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "loop_pad_mode": {
@@ -13820,7 +14319,6 @@
    "extended_interface": false,
    "method_strings": {
     "5": [
-     "config",
      "On/off",
      "Hold",
      "Roll"
@@ -13833,7 +14331,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "loop_pad_page": {
@@ -13846,7 +14345,6 @@
    "extended_interface": false,
    "method_strings": {
     "5": [
-     "config",
      "Page",
      " {}"
     ]
@@ -13858,7 +14356,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "loop_position": {
@@ -13880,6 +14379,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13915,6 +14415,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13937,6 +14438,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -13951,6 +14453,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13963,12 +14466,9 @@
    "class": "ACTION_loop_select",
    "executes": true,
    "extended_interface": false,
-   "keyword_candidates": [
-    "ION_loop_exit"
-   ],
    "method_strings": {
     "2": [
-     "ION_loop_exit"
+     "teEvE3$_2"
     ]
    },
    "mixins": [],
@@ -13977,6 +14477,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -13991,6 +14492,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14008,6 +14510,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14025,6 +14528,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14040,6 +14544,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14055,6 +14560,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14077,6 +14583,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14092,6 +14599,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14114,6 +14622,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14165,7 +14674,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "masterbpm": {
@@ -14188,6 +14698,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14205,6 +14716,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14227,6 +14739,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14242,6 +14755,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14256,6 +14770,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14295,13 +14810,12 @@
     9
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
   "maximize": {
-   "arg_demand_slots": [
-    3
-   ],
+   "arg_demand_slots": [],
    "base": "IAction",
    "class": "ACTION_maximize",
    "executes": true,
@@ -14318,12 +14832,6 @@
      "maximized",
      "fullscreen",
      "original"
-    ],
-    "6": [
-     "config"
-    ],
-    "7": [
-     "windowed"
     ]
    },
    "mixins": [],
@@ -14334,6 +14842,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14349,6 +14858,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14367,6 +14877,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14381,6 +14892,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14403,6 +14915,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14454,7 +14967,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "mic_eq_high": {
@@ -14505,7 +15019,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "mic_eq_low": {
@@ -14556,7 +15071,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "mic_eq_mid": {
@@ -14607,7 +15123,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "mic_rec": {
@@ -14629,6 +15146,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14649,6 +15167,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14700,7 +15219,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "microphone": {
@@ -14722,6 +15242,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14744,6 +15265,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14762,6 +15284,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14780,6 +15303,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14796,6 +15320,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14819,6 +15344,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14839,6 +15365,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14854,6 +15381,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14874,6 +15402,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14894,6 +15423,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14914,6 +15444,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14932,6 +15463,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14956,6 +15488,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -14978,6 +15511,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -14992,6 +15526,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15019,6 +15554,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15034,6 +15570,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15059,6 +15596,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15081,6 +15619,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15097,13 +15636,15 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
   "multibutton": {
    "arg_demand_slots": [
     2,
-    3
+    3,
+    7
    ],
    "base": "IAction",
    "class": "ACTION_multibutton",
@@ -15112,9 +15653,11 @@
    "mixins": [],
    "overridden_slots": [
     2,
-    3
+    3,
+    7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15131,6 +15674,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15151,6 +15695,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15173,6 +15718,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15187,6 +15733,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15202,6 +15749,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15216,6 +15764,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15236,12 +15785,12 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "ns7_platter": {
    "arg_demand_slots": [
-    2,
     3
    ],
    "base": "IAction",
@@ -15255,9 +15804,7 @@
    ],
    "method_strings": {
     "2": [
-     "timestamp",
-     "startspeed",
-     "stopspeed"
+     "timestamp"
     ],
     "3": [
      "startspeed",
@@ -15270,6 +15817,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15287,6 +15835,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15304,6 +15853,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15318,6 +15868,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15332,6 +15883,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15354,6 +15906,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15373,6 +15926,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15387,6 +15941,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15410,6 +15965,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15430,7 +15986,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "os2l_info": {
@@ -15439,16 +15996,12 @@
    "class": "ACTION_os2l_info",
    "executes": true,
    "extended_interface": false,
-   "method_strings": {
-    "2": [
-     "config"
-    ]
-   },
    "mixins": [],
    "overridden_slots": [
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15472,6 +16025,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15494,6 +16048,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15516,6 +16071,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15534,6 +16090,8 @@
    ],
    "method_strings": {
     "6": [
+     "{{{",
+     "}}}",
      "[value]"
     ],
     "7": [
@@ -15552,6 +16110,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -15574,6 +16133,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15589,6 +16149,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -15615,7 +16176,8 @@
     12
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 13
   },
   "pad_edit": {
@@ -15629,6 +16191,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15651,6 +16214,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -15666,6 +16230,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -15681,6 +16246,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -15695,6 +16261,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15711,6 +16278,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15726,6 +16294,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -15748,6 +16317,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15765,8 +16335,7 @@
     "KEYBOARD",
     "btn",
     "sampler",
-    "stems",
-    "vider"
+    "stems"
    ],
    "method_strings": {
     "2": [
@@ -15786,7 +16355,6 @@
      "stems",
      "stems 2.0",
      "stems (fast)",
-     "vider",
      "stems (N/A)",
      "stems (load)",
      "sampler",
@@ -15806,7 +16374,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "pad_page_favorite": {
@@ -15826,7 +16395,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "pad_page_favorite_select": {
@@ -15854,6 +16424,7 @@
     6
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15878,6 +16449,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15906,6 +16478,7 @@
     6
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15935,6 +16508,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -15952,8 +16526,7 @@
     "KEYBOARD",
     "btn",
     "sampler",
-    "stems",
-    "vider"
+    "stems"
    ],
    "method_strings": {
     "2": [
@@ -15973,7 +16546,6 @@
      "stems",
      "stems 2.0",
      "stems (fast)",
-     "vider",
      "stems (N/A)",
      "stems (load)",
      "sampler",
@@ -15993,7 +16565,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "pad_param": {
@@ -16007,6 +16580,8 @@
    "extended_interface": true,
    "method_strings": {
     "6": [
+     "{{{",
+     "}}}",
      "[value]"
     ]
    },
@@ -16021,6 +16596,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -16035,6 +16611,8 @@
    "extended_interface": true,
    "method_strings": {
     "6": [
+     "{{{",
+     "}}}",
      "[value]"
     ]
    },
@@ -16049,6 +16627,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -16065,6 +16644,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16082,7 +16662,8 @@
     12
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 13
   },
   "pad_pressure_switch": {
@@ -16120,6 +16701,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -16135,6 +16717,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -16152,6 +16735,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16169,6 +16753,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16187,6 +16772,8 @@
    ],
    "method_strings": {
     "6": [
+     "{{{",
+     "}}}",
      "[value]"
     ],
     "7": [
@@ -16205,6 +16792,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -16220,6 +16808,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -16237,7 +16826,8 @@
     12
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 13
   },
   "page": {
@@ -16280,6 +16870,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -16295,6 +16886,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16313,6 +16905,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16329,6 +16922,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16347,16 +16941,15 @@
     "bool",
     "boolean",
     "float",
-    "frac",
     "int",
     "int_trunc",
     "integer",
     "off",
     "percent",
     "percentage",
-    "relative",
     "string",
     "text",
+    "true",
     "val"
    ],
    "method_strings": {
@@ -16371,11 +16964,11 @@
      "boolean",
      "ms",
      "beats",
+     "on",
      "string",
      "text",
-     "on",
+     "true",
      "absolute",
-     "relative",
      "off"
     ],
     "3": [
@@ -16391,9 +16984,9 @@
      "ms",
      "string",
      "text",
-     "int_trunc",
      "on",
-     "frac",
+     "true",
+     "int_trunc",
      "off"
     ]
    },
@@ -16403,6 +16996,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16415,13 +17009,11 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "eckcolor",
     "nothing"
    ],
    "method_strings": {
     "3": [
-     "nothing",
-     "eckcolor"
+     "nothing"
     ]
    },
    "mixins": [],
@@ -16429,6 +17021,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16445,6 +17038,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16457,16 +17051,13 @@
    "executes": false,
    "extended_interface": false,
    "keyword_candidates": [
-    "EEE",
-    "eckcolor",
+    "TION_get_text",
     "nothing"
    ],
    "method_strings": {
     "3": [
-     "S_9allocatorIS3_EEFvP7DLGItemiPvEEE",
-     "EEE",
-     "nothing",
-     "eckcolor"
+     "TION_get_text",
+     "nothing"
     ]
    },
    "mixins": [],
@@ -16474,6 +17065,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16490,6 +17082,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16508,6 +17101,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16524,6 +17118,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16540,6 +17135,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16558,6 +17154,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16576,6 +17173,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16591,6 +17189,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16609,6 +17208,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16625,6 +17225,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16641,6 +17242,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16657,6 +17259,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16672,6 +17275,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16688,6 +17292,7 @@
     9
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16702,7 +17307,6 @@
    "extended_interface": false,
    "method_strings": {
     "6": [
-     "config",
      "Use the PFL buttons on your controller"
     ]
    },
@@ -16715,6 +17319,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16729,6 +17334,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16741,7 +17347,7 @@
    "executes": true,
    "extended_interface": false,
    "keyword_candidates": [
-    "S6_IcEEEEEEE",
+    "CVideoE",
     "dvs",
     "hid"
    ],
@@ -16749,9 +17355,9 @@
     "2": [
      "dvs",
      "hid",
-     "llocatorIS3_EEFvP7DLGItemiPvEEE",
-     "ntextMenuEiE3$_0",
-     "S6_IcEEEEEEE"
+     "CSoundEngine19onMixerOrderChangedEvE3$_0FviEEE",
+     "CVideoE",
+     "teEvE3$_8"
     ]
    },
    "mixins": [],
@@ -16759,6 +17365,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16771,7 +17378,7 @@
    "executes": true,
    "extended_interface": false,
    "keyword_candidates": [
-    "S6_IcEEEEEEE",
+    "CVideoE",
     "dvs",
     "hid"
    ],
@@ -16779,9 +17386,9 @@
     "2": [
      "dvs",
      "hid",
-     "llocatorIS3_EEFvP7DLGItemiPvEEE",
-     "ntextMenuEiE3$_0",
-     "S6_IcEEEEEEE"
+     "CSoundEngine19onMixerOrderChangedEvE3$_0FviEEE",
+     "CVideoE",
+     "teEvE3$_8"
     ]
    },
    "mixins": [],
@@ -16789,6 +17396,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16811,6 +17419,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16829,6 +17438,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16849,6 +17459,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16866,6 +17477,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16883,6 +17495,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16898,6 +17511,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -16956,7 +17570,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "pitch2": {
@@ -17014,7 +17629,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "pitch2_slider": {
@@ -17072,7 +17688,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "pitch_bend": {
@@ -17090,6 +17707,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17113,6 +17731,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -17135,6 +17754,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -17164,6 +17784,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17180,6 +17801,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17196,6 +17818,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17254,7 +17877,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "pitch_zero": {
@@ -17277,6 +17901,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17300,6 +17925,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -17317,6 +17943,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17349,7 +17976,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "play_button": {
@@ -17381,7 +18009,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "play_mode": {
@@ -17399,8 +18028,7 @@
    ],
    "method_strings": {
     "2": [
-     "numark",
-     "pioneer"
+     "numark"
     ],
     "3": [
      "numark",
@@ -17413,6 +18041,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17428,6 +18057,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17478,6 +18108,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17495,6 +18126,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17512,6 +18144,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17527,6 +18160,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17542,6 +18176,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17556,6 +18191,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17575,6 +18211,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17603,6 +18240,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17622,6 +18260,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17641,6 +18280,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17690,6 +18330,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17710,6 +18351,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17724,6 +18366,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17743,6 +18386,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17762,6 +18406,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17782,6 +18427,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17801,6 +18447,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17817,6 +18464,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17873,7 +18521,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "prelisten": {
@@ -17895,6 +18544,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -17911,6 +18561,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17936,6 +18587,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17951,6 +18603,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -17980,7 +18633,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "prelisten_stop": {
@@ -17995,6 +18649,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18017,6 +18672,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18036,6 +18692,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18058,6 +18715,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18080,6 +18738,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18102,6 +18761,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18124,9 +18784,12 @@
      "ContextMenu",
      "Edit",
      "list ",
-     "k {}",
      "(none)",
-     "(no options in current folder)"
+     "(no options in current folder)",
+     "eSkins/"
+    ],
+    "5": [
+     " = "
     ]
    },
    "mixins": [],
@@ -18136,6 +18799,7 @@
     5
    ],
    "queries": false,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -18157,6 +18821,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18178,6 +18843,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18199,6 +18865,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18215,6 +18882,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18239,6 +18907,7 @@
      "QUANTIZE",
      "STEMFX_BEHAVIOR",
      "clone_from_deck",
+     "ink_play",
      "N/A"
     ],
     "3": [
@@ -18251,6 +18920,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18286,6 +18956,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18301,6 +18972,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18323,6 +18995,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18338,6 +19011,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18366,6 +19040,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18388,6 +19063,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18404,6 +19080,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18425,6 +19102,7 @@
     6
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18447,6 +19125,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18461,6 +19140,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18475,6 +19155,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18489,6 +19170,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18511,6 +19193,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18526,6 +19209,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18541,6 +19225,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18559,6 +19244,7 @@
     7
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -18577,6 +19263,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18611,6 +19298,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -18630,6 +19318,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18649,6 +19338,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18665,6 +19355,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18679,6 +19370,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18701,12 +19393,12 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
   "rightcross": {
    "arg_demand_slots": [
-    2,
     3
    ],
    "base": "IAction",
@@ -18729,6 +19421,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18740,7 +19433,7 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "rightdeck"
+     "rightdeck{}"
     ]
    },
    "mixins": [],
@@ -18749,6 +19442,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18775,6 +19469,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18790,6 +19485,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18822,6 +19518,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18848,6 +19545,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18874,6 +19572,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18890,6 +19589,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -18903,7 +19603,6 @@
    "extended_interface": false,
    "method_strings": {
     "5": [
-     "config",
      "Assign to sample slot",
      "Sample bank is read-only"
     ]
@@ -18916,7 +19615,8 @@
     5
    ],
    "queries": false,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "sampler_bank": {
@@ -18934,6 +19634,7 @@
    ],
    "method_strings": {
     "2": [
+     "ECK 2",
      "ContextMenu",
      "New",
      "sampler"
@@ -18946,7 +19647,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_color": {
@@ -18965,7 +19667,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_default": {
@@ -18985,7 +19688,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_edit": {
@@ -19004,6 +19708,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19020,6 +19725,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19044,6 +19750,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -19060,6 +19767,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19113,7 +19821,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sampler_has_group": {
@@ -19129,6 +19838,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19146,6 +19856,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19170,6 +19881,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -19188,6 +19900,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19212,6 +19925,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19232,31 +19946,27 @@
    "method_strings": {
     "12": [
      "on/off,hold,stutter,unmute",
-     "ank in browser"
+     "Hardcore"
     ],
     "2": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "3": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "5": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "6": [
-     "config",
      "hold - Play while pressed",
      "unmute - Plays out loud when pressed",
      "on/off - Play,Stop when pressed",
@@ -19278,7 +19988,8 @@
     14
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 15
   },
   "sampler_mute": {
@@ -19303,6 +20014,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -19314,7 +20026,7 @@
    "extended_interface": false,
    "keyword_candidates": [
     "Drop",
-    "config",
+    "Sampler",
     "locked",
     "sideview",
     "stemswap"
@@ -19328,7 +20040,6 @@
      "sideview",
      "locked",
      "stemswap",
-     "config",
      "StemSwap bank",
      "Locked bank",
      "Record slots...",
@@ -19340,7 +20051,8 @@
      "Loop (32 beats)",
      "Follow Loop Size ({}bt)",
      "Record duration",
-     "Regular banks"
+     "Regular banks",
+     "Sampler"
     ]
    },
    "mixins": [],
@@ -19350,6 +20062,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19381,6 +20094,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19416,7 +20130,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "sampler_pad_page": {
@@ -19439,6 +20154,7 @@
     5
    ],
    "queries": false,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -19467,7 +20183,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "sampler_pad_volume": {
@@ -19519,7 +20236,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sampler_pfl": {
@@ -19539,6 +20257,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19566,6 +20285,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19591,6 +20311,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19616,6 +20337,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19634,6 +20356,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19654,31 +20377,27 @@
    "method_strings": {
     "12": [
      "on/off,hold,stutter,unmute",
-     "ank in browser"
+     "Hardcore"
     ],
     "2": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "3": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "5": [
-     "config",
      "Hold",
      "Unmute",
      "On/off",
      "Stutter"
     ],
     "6": [
-     "config",
      "hold - Play while pressed",
      "unmute - Plays out loud when pressed",
      "on/off - Play,Stop when pressed",
@@ -19700,7 +20419,8 @@
     14
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 15
   },
   "sampler_rec": {
@@ -19712,7 +20432,8 @@
    "method_strings": {
     "5": [
      "~~Rec {}",
-     "~~Rec"
+     "~~Rec",
+     "Rec {}bt"
     ]
    },
    "mixins": [
@@ -19725,7 +20446,8 @@
     9
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "sampler_rec_delete": {
@@ -19743,6 +20465,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19763,7 +20486,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_start_rec": {
@@ -19779,6 +20503,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19807,6 +20532,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19824,6 +20550,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -19843,7 +20570,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_used": {
@@ -19858,7 +20586,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "sampler_velocity": {
@@ -19909,7 +20638,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sampler_volume": {
@@ -19963,7 +20693,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sampler_volume_master": {
@@ -20014,7 +20745,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sampler_volume_nogroup": {
@@ -20065,7 +20797,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "sandbox": {
@@ -20079,7 +20812,6 @@
    "family": "toggle",
    "method_strings": {
     "6": [
-     "config",
      "- Currently not available -"
     ]
    },
@@ -20094,6 +20826,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -20108,6 +20841,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20120,7 +20854,6 @@
    "method_strings": {
     "2": [
      "/Deck Sets",
-     "config",
      "Save Deck Set",
      "/Deck Sets/",
      "XML File (*.xml)|*.xml",
@@ -20134,7 +20867,8 @@
      "gain",
      "pitch",
      "load",
-     "deck"
+     "deck",
+     "error"
     ]
    },
    "mixins": [],
@@ -20142,6 +20876,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20157,6 +20892,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20174,6 +20910,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20207,7 +20944,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "saved_loop_prepare": {
@@ -20222,6 +20960,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20236,6 +20975,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20252,6 +20992,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20271,6 +21012,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20290,6 +21032,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20320,6 +21063,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -20342,6 +21086,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -20358,8 +21103,7 @@
    ],
    "method_strings": {
     "2": [
-     "search",
-     "emixesFolder4loadEP7SDBInfoE3$_3"
+     "search"
     ]
    },
    "mixins": [],
@@ -20368,6 +21112,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20397,6 +21142,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20421,7 +21167,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "scratchbank_edit": {
@@ -20435,6 +21182,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20462,7 +21210,8 @@
     5
    ],
    "queries": false,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "scratchbank_load_to_deck": {
@@ -20484,6 +21233,7 @@
     5
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 12
   },
@@ -20503,7 +21253,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "scratchwheel": {
@@ -20519,8 +21270,7 @@
    ],
    "method_strings": {
     "2": [
-     "search",
-     "emixesFolder4loadEP7SDBInfoE3$_3"
+     "search"
     ]
    },
    "mixins": [],
@@ -20529,6 +21279,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20558,6 +21309,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20582,6 +21334,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20605,6 +21358,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20625,6 +21379,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20645,6 +21400,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -20656,13 +21412,11 @@
    "extended_interface": false,
    "keyword_candidates": [
     "Others",
-    "config",
     "localmusic",
     "mylists"
    ],
    "method_strings": {
     "2": [
-     "config",
      "Local Music",
      "localmusic",
      "My Lists",
@@ -20670,7 +21424,6 @@
      "Others"
     ],
     "7": [
-     "config",
      "Local Music",
      "localmusic",
      "My Lists",
@@ -20684,6 +21437,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20718,6 +21472,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20740,6 +21495,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20758,6 +21514,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20775,6 +21532,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20784,12 +21542,8 @@
    "class": "ACTION_select_master_output",
    "executes": true,
    "extended_interface": false,
-   "keyword_candidates": [
-    "config"
-   ],
    "method_strings": {
     "2": [
-     "config",
      "Computer speakers"
     ]
    },
@@ -20800,7 +21554,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "send_nothing": {
@@ -20814,6 +21569,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20836,6 +21592,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20852,6 +21609,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20868,6 +21626,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20884,6 +21643,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20900,6 +21660,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20914,6 +21675,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20936,6 +21698,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -20954,6 +21717,7 @@
     9
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20974,6 +21738,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -20990,7 +21755,8 @@
     4
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "set_mixpoint": {
@@ -21006,6 +21772,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21024,6 +21791,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21038,7 +21806,6 @@
    "extended_interface": false,
    "method_strings": {
     "2": [
-     "config",
      "Enter variable"
     ]
    },
@@ -21048,6 +21815,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21070,6 +21838,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21093,6 +21862,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21121,6 +21891,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21149,6 +21920,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21167,6 +21939,7 @@
     12
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21185,6 +21958,7 @@
     12
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21202,6 +21976,7 @@
     12
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21219,6 +21994,7 @@
     12
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -21235,6 +22011,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21251,6 +22028,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21267,6 +22045,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21282,6 +22061,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21312,6 +22092,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21332,6 +22113,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21354,6 +22136,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21382,6 +22165,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21404,6 +22188,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21423,6 +22208,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21451,6 +22237,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21470,6 +22257,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21489,6 +22277,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21504,8 +22293,7 @@
     "NoDuplicate",
     "OnlyNew",
     "SavePlaylist",
-    "ShuffleOnce",
-    "config"
+    "ShuffleOnce"
    ],
    "method_strings": {
     "2": [
@@ -21515,7 +22303,6 @@
      "OnlyNew",
      "NoDuplicate",
      "SavePlaylist",
-     "config",
      "Save List"
     ]
    },
@@ -21524,6 +22311,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21535,17 +22323,16 @@
    "extended_interface": false,
    "keyword_candidates": [
     "BeatPort",
+    "BeatSource",
     "Browser",
     "Local",
     "Online",
     "SoundCloud",
-    "config",
     "local",
     "online"
    ],
    "method_strings": {
     "2": [
-     "config",
      "Show alternative remixes for the selected song",
      "Show similar songs to the selected song",
      "Show recommendations to play next",
@@ -21560,10 +22347,10 @@
      "local",
      "Remixes provider",
      "SoundCloud",
-     "BeatPort"
+     "BeatPort",
+     "BeatSource"
     ],
     "7": [
-     "config",
      "Show alternative remixes for the selected song",
      "Show similar songs to the selected song",
      "Show recommendations to play next",
@@ -21578,7 +22365,8 @@
      "local",
      "Remixes provider",
      "SoundCloud",
-     "BeatPort"
+     "BeatPort",
+     "BeatSource"
     ]
    },
    "mixins": [],
@@ -21587,6 +22375,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21601,6 +22390,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21626,6 +22416,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21662,6 +22453,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21676,6 +22468,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21695,7 +22488,8 @@
     5
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "sideview_title": {
@@ -21709,6 +22503,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21736,6 +22531,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21758,6 +22554,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21780,6 +22577,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -21797,6 +22595,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21817,6 +22616,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21835,6 +22635,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21853,6 +22654,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21873,6 +22675,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21891,6 +22694,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21905,6 +22709,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21922,6 +22727,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -21943,15 +22749,12 @@
    ],
    "method_strings": {
     "2": [
-     "length",
-     "hold",
-     "step",
-     "video"
+     "hold"
     ],
     "3": [
      "Slicer",
-     "length",
      "pressed",
+     "length",
      "step",
      "video"
     ],
@@ -21972,7 +22775,8 @@
     7
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "slip": {
@@ -21994,6 +22798,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22016,6 +22821,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22038,6 +22844,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22060,6 +22867,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22082,6 +22890,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22104,6 +22913,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22126,6 +22936,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22151,6 +22962,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22167,6 +22979,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22181,6 +22994,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22195,6 +23009,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22206,16 +23021,12 @@
    "class": "ACTION_speedwheel",
    "executes": true,
    "extended_interface": false,
-   "method_strings": {
-    "2": [
-     "emixesFolder4loadEP7SDBInfoE3$_3"
-    ]
-   },
    "mixins": [],
    "overridden_slots": [
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22245,6 +23056,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22277,7 +23089,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "stem": {
@@ -22328,7 +23141,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "stem_color": {
@@ -22342,6 +23156,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22353,22 +23168,16 @@
    "extended_interface": false,
    "keyword_candidates": [
     "acapella",
-    "acappella",
-    "instrumental",
-    "isolate"
+    "acappella"
    ],
    "method_strings": {
     "2": [
      "acapella",
-     "acappella",
-     "instrumental",
-     "isolate"
+     "acappella"
     ],
     "3": [
      "acapella",
-     "acappella",
-     "instrumental",
-     "isolate"
+     "acappella"
     ]
    },
    "mixins": [],
@@ -22378,6 +23187,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22429,7 +23239,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "stems_bleed": {
@@ -22457,7 +23268,8 @@
     13
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 14
   },
   "stems_split": {
@@ -22483,6 +23295,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22509,6 +23322,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22523,6 +23337,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22554,7 +23369,8 @@
     6
    ],
    "queries": false,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "stop_button": {
@@ -22585,7 +23401,8 @@
     6
    ],
    "queries": false,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "stopwatch": {
@@ -22601,7 +23418,8 @@
     6
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 12
   },
   "stopwatch_reset": {
@@ -22615,6 +23433,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22631,6 +23450,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22645,6 +23465,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22662,10 +23483,12 @@
    ],
    "method_strings": {
     "3": [
-     "0123456789xX"
+     "0123456789xX",
+     "xX"
     ],
     "7": [
-     "0123456789xX"
+     "0123456789xX",
+     "xX"
     ]
    },
    "mixins": [],
@@ -22675,6 +23498,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22690,6 +23514,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22714,6 +23539,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22729,6 +23555,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22751,6 +23578,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22773,6 +23601,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22795,6 +23624,7 @@
     6
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22810,6 +23640,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22832,6 +23663,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22852,6 +23684,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22884,6 +23717,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22906,6 +23740,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22928,6 +23763,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -22937,12 +23773,8 @@
    "class": "ACTION_timecode_options",
    "executes": false,
    "extended_interface": false,
-   "keyword_candidates": [
-    "config"
-   ],
    "method_strings": {
     "7": [
-     "config",
      "Smart Mode",
      "Relative Mode",
      "Absolute Mode",
@@ -22956,6 +23788,7 @@
     7
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22980,6 +23813,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -22995,6 +23829,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23017,6 +23852,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23033,8 +23869,7 @@
    ],
    "method_strings": {
     "2": [
-     "search",
-     "emixesFolder4loadEP7SDBInfoE3$_3"
+     "search"
     ]
    },
    "mixins": [],
@@ -23043,6 +23878,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23072,6 +23908,7 @@
     7
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23086,6 +23923,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23108,6 +23946,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23122,6 +23961,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23136,6 +23976,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23152,6 +23993,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23168,6 +24010,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23184,6 +24027,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23200,6 +24044,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23214,6 +24059,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23230,6 +24076,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23246,6 +24093,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23260,7 +24108,6 @@
    "family": "toggle",
    "method_strings": {
     "13": [
-     "config",
      "Video Output",
      "Off",
      "Fullscreen: ",
@@ -23275,7 +24122,8 @@
      "Simple Video",
      "Dual-Source Mixing",
      "Video Fade-to-black",
-     "on Volume Sliders"
+     "on Volume Sliders",
+     "Video Crossfader"
     ]
    },
    "mixins": [],
@@ -23288,6 +24136,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -23339,7 +24188,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "video_crossfader_auto": {
@@ -23361,6 +24211,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -23383,6 +24234,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -23400,6 +24252,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23422,6 +24275,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -23441,6 +24295,7 @@
     12
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 13
   },
@@ -23466,6 +24321,7 @@
     14
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 15
   },
@@ -23480,6 +24336,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23522,6 +24379,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -23581,7 +24439,8 @@
     23
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 24
   },
   "video_fx_slider_slider": {
@@ -23640,7 +24499,8 @@
     23
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 24
   },
   "video_level": {
@@ -23691,7 +24551,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "video_output": {
@@ -23702,12 +24563,10 @@
    "extended_interface": false,
    "keyword_candidates": [
     "Off",
-    "Windowed",
-    "config"
+    "Windowed"
    ],
    "method_strings": {
     "2": [
-     "config",
      "Video Output",
      "Off",
      "Fullscreen: ",
@@ -23722,7 +24581,8 @@
      "Simple Video",
      "Dual-Source Mixing",
      "Video Fade-to-black",
-     "on Volume Sliders"
+     "on Volume Sliders",
+     "Video Crossfader"
     ]
    },
    "mixins": [],
@@ -23731,6 +24591,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23754,6 +24615,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -23792,6 +24654,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -23810,7 +24673,8 @@
     9
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 12
   },
   "video_transition_button": {
@@ -23835,6 +24699,7 @@
     14
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 15
   },
@@ -23873,6 +24738,7 @@
     12
    ],
    "queries": true,
+   "query_bool": true,
    "query_text": true,
    "vtable_len": 13
   },
@@ -23932,7 +24798,8 @@
     23
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 24
   },
   "video_transition_slider_slider": {
@@ -23991,7 +24858,8 @@
     23
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 24
   },
   "view_options": {
@@ -24020,6 +24888,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24049,6 +24918,7 @@
     13
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 14
   },
@@ -24071,6 +24941,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24127,7 +24998,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "volume_slider": {
@@ -24183,7 +25055,8 @@
     21
    ],
    "queries": true,
-   "query_text": true,
+   "query_bool": true,
+   "query_text": false,
    "vtable_len": 22
   },
   "wait": {
@@ -24199,6 +25072,7 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24241,7 +25115,8 @@
     14
    ],
    "queries": true,
-   "query_text": false,
+   "query_bool": false,
+   "query_text": true,
    "vtable_len": 15
   },
   "yes": {
@@ -24255,6 +25130,7 @@
     3
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24283,6 +25159,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24311,6 +25188,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   },
@@ -24339,6 +25217,7 @@
     9
    ],
    "queries": true,
+   "query_bool": false,
    "query_text": false,
    "vtable_len": 12
   }

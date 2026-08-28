@@ -459,6 +459,23 @@ Contract fields to establish per verb:
   `just check`; query with `just verb-contract <name>`. See the Candidates doc §Contract
   structure.
 
+- **Slot names: DONE (2026-08-29)** — bundle `18.0.9246` is the last unstripped build, so
+  [tools/extract_action_vtables.py](tools/extract_action_vtables.py) resolves every vtable
+  entry to a named method ([tests/action-vtables-9246.json](tests/action-vtables-9246.json)).
+  Slot 7 is `onUp`, not the options-menu provider guessed above; 8/9 are `onSaveState`/
+  `onLoadState`. Recalibrating `query_text` off slot 5 (was reading slot 4, the bool query)
+  moved 154 verbs; the old values are preserved as `query_bool`.
+- **BLOCKED: verb table is a build behind.** `tests/action-contracts.json` is now regenerated
+  from the installed `18.0.9583`, but [tests/verb-table.json](tests/verb-table.json) is still
+  the `18.0.9482` extraction, so `just check` reports the drift: id 105 orphaned, and
+  `ACTION_goto_beat_in_bar`, `ACTION_karaoke_clear`, `ACTION_repeat_start_fade`,
+  `ACTION_shoutout` unmatched (4 verbs added in 9583; ids shifted by ~1-3 throughout).
+  Re-extracting on 9583 finds all 1,032 records but **loses every category**: the
+  `const char *[38]` category-name array no longer resolves, because its members
+  (`audio_scratch`, `audio_volumes`, `deck_select`, …) are gone from `__cstring` as
+  standalone strings. Re-anchor that array on 9583 before regenerating, or the
+  Button-Editor category column disappears from `just verb-table`.
+
 ### 10a. A read-only introspection plugin — the only instrument for four questions
 
 Status: **The channel is OPEN (2026-08-15).** The plugin builds, loads, and has returned its

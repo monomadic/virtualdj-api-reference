@@ -360,17 +360,41 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   `IAction`'s defaults, with slot meanings calibrated from HTTP-proven verbs (never
   hard-coded): slot 2 onExecute, 3 the **generic onQuery** (a variant — bool, number, and
   text all flow through it; ~160 classes override only this slot yet answer typed values),
-  4 the specialized text query. Extension interfaces show as vtable length (sliders: ~22
+  4 onQueryBool, 5 onQueryText. Extension interfaces show as vtable length (sliders: ~22
   slots vs 12). *Corrected 2026-07-30:* slot 3 was first labeled onQueryBool and 5
   onQuery-number; the return-type sweep refuted that within the hour — the structure claims
   capability, the sweep claims concrete type.
-- **Slot leads, unlabeled but with suggestive membership** (the old build's symbols name the
-  method pool: `onQuery`, `onQueryBool` (46 classes then), `onQueryText`,
-  `onQueryController`, `onQueryBoolController`, `onTooltip`, plus `onUp` in surviving lambda
-  names): slot 5 (107 members) skews to argument-taking verbs (`beatjump`, `browser_sort`,
-  `get_time`); slot 7 (94) to menu/options providers (`add_list`, `browser_enter`,
-  `*_options`, which override *only* it); slots 8/9 are a near-identical 222/233 pair
-  (`auto_*` toggles, sliders) — probably press/release.
+- **Every slot is now named, not inferred (2026-08-29).** Bundle `18.0.9246` (app
+  `8.5.8769`) is the last **unstripped** build: 321,571 `nm` symbols including 952
+  `vtable for ACTION_*` and 5,325 `ACTION_*::` methods, so each vtable entry resolves to a
+  defining `class::method`. `tools/extract_action_vtables.py` →
+  [../tests/action-vtables-9246.json](../tests/action-vtables-9246.json). The layout is
+  uniform across all 952 classes:
+
+  | Slot | Method | Slot | Method |
+  | ---: | --- | ---: | --- |
+  | 0, 1 | destructor pair | 6 | `onTooltip` |
+  | 2 | `onExecute` | 7 | `onUp` |
+  | 3 | `onQuery` | 8 | `onSaveState` |
+  | 4 | `onQueryBool` | 9 | `onLoadState` |
+  | 5 | `onQueryText` | 10, 11 | `push`/`popSaveState` (never overridden) |
+
+  Slider tails are named too: `getGhost`, `getGhost_private`, `getValue`, `setValue`,
+  `getConfig`, `setGhost`, `onExecuteController`, `onQueryController`,
+  `onQueryBoolController`, `getGhostVar`, `updateParamIdx`, `getPluginSlot`.
+
+  This **retires the earlier slot leads**, which were wrong: slot 5 was read as
+  argument-taking verbs (it is `onQueryText`), slot 7 as menu/options providers (it is
+  `onUp` — so press/release is slots 2 + 7, not 8/9), and the near-identical 8/9 pair as
+  press/release (it is `onSaveState`/`onLoadState`). Structure transfers across builds:
+  `overridden_slots` agrees **950/952** between `18.0.9246` and `18.0.9583`.
+- **A flag was mislabeled for a month (2026-08-29).** `query_text` was calibrated from
+  `get_title`, whose extra override is slot **4** — the bool query. Regenerating with
+  `effect_bpm_deck` (overrides exactly 2/3/5) as the text-query pin moved **154 verbs**; the
+  old values survive unchanged under the new `query_bool` field, which is what they always
+  were. Note the correction does *not* improve return-type prediction (77.8% → 79.2% against
+  `verb-return-types.json`): the generic slot 3 remains a variant, so structure still claims
+  capability and only the sweep claims concrete type.
 - **Independent-check quality**: agreement with the Tier-1 HTTP sweep is **652/652 (100%)**
   for query verbs and 181/186 (97.3%) for action-only. The two derivations share nothing —
   one reads compiled vtables, the other probed a live instance — so this is real
