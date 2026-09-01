@@ -341,6 +341,14 @@ proves a structure exists; it says nothing about which UI reads it.
 Query it per verb with `just verb-table <name>`, which now reports `category` alongside `id`,
 `flags`, and any same-id siblings.
 
+*Refreshed to `18.0.9583` (2026-09-02):* 1,032 records / 958 ids, four of them new since
+`18.0.9482` — `goto_beat_in_bar` (which is now the canonical spelling of `goto_bar`, id 106),
+`karaoke_clear`, `repeat_start_fade`, `shoutout`. The category **names** are gone from this
+build's binary — only the `uint8` id → category array survives — so the extractor falls back
+to a pinned list and says so in `summary.categories_source`. The order is corroborated on two
+builds and reproduces every previously assigned category (1,028/1,028 against 9482,
+1,025/1,025 against 9246); see TODO.md.
+
 ### Contract structure — the ACTION_ classes (2026-07-29)
 
 The verb table settles existence; the **RTTI graph** behind it yields each verb's contract

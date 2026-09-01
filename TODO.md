@@ -465,16 +465,19 @@ Contract fields to establish per verb:
   Slot 7 is `onUp`, not the options-menu provider guessed above; 8/9 are `onSaveState`/
   `onLoadState`. Recalibrating `query_text` off slot 5 (was reading slot 4, the bool query)
   moved 154 verbs; the old values are preserved as `query_bool`.
-- **BLOCKED: verb table is a build behind.** `tests/action-contracts.json` is now regenerated
-  from the installed `18.0.9583`, but [tests/verb-table.json](tests/verb-table.json) is still
-  the `18.0.9482` extraction, so `just check` reports the drift: id 105 orphaned, and
-  `ACTION_goto_beat_in_bar`, `ACTION_karaoke_clear`, `ACTION_repeat_start_fade`,
-  `ACTION_shoutout` unmatched (4 verbs added in 9583; ids shifted by ~1-3 throughout).
-  Re-extracting on 9583 finds all 1,032 records but **loses every category**: the
-  `const char *[38]` category-name array no longer resolves, because its members
-  (`audio_scratch`, `audio_volumes`, `deck_select`, …) are gone from `__cstring` as
-  standalone strings. Re-anchor that array on 9583 before regenerating, or the
-  Button-Editor category column disappears from `just verb-table`.
+- **Verb table: refreshed to 18.0.9583 (2026-09-02).** 1,032 records, 958 distinct ids,
+  62 alias groups. Four verbs are new since 9482 — `goto_beat_in_bar` (canonical spelling of
+  `goto_bar`, same id 106), `karaoke_clear`, `repeat_start_fade`, `shoutout` — all four with
+  bundled English descriptions, now in the Broad Verb Index and the store. The contracts
+  bijection is whole again at 958 ↔ 958.
+  9583 **dropped the `const char *[38]` category-name array** (no member survives anywhere in
+  the executable, nor in `languages.zip`), but the `uint8[distinct_ids + 1]` id → category
+  array is intact. `extract_verb_table.py` now falls back to a pinned name list and records
+  `summary.categories_source`. The pinned order is not a guess: it is what the array reads on
+  both `18.0.9246` (unstripped, read directly) and `18.0.9482`, and carrying it forward
+  reproduces the previous category for **1,028/1,028** verbs shared with 9482 and
+  **1,025/1,025** shared with 9246, placing the four new verbs in audio / karaoke / repeat /
+  sampler. Re-anchor on the binary again if a later build restores the names.
 
 ### 10a. A read-only introspection plugin — the only instrument for four questions
 

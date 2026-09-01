@@ -1,17 +1,17 @@
 {
  "summary": {
-  "arg_demand_verbs": 431,
+  "arg_demand_verbs": 433,
   "classes": 958,
-  "distinct_ids": 955,
+  "distinct_ids": 958,
   "double_matched_ids": [],
   "families": {
-   "plain": 798,
+   "plain": 802,
    "slider": 56,
    "toggle": 100
   },
   "iaction_slots": 12,
-  "ids_with_class": 954,
-  "keyword_verbs": 260,
+  "ids_with_class": 958,
+  "keyword_verbs": 262,
   "optional_arg_queries": [
    "apply_audio_config",
    "auto_cue",
@@ -314,9 +314,7 @@
    "zoom_scratch",
    "zoom_vertical"
   ],
-  "orphan_ids": [
-   105
-  ],
+  "orphan_ids": [],
   "slot_labels": {
    "execute": 2,
    "query": 3,
@@ -330,9 +328,9 @@
     "total": 186
    },
    "needs-args": {
-    "agree": 112,
-    "rate": 0.9739,
-    "total": 115
+    "agree": 113,
+    "rate": 0.9741,
+    "total": 116
    },
    "query": {
     "agree": 652,
@@ -340,12 +338,7 @@
     "total": 652
    }
   },
-  "unmatched_classes": [
-   "ACTION_goto_beat_in_bar",
-   "ACTION_karaoke_clear",
-   "ACTION_repeat_start_fade",
-   "ACTION_shoutout"
-  ]
+  "unmatched_classes": []
  },
  "verbs": {
   "action_deck": {
@@ -11652,6 +11645,48 @@
    "query_text": false,
    "vtable_len": 12
   },
+  "goto_bar": {
+   "arg_demand_slots": [
+    2,
+    3
+   ],
+   "base": "IActionTemporaryPlay",
+   "class": "ACTION_goto_beat_in_bar",
+   "executes": true,
+   "extended_interface": false,
+   "mixins": [],
+   "overridden_slots": [
+    2,
+    3,
+    8,
+    9
+   ],
+   "queries": true,
+   "query_bool": false,
+   "query_text": false,
+   "vtable_len": 12
+  },
+  "goto_beat_in_bar": {
+   "arg_demand_slots": [
+    2,
+    3
+   ],
+   "base": "IActionTemporaryPlay",
+   "class": "ACTION_goto_beat_in_bar",
+   "executes": true,
+   "extended_interface": false,
+   "mixins": [],
+   "overridden_slots": [
+    2,
+    3,
+    8,
+    9
+   ],
+   "queries": true,
+   "query_bool": false,
+   "query_text": false,
+   "vtable_len": 12
+  },
   "goto_cue": {
    "arg_demand_slots": [
     2
@@ -12908,6 +12943,26 @@
    "keyword_candidates": [
     "karaoke"
    ],
+   "method_strings": {
+    "2": [
+     "karaoke"
+    ]
+   },
+   "mixins": [],
+   "overridden_slots": [
+    2
+   ],
+   "queries": false,
+   "query_bool": false,
+   "query_text": false,
+   "vtable_len": 12
+  },
+  "karaoke_clear": {
+   "arg_demand_slots": [],
+   "base": "IAction",
+   "class": "ACTION_karaoke_clear",
+   "executes": true,
+   "extended_interface": false,
    "method_strings": {
     "2": [
      "karaoke"
@@ -19322,6 +19377,33 @@
    "query_text": false,
    "vtable_len": 12
   },
+  "repeat_start_fade": {
+   "arg_demand_slots": [
+    2,
+    3
+   ],
+   "base": "IAction",
+   "class": "ACTION_repeat_start_fade",
+   "executes": true,
+   "extended_interface": false,
+   "keyword_candidates": [
+    "sine"
+   ],
+   "method_strings": {
+    "2": [
+     "sine"
+    ]
+   },
+   "mixins": [],
+   "overridden_slots": [
+    2,
+    3
+   ],
+   "queries": true,
+   "query_bool": false,
+   "query_text": false,
+   "vtable_len": 12
+  },
   "repeat_start_instant": {
    "arg_demand_slots": [
     2,
@@ -22045,6 +22127,33 @@
     2
    ],
    "queries": false,
+   "query_bool": false,
+   "query_text": false,
+   "vtable_len": 12
+  },
+  "shoutout": {
+   "arg_demand_slots": [],
+   "base": "IAction",
+   "class": "ACTION_shoutout",
+   "executes": true,
+   "extended_interface": false,
+   "keyword_candidates": [
+    "show"
+   ],
+   "method_strings": {
+    "2": [
+     "show"
+    ],
+    "3": [
+     "show"
+    ]
+   },
+   "mixins": [],
+   "overridden_slots": [
+    2,
+    3
+   ],
+   "queries": true,
    "query_bool": false,
    "query_text": false,
    "vtable_len": 12

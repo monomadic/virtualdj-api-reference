@@ -3,9 +3,9 @@
   "generated_by": "tools/extract_verb_index.py",
   "source": "docs/VDJScript Verbs.md + docs/Official VDJScript Coverage Audit.md",
   "counts": {
-   "total": 991,
+   "total": 995,
    "curated": 142,
-   "catalog": 641,
+   "catalog": 645,
    "alias": 59,
    "official-name-only": 149,
    "official": 991
@@ -3278,6 +3278,13 @@
    "example": "goto_bar 4",
    "official": true
   },
+  "goto_beat_in_bar": {
+   "tier": "catalog",
+   "section": "Audio Playback",
+   "description": "Canonical spelling of `goto_bar` from build `18.0.9583` (same verb id 106; `goto_bar` is now the alias). Put the song on its nth beat after the downbeat without losing sync.",
+   "example": "goto_beat_in_bar 4",
+   "official": false
+  },
   "goto_cue": {
    "tier": "catalog",
    "section": "Cue Points",
@@ -3707,6 +3714,13 @@
   "karaoke_add": {
    "tier": "official-name-only",
    "official": true
+  },
+  "karaoke_clear": {
+   "tier": "catalog",
+   "section": "Karaoke",
+   "description": "Clear the karaoke list (new in build `18.0.9583`)",
+   "example": "karaoke_clear",
+   "official": false
   },
   "karaoke_load": {
    "tier": "official-name-only",
@@ -5707,6 +5721,13 @@
    ],
    "official": true
   },
+  "repeat_start_fade": {
+   "tier": "catalog",
+   "section": "Repeat & Delay",
+   "description": "Fade from one value to another over a time, optionally in N steps (new in build `18.0.9583`)",
+   "example": "repeat_start_fade 'myfade' 0.0 1.0 10s",
+   "official": false
+  },
   "repeat_start_instant": {
    "tier": "curated",
    "section": "Repeat & Delay",
@@ -6593,6 +6614,13 @@
    "description": "Shift all cue points by a time offset",
    "example": "shift_all_cues -10ms",
    "official": true
+  },
+  "shoutout": {
+   "tier": "catalog",
+   "section": "Sampler",
+   "description": "Open a popup that creates an audio sample from typed text, no microphone needed (new in build `18.0.9583`; Button-Editor-hidden)",
+   "example": "shoutout",
+   "official": false
   },
   "show_keyboard": {
    "tier": "catalog",

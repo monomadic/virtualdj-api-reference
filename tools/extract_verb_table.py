@@ -45,6 +45,19 @@ BINARY = "/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ"
 ARTIFACT = "tests/verb-table.json"
 ANCHOR = "hot_cue"          # any verb certain to be in the table
 CAT_ANCHOR = "audio_scratch"  # a distinctive Button Editor category name
+# Bundle 18.0.9583 dropped the `const char *[38]` category-name array — none of the
+# names survives anywhere in the executable, though the uint8 id -> category array
+# still does. The order below is the array as it stands in two independent builds,
+# 18.0.9246 (unstripped, read directly) and 18.0.9482 (the previous artifact); it is
+# used ONLY as a fallback, and the summary records which source was used.
+CATEGORY_NAMES = [
+    "defines", "flow", "param", "repeat", "skin", "system", "variables", "window",
+    "audio", "audio_controls", "audio_inputs", "audio_scratch", "audio_volumes",
+    "automix", "browser", "config", "controllers", "cues", "deck_select",
+    "equalizer", "get", "karaoke", "key", "loop", "macro", "pads", "pitch",
+    "plugins", "poi", "prelisten", "rane", "record", "sampler", "sandbox", "sync",
+    "text", "timecode", "video",
+]
 ARM64 = 0x0100000C
 RECORD = 16
 
@@ -77,8 +90,8 @@ def sections(data: bytes, base: int):
     return out
 
 
-def build() -> dict:
-    data = open(BINARY, "rb").read()
+def build(binary: str = BINARY) -> dict:
+    data = open(binary, "rb").read()
     base = slice_offset(data)
     secs = sections(data, base)
     cseg = next(s for s in secs if s[1] == "__cstring")
@@ -191,8 +204,12 @@ def build() -> dict:
         by_id.setdefault(r["id"], []).append(r["name"])
     groups = {str(k): sorted(v) for k, v in by_id.items() if len(v) > 1}
 
-    cats = category_names()
+    cats, cats_source = category_names(), "binary"
+    if not cats:  # 9583 and later: names gone, index array still present
+        cats, cats_source = CATEGORY_NAMES, "pinned"
     cat_by_id = category_of_id(len(by_id), len(cats)) if cats else None
+    if cat_by_id is None and cats_source == "pinned":
+        cats, cats_source = [], "unresolved"
     verbs = {}
     for r in recs:
         rec = {"id": r["id"], "flags": r["flags"]}
@@ -212,6 +229,7 @@ def build() -> dict:
             "alias_forms": sum(1 for r in recs if r["flags"] == 1),
             "hidden": sum(1 for r in recs if r["flags"] == 256),
             "categories": len(cats),
+            "categories_source": cats_source,
             "categorised": sum(1 for r in verbs.values() if "category" in r),
             "sorted": [r["name"] for r in recs] == sorted(r["name"] for r in recs),
         },
@@ -254,11 +272,17 @@ def cmd_check() -> None:
 
 
 def main() -> None:
-    if len(sys.argv) > 2 and sys.argv[1] == "--get":
-        return cmd_get(sys.argv[2])
-    if len(sys.argv) > 1 and sys.argv[1] == "--check":
+    argv = sys.argv[1:]
+    binary = BINARY
+    if "--binary" in argv:
+        i = argv.index("--binary")
+        binary = argv[i + 1]
+        del argv[i:i + 2]
+    if len(argv) > 1 and argv[0] == "--get":
+        return cmd_get(argv[1])
+    if argv and argv[0] == "--check":
         return cmd_check()
-    print(json.dumps(build(), indent=1, sort_keys=True))
+    print(json.dumps(build(binary), indent=1, sort_keys=True))
 
 
 if __name__ == "__main__":

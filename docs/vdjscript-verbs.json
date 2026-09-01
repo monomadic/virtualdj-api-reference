@@ -3,10 +3,10 @@
   "generated_by": "tools/verbdb.py",
   "note": "Authoritative per-verb record store. Edit via `just put-verb`, not by hand-writing tables. Seeded by `verbdb.py bootstrap`.",
   "counts": {
-   "total": 1034,
+   "total": 1038,
    "by_tier": {
     "alias": 59,
-    "catalog": 642,
+    "catalog": 646,
     "curated": 142,
     "official-name-only": 149,
     "unofficial": 42
@@ -15,9 +15,9 @@
     "Fail": 6,
     "Partial": 14,
     "Pass": 40,
-    "Untested": 974
+    "Untested": 978
    },
-   "documented": 764,
+   "documented": 768,
    "tested_pass": 40,
    "needs_test": 19,
    "blocked": 17,
@@ -2970,7 +2970,8 @@
    "description": "Control release-FX slider",
    "example": "effect_releaseslider",
    "kind": "Action",
-   "confidence": "local_test"
+   "confidence": "local_test",
+   "note": "Confirmed **separate from deck-FX slots 1-6**: `is_releasefx` stayed `no` with every effect loaded into slot 1, release-type effects included (Backspin, BrakeStart, VinylBrake, Beat Brake) — loading into a numbered slot never arms it. Forms `is_releasefx`, `is_releasefx <slot>`, `is_releasefx '<effect>'` all `no`. `effect_releaseslider` / `effect_releaseslider_active` are accepted (execute `true`)"
   },
   "effect_releaseslider_active": {
    "name": "effect_releaseslider_active",
@@ -6854,6 +6855,20 @@
    "description": "Jump to beat after downbeat",
    "example": "goto_bar 4"
   },
+  "goto_beat_in_bar": {
+   "name": "goto_beat_in_bar",
+   "tier": "catalog",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [],
+   "section": "Audio Playback",
+   "description": "Canonical spelling of `goto_bar` from build `18.0.9583` (same verb id 106; `goto_bar` is now the alias). Put the song on its nth beat after the downbeat without losing sync.",
+   "example": "goto_beat_in_bar 4"
+  },
   "goto_cue": {
    "name": "goto_cue",
    "tier": "catalog",
@@ -7698,6 +7713,20 @@
    "needs_test": false,
    "blocked": false,
    "evidence": []
+  },
+  "karaoke_clear": {
+   "name": "karaoke_clear",
+   "tier": "catalog",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [],
+   "section": "Karaoke",
+   "description": "Clear the karaoke list (new in build `18.0.9583`)",
+   "example": "karaoke_clear"
   },
   "karaoke_load": {
    "name": "karaoke_load",
@@ -11675,6 +11704,20 @@
    "example": "repeat_start 'name' 1000ms 5 & action",
    "kind": "Action"
   },
+  "repeat_start_fade": {
+   "name": "repeat_start_fade",
+   "tier": "catalog",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [],
+   "section": "Repeat & Delay",
+   "description": "Fade from one value to another over a time, optionally in N steps (new in build `18.0.9583`)",
+   "example": "repeat_start_fade 'myfade' 0.0 1.0 10s"
+  },
   "repeat_start_instant": {
    "name": "repeat_start_instant",
    "tier": "curated",
@@ -13322,6 +13365,20 @@
    "section": "Cue Points",
    "description": "Shift all cue points by a time offset",
    "example": "shift_all_cues -10ms"
+  },
+  "shoutout": {
+   "name": "shoutout",
+   "tier": "catalog",
+   "official": false,
+   "aliases": [],
+   "surfaces": [],
+   "test_status": "Untested",
+   "needs_test": false,
+   "blocked": false,
+   "evidence": [],
+   "section": "Sampler",
+   "description": "Open a popup that creates an audio sample from typed text, no microphone needed (new in build `18.0.9583`; Button-Editor-hidden)",
+   "example": "shoutout"
   },
   "show_keyboard": {
    "name": "show_keyboard",

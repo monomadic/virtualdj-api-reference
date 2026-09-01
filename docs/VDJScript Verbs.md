@@ -4570,6 +4570,7 @@ Needs local test:
 | --- | --- | --- | --- |
 | `karaoke_load` | `Button`, `SkinAction` | Load selected folder/playlist into the karaoke list. | `karaoke_load 'append'` |
 | `karaoke_add` | `Button`, `SkinAction` | Add selected browser songs to the karaoke list. | `karaoke_add` |
+| `karaoke_clear` | `Button`, `SkinAction` | Clear the karaoke list (new in build `18.0.9583`). | `karaoke_clear` |
 | `edit_singer` | `Button`, `SkinAction` | Edit the singer for the selected karaoke-list song. | `edit_singer` |
 
 Sources:
@@ -4925,6 +4926,7 @@ Source: `Official forum`, `Community`
 | `repeat`               | Repeat action while pressed | `repeat 1000ms & browser_scroll +1`     |
 | `repeat_start`         | Start repeating action      | `repeat_start 'name' 1000ms 5 & action` |
 | `repeat_start_instant` | Start repeating immediately | `repeat_start_instant 'name' 1000ms`    |
+| `repeat_start_fade`    | Fade from one value to another over a time, optionally in N steps (new in build `18.0.9583`) | `repeat_start_fade 'myfade' 0.0 1.0 10s` |
 | `repeat_stop`          | Stop repeat                 | `repeat_stop 'name'`                    |
 | `wait`                 | Wait between actions        | `wait 1bt & pause`                      |
 | `holding`              | Execute if held long        | `holding ? automix : mix_now`           |
@@ -5047,6 +5049,7 @@ Window/workflow note:
 | `song_pos`        | Position in song (slider)   | `song_pos`                          |
 | `goto`            | Change position             | `goto +10ms`, `goto -4`, `goto 20%` |
 | `goto_bar`        | Jump to beat after downbeat | `goto_bar 4`                        |
+| `goto_beat_in_bar` | Canonical spelling of `goto_bar` from build `18.0.9583` (same verb id 106; `goto_bar` is now the alias). Put the song on its nth beat after the downbeat without losing sync. | `goto_beat_in_bar 4` |
 | `songpos_remain`  | Remaining time              | `songpos_remain 500ms ? blink`      |
 | `songpos_warning` | Last 30s warning            | `songpos_warning`                   |
 | `seek`            | Move while pressed          | `seek +2`, `seek +420ms`            |
@@ -5510,6 +5513,7 @@ eq_crossfader_low 50%
 | ----------------------- | ----------------------- | ----------------------------------- |
 | `karaoke`               | Start/stop karaoke      | `karaoke`                           |
 | `karaoke_show`          | Show singer list        | `karaoke_show`                      |
+| `karaoke_clear`         | Clear the karaoke list (new in build `18.0.9583`) | `karaoke_clear`   |
 | `karaoke_options`       | Open karaoke options    | `karaoke_options`                   |
 | `karaoke_venue_name`    | Karaoke venue-name helper | `` `karaoke_venue_name` ``        |
 | `get_next_karaoke_song` | Get upcoming track info | `get_next_karaoke_song "singer" +1` |
@@ -5896,6 +5900,7 @@ Video FX note:
 | `sampler_bank`               | Select or cycle sampler banks                                    | `sampler_bank "birthday"`, `sampler_bank +1`              |
 | `sampler_mute`               | Mute or unmute a sample                                          | `sampler_mute 4`                                          |
 | `sampler_edit`               | Open the Sample Editor for a sample                              | `sampler_edit 4`                                          |
+| `shoutout`                   | Open a popup that creates an audio sample from typed text, no microphone needed (new in build `18.0.9583`; Button-Editor-hidden) | `shoutout` |
 | `sampler_mode` / `sampler_rapidfire` | Set global or per-sample trigger mode                    | `sampler_mode 1 'stutter'`, `sampler_rapidfire +1`        |
 | `sampler_output`             | Route sampler output to master, trigger deck, headphones, etc.   | `sampler_output "headphones"`, `deck master sampler_output` |
 | `sampler_options`            | Open or toggle sampler bank options                              | `sampler_options`, `sampler_options "locked"`             |
