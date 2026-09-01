@@ -93,6 +93,39 @@ Typical results include:
 
 Do not edit these bundled files in place. Put overrides or custom work under the VirtualDJ home folder.
 
+### The bundle is platform-neutral, and `internal.data` is a model archive
+
+Cross-checked the macOS payload of bundle `18.0.9246` against the Windows installer of the
+same build (`8.5.9246.0.exe` → MSI → `virtualdj.cab` → `virtualdj.exe`, whose `.rsrc` section
+holds the same assets as `RCDATA` resources). Of the 34 shipped data files present on both
+platforms — every `pads_*.xml`, `skin.zip`, `remoteskin.zip`, `controllers.dat`,
+`controllers2.dat`, `transitions.zip`, `videos.zip`, the video skins, `lite.xml`,
+`AFX_beatgrid.xml` — **33 are byte-identical**. The exception is `languages.zip`, where the
+container bytes differ but all 12 extracted XMLs are byte-identical, English included
+(811 action descriptions, no platform-only entries and no wording differences). Platform
+differences are confined to shader format (`.cso` vs `.glsl`/`.metallib`), icon naming
+(`_dpi2x` vs `@2x`), and helper executables.
+
+So a Windows installer is a valid source for any bundled asset, and there is no
+Windows-only built-in skin, pad page, or sampler bank.
+
+`Resources/internal.data` (486,064,672 bytes, undocumented and opaque on macOS) turns out to
+be a **plain concatenation of seven Windows resources**, `IMG0`..`IMG6` in that order,
+verified byte-for-byte with a whole-file SHA-256 match:
+
+| Segment | Offset | Length | Content |
+| --- | ---: | ---: | --- |
+| `IMG0`..`IMG3` | 0, 39290900, 78581800, 117872700 | 39,290,900 each | raw little-endian float32 arrays |
+| `IMG4` | 157163600 | 191,508,424 | packed model, magic `c9 53 4f af 06 10 df d0` |
+| `IMG5` | 348672024 | 62,068,024 | same magic |
+| `IMG6` | 410740048 | 75,324,624 | same magic |
+
+These are the stem-separation / analysis models: Windows pairs them with `ml125.dll` and
+`DirectML*.dll`, macOS with `Frameworks/ml113.dylib` and the CoreML `model3.mlmodelc` /
+`model4.mlmodelc` trees. Nothing here is script-facing — the value is knowing that the
+opaque half-gigabyte in the bundle is model weights, with exact segment boundaries if it
+ever needs probing.
+
 ## Skin Deployment
 
 VirtualDJ interface packages are user data. Keep custom and installed skins under the VirtualDJ home folder, not inside the signed application bundle.
