@@ -396,6 +396,15 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   `onUp` — so press/release is slots 2 + 7, not 8/9), and the near-identical 8/9 pair as
   press/release (it is `onSaveState`/`onLoadState`). Structure transfers across builds:
   `overridden_slots` agrees **950/952** between `18.0.9246` and `18.0.9583`.
+- **The verb surface is platform-identical (2026-09-02).** The Windows `8.5.9246.0` installer
+  (MSI → `virtualdj.cab` → `virtualdj.exe`, PE32+ x64) carries MSVC RTTI names for exactly the
+  same **952** `ACTION_` classes — zero Windows-only, zero macOS-only. So a class-level absence
+  on macOS is an absence everywhere, and `get_hwnd` (the "Windows-only stray" among the
+  sweep's five action-only disagreements) is a *runtime* platform gate, not a missing class.
+  The Windows build carries no debug information either: no COFF symbol table, and its
+  `RSDS` record names `C:\atomix\virtualdj\compiled\Release_x64\virtualdj.pdb`, which is
+  not shipped. MSVC RTTI gives class names only, never method names — so Windows binaries
+  are corroboration, never a source of slot names.
 - **A flag was mislabeled for a month (2026-08-29).** `query_text` was calibrated from
   `get_title`, whose extra override is slot **4** — the bool query. Regenerating with
   `effect_bpm_deck` (overrides exactly 2/3/5) as the text-query pin moved **154 verbs**; the
