@@ -254,6 +254,33 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
             teardown=["deck 1 effect_active 1 off", "deck 1 unload"],
         ),
         Fixture(
+            name="sampler_slots_differ",
+            describes="several sampler slots hold DIFFERENT samples — the state that "
+                      "separates an aggregate `all` from a slot-scoped one. Assert-only: "
+                      "the shipped bank already provides it, so nothing is written",
+            setup=[],
+            assertions=[
+                Assertion("sampler_loaded 1", yes, "slot 1 holds a sample"),
+                Assertion("sampler_loaded 5", yes, "slot 5 holds a sample"),
+                Assertion("sampler_loaded 8", no, "slot 8 is empty, so `every` is falsifiable"),
+                Assertion("get_sample_name 1", lambda v: bool(v) and not is_error(v),
+                          "slot 1 has a name"),
+                Assertion("get_sample_name 5", lambda v: bool(v) and not is_error(v),
+                          "slot 5 has a different name"),
+            ],
+            needs_audio_file=False,
+        ),
+        Fixture(
+            name="sideview_populated",
+            describes="the sideview list holds tracks — needed by file_count and the "
+                      "browser/list parameters. Assert-only",
+            setup=[],
+            assertions=[
+                Assertion("file_count sideview", nonzero_number, "sideview reports tracks"),
+            ],
+            needs_audio_file=False,
+        ),
+        Fixture(
             name="sampler_slot_loaded",
             describes="sampler slot 1 holds a sample (shipped bank, not loaded by us)",
             setup=[],
