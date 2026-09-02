@@ -84,7 +84,8 @@ def targets(contracts: dict, table: dict, want: list[str] | None) -> dict[str, l
     for name, rec in verbs.items():
         if name not in real:
             continue
-        cands = rec.get("keyword_candidates") or []
+        cands = [c for c in (rec.get("keyword_candidates") or [])
+                 if not _looks_like_symbol_fragment(c, verbs)]
         if name in optional or cands:
             out[name] = sorted(dict.fromkeys(cands))
     if want:
@@ -93,6 +94,38 @@ def targets(contracts: dict, table: dict, want: list[str] | None) -> dict[str, l
             sys.exit(f"not probe targets: {', '.join(missing)}")
         out = {k: v for k, v in out.items() if k in want}
     return out
+
+
+def _looks_like_symbol_fragment(token: str, verbs: dict) -> bool:
+    """Drop candidates that are a tail of some `ACTION_<verb>` symbol.
+
+    String recovery off a method body picks up fragments of neighbouring
+    symbols: `param_equal` was credited with a keyword `TION_get_text`, which is
+    `ACTION_get_text` with the head sheared off. These are never real tokens.
+    """
+    # The token must reach back INTO the `ACTION_` prefix to be a fragment.
+    # A token that merely equals a verb name (`left`, `loop`, `top`) is a
+    # perfectly good keyword and must survive.
+    return any(f"ACTION_{name}".endswith(token) and len(token) > len(name)
+               for name in verbs)
+
+
+def shared_lexicon(artifact: Path, limit: int) -> list[str]:
+    """Tokens already proven real for more than one verb.
+
+    A token that separates from nonsense on two unrelated verbs is part of a
+    shared vocabulary, not a quirk of one parser — the best guess available for
+    verbs whose own candidates were never recovered.
+    """
+    if not artifact.exists():
+        sys.exit(f"--lexicon needs {artifact}; run the probe first")
+    counts: dict[str, int] = {}
+    for rec in json.load(open(artifact))["verbs"].values():
+        for form in rec["forms"]:
+            if len(form["tokens"]) == 1 and form["verdict"] == "recognized":
+                counts[form["tokens"][0]] = counts.get(form["tokens"][0], 0) + 1
+    shared = [tok for tok, n in sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])) if n > 1]
+    return shared[:limit]
 
 
 def forms_for(tokens: list[str], pairs: bool) -> list[tuple[str, ...]]:
@@ -197,6 +230,34 @@ def classify(verb_readings: dict, fixtures: list[str]) -> dict:
     }
 
 
+UNDISCERNING_SHARE = 0.5
+
+
+def _flag_undiscerning(verbs_out: dict) -> set:
+    """Strip verbs that "recognize" most of an arbitrary vocabulary.
+
+    The shared lexicon is not tailored to any one verb, so a verb separating
+    from nonsense on half of it is not speaking that vocabulary — its answer is
+    drifting under the probe (`record_vu` matched 24 of 25 tokens, `pioneer_cue`
+    15) and every hit is measurement noise. Same failure as get_cpu, one level
+    up: --repeat catches a value that moves between two reads, this catches one
+    that moves between a token read and its control.
+    """
+    flagged = set()
+    for verb, rec in verbs_out.items():
+        singles = [f for f in rec["forms"] if len(f["tokens"]) == 1]
+        hits = [f for f in singles if f["verdict"] == "recognized"]
+        if len(singles) >= 10 and len(hits) > UNDISCERNING_SHARE * len(singles):
+            flagged.add(verb)
+            for form in hits:
+                form["verdict"] = "undiscerning"
+                form["undiscerning"] = f"{len(hits)}/{len(singles)} of an arbitrary lexicon"
+            rec["recognized_tokens"] = []
+            rec["two_token_grammar"] = False
+            rec["two_token_forms"] = []
+    return flagged
+
+
 def _pair_shape_counts(verbs_out: dict) -> dict:
     from collections import Counter
     c = Counter(f["pair_shape"] for r in verbs_out.values() for f in r["forms"]
@@ -231,6 +292,9 @@ def main() -> int:
     p.add_argument("--verbs", help="comma-separated subset")
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
+    p.add_argument("--lexicon", type=int, metavar="N", nargs="?", const=25,
+                   help="probe the N most cross-verb tokens already proven real against the "
+                        "verbs whose own candidates were never recovered (default 25)")
     p.add_argument("--check", action="store_true")
     p.add_argument("--merge", metavar="FILE",
                    help="fold a targeted re-probe into the artifact, replacing "
@@ -249,6 +313,14 @@ def main() -> int:
     table = json.load(open(VERB_TABLE))
     want = [v.strip() for v in args.verbs.split(",")] if args.verbs else None
     cands = targets(contracts, table, want)
+    if args.lexicon:
+        lexicon = shared_lexicon(Path("tests/verb-arg-forms.json"), args.lexicon)
+        # Only verbs with no vocabulary of their own — the ones the first sweep
+        # could do nothing for beyond reading them bare.
+        cands = {v: lexicon for v, own in cands.items() if not own} if not want else \
+                {v: lexicon for v in cands}
+        if not args.quiet:
+            print(f"lexicon ({len(lexicon)}): {' '.join(lexicon)}", file=sys.stderr)
     plan = {v: forms_for(t, not args.no_pairs) for v, t in cands.items()}
     fixture_names = [f.strip() for f in args.fixtures.split(",") if f.strip()]
 
@@ -260,6 +332,7 @@ def main() -> int:
             sys.exit("merge refused: the two runs used different fixtures")
         repeat = add["summary"].get("repeat_reads", 1)
         disputed = set(base["summary"].get("disputed_verbs", []))
+        undiscerning = _flag_undiscerning(add["verbs"])
         for verb, rec in add["verbs"].items():
             prior = base["verbs"].get(verb)
             # A claim that flips between independent runs is not a claim. This
@@ -285,6 +358,8 @@ def main() -> int:
             "confirmed_with_repeat": sorted(v for v, r in base["verbs"].items()
                                             if r.get("repeat_reads", 1) > 1),
             "disputed_verbs": sorted(disputed),
+            "undiscerning_verbs": sorted(
+                set(base["summary"].get("undiscerning_verbs", [])) | undiscerning),
         })
         artifact.write_text(json.dumps(base, indent=1) + "\n")
         print(f"merged {len(add['verbs'])} verbs read {repeat}x: "

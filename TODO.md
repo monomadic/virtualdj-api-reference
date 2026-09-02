@@ -768,11 +768,26 @@ predicate `browsed_song <field> <value>` requiring both tokens. Both are documen
 `is_using` because `effect inaudible` depends on FX state the fixture does not pin. Two agreeing
 runs is the guard that caught both; `--repeat` alone was not enough.
 
-Still open: the 191 optional-arg verbs with no recovered candidates of their own were only ever
-probed bare, so a shared-lexicon pass (the tokens that proved real here, tried against every
-verb) is the obvious next sweep. Also worth a filter: `param_equal`'s candidate `TION_get_text`
-is a truncated `ACTION_get_text` from the binary extraction, so candidates that are substrings
-of known symbols should be dropped before probing.
+**Shared-lexicon pass run 2026-09-02** (`--lexicon`, 25 tokens proven real for more than one
+verb, 215 candidate-less verbs, 5,375 forms read 2x per fixture). Yield: **`all` is a reserved
+tail token on 22 verbs** — the whole sampler family plus `loop_load`, `loop_select`,
+`load_skin`, `load_pulse`, `effect_stems`, `effect_dock_gui`, `apply_audio_config` — and
+`wheel_mode` takes `browser`/`search`. What `all` *does* is still unknown: it returned the bare
+value everywhere, so the fixtures never built a state where it could differ. A
+`sampler_slots_differ` fixture (several slots loaded with different tracks) is the follow-up.
+
+The pass also needed a second guard. `record_vu` matched 24 of the 25 arbitrary tokens and
+`pioneer_cue` 15 — a verb separating from nonsense on half a vocabulary that was not written for
+it is drifting under the probe, not speaking. `_flag_undiscerning` now strips those (recorded in
+`summary.undiscerning_verbs`), which is the same failure as `get_cpu` one level up: `--repeat`
+catches a value that moves between two reads, this catches one that moves between a token read
+and its control.
+
+Candidate filtering is done, and the first version of it was wrong in an instructive way: "is
+this token a suffix of some `ACTION_<verb>` symbol" is true of nearly every real keyword, since
+verbs named `left`, `loop` and `top` all exist — it dropped 300 candidates including
+probe-confirmed ones. The token has to reach back *into* the `ACTION_` prefix
+(`len(token) > len(verb)`), which drops exactly the one real fragment, `TION_get_text`.
 
 **Superseded — this said the sweep was unrun:** the write-side fixtures unload decks, and the machine's decks
 were live. `tests/verb-arg-forms.json` does not exist yet; `--check` skips cleanly until it
