@@ -725,8 +725,21 @@ Done when:
 
 ### 10b. State-fixture harness + argument prober (do this first — it is the cheap unblock)
 
-Status: **Ready, and cheaper than 10a.** Python over the existing HTTP channel; no build
-toolchain, no SDK, no new evidence tier. Added 2026-08-11.
+Status: **Step 1 done 2026-09-02, step 2 next.** Python over the existing HTTP channel; no
+build toolchain, no SDK, no new evidence tier. Added 2026-08-11.
+
+Step 1 shipped as [tools/fixtures.py](tools/fixtures.py) (`just fixtures`,
+`just fixture-verify <name>`, `just fixture-establish <name>`): six named states —
+`one_deck_loaded`, `both_decks_loaded`, `deck2_playing`, `loop_active`, `fx_slot_1_on`,
+`sampler_slot_loaded` — each polling its own readbacks and raising `FixtureError` rather
+than reporting a state it could not confirm. Fixture audio is generated locally with ffmpeg
+(90 s, 120 BPM pulse train, cached under `~/Library/Caches/virtualdj-api-reference/`) so
+results never depend on the user's collection, and teardown restores each deck to the
+contents and transport state observed at establish time. `--check` validates definitions
+offline, so `just check` stays hermetic.
+
+Not yet done: `stems_active` needs a stem-capable fixture track and an analysis wait, so it
+is deliberately absent rather than half-verified.
 
 The blocker for argument forms is not the channel, it is **prepared state**. Unknown arguments
 are silently ignored (`loaded bogusword` → `yes`), so a form can only be confirmed by comparing

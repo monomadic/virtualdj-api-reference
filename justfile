@@ -143,6 +143,20 @@ verb-return-type name:
 sweep-return-types:
     @python3 tools/sweep_return_types.py > tests/verb-return-types.json
 
+# --- prepared state (fixtures) ----------------------------------------------
+# Argument forms can only be told apart in a state where they would disagree.
+# Each fixture verifies its own preconditions and refuses to report success
+# otherwise. `fixture-establish` changes live app state; some make sound.
+
+fixtures:
+    @python3 tools/fixtures.py --list
+
+fixture-verify name:
+    @python3 tools/fixtures.py --verify "{{name}}"
+
+fixture-establish name *args:
+    python3 tools/fixtures.py --establish "{{name}}" {{args}}
+
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
@@ -224,6 +238,7 @@ check:
     python3 tools/plugin_introspect.py --check
     python3 tools/plugin_skin.py --check
     python3 tools/topic.py check
+    python3 tools/fixtures.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
