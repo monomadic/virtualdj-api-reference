@@ -768,6 +768,34 @@ predicate `browsed_song <field> <value>` requiring both tokens. Both are documen
 `is_using` because `effect inaudible` depends on FX state the fixture does not pin. Two agreeing
 runs is the guard that caught both; `--repeat` alone was not enough.
 
+**Catalog + corpus extraction, 2026-09-03.** `Resources/languages.zip` is the source of the
+official verbs-appendix prose — verified verbatim against the published page — so the appendix
+is available offline and the repo had been reading that file for verb *names* only, discarding
+816 descriptions. [tools/extract_action_catalog.py](tools/extract_action_catalog.py) now emits
+them (`tests/action-catalog.json`), with the quoted parameters pulled out: 97 verbs document
+parameters, 18 promise more than one argument.
+
+The cross-check against the probe artifacts is the useful part, and it cuts three ways:
+**16 verbs confirmed by both**, **90 documented but never probe-confirmed** (`auto_cue`
+always/on/off, `display_time` elapsed/remain/total, `broadcast` direct/podcast/server/video …
+— each one a state the fixtures never built, or an observable the probe could not see), and
+**64 probe-confirmed but undocumented** (`browser_scroll` top/bottom/parent, `cue_display`
+num/number, `action_deck` left/right …). The 90 are the immediate worklist: the meaning is
+already written down, only the local confirmation is missing.
+
+[tools/extract_script_corpus.py](tools/extract_script_corpus.py) collects the sanctioned
+examples into `tests/vdjscript-corpus.json`: 1,390 snippets over 372 verbs, 269 quoted in
+catalog descriptions and 1,131 from shipped Built-In XML, deduped with provenance on each.
+Two provenance traps were fixed while building it — prose sentences beginning with a verb-like
+word (`"Load saved loop named …"`) are excluded by requiring a lowercase first character, and
+only `Built-In` trees are read, since `examples/Pads/Quarantine` and the repo's own skins would
+otherwise let our test fixtures masquerade as vendor evidence.
+
+Next with these: (1) work the 90 documented-but-unconfirmed parameters, which now have known
+meanings to test against; (2) mine corpus tails as a third independent source of argument
+forms; (3) use the corpus as a parse-regression set for every grammar claim in
+[VDJScript Grammar](docs/VDJScript%20Grammar.md).
+
 **Execute-position pass run 2026-09-03** ([tools/probe_execute_forms.py](tools/probe_execute_forms.py),
 `just probe-execute-forms`, artifact `tests/verb-execute-forms.json`). Motivated by `deck all`:
 32,376 queries could not see it because the query path collapses it to deck 1, and one execute

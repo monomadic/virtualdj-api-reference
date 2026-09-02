@@ -157,6 +157,15 @@ fixture-verify name:
 fixture-establish name *args:
     python3 tools/fixtures.py --establish "{{name}}" {{args}}
 
+# The Button Editor's own action descriptions — the official appendix prose,
+# offline. `--cross-check` diffs documented parameters against probe findings.
+action-catalog *args:
+    @python3 tools/extract_action_catalog.py {{args}}
+
+# Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML.
+script-corpus *args:
+    @python3 tools/extract_script_corpus.py {{args}}
+
 # TAIL GRAMMAR: which trailing tokens a verb actually recognizes (Tier 1).
 # Every candidate is measured against nonsense controls, in every fixture.
 verb-arg-forms name:
@@ -255,6 +264,8 @@ check:
     python3 tools/fixtures.py --check
     python3 tools/probe_arg_forms.py --check
     python3 tools/probe_execute_forms.py --check
+    python3 tools/extract_action_catalog.py --check
+    python3 tools/extract_script_corpus.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
