@@ -525,6 +525,33 @@ deck 99 get_version             -> 2026     <- nonexistent deck, accepted silent
 again: an out-of-range deck is not reported. `all_decks get_version` errors — `all_decks`
 is action-only and has no query value, so it cannot wrap a query.
 
+### `deck all` broadcasts on execute and collapses to one deck on query (2026-09-03)
+
+`all` is a deck target beside `1`, `left`, `active` and `master`, and it behaves differently
+in the two contexts. **Executing broadcasts to every deck** (`Local test`, four-deck setup,
+values restored afterwards):
+
+```
+deck all beatlock on   -> deck 1..4 beatlock all read yes
+deck all beatlock off  -> deck 1..4 all read no
+deck 1 beatlock on     -> only deck 1 reads yes
+```
+
+So `deck all play` does start every deck, as the name suggests.
+
+**Querying does not aggregate — it answers from the first deck.** With deck 1 loaded and
+deck 2 empty:
+
+```
+deck all get_deck    -> 1
+deck all loaded      -> yes    (deck 1's answer; deck 2 reads no)
+deck all get_title   -> the deck 1 title
+```
+
+An unknown target does error here (`deck qqqq loaded` -> `error:-2147467259`), so the target
+slot is one of the few places the parser is not silent. Do not read a `deck all` query as
+"all decks agree" — it is deck 1's value, and there is no established aggregate-query form.
+
 ## XML escaping
 
 Inside XML attributes, `&` must be written `&amp;`:
