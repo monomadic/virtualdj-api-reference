@@ -1029,9 +1029,23 @@ as the `TION_get_text` symbol fragment and the `"Load saved loop named …"` pro
 of which shipped before being caught. Exclude `while_pressed`, the unit suffixes, and anything
 that is itself a verb name.
 
-Done when: `attested-tails.json` exists with provenance per token, the probe accepts
-`--from-corpus`, and the three-source cross-check in `just action-catalog --cross-check` reports
-corpus attestation alongside the catalog and probe columns.
+**DONE 2026-09-03.** [tools/extract_attested_tails.py](tools/extract_attested_tails.py)
+(`just attested-tails`) emits `tests/attested-tails.json`: **154 tokens on 71 verbs, 116 of them
+unknown to both other sources**, each carrying the snippet and shipped file it came from.
+`probe_arg_forms.py --from-corpus` probes them; 33 verbs confirmed an attested tail locally and
+**11 were newly confirmed** — `browser_window songs`, `effect_stems vocal`, `stem_pad vocal`,
+`skin_panel audiomixer|defaultwave`, `get_next_karaoke_song artist|singer|title`,
+`setting eqmode`, `pad_page btn1`, `cue_display name`, `effect_slider active`,
+`get_sample_name active`, `color green`.
+
+The filters earned their place immediately: `dump while_pressed` is correctly gone while
+`dump quantized|notquantized` survives.
+
+`just action-catalog --cross-check` now reports a fourth column, `confirmed_by_all_three` — 8
+verbs whose tokens are documented by the vendor, written by the vendor, *and* locally
+reproduced (`crossfader_curve` cut/full/smooth, `loop_adjust` in/move/out, `is_using`
+effect/equalizer/pads/sample, `get_time` remain/total). That is as settled as this project can
+make a claim.
 
 ### 13. Fixtures For The 81 Documented-But-Unconfirmed Parameters
 

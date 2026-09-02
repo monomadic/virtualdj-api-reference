@@ -83,7 +83,10 @@ def cross_check(entries: dict[str, dict]) -> dict:
     if not ARG_FORMS.exists():
         return {}
     probed = json.load(open(ARG_FORMS))["verbs"]
+    attested_path = Path("tests/attested-tails.json")
+    attested = json.load(open(attested_path))["tails"] if attested_path.exists() else {}
     both, catalog_only, probe_only = {}, {}, {}
+    three_ways = {}
     for verb, rec in entries.items():
         documented = set(rec["documented_parameters"])
         found = {t[0] for t in probed.get(verb, {}).get("recognized_tokens", []) if len(t) == 1}
@@ -95,10 +98,16 @@ def cross_check(entries: dict[str, dict]) -> dict:
             catalog_only[verb] = sorted(documented - found)
         if found - documented:
             probe_only[verb] = sorted(found - documented)
+        # Attested = written by Atomix in a shipped script. A token carried by
+        # all three sources is as settled as this project can make it.
+        written = set(attested.get(verb, {}))
+        if documented & found & written:
+            three_ways[verb] = sorted(documented & found & written)
     return {
         "confirmed_by_both": both,
         "documented_but_not_probe_confirmed": catalog_only,
         "probe_confirmed_but_undocumented": probe_only,
+        "confirmed_by_all_three": three_ways,
     }
 
 

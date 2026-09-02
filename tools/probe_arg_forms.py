@@ -292,6 +292,10 @@ def main() -> int:
     p.add_argument("--verbs", help="comma-separated subset")
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
+    p.add_argument("--from-corpus", action="store_true",
+                   help="take candidates from tails Atomix actually wrote in shipped scripts "
+                        "(tests/attested-tails.json) — attested forms, so a miss means the "
+                        "fixtures cannot see it, not that the token is unreal")
     p.add_argument("--from-catalog", action="store_true",
                    help="take each verb's candidates from the Button Editor catalog's own "
                         "prose (tests/action-catalog.json) instead of the binary — these are "
@@ -317,6 +321,13 @@ def main() -> int:
     table = json.load(open(VERB_TABLE))
     want = [v.strip() for v in args.verbs.split(",")] if args.verbs else None
     cands = targets(contracts, table, want)
+    if args.from_corpus:
+        attested = json.load(open("tests/attested-tails.json"))["tails"]
+        real = set(table["verbs"])
+        cands = {v: sorted(toks) for v, toks in attested.items()
+                 if v in real and (not want or v in want)}
+        if not args.quiet:
+            print(f"corpus-attested tails on {len(cands)} verbs", file=sys.stderr)
     if args.from_catalog:
         catalog = json.load(open("tests/action-catalog.json"))["actions"]
         documented = {v: r["documented_parameters"] for v, r in catalog.items()
