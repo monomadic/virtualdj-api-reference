@@ -6031,11 +6031,28 @@ sampler_load_to_deck
 | `smart_fader`  | Sync while crossfading      | `smart_fader`    |
 | `phrase_sync`  | Match phrase                | `phrase_sync 16` |
 | `quantize_all` | Set all quantize options    | `quantize_all`   |
-| `auto_bpm_transition` | Gradually move BPM toward the other deck | `auto_bpm_transition` |
-| `auto_bpm_transition_options` | Configure auto BPM transition features | `auto_bpm_transition_options "length"` |
+| `auto_bpm_transition` | Gradually move BPM toward the other deck; an optional parameter forces which BPM it lands on | `auto_bpm_transition 'target_current'` |
+| `auto_bpm_transition_options` | Enable/disable features of the transition; first parameter names the feature | `auto_bpm_transition_options 'stems' 'vocal'` |
 | `get_bpm_match` | Return BPM match amount | `get_bpm_match` |
 | `sync_hint` | Query sync hint such as pitch or phase | `sync_hint "phase"` |
 | `bpm_stabilizer` | Lock fluid track to current BPM | `bpm_stabilizer` |
+
+Important notes:
+
+- `auto_bpm_transition` gradually moves this song's BPM to the other deck's while keeping both
+  playing at the same BPM; with `smartPlay` or `autoBPMMatch` on it moves at normal speed. The
+  optional parameter **forces which BPM the transition targets**: `'source_original'`,
+  `'target_original'` or `'target_current'` (`Official`, VDJScript verbs appendix).
+- `auto_bpm_transition_options` takes the feature as its first parameter — `'length'`, `'loop'`,
+  `'stems'`, `'master_tempo'` or `'autostart'` — and features that need a value take a **second
+  token**: the appendix's own example is `auto_bpm_transition_options 'stems' 'vocal'` to
+  disable a specific stem. This is documented confirmation of the two-token tail that
+  [tests/verb-arg-forms.json](../tests/verb-arg-forms.json) found structurally.
+- **Do not read the 2026-09-03 execute-probe result as evidence against these parameters.**
+  That probe's observable was the verb's own boolean readback, which reports whether a
+  transition is *running*; the parameters steer which BPM it lands on, which that observable
+  cannot see. The three parameter tokens looked identical to junk for that reason alone. A
+  valid test needs two decks at different BPMs and a readback of the resulting BPM over time.
 
 ## Video
 

@@ -10,6 +10,16 @@ tests/verb-arg-forms.json inherits that blindness, so a token being
 The observable is the verb's own state, read back independently (Evidence
 Standards rule 4) — never the return value of the call that made the change.
 
+THE OBSERVABLE IS ALSO THIS TOOL'S LIMIT. It can only see a token that changes
+what the verb does to its OWN readable state. A token that steers how an action
+runs, or that touches different state, is invisible here and will be reported
+`tail-ignored-in-execute` — which means "not visible in this observable", never
+"not a parameter". `auto_bpm_transition source_original` is the type case: the
+official appendix documents it as forcing which BPM the transition lands on,
+while this tool watches a boolean saying whether a transition is running, so it
+scored identically to junk. Verbs whose tail selects a mode or a target need an
+observable chosen for that tail.
+
 The method is TWO BASELINES, and it is what makes a real argument separable from
 an ignored one. A bare toggle flips, so from a single baseline `beatlock on` and
 `beatlock <garbage>` both end up on and look identical. Run each form from both

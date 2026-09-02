@@ -585,10 +585,20 @@ on a verb whose junk tail flips, i.e. `all` is parsed and suppresses the toggle.
 consistent with [`all` being a target keyword](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query)
 rather than vocabulary belonging to this verb.
 
-The verbs' own binary-recovered candidates (`source_original`, `target_current`,
-`target_original`) behaved exactly like junk here, so they belong to the `_options` variant or
-to a context these fixtures do not build — the query sweep's negative on them is corroborated,
-not overturned.
+*Corrected 2026-09-03, same day:* this section first read that the verbs' own candidates
+(`source_original`, `target_current`, `target_original`) "behaved exactly like junk here, so
+the query sweep's negative on them is corroborated". **That was wrong, and the error was the
+observable, not the data.** The official verbs appendix documents all three as parameters of
+`auto_bpm_transition` that force which BPM the transition lands on. The probe watched the
+verb's own boolean readback — whether a transition is *running* — which cannot see which BPM
+it targets, so a real parameter was indistinguishable from junk by construction.
+
+The lesson generalises past this verb: **a signature test is only as good as its observable.**
+Two-baseline signatures answer "did this token change what the verb did to its own state"; a
+token that steers *how* an action runs, or that affects a different piece of state, is
+invisible to it. Verbs whose tail selects a mode or a target need an observable chosen for that
+tail — here, two decks at different BPMs and a readback of the resulting BPM over time. Treat
+`tail-ignored-in-execute` as "not visible in this observable", never as "not a parameter".
 
 ## XML escaping
 

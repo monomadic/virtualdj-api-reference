@@ -774,6 +774,16 @@ runs is the guard that caught both; `--repeat` alone was not enough.
 made it obvious. Method is two baselines per form — from `off` and from `on` — which is what
 separates *set* from *flip* from *no-op*; from one baseline they are indistinguishable.
 
+**Corrected same day:** the pass reported `auto_bpm_transition`'s own candidates
+(`source_original`, `target_original`, `target_current`) as behaving like junk, and this file
+first recorded that as corroborating the query negative. The official verbs appendix documents
+all three as parameters forcing which BPM the transition lands on — the probe's observable was
+a boolean saying whether a transition is *running*, which cannot see which BPM it targets. The
+appendix also documents `auto_bpm_transition_options 'stems' 'vocal'`, a two-token tail, which
+independently confirms what `verb-arg-forms.json` found structurally. **Read
+`tail-ignored-in-execute` as "not visible in this observable".** Open task: re-test those three
+with two decks at different BPMs, reading the resulting BPM over time.
+
 Yield: the tail-handling rule is **verb-specific**, not universal. On 9 of 10 toggles a junk
 tail suppresses the action entirely; on `auto_bpm_transition` it is ignored and the toggle
 flips anyway. Only one token turned up that the query sweeps had missed —
