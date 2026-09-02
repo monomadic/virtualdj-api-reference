@@ -115,16 +115,45 @@ verified byte-for-byte with a whole-file SHA-256 match:
 
 | Segment | Offset | Length | Content |
 | --- | ---: | ---: | --- |
-| `IMG0`..`IMG3` | 0, 39290900, 78581800, 117872700 | 39,290,900 each | raw little-endian float32 arrays |
-| `IMG4` | 157163600 | 191,508,424 | packed model, magic `c9 53 4f af 06 10 df d0` |
-| `IMG5` | 348672024 | 62,068,024 | same magic |
-| `IMG6` | 410740048 | 75,324,624 | same magic |
+| `IMG0` | 0 | 39,290,900 | plaintext float32 weights |
+| `IMG1` | 39290900 | 39,290,900 | plaintext float32 weights |
+| `IMG2` | 78581800 | 39,290,900 | plaintext float32 weights |
+| `IMG3` | 117872700 | 39,290,900 | plaintext float32 weights |
+| `IMG4` | 157163600 | 191,508,424 | encrypted, magic `c9 53 4f af 06 10 df d0` |
+| `IMG5` | 348672024 | 62,068,024 | encrypted, same magic |
+| `IMG6` | 410740048 | 75,324,624 | encrypted, same magic |
 
 These are the stem-separation / analysis models: Windows pairs them with `ml125.dll` and
 `DirectML*.dll`, macOS with `Frameworks/ml113.dylib` and the CoreML `model3.mlmodelc` /
 `model4.mlmodelc` trees. Nothing here is script-facing — the value is knowing that the
 opaque half-gigabyte in the bundle is model weights, with exact segment boundaries if it
 ever needs probing.
+
+The two halves are not equally opaque:
+
+- **`IMG0`..`IMG3` are in the clear.** Each holds exactly 9,822,725 little-endian float32
+  values with no header (the length divides evenly by 4). Sampled at thirteen offsets
+  spanning each segment, **100%** of values land in `[-2, 2]`; across 20,480 samples per
+  segment the distribution is mean ≈ -0.002, σ ≈ 0.11, max |x| < 1.4, no exact zeros — a
+  trained weight tensor, not a container. Four identically sized blobs suggests one model
+  per stem. Split them with
+  `dd if=internal.data of=img$i.f32 bs=4 skip=$((i*9822725)) count=9822725`. *Beware
+  alignment when sampling: seek to a multiple of 4 or the floats decode as garbage.*
+- **`IMG4`..`IMG6` are encrypted.** Entropy 7.997-7.998 bits/byte, an identical 8-byte
+  header on all three followed by noise, and zero recoverable ASCII in the first megabyte.
+  `ml113.dylib` is ONNX Runtime (full ONNX opset diagnostics, 9,455 `onnxruntime` string
+  hits), and plaintext ONNX is protobuf that would leak node and type names immediately —
+  so these are presumably ONNX behind a cipher whose routine lives in the binary.
+- **The CoreML pair is encrypted by Apple.** `model3.mlmodelc` / `model4.mlmodelc` carry the
+  `LMNE` magic on `metadata.json` and `model.mil` plus a populated
+  `encryptionInfo/coremldata.bin` — CoreML model encryption, with the key unwrapped by the
+  OS at load. The on-disk files are inert without a live process.
+
+Practical upshot for anyone tempted to reuse them: the legible weights ship without an
+architecture (no graph, shapes, layer names, or normalization constants — those would have
+to come out of the inference code), and everything that carries its own architecture is
+encrypted. Note also that these are Atomix's proprietary weights; local inspection is one
+thing, redistribution is a licensing question.
 
 ## Skin Deployment
 
