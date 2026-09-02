@@ -525,6 +525,29 @@ deck 99 get_version             -> 2026     <- nonexistent deck, accepted silent
 again: an out-of-range deck is not reported. `all_decks get_version` errors — `all_decks`
 is action-only and has no query value, so it cannot wrap a query.
 
+### The full target list, and brackets as threads (`Official wiki`, 2026-09-03)
+
+From [the VDJScript wiki page](https://virtualdj.com/wiki/vdjscript.html), fetched
+2026-09-03 — the deck wrapper accepts nine targets, four more than this reference had:
+
+`deck 1` … `deck 4`, `deck left`, `deck right`, **`deck leftvideo`**, **`deck rightvideo`**,
+`deck all`, **`deck default`**, `deck active`. Without a wrapper a verb applies to the default
+or controller-mapped deck.
+
+Two constructs the wiki documents that are not otherwise recorded here:
+
+- **Brackets start a separate execution thread**, which is how a script waits without blocking
+  the rest of the line:
+  `( wait 1000ms & play_pause ) & action_deck 1 ? deck 2 play_pause : deck 1 play_pause`
+- **`while_pressed`** at the end of a statement limits it to the duration of the button press:
+  `volume 100% while_pressed`.
+
+Argument units are `ms`, `bt` (beats) and `%`, alongside plain integers and decimals:
+`nudge +100ms`, `wait 8bt`, `crossfader 50%`.
+
+`deck leftvideo`, `deck rightvideo` and `deck default` are **not yet locally tested** — they
+are recorded here on the wiki's authority alone.
+
 ### `deck all` broadcasts on execute and collapses to one deck on query (2026-09-03)
 
 `all` is a deck target beside `1`, `left`, `active` and `master`, and it behaves differently

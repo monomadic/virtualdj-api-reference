@@ -5,8 +5,8 @@
   "multi_argument": 18,
   "language": "English.xml",
   "cross_check_counts": {
-   "confirmed_by_both": 16,
-   "documented_but_not_probe_confirmed": 90,
+   "confirmed_by_both": 26,
+   "documented_but_not_probe_confirmed": 81,
    "probe_confirmed_but_undocumented": 64
   }
  },
@@ -19,14 +19,34 @@
     "master_tempo",
     "stems"
    ],
+   "auto_cue": [
+    "always"
+   ],
+   "color": [
+    "red"
+   ],
+   "cross_assign": [
+    "thru"
+   ],
    "crossfader_curve": [
     "cut",
     "full",
     "scratch",
     "smooth"
    ],
+   "display_time": [
+    "elapsed",
+    "remain",
+    "total"
+   ],
    "effect_list": [
     "master"
+   ],
+   "effect_select": [
+    "audioonlyvisualisation"
+   ],
+   "effect_select_multi": [
+    "video"
    ],
    "file_count": [
     "automix",
@@ -48,8 +68,17 @@
    ],
    "get_song_event": [
     "hasbeats",
+    "remaining",
     "volume",
     "volume_end"
+   ],
+   "get_time": [
+    "absolute",
+    "remain",
+    "total"
+   ],
+   "get_vu_meter": [
+    "sampler"
    ],
    "is_using": [
     "cue",
@@ -58,7 +87,13 @@
     "filter",
     "load",
     "loop",
+    "pads",
     "sample"
+   ],
+   "loop_adjust": [
+    "in",
+    "move",
+    "out"
    ],
    "maximize": [
     "fullscreen"
@@ -66,24 +101,27 @@
    "mixermode": [
     "external"
    ],
-   "param_cast": [
-    "absolute",
-    "beats",
-    "boolean",
-    "float",
-    "int_trunc",
-    "integer",
-    "percentage",
-    "text"
+   "sampler_mode": [
+    "hold",
+    "stutter",
+    "unmute"
    ],
    "sampler_options": [
     "stemswap"
    ],
+   "scratch_dna_option": [
+    "drymix",
+    "quantized"
+   ],
    "timecode_mode": [
-    "smart"
+    "relative"
    ],
    "wheel_mode": [
     "browser",
+    "jog",
+    "loop_in",
+    "loop_move",
+    "loop_out",
     "search"
    ]
   },
@@ -94,7 +132,6 @@
     "target_original"
    ],
    "auto_cue": [
-    "always",
     "off",
     "on"
    ],
@@ -123,19 +160,8 @@
    "browser_shortcut": [
     "browser_shortcut"
    ],
-   "color": [
-    "red"
-   ],
-   "cross_assign": [
-    "thru"
-   ],
    "cue_color": [
     "yellow"
-   ],
-   "display_time": [
-    "elapsed",
-    "remain",
-    "total"
    ],
    "effect_active": [
     "flanger"
@@ -159,12 +185,10 @@
     "transition"
    ],
    "effect_select": [
-    "audioonlyvisualisation",
     "echo"
    ],
    "effect_select_multi": [
-    "echo",
-    "video"
+    "echo"
    ],
    "eventscheduler_start": [
     "summer_wedding"
@@ -208,8 +232,7 @@
    ],
    "get_song_event": [
     "current",
-    "next",
-    "remaining"
+    "next"
    ],
    "get_text": [
     "off",
@@ -217,16 +240,13 @@
     "title"
    ],
    "get_time": [
-    "absolute",
     "cue1",
     "display_time",
     "elapsed",
     "loopin",
     "loopout",
-    "remain",
     "short",
-    "to_lyrics",
-    "total"
+    "to_lyrics"
    ],
    "get_time_hour": [
     "display_time"
@@ -249,9 +269,6 @@
    "get_version": [
     "2026"
    ],
-   "get_vu_meter": [
-    "sampler"
-   ],
    "goto_cue": [
     "goto_cue"
    ],
@@ -266,16 +283,8 @@
    "is_pc": [
     "is_pc"
    ],
-   "is_using": [
-    "pads"
-   ],
    "loop": [
     "loop"
-   ],
-   "loop_adjust": [
-    "in",
-    "move",
-    "out"
    ],
    "loop_color": [
     "yellow"
@@ -328,9 +337,17 @@
    ],
    "param_cast": [
     "000",
+    "absolute",
+    "beats",
+    "boolean",
+    "float",
     "frac",
+    "int_trunc",
+    "integer",
     "ms",
-    "relative"
+    "percentage",
+    "relative",
+    "text"
    ],
    "param_equal": [
     "audio",
@@ -355,11 +372,6 @@
    "sampler_loop": [
     "play"
    ],
-   "sampler_mode": [
-    "hold",
-    "stutter",
-    "unmute"
-   ],
    "sampler_play": [
     "sampler_play"
    ],
@@ -377,10 +389,6 @@
    ],
    "saved_loop_prepare": [
     "myloop"
-   ],
-   "scratch_dna_option": [
-    "drymix",
-    "quantized"
    ],
    "set": [
     "var2",
@@ -405,7 +413,7 @@
    ],
    "timecode_mode": [
     "absolute",
-    "relative"
+    "smart"
    ],
    "timecode_reset_pitch": [
     "software"
@@ -415,12 +423,6 @@
    ],
    "video_transition": [
     "left"
-   ],
-   "wheel_mode": [
-    "jog",
-    "loop_in",
-    "loop_move",
-    "loop_out"
    ]
   },
   "probe_confirmed_but_undocumented": {

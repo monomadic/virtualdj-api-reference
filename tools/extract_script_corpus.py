@@ -38,6 +38,7 @@ from zipfile import ZipFile
 DEFAULT_APP = Path("/Applications/VirtualDJ.app")
 ARTIFACT = Path("tests/vdjscript-corpus.json")
 VERB_TABLE = Path("tests/verb-table.json")
+WIKI = Path("tests/sources/wiki-examples.json")
 # ONLY vendor-shipped trees. examples/Pads/Quarantine and examples/Skins/GraveRaver
 # are this repo's own fixtures — including them would let our test files
 # masquerade as vendor evidence, which is the whole point of the corpus.
@@ -96,6 +97,33 @@ def from_builtins(known: set[str]) -> list[dict]:
     return out
 
 
+def from_wiki(known: set[str]) -> list[dict]:
+    """Examples transcribed from the official wiki pages.
+
+    Third source, and the only one carrying whole idioms — threading brackets,
+    `while_pressed`, sweep loops — rather than single-verb forms. Transcribed by
+    fetch rather than byte-verified, so every snippet is verb-checked here: a
+    slip that invents a verb is dropped and reported, one that alters an
+    argument is not detectable and the provenance note says so.
+    """
+    if not WIKI.exists():
+        return []
+    data = json.loads(WIKI.read_text())
+    out, rejected = [], []
+    for item in data["examples"]:
+        script = item["script"].strip()
+        found = verbs_in(script, known)
+        if not found:
+            rejected.append(script)
+            continue
+        out.append({"script": script, "source": "wiki",
+                    "origin": f"wiki:{item['section']}", "verbs": found})
+    if rejected:
+        print(f"  {len(rejected)} wiki snippets dropped (no known verb): "
+              f"{rejected[:3]}", file=sys.stderr)
+    return out
+
+
 def merge(entries: list[dict]) -> dict[str, dict]:
     merged: dict[str, dict] = {}
     for entry in entries:
@@ -118,7 +146,8 @@ def main() -> int:
     args = parser.parse_args()
 
     known = set(json.load(open(VERB_TABLE))["verbs"])
-    merged = merge(from_catalog(args.app, known) + from_builtins(known))
+    merged = merge(from_catalog(args.app, known) + from_builtins(known)
+                   + from_wiki(known))
 
     if args.check:
         if not ARTIFACT.exists():

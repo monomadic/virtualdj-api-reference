@@ -292,6 +292,10 @@ def main() -> int:
     p.add_argument("--verbs", help="comma-separated subset")
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
+    p.add_argument("--from-catalog", action="store_true",
+                   help="take each verb's candidates from the Button Editor catalog's own "
+                        "prose (tests/action-catalog.json) instead of the binary — these are "
+                        "documented parameters, so a hit confirms and a miss is a real gap")
     p.add_argument("--lexicon", type=int, metavar="N", nargs="?", const=25,
                    help="probe the N most cross-verb tokens already proven real against the "
                         "verbs whose own candidates were never recovered (default 25)")
@@ -313,6 +317,15 @@ def main() -> int:
     table = json.load(open(VERB_TABLE))
     want = [v.strip() for v in args.verbs.split(",")] if args.verbs else None
     cands = targets(contracts, table, want)
+    if args.from_catalog:
+        catalog = json.load(open("tests/action-catalog.json"))["actions"]
+        documented = {v: r["documented_parameters"] for v, r in catalog.items()
+                      if r["documented_parameters"]}
+        real = set(table["verbs"])
+        cands = {v: toks for v, toks in documented.items()
+                 if v in real and (not want or v in want)}
+        if not args.quiet:
+            print(f"catalog-documented parameters on {len(cands)} verbs", file=sys.stderr)
     if args.lexicon:
         lexicon = shared_lexicon(Path("tests/verb-arg-forms.json"), args.lexicon)
         # Only verbs with no vocabulary of their own — the ones the first sweep
@@ -335,17 +348,44 @@ def main() -> int:
         undiscerning = _flag_undiscerning(add["verbs"])
         for verb, rec in add["verbs"].items():
             prior = base["verbs"].get(verb)
-            # A claim that flips between independent runs is not a claim. This
-            # is the only guard that catches a value drifting slowly enough for
-            # --repeat to miss it (get_cpu is the type case).
-            if prior is not None and prior.get("repeat_reads", 1) > 1 and \
-                    prior["two_token_grammar"] != rec["two_token_grammar"]:
-                disputed.add(verb)
-                rec["two_token_grammar"] = False
-                rec["two_token_forms"] = []
-                rec["disputed"] = "two-token verdict differed between runs"
-            rec["repeat_reads"] = repeat
-            base["verbs"][verb] = rec
+            if prior is None:
+                rec["repeat_reads"] = repeat
+                base["verbs"][verb] = rec
+                continue
+            # UNION the form lists, never replace. A targeted re-probe covers a
+            # narrower set of forms than the sweep it refines (--from-catalog
+            # skips pairs entirely), so replacing would silently delete
+            # measurements and turn "not probed this time" into "not a token".
+            by_tokens = {tuple(f["tokens"]): f for f in prior["forms"]}
+            reprobed = {tuple(f["tokens"]): f for f in rec["forms"]}
+            # A verdict that flips on a form BOTH runs measured is a real
+            # dispute; one the new run never sent is not.
+            for tokens, form in reprobed.items():
+                was = by_tokens.get(tokens)
+                if (was and prior.get("repeat_reads", 1) > 1
+                        and was["verdict"] != form["verdict"]
+                        and "recognized" in (was["verdict"], form["verdict"])):
+                    disputed.add(verb)
+                    form["disputed"] = (f"verdict for {' '.join(tokens) or '(bare)'} differed "
+                                        f"between runs: {was['verdict']} vs {form['verdict']}")
+                by_tokens[tokens] = form
+            merged_forms = sorted(by_tokens.values(),
+                                  key=lambda f: (len(f["tokens"]), f["tokens"]))
+            recognized = [f for f in merged_forms if f["verdict"] == "recognized"
+                          and "disputed" not in f]
+            prior.update({
+                "forms": merged_forms,
+                "controls": {**prior.get("controls", {}), **rec.get("controls", {})},
+                "recognized_tokens": [list(x) for x in sorted(
+                    {tuple(f["tokens"]) for f in recognized}, key=lambda x: (len(x), x))],
+                "two_token_grammar": any(
+                    f.get("pair_shape") in ("beyond-singles", "last-token-wins")
+                    for f in recognized),
+                "repeat_reads": max(prior.get("repeat_reads", 1), repeat),
+            })
+            prior["two_token_forms"] = [f["tokens"] for f in recognized
+                                        if f.get("pair_shape") in ("beyond-singles",
+                                                                   "last-token-wins")]
         recognized = sum(1 for r in base["verbs"].values()
                          for f in r["forms"] if f["verdict"] == "recognized")
         base["summary"].update({

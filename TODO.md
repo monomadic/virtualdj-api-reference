@@ -791,10 +791,30 @@ word (`"Load saved loop named …"`) are excluded by requiring a lowercase first
 only `Built-In` trees are read, since `examples/Pads/Quarantine` and the repo's own skins would
 otherwise let our test fixtures masquerade as vendor evidence.
 
-Next with these: (1) work the 90 documented-but-unconfirmed parameters, which now have known
-meanings to test against; (2) mine corpus tails as a third independent source of argument
-forms; (3) use the corpus as a parse-regression set for every grammar claim in
-[VDJScript Grammar](docs/VDJScript%20Grammar.md).
+**Catalog-driven probe run 2026-09-03** (`--from-catalog`: take each verb's candidates from the
+catalog's own prose rather than the binary). 97 verbs, 196 single-token forms, read 2x in all
+six fixtures. **27 verbs confirmed a documented parameter locally, 16 of them tokens no
+previous sweep had found** — `display_time` elapsed/remain/total, `get_time` absolute/remain/
+total, `loop_adjust` in/move/out, `sampler_mode` hold/stutter/unmute, `wheel_mode` jog/loop_in/
+loop_move/loop_out, `param_cast` frac/ms/relative, `scratch_dna_option` drymix/quantized,
+`auto_cue always`, `cross_assign thru`, `timecode_mode relative`, `get_vu_meter sampler`,
+`effect_select audioonlyvisualisation`, `effect_select_multi video`. The catalog is a better
+candidate source than the binary: it is written for these verbs, so its hit rate is far above a
+generic lexicon's.
+
+Cross-check moved from 16/90/64 to 26/81/64. The 81 that remain documented-but-unconfirmed are
+mostly *contextual* — `broadcast` direct/podcast/server/video, `effect_arm_deck` aux/mic/sampler,
+`automix_editor_movetrack` current/next/previous — states no fixture builds. Those need
+fixtures, not more probing.
+
+Fixed while doing this: `--merge` **replaced** a verb's forms with the incoming run's, so
+merging a narrow re-probe over a broad sweep deleted measurements (950 recognized forms
+collapsed to 535) and manufactured disputes for verbs whose pairs the new run never sent. It
+now UNIONs form lists and disputes only a form both runs actually measured.
+
+Still next: (1) fixtures for the 81 contextual parameters; (2) mine corpus tails as a third
+independent source of argument forms; (3) use the corpus as a parse-regression set for every
+grammar claim in [VDJScript Grammar](docs/VDJScript%20Grammar.md).
 
 **Execute-position pass run 2026-09-03** ([tools/probe_execute_forms.py](tools/probe_execute_forms.py),
 `just probe-execute-forms`, artifact `tests/verb-execute-forms.json`). Motivated by `deck all`:

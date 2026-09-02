@@ -2,8 +2,8 @@
  "summary": {
   "verbs": 483,
   "forms": 4430,
-  "recognized_forms": 950,
-  "verbs_with_recognized_token": 106,
+  "recognized_forms": 968,
+  "verbs_with_recognized_token": 117,
   "fixtures": [
    "sampler_slot_loaded",
    "one_deck_loaded",
@@ -34,6 +34,7 @@
   },
   "confirmed_with_repeat": [
    "apply_audio_config",
+   "auto_bpm_transition",
    "auto_bpm_transition_options",
    "auto_cue",
    "auto_match_bpm",
@@ -43,19 +44,29 @@
    "automix",
    "automix_dualdeck",
    "automix_editor",
+   "automix_editor_movetrack",
    "beatjump",
    "beatjump_page",
    "beatlock",
    "booth_volume",
    "bpm_stabilizer",
    "brakespeed",
+   "broadcast",
+   "browsed_file_color",
    "browsed_song",
    "browser",
+   "browser_gotofolder",
+   "browser_move",
    "browser_padding",
+   "browser_shortcut",
    "browser_zoom",
+   "color",
    "colorfx_prefader",
    "controller_mapping",
+   "cross_assign",
+   "crossfader_curve",
    "crossfader_disable",
+   "cue_color",
    "cue_cup",
    "cue_loop_autosync",
    "cue_loop_hold",
@@ -66,11 +77,18 @@
    "effect_3slots_layout",
    "effect_activate",
    "effect_active",
+   "effect_arm_deck",
+   "effect_arm_stem",
    "effect_bank_load",
    "effect_bpm_deck",
    "effect_button",
+   "effect_disable_all",
    "effect_dock_gui",
    "effect_fxsendreturnenable",
+   "effect_list",
+   "effect_list_edit",
+   "effect_select",
+   "effect_select_multi",
    "effect_show_gui",
    "effect_slider_activate",
    "effect_slider_active",
@@ -83,6 +101,7 @@
    "eq_kill_low",
    "eq_kill_med",
    "eq_kill_mid",
+   "eventscheduler_start",
    "fader_curve",
    "fader_start",
    "fake_eq",
@@ -93,23 +112,45 @@
    "fake_master",
    "fake_mixer",
    "fake_pfl",
+   "file_count",
+   "filter_label",
    "filter_resonance",
    "flip_arm",
    "flip_loop",
    "flip_play",
+   "get_artist_before_feat",
+   "get_beat_num",
    "get_bpm_match",
    "get_controller_image",
    "get_cpu",
+   "get_crossfader_result",
+   "get_deck_color",
+   "get_decks",
    "get_display",
    "get_gemini_display",
+   "get_key",
    "get_key_modifier",
+   "get_limiter",
+   "get_phrase_num",
    "get_pioneer_display",
    "get_sample_color",
    "get_sample_info",
    "get_sample_name",
    "get_sample_slot_name",
+   "get_saved_loop",
+   "get_slip_time",
    "get_song_event",
    "get_text",
+   "get_time",
+   "get_time_hour",
+   "get_time_min",
+   "get_time_ms",
+   "get_time_msf",
+   "get_time_sec",
+   "get_time_sign",
+   "get_version",
+   "get_vu_meter",
+   "goto_cue",
    "grid_view",
    "has_battery",
    "has_video_mix",
@@ -117,7 +158,10 @@
    "headphone_gain",
    "headphone_mix",
    "hold",
+   "hot_cue",
+   "invert_deck",
    "is_battery",
+   "is_pc",
    "is_using",
    "jog",
    "jog_wheel",
@@ -138,24 +182,30 @@
    "loop",
    "loop_adjust",
    "loop_back",
+   "loop_color",
    "loop_in",
    "loop_length",
    "loop_load",
+   "loop_load_prepare",
    "loop_move",
    "loop_out",
    "loop_pad_mode",
    "loop_pad_page",
    "loop_position",
    "loop_roll_mode",
+   "loop_save",
    "loop_select",
    "macro_record",
    "master_balance",
    "master_tempo",
    "masterdeck",
    "masterdeck_auto",
+   "maximize",
    "mic",
    "mic_rec",
    "microphone",
+   "mix_and_load_next",
+   "mixermode",
    "mono_mix",
    "motorwheel",
    "motorwheel_instant_play",
@@ -163,18 +213,27 @@
    "nudge",
    "numark_waveform_zoom",
    "only_stem",
+   "os2l_button",
+   "os2l_scene",
    "over_video",
    "overvideo",
    "pad_bank2",
    "pad_has_16pads",
+   "pad_page",
    "pad_param",
    "pad_param2",
+   "padfx",
+   "padshift",
+   "padshift_button_color",
+   "padshift_pressure",
+   "param_cast",
    "param_equal",
    "pfl",
    "pioneer_cue",
    "pioneer_loop",
    "pioneer_loop_in",
    "pioneer_loop_out",
+   "pitch",
    "pitch_bend",
    "pitch_lock",
    "pitch_motorized",
@@ -196,6 +255,7 @@
    "repeat",
    "repeat_song",
    "reverse",
+   "sampler_bank",
    "sampler_color",
    "sampler_default",
    "sampler_group_mute",
@@ -205,6 +265,7 @@
    "sampler_loop",
    "sampler_mode",
    "sampler_mute",
+   "sampler_options",
    "sampler_pad",
    "sampler_pad_shift",
    "sampler_pfl",
@@ -215,8 +276,12 @@
    "sampler_rapidfire",
    "sampler_select",
    "sampler_stop",
+   "sampler_volume",
+   "sampler_volume_master",
    "sandbox",
+   "saved_loop",
    "saved_loop_autotrigger",
+   "saved_loop_prepare",
    "scratch_dna",
    "scratch_dna_option",
    "scratch_hold",
@@ -225,13 +290,16 @@
    "scratchwheel",
    "scratchwheel_touch",
    "seek",
+   "set",
    "set_fluid",
+   "set_var_dialog",
    "set_variable_bpm",
    "show_pluginpage",
    "sideview_triggerpad",
    "silent_cue",
    "skin_empty_buttons",
    "skin_height",
+   "skin_panelgroup",
    "skin_width",
    "slip",
    "slip_mode",
@@ -242,13 +310,19 @@
    "smart_scratch",
    "speedwheel_touch",
    "startupspeed",
+   "stem_pad",
    "stems_bleed",
+   "stems_split",
+   "sync_hint",
    "system_volume",
    "timecode_cd_mode",
+   "timecode_mode",
    "timecode_motor_enable",
    "timecode_no_jump",
+   "timecode_reset_pitch",
    "touchwheel",
    "touchwheel_touch",
+   "var_equal",
    "video",
    "video_crossfader_auto",
    "video_crossfader_link",
@@ -256,6 +330,7 @@
    "video_fadetoblack",
    "video_fx",
    "video_fx_button",
+   "video_transition",
    "video_transition_button",
    "vinyl_mode",
    "wheel_mode"
@@ -265,6 +340,7 @@
    "is_using"
   ],
   "undiscerning_verbs": [
+   "param_cast",
    "pioneer_cue",
    "record_vu"
   ]
@@ -999,7 +1075,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "auto_bpm_transition_options": {
    "forms": [
@@ -1794,6 +1871,29 @@
     },
     {
      "tokens": [
+      "always"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "auto"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -2018,6 +2118,34 @@
     },
     {
      "tokens": [
+      "off"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "on"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
       "pioneer"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -2133,7 +2261,11 @@
      "fx_slot_1_on": "error:-2147024809"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "always"
+    ]
+   ],
    "two_token_grammar": false,
    "two_token_forms": [],
    "repeat_reads": 2
@@ -5268,7 +5400,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "automix_skip": {
    "forms": [
@@ -9161,7 +9294,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "browser_options": {
    "forms": [
@@ -17675,7 +17809,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "crossfader_disable": {
    "forms": [
@@ -19613,6 +19748,21 @@
       "fx_slot_1_on": "error:-2147467263"
      },
      "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "yellow"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
     }
    ],
    "controls": {
@@ -19635,7 +19785,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "cue_countdown": {
    "forms": [
@@ -22574,6 +22725,28 @@
     },
     {
      "tokens": [
+      "elapsed"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "full"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -22756,6 +22929,29 @@
     },
     {
      "tokens": [
+      "remain"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "right"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -22798,6 +22994,28 @@
     },
     {
      "tokens": [
+      "total"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -22829,7 +23047,17 @@
      "fx_slot_1_on": "error:-2147024809"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "elapsed"
+    ],
+    [
+     "remain"
+    ],
+    [
+     "total"
+    ]
+   ],
    "two_token_grammar": false,
    "two_token_forms": [],
    "repeat_reads": 2
@@ -26123,6 +26351,21 @@
     },
     {
      "tokens": [
+      "flanger"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "full"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -28786,7 +29029,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "effect_dock_gui": {
    "forms": [
@@ -30551,6 +30795,21 @@
       "loop_active",
       "fx_slot_1_on"
      ]
+    },
+    {
+     "tokens": [
+      "video"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
     }
    ],
    "controls": {
@@ -30577,7 +30836,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "effect_list_edit": {
    "forms": [
@@ -30755,7 +31015,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "effect_mixfx": {
    "forms": [
@@ -31425,6 +31686,42 @@
     },
     {
      "tokens": [
+      "audioonlyvisualisation"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "echo"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
       "menushown"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -31486,9 +31783,14 @@
      "fx_slot_1_on": "no"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "audioonlyvisualisation"
+    ]
+   ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "effect_select_multi": {
    "forms": [
@@ -31528,6 +31830,20 @@
     },
     {
      "tokens": [
+      "echo"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
       "menushown"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -31539,6 +31855,28 @@
       "loop_active": "no",
       "fx_slot_1_on": "no"
      }
+    },
+    {
+     "tokens": [
+      "video"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
     },
     {
      "tokens": [
@@ -31589,9 +31927,14 @@
      "fx_slot_1_on": "no"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "video"
+    ]
+   ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "effect_select_popup": {
    "forms": [
@@ -45531,12 +45874,12 @@
      ],
      "verdict": "recognized",
      "values": {
-      "sampler_slot_loaded": "0",
-      "one_deck_loaded": "0",
-      "both_decks_loaded": "0",
-      "deck2_playing": "0",
-      "loop_active": "0",
-      "fx_slot_1_on": "0"
+      "sampler_slot_loaded": "5",
+      "one_deck_loaded": "5",
+      "both_decks_loaded": "5",
+      "deck2_playing": "5",
+      "loop_active": "5",
+      "fx_slot_1_on": "5"
      },
      "separates_in": [
       "sampler_slot_loaded",
@@ -47117,7 +47460,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "filter": {
    "forms": [
@@ -47620,8 +47964,8 @@
       "one_deck_loaded": "MOBIUS TRI",
       "both_decks_loaded": "MOBIUS TRI",
       "deck2_playing": "MOBIUS TRI",
-      "loop_active": "DELAY",
-      "fx_slot_1_on": "DELAY"
+      "loop_active": "MOBIUS TRI",
+      "fx_slot_1_on": "MOBIUS TRI"
      }
     },
     {
@@ -47716,8 +48060,8 @@
       "one_deck_loaded": "MOBIUS TRI",
       "both_decks_loaded": "MOBIUS TRI",
       "deck2_playing": "MOBIUS TRI",
-      "loop_active": "DELAY",
-      "fx_slot_1_on": "DELAY"
+      "loop_active": "MOBIUS TRI",
+      "fx_slot_1_on": "MOBIUS TRI"
      },
      "same_as_bare_everywhere": true
     },
@@ -48248,16 +48592,16 @@
      "one_deck_loaded": "MOBIUS TRI",
      "both_decks_loaded": "MOBIUS TRI",
      "deck2_playing": "MOBIUS TRI",
-     "loop_active": "DELAY",
-     "fx_slot_1_on": "DELAY"
+     "loop_active": "MOBIUS TRI",
+     "fx_slot_1_on": "MOBIUS TRI"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "MOBIUS TRI",
      "one_deck_loaded": "MOBIUS TRI",
      "both_decks_loaded": "MOBIUS TRI",
      "deck2_playing": "MOBIUS TRI",
-     "loop_active": "DELAY",
-     "fx_slot_1_on": "DELAY"
+     "loop_active": "MOBIUS TRI",
+     "fx_slot_1_on": "MOBIUS TRI"
     }
    },
    "recognized_tokens": [
@@ -48286,7 +48630,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "filter_resonance": {
    "forms": [
@@ -51902,8 +52247,8 @@
       "one_deck_loaded": "error:-2147024891",
       "both_decks_loaded": "fixture",
       "deck2_playing": "fixture",
-      "loop_active": "fixture",
-      "fx_slot_1_on": "fixture"
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
      }
     },
     {
@@ -51918,6 +52263,21 @@
       "deck2_playing": "fixture",
       "loop_active": "fixture",
       "fx_slot_1_on": "fixture"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "featuring"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024891",
+      "one_deck_loaded": "error:-2147024891",
+      "both_decks_loaded": "fixture",
+      "deck2_playing": "fixture",
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
      },
      "same_as_bare_everywhere": true
     },
@@ -51975,21 +52335,22 @@
      "one_deck_loaded": "error:-2147024891",
      "both_decks_loaded": "fixture",
      "deck2_playing": "fixture",
-     "loop_active": "fixture",
-     "fx_slot_1_on": "fixture"
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "error:-2147024891",
      "one_deck_loaded": "error:-2147024891",
      "both_decks_loaded": "fixture",
      "deck2_playing": "fixture",
-     "loop_active": "fixture",
-     "fx_slot_1_on": "fixture"
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
     }
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_artist_title": {
    "forms": [
@@ -53839,7 +54200,7 @@
      "tokens": [],
      "verdict": "bare",
      "values": {
-      "sampler_slot_loaded": "0",
+      "sampler_slot_loaded": "0.5",
       "one_deck_loaded": "0.5",
       "both_decks_loaded": "0.5",
       "deck2_playing": "1",
@@ -53847,7 +54208,6 @@
       "fx_slot_1_on": "0"
      },
      "separates_in": [
-      "sampler_slot_loaded",
       "fx_slot_1_on"
      ]
     },
@@ -53894,7 +54254,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_deck": {
    "forms": [
@@ -53958,8 +54319,8 @@
       "one_deck_loaded": "#FF6868",
       "both_decks_loaded": "#FF6868",
       "deck2_playing": "#FF6868",
-      "loop_active": "#B0E0FF",
-      "fx_slot_1_on": "#B0E0FF"
+      "loop_active": "#FF6868",
+      "fx_slot_1_on": "#FF6868"
      }
     },
     {
@@ -53972,8 +54333,8 @@
       "one_deck_loaded": "red",
       "both_decks_loaded": "red",
       "deck2_playing": "red",
-      "loop_active": "blue",
-      "fx_slot_1_on": "blue"
+      "loop_active": "red",
+      "fx_slot_1_on": "red"
      },
      "separates_in": [
       "sampler_slot_loaded",
@@ -53991,16 +54352,16 @@
      "one_deck_loaded": "#FF6868",
      "both_decks_loaded": "#FF6868",
      "deck2_playing": "#FF6868",
-     "loop_active": "#B0E0FF",
-     "fx_slot_1_on": "#B0E0FF"
+     "loop_active": "#FF6868",
+     "fx_slot_1_on": "#FF6868"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "#FF6868",
      "one_deck_loaded": "#FF6868",
      "both_decks_loaded": "#FF6868",
      "deck2_playing": "#FF6868",
-     "loop_active": "#B0E0FF",
-     "fx_slot_1_on": "#B0E0FF"
+     "loop_active": "#FF6868",
+     "fx_slot_1_on": "#FF6868"
     }
    },
    "recognized_tokens": [
@@ -54009,7 +54370,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_deck_letter": {
    "forms": [
@@ -57051,8 +57413,8 @@
       "one_deck_loaded": "error:-2147024891",
       "both_decks_loaded": "A",
       "deck2_playing": "A",
-      "loop_active": "A",
-      "fx_slot_1_on": "A"
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
      }
     },
     {
@@ -57065,14 +57427,12 @@
       "one_deck_loaded": "error:-2147024891",
       "both_decks_loaded": "11B",
       "deck2_playing": "11B",
-      "loop_active": "11B",
-      "fx_slot_1_on": "11B"
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
      },
      "separates_in": [
       "both_decks_loaded",
-      "deck2_playing",
-      "loop_active",
-      "fx_slot_1_on"
+      "deck2_playing"
      ]
     },
     {
@@ -57085,8 +57445,8 @@
       "one_deck_loaded": "error:-2147024891",
       "both_decks_loaded": "A",
       "deck2_playing": "A",
-      "loop_active": "A",
-      "fx_slot_1_on": "A"
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
      },
      "same_as_bare_everywhere": true
     },
@@ -57544,16 +57904,16 @@
      "one_deck_loaded": "error:-2147024891",
      "both_decks_loaded": "A",
      "deck2_playing": "A",
-     "loop_active": "A",
-     "fx_slot_1_on": "A"
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "error:-2147024891",
      "one_deck_loaded": "error:-2147024891",
      "both_decks_loaded": "A",
      "deck2_playing": "A",
-     "loop_active": "A",
-     "fx_slot_1_on": "A"
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
     }
    },
    "recognized_tokens": [
@@ -57616,7 +57976,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_key_modifier": {
    "forms": [
@@ -64781,7 +65142,35 @@
     },
     {
      "tokens": [
+      "group"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
       "left"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
+      "length"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -64908,6 +65297,20 @@
     {
      "tokens": [
       "play_pause"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
+      "pos"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -65896,6 +66299,21 @@
     },
     {
      "tokens": [
+      "pos"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "len",
       "length"
      ],
@@ -66011,7 +66429,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_slip_time": {
    "forms": [
@@ -66189,7 +66608,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_song_event": {
    "forms": [
@@ -66251,6 +66671,23 @@
       "fx_slot_1_on": "error:-2147467259"
      },
      "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "remaining"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467259",
+      "one_deck_loaded": "error:-2147467259",
+      "both_decks_loaded": "error:-2147467259",
+      "deck2_playing": "168",
+      "loop_active": "error:-2147467259",
+      "fx_slot_1_on": "error:-2147467259"
+     },
+     "separates_in": [
+      "deck2_playing"
+     ]
     },
     {
      "tokens": [
@@ -66682,6 +67119,9 @@
    "recognized_tokens": [
     [
      "hasbeats"
+    ],
+    [
+     "remaining"
     ],
     [
      "volume"
@@ -67211,6 +67651,50 @@
     },
     {
      "tokens": [
+      "off"
+     ],
+     "verdict": "unstable",
+     "values": {
+      "sampler_slot_loaded": "-",
+      "one_deck_loaded": "-",
+      "both_decks_loaded": "fixture - 120bpm",
+      "deck2_playing": "fixture - 120bpm",
+      "loop_active": "-",
+      "fx_slot_1_on": "-"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "on"
+     ],
+     "verdict": "unstable",
+     "values": {
+      "sampler_slot_loaded": "-",
+      "one_deck_loaded": "-",
+      "both_decks_loaded": "fixture - 120bpm",
+      "deck2_playing": "fixture - 120bpm",
+      "loop_active": "-",
+      "fx_slot_1_on": "-"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "pioneer"
      ],
      "verdict": "unstable",
@@ -67343,6 +67827,28 @@
     },
     {
      "tokens": [
+      "title"
+     ],
+     "verdict": "unstable",
+     "values": {
+      "sampler_slot_loaded": "title",
+      "one_deck_loaded": "title",
+      "both_decks_loaded": "title",
+      "deck2_playing": "title",
+      "loop_active": "title",
+      "fx_slot_1_on": "title"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "unstable",
@@ -67396,17 +67902,140 @@
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
       "both_decks_loaded": "90000",
-      "deck2_playing": "50491",
-      "loop_active": "90533",
-      "fx_slot_1_on": "89811"
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
      },
      "separates_in": [
-      "both_decks_loaded",
-      "fx_slot_1_on"
+      "both_decks_loaded"
      ],
      "unstable_in": [
-      "deck2_playing",
-      "loop_active"
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "absolute"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "90000",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded"
+     ],
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "cue1"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "elapsed"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "loopin"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "loopout"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "remain"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "90000",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded"
+     ],
+     "unstable_in": [
+      "deck2_playing"
      ]
     },
     {
@@ -67418,13 +68047,49 @@
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
       "both_decks_loaded": "0",
-      "deck2_playing": "39520",
-      "loop_active": "-522",
-      "fx_slot_1_on": "188"
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
      },
      "unstable_in": [
-      "deck2_playing",
-      "loop_active"
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "to_lyrics"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "total"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "90000",
+      "deck2_playing": "90000",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded"
+     ],
+     "unstable_in": [
+      "deck2_playing"
      ]
     }
    ],
@@ -67433,22 +68098,33 @@
      "sampler_slot_loaded": "error:1",
      "one_deck_loaded": "error:1",
      "both_decks_loaded": "0",
-     "deck2_playing": "39531",
-     "loop_active": "-510",
-     "fx_slot_1_on": "188"
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "error:1",
      "one_deck_loaded": "error:1",
      "both_decks_loaded": "0",
-     "deck2_playing": "39543",
-     "loop_active": "-499",
-     "fx_slot_1_on": "188"
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "absolute"
+    ],
+    [
+     "remain"
+    ],
+    [
+     "total"
+    ]
+   ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_time_msf": {
    "forms": [
@@ -67459,16 +68135,12 @@
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
       "both_decks_loaded": "0",
-      "deck2_playing": "33",
-      "loop_active": "36",
-      "fx_slot_1_on": "60"
+      "deck2_playing": "39",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
      },
-     "separates_in": [
-      "fx_slot_1_on"
-     ],
      "unstable_in": [
-      "deck2_playing",
-      "loop_active"
+      "deck2_playing"
      ]
     },
     {
@@ -67491,6 +68163,23 @@
       "deck2_playing",
       "loop_active"
      ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
     }
    ],
    "controls": {
@@ -67498,17 +68187,17 @@
      "sampler_slot_loaded": "error:1",
      "one_deck_loaded": "error:1",
      "both_decks_loaded": "0",
-     "deck2_playing": "43",
-     "loop_active": "34",
-     "fx_slot_1_on": "14"
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
     },
     "vfnrbq": {
      "sampler_slot_loaded": "error:1",
      "one_deck_loaded": "error:1",
      "both_decks_loaded": "0",
-     "deck2_playing": "45",
-     "loop_active": "33",
-     "fx_slot_1_on": "14"
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
     }
    },
    "recognized_tokens": [
@@ -67517,7 +68206,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "get_title": {
    "forms": [
@@ -74501,6 +75191,21 @@
     },
     {
      "tokens": [
+      "invert_deck"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "left"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -74582,7 +75287,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "is_battery": {
    "forms": [
@@ -75149,7 +75855,7 @@
      ],
      "verdict": "recognized",
      "values": {
-      "sampler_slot_loaded": "yes",
+      "sampler_slot_loaded": "no",
       "one_deck_loaded": "no",
       "both_decks_loaded": "no",
       "deck2_playing": "no",
@@ -75168,6 +75874,28 @@
     {
      "tokens": [
       "loopsize"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "pads"
      ],
      "verdict": "recognized",
      "values": {
@@ -77350,6 +78078,9 @@
     ],
     [
      "loopsize"
+    ],
+    [
+     "pads"
     ],
     [
      "sample"
@@ -90253,6 +90984,29 @@
     },
     {
      "tokens": [
+      "in"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "left"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -90309,6 +91063,29 @@
     },
     {
      "tokens": [
+      "move"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "name"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -90362,6 +91139,29 @@
       "loop_active": "error:-2147024809",
       "fx_slot_1_on": "error:-2147024809"
      }
+    },
+    {
+     "tokens": [
+      "out"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
     },
     {
      "tokens": [
@@ -90480,7 +91280,17 @@
      "fx_slot_1_on": "error:-2147024809"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "in"
+    ],
+    [
+     "move"
+    ],
+    [
+     "out"
+    ]
+   ],
    "two_token_grammar": false,
    "two_token_forms": [],
    "repeat_reads": 2
@@ -91943,6 +92753,21 @@
     {
      "tokens": [
       "master"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "myloop"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -98086,7 +98911,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "mic": {
    "forms": [
@@ -100874,7 +101700,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "mixermode": {
    "forms": [
@@ -100996,7 +101823,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "mono_mix": {
    "forms": [
@@ -101420,7 +102248,7 @@
       "sampler_slot_loaded": "no",
       "one_deck_loaded": "no",
       "both_decks_loaded": "no",
-      "deck2_playing": "no",
+      "deck2_playing": "yes",
       "loop_active": "no",
       "fx_slot_1_on": "no"
      }
@@ -101637,6 +102465,21 @@
     },
     {
      "tokens": [
+      "motorwheel"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "yes",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "name"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -101787,6 +102630,21 @@
     },
     {
      "tokens": [
+      "timestamp"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "yes",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -101806,7 +102664,7 @@
      "sampler_slot_loaded": "no",
      "one_deck_loaded": "no",
      "both_decks_loaded": "no",
-     "deck2_playing": "no",
+     "deck2_playing": "yes",
      "loop_active": "no",
      "fx_slot_1_on": "no"
     },
@@ -101814,7 +102672,7 @@
      "sampler_slot_loaded": "no",
      "one_deck_loaded": "no",
      "both_decks_loaded": "no",
-     "deck2_playing": "no",
+     "deck2_playing": "yes",
      "loop_active": "no",
      "fx_slot_1_on": "no"
     }
@@ -106158,6 +107016,20 @@
     },
     {
      "tokens": [
+      "pad_page"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
       "sampler"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -106385,7 +107257,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "pad_page_favorite_select": {
    "forms": [
@@ -107890,6 +108763,21 @@
     },
     {
      "tokens": [
+      "pad"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "pads"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -107956,7 +108844,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "page": {
    "forms": [
@@ -108406,9 +109295,24 @@
     },
     {
      "tokens": [
+      "000"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "absolute"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "",
       "one_deck_loaded": "",
@@ -108424,13 +109328,14 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
       "beats"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108446,7 +109351,8 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
@@ -108474,7 +109380,7 @@
      "tokens": [
       "boolean"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108490,13 +109396,14 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
       "float"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108512,7 +109419,31 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
+    },
+    {
+     "tokens": [
+      "frac"
+     ],
+     "verdict": "undiscerning",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
@@ -108540,7 +109471,7 @@
      "tokens": [
       "int_trunc"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108556,13 +109487,14 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
       "integer"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108578,7 +109510,31 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
+    },
+    {
+     "tokens": [
+      "ms"
+     ],
+     "verdict": "undiscerning",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
@@ -108621,7 +109577,7 @@
      "tokens": [
       "percentage"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108637,7 +109593,31 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
+    },
+    {
+     "tokens": [
+      "relative"
+     ],
+     "verdict": "undiscerning",
+     "values": {
+      "sampler_slot_loaded": "",
+      "one_deck_loaded": "",
+      "both_decks_loaded": "",
+      "deck2_playing": "",
+      "loop_active": "",
+      "fx_slot_1_on": ""
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
@@ -108665,7 +109645,7 @@
      "tokens": [
       "text"
      ],
-     "verdict": "recognized",
+     "verdict": "undiscerning",
      "values": {
       "sampler_slot_loaded": "error:1",
       "one_deck_loaded": "error:1",
@@ -108681,7 +109661,8 @@
       "deck2_playing",
       "loop_active",
       "fx_slot_1_on"
-     ]
+     ],
+     "undiscerning": "11/12 of an arbitrary lexicon"
     },
     {
      "tokens": [
@@ -113557,40 +114538,16 @@
    },
    "recognized_tokens": [
     [
-     "absolute"
-    ],
-    [
-     "beats"
-    ],
-    [
      "bool"
-    ],
-    [
-     "boolean"
-    ],
-    [
-     "float"
     ],
     [
      "int"
     ],
     [
-     "int_trunc"
-    ],
-    [
-     "integer"
-    ],
-    [
      "percent"
     ],
     [
-     "percentage"
-    ],
-    [
      "string"
-    ],
-    [
-     "text"
     ],
     [
      "val"
@@ -114325,7 +115282,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "param_contains": {
    "forms": [
@@ -114417,7 +115375,49 @@
     },
     {
      "tokens": [
+      "audio"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     }
+    },
+    {
+     "tokens": [
       "nothing"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     }
+    },
+    {
+     "tokens": [
+      "string"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     }
+    },
+    {
+     "tokens": [
+      "type"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -117403,7 +118403,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "pitch2": {
    "forms": [
@@ -129138,6 +130139,21 @@
     },
     {
      "tokens": [
+      "unit1"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -129551,6 +130567,21 @@
     },
     {
      "tokens": [
+      "unit1"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -129950,6 +130981,21 @@
     {
      "tokens": [
       "stems"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "unit1"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -134236,6 +135282,20 @@
     },
     {
      "tokens": [
+      "birthday"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
       "sampler"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -134359,7 +135419,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "sampler_color": {
    "forms": [
@@ -137402,6 +138463,20 @@
     },
     {
      "tokens": [
+      "play"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
       "play_pause"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -137672,6 +138747,29 @@
     },
     {
      "tokens": [
+      "hold"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "left"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -137868,6 +138966,52 @@
     },
     {
      "tokens": [
+      "stutter"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "unmute"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "waveform"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -137899,7 +139043,17 @@
      "fx_slot_1_on": "error:-2147024809"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "hold"
+    ],
+    [
+     "stutter"
+    ],
+    [
+     "unmute"
+    ]
+   ],
    "two_token_grammar": false,
    "two_token_forms": [],
    "repeat_reads": 2
@@ -138864,7 +140018,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "sampler_output": {
    "forms": [
@@ -140930,6 +142085,20 @@
     {
      "tokens": [
       "right"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "sampler_play"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -143384,6 +144553,20 @@
     },
     {
      "tokens": [
+      "sampler_stop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
       "search"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -143863,6 +145046,20 @@
     },
     {
      "tokens": [
+      "sampler_volume"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     }
+    },
+    {
+     "tokens": [
       "touchrelative"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -144122,7 +145319,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "sampler_volume_master": {
    "forms": [
@@ -144171,6 +145369,21 @@
     {
      "tokens": [
       "locked"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "1",
+      "one_deck_loaded": "1",
+      "both_decks_loaded": "1",
+      "deck2_playing": "1",
+      "loop_active": "1",
+      "fx_slot_1_on": "1"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "sampler_volume_master"
      ],
      "verdict": "indistinguishable-from-nonsense",
      "values": {
@@ -144411,7 +145624,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "sampler_volume_nogroup": {
    "forms": [
@@ -146268,6 +147482,28 @@
     },
     {
      "tokens": [
+      "drymix"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "full"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -146448,6 +147684,28 @@
     },
     {
      "tokens": [
+      "quantized"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "red"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -146540,7 +147798,14 @@
      "fx_slot_1_on": "no"
     }
    },
-   "recognized_tokens": [],
+   "recognized_tokens": [
+    [
+     "drymix"
+    ],
+    [
+     "quantized"
+    ]
+   ],
    "two_token_grammar": false,
    "two_token_forms": [],
    "repeat_reads": 2
@@ -159988,6 +161253,21 @@
     },
     {
      "tokens": [
+      "isolate"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "acapella",
       "acappella"
      ],
@@ -160070,7 +161350,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "stem_volume": {
    "forms": [
@@ -160790,6 +162071,21 @@
     },
     {
      "tokens": [
+      "stems_split"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
       "target"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -160824,7 +162120,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "stems_split_unlink": {
    "forms": [
@@ -161341,6 +162638,20 @@
       "loop_active": "no",
       "fx_slot_1_on": "no"
      }
+    },
+    {
+     "tokens": [
+      "pitch"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
     }
    ],
    "controls": {
@@ -161363,7 +162674,8 @@
    },
    "recognized_tokens": [],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "system": {
    "forms": [
@@ -162276,21 +163588,6 @@
      "tokens": [
       "relative"
      ],
-     "verdict": "indistinguishable-from-nonsense",
-     "values": {
-      "sampler_slot_loaded": "no",
-      "one_deck_loaded": "no",
-      "both_decks_loaded": "no",
-      "deck2_playing": "no",
-      "loop_active": "no",
-      "fx_slot_1_on": "no"
-     },
-     "same_as_bare_everywhere": true
-    },
-    {
-     "tokens": [
-      "smart"
-     ],
      "verdict": "recognized",
      "values": {
       "sampler_slot_loaded": "yes",
@@ -162308,6 +163605,21 @@
       "loop_active",
       "fx_slot_1_on"
      ]
+    },
+    {
+     "tokens": [
+      "smart"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
     },
     {
      "tokens": [
@@ -162442,7 +163754,7 @@
    },
    "recognized_tokens": [
     [
-     "smart"
+     "relative"
     ],
     [
      "smart",
@@ -162454,7 +163766,8 @@
     ]
    ],
    "two_token_grammar": false,
-   "two_token_forms": []
+   "two_token_forms": [],
+   "repeat_reads": 2
   },
   "timecode_motor_enable": {
    "forms": [
@@ -171383,6 +172696,28 @@
     },
     {
      "tokens": [
+      "jog"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
       "left"
      ],
      "verdict": "indistinguishable-from-nonsense",
@@ -171422,6 +172757,75 @@
       "loop_active": "error:-2147024809",
       "fx_slot_1_on": "error:-2147024809"
      }
+    },
+    {
+     "tokens": [
+      "loop_in"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "loop_move"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "loop_out"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ],
+     "same_as_bare_everywhere": true
     },
     {
      "tokens": [
@@ -171622,6 +173026,18 @@
    "recognized_tokens": [
     [
      "browser"
+    ],
+    [
+     "jog"
+    ],
+    [
+     "loop_in"
+    ],
+    [
+     "loop_move"
+    ],
+    [
+     "loop_out"
     ],
     [
      "search"
@@ -171843,6 +173259,2434 @@
    ],
    "two_token_grammar": false,
    "two_token_forms": []
+  },
+  "broadcast": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "direct"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "podcast"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "server"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "video"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "browsed_file_color": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "red"
+     ],
+     "verdict": "unstable",
+     "values": {
+      "sampler_slot_loaded": "red",
+      "one_deck_loaded": "red",
+      "both_decks_loaded": "red",
+      "deck2_playing": "red",
+      "loop_active": "red",
+      "fx_slot_1_on": "red"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "reset"
+     ],
+     "verdict": "unstable",
+     "values": {
+      "sampler_slot_loaded": "reset",
+      "one_deck_loaded": "reset",
+      "both_decks_loaded": "reset",
+      "deck2_playing": "reset",
+      "loop_active": "reset",
+      "fx_slot_1_on": "reset"
+     },
+     "unstable_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "zzqqx",
+     "one_deck_loaded": "zzqqx",
+     "both_decks_loaded": "zzqqx",
+     "deck2_playing": "zzqqx",
+     "loop_active": "zzqqx",
+     "fx_slot_1_on": "zzqqx"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "vfnrbq",
+     "one_deck_loaded": "vfnrbq",
+     "both_decks_loaded": "vfnrbq",
+     "deck2_playing": "vfnrbq",
+     "loop_active": "vfnrbq",
+     "fx_slot_1_on": "vfnrbq"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "browser_gotofolder": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "browser_gotofolder"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "browser_shortcut": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
+      "browser_shortcut"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "error:1",
+     "deck2_playing": "error:1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "error:1",
+     "deck2_playing": "error:1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "color": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "red"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "red",
+      "one_deck_loaded": "red",
+      "both_decks_loaded": "red",
+      "deck2_playing": "red",
+      "loop_active": "red",
+      "fx_slot_1_on": "red"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "transparent",
+     "one_deck_loaded": "transparent",
+     "both_decks_loaded": "transparent",
+     "deck2_playing": "transparent",
+     "loop_active": "transparent",
+     "fx_slot_1_on": "transparent"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "transparent",
+     "one_deck_loaded": "transparent",
+     "both_decks_loaded": "transparent",
+     "deck2_playing": "transparent",
+     "loop_active": "transparent",
+     "fx_slot_1_on": "transparent"
+    }
+   },
+   "recognized_tokens": [
+    [
+     "red"
+    ]
+   ],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "cross_assign": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "thru"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    }
+   },
+   "recognized_tokens": [
+    [
+     "thru"
+    ]
+   ],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "effect_arm_deck": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "aux"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "mic"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "sampler"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "effect_arm_stem": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     }
+    },
+    {
+     "tokens": [
+      "stems"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "yes",
+     "one_deck_loaded": "yes",
+     "both_decks_loaded": "yes",
+     "deck2_playing": "yes",
+     "loop_active": "yes",
+     "fx_slot_1_on": "yes"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "yes",
+     "one_deck_loaded": "yes",
+     "both_decks_loaded": "yes",
+     "deck2_playing": "yes",
+     "loop_active": "yes",
+     "fx_slot_1_on": "yes"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "eventscheduler_start": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "summer_wedding"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_beat_num": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024891",
+      "one_deck_loaded": "error:-2147024891",
+      "both_decks_loaded": "4",
+      "deck2_playing": "2",
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
+     }
+    },
+    {
+     "tokens": [
+      "get_beat_num"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024891",
+      "one_deck_loaded": "error:-2147024891",
+      "both_decks_loaded": "4",
+      "deck2_playing": "2",
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024891",
+     "one_deck_loaded": "error:-2147024891",
+     "both_decks_loaded": "4",
+     "deck2_playing": "2",
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024891",
+     "one_deck_loaded": "error:-2147024891",
+     "both_decks_loaded": "4",
+     "deck2_playing": "2",
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_decks": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "4",
+      "one_deck_loaded": "4",
+      "both_decks_loaded": "4",
+      "deck2_playing": "4",
+      "loop_active": "4",
+      "fx_slot_1_on": "4"
+     }
+    },
+    {
+     "tokens": [
+      "get_decks"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "4",
+      "one_deck_loaded": "4",
+      "both_decks_loaded": "4",
+      "deck2_playing": "4",
+      "loop_active": "4",
+      "fx_slot_1_on": "4"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "4",
+     "one_deck_loaded": "4",
+     "both_decks_loaded": "4",
+     "deck2_playing": "4",
+     "loop_active": "4",
+     "fx_slot_1_on": "4"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "4",
+     "one_deck_loaded": "4",
+     "both_decks_loaded": "4",
+     "deck2_playing": "4",
+     "loop_active": "4",
+     "fx_slot_1_on": "4"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_limiter": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     }
+    },
+    {
+     "tokens": [
+      "booth"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "get_limiter"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "0",
+     "one_deck_loaded": "0",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "0",
+     "fx_slot_1_on": "0"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "0",
+     "one_deck_loaded": "0",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "0",
+     "fx_slot_1_on": "0"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_phrase_num": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024891",
+      "one_deck_loaded": "error:-2147024891",
+      "both_decks_loaded": "4",
+      "deck2_playing": "2",
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
+     }
+    },
+    {
+     "tokens": [
+      "get_phrase_num"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024891",
+      "one_deck_loaded": "error:-2147024891",
+      "both_decks_loaded": "4",
+      "deck2_playing": "2",
+      "loop_active": "error:-2147024891",
+      "fx_slot_1_on": "error:-2147024891"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024891",
+     "one_deck_loaded": "error:-2147024891",
+     "both_decks_loaded": "4",
+     "deck2_playing": "2",
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024891",
+     "one_deck_loaded": "error:-2147024891",
+     "both_decks_loaded": "4",
+     "deck2_playing": "2",
+     "loop_active": "error:-2147024891",
+     "fx_slot_1_on": "error:-2147024891"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_time_hour": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_time_min": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "1",
+      "deck2_playing": "1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded",
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_time_ms": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "\u0000drifting",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "unstable_in": [
+      "deck2_playing"
+     ]
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "\u0000drifting",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_time_sec": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "30",
+      "deck2_playing": "24",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded",
+      "deck2_playing"
+     ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "5",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "5",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "5",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_time_sign": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "1",
+      "deck2_playing": "1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "separates_in": [
+      "both_decks_loaded"
+     ]
+    },
+    {
+     "tokens": [
+      "display_time"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "0",
+      "deck2_playing": "1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "0",
+     "deck2_playing": "1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_version": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "2026",
+      "one_deck_loaded": "2026",
+      "both_decks_loaded": "2026",
+      "deck2_playing": "2026",
+      "loop_active": "2026",
+      "fx_slot_1_on": "2026"
+     }
+    },
+    {
+     "tokens": [
+      "2026"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "2026",
+      "one_deck_loaded": "2026",
+      "both_decks_loaded": "2026",
+      "deck2_playing": "2026",
+      "loop_active": "2026",
+      "fx_slot_1_on": "2026"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "2026",
+     "one_deck_loaded": "2026",
+     "both_decks_loaded": "2026",
+     "deck2_playing": "2026",
+     "loop_active": "2026",
+     "fx_slot_1_on": "2026"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "2026",
+     "one_deck_loaded": "2026",
+     "both_decks_loaded": "2026",
+     "deck2_playing": "2026",
+     "loop_active": "2026",
+     "fx_slot_1_on": "2026"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "get_vu_meter": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0.01",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     }
+    },
+    {
+     "tokens": [
+      "sampler"
+     ],
+     "verdict": "recognized",
+     "values": {
+      "sampler_slot_loaded": "0",
+      "one_deck_loaded": "0",
+      "both_decks_loaded": "0",
+      "deck2_playing": "0",
+      "loop_active": "0",
+      "fx_slot_1_on": "0"
+     },
+     "separates_in": [
+      "deck2_playing"
+     ]
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "0",
+     "one_deck_loaded": "0",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0.01",
+     "loop_active": "0",
+     "fx_slot_1_on": "0"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "0",
+     "one_deck_loaded": "0",
+     "both_decks_loaded": "0",
+     "deck2_playing": "0.01",
+     "loop_active": "0",
+     "fx_slot_1_on": "0"
+    }
+   },
+   "recognized_tokens": [
+    [
+     "sampler"
+    ]
+   ],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "goto_cue": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     }
+    },
+    {
+     "tokens": [
+      "goto_cue"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "hot_cue": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "cue"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "cue_play"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "cue_stop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "is_pc": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "is_pc"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "loop_color": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "yellow"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "loop_load_prepare": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "myloop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "loop_save": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     }
+    },
+    {
+     "tokens": [
+      "myloop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "os2l_button": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "mybutton"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "off"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "on"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "os2l_scene": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "mypage"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "myscene"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "on"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "scene1"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "padfx": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467259",
+      "one_deck_loaded": "error:-2147467259",
+      "both_decks_loaded": "error:-2147467259",
+      "deck2_playing": "error:-2147467259",
+      "loop_active": "error:-2147467259",
+      "fx_slot_1_on": "error:-2147467259"
+     }
+    },
+    {
+     "tokens": [
+      "off"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467259",
+      "one_deck_loaded": "error:-2147467259",
+      "both_decks_loaded": "error:-2147467259",
+      "deck2_playing": "error:-2147467259",
+      "loop_active": "error:-2147467259",
+      "fx_slot_1_on": "error:-2147467259"
+     },
+     "same_as_bare_everywhere": true
+    },
+    {
+     "tokens": [
+      "on"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467259",
+      "one_deck_loaded": "error:-2147467259",
+      "both_decks_loaded": "error:-2147467259",
+      "deck2_playing": "error:-2147467259",
+      "loop_active": "error:-2147467259",
+      "fx_slot_1_on": "error:-2147467259"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147467259",
+     "one_deck_loaded": "error:-2147467259",
+     "both_decks_loaded": "error:-2147467259",
+     "deck2_playing": "error:-2147467259",
+     "loop_active": "error:-2147467259",
+     "fx_slot_1_on": "error:-2147467259"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147467259",
+     "one_deck_loaded": "error:-2147467259",
+     "both_decks_loaded": "error:-2147467259",
+     "deck2_playing": "error:-2147467259",
+     "loop_active": "error:-2147467259",
+     "fx_slot_1_on": "error:-2147467259"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "padshift_button_color": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     }
+    },
+    {
+     "tokens": [
+      "pad_button_color"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:1",
+      "one_deck_loaded": "error:1",
+      "both_decks_loaded": "error:1",
+      "deck2_playing": "error:1",
+      "loop_active": "error:1",
+      "fx_slot_1_on": "error:1"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "error:1",
+     "deck2_playing": "error:1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:1",
+     "one_deck_loaded": "error:1",
+     "both_decks_loaded": "error:1",
+     "deck2_playing": "error:1",
+     "loop_active": "error:1",
+     "fx_slot_1_on": "error:1"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "padshift_pressure": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     }
+    },
+    {
+     "tokens": [
+      "pad_pressure"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147467263",
+      "one_deck_loaded": "error:-2147467263",
+      "both_decks_loaded": "error:-2147467263",
+      "deck2_playing": "error:-2147467263",
+      "loop_active": "error:-2147467263",
+      "fx_slot_1_on": "error:-2147467263"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147467263",
+     "one_deck_loaded": "error:-2147467263",
+     "both_decks_loaded": "error:-2147467263",
+     "deck2_playing": "error:-2147467263",
+     "loop_active": "error:-2147467263",
+     "fx_slot_1_on": "error:-2147467263"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "saved_loop": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "myloop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "saved_loop_prepare": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "myloop"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "set": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "var2"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "",
+      "one_deck_loaded": "",
+      "both_decks_loaded": "",
+      "deck2_playing": "",
+      "loop_active": "",
+      "fx_slot_1_on": ""
+     }
+    },
+    {
+     "tokens": [
+      "varname"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "",
+      "one_deck_loaded": "",
+      "both_decks_loaded": "",
+      "deck2_playing": "",
+      "loop_active": "",
+      "fx_slot_1_on": ""
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "",
+     "one_deck_loaded": "",
+     "both_decks_loaded": "",
+     "deck2_playing": "",
+     "loop_active": "",
+     "fx_slot_1_on": ""
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "",
+     "one_deck_loaded": "",
+     "both_decks_loaded": "",
+     "deck2_playing": "",
+     "loop_active": "",
+     "fx_slot_1_on": ""
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "set_var_dialog": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "varname"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "",
+      "one_deck_loaded": "",
+      "both_decks_loaded": "",
+      "deck2_playing": "",
+      "loop_active": "",
+      "fx_slot_1_on": ""
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "",
+     "one_deck_loaded": "",
+     "both_decks_loaded": "",
+     "deck2_playing": "",
+     "loop_active": "",
+     "fx_slot_1_on": ""
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "",
+     "one_deck_loaded": "",
+     "both_decks_loaded": "",
+     "deck2_playing": "",
+     "loop_active": "",
+     "fx_slot_1_on": ""
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "skin_panelgroup": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "separates_in": [
+      "sampler_slot_loaded",
+      "one_deck_loaded",
+      "both_decks_loaded",
+      "deck2_playing",
+      "loop_active",
+      "fx_slot_1_on"
+     ]
+    },
+    {
+     "tokens": [
+      "groupname"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    },
+    {
+     "tokens": [
+      "panelname"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "no",
+      "one_deck_loaded": "no",
+      "both_decks_loaded": "no",
+      "deck2_playing": "no",
+      "loop_active": "no",
+      "fx_slot_1_on": "no"
+     }
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "no",
+     "one_deck_loaded": "no",
+     "both_decks_loaded": "no",
+     "deck2_playing": "no",
+     "loop_active": "no",
+     "fx_slot_1_on": "no"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "timecode_reset_pitch": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     }
+    },
+    {
+     "tokens": [
+      "software"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "yes",
+      "one_deck_loaded": "yes",
+      "both_decks_loaded": "yes",
+      "deck2_playing": "yes",
+      "loop_active": "yes",
+      "fx_slot_1_on": "yes"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "yes",
+     "one_deck_loaded": "yes",
+     "both_decks_loaded": "yes",
+     "deck2_playing": "yes",
+     "loop_active": "yes",
+     "fx_slot_1_on": "yes"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "yes",
+     "one_deck_loaded": "yes",
+     "both_decks_loaded": "yes",
+     "deck2_playing": "yes",
+     "loop_active": "yes",
+     "fx_slot_1_on": "yes"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "var_equal": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     }
+    },
+    {
+     "tokens": [
+      "that_var"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "error:-2147024809",
+      "one_deck_loaded": "error:-2147024809",
+      "both_decks_loaded": "error:-2147024809",
+      "deck2_playing": "error:-2147024809",
+      "loop_active": "error:-2147024809",
+      "fx_slot_1_on": "error:-2147024809"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "error:-2147024809",
+     "one_deck_loaded": "error:-2147024809",
+     "both_decks_loaded": "error:-2147024809",
+     "deck2_playing": "error:-2147024809",
+     "loop_active": "error:-2147024809",
+     "fx_slot_1_on": "error:-2147024809"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
+  },
+  "video_transition": {
+   "forms": [
+    {
+     "tokens": [],
+     "verdict": "bare",
+     "values": {
+      "sampler_slot_loaded": "0.5",
+      "one_deck_loaded": "0.5",
+      "both_decks_loaded": "0.5",
+      "deck2_playing": "0.5",
+      "loop_active": "0.5",
+      "fx_slot_1_on": "0.5"
+     }
+    },
+    {
+     "tokens": [
+      "left"
+     ],
+     "verdict": "indistinguishable-from-nonsense",
+     "values": {
+      "sampler_slot_loaded": "0.5",
+      "one_deck_loaded": "0.5",
+      "both_decks_loaded": "0.5",
+      "deck2_playing": "0.5",
+      "loop_active": "0.5",
+      "fx_slot_1_on": "0.5"
+     },
+     "same_as_bare_everywhere": true
+    }
+   ],
+   "controls": {
+    "zzqqx": {
+     "sampler_slot_loaded": "0.5",
+     "one_deck_loaded": "0.5",
+     "both_decks_loaded": "0.5",
+     "deck2_playing": "0.5",
+     "loop_active": "0.5",
+     "fx_slot_1_on": "0.5"
+    },
+    "vfnrbq": {
+     "sampler_slot_loaded": "0.5",
+     "one_deck_loaded": "0.5",
+     "both_decks_loaded": "0.5",
+     "deck2_playing": "0.5",
+     "loop_active": "0.5",
+     "fx_slot_1_on": "0.5"
+    }
+   },
+   "recognized_tokens": [],
+   "two_token_grammar": false,
+   "two_token_forms": [],
+   "repeat_reads": 2
   }
  }
 }

@@ -1,11 +1,12 @@
 {
  "summary": {
-  "snippets": 1390,
+  "snippets": 1427,
   "by_source": {
    "catalog": 269,
-   "builtin": 1131
+   "builtin": 1131,
+   "wiki": 41
   },
-  "verbs_covered": 372,
+  "verbs_covered": 382,
   "most_exampled": [
    [
     "effect_command",
@@ -13,18 +14,18 @@
    ],
    [
     "set",
-    112
+    115
    ],
    [
     "on",
-    97
-   ],
-   [
-    "color",
-    77
+    103
    ],
    [
     "skin_panel",
+    78
+   ],
+   [
+    "color",
     77
    ],
    [
@@ -37,7 +38,7 @@
    ],
    [
     "off",
-    35
+    41
    ],
    [
     "true",
@@ -48,11 +49,11 @@
     34
    ],
    [
-    "sampler_color",
-    32
+    "var",
+    33
    ],
    [
-    "var",
+    "sampler_color",
     32
    ],
    [
@@ -64,12 +65,26 @@
     29
    ],
    [
-    "slicer",
+    "blink",
     27
    ]
   ]
  },
  "snippets": [
+  {
+   "script": "( wait 1000ms & play_pause ) & action_deck 1 ? deck 2 play_pause : deck 1 play_pause",
+   "verbs": [
+    "action_deck",
+    "play_pause",
+    "wait"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Flow"
+   ]
+  },
   {
    "script": "[ACTION2] ? blink",
    "verbs": [
@@ -829,6 +844,18 @@
    ]
   },
   {
+   "script": "browser_window 'folders,songs'",
+   "verbs": [
+    "browser_window"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Browsing"
+   ]
+  },
+  {
    "script": "browser_window 'songs'",
    "verbs": [
     "browser_window"
@@ -847,10 +874,12 @@
     "browser_window"
    ],
    "sources": [
-    "catalog"
+    "catalog",
+    "wiki"
    ],
    "origins": [
-    "browser_window"
+    "browser_window",
+    "wiki:Browsing"
    ]
   },
   {
@@ -859,10 +888,12 @@
     "browser_window"
    ],
    "sources": [
-    "catalog"
+    "catalog",
+    "wiki"
    ],
    "origins": [
-    "browser_window"
+    "browser_window",
+    "wiki:Browsing"
    ]
   },
   {
@@ -1096,6 +1127,33 @@
    ]
   },
   {
+   "script": "crossfader 0% & set \"$XFside\" 1 & repeat_start \"rsXFcheck\" 2000ms & crossfader 0% ? set \"$XFside\" 1 : crossfader 100% ? set \"$XFside\" 2 : nothing",
+   "verbs": [
+    "crossfader",
+    "nothing",
+    "repeat_start",
+    "set"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sweeping Actions"
+   ]
+  },
+  {
+   "script": "crossfader 50%",
+   "verbs": [
+    "crossfader"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Syntax"
+   ]
+  },
+  {
    "script": "crossfader_curve 'cut'",
    "verbs": [
     "crossfader_curve"
@@ -1142,6 +1200,19 @@
    ],
    "origins": [
     "examples/Skins/Built-In/Desktop/Pro.xml@action"
+   ]
+  },
+  {
+   "script": "crossfader_curve smooth ? crossfader_curve scratch : crossfader_curve smooth",
+   "verbs": [
+    "crossfader_curve",
+    "scratch"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Crossfader"
    ]
   },
   {
@@ -1946,6 +2017,22 @@
    ]
   },
   {
+   "script": "deck 1 eq_low & deck 1 eq_mid & param_multiply 0.5 & param_add 0.25 & deck 1 eq_high",
+   "verbs": [
+    "eq_high",
+    "eq_low",
+    "eq_mid",
+    "param_add",
+    "param_multiply"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:FX"
+   ]
+  },
+  {
    "script": "deck 1 leftdeck",
    "verbs": [
     "leftdeck"
@@ -1972,6 +2059,20 @@
    "origins": [
     "examples/Skins/Built-In/Desktop/Performance.xml@action",
     "examples/Skins/Built-In/Desktop/Vertical.xml@action"
+   ]
+  },
+  {
+   "script": "deck 1 leftvideo & set '$lv' 1 & deck 2 rightvideo & set '$rv' 2 &",
+   "verbs": [
+    "leftvideo",
+    "rightvideo",
+    "set"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Video"
    ]
   },
   {
@@ -2269,6 +2370,18 @@
    ]
   },
   {
+   "script": "deck master sampler_output ? sampler output \"headphones\" : deck master sampler_output",
+   "verbs": [
+    "sampler_output"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
+   ]
+  },
+  {
    "script": "deck right beatlock",
    "verbs": [
     "beatlock"
@@ -2447,6 +2560,20 @@
    ]
   },
   {
+   "script": "doubleclick ? clone_from_deck : load",
+   "verbs": [
+    "clone_from_deck",
+    "doubleclick",
+    "load"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Flow"
+   ]
+  },
+  {
    "script": "down ? action1 : action2",
    "verbs": [
     "down"
@@ -2540,6 +2667,22 @@
     "examples/Skins/Built-In/Desktop/Vertical.xml@visibility",
     "examples/Skins/Built-In/Lite/Lite.xml@visibility",
     "examples/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml@action"
+   ]
+  },
+  {
+   "script": "effect_active 'flanger' ? effect_active 'flanger' & get_var \"resetGain\" & param_cast & gain : set \"resetGain\" '`gain' & effect_active 'flanger' & gain -15%",
+   "verbs": [
+    "effect_active",
+    "gain",
+    "get_var",
+    "param_cast",
+    "set"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:FX"
    ]
   },
   {
@@ -7870,6 +8013,20 @@
    ]
   },
   {
+   "script": "holding 500ms ? unload : load",
+   "verbs": [
+    "holding",
+    "load",
+    "unload"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Flow"
+   ]
+  },
+  {
    "script": "holding ? automix : mix_now",
    "verbs": [
     "automix",
@@ -9353,6 +9510,36 @@
     "examples/Skins/Built-In/Desktop/Performance.xml@action",
     "examples/Skins/Built-In/Desktop/Pro.xml@action",
     "examples/Skins/Built-In/Desktop/Vertical.xml@action"
+   ]
+  },
+  {
+   "script": "loop 1 & wait 2bt & loop 0.5 & wait 1bt & loop 0.25 & wait 1bt & loop off",
+   "verbs": [
+    "loop",
+    "off",
+    "wait"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Loop"
+   ]
+  },
+  {
+   "script": "loop 1 & wait 2bt & loop 0.5 & wait 1bt & loop_move +4 & goto +4 & loop 0.25 & wait 1bt & loop off",
+   "verbs": [
+    "goto",
+    "loop",
+    "loop_move",
+    "off",
+    "wait"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Loop"
    ]
   },
   {
@@ -11637,6 +11824,18 @@
    ]
   },
   {
+   "script": "nudge +100ms",
+   "verbs": [
+    "nudge"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Syntax"
+   ]
+  },
+  {
    "script": "nudge +120ms",
    "verbs": [
     "nudge"
@@ -12630,6 +12829,34 @@
    ]
   },
   {
+   "script": "param_add -0.5 & param_multiply 2 & key_move",
+   "verbs": [
+    "key_move",
+    "param_add",
+    "param_multiply"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key"
+   ]
+  },
+  {
+   "script": "param_add -0.5 & param_multiply 2 & key_smooth",
+   "verbs": [
+    "key_smooth",
+    "param_add",
+    "param_multiply"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key"
+   ]
+  },
+  {
    "script": "param_add `get_var a` `get_var b`",
    "verbs": [
     "get_var",
@@ -12718,6 +12945,20 @@
    ],
    "origins": [
     "param_make_discrete"
+   ]
+  },
+  {
+   "script": "param_multiply 0.16 & param_add 0.44 & key_smooth",
+   "verbs": [
+    "key_smooth",
+    "param_add",
+    "param_multiply"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key"
    ]
   },
   {
@@ -13369,6 +13610,36 @@
    ]
   },
   {
+   "script": "repeat_start_instant 'levelSweep' 10ms 101 & level & param_smaller 1% ? stop & level 100% & repeat_stop 'levelSweep' : level -1%",
+   "verbs": [
+    "level",
+    "param_smaller",
+    "repeat_start_instant",
+    "repeat_stop",
+    "stop"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sweeping Actions"
+   ]
+  },
+  {
+   "script": "repeat_stop 'rsi_CollapseFolders' & browser_window 'folders' & browser_scroll 'bottom'",
+   "verbs": [
+    "browser_scroll",
+    "browser_window",
+    "repeat_stop"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Browsing"
+   ]
+  },
+  {
    "script": "rightcross",
    "verbs": [
     "rightcross"
@@ -13460,6 +13731,18 @@
    ]
   },
   {
+   "script": "sampler output \"headphones\" on",
+   "verbs": [
+    "on"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
+   ]
+  },
+  {
    "script": "sampler_assign 1",
    "verbs": [
     "sampler_assign"
@@ -13469,6 +13752,19 @@
    ],
    "origins": [
     "sampler_assign"
+   ]
+  },
+  {
+   "script": "sampler_bank X & sampler_play_stop Y",
+   "verbs": [
+    "sampler_bank",
+    "sampler_play_stop"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
    ]
   },
   {
@@ -14024,6 +14320,19 @@
    ]
   },
   {
+   "script": "sampler_play Y on",
+   "verbs": [
+    "on",
+    "sampler_play"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
+   ]
+  },
+  {
    "script": "sampler_rec",
    "verbs": [
     "sampler_rec"
@@ -14121,10 +14430,12 @@
     "sampler_stop"
    ],
    "sources": [
-    "catalog"
+    "catalog",
+    "wiki"
    ],
    "origins": [
-    "sampler_stop"
+    "sampler_stop",
+    "wiki:Sampler"
    ]
   },
   {
@@ -14170,10 +14481,37 @@
     "sampler_volume_master"
    ],
    "sources": [
-    "builtin"
+    "builtin",
+    "wiki"
    ],
    "origins": [
-    "examples/Skins/Built-In/Desktop/Pro.xml@action"
+    "examples/Skins/Built-In/Desktop/Pro.xml@action",
+    "wiki:Sampler"
+   ]
+  },
+  {
+   "script": "sampler_volume_master 0% on",
+   "verbs": [
+    "on",
+    "sampler_volume_master"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
+   ]
+  },
+  {
+   "script": "sampler_volume_master 100% ? sampler_volume_master 0% : sampler_volume_master 100%",
+   "verbs": [
+    "sampler_volume_master"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Sampler"
    ]
   },
   {
@@ -15399,6 +15737,20 @@
    ]
   },
   {
+   "script": "setting \"fxProcessing\" \"Post-fader\" ? on & setting \"fxProcessing\" : off & setting \"fxProcessing\"",
+   "verbs": [
+    "off",
+    "on",
+    "setting"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:FX"
+   ]
+  },
+  {
    "script": "setting 'coloredWaveforms' 'monochrome'",
    "verbs": [
     "setting"
@@ -15972,6 +16324,61 @@
    ]
   },
   {
+   "script": "shift ? blink 500ms : off",
+   "verbs": [
+    "blink",
+    "off",
+    "shift"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key and Loop control"
+   ]
+  },
+  {
+   "script": "shift ? loop_move -1 : seek -4",
+   "verbs": [
+    "loop_move",
+    "seek",
+    "shift"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key and Loop control"
+   ]
+  },
+  {
+   "script": "shift ? param_multiply 1 & key_move : param_multiply 0.25% & pitch",
+   "verbs": [
+    "key_move",
+    "param_multiply",
+    "pitch",
+    "shift"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key and Loop control"
+   ]
+  },
+  {
+   "script": "shift while_pressed",
+   "verbs": [
+    "shift"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Key and Loop control"
+   ]
+  },
+  {
    "script": "sideview +1",
    "verbs": [
     "sideview"
@@ -15993,6 +16400,18 @@
    ],
    "origins": [
     "sideview"
+   ]
+  },
+  {
+   "script": "skin_panel \"horizontal_scratch_active\" ? skin_panel \"defaultwave\" : skin_panel \"horizontal_scratch_active\"",
+   "verbs": [
+    "skin_panel"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Wave"
    ]
   },
   {
@@ -17519,6 +17938,22 @@
    ]
   },
   {
+   "script": "slip_mode on & loop 1 & wait 2bt & loop 0.5 & wait 1bt & loop 0.25 & wait 1bt & loop off & slip_mode off",
+   "verbs": [
+    "loop",
+    "off",
+    "on",
+    "slip_mode",
+    "wait"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Loop"
+   ]
+  },
+  {
    "script": "smart_scratch",
    "verbs": [
     "smart_scratch"
@@ -17791,6 +18226,21 @@
     "examples/Skins/Built-In/Desktop/Performance.xml@action",
     "examples/Skins/Built-In/Desktop/Pro.xml@action",
     "examples/Skins/Built-In/Desktop/Vertical.xml@action"
+   ]
+  },
+  {
+   "script": "toggle \"1/2pitch\" & var \"1/2pitch\" ? pitch & param_multiply 50% & pitch : pitch & param_multiply 200% & pitch",
+   "verbs": [
+    "param_multiply",
+    "pitch",
+    "toggle",
+    "var"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:FX"
    ]
   },
   {
@@ -19555,6 +20005,18 @@
    ]
   },
   {
+   "script": "video_source_select 'Camera' ? video_source_select 'None': video_source_select 'Camera'",
+   "verbs": [
+    "video_source_select"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Video"
+   ]
+  },
+  {
    "script": "video_transition 1000ms",
    "verbs": [
     "video_transition"
@@ -19601,6 +20063,20 @@
    "origins": [
     "examples/Skins/Built-In/Desktop/Performance.xml@action",
     "examples/Skins/Built-In/Desktop/Vertical.xml@action"
+   ]
+  },
+  {
+   "script": "view_options \"showkaraoke\" on & view_options \"showmusic\" off & view_options \"showvideo\" off",
+   "verbs": [
+    "off",
+    "on",
+    "view_options"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Browsing"
    ]
   },
   {
@@ -19676,6 +20152,18 @@
    ]
   },
   {
+   "script": "volume 100% while_pressed",
+   "verbs": [
+    "volume"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Syntax"
+   ]
+  },
+  {
    "script": "wait 1bt & pause",
    "verbs": [
     "pause",
@@ -19699,6 +20187,31 @@
    ],
    "origins": [
     "wait"
+   ]
+  },
+  {
+   "script": "wait 8bt",
+   "verbs": [
+    "wait"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Syntax"
+   ]
+  },
+  {
+   "script": "zoom \"default\" ? zoom 75% & zoom_scratch 75% : zoom \"default\" & zoom_scratch \"default\"",
+   "verbs": [
+    "zoom",
+    "zoom_scratch"
+   ],
+   "sources": [
+    "wiki"
+   ],
+   "origins": [
+    "wiki:Wave"
    ]
   },
   {

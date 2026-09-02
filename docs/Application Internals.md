@@ -399,6 +399,26 @@ print "backup: $VDJ_HOME/database.xml.$stamp.bak"
 print "database.xml is well-formed"
 ```
 
+## Options and the `setting` verb
+
+The ~250 configuration options in the official
+[options list](https://virtualdj.com/manuals/virtualdj/appendix/optionslist.html) are the same
+keys that appear in `settings.xml`, and the wiki's own examples address them from script with
+the `setting` verb, using the option name as the first argument:
+
+```vdjscript
+setting "fxProcessing" "Post-fader" ? on & setting "fxProcessing" : off & setting "fxProcessing"
+```
+
+Named options carry their allowed values in the option's own description — `globalQuantize`
+takes 1 for beats, 4 for measures, 0.25 for quarters; `pitchQuality` takes 1-4 fastest to best;
+`autoBPMMatch` takes `smart` among others. The binary's settings-string cluster carries the
+same enum documentation inline, so option values can be recovered offline as well.
+
+`Official` (options list appendix), `Official wiki` (the `setting` example), both fetched
+2026-09-03. Not yet locally probed — the `setting` verb writes persistent configuration, so it
+sits outside the current execute-probe allowlist by design.
+
 ## settings.xml
 
 `settings.xml` is a single XML document rooted at `<settings>`.
