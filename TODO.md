@@ -768,6 +768,36 @@ predicate `browsed_song <field> <value>` requiring both tokens. Both are documen
 `is_using` because `effect inaudible` depends on FX state the fixture does not pin. Two agreeing
 runs is the guard that caught both; `--repeat` alone was not enough.
 
+**Execute-position pass run 2026-09-03** ([tools/probe_execute_forms.py](tools/probe_execute_forms.py),
+`just probe-execute-forms`, artifact `tests/verb-execute-forms.json`). Motivated by `deck all`:
+32,376 queries could not see it because the query path collapses it to deck 1, and one execute
+made it obvious. Method is two baselines per form — from `off` and from `on` — which is what
+separates *set* from *flip* from *no-op*; from one baseline they are indistinguishable.
+
+Yield: the tail-handling rule is **verb-specific**, not universal. On 9 of 10 toggles a junk
+tail suppresses the action entirely; on `auto_bpm_transition` it is ignored and the toggle
+flips anyway. Only one token turned up that the query sweeps had missed —
+`auto_bpm_transition all` — and it reads as the target keyword again, not verb vocabulary. The
+verbs' own binary-recovered candidates behaved like junk in execute position too, so the query
+sweep's negatives are corroborated rather than overturned.
+
+**Two safety lessons, both worth keeping.** The first run aborted on `timecode_cd_mode`, which
+went `on` and would not come back — `off`, `0`, bare toggle and deck-scoped forms all left it
+`yes`. It is not in `settings.xml`, so it should be runtime-only and clear on restart; verify
+after the next VirtualDJ restart. It reached the probe because of a plain bug: `table.get(name)`
+against an artifact shaped `{"summary":…, "verbs":{…}}` returns `None` for every verb, so the
+**entire category deny-list was inert** — `timecode`, `browser`, `cues`, `database` were never
+excluded and only the name and audible filters were doing any work. Fixed, and the tool now
+exits if the table carries no categories rather than trusting it. Added since: a **pre-flight
+round-trip** (flip once, put it back, skip the verb if it does not return — it caught four
+verbs that ignore `on`/`off` entirely) and **partial results on abort**, because the first run
+threw away 25 verbs of completed work when the exception escaped.
+
+Next in this direction: the allowlist is deliberately tiny (18 verbs, settings-only, silent).
+Widening it to the audible tier (`--include-audible`: faders, mics, playback) needs an instance
+nobody is listening to, and widening past toggles/sliders needs a restore story for verbs whose
+state is not a single readable value.
+
 **Shared-lexicon pass run 2026-09-02** (`--lexicon`, 25 tokens proven real for more than one
 verb, 215 candidate-less verbs, 5,375 forms read 2x per fixture). Yield: **`all` is a reserved
 tail token on 22 verbs** — the whole sampler family plus `loop_load`, `loop_select`,

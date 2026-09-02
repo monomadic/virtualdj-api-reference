@@ -552,6 +552,44 @@ An unknown target does error here (`deck qqqq loaded` -> `error:-2147467259`), s
 slot is one of the few places the parser is not silent. Do not read a `deck all` query as
 "all decks agree" — it is deck 1's value, and there is no established aggregate-query form.
 
+## What an unrecognized tail does in execute position (2026-09-03)
+
+Under `/query` a bad argument is ignored and the verb answers anyway — `loaded bogusword`
+returns `yes`, the [no-error rule](#the-parser-never-reports-an-error) — which is why an
+argument can only be confirmed against a nonsense control.
+
+Under `/execute` there is no single rule. Measured on 14 allowlisted settings verbs from
+**both** baselines, values restored and verified (`Local test`, 2026-09-03,
+[tools/probe_execute_forms.py](../tools/probe_execute_forms.py)); a toggle's signature is
+what it reads after the call from `off` and from `on`:
+
+| Verb behaviour | bare | junk tail | Seen on |
+| --- | --- | --- | --- |
+| **Junk suppresses the action** | flips (`yes`,`no`) | nothing (`no`,`yes`) | 9 of 10 toggles — `beatlock`, `auto_sync`, `auto_match_bpm`, `quantize_all`, `pad_bank2`, `pad_pressure_switch`, `repeat_song`, `djc_shift`, `rane_timecode_enable` |
+| **Junk is ignored, action proceeds** | flips (`yes`,`no`) | flips (`yes`,`no`) | `auto_bpm_transition` |
+
+So the practical warning for mappers stands but is verb-specific: a misspelled argument
+usually makes the action do **nothing**, and on some verbs it degrades to the bare action
+instead. Neither is reported as an error.
+
+Two-baseline measurement is what separates these at all. From a single baseline, `beatlock on`
+and `beatlock <junk>` both end up on and look identical; only running from both baselines
+distinguishes *set* (`yes`,`yes`) from *flip* (`yes`,`no`) from *no-op* (`no`,`yes`).
+
+### What the execute channel added over the query sweeps
+
+Less than expected, which is itself worth recording. Across those 14 verbs — each probed with
+its own recovered candidates plus the 25-token shared lexicon — exactly **one** token appeared
+that the query sweeps had not found: `auto_bpm_transition all`, which is the no-op signature
+on a verb whose junk tail flips, i.e. `all` is parsed and suppresses the toggle. That is
+consistent with [`all` being a target keyword](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query)
+rather than vocabulary belonging to this verb.
+
+The verbs' own binary-recovered candidates (`source_original`, `target_current`,
+`target_original`) behaved exactly like junk here, so they belong to the `_options` variant or
+to a context these fixtures do not build — the query sweep's negative on them is corroborated,
+not overturned.
+
 ## XML escaping
 
 Inside XML attributes, `&` must be written `&amp;`:

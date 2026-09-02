@@ -166,6 +166,11 @@ verb-arg-forms name:
 probe-arg-forms *args:
     python3 tools/probe_arg_forms.py {{args}} > tests/verb-arg-forms.json
 
+# EXECUTE-position tails. WRITES to the running instance: allowlisted settings
+# verbs only, each round-trip tested first, every value restored and verified.
+probe-execute-forms *args:
+    python3 tools/probe_execute_forms.py {{args}} > tests/verb-execute-forms.json
+
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
@@ -249,6 +254,7 @@ check:
     python3 tools/topic.py check
     python3 tools/fixtures.py --check
     python3 tools/probe_arg_forms.py --check
+    python3 tools/probe_execute_forms.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check
