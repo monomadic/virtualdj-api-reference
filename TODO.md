@@ -992,6 +992,111 @@ justification.
 Done when `just verb-index` reads no Markdown, `just check` is green, and the step-2
 reconciliation is recorded.
 
+### 12. Mine Argument Tails From The Vendor Corpus
+
+Status: **Ready, and the cheapest source left** — static extraction, no live VirtualDJ, no
+fixtures. Added 2026-09-03.
+
+Measured before queueing: splitting every snippet in
+[tests/vdjscript-corpus.json](tests/vdjscript-corpus.json) on `& ? : ( )` and reading the token
+after each leading verb yields bare-word tails on **73 verbs**, of which **119 tokens across 50
+verbs appear in neither [tests/verb-arg-forms.json](tests/verb-arg-forms.json) nor
+[tests/action-catalog.json](tests/action-catalog.json)** — `browser_window folders|songs`,
+`eq_mode frequency|stems`, `effect_arm_deck master|single`, `effect_stems vocal`,
+`dump quantized|notquantized`, `effect_show_gui transition|audioonlyvisualisation`,
+`cue_name active`.
+
+These are attested by construction: Atomix shipped them in Built-In skins and pad pages, so the
+parser accepts them. That makes the corpus a **third independent source** alongside the binary's
+`keyword_candidates` and the catalog's prose, and it is the best remaining candidate list to feed
+`probe_arg_forms.py` — the catalog scored 27 verbs from 97 where the generic lexicon scored 24
+from 215, and a source written *for these verbs* is why.
+
+Plan:
+
+1. `--from-corpus` in [tools/probe_arg_forms.py](tools/probe_arg_forms.py), mirroring
+   `--from-catalog`: candidates per verb taken from attested tails.
+2. Record attestation in its own right. A tail in shipped XML is evidence *without* a probe: the
+   probe can only separate a token from nonsense, and it is blind wherever no fixture
+   discriminates. Emit `tests/attested-tails.json` with the snippet and file each token came
+   from, so a token can be documented as attested even when unprobeable.
+3. Then probe them, in fixtures, `--repeat 2`, and merge (the union-merge, so nothing is lost).
+
+**Filter the known non-arguments first**, or the extraction will invent parameters. Already
+visible in the sample: `dump while_pressed` is the statement suffix from
+[VDJScript Grammar](docs/VDJScript%20Grammar.md), not an argument to `dump`. Same failure class
+as the `TION_get_text` symbol fragment and the `"Load saved loop named …"` prose sentence — both
+of which shipped before being caught. Exclude `while_pressed`, the unit suffixes, and anything
+that is itself a verb name.
+
+Done when: `attested-tails.json` exists with provenance per token, the probe accepts
+`--from-corpus`, and the three-source cross-check in `just action-catalog --cross-check` reports
+corpus attestation alongside the catalog and probe columns.
+
+### 13. Fixtures For The 81 Documented-But-Unconfirmed Parameters
+
+Status: **Ready, needs a live instance** — the expensive one of this group. Added 2026-09-03.
+
+`just action-catalog --cross-check` lists 81 verbs whose parameters the vendor documents and no
+local probe has confirmed. They are overwhelmingly **contextual**, not wrong: `broadcast`
+direct/podcast/server/video, `effect_arm_deck` aux/mic/sampler, `automix_editor_movetrack`
+current/next/previous, `browser_move` top/bottom. The six fixtures in
+[tools/fixtures.py](tools/fixtures.py) never build the state in which these would differ, so the
+probe reads them as indistinguishable from nonsense and that verdict means nothing.
+
+The meaning is already written down for every one of them, so this is confirmation work, not
+discovery: each needs a state, then a re-probe with `--from-catalog --verbs <name>`.
+
+Fixture candidates, cheapest first: `sideview_populated` (automix list, sidelist),
+`browser_folder_deep` (a folder tree with a scrollable parent), `sampler_slots_differ` (several
+slots loaded with *different* tracks — also settles what the sampler `all` means, still open from
+2026-09-02), `effect_armed`, `broadcast_configured` (likely blocked: needs a server).
+
+Each fixture must assert its own preconditions and fail loudly, per the rule the harness already
+follows: a probe against an unestablished state is worse than none.
+
+Done when: at least the four unblocked fixtures exist with assertions, the affected verbs are
+re-probed, and the cross-check's middle column shrinks with each confirmation recorded.
+
+### 14. Run The Corpus As A Parse-Regression Set
+
+Status: **Ready.** Added 2026-09-03. The first thing in this project that can *falsify* a
+grammar claim rather than extend one.
+
+Every one of the 1,427 snippets in the corpus is a form the vendor considers valid — 1,131 from
+shipped Built-In XML, 269 quoted in the catalog's own descriptions, 41 from the wiki. Send each
+through the read-only query channel and any that fail to parse contradicts something this repo
+believes about the grammar.
+
+Design constraints, learned the hard way this session:
+
+- **Query only.** Corpus snippets contain `load`, `unload`, `browsed_song color`, sampler and
+  broadcast verbs; executing them would rewrite the library. The channel's own return value
+  proves nothing either (rule 4) — the observable is whether the parse errors, not what it says.
+- **`E_FAIL` is silence, not denial.** A snippet returning `E_FAIL` is not evidence of a parse
+  failure; only `E_INVALIDARG`-style structural errors are, and even those need the nonsense
+  control treatment before being called a contradiction.
+- Snippets naming effects, skins or files this install lacks will fail for environmental
+  reasons. Classify those separately or the signal drowns.
+
+Done when: every corpus snippet has a recorded parse outcome, environmental failures are
+separated from structural ones, and any structural failure is either explained or raised as a
+correction to [VDJScript Grammar](docs/VDJScript%20Grammar.md).
+
+### 15. Two Loose Ends
+
+Status: Ready, small. Added 2026-09-03.
+
+- **`timecode_cd_mode` is left on.** The 2026-09-03 execute probe set it and could not clear it;
+  `off`, `0`, bare toggle and deck-scoped forms all leave it `yes` on all four decks. It is not
+  in `settings.xml`, so it should be runtime-only — **verify after the next VirtualDJ restart**
+  and record the result either way. If it survives a restart, it is persistent state written
+  somewhere this repo has not mapped, which is worth knowing on its own.
+- **What the sampler `all` means.** 22 verbs reserve `all` as a tail token (2026-09-02), and in
+  every fixture tested `<verb> all` returned exactly the bare value while nonsense errored, so
+  the probe proves only that the parser reserves the word. `sampler_slots_differ` from task 13
+  is the fixture that would separate "any", "first" and "every".
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
