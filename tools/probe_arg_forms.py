@@ -28,6 +28,20 @@ writes, and it restores what it changed.
 
 Forms are recorded as TOKEN LISTS, never a single argument string, because
 whether a verb accepts more than one token is exactly what is unknown.
+
+Separating from nonsense is NOT enough for a two-token form: `is_using loop
+zzqqx` separates from garbage purely because `loop` does, with the tail
+discarded. So each recognized pair is additionally compared against its own
+single-token forms and labelled `first-token-wins`, `last-token-wins`,
+`beyond-singles` (a value neither token produces alone — the only real evidence
+of two-token grammar) or `singles-agree` (both singles read the same, so the
+pair cannot discriminate).
+
+Caveat this design does not fix: a verb whose value drifts on its own — CPU
+load, position, level meters — can separate from a control by measurement noise
+alone. `--repeat N` reads every form N times and demands agreement; the run
+recorded in tests/verb-arg-forms.json used the default of 1, so treat
+time-varying verbs (`get_cpu` is the type case) as unproven.
 """
 
 from __future__ import annotations
@@ -50,6 +64,10 @@ VERB_TABLE = "tests/verb-table.json"
 # count: if garbage A and garbage B disagree, the verb's answer is unstable
 # (time-varying, say) and nothing can be concluded from it.
 CONTROLS = ("zzqqx", "vfnrbq")
+
+# Sentinel written when --repeat reads disagree: the verb answers differently to
+# identical questions, so no comparison against it can mean anything.
+DRIFTING = "\0drifting"
 
 # Fixtures worth sweeping, cheapest first. sampler_slot_loaded asserts a state
 # it does not create, so it is a free extra reading rather than a setup step.
@@ -90,15 +108,31 @@ def script_for(verb: str, form: tuple[str, ...]) -> str:
     return " ".join((verb,) + form)
 
 
+def read_form(channel: Channel, script: str, repeat: int) -> str:
+    """Read a form, demanding agreement across `repeat` reads.
+
+    A verb that answers differently to two identical reads is time-varying, and
+    no comparison against it means anything — say so rather than record one of
+    the values.
+    """
+    first = channel.query(script)
+    for _ in range(repeat - 1):
+        if channel.query(script) != first:
+            return DRIFTING
+    return first
+
+
 def probe_fixture(channel: Channel, plan: dict[str, list[tuple[str, ...]]],
-                  fixture_name: str, readings: dict, verbose: bool) -> None:
-    """Read every form of every verb once, in the state currently established."""
+                  fixture_name: str, readings: dict, verbose: bool,
+                  repeat: int = 1) -> None:
+    """Read every form of every verb, in the state currently established."""
     for i, (verb, forms) in enumerate(plan.items(), 1):
         for form in forms:
-            readings[verb][form][fixture_name] = channel.query(script_for(verb, form))
+            readings[verb][form][fixture_name] = read_form(
+                channel, script_for(verb, form), repeat)
         for control in CONTROLS:
-            readings[verb][("\0control", control)][fixture_name] = channel.query(
-                script_for(verb, (control,)))
+            readings[verb][("\0control", control)][fixture_name] = read_form(
+                channel, script_for(verb, (control,)), repeat)
         if verbose and i % 50 == 0:
             print(f"    {fixture_name}: {i}/{len(plan)} verbs", file=sys.stderr)
 
@@ -116,6 +150,9 @@ def classify(verb_readings: dict, fixtures: list[str]) -> dict:
             controls = [verb_readings[k].get(fx) for k in control_keys]
             bare = verb_readings.get((), {}).get(fx)
             if value is None or any(c is None for c in controls):
+                continue
+            if value == DRIFTING or DRIFTING in controls:
+                unstable.append(fx)
                 continue
             if controls[0] != controls[1]:
                 unstable.append(fx)
@@ -144,16 +181,48 @@ def classify(verb_readings: dict, fixtures: list[str]) -> dict:
         if form != () and matches_bare and len(matches_bare) == len(rec["values"]):
             rec["same_as_bare_everywhere"] = True
         out_forms.append(rec)
+    _label_pairs(out_forms)
     out_forms.sort(key=lambda r: (len(r["tokens"]), r["tokens"]))
     recognized = [r for r in out_forms if r["verdict"] == "recognized"]
+    beyond = [r for r in recognized if r.get("pair_shape") in ("beyond-singles",
+                                                               "last-token-wins")]
     return {
         "forms": out_forms,
         "controls": {c: {fx: verb_readings[("\0control", c)].get(fx) for fx in fixtures
                          if fx in verb_readings[("\0control", c)]} for c in CONTROLS},
         "recognized_tokens": [list(t) for t in sorted(
             {tuple(r["tokens"]) for r in recognized}, key=lambda t: (len(t), t))],
-        "multi_token_recognized": any(len(r["tokens"]) > 1 for r in recognized),
+        "two_token_grammar": bool(beyond),
+        "two_token_forms": [r["tokens"] for r in beyond],
     }
+
+
+def _pair_shape_counts(verbs_out: dict) -> dict:
+    from collections import Counter
+    c = Counter(f["pair_shape"] for r in verbs_out.values() for f in r["forms"]
+                if "pair_shape" in f)
+    return dict(sorted(c.items(), key=lambda kv: -kv[1]))
+
+
+def _label_pairs(out_forms: list[dict]) -> None:
+    """A recognized pair means nothing until compared with its own singles."""
+    single = {tuple(r["tokens"]): r for r in out_forms if len(r["tokens"]) == 1}
+    for rec in out_forms:
+        if len(rec["tokens"]) != 2 or rec["verdict"] != "recognized":
+            continue
+        a, b = (single.get((rec["tokens"][0],)), single.get((rec["tokens"][1],)))
+        def same(other):
+            return other is not None and all(
+                rec["values"].get(fx) == other["values"].get(fx) for fx in rec["values"])
+        eq_a, eq_b = same(a), same(b)
+        if eq_a and eq_b:
+            rec["pair_shape"] = "singles-agree"
+        elif eq_a:
+            rec["pair_shape"] = "first-token-wins"
+        elif eq_b:
+            rec["pair_shape"] = "last-token-wins"
+        else:
+            rec["pair_shape"] = "beyond-singles"
 
 
 def main() -> int:
@@ -163,8 +232,14 @@ def main() -> int:
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
     p.add_argument("--check", action="store_true")
+    p.add_argument("--reclassify", action="store_true",
+                   help="recompute verdicts from the stored artifact values, "
+                        "without touching VirtualDJ")
     p.add_argument("--get", metavar="NAME", help="report one verb from the artifact")
     p.add_argument("--quiet", action="store_true")
+    p.add_argument("--repeat", type=int, default=1, metavar="N",
+                   help="read each form N times and keep the value only if every read "
+                        "agrees; guards against verbs whose value drifts on its own")
     args = p.parse_args()
 
     contracts = json.load(open(CONTRACTS))
@@ -173,6 +248,33 @@ def main() -> int:
     cands = targets(contracts, table, want)
     plan = {v: forms_for(t, not args.no_pairs) for v, t in cands.items()}
     fixture_names = [f.strip() for f in args.fixtures.split(",") if f.strip()]
+
+    if args.reclassify:
+        artifact = Path("tests/verb-arg-forms.json")
+        data = json.load(open(artifact))
+        fixtures_done = data["summary"]["fixtures"]
+        rebuilt = {}
+        for verb, rec in data["verbs"].items():
+            readings = {tuple(f["tokens"]): dict(f["values"]) for f in rec["forms"]}
+            for control, values in rec["controls"].items():
+                readings[("\0control", control)] = dict(values)
+            rebuilt[verb] = classify(readings, fixtures_done)
+        recognized = sum(1 for r in rebuilt.values()
+                         for f in r["forms"] if f["verdict"] == "recognized")
+        data["verbs"] = rebuilt
+        data["summary"].update({
+            "recognized_forms": recognized,
+            "verbs_with_recognized_token": sum(1 for r in rebuilt.values()
+                                               if r["recognized_tokens"]),
+            "two_token_grammar_verbs": sorted(v for v, r in rebuilt.items()
+                                              if r["two_token_grammar"]),
+            "pair_shapes": _pair_shape_counts(rebuilt),
+        })
+        data["summary"].pop("multi_token_verbs", None)
+        artifact.write_text(json.dumps(data, indent=1) + "\n")
+        print(f"reclassified {len(rebuilt)} verbs from stored values: "
+              f"{data['summary']['pair_shapes']}", file=sys.stderr)
+        return 0
 
     if args.get:
         artifact = Path("tests/verb-arg-forms.json")
@@ -230,7 +332,8 @@ def main() -> int:
             print(f"  establishing {name}", file=sys.stderr)
         before = establish(channel, fixture, verbose=False)
         try:
-            probe_fixture(channel, plan, name, readings, verbose=not args.quiet)
+            probe_fixture(channel, plan, name, readings, verbose=not args.quiet,
+                          repeat=args.repeat)
             done.append(name)
         finally:
             teardown(channel, fixture, before, verbose=False)
@@ -238,7 +341,7 @@ def main() -> int:
     verbs_out = {v: classify(readings[v], done) for v in plan}
     recognized = sum(1 for v in verbs_out.values()
                      for f in v["forms"] if f["verdict"] == "recognized")
-    multi = sorted(v for v, r in verbs_out.items() if r["multi_token_recognized"])
+    multi = sorted(v for v, r in verbs_out.items() if r["two_token_grammar"])
     json.dump({
         "summary": {
             "verbs": len(verbs_out),
@@ -246,7 +349,9 @@ def main() -> int:
             "recognized_forms": recognized,
             "verbs_with_recognized_token": sum(1 for r in verbs_out.values()
                                                if r["recognized_tokens"]),
-            "multi_token_verbs": multi,
+            "two_token_grammar_verbs": multi,
+            "pair_shapes": _pair_shape_counts(verbs_out),
+            "repeat_reads": args.repeat,
             "fixtures": done,
             "controls": list(CONTROLS),
         },
