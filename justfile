@@ -157,6 +157,15 @@ fixture-verify name:
 fixture-establish name *args:
     python3 tools/fixtures.py --establish "{{name}}" {{args}}
 
+# TAIL GRAMMAR: which trailing tokens a verb actually recognizes (Tier 1).
+# Every candidate is measured against nonsense controls, in every fixture.
+verb-arg-forms name:
+    @python3 tools/probe_arg_forms.py --get "{{name}}"
+
+# Needs `just vdj-up`. Establishes each fixture in turn; some make sound.
+probe-arg-forms *args:
+    python3 tools/probe_arg_forms.py {{args}} > tests/verb-arg-forms.json
+
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
     @python3 tools/extract_binary_verbs.py --get "{{name}}"
@@ -239,6 +248,7 @@ check:
     python3 tools/plugin_skin.py --check
     python3 tools/topic.py check
     python3 tools/fixtures.py --check
+    python3 tools/probe_arg_forms.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check

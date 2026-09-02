@@ -725,7 +725,7 @@ Done when:
 
 ### 10b. State-fixture harness + argument prober (do this first — it is the cheap unblock)
 
-Status: **Step 1 done 2026-09-02, step 2 next.** Python over the existing HTTP channel; no
+Status: **Steps 1-2 built 2026-09-02; the sweep itself is unrun.** Python over the existing HTTP channel; no
 build toolchain, no SDK, no new evidence tier. Added 2026-08-11.
 
 Step 1 shipped as [tools/fixtures.py](tools/fixtures.py) (`just fixtures`,
@@ -740,6 +740,21 @@ offline, so `just check` stays hermetic.
 
 Not yet done: `stems_active` needs a stem-capable fixture track and an analysis wait, so it
 is deliberately absent rather than half-verified.
+
+Step 2 shipped as [tools/probe_arg_forms.py](tools/probe_arg_forms.py)
+(`just probe-arg-forms`, `just verb-arg-forms <name>`): 483 target verbs — the 300 that answer
+bare while demanding an argument somewhere, plus every verb carrying recovered
+`keyword_candidates` — probed as **token lists** (bare, each token alone, then all ordered
+pairs: 835 single-token and 3,112 pair forms), inside each fixture, `/query` only. Two
+unrelated nonsense controls run alongside every verb; they must agree with each other or the
+reading is reported `unstable` rather than scored. A form is `recognized` only where it
+separates from garbage in at least one state. Full sweep: 32,376 requests over 6 fixtures
+(13,704 with `--no-pairs`).
+
+**Unrun, and deliberately so:** the write-side fixtures unload decks, and the machine's decks
+were live. `tests/verb-arg-forms.json` does not exist yet; `--check` skips cleanly until it
+does. Run it on an idle instance — the first real question it answers is whether any verb
+accepts a two-token tail at all, which nothing to date has established.
 
 The blocker for argument forms is not the channel, it is **prepared state**. Unknown arguments
 are silently ignored (`loaded bogusword` → `yes`), so a form can only be confirmed by comparing
