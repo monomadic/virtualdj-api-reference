@@ -751,7 +751,30 @@ reading is reported `unstable` rather than scored. A form is `recognized` only w
 separates from garbage in at least one state. Full sweep: 32,376 requests over 6 fixtures
 (13,704 with `--no-pairs`).
 
-**Unrun, and deliberately so:** the write-side fixtures unload decks, and the machine's decks
+**Run 2026-09-02** (`tests/verb-arg-forms.json`): 176 single-token tails confirmed across 89
+verbs. The pair result needed the classifier fixed first — separating from nonsense is not
+enough for a two-token form, since `is_using loop zzqqx` separates purely because `loop` does.
+Comparing each pair against its own singles splits 763 apparent hits into 416 first-token-wins,
+288 singles-agree, 51 beyond-singles and 5 last-token-wins, leaving **8 verbs with real
+two-token grammar**, not the 62 first claimed.
+
+`get_song_event` and `browsed_song` were then confirmed by direct query: the first takes
+`[current|next] <field>` with the selector defaulting to `current`, the second is an exact-match
+predicate `browsed_song <field> <value>` requiring both tokens. Both are documented in
+[VDJScript Verbs](docs/VDJScript%20Verbs.md).
+
+`get_cpu` and `is_using` are **disputed** — their two-token verdict flipped between independent
+`--repeat 3` runs, `get_cpu` because its value drifts faster than repeat-agreement can catch and
+`is_using` because `effect inaudible` depends on FX state the fixture does not pin. Two agreeing
+runs is the guard that caught both; `--repeat` alone was not enough.
+
+Still open: the 191 optional-arg verbs with no recovered candidates of their own were only ever
+probed bare, so a shared-lexicon pass (the tokens that proved real here, tried against every
+verb) is the obvious next sweep. Also worth a filter: `param_equal`'s candidate `TION_get_text`
+is a truncated `ACTION_get_text` from the binary extraction, so candidates that are substrings
+of known symbols should be dropped before probing.
+
+**Superseded — this said the sweep was unrun:** the write-side fixtures unload decks, and the machine's decks
 were live. `tests/verb-arg-forms.json` does not exist yet; `--check` skips cleanly until it
 does. Run it on an idle instance — the first real question it answers is whether any verb
 accepts a two-token tail at all, which nothing to date has established.

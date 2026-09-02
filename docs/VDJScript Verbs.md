@@ -1016,7 +1016,7 @@ Notes:
 
 - `get_spectrum_band` defaults to 32 bands; pass a second parameter for a different band count.
 - The third `get_spectrum_band` parameter can request a stem-aware spectrum such as `vocals`.
-- `get_song_event` accepts `current` or `next`, then an event field such as `hasbeats`, `volume`, `volume_end`, or `remaining`.
+- `get_song_event` accepts `current` or `next`, then an event field such as `hasbeats`, `volume`, `volume_end`, or `remaining`. `Local test` (2026-09-02, arg-form probe, `deck2_playing` fixture, each form read 3x): the two-token tail is confirmed and the selector defaults to `current` — `next volume` → `0.74` where `volume`, `current volume` and `volume_end` all → `1`, and `next hasbeats` → `no` where `hasbeats` → `yes`. A field alone works; a selector alone (`current`, `next`) is indistinguishable from nonsense, so the field is the required token and the selector the optional one.
 
 Sources:
 
@@ -4467,6 +4467,7 @@ Important notes:
 - `browsed_file_reload_tag` overwrites VirtualDJ database changes with values saved in the file tag.
 - `set_browsed_file_bpm` follows the same value style as `set_bpm`, including absolute and relative values.
 - Prefer `get_browsed_song` / `get_loaded_song` for read-only display; use `browsed_song` / `loaded_song` only when a control should write metadata.
+- **In a query context `browsed_song <field> <value>` is an exact-match predicate**, not a getter: it answers `yes`/`no` on whether the browsed song's field equals the value. `Local test` (2026-09-02, arg-form probe plus direct HTTP queries, browsed track *In The Dark* by *Luke Alexander*): `browsed_song title 'In The Dark'` → `yes`, `browsed_song artist 'Luke Alexander'` → `yes`, `browsed_song title 'Not The Title'` → `no`, and the match is exact rather than substring — `browsed_song title 'In'` → `no`. An unknown field answers `no` rather than erroring (`browsed_song bogusfield 'In The Dark'` → `no`), so a typo reads as a mismatch and fails silently. **Both tokens are required**: every one-token form, `browsed_song title` included, returns `E_INVALIDARG`; use `get_browsed_song 'title'` to read a value.
 
 Sources:
 
@@ -4952,7 +4953,7 @@ Source: `Official forum`, `Community`
 
 ### Skin Context Notes
 
-- `is_using` is built for temporary context panels and stacked feedback. Official feature names include `filter`, `equalizer`, `loop`, `cue`, `sample`, `pads`, `effect`, and `load`.
+- `is_using` is built for temporary context panels and stacked feedback. Official feature names include `filter`, `equalizer`, `loop`, `cue`, `sample`, `pads`, `effect`, and `load`. `Local test` (2026-09-02, arg-form probe): nine of those separate from nonsense as the first token — `cue`, `effect`, `equalizer`, `filter`, `load`, `loop`, `loopsize`, `sample`, `stems` — and `loop` correctly reads `yes` only in the `loop_active` fixture. A bare `is_using` returns `E_INVALIDARG`, so the feature name is required. `inaudible` alone errors and is not a feature name; whether it works as a second token modifier is **unresolved** — `is_using effect inaudible` read `yes` with an effect active in one run and `no` in another, so the artifact marks the verb disputed.
 - Optional timing parameters keep the state true long enough for UI feedback, for example `is_using 'sample' 1000ms 8000ms`.
 
 ## Custom Buttons & Multi-buttons

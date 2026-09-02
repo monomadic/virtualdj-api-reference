@@ -232,6 +232,9 @@ def main() -> int:
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
     p.add_argument("--check", action="store_true")
+    p.add_argument("--merge", metavar="FILE",
+                   help="fold a targeted re-probe into the artifact, replacing "
+                        "those verbs and recording how many reads backed them")
     p.add_argument("--reclassify", action="store_true",
                    help="recompute verdicts from the stored artifact values, "
                         "without touching VirtualDJ")
@@ -248,6 +251,46 @@ def main() -> int:
     cands = targets(contracts, table, want)
     plan = {v: forms_for(t, not args.no_pairs) for v, t in cands.items()}
     fixture_names = [f.strip() for f in args.fixtures.split(",") if f.strip()]
+
+    if args.merge:
+        artifact = Path("tests/verb-arg-forms.json")
+        base = json.load(open(artifact))
+        add = json.load(open(args.merge))
+        if add["summary"]["fixtures"] != base["summary"]["fixtures"]:
+            sys.exit("merge refused: the two runs used different fixtures")
+        repeat = add["summary"].get("repeat_reads", 1)
+        disputed = set(base["summary"].get("disputed_verbs", []))
+        for verb, rec in add["verbs"].items():
+            prior = base["verbs"].get(verb)
+            # A claim that flips between independent runs is not a claim. This
+            # is the only guard that catches a value drifting slowly enough for
+            # --repeat to miss it (get_cpu is the type case).
+            if prior is not None and prior.get("repeat_reads", 1) > 1 and \
+                    prior["two_token_grammar"] != rec["two_token_grammar"]:
+                disputed.add(verb)
+                rec["two_token_grammar"] = False
+                rec["two_token_forms"] = []
+                rec["disputed"] = "two-token verdict differed between runs"
+            rec["repeat_reads"] = repeat
+            base["verbs"][verb] = rec
+        recognized = sum(1 for r in base["verbs"].values()
+                         for f in r["forms"] if f["verdict"] == "recognized")
+        base["summary"].update({
+            "recognized_forms": recognized,
+            "verbs_with_recognized_token": sum(1 for r in base["verbs"].values()
+                                               if r["recognized_tokens"]),
+            "two_token_grammar_verbs": sorted(v for v, r in base["verbs"].items()
+                                              if r["two_token_grammar"]),
+            "pair_shapes": _pair_shape_counts(base["verbs"]),
+            "confirmed_with_repeat": sorted(v for v, r in base["verbs"].items()
+                                            if r.get("repeat_reads", 1) > 1),
+            "disputed_verbs": sorted(disputed),
+        })
+        artifact.write_text(json.dumps(base, indent=1) + "\n")
+        print(f"merged {len(add['verbs'])} verbs read {repeat}x: "
+              f"two-token grammar now {base['summary']['two_token_grammar_verbs']}",
+              file=sys.stderr)
+        return 0
 
     if args.reclassify:
         artifact = Path("tests/verb-arg-forms.json")
