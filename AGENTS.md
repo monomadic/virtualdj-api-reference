@@ -74,7 +74,7 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
   probed. `get_song_event`'s two-token grammar was established by a 32,000
   query sweep and had been documented in the app bundle the whole time.
 - **Probing arguments needs prepared state and nonsense controls.** An unrecognized argument is
-  silently ignored, so a verb answering proves nothing: `just fixture-list` shows the 10 named
+  silently ignored, so a verb answering proves nothing: `just fixtures` lists the 10 named
   states, and `tools/probe_arg_forms.py` compares every candidate against two junk tokens inside
   each. Separation is positive evidence; failing to separate means the state did not
   discriminate, *not* that the token is unreal.
@@ -85,6 +85,17 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
   shows the shape that is acceptable: an allowlist, a round-trip test before probing, restore
   and verify after every form, and abort on a failed restore. `timecode_cd_mode` is why — it can
   be set from script and only a restart clears it.
+- **A second live channel exists: the read-only introspection plugin.** Where HTTP flattens a
+  result to a string, the plugin sees the native call — `GetInfo` → `double`,
+  `GetStringInfo` → text, **and the `HRESULT` separately from the value**, which is the only way
+  to tell a recognized keyword from a silently-ignored one, and it needs no prepared state.
+  `just plugin-status` / `just plugin-probe <name>` read the existing captures
+  (`tests/plugin-introspection*.json`); `just plugin-build` then `just plugin-collect` take a new
+  one. Two method rules learned the hard way: an `E_INVALIDARG` from a load-time probe means
+  "not available now", not "no such form" — re-take negatives from the delayed sweep
+  (`just plugin-collect-late`); and VirtualDJ writes `0.0` to `*result` even on failure, so the
+  HRESULT is the answer, not the value. Full evidence table: the tracker's "Plugin Channel
+  (VDJIntrospect)" section.
 - Recording a result has two destinations, and they hold different things. The **verb store is authoritative for per-verb conclusions**: `just put-verb <name> test_status=… confidence=local_test evidence="…"` — one verb, one settled fact, with the build in the evidence string. The **tracker holds the run narrative** for a session that does not reduce to a single verb: a fixture setup, a negative result, a multi-verb probe, cross-verb interactions. A tested status in the store with no evidence now fails `just check`, so record the evidence at the same time as the status, not later. Note the channel (HTTP vs pad) in the evidence, since some behavior is surface-specific.
 
 ## Key facts for AI agents

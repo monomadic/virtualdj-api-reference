@@ -11,14 +11,15 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 - **`examples/Mappers/`** — real working controller/keyboard mapper XML copied from a local install; ground truth for the mapper format
 - **`examples/Samplerbanks/`** — sampler-bank XML copied from the app bundle (a third XML format alongside skins and pads)
 - **`examples/VideoSkins/`** — built-in video skins (broadcast, karaoke, live) copied from the app bundle; same `<skin>` format as deck skins, rendered onto the video output
-- **`tests/`** — reproducible documentation test harnesses, pad-page XML fixtures, and the **extracted data artifacts**: `verb-table.json` (the authoritative verb set), `action-contracts.json` (per-verb implementation contract), `verb-return-types.json` (observed types and boolean truth), `verb-existence-sweep.json`
+- **`tests/`** — reproducible documentation test harnesses, pad-page XML fixtures, and the **extracted data artifacts**: `verb-table.json` (the authoritative verb set), `action-contracts.json` (per-verb implementation contract), `verb-return-types.json` (observed types and boolean truth), `verb-existence-sweep.json`, `action-catalog.json` (816 vendor descriptions), `attested-tails.json` (argument tails and shapes Atomix wrote), `binary-vocabularies.json` (argument enumerations as groups), `vdjscript-corpus.json` (1,516 vendor snippets) and `verb-arg-forms.json` (probe results), plus the `plugin-introspection*.json` captures from the native channel
 - **`tools/`** — extractors, sweeps, linters and the `just` query API; every artifact is regenerable and gated by `just check`
 
 ## Where to start
 
 | Goal | File |
 | --- | --- |
-| **Answer anything about one verb** | `just get-verb <name>` — joins every artifact: existence, category, aliases, implementation class, capability, argument demands, keyword arguments, observed return type, boolean truth |
+| **Answer anything about one verb** | `just verb <name>` — the one-screen join: store record, vendor description, real usages, argument shapes with return evidence, every tail candidate by source, vocabulary groups, probe state, each labelled with its evidence tier. `just get-verb <name>` is the bare store record |
+| **Answer "how do I do X"** | `just topic <term>` — the matching verbs, effects and XML elements, plus the real example files that use them, ranked by how much of the topic each demonstrates |
 | Pick the next active maintenance task | [TODO.md](TODO.md) |
 | Route a topic to the right docs and fixtures | [INDEX.yml](INDEX.yml) |
 | Understand the repo structure and source labeling | [docs/README.md](docs/README.md) |
@@ -90,14 +91,16 @@ prints them against each other:
   the return type the vendor's attribute implies, for the verbs whose arguments are values
   rather than keywords. Attested without a probe, which reaches where no test state can.
 - **`tests/binary-vocabularies.json`** — argument vocabularies as *groups*, recovered from the
-  binary as structures (pointer tables, switch functions): the 38 colour names, the 5 stems,
-  the 19 settings pages. The only source that sees an enumeration matched in a shared helper
-  rather than in the verb's own code. Leads, not confirmations.
+  binary as structures (pointer tables, switch functions): 21 groups, 265 members, of which 189
+  are named by no per-verb source — the 26 colour names, the 19 settings pages, the 16 stem
+  tokens. The only source that sees an enumeration matched in a shared helper rather than in
+  the verb's own code. Leads, not confirmations.
 - **`tests/verb-arg-forms.json`** — every candidate probed against two nonsense controls inside
   10 named fixtures, because VirtualDJ silently ignores an argument it cannot parse, so a verb
   answering proves nothing on its own.
 
-Agreement across all three is the strongest claim this project makes; 9 verbs have it today.
+Agreement across all three is the strongest claim this project makes; 10 verbs have it today
+(`just action-catalog --cross-check`).
 
 ### Traps that will bite anyone writing VDJScript, added this cycle
 
@@ -119,12 +122,12 @@ rather than assembled from documentation.
 
 | Question | Answer | How |
 | --- | --- | --- |
-| Is `x` a verb? | **Decided, both ways** | VirtualDJ's own verb table — 1,028 records, 955 distinct verbs, 61 alias groups, 37 editor-hidden. Membership proves; absence disproves. `just verb-table <name>` |
-| What category is it in? | All 1,028 mapped | Compiled Button Editor category tables, confirmed against the live UI |
-| Can it execute / query / return text? | All 955 | `ACTION_` class RTTI — a checked 955↔955 bijection of verbs to implementation classes. `just verb-contract <name>` |
+| Is `x` a verb? | **Decided, both ways** | VirtualDJ's own verb table — 1,032 records, 958 distinct verbs, 62 alias groups, 38 editor-hidden on build 18.0.9598. Membership proves; absence disproves. `just verb-table <name>` is the live answer |
+| What category is it in? | All of them mapped | Compiled Button Editor category tables, confirmed against the live UI |
+| Can it execute / query / return text? | All of them | `ACTION_` class RTTI — a checked 958↔958 bijection of verbs to implementation classes. `just verb-contract <name>` |
 | What type does it return? | 623 of 652 query verbs | Live HTTP sweep. `just verb-return-type <name>` |
-| Does it take arguments? | 436 verbs flagged, incl. **301 with optional args** | `E_INVALIDARG` fingerprint in each class's own methods |
-| Which keyword arguments? | 259 verbs | String-comparison fingerprint — recovered `get_bpm absolute`, `browser_window sidelist`, `loaded opposite` and 200+ more that no documentation lists |
+| Does it take arguments? | 433 verbs flagged, incl. **300 with optional args** | `E_INVALIDARG` fingerprint in each class's own methods |
+| Which keyword arguments? | 262 verbs | String-comparison fingerprint — recovered `get_bpm absolute`, `browser_window sidelist`, `loaded opposite` and 200+ more that no documentation lists |
 
 ### Traps now documented that will bite anyone writing VDJScript
 
@@ -146,13 +149,20 @@ rather than assembled from documentation.
   official-doc-derived and still not load-tested.
 - The **VirtualDJ Remote** wire protocol is decoded and proven bidirectional
   ([docs/Remote Protocol.md](docs/Remote%20Protocol.md)).
-- The **plugin SDK** is now documented ([docs/Plugin SDK.md](docs/Plugin%20SDK.md)): interface
+- The **plugin SDK** is documented ([docs/Plugin SDK.md](docs/Plugin%20SDK.md)): interface
   hierarchy, the `VDJPARAM_*` model and the `[autoparams]` manifest all 173 built-in plugins
   use, plugin UI models, and the interfaces present in the binary that the public headers never
-  declare. It is the boundary where VDJScript results are still typed — `GetInfo` → `double`,
-  `GetStringInfo` → text — which is both *why* the HTTP channel flattens them and the basis of
-  the next session's primary plan below. Headers are third-party with no license grant, so they
-  are fetched to a gitignored `vendor/` rather than committed.
+  declare. Headers are third-party with no license grant, so they are fetched to a gitignored
+  `vendor/` rather than committed.
+- The **native introspection channel is open** (2026-08-15). The read-only plugin builds, loads,
+  and has swept every verb-table name through both query callbacks (`just plugin-probe <name>`,
+  captures in `tests/plugin-introspection*.json`). It is the boundary where VDJScript results are
+  still typed — `GetInfo` → `double`, `GetStringInfo` → text — which is why HTTP flattens them,
+  and it settled things HTTP structurally cannot: `master_beat_num`'s float-bits defect is in the
+  **core**, not the transport; a definitive channel map (532 verbs on both callbacks, 67
+  text-only, 11 numeric-only, 418 on neither); and **the HRESULT does discriminate a recognized
+  keyword from an ignored one**, which is now the method for the keyword queue because it needs
+  no prepared state.
 
 ### Recommended next steps
 
@@ -162,23 +172,21 @@ rather than assembled from documentation.
    prose wins silently and nothing gates it. The reconciliation diff is the real prize: every
    discrepancy is either a documented claim the artifacts contradict, or a curated fact the
    store has no field for.
-2. **Build the state-fixture harness and argument prober** ([TODO.md](TODO.md) task 10b) —
-   the cheap unblock, Python over the existing HTTP channel. The blocker on argument forms is
-   not the channel but *prepared state*: unknown arguments are silently ignored
-   (`loaded bogusword` → `yes`), so a form is only confirmable by comparing it against both
-   bare and a **nonsense control** in a state where they would disagree. That settles the
-   217 undocumented keyword sets and the 301-verb optional-argument queue.
-3. **Build the read-only introspection plugin** ([TODO.md](TODO.md) task 10a). Its value is
-   *not* verb throughput — the 2026-07-30 sweeps ran ~3,000 HTTP probes in minutes. It is the
-   only channel for things nothing else reaches: `GetSongBuffer` and `OnProcessSamples` give
-   the actual PCM behind every waveform element; `OnKey(ch, vkey, modifiers, flag, scancode)`
-   is the first channel that may expose press/release, which HTTP structurally cannot;
-   `VDJINTERFACE_SKIN` turns skin testing from edit-and-restart into a loop. For verbs
-   specifically, one real edge: `GetInfo` returns an **HRESULT separately from the value**,
-   which HTTP flattens — the one way to tell a recognized keyword from an ignored one. Headers
-   are fetched to a gitignored `vendor/`, never committed — Atomix grants no redistribution
-   license.
-4. **Behavior for ~940 verbs is still untested.** Existence, kind, category, capability and
+2. **Confirm the documented-but-unprobed parameters** ([TODO.md](TODO.md) task 13). The
+   fixture harness and argument prober are built and have run: 10 named states
+   (`just fixtures`), 483 verbs × 4,430 forms probed against nonsense controls, 986 recognized
+   (`just verb-arg-forms <name>`). What is left is the state, not the tooling —
+   `just action-catalog --cross-check` names **79 verbs whose parameters the vendor documents
+   and no probe has confirmed**, each one a state the 10 fixtures never build. The 71
+   probe-confirmed-but-undocumented forms are the mirror worklist.
+3. **Spend the native channel on what only it reaches** ([TODO.md](TODO.md) task 10a). The
+   plugin is built and the verb sweep is done, so the remaining value is not throughput:
+   `GetSongBuffer` and `OnProcessSamples` give the actual PCM behind every waveform element;
+   `OnKey(ch, vkey, modifiers, flag, scancode)` is the first channel that may expose
+   press/release, which HTTP structurally cannot; `VDJINTERFACE_SKIN` turns skin testing from
+   edit-and-restart into a loop.
+4. **Behavior for most verbs is still untested** — 978 of 1,038 store records carry
+   `Untested`, against 40 `Pass` (`just verb-stats`). Existence, kind, category, capability and
    return type are settled; what a verb *does* mostly is not.
 5. **Audit the remaining `Inference` and `Community` labels** against
    [docs/Evidence Standards.md](docs/Evidence%20Standards.md), which does not permit either as
