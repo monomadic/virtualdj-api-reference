@@ -1037,3 +1037,38 @@ so the stacked-`<size condition="">` question at
 [Skin Waveforms](Skin%20Waveforms.md) §Open Questions is **not reachable through
 this instrument** and stays open. That is a bounded negative, not a failure: it
 names the fixture the question actually needs, which is a real skin.
+
+## Corpus Parse Regression, Full Corpus
+
+VirtualDJ 2026 (bundle `18.0.9598`), macOS arm64, 2026-09-04, HTTP `/query`.
+First run covering the whole corpus after the mapper source and the refreshed
+vendor copies landed: **1,610 snippets, 1,206 parsed**
+(`just corpus-parses`, `tests/corpus-parse-results.json`).
+
+**No grammar claim was falsified.** That is the headline, and it needed the
+controls to establish — the run reports 15 `structural` rows, and the artifact's
+own rule is that each is only a candidate until a nonsense control separates it.
+None does:
+
+| Verb | Vendor form | Nonsense control | Reading |
+| --- | --- | --- | --- |
+| `sampler_bank` | `+1` → `E_INVALIDARG` | `zzqqx` → `no` | **Separates.** The step argument is recognized and refused on query while garbage is silently ignored — positive evidence for the documented execute-only rule, not against it |
+| `pad_page` | `+1` → `E_INVALIDARG` | `zzqqx` → `no` | Separates, same reading |
+| `pitch_range` | `'8,16,50' +1` → `E_INVALIDARG` | `zzqqx` → `E_INVALIDARG` | **Does not separate.** Bare answers `0.33`; every tail errors, real or invented, so the verdict says nothing about the form |
+| `loop` | `50%` / `200%` | `zzqqx` → same error | Does not separate |
+| `display_time` | `'elapsed,remain'` | `zzqqx` → same error | Does not separate |
+| `sampler_loop`, `sampler_mode` | `+1` / `-1` | `zzqqx` → same error | Does not separate |
+
+So the `structural` bucket currently mixes two unrelated things: verbs whose
+relative argument really is distinguished from garbage, and verbs that reject
+**every** argument on the query surface regardless of what it is. Neither is a
+contradiction. `pitch_range '8,16,50' +1` is the one new row this run added, and
+it lands in the second group — it is attested in Atomix's own DDJ-XP2 factory
+mapping, so the form is vendor-shipped; the query surface simply cannot evaluate
+`pitch_range` with any tail at all.
+
+**Method note.** The classifier reaches `structural` only for verbs the existence
+sweep calls `query` — a verb that answers bare, like `pitch_range` (`0.33`), skips
+the `surface-gated` branch even when it refuses every argument. Argument-surface
+gating and structural rejection are therefore not yet distinguished automatically,
+and the controls above have to be run by hand.

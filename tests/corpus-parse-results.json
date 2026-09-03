@@ -1,17 +1,17 @@
 {
  "summary": {
-  "snippets": 1516,
+  "snippets": 1610,
   "outcomes": {
-   "not-implemented": 157,
-   "other-error": 100,
-   "no-value": 29,
-   "parsed": 1167,
+   "not-implemented": 161,
+   "other-error": 131,
+   "no-value": 48,
+   "parsed": 1206,
    "surface-gated": 33,
    "pipeline": 15,
-   "structural": 14,
+   "structural": 15,
    "placeholder": 1
   },
-  "allowed_structural": 14,
+  "allowed_structural": 15,
   "note": "only `structural` outcomes are candidate contradictions; each still needs a nonsense control before it is called one"
  },
  "structural": [
@@ -68,6 +68,15 @@
     "binary"
    ],
    "origin": "binary:18.0.9598:0x103bf7def"
+  },
+  {
+   "script": "pitch_range '8,16,50' +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "pitch_range +1",
@@ -522,6 +531,15 @@
    "origin": "blink"
   },
   {
+   "script": "blink 150ms",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "blink 1bt",
    "answer": "no",
    "outcome": "parsed",
@@ -585,6 +603,15 @@
    "origin": "browsed_file_analyze"
   },
   {
+   "script": "browser_folder",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "browser_geniusdj playing",
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
@@ -628,6 +655,15 @@
     "binary"
    ],
    "origin": "binary:18.0.9598:0x103c19b0f"
+  },
+  {
+   "script": "browser_scroll",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "browser_scroll +1",
@@ -675,6 +711,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Remote/16x9P.xml@action"
+  },
+  {
+   "script": "browser_window 'folders' ? browser_enter : browser_window 'folders'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "browser_window 'folders,songs'",
@@ -1664,7 +1709,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
   },
@@ -1696,11 +1742,21 @@
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
   },
   {
+   "script": "deck 3 leftdeck ? deck 1 leftdeck : deck 3 leftdeck",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "deck 4 rightdeck",
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
   },
@@ -1730,6 +1786,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
+  },
+  {
+   "script": "deck 4 rightdeck ? deck 2 rightdeck : deck 4 rightdeck",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "deck [LEFTDECK] leftdeck",
@@ -1793,6 +1858,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "deck all effect_3slots_layout on",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "deck all effect_active 'Blur Black Bars' on",
@@ -1904,8 +1978,8 @@
   },
   {
    "script": "device_side 1 ? action1 : device_side 2 ? action2 ? device_side 3 ? action3 : etc...",
-   "answer": "error:1",
-   "outcome": "other-error",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
    "sources": [
     "catalog"
    ],
@@ -1984,6 +2058,24 @@
    "origin": "wiki:Flow"
   },
   {
+   "script": "doubleclick ? clone_from_deck : load & play & sync & phrase_sync 16",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "doubleclick ? clone_from_deck : load & sync",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "down ? action1 : action2",
    "answer": "error:-2147467259",
    "outcome": "no-value",
@@ -1991,6 +2083,33 @@
     "catalog"
    ],
    "origin": "down"
+  },
+  {
+   "script": "down ? set 'fxtouch' 1 & var_equal 'xp2_slotselect1' 1 ? effect_active 1 on : nothing : set 'fxtouch' 0 & var_equal 'xp2_slotselect1' 1 ? effect_active 1 off : nothing",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "down ? set 'fxtouch' 1 & var_equal 'xp2_slotselect2' 1 ? effect_active 2 on : nothing : set 'fxtouch' 0 & var_equal 'xp2_slotselect2' 1 ? effect_active 2 off : nothing",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "down ? set 'fxtouch' 1 & var_equal 'xp2_slotselect3' 1 ? effect_active 3 on : nothing : set 'fxtouch' 0 & var_equal 'xp2_slotselect3' 1 ? effect_active 3 off : nothing",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "dump notquantized",
@@ -3602,7 +3721,8 @@
    "answer": "",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -3620,7 +3740,8 @@
    "answer": "",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -3638,7 +3759,8 @@
    "answer": "",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -3842,7 +3964,7 @@
   },
   {
    "script": "effect_slider 2 1",
-   "answer": "0.9",
+   "answer": "0",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -3851,7 +3973,7 @@
   },
   {
    "script": "effect_slider 2 2",
-   "answer": "0.91",
+   "answer": "0",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4158,7 +4280,7 @@
   },
   {
    "script": "filter_label",
-   "answer": "MOBIUS TRI",
+   "answer": "DELAY",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4176,7 +4298,7 @@
   },
   {
    "script": "filter_selectcolorfx",
-   "answer": "Mobius Tri",
+   "answer": "Delay",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4401,7 +4523,7 @@
   },
   {
    "script": "get_clock",
-   "answer": "01:56 PM",
+   "answer": "05:15 AM",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4410,7 +4532,7 @@
   },
   {
    "script": "get_clock 12",
-   "answer": "01:56 PM",
+   "answer": "05:15 AM",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -4419,7 +4541,7 @@
   },
   {
    "script": "get_crossfader_result & param_invert",
-   "answer": "0.5",
+   "answer": "1",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4428,7 +4550,7 @@
   },
   {
    "script": "get_crossfader_result & param_pingpong & param_multiply 10",
-   "answer": "10",
+   "answer": "0",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4446,7 +4568,7 @@
   },
   {
    "script": "get_deck_color 50%",
-   "answer": "#80FF6868",
+   "answer": "#80B0E0FF",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -4455,7 +4577,7 @@
   },
   {
    "script": "get_deck_letter",
-   "answer": "2",
+   "answer": "1",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4626,7 +4748,7 @@
   },
   {
    "script": "get_effect_slider_label 2 1",
-   "answer": "STR",
+   "answer": "",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4635,7 +4757,7 @@
   },
   {
    "script": "get_effect_slider_label 2 2",
-   "answer": "SPD",
+   "answer": "",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4788,7 +4910,7 @@
   },
   {
    "script": "get_effect_title",
-   "answer": "Phaser - Deck 2",
+   "answer": "Phaser - Deck 1",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -4884,6 +5006,24 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "get_key_modifier & param_bigger 0",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "get_key_modifier & param_smaller 0",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "get_key_modifier_text",
@@ -5167,8 +5307,8 @@
   },
   {
    "script": "get_spectrum_band 1",
-   "answer": "0",
-   "outcome": "parsed",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
    "sources": [
     "catalog"
    ],
@@ -5176,8 +5316,8 @@
   },
   {
    "script": "get_spectrum_band 1 3",
-   "answer": "0",
-   "outcome": "parsed",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
    "sources": [
     "catalog"
    ],
@@ -5823,6 +5963,24 @@
    "origin": "holding"
   },
   {
+   "script": "holding ? loop_delete : loop_save",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "holding ? masterdeck_auto : masterdeck",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "hot_cue 1",
    "answer": "error:-2147024809",
    "outcome": "surface-gated",
@@ -6193,7 +6351,7 @@
   },
   {
    "script": "is_battery",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -6340,7 +6498,8 @@
    "answer": "yes",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
   },
@@ -6525,8 +6684,26 @@
    "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
   },
   {
+   "script": "keylock on & pitch +0.5%",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "keylock on & pitch -0.5%",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "leftcross",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -6535,7 +6712,7 @@
   },
   {
    "script": "leftdeck",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -6544,7 +6721,7 @@
   },
   {
    "script": "leftdeck +1",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -6553,7 +6730,7 @@
   },
   {
    "script": "leftdeck ? true : false",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -6631,6 +6808,15 @@
     "catalog"
    ],
    "origin": "load_next"
+  },
+  {
+   "script": "load_pulse",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "load_pulse_active 1000ms 5000ms",
@@ -6763,7 +6949,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -6894,6 +7081,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+  },
+  {
+   "script": "loop ? loop_exit : loop 4",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "loop_adjust",
@@ -7134,7 +7330,8 @@
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -7143,7 +7340,8 @@
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -7152,13 +7350,14 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
   {
    "script": "loop_length +100%",
-   "answer": "2",
+   "answer": "4",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -7167,7 +7366,7 @@
   },
   {
    "script": "loop_length 0.5",
-   "answer": "2",
+   "answer": "4",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -7176,12 +7375,21 @@
   },
   {
    "script": "loop_length 15ms",
-   "answer": "2",
+   "answer": "4",
    "outcome": "parsed",
    "sources": [
     "catalog"
    ],
    "origin": "loop_length"
+  },
+  {
+   "script": "loop_load",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "loop_load 1",
@@ -7386,7 +7594,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -7477,7 +7686,8 @@
    "answer": "yes",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -7486,18 +7696,28 @@
    "answer": "1",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
   {
    "script": "masterdeck",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+  },
+  {
+   "script": "masterdeck_auto ? masterdeck : masterdeck ? blink",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "match_bpm",
@@ -7507,6 +7727,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Starter.xml@action"
+  },
+  {
+   "script": "match_key",
+   "answer": "0",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "maximize",
@@ -7888,7 +8117,7 @@
   },
   {
    "script": "not effect_has_slider 2 1",
-   "answer": "no",
+   "answer": "",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -7897,7 +8126,7 @@
   },
   {
    "script": "not effect_has_slider 2 2",
-   "answer": "no",
+   "answer": "",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -8050,7 +8279,7 @@
   },
   {
    "script": "not is_battery",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -8077,7 +8306,7 @@
   },
   {
    "script": "not leftdeck",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -8194,7 +8423,7 @@
   },
   {
    "script": "not rightdeck",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -8404,7 +8633,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8413,7 +8643,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8422,7 +8653,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8431,7 +8663,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8440,7 +8673,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8449,7 +8683,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8458,7 +8693,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8467,7 +8703,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
@@ -8476,7 +8713,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8485,7 +8723,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8494,7 +8733,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8503,7 +8743,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8512,7 +8753,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8521,7 +8763,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8530,7 +8773,8 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8539,9 +8783,154 @@
    "answer": "error:1",
    "outcome": "other-error",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
+  },
+  {
+   "script": "pad_button_color 1",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 10",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 11",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 12",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 13",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 14",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 15",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 16",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 2",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 3",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 4",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 5",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 6",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 7",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 8",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_button_color 9",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "pad_has_menu",
@@ -8639,7 +9028,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8648,7 +9038,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -8657,9 +9048,46 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "pad_page btn5",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_page btn6",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_page btn7",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_page btn8",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "pad_page_select",
@@ -8669,6 +9097,78 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+  },
+  {
+   "script": "pad_pages 1 ? color '#FF4466' : off",
+   "answer": "#FF4466",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 2 ? color '#0F4F3F' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 3 ? color '#FA2FFF' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 4 ? color '#0A4F0F' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 5 ? color '#FFA0A0' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 6 ? color 'yellow' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 7 ? color 'yellow' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "pad_pages 8 ? color '#558822' : off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "pad_param",
@@ -8684,7 +9184,8 @@
    "answer": "play",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -8693,7 +9194,8 @@
    "answer": "play",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -8711,7 +9213,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -8720,7 +9223,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -8842,6 +9346,294 @@
    "origin": "examples/Skins/Built-In/Desktop/Starter.xml@action"
   },
   {
+   "script": "padshift 1",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 10",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 11",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 12",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 13",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 14",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 15",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 16",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 2",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 3",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 4",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 5",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 6",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 7",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 8",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift 9",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 1",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 10",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 11",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 12",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 13",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 14",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 15",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 16",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 2",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 3",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 4",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 5",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 6",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 7",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 8",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "padshift_button_color 9",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "param_1_x & effect slider",
    "answer": "1.38",
    "outcome": "parsed",
@@ -8894,6 +9686,15 @@
     "catalog"
    ],
    "origin": "param_bigger"
+  },
+  {
+   "script": "param_equal \"`pad_page 1`\" \"CUE 16\"  ? pad_page 1 'CUE SCAN' :\nparam_equal \"`pad_page 1`\" \"CUE SCAN\" ? pad_page 1 'CUE SEARCH' :\npad_page 1 'CUE 16'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "param_equal '`[SOURCECOLOR]`' 'white'",
@@ -9140,6 +9941,15 @@
    "origin": "param_cast"
   },
   {
+   "script": "pitch_range '8,16,50' +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "pitch_range +1",
    "answer": "error:-2147024809",
    "outcome": "structural",
@@ -9180,7 +9990,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "catalog"
+    "catalog",
+    "mapper"
    ],
    "origin": "pitch_reset"
   },
@@ -9201,6 +10012,15 @@
     "catalog"
    ],
    "origin": "pitch_reset"
+  },
+  {
+   "script": "pitch_reset ? blink : is_sync",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "pitch_reset ? blink : off",
@@ -9252,7 +10072,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
@@ -9279,7 +10100,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -9356,8 +10178,17 @@
    "origin": "wiki:Browsing"
   },
   {
+   "script": "reverse",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "rightcross",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -9366,7 +10197,7 @@
   },
   {
    "script": "rightdeck",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -9375,7 +10206,7 @@
   },
   {
    "script": "rightdeck +1",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -11208,7 +12039,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "mapper"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@visibility"
   },
@@ -11247,6 +12079,24 @@
     "wiki"
    ],
    "origin": "wiki:Key and Loop control"
+  },
+  {
+   "script": "shoutout",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "builtin"
+   ],
+   "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "shoutout show",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "builtin"
+   ],
+   "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@visibility"
   },
   {
    "script": "show_splitpanel 'effects'",
@@ -11364,6 +12214,15 @@
     "catalog"
    ],
    "origin": "sideview"
+  },
+  {
+   "script": "silent_cue",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "skin_panel \"horizontal_scratch_active\" ? skin_panel \"defaultwave\" : skin_panel \"horizontal_scratch_active\"",
@@ -12455,6 +13314,33 @@
    "origin": "examples/Pads/Built-In/pads_stems.xml@color"
   },
   {
+   "script": "stem_pad \"Melody\"",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "stem_pad \"Rhythm\"",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
+   "script": "stem_pad \"Vocal\"",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
+  },
+  {
    "script": "stem_pad vocal isolate",
    "answer": "yes",
    "outcome": "parsed",
@@ -12489,6 +13375,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "sync & phrase_sync 16",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "mapper"
+   ],
+   "origin": "examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml@map"
   },
   {
    "script": "system_volume",

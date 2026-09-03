@@ -2,9 +2,14 @@
 """Send every vendor-written snippet through the parser and record what happens.
 
 The first check in this repo that can FALSIFY a grammar claim rather than extend
-one: each of the 1,427 snippets in tests/vdjscript-corpus.json is a form Atomix
-shipped or documented, so a structural parse failure means this reference (or
-the corpus extraction) is wrong about the language.
+one: every snippet in tests/vdjscript-corpus.json is a form Atomix shipped or
+documented, so a structural parse failure means this reference (or the corpus
+extraction) is wrong about the language.
+
+As of the 2026-09-04 run, none of the 15 `structural` rows survives its nonsense
+control, so the bucket holds no contradiction — see the tracker section
+"Corpus parse regression, full corpus". Read `structural` as "needs a control",
+never as "the vendor shipped invalid script".
 
 Reading the results needs care, and the traps are already documented:
 
