@@ -281,6 +281,32 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
             needs_audio_file=False,
         ),
         Fixture(
+            name="effect_armed",
+            describes="deck 1 loaded, effect slot 1 active and the deck arm engaged — the "
+                      "state effect_arm_* parameters need. Round-trip verified before use",
+            setup=[load1, "deck 1 effect_active 1 on", "effect_arm_deck on"],
+            assertions=[
+                Assertion("effect_arm_deck", yes, "the deck arm reports engaged"),
+                Assertion("deck 1 effect_active 1", yes, "slot 1 reports active"),
+            ],
+            teardown=["effect_arm_deck off", "deck 1 effect_active 1 off", "deck 1 unload"],
+        ),
+        Fixture(
+            name="browser_populated",
+            describes="the browser holds a folder with tracks and one is browsed — enough for "
+                      "the browsed_*/browser_* parameters. Assert-only: it reads whatever the "
+                      "user is already browsing rather than navigating and failing to return",
+            setup=[],
+            assertions=[
+                Assertion("file_count", nonzero_number, "the browsed folder reports tracks"),
+                Assertion("get_browsed_folder", lambda v: bool(v) and not is_error(v),
+                          "a folder is browsed"),
+                Assertion("get_browsed_filepath", lambda v: bool(v) and not is_error(v),
+                          "a file is browsed"),
+            ],
+            needs_audio_file=False,
+        ),
+        Fixture(
             name="sampler_slot_loaded",
             describes="sampler slot 1 holds a sample (shipped bank, not loaded by us)",
             setup=[],

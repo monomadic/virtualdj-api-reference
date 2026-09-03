@@ -1086,8 +1086,24 @@ new states simply are not the ones those 81 parameters need.
 pattern again. Its absolute/remain/total tokens stay recognized because the *catalog documents
 them*, not because the probe is trustworthy here.
 
-Still to build: `browser_folder_deep`, `effect_armed`, and `broadcast_configured` (blocked —
-needs a server). The remaining 81 need those, or an observable other than the verb's own value.
+**Two more fixtures, 2026-09-03 (after the restart).** `effect_armed` (deck 1 loaded, slot 1
+active, deck arm engaged — round-trip verified on `effect_arm_deck` before being written into a
+fixture) and `browser_populated` (assert-only: it reads whatever the user is already browsing
+rather than navigating somewhere it cannot return from). Re-probing all 97 catalog verbs across
+**10 fixtures** confirmed `effect_arm_deck` aux/mic/sampler — one of the 81, and exactly the
+kind of state-gated parameter the fixture was built for — plus `timecode_mode smart`.
+
+Cross-check: **27 / 80 / 71**, with 9 verbs now confirmed by all three sources. The middle
+column has moved only 90 → 80 across three fixture rounds, which is the honest measure of how
+state-specific the remainder is.
+
+Still to build: `broadcast_configured` (blocked — needs a server), a karaoke fixture, and an
+automix-list fixture. `browser_folder_deep` was deliberately *not* built: navigating the browser
+tree has no verified way back, and an assert-only fixture that reads the user's current position
+is worth more than a probe that leaves them somewhere else.
+
+The rest of the 80 likely need an observable other than the verb's own value — the
+`auto_bpm_transition` lesson. That is a different instrument, not another fixture.
 
 Two merge rules were fixed while doing this, both found by watching totals rather than by a
 test: a re-probe must use a **superset** of the artifact's fixtures (a swapped fixture set
