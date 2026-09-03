@@ -1069,8 +1069,32 @@ slots loaded with *different* tracks — also settles what the sampler `all` mea
 Each fixture must assert its own preconditions and fail loudly, per the rule the harness already
 follows: a probe against an unestablished state is worse than none.
 
-Done when: at least the four unblocked fixtures exist with assertions, the affected verbs are
-re-probed, and the cross-check's middle column shrinks with each confirmation recorded.
+**PARTLY DONE 2026-09-03.** Two fixtures added, both **assert-only** — the shipped state already
+satisfies them, so they write nothing and refuse to run if it is absent:
+
+- `sampler_slots_differ` (slots 1-5 hold different samples, 6-8 empty) — settled what the
+  sampler `all` means: **the selected slot**, not an aggregate. See
+  [VDJScript Verbs](docs/VDJScript%20Verbs.md).
+- `sideview_populated` (`file_count sideview` nonzero).
+
+Re-probing all 97 catalog verbs across 8 fixtures added `get_time` cue1/loopin/loopout/
+to_lyrics and more `param_cast` types, but the cross-check middle column did not move (81). The
+new states simply are not the ones those 81 parameters need.
+
+**It also exposed a drift verb.** In the 8-fixture run `get_time` tripped the undiscerning guard
+— with a deck playing its value moves, so it separates from a control by noise, the `get_cpu`
+pattern again. Its absolute/remain/total tokens stay recognized because the *catalog documents
+them*, not because the probe is trustworthy here.
+
+Still to build: `browser_folder_deep`, `effect_armed`, and `broadcast_configured` (blocked —
+needs a server). The remaining 81 need those, or an observable other than the verb's own value.
+
+Two merge rules were fixed while doing this, both found by watching totals rather than by a
+test: a re-probe must use a **superset** of the artifact's fixtures (a swapped fixture set
+produces verdicts that are not comparable), and **separation is positive evidence while failure
+to separate is not evidence of absence** — so a token recognized in any run stays recognized,
+annotated `not_reproduced_in` when a later run's states could not show it. Taking the newer
+verdict had silently deleted four confirmations.
 
 ### 14. Run The Corpus As A Parse-Regression Set
 

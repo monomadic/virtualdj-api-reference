@@ -352,8 +352,14 @@ def main() -> int:
         artifact = Path("tests/verb-arg-forms.json")
         base = json.load(open(artifact))
         add = json.load(open(args.merge))
-        if add["summary"]["fixtures"] != base["summary"]["fixtures"]:
-            sys.exit("merge refused: the two runs used different fixtures")
+        # More states is more evidence and merges cleanly; a DIFFERENT set does
+        # not, because a verdict computed under states the base never saw is not
+        # comparable with one it did.
+        base_fixtures, add_fixtures = set(base["summary"]["fixtures"]), set(add["summary"]["fixtures"])
+        if not base_fixtures <= add_fixtures:
+            sys.exit(f"merge refused: the incoming run is missing fixtures the artifact used "
+                     f"({sorted(base_fixtures - add_fixtures)}); re-run with a superset")
+        base["summary"]["fixtures"] = sorted(add_fixtures, key=lambda f: (f not in base_fixtures, f))
         repeat = add["summary"].get("repeat_reads", 1)
         disputed = set(base["summary"].get("disputed_verbs", []))
         undiscerning = _flag_undiscerning(add["verbs"])
@@ -373,12 +379,21 @@ def main() -> int:
             # dispute; one the new run never sent is not.
             for tokens, form in reprobed.items():
                 was = by_tokens.get(tokens)
+                # Separation is positive evidence; failing to separate is not
+                # evidence of absence — it usually means this run's states did
+                # not discriminate. So a token recognized in ANY run stays
+                # recognized, with a note that a later run did not reproduce it.
+                if was and was["verdict"] == "recognized" and form["verdict"] != "recognized":
+                    was.setdefault("not_reproduced_in", []).append(
+                        {"fixtures": add["summary"]["fixtures"],
+                         "verdict": form["verdict"]})
+                    continue
                 if (was and prior.get("repeat_reads", 1) > 1
-                        and was["verdict"] != form["verdict"]
-                        and "recognized" in (was["verdict"], form["verdict"])):
+                        and was.get("pair_shape") and form.get("pair_shape")
+                        and was["pair_shape"] != form["pair_shape"]):
                     disputed.add(verb)
-                    form["disputed"] = (f"verdict for {' '.join(tokens) or '(bare)'} differed "
-                                        f"between runs: {was['verdict']} vs {form['verdict']}")
+                    form["disputed"] = (f"pair shape for {' '.join(tokens)} differed between "
+                                        f"runs: {was['pair_shape']} vs {form['pair_shape']}")
                 by_tokens[tokens] = form
             merged_forms = sorted(by_tokens.values(),
                                   key=lambda f: (len(f["tokens"]), f["tokens"]))
