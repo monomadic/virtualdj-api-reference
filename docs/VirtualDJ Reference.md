@@ -198,18 +198,21 @@ Source labels used below:
 
 For the current pad-page inventory, status labels, built-in page copies, and maintenance checklist, see [examples/Pads/README.md](../examples/Pads/README.md). For reproducible documentation fixtures, see [tests/README.md](../tests/README.md).
 
-Recommended runnable pad-page examples:
+Runnable pad-page examples. **All of the pages below are quarantined personal files**
+(2026-09-04) — real working examples to read, but not curated patterns and never verb
+evidence. For copyable patterns and evidence, prefer the Atomix-shipped pages under
+[examples/Pads/Built-In/](../examples/Pads/Built-In/).
 
-- [Reference - Slot FX.xml](../examples/Pads/Reference%20-%20Slot%20FX.xml)
-  Canonical slot-based audio FX pads.
+- [Reference - Slot FX.xml](../examples/Pads/Quarantine/Reference%20-%20Slot%20FX.xml)
+  Slot-based audio FX pads.
 
-- [Reference - ColorFX.xml](../examples/Pads/Reference%20-%20ColorFX.xml)
-  Canonical filter and ColorFX selection patterns using the current verbs.
+- [Reference - ColorFX.xml](../examples/Pads/Quarantine/Reference%20-%20ColorFX.xml)
+  Filter and ColorFX selection patterns using the current verbs.
 
 - [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml)
   Legacy page-aware sampler labels, colors, and actions retained for comparison with newer sampler findings.
 
-- [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml)
+- [SAMPLER READ ONLY.xml](../examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml)
   Confirmed read-only multi-page sampler with absolute empty-slot guards.
 
 - [Reference - Sparse Helper Tests.xml](../tests/Pads/Reference%20-%20Sparse%20Helper%20Tests.xml)
@@ -856,7 +859,7 @@ Why this is the safest rack-owning reference pattern:
 - it avoids name-based ambiguity when several effects are loaded
 - it makes clear that the pad owns both the effect choice and the parameter preset
 
-Use [Reference - Slot FX.xml](../examples/Pads/Reference%20-%20Slot%20FX.xml) for a working repo example.
+See [Reference - Slot FX.xml](../examples/Pads/Quarantine/Reference%20-%20Slot%20FX.xml) for a working example (quarantined personal file, not evidence).
 
 Source: `Official`, `Local test`
 
@@ -1007,7 +1010,7 @@ Notes:
 - In pad XML `query=""` attributes, use `filter_label 'name'` for selected-state checks instead of running selector actions such as `filter_selectcolorfx 'Name'`.
 - CTO guidance says that the dedicated `colorfx` slot only exposes approved ColorFX-compatible effects, while extra slots are more flexible.
 
-Use [Reference - ColorFX.xml](../examples/Pads/Reference%20-%20ColorFX.xml) for a working repo example.
+See [Reference - ColorFX.xml](../examples/Pads/Quarantine/Reference%20-%20ColorFX.xml) for a working example (quarantined personal file, not evidence).
 
 Source: `Official`, `Official forum`
 
@@ -1188,7 +1191,7 @@ Practical rule:
 - visible sampler-pad UI: page-aware
 - fixed sampler-slot utility controls: absolute
 
-Use [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
+Use [SAMPLER READ ONLY.xml](../examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml) for the current confirmed read-only multi-page pattern. [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml) is retained as a legacy page-aware sampler example, but it uses the now-unreliable `sampler_loaded <n> 'auto'` guard.
 
 Source: `Official`, `Local test`, `Inference`
 
@@ -1219,7 +1222,7 @@ For sampler pages that must never record into empty slots, use `sampler_pad_page
 
 Use `sampler_pad <pad>` for loaded actions and `nothing` for empty actions. Do not include `sampler_rec`, `sampler_assign`, or `drop=` on a read-only page. For intentionally blank names, return `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later pages.
 
-Working example: [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml)
+Working example: [SAMPLER READ ONLY.xml](../examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml)
 
 Source: `Local test`, `Inference`
 
@@ -1424,8 +1427,8 @@ Repo examples:
 - [CUE SCAN.xml](../examples/Pads/Quarantine/CUE%20SCAN.xml)
 - [PLAY 16.xml](../examples/Pads/Quarantine/PLAY%2016.xml)
 - [PUSH FX.xml](../examples/Pads/Quarantine/PUSH%20FX.xml)
-- [Reference - Slot FX.xml](../examples/Pads/Reference%20-%20Slot%20FX.xml)
-- [Reference - ColorFX.xml](../examples/Pads/Reference%20-%20ColorFX.xml)
+- [Reference - Slot FX.xml](../examples/Pads/Quarantine/Reference%20-%20Slot%20FX.xml)
+- [Reference - ColorFX.xml](../examples/Pads/Quarantine/Reference%20-%20ColorFX.xml)
 - [Reference - Page Aware Sampler.xml](../examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml)
 - [SAMPLER.xml](../examples/Pads/Quarantine/SAMPLER.xml)
 - [SAMPLER SIMPLE.xml](../examples/Pads/Quarantine/SAMPLER%20SIMPLE.xml)

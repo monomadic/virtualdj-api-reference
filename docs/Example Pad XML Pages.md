@@ -6,7 +6,7 @@ These examples were checked against the current VirtualDJ manual, recent forum g
 
 ## Read-Only Multi-Page Sampler
 
-Use [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml) when a pad page should only play existing samples and must never record into empty slots. This is the current safest pattern for banks with more than eight samples.
+Use [SAMPLER READ ONLY.xml](../examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml) when a pad page should only play existing samples and must never record into empty slots. This is the current safest pattern for banks with more than eight samples.
 
 The important discovery is that `sampler_pad_page` evaluates as text ranges such as `"1 to 8"` and `"9 to 16"` in the tested pad/skin contexts. `sampler_loaded` should still be treated as an absolute-slot query, so each page branch checks the real slot behind the visible pad.
 

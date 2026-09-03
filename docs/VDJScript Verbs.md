@@ -5965,7 +5965,7 @@ Video FX note:
 - For 16-pad pad pages, pads `9-16` are the next eight visible sampler positions. Example: on page `"9 to 16"`, pad 16 is backed by absolute slot 24.
 - To nullify an empty sampler pad, use an explicit false branch in each relevant field: blank text in `name`, dim/off visual state in `color`/`query`, and `: nothing` in the action body.
 - For intentionally blank sampler pad labels, prefer `get_text ' '` rather than an empty string; local testing showed empty strings can fall back to visible slot numbers on later sampler pages.
-- For a confirmed read-only implementation, see [SAMPLER READ ONLY.xml](../examples/Pads/SAMPLER%20READ%20ONLY.xml).
+- For a confirmed read-only implementation, see [SAMPLER READ ONLY.xml](../examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml).
 - When defining `shift_pad<n>` entries for sampler pages, also define shifted `color=""` values such as `sampler_loaded 1 ? sampler_color 1 : dim`; skin pad frameworks may render shifted pad colors separately, and missing shifted colors can fall back to the skin/default button color. Source: `Local test`, `Inference`
 - `sampler_play`, `sampler_stop`, `sampler_volume`, `get_sample_name`, `get_sample_info`, and `get_sample_color` are best treated as absolute-slot helpers.
 - `sampler_default` is the official alias of `sampler_select`; prefer `sampler_select` in new docs unless documenting older mappings.

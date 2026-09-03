@@ -133,17 +133,17 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
 
 | File | Status | Demonstrates |
 | --- | --- | --- |
-| [examples/Pads/Reference - Slot FX.xml](examples/Pads/Reference%20-%20Slot%20FX.xml) | Canonical | Slot-based audio FX pads |
-| [examples/Pads/Reference - ColorFX.xml](examples/Pads/Reference%20-%20ColorFX.xml) | Canonical | Filter + ColorFX selection |
-| [examples/Pads/SAMPLER READ ONLY.xml](examples/Pads/SAMPLER%20READ%20ONLY.xml) | Canonical | Confirmed read-only multi-page sampler with absolute empty-slot guards |
+| [examples/Pads/Quarantine/Reference - Slot FX.xml](examples/Pads/Quarantine/Reference%20-%20Slot%20FX.xml) | Quarantined (personal) | Slot-based audio FX pads |
+| [examples/Pads/Quarantine/Reference - ColorFX.xml](examples/Pads/Quarantine/Reference%20-%20ColorFX.xml) | Quarantined (personal) | Filter + ColorFX selection |
+| [examples/Pads/Quarantine/SAMPLER READ ONLY.xml](examples/Pads/Quarantine/SAMPLER%20READ%20ONLY.xml) | Quarantined (personal) | Confirmed read-only multi-page sampler with absolute empty-slot guards |
 | [examples/Pads/Built-In/README.md](examples/Pads/Built-In/README.md) | Built-in | Copied VirtualDJ app-bundle pad pages; semi-official executable examples |
 | [examples/Skins/Built-In/README.md](examples/Skins/Built-In/README.md) | Built-in | Copied VirtualDJ app-bundle skins; semi-official executable examples |
 | [examples/Skins/ModularSkeleton/build/skin.xml](examples/Skins/ModularSkeleton/build/skin.xml) | Unofficial (project-authored) | Minimal modular skin scaffold |
 | [examples/Skins/GraveRaver/src/skin.xml](examples/Skins/GraveRaver/src/skin.xml) | Unofficial (project-authored) | Minimal XInclude build-system demo, not a skin design reference |
 | [examples/Pads/Quarantine/Reference - Page Aware Sampler.xml](examples/Pads/Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml) | Quarantined (personal, superseded) | Page-aware sampler labels, colors, actions — see [examples/Pads/README.md](examples/Pads/README.md) before citing |
-| [examples/Pads/Quarantine/COLOR FX.xml](examples/Pads/Quarantine/COLOR%20FX.xml) | Quarantined (personal) | ColorFX selection with stems context — not the canonical pattern, use `Reference - ColorFX.xml` instead |
+| [examples/Pads/Quarantine/COLOR FX.xml](examples/Pads/Quarantine/COLOR%20FX.xml) | Quarantined (personal) | ColorFX selection with stems context |
 
-Prefer `Canonical` and `Built-in` rows for copy/paste patterns and verb evidence. `Quarantined` rows are real personal working files, kept only as usage examples — see [examples/Pads/README.md](examples/Pads/README.md) and [examples/Mappers/README.md](examples/Mappers/README.md) for the full provenance tables and why quarantined mapper files should never be cited as verb evidence.
+**No pad page in this repo is `Canonical` any more** (2026-09-04): the three `Reference - *` pages were quarantined, so `Built-in` rows — Atomix's own shipped pages — are now the only pad source to copy patterns from or cite as evidence. `Quarantined` rows are real personal working files kept as usage examples only; **never cite one as evidence that a verb exists or behaves a given way**, because a personal page legitimately contains experiments that were never claimed to work. See [examples/Pads/README.md](examples/Pads/README.md) and [examples/Mappers/README.md](examples/Mappers/README.md) for the full provenance tables.
 
 ## macOS paths
 

@@ -2,7 +2,7 @@
 
 This folder contains local working pad pages, focused reference pages, and copied built-in VirtualDJ pad pages.
 
-Use root-level `Reference - *.xml` files when copying a pattern into documentation. Built-in pages live under [Built-In/](Built-In/) as provenance examples. Personal/local working pages live under [Quarantine/](Quarantine/) — real examples, but not official or curated. Documentation test harnesses live outside this folder in [tests/Pads/](../../tests/Pads/).
+**There are no root-level reference pages left** (2026-09-04): the three `Reference - *.xml` pages were moved into [Quarantine/](Quarantine/), so copy patterns from the Atomix-shipped pages under [Built-In/](Built-In/) instead. Personal/local working pages live under [Quarantine/](Quarantine/) — real examples, but not official or curated, and never verb evidence. Documentation test harnesses live outside this folder in [tests/Pads/](../../tests/Pads/).
 
 Format reference: [Pad Page XML](../../docs/Pad%20Page%20XML.md) — container schema for `<page>`, `<padN>`/`<shift_padN>`, `<param1>`/`<param2>`, `<menu>`, and `<custompadsmode>`.
 
@@ -10,19 +10,13 @@ Format reference: [Pad Page XML](../../docs/Pad%20Page%20XML.md) — container s
 
 | Status | Meaning |
 | --- | --- |
-| Canonical | Preferred copyable reference pattern for docs and new examples. |
+| Canonical | Preferred copyable reference pattern for docs and new examples. **No page currently holds this status.** |
 | Built-in | Copied as-is from VirtualDJ's application bundle; treat as semi-official executable examples, not curated copy/paste patterns. |
 | Quarantined | Personal/local working or superseded page (formerly `Working`/`Legacy`); real usage evidence, not official or curated — see [Quarantine/](Quarantine/). |
 
 ## Reference Pages
 
-For local pad XML files, VirtualDJ's pad-page selector generally shows the filename stem. The XML `<page name="">` remains useful for `pad_page` targets, internal metadata, and source documentation.
-
-| File | XML `<page name="">` | Status | Notes |
-| --- | --- | --- | --- |
-| [Reference - Slot FX.xml](Reference%20-%20Slot%20FX.xml) | `REF: SLOT FX` | Canonical | Slot-based audio FX selection, sliders, and state. |
-| [Reference - ColorFX.xml](Reference%20-%20ColorFX.xml) | `REF: COLOR FX` | Canonical | Main filter ColorFX plus extra custom ColorFX slots. Queries use `filter_label 'name'` for selected-state checks. |
-| [SAMPLER READ ONLY.xml](SAMPLER%20READ%20ONLY.xml) | `SAMPLER READ ONLY` | Canonical | Confirmed read-only multi-page sampler with absolute empty-slot guards. |
+None. For local pad XML files, VirtualDJ's pad-page selector generally shows the filename stem; the XML `<page name="">` remains useful for `pad_page` targets, internal metadata, and source documentation.
 
 ## Quarantine/
 
@@ -30,6 +24,9 @@ Personal/local pad pages — real working examples from this repo's own VirtualD
 
 | File | XML `<page name="">` | Former status | Notes |
 | --- | --- | --- | --- |
+| [Reference - Slot FX.xml](Quarantine/Reference%20-%20Slot%20FX.xml) | `REF: SLOT FX` | Canonical | Slot-based audio FX selection, sliders, and state. |
+| [Reference - ColorFX.xml](Quarantine/Reference%20-%20ColorFX.xml) | `REF: COLOR FX` | Canonical | Main filter ColorFX plus extra custom ColorFX slots. Queries use `filter_label 'name'` for selected-state checks. |
+| [SAMPLER READ ONLY.xml](Quarantine/SAMPLER%20READ%20ONLY.xml) | `SAMPLER READ ONLY` | Canonical | Confirmed read-only multi-page sampler with absolute empty-slot guards. Cited by several docs as the read-only pattern; those citations now point here. |
 | [Reference - Page Aware Sampler.xml](Quarantine/Reference%20-%20Page%20Aware%20Sampler.xml) | `REF: SAMPLER` | Legacy | Older page-aware sampler example; retained for comparison with the current read-only pattern. |
 | [COLOR FX.xml](Quarantine/COLOR%20FX.xml) | `COLOR FX` | Working | ColorFX selector with stems context and read-only selected-state queries. |
 | [PUSH FX.xml](Quarantine/PUSH%20FX.xml) | `PUSH FX` | Working | Momentary `padfx` performance page with stem-targeted variants. |

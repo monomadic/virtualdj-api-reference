@@ -172,13 +172,13 @@ These examples are known working forms from local reference pad pages and built-
 
 | Effect | Working form | Source |
 | --- | --- | --- |
-| Echo | `effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Echo Out | `effect_select 1 'Echo Out' & effect_slider 1 1 80% & effect_slider 1 2 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Reverb | `effect_select 2 'Reverb' & effect_slider 2 1 45% & effect_slider 2 2 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Delay | `effect_select 3 'Delay' & effect_slider 3 1 75% & effect_slider 3 2 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
-| Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Reference - Slot FX.xml` |
+| Echo | `effect_select 1 'Echo' & effect_slider 1 1 75% & effect_slider 1 2 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Echo Out | `effect_select 1 'Echo Out' & effect_slider 1 1 80% & effect_slider 1 2 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Reverb | `effect_select 2 'Reverb' & effect_slider 2 1 45% & effect_slider 2 2 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Delay | `effect_select 3 'Delay' & effect_slider 3 1 75% & effect_slider 3 2 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Flanger | `effect_select 4 'Flanger' & effect_slider 4 1 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Loop Roll | `effect_select 1 'Loop Roll' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
+| Phaser | `effect_select 1 'Phaser' & effect_slider 1 1 50%` | `Local test`: `examples/Pads/Quarantine/Reference - Slot FX.xml` |
 | Beat Grid | `effect_select 1 'Beat Grid' & effect_slider 1 1 75%` | `Local test`: `v2026-m b9482`; the no-space selector `'BeatGrid'` did not replace the previously selected effect |
 
 **PadFX presets:**
