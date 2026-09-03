@@ -460,6 +460,59 @@ Artifact: `tests/action-contracts.json`; query with `just verb-contract <name>`.
 it predicts capability and family — for the **concrete return type**, use the Tier-1
 return-type sweep below; Tier-1 probes confirm behavior (rule 3).
 
+### Argument vocabularies — shared enumerations as structures (2026-09-03)
+
+`keyword_candidates` is per verb: literals referenced from the verb's own methods. That misses
+every enumeration matched in a helper — and most are. When the vendor-script corpus was checked
+against the binary, 67 of its attested tails were present as strings but outside their verb's
+code, and 66 were not in the binary at all (skin-defined `skin_panel` names, `var` names).
+[tools/extract_binary_vocabularies.py](../tools/extract_binary_vocabularies.py)
+(`tests/binary-vocabularies.json`, `just binary-vocab`) recovers the shared ones as **groups**,
+from three signals recorded separately:
+
+- **run** — neighbours in the string pool. Pools cluster by compilation unit, so a run is
+  related, but adjacency is not structure: the colour names sit right after the month names.
+  Never promoted on its own.
+- **code region** — a stretch of `__text` whose ADRP+ADD pairs reference two or more seeds.
+  That is a comparison chain or a switch over the enumeration, and every other keyword it
+  references is a candidate member. This is where hidden options come from.
+- **pointer table** — a `const char *[]` in `__DATA_CONST` (stride 8, 16, 24 or 32) whose
+  entries point at the seeds. The serialised structure itself; its entry list is the whole
+  enumeration. Ten found, among them:
+
+| Table | Entries | Verbs it serves |
+| --- | --- | --- |
+| colour names, stride 24 | `red green blue white black yellow cyan magenta gray orange darkred darkgreen darkblue darkyellow darkcyan darkmagenta darkorange darkgray lightgray pink beige marine violet transparent none reset` | `color`, `get_loaded_song_color`, `browsed_file_color`, `cue_color`, `loop_color` |
+| stems | `vocal hihat bass instru kick` | `stem_color`, `stems_split`, `effect_stems`, `stem_pad` |
+| sideview pages | `sidelist remixes sampler automix karaoke` (+ `clone`, from a code region) | `sideview`, `browser_window` |
+| settings pages, stride 16 | `automation controls skins audio video karaoke controllers timecode sampler browser tags automix internet record broadcast options performance all modified` | `settings` (`settings 'audio'` is attested; the other 18 are new) |
+| pad pages | `stems hotcues slicer sampler stems+fx "loop roll" scratch keycue cueloop beatjump loop "saved loops" "manual loop" "remix points" dmx scratchbank custom` | `pad_page` |
+| song fields | `title author filepath filename comment album genre year bpm key composer user1 user2 remix remixer grouping label` | `get_karaoke_background_song`, `get_next_karaoke_song` |
+
+Code regions without a table settle smaller sets: `get_bpm absolute|ghost|all`, `get_time`'s
+`elapsed remain total absolute cue loopin loopout`, `eq_mode frequency|stems|deck`,
+`view_options showmusic|showvideo|showkaraoke`, `search_folder dialog|clear|focus`, the stem
+modes `acapella|acappella|instrumental|isolate` (`stem_pad`), the audio channels
+`master headphones booth auxin auxout mic mic2 preview record sampler samplerin timecode
+deckfxsend deckfxreturn` (`effect_arm_deck`, `effect_fxsendreturndeck`), and the browser
+root folders `itunes rekordbox traktor history crates charts clouddrive geniusdj askthedj
+idjpool digitrax onlinemusic cdjexport mymusic myvideos desktop drives` (`browser_window`).
+
+Membership rules, because two of the signals are weak: a word that is also a verb name
+(`sampler`, `automix`) never seeds a code region, since every skin builder references it; a
+table larger than 64 entries is the verb table, not an enumeration; a region referencing more
+than 48 keywords is a dispatcher; a table whose entries are mostly not script-shaped
+(`WM/AlbumArtist`, the ID3 genre list) is a format map. A named group that regions push past 60
+members keeps its tables and drops the regions (`song_fields`: `artist` and `title` are
+compared by every tag parser in the app). `seed_unconfirmed` lists seeds the binary did not
+corroborate — none so far.
+
+**Tier 2, and a discovery channel, not a confirmation one** (same rule as
+`keyword_candidates`): a member is a lead for `probe_arg_forms.py`, and since verbs silently
+ignore unknown words, confirming one needs a fixture in which the forms would differ.
+`waveform_options` has no verb at all — it is skin-attribute vocabulary that the seed happened
+to catch — and is kept as a lead for the skin docs, not the verb store.
+
 ### Observed return types — the HTTP sweep (2026-07-30)
 
 [tools/sweep_return_types.py](../tools/sweep_return_types.py) sampled every one of the 652
