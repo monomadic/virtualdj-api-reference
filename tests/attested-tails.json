@@ -1,9 +1,9 @@
 {
  "summary": {
-  "verbs": 71,
-  "tokens": 154,
-  "novel_tokens": 116,
-  "novel_verbs": 48,
+  "verbs": 72,
+  "tokens": 167,
+  "novel_tokens": 114,
+  "novel_verbs": 42,
   "filtered": {
    "modifiers": [
     "instant",
@@ -24,11 +24,16 @@
    "playing"
   ],
   "browser_window": [
-   "folders",
-   "songs"
+   "folders"
   ],
-  "cue_display": [
-   "name"
+  "color": [
+   "black",
+   "blue",
+   "cyan",
+   "magenta",
+   "orange",
+   "white",
+   "yellow"
   ],
   "cue_name": [
    "active"
@@ -51,12 +56,6 @@
    "audioonlyvisualisation",
    "transition"
   ],
-  "effect_slider": [
-   "active"
-  ],
-  "effect_stems": [
-   "vocal"
-  ],
   "eq_mode": [
    "frequency",
    "stems"
@@ -75,14 +74,6 @@
   "get_loaded_song_color": [
    "white"
   ],
-  "get_next_karaoke_song": [
-   "artist",
-   "singer",
-   "title"
-  ],
-  "get_sample_name": [
-   "active"
-  ],
   "is_video": [
    "active"
   ],
@@ -90,11 +81,9 @@
    "browsed"
   ],
   "skin_panel": [
-   "audiomixer",
    "barcounter",
    "beatgrid_left",
    "beatgrid_right",
-   "defaultwave",
    "fxrack_1_1",
    "fxrack_1_3",
    "fxrack_2_1",
@@ -154,14 +143,10 @@
   "mid_label": [
    "short"
   ],
-  "setting": [
-   "eqmode"
-  ],
   "pad_menu": [
    "show_edit"
   ],
   "pad_page": [
-   "btn1",
    "btn2",
    "btn3",
    "btn4"
@@ -197,10 +182,11 @@
    "decktimer_deck3mini",
    "decktimer_deck4mini"
   ],
-  "color": [
-   "green"
-  ],
-  "stem_pad": [
+  "stem_color": [
+   "bass",
+   "hihat",
+   "instru",
+   "kick",
    "vocal"
   ],
   "stems_split": [
@@ -327,6 +313,817 @@
       "builtin"
      ],
      "origin": "examples/Skins/Built-In/Remote/16x9P.xml@action"
+    }
+   ]
+  },
+  "color": {
+   "cyan": [
+    {
+     "snippet": "color 'cyan'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_loop_roll.xml@color"
+    }
+   ],
+   "green": [
+    {
+     "snippet": "color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'in' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'in' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'move' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'move' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'out' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'out' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "reloop_exit ? color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : slicer 2 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : slicer 2 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : slicer 4 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : slicer 4 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : slicer 6 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : slicer 6 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : slicer 8 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : slicer 8 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    }
+   ],
+   "magenta": [
+    {
+     "snippet": "color 'magenta'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    }
+   ],
+   "orange": [
+    {
+     "snippet": "color 'orange'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    }
+   ],
+   "red": [
+    {
+     "snippet": "color 'red'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_stems+fx.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : slicer 2 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : slicer 4 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : slicer 6 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : slicer 8 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    }
+   ],
+   "white": [
+    {
+     "snippet": "color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
+    },
+    {
+     "snippet": "has_cue 1 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 10 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 11 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 12 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 13 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 14 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 15 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 16 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 2 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 3 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 4 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 5 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 6 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 7 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 8 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    },
+    {
+     "snippet": "has_cue 9 ? color 'white'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_hotcues.xml@color"
+    }
+   ],
+   "yellow": [
+    {
+     "snippet": "color 'yellow'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    }
+   ],
+   "black": [
+    {
+     "snippet": "hot_cue 1 ? cue_color 1 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 10 ? cue_color 10 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 11 ? cue_color 11 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 12 ? cue_color 12 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 13 ? cue_color 13 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 14 ? cue_color 14 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 15 ? cue_color 15 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 16 ? cue_color 16 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 2 ? cue_color 2 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 3 ? cue_color 3 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 4 ? cue_color 4 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 5 ? cue_color 5 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 6 ? cue_color 6 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 7 ? cue_color 7 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 8 ? cue_color 8 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "hot_cue 9 ? cue_color 9 : color 'black'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_keycue.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'in' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'move' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    },
+    {
+     "snippet": "loop_adjust 'out' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+    }
+   ],
+   "blue": [
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 1 'pressed' ? color 'red' : slicer 1 ? color 'green' : slicer 2 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 2 'pressed' ? color 'red' : slicer 2 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 3 'pressed' ? color 'red' : slicer 3 ? color 'green' : slicer 4 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 4 'pressed' ? color 'red' : slicer 4 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 5 'pressed' ? color 'red' : slicer 5 ? color 'green' : slicer 6 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 6 'pressed' ? color 'red' : slicer 6 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 7 'pressed' ? color 'red' : slicer 7 ? color 'green' : slicer 8 ? color green : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'blue' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+    },
+    {
+     "snippet": "slicer 8 'pressed' ? color 'red' : slicer 8 ? color 'green' : color 'blue'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
     }
    ]
   },
@@ -1560,7 +2357,23 @@
      "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
     },
     {
-     "snippet": "skin_panel 'leftkey' off &amp; skin_panel 'rightkey' off",
+     "snippet": "skin_panel 'leftkey' off & skin_panel 'rightkey' off",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
+    }
+   ],
+   "rightkey": [
+    {
+     "snippet": "skin_panel 'leftkey' off & skin_panel 'rightkey' off",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
+    },
+    {
+     "snippet": "skin_panel 'rightkey'",
      "sources": [
       "builtin"
      ],
@@ -1657,15 +2470,6 @@
      "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
     }
    ],
-   "rightkey": [
-    {
-     "snippet": "skin_panel 'rightkey'",
-     "sources": [
-      "builtin"
-     ],
-     "origin": "examples/Skins/Built-In/Remote/16x10T.xml@action"
-    }
-   ],
    "rmaudio": [
     {
      "snippet": "skin_panel 'rmaudio' on",
@@ -1700,7 +2504,7 @@
      "origin": "examples/Skins/Built-In/Remote/16x9P.xml@action"
     },
     {
-     "snippet": "skin_panel 'rmleft' on &amp; deck left select",
+     "snippet": "skin_panel 'rmleft' on & deck left select",
      "sources": [
       "builtin"
      ],
@@ -1777,7 +2581,7 @@
      "origin": "examples/Skins/Built-In/Remote/16x9P.xml@action"
     },
     {
-     "snippet": "skin_panel 'rmright' on &amp; deck right select",
+     "snippet": "skin_panel 'rmright' on & deck right select",
      "sources": [
       "builtin"
      ],
@@ -1876,7 +2680,7 @@
   "is_audible": {
    "or": [
     {
-     "snippet": "is_audible 'or scratch' &amp; fadeout 1000ms 500ms",
+     "snippet": "is_audible 'or scratch' & fadeout 1000ms 500ms",
      "sources": [
       "builtin"
      ],
@@ -1993,6 +2797,13 @@
       "builtin"
      ],
      "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+    },
+    {
+     "snippet": "loop_adjust 'in' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
     }
    ],
    "move": [
@@ -2002,6 +2813,13 @@
       "builtin"
      ],
      "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+    },
+    {
+     "snippet": "loop_adjust 'move' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
     }
    ],
    "out": [
@@ -2011,6 +2829,13 @@
       "builtin"
      ],
      "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+    },
+    {
+     "snippet": "loop_adjust 'out' ? blink ? color 'black' : color 'green' : color 'green'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
     }
    ]
   },
@@ -2319,35 +3144,50 @@
     }
    ]
   },
-  "color": {
-   "green": [
+  "stem_color": {
+   "bass": [
     {
-     "snippet": "slicer 1 &apos;pressed&apos; ? color &apos;red&apos; : slicer 1 ? color &apos;green&apos; : slicer 2 ? color green : color &apos;blue&apos;",
+     "snippet": "stem_color 'bass'",
      "sources": [
       "builtin"
      ],
-     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
-    },
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
+    }
+   ],
+   "hihat": [
     {
-     "snippet": "slicer 3 &apos;pressed&apos; ? color &apos;red&apos; : slicer 3 ? color &apos;green&apos; : slicer 4 ? color green : color &apos;blue&apos;",
+     "snippet": "stem_color 'hihat'",
      "sources": [
       "builtin"
      ],
-     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
-    },
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
+    }
+   ],
+   "instru": [
     {
-     "snippet": "slicer 5 &apos;pressed&apos; ? color &apos;red&apos; : slicer 5 ? color &apos;green&apos; : slicer 6 ? color green : color &apos;blue&apos;",
+     "snippet": "stem_color 'instru'",
      "sources": [
       "builtin"
      ],
-     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
-    },
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
+    }
+   ],
+   "kick": [
     {
-     "snippet": "slicer 7 &apos;pressed&apos; ? color &apos;red&apos; : slicer 7 ? color &apos;green&apos; : slicer 8 ? color green : color &apos;blue&apos;",
+     "snippet": "stem_color 'kick'",
      "sources": [
       "builtin"
      ],
-     "origin": "examples/Pads/Built-In/pads_slicer.xml@color"
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
+    }
+   ],
+   "vocal": [
+    {
+     "snippet": "stem_color 'vocal'",
+     "sources": [
+      "builtin"
+     ],
+     "origin": "examples/Pads/Built-In/pads_stems.xml@color"
     }
    ]
   },

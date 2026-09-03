@@ -55,6 +55,13 @@ QUOTED = re.compile(r"['\"]([^'\"\n]{4,120})['\"]")
 WORD = re.compile(r"[a-z_][a-z0-9_]*")
 
 
+def unescape_xml(text: str) -> str:
+    for entity, char in (("&apos;", "'"), ("&quot;", '"'), ("&lt;", "<"),
+                         ("&gt;", ">"), ("&amp;", "&")):
+        text = text.replace(entity, char)
+    return text
+
+
 def verbs_in(script: str, known: set[str]) -> list[str]:
     return sorted({w for w in WORD.findall(script.lower()) if w in known})
 
@@ -86,7 +93,11 @@ def from_builtins(known: set[str]) -> list[dict]:
         for path in sorted(root.rglob("*.xml")) if root.exists() else []:
             text = path.read_text(encoding="utf-8", errors="replace")
             for attr, value in ATTR.findall(text):
-                script = value.strip()
+                # Attribute values are XML-escaped on disk. Without this the
+                # corpus stores `color &apos;red&apos;`, which no parser accepts
+                # — caught by the parse-regression run, which reported eight
+                # such snippets as structural failures.
+                script = unescape_xml(value).strip()
                 if not script or len(script) > 400:
                     continue
                 found = verbs_in(script, known)

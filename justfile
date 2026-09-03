@@ -157,6 +157,10 @@ fixture-verify name:
 fixture-establish name *args:
     python3 tools/fixtures.py --establish "{{name}}" {{args}}
 
+# Send every vendor snippet through /query and classify the outcome.
+corpus-parses *args:
+    python3 tools/check_corpus_parses.py {{args}} > tests/corpus-parse-results.json
+
 # Argument tails Atomix wrote in shipped scripts — attested without a probe.
 attested-tails *args:
     @python3 tools/extract_attested_tails.py {{args}}
@@ -271,6 +275,7 @@ check:
     python3 tools/extract_action_catalog.py --check
     python3 tools/extract_script_corpus.py --check
     python3 tools/extract_attested_tails.py --check
+    python3 tools/check_corpus_parses.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
     git diff --check

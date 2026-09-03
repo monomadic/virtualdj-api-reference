@@ -1117,9 +1117,23 @@ Design constraints, learned the hard way this session:
 - Snippets naming effects, skins or files this install lacks will fail for environmental
   reasons. Classify those separately or the signal drowns.
 
-Done when: every corpus snippet has a recorded parse outcome, environmental failures are
-separated from structural ones, and any structural failure is either explained or raised as a
-correction to [VDJScript Grammar](docs/VDJScript%20Grammar.md).
+**DONE 2026-09-03.** [tools/check_corpus_parses.py](tools/check_corpus_parses.py)
+(`just corpus-parses`, gated in `just check`) sends all 1,427 snippets through `/query`:
+**1,099 parse and none contradicts a grammar claim.** Outcomes are classified rather than
+counted — 152 not-implemented, 97 other-error, 28 `E_FAIL` no-value, 28 surface-gated
+(action-position verbs sent to a query surface), 15 pipeline (`& param_*` needs an inbound
+value HTTP cannot supply), 1 placeholder, 7 structural.
+
+The seven residual cases turned out to be execute-position semantics — `loop 50%` multiplies
+rather than sets, `pitch_range +1` and `sampler_loop ±1` are relative — and each has an
+absolute equivalent that answers normally. Written up in
+[VDJScript Grammar](docs/VDJScript%20Grammar.md); a relative or multiplying argument is
+execute-only, and asking a query for one errors rather than going silent.
+
+**It also falsified something on its first run — my own extractor.** Eight snippets read
+`color &apos;red&apos;`: `extract_script_corpus.py` never XML-unescaped attribute values, so
+the corpus had been storing escaped entities since it was built an hour earlier. Fixed, and it
+is exactly what a regression set is for.
 
 ### 15. Two Loose Ends
 

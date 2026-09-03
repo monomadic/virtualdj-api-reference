@@ -575,6 +575,47 @@ An unknown target does error here (`deck qqqq loaded` -> `error:-2147467259`), s
 slot is one of the few places the parser is not silent. Do not read a `deck all` query as
 "all decks agree" — it is deck 1's value, and there is no established aggregate-query form.
 
+## What the HTTP query surface will not evaluate (2026-09-03)
+
+Every one of the 1,427 vendor-written snippets in
+[tests/vdjscript-corpus.json](../tests/vdjscript-corpus.json) was sent through `/query`
+([tools/check_corpus_parses.py](../tools/check_corpus_parses.py), gated in `just check`).
+**1,099 parse. Not one contradicts a grammar claim in this document.** The failures map the
+channel's boundary instead, and each class is a rule worth knowing:
+
+| Outcome | Count | What it means |
+| --- | ---: | --- |
+| `parsed` | 1,099 | answered without error |
+| `not-implemented` | 152 | `E_NOTIMPL` — verb exists, this form does nothing on this build |
+| `other-error` | 97 | non-standard error codes |
+| `no-value` | 28 | `E_FAIL` — [silence, not denial](../docs/Evidence%20Standards.md) |
+| `surface-gated` | 28 | action-position verbs (`hot_cue 1`, `loop_color 3`, `custom_button 1`) sent to a query surface |
+| `pipeline` | 15 | `get_bpm & param_cast` — `param_*` consumes a value flowing down the chain, and HTTP supplies none |
+| `structural` | 7 | see below |
+| `placeholder` | 1 | `sampler_bank X` — a documentation stand-in |
+
+Re-running with `loop_active` established changed nothing, so these are not missing-state
+failures.
+
+**The seven residual cases are all execute-position semantics, verb by verb.** They error under
+`/query` while their absolute equivalents answer:
+
+| Vendor form | `/query` | Absolute equivalent | `/query` |
+| --- | --- | --- | --- |
+| `loop 50%`, `loop 200%` | `E_INVALIDARG` | `loop 4`, `loop 0.5` | `no` |
+| `pitch_range +1` | `E_INVALIDARG` | `pitch_range 8` | `no` |
+| `sampler_loop +1`, `-1` | `E_INVALIDARG` | `sampler_loop 1` | `yes` |
+| `display_time 'elapsed,remain'` | `E_INVALIDARG` | `display_time elapsed` | `no` |
+
+The catalog explains the first row — `loop 200%` *multiplies* the loop size and `loop 50%`
+halves it, so they are adjustments, not values, and there is nothing for a query to return. The
+`+1` forms are the same shape. Note the comma list is **not** a general rule: `display_time
+'elapsed,remain'` is rejected while `browser_window 'folders,songs'` answers normally, so
+multi-value tails are per-verb.
+
+So: a relative or multiplying argument is execute-only, and asking a query for one is an error
+rather than silence — one of the few places the parser does report a problem.
+
 ## What an unrecognized tail does in execute position (2026-09-03)
 
 Under `/query` a bad argument is ignored and the verb answers anyway — `loaded bogusword`
