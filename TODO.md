@@ -1139,15 +1139,27 @@ is exactly what a regression set is for.
 
 Status: Ready, small. Added 2026-09-03.
 
-- **`timecode_cd_mode` is left on.** The 2026-09-03 execute probe set it and could not clear it;
-  `off`, `0`, bare toggle and deck-scoped forms all leave it `yes` on all four decks. It is not
-  in `settings.xml`, so it should be runtime-only — **verify after the next VirtualDJ restart**
-  and record the result either way. If it survives a restart, it is persistent state written
-  somewhere this repo has not mapped, which is worth knowing on its own.
-- **What the sampler `all` means.** 22 verbs reserve `all` as a tail token (2026-09-02), and in
-  every fixture tested `<verb> all` returned exactly the bare value while nonsense errored, so
-  the probe proves only that the parser reserves the word. `sampler_slots_differ` from task 13
-  is the fixture that would separate "any", "first" and "every".
+- **`timecode_cd_mode` is left on — STILL PENDING, and it needs a restart nobody has done.**
+  Checked 2026-09-03 08:09: still `yes` on every deck, but `ps` shows the VirtualDJ process
+  started 2026-09-02 15:39, *before* the probe that set it, so this is the same session and the
+  restart test has not actually been run yet. Not something to force: restarting is the user's
+  call, not a probe's.
+
+  Run after the next restart, and record either outcome:
+
+  ```sh
+  python3 -c "import sys;sys.path.insert(0,'tools');from fixtures import Channel;print(Channel().query('timecode_cd_mode'))"
+  ```
+
+  `no` means runtime-only state and the incident is closed. `yes` means it persists somewhere
+  this repo has not mapped — it is absent from `settings.xml`, so that would be a finding in its
+  own right and worth tracing.
+- **What the sampler `all` means — DONE 2026-09-03.** It is **the selected slot**, not an
+  aggregate: with slot 1 selected `get_sample_name all` reads slot 1's name, after
+  `sampler_select 5` it reads slot 5's, and `sampler_loaded all` stays `yes` while
+  `sampler_loaded 8` is `no`. Recorded in [VDJScript Verbs](docs/VDJScript%20Verbs.md), along
+  with the `sampler_select` quirk found while restoring state — 1-based slot on execute, 0-1
+  slider value on query.
 
 ## Blocked Or Hardware-Gated
 
