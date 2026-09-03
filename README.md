@@ -64,12 +64,44 @@ Every fact in the reference docs is labeled by source:
 | `Binary compiled table` | Structured command metadata observed in compiled executable tables |
 | `Binary symbol table` | Demangled implementation symbols observed in the VirtualDJ executable |
 | `Binary string-table` | Command-looking string observed in the VirtualDJ executable; discovery only |
+| `Action catalog` | The Button Editor's own description for a verb, shipped in `languages.zip` — the same prose the official appendix publishes, readable offline |
+| `Vendor script` | A form Atomix wrote into a shipped Built-In pad page or skin — attested usage, no probe required |
 | `Local test` | Reproduced in VirtualDJ locally |
 | `Inference` | Conclusion drawn from the above sources |
 
 Unlabeled files are raw material not yet normalized to this standard.
 [docs/Evidence Standards.md](docs/Evidence%20Standards.md) governs every claim: three tiers,
 what counts as a behavioral test, and why a channel's own return value is never a result.
+
+## Status (2026-09-03)
+
+### What a verb's arguments accept is now three-sourced
+
+The reference used to document verb *names* well and their *arguments* barely. Three
+independent sources now cover the tail of a statement, and `just action-catalog --cross-check`
+prints them against each other:
+
+- **`tests/action-catalog.json`** — 816 vendor descriptions extracted from the app bundle
+  (`languages.zip` carries the official appendix's prose, so it is available offline). The only
+  source that says what a parameter *means*.
+- **`tests/attested-tails.json`** — 167 tails Atomix wrote into shipped skins and pad pages.
+  Attested without a probe, which reaches where no test state can.
+- **`tests/verb-arg-forms.json`** — every candidate probed against two nonsense controls inside
+  10 named fixtures, because VirtualDJ silently ignores an argument it cannot parse, so a verb
+  answering proves nothing on its own.
+
+Agreement across all three is the strongest claim this project makes; 9 verbs have it today.
+
+### Traps that will bite anyone writing VDJScript, added this cycle
+
+- A **misspelled argument usually makes the action do nothing**, and on some verbs degrades to
+  the bare action instead. Neither is reported as an error.
+- **Relative and multiplying arguments are execute-only.** `loop 50%` halves a loop rather than
+  setting one, and asking a query for it errors.
+- **`deck all` broadcasts on execute but collapses to deck 1 on query** — the same line means
+  two different things depending on position.
+- **`timecode_cd_mode` latches**: script can set it and cannot unset it; only a restart clears.
+- The sampler's **`all` means the selected slot**, not every slot.
 
 ## Status (2026-07-30)
 

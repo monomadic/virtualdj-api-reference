@@ -49,7 +49,9 @@ examples/Pads/                    — working/reference pad page XML files plus 
 examples/Skins/                   — skin source trees, reference skins, and copied built-in skins
 examples/Mappers/                 — real working controller/keyboard mapper XML (ground truth for the mapper format)
 examples/Samplerbanks/            — copied built-in sampler-bank XML (third XML format)
-tests/                       — documentation test harnesses, including pad XML fixtures
+tests/                       — documentation test harnesses, pad XML fixtures, and the evidence artifacts
+                                  (verb-table, action-contracts, action-catalog, verb-arg-forms,
+                                   attested-tails, vdjscript-corpus — see tests/README.md)
 docs/                   — Markdown documentation
 ```
 
@@ -62,6 +64,23 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
 - `just vdj-execute 'effect_active 1'` — run an action; the body is the verb's own `true`/`false` result (not transport success — `nothing` returns `false`).
 - Unknown verbs return HTTP 200 with an `error:<code>` body; check the body, not the status.
 - Execute only verbs the current task names; never `system` or file/database-touching verbs through this channel.
+- **Before probing a verb's arguments, read what is already known.** `just action-catalog --get
+  <name>` gives the vendor's own description and its documented parameters; `just attested-tails
+  --verb <name>` gives tails Atomix wrote in shipped scripts; `just verb-arg-forms <name>` gives
+  what has already been probed. `get_song_event`'s two-token grammar was established by a 32,000
+  query sweep and had been documented in the app bundle the whole time.
+- **Probing arguments needs prepared state and nonsense controls.** An unrecognized argument is
+  silently ignored, so a verb answering proves nothing: `just fixture-list` shows the 10 named
+  states, and `tools/probe_arg_forms.py` compares every candidate against two junk tokens inside
+  each. Separation is positive evidence; failing to separate means the state did not
+  discriminate, *not* that the token is unreal.
+- **Time-varying verbs manufacture false positives.** `get_cpu`, `get_time` and `record_vu`
+  separate from a control by drift alone. `--repeat N` catches fast drift; only two independent
+  runs catch slow drift.
+- **Executing verbs to test them writes to a live instance.** `tools/probe_execute_forms.py`
+  shows the shape that is acceptable: an allowlist, a round-trip test before probing, restore
+  and verify after every form, and abort on a failed restore. `timecode_cd_mode` is why — it can
+  be set from script and only a restart clears it.
 - Recording a result has two destinations, and they hold different things. The **verb store is authoritative for per-verb conclusions**: `just put-verb <name> test_status=… confidence=local_test evidence="…"` — one verb, one settled fact, with the build in the evidence string. The **tracker holds the run narrative** for a session that does not reduce to a single verb: a fixture setup, a negative result, a multi-verb probe, cross-verb interactions. A tested status in the store with no evidence now fails `just check`, so record the evidence at the same time as the status, not later. Note the channel (HTTP vs pad) in the evidence, since some behavior is surface-specific.
 
 ## Key facts for AI agents
@@ -75,7 +94,11 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
 - `examples/Skins/GraveRaver/src/` is intentionally minimal and demonstrates the build system only. Do not use it as a polished skin reference.
 - The official VDJScript appendix coverage and local-test gap are tracked in `docs/Official VDJScript Coverage Audit.md`.
 - **[docs/Evidence Standards.md](docs/Evidence%20Standards.md) governs every claim in this repo — read it before recording a finding.** Three tiers: only direct observation of the running app (network protocol, HTTP interface, live pad tests, agent driving the window) proves that something *works*; forums, unbacked binary analysis, and official example files are *leads*; everything else is not recorded. Existence, kind, and behavior are separate claims. A channel's own return value is not a result. The binary can disprove a name even though it cannot prove behavior.
-- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Local test`, `Inference`) appear throughout the reference docs; Evidence Standards maps each onto its tier.
+- Source labels (`Official`, `Official forum`, `Community`, `Published skin`, `Built-in skin`, `Published pad page`, `Built-in pad page`, `Action catalog`, `Vendor script`, `Local test`, `Inference`) appear throughout the reference docs; Evidence Standards maps each onto its tier.
+- **The official verbs appendix ships inside the app.** `Resources/languages.zip` → `English.xml`
+  → `<Actions>` is the same prose virtualdj.com publishes, so 816 verb descriptions — including
+  parameter lists — are readable offline via `just action-catalog`. Do not fetch the manual for
+  something the bundle already answers.
 - Run `python3 tools/check_reference_status.py` after changing coverage counts, fixture inventories, or local reference links.
 
 ## Preferred patterns (quick version)

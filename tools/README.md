@@ -72,6 +72,49 @@ believing it. `prepare --remaining` emits the execute-capable keyword verbs (que
 only, unsafe families excluded and printed); `just plugin-keyword-report <capture>` splits
 every keyword against its nonsense control.
 
+## Argument discovery: what a verb's tail accepts
+
+Three independent sources, deliberately kept apart — they fail in different places, so
+agreement is corroboration and disagreement is a worklist. `just action-catalog --cross-check`
+prints all three against each other.
+
+| Tool | Source | What it proves |
+| --- | --- | --- |
+| `extract_action_catalog.py` | `Resources/languages.zip` — the same prose the official appendix publishes | What a parameter **means**. 816 descriptions, 97 with parameters. Offline. |
+| `extract_attested_tails.py` | Tails inside `vdjscript-corpus.json` | That a token is **used** by the vendor. Needs no probe, so it reaches where fixtures cannot. |
+| `probe_arg_forms.py` | The running app over HTTP | That a token is **not nonsense**, in a state where it could show. Needs `just vdj-up`. |
+
+`probe_arg_forms.py` takes candidates from any of the three: `--from-catalog` (documented),
+`--from-corpus` (attested), `--lexicon N` (tokens already proven on more than one verb), or the
+binary's own `keyword_candidates` by default. `--merge FILE` folds a targeted re-probe into the
+artifact — it **unions** form lists rather than replacing them, and requires the incoming run to
+use a **superset** of the artifact's fixtures, since a verdict computed under states the base
+never saw is not comparable.
+
+Rules these tools encode, each learned by getting it wrong first:
+
+- **Two nonsense controls, not one.** They must agree with each other, or the reading is
+  `unstable` rather than scored.
+- **Separation is positive evidence; failure to separate is not evidence of absence.** It
+  usually means the states did not discriminate.
+- **`--repeat N` for fast drift, two independent runs for slow drift.** `get_cpu` passed
+  `--repeat 3` and still flipped between runs.
+- **A verb matching most of an arbitrary vocabulary is drifting, not speaking it** —
+  `_flag_undiscerning`, which caught `record_vu` (24 of 25 tokens) and `get_time`.
+
+`probe_execute_forms.py` measures tails in **execute** position, where the query path is blind.
+It writes to a live instance, so it is allowlist-only (name, category and audible deny-lists),
+round-trips every verb before probing, restores and verifies each value, and aborts on a failed
+restore while keeping the results already collected.
+
+`check_corpus_parses.py` sends every corpus snippet through `/query` and classifies the
+outcome — the one check here that can falsify a grammar claim rather than extend one.
+
+`fixtures.py` provides the 10 named states these probes run inside (`just fixture-list`). Each
+asserts its own preconditions and fails loudly: a probe against an unestablished state is worse
+than no probe. Several are **assert-only** — they read state the app already has rather than
+writing, which is the right trade when there is no verified way back (`browser_populated`).
+
 ## Extraction: local VirtualDJ required
 
 These read `/Applications/VirtualDJ.app` (override with `--app`). They need macOS with Apple Silicon tooling (`nm`, `c++filt`, `otool`, `strings`) and produce *evidence*, which is hand-promoted into the docs with source labels — their output is not directly committed.
@@ -83,6 +126,8 @@ These read `/Applications/VirtualDJ.app` (override with `--app`). They need macO
 | `extract_vdjscript_taxonomy.py` | Compiled Button Editor taxonomy tables via a hand-rolled Mach-O parser | **Hard-pinned**: default virtual addresses are for VirtualDJ `8.5.9307` / bundle `18.0.9336`; on any other build you must re-derive addresses and pass `--*-va` flags |
 | `disassemble_vdjscript_parser_targets.py` | `otool -tV` disassembly of eight `DLGActionWizard` parser/highlighter symbols | Breaks if symbols are stripped or renamed |
 | `extract_vdjscript_metadata.py` | Joins the four extractors into one summary/CSV | Inherits all of the above |
+| `extract_action_vtables.py` | Every `ACTION_` vtable slot resolved to a named method | **Needs an unstripped build.** `18.0.9246` is the last one (321,571 symbols); `18.0.9482` onward keep ~1,210 and the tool exits rather than report nothing |
+| `extract_script_corpus.py` | Catalog snippets + shipped `Built-In` XML + wiki transcriptions | Re-extracts and compares in `just check`, so a VirtualDJ update fails loudly rather than drifting |
 
 Usage examples live in the docs that consume them: `docs/Button Editor Taxonomy.md`, `docs/Button Editor Catalog Audit.md`, `docs/Undocumented VDJScript Candidates.md`, `docs/VDJScript Syntax Evidence.md`.
 

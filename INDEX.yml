@@ -47,8 +47,21 @@ vdjscript:
     - docs/vdjscript-verb-index.json
   record_store:
     - docs/vdjscript-verbs.json
+  arguments:                             # what a verb's TAIL accepts — three sources
+    - tests/action-catalog.json          # vendor prose: what a parameter MEANS (816 descriptions)
+    - tests/verb-arg-forms.json          # probed: token vs nonsense control, per fixture
+    - tests/attested-tails.json          # tails Atomix wrote in shipped scripts
+    - tests/verb-execute-forms.json      # execute-position tails, two-baseline signatures
+  corpus:
+    - tests/vdjscript-corpus.json        # 1,427 vendor-written snippets, with provenance
+    - tests/corpus-parse-results.json    # every snippet through /query, outcomes classified
   commands:
     - just get-verb NAME
+    - just verb-arg-forms NAME           # probed tail tokens for one verb
+    - just action-catalog --get NAME     # the vendor's own description and parameters
+    - just action-catalog --cross-check  # catalog vs probe vs corpus, three ways
+    - just attested-tails --verb NAME    # tails used in shipped scripts
+    - just script-corpus --verb NAME     # vendor examples mentioning a verb
     - just find-verbs TERM [--surface=X --section=X --status=X --format=json]
     - just put-verb NAME field=value ...
     - just next-incomplete-verb
@@ -67,6 +80,10 @@ live_probe:
     - just verb-probe NAME          # does this name exist, and what kind is it?
     - just binary-verb NAME         # structured binary evidence for one name
     - just sweep-verb-existence     # refresh tests/verb-existence-sweep.json
+    - just fixture-list             # named states a probe can establish (10)
+    - just probe-arg-forms [--from-catalog|--from-corpus|--lexicon]
+    - just probe-execute-forms      # WRITES: allowlisted settings verbs, restored and verified
+    - just corpus-parses            # send every vendor snippet through /query
 
 remote_protocol:
   primary:

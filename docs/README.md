@@ -37,6 +37,16 @@ Start here:
 - [VDJScript Grammar](VDJScript%20Grammar.md)
   The language itself: chaining, conditionals, quoting, scope prefixes, and the traps. Read its summary before writing VDJScript; jump via its Contents for detail. Per-verb argument rules are not here — those are `just get-verb <name>`.
 
+- **Verb arguments live in artifacts, not prose.** What a verb's *tail* accepts is answered by
+  three independent sources under `tests/`, deliberately kept apart because they fail in
+  different places: `action-catalog.json` (the vendor's own descriptions, shipped in the app
+  bundle — what a parameter *means*), `attested-tails.json` (tails Atomix wrote into shipped
+  skins and pad pages — that a token is *used*), and `verb-arg-forms.json` (probed against
+  nonsense controls in 10 named fixtures — that a token is *not nonsense*). Read them with
+  `just action-catalog --get <name>`, `just attested-tails --verb <name>`,
+  `just verb-arg-forms <name>`, and diff all three with `just action-catalog --cross-check`.
+  See [../tests/README.md](../tests/README.md) for what each artifact proves and does not.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 
