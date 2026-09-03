@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Collect every VDJScript snippet Atomix themselves wrote, in one place.
 
-Four sanctioned sources, kept apart by provenance because they prove different
+Five sanctioned sources, kept apart by provenance because they prove different
 things:
 
 - **catalog** — snippets quoted inside the Button Editor's own action
@@ -11,6 +11,12 @@ things:
   and video skins under `examples/`. These are usage: whatever the parser
   actually accepts in a file Atomix ships.
 
+- **mapper** — the `action=""` of each `<map>` in a shipped factory controller
+  mapping. Usage, and the only source that exercises the hardware families:
+  `padshift`, `pad_button_color`, `get_key_modifier`, `silent_cue` and the
+  `SHIFT`/`ONINIT`/`LED_*` idioms appear in no skin or pad page, because no skin
+  has a shift key. Graded apart from `builtin` because a mapping reaches this
+  repo as a file copied off a local install, not as a file read from the bundle.
 - **binary** — VDJScript statements compiled into the app itself: the scripts
   behind its own menus, toolbars and default actions, found as string
   literals in the `__cstring` pool. Usage too, and executed by the app's own
@@ -53,6 +59,25 @@ WIKI = Path("tests/sources/wiki-examples.json")
 # masquerade as vendor evidence, which is the whole point of the corpus.
 XML_ROOTS = (Path("examples/Pads/Built-In"), Path("examples/Skins/Built-In"),
              Path("examples/Samplerbanks/Built-In"), Path("examples/VideoSkins/Built-In"))
+
+# Named one by one, never globbed: `examples/Mappers/` also holds personal
+# mappings, and a personal mapping legitimately contains experiments and guesses
+# that were never claimed to work (examples/Mappers/README.md). A glob would let
+# one land in the corpus the day it is added.
+#
+# Only the DDJ-XP2 file qualifies. It is Atomix's shipped factory mapping for
+# that controller, `author="Atomix Productions"`, copied unmodified. The
+# DDJ-GRV6 "Factory Default" file is deliberately NOT here: it is a local
+# *export* produced by Settings -> Controllers -> Factory default -> Save on
+# this machine, not a file Atomix shipped, so it carries a round-trip through
+# the app's own writer that nothing here has checked.
+MAPPER_FILES = (Path("examples/Mappers/Local/Pioneer DDJ-XP2 - Pioneer DDJ-XP2.xml"),)
+
+# In a mapper, `value=""` is the CONTROL NAME (`PLAY_PAUSE`, `SHIFT`, `LED_CUE`),
+# not script — and some control names collide with real verb names (`SEARCH`,
+# `PREVIEW`, `REVERSE`), so running SCRIPT_ATTRS over a mapper would mint
+# snippets out of hardware labels. Only `<map action="">` holds script.
+MAP_ACTION = re.compile(r'<map\b[^>]*\baction\s*=\s*"([^"]*)"', re.I)
 
 # Attributes that hold script in shipped pad/skin XML.
 SCRIPT_ATTRS = ("action", "query", "visibility", "color", "textcolor", "value",
@@ -148,6 +173,24 @@ def from_builtins(known: set[str]) -> list[dict]:
                     continue
                 out.append({"script": script, "source": "builtin", "origin": str(path),
                             "context": attr.lower(), "verbs": found})
+    return out
+
+
+def from_mappers(known: set[str]) -> list[dict]:
+    """Script bound to hardware controls in a shipped factory mapping."""
+    out = []
+    for path in MAPPER_FILES:
+        if not path.exists():
+            continue
+        for value in MAP_ACTION.findall(path.read_text(encoding="utf-8", errors="replace")):
+            script = unescape_xml(value).strip()
+            if not script or len(script) > 400:
+                continue
+            found = verbs_in(script, known)
+            if not found:
+                continue
+            out.append({"script": script, "source": "mapper", "origin": str(path),
+                        "context": "map", "verbs": found})
     return out
 
 
@@ -262,7 +305,8 @@ def main() -> int:
 
     known = set(json.load(open(VERB_TABLE))["verbs"])
     merged = merge(from_catalog(args.app, known) + from_builtins(known)
-                   + from_wiki(known) + from_binary(args.app, known))
+                   + from_mappers(known) + from_wiki(known)
+                   + from_binary(args.app, known))
 
     if args.check:
         if not ARTIFACT.exists():

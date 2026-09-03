@@ -177,9 +177,16 @@ action-catalog *args:
     @python3 tools/extract_action_catalog.py {{args}}
 
 # Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML
-# + wiki transcriptions + statements compiled into the app binary.
+# + the shipped factory controller mapping + wiki transcriptions + statements
+# compiled into the app binary.
 script-corpus *args:
     @python3 tools/extract_script_corpus.py {{args}}
+
+# Do the vendor XML copies under examples/*/Built-In still match the installed
+# app? A VirtualDJ update silently ages them, and the corpus then attests a
+# value the vendor no longer ships. `--refresh` re-copies; re-extract after.
+bundle-copies *args:
+    @python3 tools/check_bundle_copies.py {{args}}
 
 # Argument VOCABULARIES: shared enumerations (stem names, colours, sideview
 # pages) recovered as structures from the binary — pointer tables and the
@@ -271,6 +278,7 @@ lint-mappers *paths:
     python3 tools/lint_mappers.py "$@"
 
 check:
+    python3 tools/check_bundle_copies.py
     python3 tools/lint_pads.py
     python3 tools/lint_skins.py
     python3 tools/lint_mappers.py
