@@ -47,20 +47,24 @@ vdjscript:
     - docs/vdjscript-verb-index.json
   record_store:
     - docs/vdjscript-verbs.json
-  arguments:                             # what a verb's TAIL accepts — three sources
+  arguments:                             # what a verb's TAIL accepts — four sources
     - tests/action-catalog.json          # vendor prose: what a parameter MEANS (816 descriptions)
     - tests/verb-arg-forms.json          # probed: token vs nonsense control, per fixture
-    - tests/attested-tails.json          # tails Atomix wrote in shipped scripts
+    - tests/attested-tails.json          # tails AND argument shapes (arity, token types, return evidence) from shipped scripts
+    - tests/binary-vocabularies.json     # shared enumerations as binary structures (tables, switches)
     - tests/verb-execute-forms.json      # execute-position tails, two-baseline signatures
   corpus:
-    - tests/vdjscript-corpus.json        # 1,427 vendor-written snippets, with provenance
+    - tests/vdjscript-corpus.json        # 1,507 vendor-written snippets, with provenance (83 from the binary)
     - tests/corpus-parse-results.json    # every snippet through /query, outcomes classified
   commands:
+    - just verb NAME                     # everything known about one verb, one screen
     - just get-verb NAME
     - just verb-arg-forms NAME           # probed tail tokens for one verb
     - just action-catalog --get NAME     # the vendor's own description and parameters
     - just action-catalog --cross-check  # catalog vs probe vs corpus, three ways
     - just attested-tails --verb NAME    # tails used in shipped scripts
+    - just binary-vocab --get GROUP      # a shared enumeration and its hidden members
+    - just binary-vocab --verb NAME      # which enumerations a verb draws from
     - just script-corpus --verb NAME     # vendor examples mentioning a verb
     - just find-verbs TERM [--surface=X --section=X --status=X --format=json]
     - just put-verb NAME field=value ...

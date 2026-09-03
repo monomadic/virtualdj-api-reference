@@ -84,8 +84,15 @@ prints them against each other:
 - **`tests/action-catalog.json`** — 816 vendor descriptions extracted from the app bundle
   (`languages.zip` carries the official appendix's prose, so it is available offline). The only
   source that says what a parameter *means*.
-- **`tests/attested-tails.json`** — 167 tails Atomix wrote into shipped skins and pad pages.
-  Attested without a probe, which reaches where no test state can.
+- **`tests/attested-tails.json`** — 214 tails Atomix wrote into shipped skins, pad pages and
+  the app's own compiled menu scripts, plus 410 argument *shapes* (`` fadeout DUR DUR `BOOL` ``,
+  `param_bigger EXP:NUM EXP:NUM`, the `deck SEL EXP` wrapper) with
+  the return type the vendor's attribute implies, for the verbs whose arguments are values
+  rather than keywords. Attested without a probe, which reaches where no test state can.
+- **`tests/binary-vocabularies.json`** — argument vocabularies as *groups*, recovered from the
+  binary as structures (pointer tables, switch functions): the 38 colour names, the 5 stems,
+  the 19 settings pages. The only source that sees an enumeration matched in a shared helper
+  rather than in the verb's own code. Leads, not confirmations.
 - **`tests/verb-arg-forms.json`** — every candidate probed against two nonsense controls inside
   10 named fixtures, because VirtualDJ silently ignores an argument it cannot parse, so a verb
   answering proves nothing on its own.

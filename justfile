@@ -92,6 +92,12 @@ verb-index:
 get-verb name:
     @python3 tools/verbdb.py get "{{name}}"
 
+# EVERYTHING about one verb on one screen: store record, vendor description,
+# real usages, argument shapes with return evidence, every tail candidate by
+# source, vocabulary groups, probe state. `--format=json` for structure.
+verb name *args:
+    @python3 tools/verb_summary.py "{{name}}" {{args}}
+
 find-verbs *args:
     @python3 tools/verbdb.py search "$@"
 
@@ -170,9 +176,19 @@ attested-tails *args:
 action-catalog *args:
     @python3 tools/extract_action_catalog.py {{args}}
 
-# Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML.
+# Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML
+# + wiki transcriptions + statements compiled into the app binary.
 script-corpus *args:
     @python3 tools/extract_script_corpus.py {{args}}
+
+# Argument VOCABULARIES: shared enumerations (stem names, colours, sideview
+# pages) recovered as structures from the binary — pointer tables and the
+# switch functions that walk them. Tier 2: members are leads for the prober.
+binary-vocab *args:
+    @python3 tools/extract_binary_vocabularies.py {{args}}
+
+extract-binary-vocabularies:
+    @python3 tools/extract_binary_vocabularies.py > tests/binary-vocabularies.json
 
 # TAIL GRAMMAR: which trailing tokens a verb actually recognizes (Tier 1).
 # Every candidate is measured against nonsense controls, in every fixture.
@@ -275,6 +291,7 @@ check:
     python3 tools/extract_action_catalog.py --check
     python3 tools/extract_script_corpus.py --check
     python3 tools/extract_attested_tails.py --check
+    python3 tools/extract_binary_vocabularies.py --check
     python3 tools/check_corpus_parses.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py

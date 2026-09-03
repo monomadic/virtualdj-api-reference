@@ -74,14 +74,16 @@ every keyword against its nonsense control.
 
 ## Argument discovery: what a verb's tail accepts
 
-Three independent sources, deliberately kept apart — they fail in different places, so
+Four independent sources, deliberately kept apart — they fail in different places, so
 agreement is corroboration and disagreement is a worklist. `just action-catalog --cross-check`
 prints all three against each other.
 
 | Tool | Source | What it proves |
 | --- | --- | --- |
 | `extract_action_catalog.py` | `Resources/languages.zip` — the same prose the official appendix publishes | What a parameter **means**. 816 descriptions, 97 with parameters. Offline. |
-| `extract_attested_tails.py` | Tails inside `vdjscript-corpus.json` | That a token is **used** by the vendor. Needs no probe, so it reaches where fixtures cannot. |
+| `verb_summary.py` | Every artifact above, joined per verb | Nothing new — the existing evidence read together, tiers stated. `just verb <name>`. |
+| `extract_attested_tails.py` | Tails and SHAPES inside `vdjscript-corpus.json` | That a token is **used** by the vendor, and — for value arguments — the **arity and token types** (`fadeout DUR DUR BT`) with the return type the vendor's attribute implies. Needs no probe, so it reaches where fixtures cannot. |
+| `extract_binary_vocabularies.py` | Pointer tables and switch functions in the app binary | That a token belongs to a **shared enumeration** — and what the rest of the enumeration is. The only source that sees vocabulary matched in a helper rather than in the verb's own code (colour names, stem names, settings pages). Tier 2: members are leads. `just binary-vocab --get stems`. |
 | `probe_arg_forms.py` | The running app over HTTP | That a token is **not nonsense**, in a state where it could show. Needs `just vdj-up`. |
 
 `probe_arg_forms.py` takes candidates from any of the three: `--from-catalog` (documented),
@@ -127,7 +129,8 @@ These read `/Applications/VirtualDJ.app` (override with `--app`). They need macO
 | `disassemble_vdjscript_parser_targets.py` | `otool -tV` disassembly of eight `DLGActionWizard` parser/highlighter symbols | Breaks if symbols are stripped or renamed |
 | `extract_vdjscript_metadata.py` | Joins the four extractors into one summary/CSV | Inherits all of the above |
 | `extract_action_vtables.py` | Every `ACTION_` vtable slot resolved to a named method | **Needs an unstripped build.** `18.0.9246` is the last one (321,571 symbols); `18.0.9482` onward keep ~1,210 and the tool exits rather than report nothing |
-| `extract_script_corpus.py` | Catalog snippets + shipped `Built-In` XML + wiki transcriptions | Re-extracts and compares in `just check`, so a VirtualDJ update fails loudly rather than drifting |
+| `extract_script_corpus.py` | Catalog snippets + shipped `Built-In` XML + wiki transcriptions + statements compiled into the binary's `__cstring` pool | Re-extracts and compares in `just check`, so a VirtualDJ update fails loudly rather than drifting |
+| `extract_binary_vocabularies.py` | ADRP+ADD code references and `const char *[]` tables, decoded with numpy over the arm64 slice | Build-independent by construction (no fixed addresses), but the seeds in `SEEDS` are hand-named; a new enumeration needs a seed or a shared attested tail to be found |
 
 Usage examples live in the docs that consume them: `docs/Button Editor Taxonomy.md`, `docs/Button Editor Catalog Audit.md`, `docs/Undocumented VDJScript Candidates.md`, `docs/VDJScript Syntax Evidence.md`.
 

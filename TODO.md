@@ -210,7 +210,10 @@ Done when:
 
 Status: Ready — reframed 2026-07-29: these are no longer "candidates". All 37 hidden names are
 proven real by verb-table membership (`flags == 256`), every one now has a verb-store record,
-and 34/37 have HTTP-proven kind. What this task probes is **behavior only**.
+and 34/37 have HTTP-proven kind. What this task probes is **behavior only**. The hidden flag's
+UI meaning was confirmed live 2026-09-03: the redesigned editor's "VDJScript list of verbs"
+window omits `flip_play`, `rane_timecode`, `shoutout` and `stem_volume` while listing alias
+spellings such as `skin_pannel` (see [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)).
 
 Start here:
 
@@ -1037,6 +1040,51 @@ unknown to both other sources**, each carrying the snippet and shipped file it c
 `skin_panel audiomixer|defaultwave`, `get_next_karaoke_song artist|singer|title`,
 `setting eqmode`, `pad_page btn1`, `cue_display name`, `effect_slider active`,
 `get_sample_name active`, `color green`.
+
+**Extended 2026-09-03 — a fourth corpus source and the tails' binary locations.** The app
+binary compiles its own menu and toolbar scripts as `__cstring` literals; 83 statements pass
+the statement filter in `extract_script_corpus.py`, 80 in no other source, and they add 22
+attested tails on 15 verbs (`show_splitpanel effects|info`, `sideview clone`, `font_size big`,
+`scratch_dna_option continue`, `browser_options le`) plus a real two-token form,
+`sideview 'automix' 'blink'`. Locating every attested tail in the binary split them 52 in the
+verb's own method / 67 shared / 66 absent — the shared ones are enumerations matched in
+helpers, which is what §13 recovers.
+
+**Shapes, 2026-09-03 — the first verb tried exposed the gap.** `fadeout` has two catalog
+examples and two shipped ones, and every command answered "nothing": the catalog extractor's
+quote regex rejected examples containing `&` or backticks, the tails extractor drops literals
+by design, and the prober then declared the verb "needs no args". Measured: 114 verbs with
+vendor examples had tails made only of values and were invisible to every source. Fixed three
+ways — the catalog regex admits chains, ternaries and backticks (and bare example lines such
+as `color 0.8 0.5 0.25` now enter the corpus); `attested-tails.json` carries `shapes` (410 on
+262 verbs, 167 with no keyword tail; classes DUR/PCT/NUM/REL/STR/VAR/BOOL/KW/NAME, expressions reduced to their inner return type (`` `BOOL` ``, `EXP:NUM`), and
+the `deck SEL EXP` wrapper unwrapped so inner verbs are shaped) with per-shape return evidence from the vendor's
+attribute, the catalog prose and the bare-form sweep; and `verb-arg-forms` points at the
+shapes. Confirming a shape live still needs a fixture; probing by shape (`DUR DUR` against
+`DUR` and nonsense) is the next prober feature.
+
+### 13. Probe The Shared Enumerations The Binary Serialises
+
+Status: **Ready** (2026-09-03) — candidates extracted, fixtures exist, needs `just vdj-up`.
+
+[tests/binary-vocabularies.json](tests/binary-vocabularies.json) (`just binary-vocab`) holds
+21 argument groups recovered as *structures* — pointer tables and switch functions — with
+190 members no per-verb source names. The highest-yield leads, each already tied to a verb:
+
+- `settings <page>`: 18 unprobed pages from a 19-entry table (`settings 'audio'` is attested).
+- `color` / `get_loaded_song_color` / `cue_color`: 16 unprobed colour names from the 38-entry
+  table — `beige`, `marine`, `violet`, `transparent`, `none`, `reset`.
+- `effect_arm_deck` / `effect_fxsendreturndeck`: `booth auxin auxout mic2 preview samplerin
+  timecode deckfxsend deckfxreturn` from the audio-channel switch.
+- `browser_window`: the 17 root-folder names (`itunes`, `rekordbox`, `history`, `crates` …).
+- `pad_page`: the 17 table names, several with spaces (`'loop roll'`, `'saved loops'`).
+- `stem_pad instrumental`, `get_time cue`, `effect_show_gui` × 14.
+
+Probe with `probe_arg_forms.py` against nonsense controls in a discriminating fixture (colours
+need a coloured track; settings pages need the dialog observable), `--repeat 2`, union-merge.
+Record confirmations with `just put-verb`; record a group-level conclusion (the table IS the
+vocabulary) in the tracker, since it does not reduce to one verb. Rule reminder: a member that
+fails to separate is undiscriminated, not disproved.
 
 The filters earned their place immediately: `dump while_pressed` is correctly gone while
 `dump quantized|notquantized` survives.
