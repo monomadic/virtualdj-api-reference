@@ -10,6 +10,49 @@ Observed on 2026-05-30:
 - VirtualDJ bundle build: `18.0.9336`
 - Main executable SHA-256: `233f36a8d454d0fe90e7bb1c57b9550a4ea8aa3ee0a9f219624c24aa8aaa59f1`
 
+## The redesigned editor (observed 2026-09-03, bundle 18.0.9598)
+
+The Button Editor no longer opens on the category list this file describes. It now offers
+three ways to fill the action field, and a separate **VDJScript list of verbs** window that
+acts as a small lookup: an alphabetical list, a search box, and the description of the
+selected verb. The description text is byte-identical to the `<Actions>` prose in
+`Resources/languages.zip` — the same 816 entries `just action-catalog` reads offline — so the
+window is a viewer over the catalog, not a new source.
+
+The modes are visible as a string cluster next to the window's title in the binary (`Binary
+string-table`, so labels only, not behaviour):
+
+| Label | Prompt | Meaning |
+| --- | --- | --- |
+| `Use Natural Language` | `Describe what you want this button to do` (slider and query variants exist) | A natural-language mode that generates script |
+| `Use VDJScript` | `Enter a VDJScript command` | The classic text field |
+| `Pick an action from a skin element` | — | Copies the action of an existing skin element |
+| `Show a list of available VDJScript verbs` | — | Opens the lookup window above |
+
+Adjacent fragments `condition: `, `not ` and ` ?` are the editor's own annotation: the Pads
+Editor renders `condition: hotcue 1` in grey under an action written `hotcue 1 ? …`, so it
+parses the ternary rather than merely storing it. The category tables below still exist in
+the binary (the verb-table extractor reads them on every build), but whether the new UI still
+shows categories was not checked.
+
+**What the list contains — driven live 2026-09-03 (`Local test`, bundle 18.0.9598).** The
+window was opened from the Pads Editor (`deck 1 pad_edit 1` over HTTP, then the book icon)
+and six names typed into its search box:
+
+| Typed | Shown | Reading |
+| --- | --- | --- |
+| `stem_pad` (control, visible) | `stem_pad` | the search works |
+| `flip_play`, `rane_timecode`, `shoutout` (hidden, `flags == 256`) | nothing | **the hidden flag is honoured** |
+| `stem_volume` (hidden) | `has_system_volume`, `system_volume` | substring match on names; the hidden verb itself absent |
+| `pannel` (alias spelling, `flags == 1`) | `lock_pannel`, `skin_pannel`, `skin_pannelgroup` | **alias spellings are listed** |
+
+The alias spellings have no entry in `languages.zip`, so the list is populated from the
+compiled verb table (records minus the 38 hidden ones, 994 names), not from the catalog; the
+catalog only supplies the description pane. Search matches substrings of names (`stem_volume`
+hit `system_volume`), and probably descriptions too (`_v` returned `cycle`). So the window
+confirms the verb table's two flag meanings from the UI side: `256` hides a name from the
+editor, `1` marks an alias spelling that the editor still offers.
+
 ## Purpose
 
 This file records the action-to-category taxonomy used by the Button Editor UI. It is separate from the language-description catalog in `Resources/languages.zip`: the language files provide prose descriptions, while the category mapping is compiled into the executable.
