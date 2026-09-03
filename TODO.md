@@ -1139,21 +1139,15 @@ is exactly what a regression set is for.
 
 Status: Ready, small. Added 2026-09-03.
 
-- **`timecode_cd_mode` is left on — STILL PENDING, and it needs a restart nobody has done.**
-  Checked 2026-09-03 08:09: still `yes` on every deck, but `ps` shows the VirtualDJ process
-  started 2026-09-02 15:39, *before* the probe that set it, so this is the same session and the
-  restart test has not actually been run yet. Not something to force: restarting is the user's
-  call, not a probe's.
+- **`timecode_cd_mode` — CLOSED 2026-09-03.** VirtualDJ restarted at 09:42 and the verb reads
+  `no` on all four decks, back to its pre-probe value. So it is **runtime-only state**: settable
+  from script, not clearable from script, and not persisted to `settings.xml`. The 2026-09-03
+  execute-probe incident is closed with no lasting change to the user's configuration.
 
-  Run after the next restart, and record either outcome:
-
-  ```sh
-  python3 -c "import sys;sys.path.insert(0,'tools');from fixtures import Channel;print(Channel().query('timecode_cd_mode'))"
-  ```
-
-  `no` means runtime-only state and the incident is closed. `yes` means it persists somewhere
-  this repo has not mapped — it is absent from `settings.xml`, so that would be a finding in its
-  own right and worth tracing.
+  Worth keeping as a documented verb property rather than only an incident: a verb can latch for
+  the life of a session. The execute prober's pre-flight round-trip now catches that class
+  before probing (it flips once and requires the value to return), and `timecode` is back inside
+  the category deny-list that was inert at the time.
 - **What the sampler `all` means — DONE 2026-09-03.** It is **the selected slot**, not an
   aggregate: with slot 1 selected `get_sample_name all` reads slot 1's name, after
   `sampler_select 5` it reads slot 5's, and `sampler_loaded all` stays `yes` while

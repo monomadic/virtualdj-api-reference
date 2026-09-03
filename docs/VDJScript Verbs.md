@@ -6270,6 +6270,11 @@ OS2L source note:
 - Use `timecode_reset_pitch` when you need software pitch to match the turntable pitch exactly before absolute needle-drop work.
 - `timecode_pitch` is for controllers that send pitch separately over MIDI while timecode controls position.
 - `timecode_cd_mode` is for CD or digital devices using a vinyl-style timecode signal.
+- **It latches for the session.** `Local test` (2026-09-03): executing `timecode_cd_mode on`
+  sets it to `yes` on all four decks, and it cannot be cleared from script — `off`, `0`, the
+  bare toggle and deck-scoped forms all leave it `yes`. Restarting VirtualDJ restores `no`, and
+  the value is absent from `settings.xml`, so this is runtime-only state that script can set but
+  not unset. Treat it as one-way within a session.
 
 ### Timecode Examples
 
