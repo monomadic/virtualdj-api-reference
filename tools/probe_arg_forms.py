@@ -467,9 +467,20 @@ def main() -> int:
                      "`just probe-arg-forms` with VirtualDJ up")
         rec = json.load(open(artifact))["verbs"].get(args.get)
         if rec is None:
-            print(json.dumps({"name": args.get, "probed": False,
-                              "hint": "not an arg-form target (no candidates, needs no args)"},
-                             indent=1))
+            # A verb with no keyword candidates may still take arguments: the
+            # corpus attests literal shapes (`fadeout DUR DUR BT`) that the
+            # keyword sources never see. Say so instead of "needs no args".
+            shapes = {}
+            tails = Path("tests/attested-tails.json")
+            if tails.exists():
+                shapes = json.load(open(tails)).get("shapes", {}).get(args.get, {})
+            if shapes:
+                hint = ("not probed: no keyword candidates, but the corpus attests literal "
+                        "argument shapes — probe by shape (`just attested-tails --verb`)")
+            else:
+                hint = "not an arg-form target (no candidates, no attested shapes)"
+            print(json.dumps({"name": args.get, "probed": False, "hint": hint,
+                              "attested_shapes": sorted(shapes)}, indent=1))
             return 0
         print(json.dumps({"name": args.get, **rec}, indent=1))
         return 0

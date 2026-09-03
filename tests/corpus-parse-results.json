@@ -1,20 +1,38 @@
 {
  "summary": {
-  "snippets": 1427,
+  "snippets": 1516,
   "outcomes": {
-   "not-implemented": 152,
-   "other-error": 97,
-   "no-value": 28,
-   "parsed": 1099,
-   "surface-gated": 28,
+   "not-implemented": 157,
+   "other-error": 100,
+   "no-value": 29,
+   "parsed": 1167,
+   "surface-gated": 33,
    "pipeline": 15,
-   "structural": 7,
+   "structural": 14,
    "placeholder": 1
   },
-  "allowed_structural": 7,
+  "allowed_structural": 14,
   "note": "only `structural` outcomes are candidate contradictions; each still needs a nonsense control before it is called one"
  },
  "structural": [
+  {
+   "script": "deck master sampler_bank +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19df1"
+  },
+  {
+   "script": "deck master sampler_bank -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d9f"
+  },
   {
    "script": "display_time 'elapsed,remain'",
    "answer": "error:-2147024809",
@@ -43,6 +61,15 @@
    "origin": "loop"
   },
   {
+   "script": "pad_page +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103bf7def"
+  },
+  {
    "script": "pitch_range +1",
    "answer": "error:-2147024809",
    "outcome": "structural",
@@ -61,6 +88,24 @@
    "origin": "pitch_range"
   },
   {
+   "script": "sampler_bank +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3ca"
+  },
+  {
+   "script": "sampler_bank -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3aa"
+  },
+  {
    "script": "sampler_loop +1",
    "answer": "error:-2147024809",
    "outcome": "structural",
@@ -77,6 +122,24 @@
     "catalog"
    ],
    "origin": "sampler_loop"
+  },
+  {
+   "script": "sampler_mode +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3da"
+  },
+  {
+   "script": "sampler_mode -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3ba"
   }
  ],
  "results": [
@@ -270,6 +333,15 @@
    "origin": "examples/Skins/Built-In/Remote/16x9P.xml@action"
   },
   {
+   "script": "automix_editor_movetrack 'current' +10",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "automix_editor_movetrack"
+  },
+  {
    "script": "backspin 4bt",
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
@@ -442,7 +514,7 @@
   },
   {
    "script": "blink 1000ms",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -549,6 +621,15 @@
    "origin": "browser_open_folder"
   },
   {
+   "script": "browser_options 'le'",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19b0f"
+  },
+  {
    "script": "browser_scroll +1",
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
@@ -634,6 +715,78 @@
    "origin": "browser_window"
   },
   {
+   "script": "browser_window files",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19b8b"
+  },
+  {
+   "script": "browser_window folders",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19b74"
+  },
+  {
+   "script": "browser_window sideview",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19cd3"
+  },
+  {
+   "script": "browser_window sideview && sideview 'automix'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19c4a"
+  },
+  {
+   "script": "browser_window sideview && sideview 'karaoke'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19c78"
+  },
+  {
+   "script": "browser_window sideview && sideview 'remixes'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19be6"
+  },
+  {
+   "script": "browser_window sideview && sideview 'sampler'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19c14"
+  },
+  {
+   "script": "browser_window sideview && sideview 'sidelist'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19ba9"
+  },
+  {
    "script": "browser_zoom",
    "answer": "no",
    "outcome": "parsed",
@@ -677,6 +830,24 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "color \"#C08040\"",
+   "answer": "#C08040",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color"
+  },
+  {
+   "script": "color \"red\"",
+   "answer": "red",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color"
   },
   {
    "script": "color '#3D619C'",
@@ -749,6 +920,42 @@
     "builtin"
    ],
    "origin": "examples/Pads/Built-In/pads_manual_loop.xml@color"
+  },
+  {
+   "script": "color 0.66",
+   "answer": "#A8A8A8",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color"
+  },
+  {
+   "script": "color 0.8 0.5 0.25",
+   "answer": "#CC8040",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color"
+  },
+  {
+   "script": "color 75% \"red\"",
+   "answer": "#BF0000",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color"
+  },
+  {
+   "script": "color_mix white red `get_limiter`",
+   "answer": "white",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "color_mix"
   },
   {
    "script": "connect",
@@ -1588,6 +1795,15 @@
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
   },
   {
+   "script": "deck all effect_active 'Blur Black Bars' on",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c33b90"
+  },
+  {
    "script": "deck left load",
    "answer": "error:-2147467263",
    "outcome": "not-implemented",
@@ -1598,7 +1814,7 @@
   },
   {
    "script": "deck left loaded ? true : deck right loaded",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -1622,6 +1838,24 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+  },
+  {
+   "script": "deck master sampler_bank +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19df1"
+  },
+  {
+   "script": "deck master sampler_bank -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d9f"
   },
   {
    "script": "deck master sampler_output ? sampler output \"headphones\" : deck master sampler_output",
@@ -1805,6 +2039,15 @@
    "origin": "edit_comment"
   },
   {
+   "script": "effect_activate off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c05a7c"
+  },
+  {
    "script": "effect_active",
    "answer": "no",
    "outcome": "parsed",
@@ -1821,6 +2064,15 @@
     "wiki"
    ],
    "origin": "wiki:FX"
+  },
+  {
+   "script": "effect_active 'sampler'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19f7a"
   },
   {
    "script": "effect_active 1",
@@ -1875,6 +2127,24 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@visibility"
+  },
+  {
+   "script": "effect_active off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103bf8cb1"
+  },
+  {
+   "script": "effect_active on",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b7b1"
   },
   {
    "script": "effect_arm_deck master",
@@ -1944,7 +2214,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "builtin"
+    "builtin",
+    "binary"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
@@ -3246,6 +3517,24 @@
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
   },
   {
+   "script": "effect_has_slider 'sampler' 1",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a030"
+  },
+  {
+   "script": "effect_has_slider 'sampler' 2",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a0b2"
+  },
+  {
    "script": "effect_has_slider 1",
    "answer": "yes",
    "outcome": "parsed",
@@ -3363,6 +3652,15 @@
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
   {
+   "script": "effect_select_multi 'sampler'",
+   "answer": "0.69",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19f92"
+  },
+  {
    "script": "effect_show_gui",
    "answer": "no",
    "outcome": "parsed",
@@ -3426,6 +3724,24 @@
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
   },
   {
+   "script": "effect_show_gui off",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c07694"
+  },
+  {
+   "script": "effect_show_gui on",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c075e7"
+  },
+  {
    "script": "effect_slider 'active'",
    "answer": "0",
    "outcome": "parsed",
@@ -3433,6 +3749,24 @@
     "builtin"
    ],
    "origin": "examples/VideoSkins/Built-In/broadcast/broadcast.xml@action"
+  },
+  {
+   "script": "effect_slider 'sampler' 1",
+   "answer": "0.73",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19fb0"
+  },
+  {
+   "script": "effect_slider 'sampler' 2",
+   "answer": "0.99",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a04e"
   },
   {
    "script": "effect_slider 1",
@@ -3570,6 +3904,24 @@
    "origin": "examples/Skins/Built-In/Desktop/Pro.xml@action"
   },
   {
+   "script": "effect_slider_reset 'sampler' 1",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19fca"
+  },
+  {
+   "script": "effect_slider_reset 'sampler' 2",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a068"
+  },
+  {
    "script": "effect_slider_skip_length 1 0%",
    "answer": "no",
    "outcome": "parsed",
@@ -3586,6 +3938,24 @@
     "catalog"
    ],
    "origin": "effect_slider_skip_length"
+  },
+  {
+   "script": "effect_stems +1",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c3f7bd"
+  },
+  {
+   "script": "effect_stems off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c3f7e1"
   },
   {
    "script": "effect_stems vocal on",
@@ -3751,6 +4121,15 @@
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@visibility"
   },
   {
+   "script": "file_count 'files'",
+   "answer": "1502",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19ae4"
+  },
+  {
    "script": "file_count automix",
    "answer": "0",
    "outcome": "parsed",
@@ -3803,6 +4182,60 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "font_size 'big'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c199e2"
+  },
+  {
+   "script": "font_size +",
+   "answer": "1.03",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b467"
+  },
+  {
+   "script": "font_size +7%",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c199d4"
+  },
+  {
+   "script": "font_size -",
+   "answer": "1.03",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b44f"
+  },
+  {
+   "script": "font_size -7%",
+   "answer": "error:1",
+   "outcome": "other-error",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c199c6"
+  },
+  {
+   "script": "font_size 0",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b45b"
   },
   {
    "script": "gain",
@@ -3941,7 +4374,7 @@
   },
   {
    "script": "get_browsed_color 0 red 255",
-   "answer": "255",
+   "answer": "243",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -3950,7 +4383,7 @@
   },
   {
    "script": "get_browsed_color 0 white",
-   "answer": "white",
+   "answer": "#F3C6D3",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -3968,7 +4401,7 @@
   },
   {
    "script": "get_clock",
-   "answer": "08:08 AM",
+   "answer": "01:56 PM",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -3977,7 +4410,7 @@
   },
   {
    "script": "get_clock 12",
-   "answer": "08:08 AM",
+   "answer": "01:56 PM",
    "outcome": "parsed",
    "sources": [
     "catalog"
@@ -4046,6 +4479,33 @@
     "catalog"
    ],
    "origin": "get_denon_cuepoints"
+  },
+  {
+   "script": "get_effect_name 'sampler'",
+   "answer": "Phaser",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19f60"
+  },
+  {
+   "script": "get_effect_slider_default 'sampler' 1 0.5",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a006"
+  },
+  {
+   "script": "get_effect_slider_default 'sampler' 2 0.5",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a088"
   },
   {
    "script": "get_effect_slider_label 'transition' 1",
@@ -4433,6 +4893,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@action"
+  },
+  {
+   "script": "get_loaded_song 'File Name'",
+   "answer": "error:-2147024891",
+   "outcome": "other-error",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c3100b"
   },
   {
    "script": "get_loaded_song color",
@@ -4830,6 +5299,60 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Essentials.xml@action"
+  },
+  {
+   "script": "get_var $fscommand",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c34143"
+  },
+  {
+   "script": "get_var $fscommand2",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c34189"
+  },
+  {
+   "script": "get_var $fscommand3",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c341d3"
+  },
+  {
+   "script": "get_var $fsvalue",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c34156"
+  },
+  {
+   "script": "get_var $fsvalue2",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c3419d"
+  },
+  {
+   "script": "get_var $fsvalue3",
+   "answer": "",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c341e7"
   },
   {
    "script": "get_video_fx_slider_label 1",
@@ -5606,6 +6129,51 @@
    "origin": "examples/Pads/Built-In/pads_keycue.xml@query"
   },
   {
+   "script": "hotcue 1",
+   "answer": "error:-2147024809",
+   "outcome": "surface-gated",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36ec1"
+  },
+  {
+   "script": "hotcue 2",
+   "answer": "error:-2147024809",
+   "outcome": "surface-gated",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36ed3"
+  },
+  {
+   "script": "hotcue 3",
+   "answer": "error:-2147024809",
+   "outcome": "surface-gated",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36ee5"
+  },
+  {
+   "script": "hotcue 4",
+   "answer": "error:-2147024809",
+   "outcome": "surface-gated",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36ef7"
+  },
+  {
+   "script": "hotcue 5",
+   "answer": "error:-2147024809",
+   "outcome": "surface-gated",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36f09"
+  },
+  {
    "script": "is_audible",
    "answer": "no",
    "outcome": "parsed",
@@ -5625,7 +6193,7 @@
   },
   {
    "script": "is_battery",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -6933,7 +7501,7 @@
   },
   {
    "script": "match_bpm",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -7482,7 +8050,7 @@
   },
   {
    "script": "not is_battery",
-   "answer": "no",
+   "answer": "yes",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -7527,7 +8095,7 @@
   },
   {
    "script": "not loaded && loaded 'opposite'",
-   "answer": "yes",
+   "answer": "no",
    "outcome": "parsed",
    "sources": [
     "builtin"
@@ -7814,6 +8382,24 @@
    "origin": "os2l_cmd"
   },
   {
+   "script": "os2l_scene \"mypage\" \"myscene\"",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "os2l_scene"
+  },
+  {
+   "script": "os2l_scene \"scene1\"",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "catalog"
+   ],
+   "origin": "os2l_scene"
+  },
+  {
    "script": "pad 1",
    "answer": "error:1",
    "outcome": "other-error",
@@ -8010,6 +8596,15 @@
     "builtin"
    ],
    "origin": "examples/VideoSkins/Built-In/broadcast/broadcast.xml@action"
+  },
+  {
+   "script": "pad_page +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103bf7def"
   },
   {
    "script": "pad_page 1",
@@ -8391,6 +8986,15 @@
    "origin": "param_smaller"
   },
   {
+   "script": "pause ? play : nothing",
+   "answer": "error:-2147467259",
+   "outcome": "no-value",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c05a65"
+  },
+  {
    "script": "pfl",
    "answer": "yes",
    "outcome": "parsed",
@@ -8476,7 +9080,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "catalog"
+    "catalog",
+    "binary"
    ],
    "origin": "pitch_bend"
   },
@@ -8497,6 +9102,15 @@
     "catalog"
    ],
    "origin": "pitch_bend"
+  },
+  {
+   "script": "pitch_bend -1% 500ms",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c36f1e"
   },
   {
    "script": "pitch_bend -2% 500ms",
@@ -8823,6 +9437,24 @@
    "origin": "sampler_assign"
   },
   {
+   "script": "sampler_bank +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3ca"
+  },
+  {
+   "script": "sampler_bank -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3aa"
+  },
+  {
    "script": "sampler_bank X & sampler_play_stop Y",
    "answer": "no",
    "outcome": "parsed",
@@ -9147,6 +9779,24 @@
    "origin": "sampler_loop"
   },
   {
+   "script": "sampler_mode +1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3da"
+  },
+  {
+   "script": "sampler_mode -1",
+   "answer": "error:-2147024809",
+   "outcome": "structural",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b3ba"
+  },
+  {
    "script": "sampler_mode 1",
    "answer": "no",
    "outcome": "parsed",
@@ -9154,6 +9804,15 @@
     "catalog"
    ],
    "origin": "sampler_mode"
+  },
+  {
+   "script": "sampler_options 'sideview'",
+   "answer": "error:-2147467263",
+   "outcome": "not-implemented",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19e0d"
   },
   {
    "script": "sampler_pad 1",
@@ -9374,6 +10033,15 @@
    "origin": "wiki:Sampler"
   },
   {
+   "script": "sampler_volume_master 1.0",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c1a0d4"
+  },
+  {
    "script": "sampler_volume_master 100% ? sampler_volume_master 0% : sampler_volume_master 100%",
    "answer": "no",
    "outcome": "parsed",
@@ -9480,6 +10148,15 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Starter.xml@action"
+  },
+  {
+   "script": "scratch_dna_option continue",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c314f2"
   },
   {
    "script": "scratchbank_load_to_deck 1",
@@ -9639,7 +10316,8 @@
    "answer": "no",
    "outcome": "parsed",
    "sources": [
-    "catalog"
+    "catalog",
+    "binary"
    ],
    "origin": "search_folder"
   },
@@ -9696,6 +10374,33 @@
     "builtin"
    ],
    "origin": "examples/Skins/Built-In/Desktop/Starter.xml@visibility"
+  },
+  {
+   "script": "set $fscommand 0 & set $fsvalue 0",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c34167"
+  },
+  {
+   "script": "set $fscommand2 0 & set $fsvalue2 0",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c341af"
+  },
+  {
+   "script": "set $fscommand3 0 & set $fsvalue3 0",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c341f9"
   },
   {
    "script": "set '$fx_rack' 0",
@@ -10542,6 +11247,105 @@
     "wiki"
    ],
    "origin": "wiki:Key and Loop control"
+  },
+  {
+   "script": "show_splitpanel 'effects'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b435"
+  },
+  {
+   "script": "show_splitpanel 'info'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b403"
+  },
+  {
+   "script": "show_splitpanel 'sideview'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b41a"
+  },
+  {
+   "script": "sideview 'automix'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d2c"
+  },
+  {
+   "script": "sideview 'automix' 'blink'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b473"
+  },
+  {
+   "script": "sideview 'clone'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d52"
+  },
+  {
+   "script": "sideview 'karaoke'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d3f"
+  },
+  {
+   "script": "sideview 'karaoke' 'blink'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c2b48e"
+  },
+  {
+   "script": "sideview 'remixes'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d06"
+  },
+  {
+   "script": "sideview 'sampler'",
+   "answer": "yes",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19d19"
+  },
+  {
+   "script": "sideview 'sidelist'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19ceb"
   },
   {
    "script": "sideview +1",
@@ -11831,6 +12635,24 @@
    "origin": "examples/VideoSkins/Built-In/live/live.xml@visibility"
   },
   {
+   "script": "touchwheel_touch off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c049f1"
+  },
+  {
+   "script": "touchwheel_touch on",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c049c8"
+  },
+  {
    "script": "true",
    "answer": "yes",
    "outcome": "parsed",
@@ -12677,6 +13499,24 @@
    "origin": "examples/Skins/Built-In/Desktop/Performance.xml@visibility"
   },
   {
+   "script": "video_fx off",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c0760a"
+  },
+  {
+   "script": "video_fx on",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c07617"
+  },
+  {
    "script": "video_fx_slider 1",
    "answer": "1",
    "outcome": "parsed",
@@ -12792,6 +13632,33 @@
     "wiki"
    ],
    "origin": "wiki:Browsing"
+  },
+  {
+   "script": "view_options 'showkaraoke'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c199ab"
+  },
+  {
+   "script": "view_options 'showmusic'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19979"
+  },
+  {
+   "script": "view_options 'showvideo'",
+   "answer": "no",
+   "outcome": "parsed",
+   "sources": [
+    "binary"
+   ],
+   "origin": "binary:18.0.9598:0x103c19992"
   },
   {
    "script": "vinyl_mode",

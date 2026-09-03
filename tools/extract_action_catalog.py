@@ -43,7 +43,14 @@ LANGUAGE = "English.xml"
 ACTION_BLOCK = re.compile(r"<Actions>(.*?)</Actions>", re.S)
 ACTION_ENTRY = re.compile(r"<([a-z0-9_]+)>(.*?)</\1>", re.S)
 # 'single' or "double" quoted words — how the catalog spells every parameter.
-QUOTED = re.compile(r"['\"]([a-z0-9_ +-]{2,40})['\"]")
+# Examples are quoted in the prose: 'fadeout 10000ms 3000ms `loop`', 'loop & fadeout
+# 10000ms 3000ms', 'action_deck 1 ? actionA : actionB'. The character class must admit
+# chains, ternaries and backtick expressions or the multi-token examples are lost
+# (2026-09-03: every `fadeout` example was, and 114 verbs with them).
+QUOTED = re.compile(r"['\"]([a-z0-9_ +\-&?:`.%$#]{2,80})['\"]")
+# A documented PARAMETER is a bare keyword ('red', 'absolute'); values and
+# expressions are examples, not vocabulary.
+KEYWORD = re.compile(r"^[a-z0-9_+-]{2,40}$")
 # Prose that promises more than one positional argument.
 MULTI_ARG = re.compile(r"\b(second|third|two|first and second) parameter\b", re.I)
 
@@ -66,8 +73,9 @@ def catalog(app: Path, language: str) -> dict[str, dict]:
         text = unescape(body)
         if not text:
             continue
-        tokens = [t for t in dict.fromkeys(QUOTED.findall(text)) if " " not in t]
-        phrases = [t for t in dict.fromkeys(QUOTED.findall(text)) if " " in t]
+        quoted = list(dict.fromkeys(QUOTED.findall(text)))
+        tokens = [t for t in quoted if " " not in t and KEYWORD.match(t)]
+        phrases = [t for t in quoted if " " in t]
         out[name] = {
             "text": text,
             "documented_parameters": sorted(tokens),

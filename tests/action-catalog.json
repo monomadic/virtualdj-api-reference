@@ -1,12 +1,12 @@
 {
  "summary": {
   "actions": 816,
-  "with_parameters": 97,
+  "with_parameters": 96,
   "multi_argument": 18,
   "language": "English.xml",
   "cross_check_counts": {
    "confirmed_by_both": 27,
-   "documented_but_not_probe_confirmed": 80,
+   "documented_but_not_probe_confirmed": 79,
    "probe_confirmed_but_undocumented": 71,
    "confirmed_by_all_three": 9
   }
@@ -307,8 +307,7 @@
     "internal"
    ],
    "motorwheel": [
-    "motorwheel",
-    "timestamp"
+    "motorwheel"
    ],
    "os2l_button": [
     "mybutton",
@@ -338,7 +337,6 @@
     "pad_pressure"
    ],
    "param_cast": [
-    "000",
     "absolute",
     "beats",
     "boolean",
@@ -370,9 +368,6 @@
    ],
    "sampler_bank": [
     "birthday"
-   ],
-   "sampler_loop": [
-    "play"
    ],
    "sampler_play": [
     "sampler_play"
@@ -765,6 +760,7 @@
    "text": "adjust the beat grid. 'adjust_cbg +2' moves the start bar from 4:4. 'adjust_cbg +10%' moves the actual bars.",
    "documented_parameters": [],
    "quoted_phrases": [
+    "adjust_cbg +10%",
     "adjust_cbg +2"
    ],
    "multi_argument": false,
@@ -818,8 +814,9 @@
    "text": "Automatically crossfade to the other deck. You can specify the duration of the crossfade in ms: 'auto_crossfade 2000ms'\nAssigned to a slider, or specifying a specific position, it will move the crossfader slowly to that position: 'auto_crossfade 50%' or 'auto_crossfade 1000ms 50%'",
    "documented_parameters": [],
    "quoted_phrases": [
-    " or ",
-    "auto_crossfade 2000ms"
+    "auto_crossfade 1000ms 50%",
+    "auto_crossfade 2000ms",
+    "auto_crossfade 50%"
    ],
    "multi_argument": false,
    "lines": 2
@@ -929,7 +926,9 @@
   "beat_juggle": {
    "text": "Alternatively jumps one beat forward and backward\n'beat_juggle 0.5' will jump 1/2 beat forward or backward",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "beat_juggle 0.5"
+   ],
    "multi_argument": false,
    "lines": 2
   },
@@ -971,7 +970,9 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "beatjump_select +1",
-    "beatjump_select 4"
+    "beatjump_select 200%",
+    "beatjump_select 4",
+    "beatjump_select 50%"
    ],
    "multi_argument": false,
    "lines": 5
@@ -988,7 +989,8 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "blink 1000ms",
-    "blink 1bt"
+    "blink 1bt",
+    "blink 1bt 25%"
    ],
    "multi_argument": false,
    "lines": 2
@@ -1314,7 +1316,9 @@
   "constant": {
    "text": "Return the specified value\nExample: 'get constant 75%' always returns 75%",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "get constant 75%"
+   ],
    "multi_argument": false,
    "lines": 2
   },
@@ -1605,6 +1609,7 @@
    "text": "Assign a different action for a button or slider of a device depending on which side of the device it is on: \"device_side 'left' ? action_for_left : action_for_right\"\nFor more than 2-deck controllers, you can use \"device_side 1 ? action1 : device_side 2 ? action2 ? device_side 3 ? action3 : etc...\"",
    "documented_parameters": [],
    "quoted_phrases": [
+    " ? action_for_left : action_for_right",
     "device_side "
    ],
    "multi_argument": false,
@@ -1613,7 +1618,9 @@
   "dim": {
    "text": "equivalent of \"constant 0.1\"",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "constant 0.1"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -1632,7 +1639,8 @@
    "text": "execute different actions depending if the key is pressed twice in a short period of time or not: 'doubleclick ? automix : mix_now'. you can specify the time between two presses ('doubleclick 1000ms'), by default it's 300ms.",
    "documented_parameters": [],
    "quoted_phrases": [
-    "doubleclick 1000ms"
+    "doubleclick 1000ms",
+    "doubleclick ? automix : mix_now"
    ],
    "multi_argument": false,
    "lines": 1
@@ -1640,7 +1648,9 @@
   "down": {
    "text": "execute different actions depending if the key if pressed or released: 'down ? action1 : action2'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "down ? action1 : action2"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -1933,6 +1943,7 @@
    "text": "Select which source to apply fx to for a specific send/return channel in case there are more than one\n'deck 1 effect_fxsendreturndeck_multi master' : Apply master fx on the first fx send/return pair\n'deck 2 effect_fxsendreturndeck_multi mic' : Apply mic fx on the second fx send/return pair\n'deck 2 effect_fxsendreturndeck_multi 4' : Apply deck 4 fx on the second fx send/return pair",
    "documented_parameters": [],
    "quoted_phrases": [
+    "deck 1 effect_fxsendreturndeck_multi master",
     "deck 2 effect_fxsendreturndeck_multi 4",
     "deck 2 effect_fxsendreturndeck_multi mic"
    ],
@@ -2053,7 +2064,10 @@
   "effect_slider": {
    "text": "Move the n-th slider on the given effect\n\"effect_slider 1 2 50%\" : Set slider id 2 on slot 1 to 50%\n\"effect_slider 1 0%\" : set slider id 1 on slot 1 to 0%",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "effect_slider 1 0%",
+    "effect_slider 1 2 50%"
+   ],
    "multi_argument": false,
    "lines": 3
   },
@@ -2074,7 +2088,10 @@
   "effect_slider_skip_length": {
    "text": "Move the n-th slider on the given effect, excluding a length slider if present\n\"effect_slider_skip_length 1 2 50%\" : Set slider 2 (excluding length) on slot 1 to 50%\n\"effect_slider_skip_length 1 0%\" : set slider 1 (excluding length) on slot 1 to 0%",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "effect_slider_skip_length 1 0%",
+    "effect_slider_skip_length 1 2 50%"
+   ],
    "multi_argument": false,
    "lines": 3
   },
@@ -2233,7 +2250,10 @@
   "fadeout": {
    "text": "'loop & fadeout 10000ms 3000ms' will return 100% when loop is on, and fade out to 0% after 10 seconds in 3 seconds when loop turns off\nAlternatively, the action can be entered as the third parameter in backticks: 'fadeout 10000ms 3000ms `loop`'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "fadeout 10000ms 3000ms `loop`",
+    "loop & fadeout 10000ms 3000ms"
+   ],
    "multi_argument": true,
    "lines": 2
   },
@@ -2740,7 +2760,8 @@
    ],
    "quoted_phrases": [
     " or ",
-    "get_deck_color "
+    "get_deck_color ",
+    "get_deck_color 50%"
    ],
    "multi_argument": false,
    "lines": 2
@@ -3140,6 +3161,7 @@
    "text": "Get time (in ms) of the start of the loop\nUse \"get_loop_in_time 1.0\" to return the time in seconds instead of milliseconds\nUse \"get_loop_in_time on\" to return the loop in time even when no loop is active",
    "documented_parameters": [],
    "quoted_phrases": [
+    "get_loop_in_time 1.0",
     "get_loop_in_time on"
    ],
    "multi_argument": false,
@@ -3149,6 +3171,7 @@
    "text": "Get time (in ms) of the end of the loop\nUse \"get_loop_out_time 1.0\" to return the time in seconds instead of milliseconds\nUse \"get_loop_out_time on\" to return the loop out time even when no loop is active",
    "documented_parameters": [],
    "quoted_phrases": [
+    "get_loop_out_time 1.0",
     "get_loop_out_time on"
    ],
    "multi_argument": false,
@@ -3207,7 +3230,9 @@
    "text": "Is true if the pitch is zero, with an optional precision parameter: 'get pitch_zero 5%' (the % is relative to the pitch range. Use \"get pitch_zero 'absolute' 0.1%\" to use absolute precision)",
    "documented_parameters": [],
    "quoted_phrases": [
-    "get pitch_zero "
+    " 0.1%",
+    "get pitch_zero ",
+    "get pitch_zero 5%"
    ],
    "multi_argument": false,
    "lines": 1
@@ -3698,7 +3723,8 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "goto +10ms",
-    "goto -4"
+    "goto -4",
+    "goto 20%"
    ],
    "multi_argument": false,
    "lines": 1
@@ -3806,6 +3832,7 @@
    "text": "Returns true when track has links to other tracks. On a button can be used to show the linked tracks in the sideview\nYou can also use 'has_linked_tracks browsed' to get the result for the currently browsed track\nPassing a script that returns a full file path is also possible using 'has_linked_tracks `script`'",
    "documented_parameters": [],
    "quoted_phrases": [
+    "has_linked_tracks `script`",
     "has_linked_tracks browsed"
    ],
    "multi_argument": false,
@@ -3898,7 +3925,8 @@
    "text": "execute different actions depending if the key is pressed for a long time or not: 'holding ? automix : mix_now'. you can specify the time ('holding 1000ms'), by default it's 500ms.",
    "documented_parameters": [],
    "quoted_phrases": [
-    "holding 1000ms"
+    "holding 1000ms",
+    "holding ? automix : mix_now"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4047,14 +4075,18 @@
   "isrepeat": {
    "text": "execute different actions depending if the key is being repeated or if it's the first message (on Windows, keyboard shortcuts are usually auto-repeated while held down): 'isrepeat ? nothing : goto_cue')",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "isrepeat ? nothing : goto_cue"
+   ],
    "multi_argument": false,
    "lines": 1
   },
   "jogwheel": {
    "text": "used for a jogwheel without touch sensitivity. 'jogwheel +1.0' means a full rotation of the wheel.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "jogwheel +1.0"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -4362,8 +4394,11 @@
     "loop"
    ],
    "quoted_phrases": [
+    "loop 0.5",
     "loop 10ms",
-    "loop 4"
+    "loop 200%",
+    "loop 4",
+    "loop 50%"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4443,6 +4478,8 @@
    "text": "change the length of the loop. 'loop_length 15ms' set the length in ms, 'loop_length 0.5' set the length in beats, 'loop_length +100%' set the length in percentage of the actual length.",
    "documented_parameters": [],
    "quoted_phrases": [
+    "loop_length +100%",
+    "loop_length 0.5",
     "loop_length 15ms"
    ],
    "multi_argument": false,
@@ -4477,7 +4514,8 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "loop_move +10ms",
-    "loop_move +2"
+    "loop_move +2",
+    "loop_move +50%"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4531,6 +4569,7 @@
    "text": "\"loop_roll 0.25\" for 1/4th beat loop roll\n\"loop_roll video\" to toggle video loop roll on or off",
    "documented_parameters": [],
    "quoted_phrases": [
+    "loop_roll 0.25",
     "loop_roll video"
    ],
    "multi_argument": false,
@@ -4696,6 +4735,7 @@
    "text": "Lower the volume of all decks while active and activates microphone\nUse 'mic_talkover while_pressed' to only activate mic as long as button is held\nUse 'mic_talkover 20% 1000ms' to lower deck volumes to 20% and fade to the volume in 1 second. (Defaults are 30% and 400ms)",
    "documented_parameters": [],
    "quoted_phrases": [
+    "mic_talkover 20% 1000ms",
     "mic_talkover while_pressed"
    ],
    "multi_argument": false,
@@ -4831,12 +4871,14 @@
   "motorwheel": {
    "text": "used for a motorized jogwheel. Each time the jogwheel moves, send 'motorwheel \"move\" +1.0' followed by 'motorwheel \"timestamp\" 1000.0'. 'move +1.0' means a full platter rotation. 'timestamp 1.0' means 1ms since last message. You should query 'motorwheel' and turn the motor on when it returns true and off when false.",
    "documented_parameters": [
-    "motorwheel",
-    "timestamp"
+    "motorwheel"
    ],
    "quoted_phrases": [
-    " followed by ",
-    "motorwheel "
+    " +1.0",
+    " 1000.0",
+    "motorwheel ",
+    "move +1.0",
+    "timestamp 1.0"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4868,6 +4910,7 @@
    "text": "Open the selection menu for the named multibutton.\nIf a second text parameter is provided after the name, use it as the new action to load in the multibutton: 'multibutton_select \"my_button\" \"goto_cue 2 & play\"'",
    "documented_parameters": [],
    "quoted_phrases": [
+    "goto_cue 2 & play",
     "multibutton_select "
    ],
    "multi_argument": false,
@@ -4952,7 +4995,9 @@
    "text": "Send a numeric command to a DMX software over OS2L: 'os2l_cmd 42 on' or 'os2l_cmd 43 50%'\nSecond parameter can be script 'os2l_cmd 42 `get_var x`'",
    "documented_parameters": [],
    "quoted_phrases": [
-    "os2l_cmd 42 on"
+    "os2l_cmd 42 `get_var x`",
+    "os2l_cmd 42 on",
+    "os2l_cmd 43 50%"
    ],
    "multi_argument": true,
    "lines": 2
@@ -5094,6 +5139,11 @@
     "on"
    ],
    "quoted_phrases": [
+    " 40% 1bt",
+    " 40% 90%",
+    " 40% 90% ",
+    " 40% 90% smart_pressed",
+    " 80% ",
     "padfx "
    ],
    "multi_argument": true,
@@ -5136,14 +5186,18 @@
   "param_1_x": {
    "text": "invert the value of the calling slider/encoder/button (calculate 1/x) 'param_1_x & effect slider'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "param_1_x & effect slider"
+   ],
    "multi_argument": false,
    "lines": 1
   },
   "param_add": {
    "text": "add the given value to the value of the calling slider/encoder/button\nadd the value of the first parameter with the value of the second parameter. Both parameters can be actions instead of values: 'param_add `get_var a` `get_var b`'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "param_add `get_var a` `get_var b`"
+   ],
    "multi_argument": true,
    "lines": 2
   },
@@ -5151,6 +5205,7 @@
    "text": "check if the value of the calling slider/encoder/button is bigger than something: 'param_bigger 0 ? sampler loop 200% : sampler loop 50%'\ncompare value of the first parameter with the value of the second parameter. Both parameters can be actions instead of values: 'param_bigger pitch pitch_slider'",
    "documented_parameters": [],
    "quoted_phrases": [
+    "param_bigger 0 ? sampler loop 200% : sampler loop 50%",
     "param_bigger pitch pitch_slider"
    ],
    "multi_argument": true,
@@ -5159,7 +5214,6 @@
   "param_cast": {
    "text": "cast the value of the previous query action into a new type: 'pitch_range & param_cast \"percentage\"'. Valid types are 'integer', 'float', 'percentage', 'ms', 'boolean', 'beats', 'text'.\ncasting to text can also optionally limit the number of characters: 'get_browsed_song \"artist\" & param_cast \"text\" 5'\nto format a number as text with a specific number of digits: 'get_bpm & param_cast \"000\"'\nparam_cast 'int_trunc' : provides the integer part of a number without rounding to the nearest integer\nparam_cast 'frac' : provides the decimal part of a number.\nparam_cast 'relative' and param_cast 'absolute' : change the parameter to be a relative or absolute value",
    "documented_parameters": [
-    "000",
     "absolute",
     "beats",
     "boolean",
@@ -5173,7 +5227,11 @@
     "text"
    ],
    "quoted_phrases": [
-    "get_browsed_song "
+    " & param_cast ",
+    " 5",
+    "get_bpm & param_cast ",
+    "get_browsed_song ",
+    "pitch_range & param_cast "
    ],
    "multi_argument": false,
    "lines": 6
@@ -5206,7 +5264,9 @@
   "param_invert": {
    "text": "invert the value of the calling slider/encoder/button (1-x): 'param_invert & pitch_slider'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "param_invert & pitch_slider"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -5235,8 +5295,10 @@
    "text": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'\nCan also be used with two parameters, in which case both parameters can be actions or values: 'param_multiply `get_var a` `get_var b`' or 'param_multiply 50% `get_sampler_loop`'",
    "documented_parameters": [],
    "quoted_phrases": [
-    " or ",
-    "get_time total 1000"
+    "cue_pos 0 & param_multiply ",
+    "param_multiply 300% & effect slider",
+    "param_multiply 50% `get_sampler_loop`",
+    "param_multiply `get_var a` `get_var b`"
    ],
    "multi_argument": false,
    "lines": 3
@@ -5252,7 +5314,8 @@
    "text": "param_pow y : computes the power of the caller to the power of y. Can be 0.5 for calculating square root.\nCan also be used with 2 parameters, both of which can be actions or values. Note that the first parameter is the power, and the second parameter is the base. 'param_pow `get_var a` `get_var b`' or 'param_pow 2 `get_sampler_loop`'",
    "documented_parameters": [],
    "quoted_phrases": [
-    " or "
+    "param_pow 2 `get_sampler_loop`",
+    "param_pow `get_var a` `get_var b`"
    ],
    "multi_argument": true,
    "lines": 2
@@ -5260,7 +5323,9 @@
   "param_smaller": {
    "text": "check if the value of the calling slider/encoder/button is smaller than something: 'param_smaller 0 ? sampler loop 200% : sampler loop 50%'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "param_smaller 0 ? sampler loop 200% : sampler loop 50%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -5295,7 +5360,9 @@
   "pfl": {
    "text": "select if this deck is sent to the headphones. (can be used with a slider or a % to specify the volume: 'pfl 75%')",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "pfl 75%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -5328,6 +5395,10 @@
     "bpm"
    ],
    "quoted_phrases": [
+    "pitch +0.1 bpm",
+    "pitch +0.1%",
+    "pitch 0.25",
+    "pitch 112%",
     "pitch 130 bpm"
    ],
    "multi_argument": false,
@@ -5336,7 +5407,10 @@
   "pitch_bend": {
    "text": "slow down or speed up the song: 'pitch_bend +3%'. you can make the bend to increase slowly by specifying a second time parameter: 'pitch_bend +1% 500ms' will start at +1% and will double every 500ms.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "pitch_bend +1% 500ms",
+    "pitch_bend +3%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -5354,7 +5428,8 @@
     " +1",
     "pitch_range ",
     "pitch_range +1",
-    "pitch_range +1 deck"
+    "pitch_range +1 deck",
+    "pitch_range 12%"
    ],
    "multi_argument": false,
    "lines": 3
@@ -5371,6 +5446,7 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "pitch_reset 4bt",
+    "pitch_reset 5%",
     "pitch_reset 500ms"
    ],
    "multi_argument": false,
@@ -5585,6 +5661,7 @@
    "text": "return true when the previous action turns to true only for the duration specified: 'is_using 'equalizer' & pulse 2000ms'",
    "documented_parameters": [],
    "quoted_phrases": [
+    " & pulse 2000ms",
     "is_using "
    ],
    "multi_argument": false,
@@ -5764,7 +5841,9 @@
   "repeat": {
    "text": "repeat the actions every x ms as long as the key is pressed: 'repeat 1000ms & browser_scroll +1' (default is 500ms if no speed is specified. Second parameter can specify a delay before repeating the first time)",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "repeat 1000ms & browser_scroll +1"
+   ],
    "multi_argument": true,
    "lines": 1
   },
@@ -5779,6 +5858,7 @@
    "text": "Repeat an action at a specified interval: 'repeat_start 'myrepeatname' 1000ms 5 & browser_scroll +1' (first parameter is an identifier name, second parameter is the interval and the third optional parameter can specify a number of times to repeat). The first action will be performed after an interval has passed.\nThe interval can be specified in milliseconds, beats, or can be an action of itself. 'repeat_start 'myrepeatname' 1bt' or 'repeat_start 'myrepeatname `get_var a`'",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 1000ms 5 & browser_scroll +1",
     " 1bt",
     "repeat_start "
    ],
@@ -5789,6 +5869,7 @@
    "text": "Fade from one value to another in a specified time and optionally in a specified number of steps: 'repeat_start_fade 'myfadename' 0.0 1.0 1000ms 4 1.0 & level'\nFirst parameter is name, so it can be stopped early using repeat_stop. Second parameter is start value, third parameter is end value, fourth parameter is time (milliseconds or beats), fifth parameter is number of steps (optional, default is smooth).  Sixth parameter is curve (optional)\nThe action will be executed with the current value as a implicit parameter.\nAll parameters except name can be script as well by using backticks. For example: 'repeat_start_fade 'myfadename' `level` `get_var targetLevel` 1000ms 4 & level'. In this example, by using level as starting value, it will start to fade from the current value.",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 0.0 1.0 1000ms 4 1.0 & level",
     "repeat_start_fade "
    ],
    "multi_argument": true,
@@ -5798,6 +5879,7 @@
    "text": "Repeat an action at a specified interval: 'repeat_start_instant 'myrepeatname' 1000ms 5 & browser_scroll +1' (first parameter is an identifier name, second parameter is the interval and the third optional parameter can specify a number of times to repeat). The first action will be performed immediately.",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 1000ms 5 & browser_scroll +1",
     "repeat_start_instant "
    ],
    "multi_argument": true,
@@ -5964,11 +6046,11 @@
   },
   "sampler_loop": {
    "text": "use 'sampler_loop -1' or 'sampler_loop +1' to change the length of a playing sample\nuse 'sampler_loop \"current\" 1' to set the sample to loop for 1 beat or 'sampler_loop 1 1' to set sample 1 to 1 beat loop\nuse 'sampler_loop \"current\" 0.5 \"play\" while_pressed' to loop the sample as long as long as the button is pressed for 0.5 beats",
-   "documented_parameters": [
-    "play"
-   ],
+   "documented_parameters": [],
    "quoted_phrases": [
+    " 0.5 ",
     " 1",
+    " while_pressed",
     "sampler_loop ",
     "sampler_loop +1",
     "sampler_loop -1",
@@ -6062,7 +6144,9 @@
   "sampler_pfl": {
    "text": "Select if the sampler is sent to the headphones. (can be used with a slider or a % to specify the volume: 'sampler_pfl 75%')",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "sampler_pfl 75%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -6102,6 +6186,7 @@
    "text": "On first press, start to record a new sample. On second press, stop to record\nUse 'sampler_rec \"mic\"' to record a sample from microphone, or 'sampler_rec \"master\"' to record from master output\nIf the deck is on loop, a loop sample will immediately be created. If the deck is playing, it will record what's playing until the stop. If the deck is paused, it sets the 'entry point', and the second push will set the 'exit point' and use the deck's file between those two points.\n'sampler_rec 1' or 'sampler_rec 1 \"mic\"' will store the sample in the first slot of the \"Record\" sample bank, so that it can be used immediately after recording",
    "documented_parameters": [],
    "quoted_phrases": [
+    " will store the sample in the first slot of the ",
     "entry point",
     "exit point",
     "sampler_rec ",
@@ -6396,14 +6481,20 @@
   "set_bpm": {
    "text": "set the bpm of the song to the set value: 'set_bpm 129.3', or relative to the actual value: 'set_bpm 50%'.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "set_bpm 129.3",
+    "set_bpm 50%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
   "set_browsed_file_bpm": {
    "text": "set the bpm of the selected songs to the set value: 'set_bpm 129.3', or relative to the actual value: 'set_bpm 50%'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "set_bpm 129.3",
+    "set_bpm 50%"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -6417,7 +6508,9 @@
   "set_deck": {
    "text": "use script or implicit variable to affect which deck the action is applied to\nexample: 'set_deck `get_var varname` & play'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "set_deck `get_var varname` & play"
+   ],
    "multi_argument": false,
    "lines": 2
   },
@@ -6569,6 +6662,7 @@
    "text": "Show/hide the specified split panel\nExamples: \"show_splitpanel 'sidelist'\", \"show_splitpanel 'sideview' on\", \"show_splitpanel 'sidelist' 50%\"",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 50%",
     " on",
     "show_splitpanel "
    ],
@@ -6796,7 +6890,9 @@
   "songpos_remain": {
    "text": "get the remaining time in %. if used with a parameter (in % or ms), returns true if the time left is less or equal than the value: 'songpos_remain 500ms ? blink'.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "songpos_remain 500ms ? blink"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -6817,7 +6913,9 @@
   "speedwheel": {
    "text": "used for a precision touchwheel that reports both position and speed. 'speedwheel +1.0 1.5' means a full rotation of the wheel, at 150% speed.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "speedwheel +1.0 1.5"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -6943,6 +7041,7 @@
    "text": "Select if the deck is controlled by a timecode signal.\n(note: You can use 'timecode_active x' where x is the turntable number, to assign the same turntable to control several decks at once: 'deck 1 timecode_active 1 on & deck 2 timecode_active 1 on')",
    "documented_parameters": [],
    "quoted_phrases": [
+    "deck 1 timecode_active 1 on & deck 2 timecode_active 1 on",
     "timecode_active x"
    ],
    "multi_argument": false,
@@ -7022,7 +7121,9 @@
   "touchwheel": {
    "text": "used for a jogwheel with touch sensitivity. 'touchwheel +1.0' means a full rotation of the wheel.",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "touchwheel +1.0"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -7059,7 +7160,9 @@
   "up": {
    "text": "execute different actions depending if the key if pressed or released: 'up ? action1 : action2'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "up ? action1 : action2"
+   ],
    "multi_argument": false,
    "lines": 1
   },
@@ -7067,6 +7170,8 @@
    "text": "'var \"my_var\" ? my_action1 : my_action2'. execute my_action1 if my_var is true (non zero), execute my_action2 otherwise.\nYou can also compare var with a specific value: 'var \"my_var\" 1 ? my_action1 : my_action2' execute my_action1 is my_var is 1, or my_action2 otherwise",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 1 ? my_action1 : my_action2",
+    " ? my_action1 : my_action2",
     "var "
    ],
    "multi_argument": false,
@@ -7078,6 +7183,7 @@
     "that_var"
    ],
    "quoted_phrases": [
+    " 42 ? my_action1 : my_action2",
     "var_equal "
    ],
    "multi_argument": false,
@@ -7087,6 +7193,7 @@
    "text": "syntax: 'var_greater \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var is greater than 42, execute my_action2 otherwise.",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 42 ? my_action1 : my_action2",
     "var_greater "
    ],
    "multi_argument": false,
@@ -7103,6 +7210,7 @@
    "text": "syntax: 'var_not_equal \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var doesn't equal 42, execute my_action2 otherwise.",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 42 ? my_action1 : my_action2",
     "var_not_equal "
    ],
    "multi_argument": false,
@@ -7112,6 +7220,7 @@
    "text": "syntax: 'var_smaller \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var is smaller than 42, execute my_action2 otherwise.",
    "documented_parameters": [],
    "quoted_phrases": [
+    " 42 ? my_action1 : my_action2",
     "var_smaller "
    ],
    "multi_argument": false,
@@ -7215,6 +7324,7 @@
    "documented_parameters": [],
    "quoted_phrases": [
     "video_output 1",
+    "video_output ? video_output off : video_output on",
     "video_output off",
     "video_output on"
    ],
@@ -7246,7 +7356,9 @@
    "quoted_phrases": [
     " or ",
     "video_transition ",
-    "video_transition 1000ms"
+    "video_transition 1000ms",
+    "video_transition 1000ms 50%",
+    "video_transition 50%"
    ],
    "multi_argument": false,
    "lines": 4
@@ -7295,7 +7407,10 @@
   "wait": {
    "text": "wait for the specified amount of time between two script actions: 'wait 1bt & pause', 'wait 500ms & play'",
    "documented_parameters": [],
-   "quoted_phrases": [],
+   "quoted_phrases": [
+    "wait 1bt & pause",
+    "wait 500ms & play"
+   ],
    "multi_argument": false,
    "lines": 1
   },
