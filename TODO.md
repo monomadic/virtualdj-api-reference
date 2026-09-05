@@ -502,40 +502,52 @@ Done when:
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 
-Status: Ready
+Status: Done
 
-Note: Reframed 2026-07-29: these are no longer "candidates". All 37 hidden names are proven
-real by verb-table membership (`flags == 256`), every one now has a verb-store record, and
-34/37 have HTTP-proven kind. What this task probes is **behavior only**. The hidden flag's
-UI meaning was confirmed live 2026-09-03: the redesigned editor's "VDJScript list of verbs"
-window omits `flip_play`, `rane_timecode`, `shoutout` and `stem_volume` while listing alias
-spellings such as `skin_pannel` (see [docs/Button Editor
-Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)).
+Note: 2026-09-06, HTTP, build 18.0.9598. Both done-when clauses are met: every one of the 38
+`flags == 256` names is now recorded Pass, Partial or Fail, or explicitly blocked, and none is
+left as active untested work. Full narrative: the tracker's "Editor-Hidden Verbs: Behavior, Not
+Existence". State restored — pad page back to `1 CUE`, deck volume back to `1`, decks empty.
 
-Start here:
+**The Flip family closed entirely, and it needed no gate.** The candidates doc had deferred all
+six pending "Flip availability and how recording is gated"; a loaded track was enough. Driven end
+to end on a disposable generated fixture with the deck volume at zero: `flip_record` is a toggle
+whose first press reads `Rec Standby` and whose **recording begins on the first cue press**, the
+status counts up, a second press stops it, and `flip_load` flips `no` → `yes` because a flip now
+exists; `flip_play` jumps to the flip start and plays it; `flip_loop` and `flip_arm` toggle
+cleanly. The reusable find is that **`flip_get_status` is a text query absent from the catalog** —
+`''` / `Rec Standby` / `Rec MM:SS` / `Play MM:SS`, the display string a Flip control wants.
 
-- [tests/Pads/Reference - Hidden Button Editor Tests.xml](tests/Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml)
-- [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
+**`effect_beats_sliderindex` verified against an independent oracle.** It takes an effect *name*
+and returns the 1-based index of that effect's beats/length slider: `BrakeStart` → 1,
+`Backspin`/`Echo`/`VinylBrake` → 2, `Beat Brake`/`Reverb` → 0, matching the FX catalog (built by a
+separate sweep) on three distinct answers. A nonsense name also returns 0, so 0 conflates "no
+beats slider" with "unknown effect" and cannot probe existence.
 
-Read first:
+**A trap in the pad-page trio.** `get_pad_page_name <n>` is index-only and follows
+`padsPagesOrder`; `pad_page_favorite <n>` answers only for 1-4, so it addresses a four-slot
+favourites bank rather than a per-page flag; and `pad_page_insplit '<name>'` takes a *name*, not
+an index — but **it tracks the current page**. Switching to `2 SYNC` moved the `yes` with it.
+With no split layout configured, "part of a split" and "is the current page" cannot be separated,
+so its catalog meaning stays unconfirmed and no split indicator should be built on it yet.
 
-- [docs/Button Editor Catalog Audit.md](docs/Button%20Editor%20Catalog%20Audit.md)
-- [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) (hidden-candidate probe table only)
+**`all_decks` and `combine_query` are not query-position verbs** — `error:-2147467259` bare and
+deck-scoped, while every other hidden verb in the sweep answered. Consistent with script-structural
+prefixes that only parse in execute position, which was not tested.
 
-Record results in:
+**Two names deliberately not executed:** `crash`, now marked blocked — verb-table membership
+already proves the name and that is all this repo wants from it — and `browser_colorfilter_edit`,
+which opens a modal dialog (query position gives `error:-2147467263`, a different code from the
+two above, matching its action-only kind).
 
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-- [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md)
+**Ten hardware-gated names marked blocked** rather than left looking startable: the five `rane_*`,
+`ns7_get_drift`, `motorwheel2`/`3`, `controllerscreen_action`, `assign_related_controller`.
 
-Promote to:
-
-- [docs/VDJScript Verbs.md](docs/VDJScript%20Verbs.md), only when behavior is locally observed and useful enough for normal guidance.
-
-Done when:
-
-- Candidate behavior is recorded as pass, partial, failed, or still discovery-only.
-- Catalog-only names stay out of ordinary recommendations unless behavior proof supports promotion.
+Fifteen more are recorded Partial as return shapes only — `is_colorfx`, `masterbpm`,
+`pad_pressure_switch`, `sampler_inputgain`, `send_nothing`, `shoutout`, `stem_volume`,
+`timecode_no_jump`, `load_security_shown` and the two that require arguments — each with the state
+that would move it named in its evidence, rather than dressed up as a behavior claim. `stem_volume`
+in particular still wants a stem-analysed track, which is the candidates doc's own first-probe row.
 
 ### 7. Repeat `dualdeckmode_decks` In A Better Context
 

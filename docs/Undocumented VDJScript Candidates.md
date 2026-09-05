@@ -120,9 +120,9 @@ for the current low-risk pad-page probes.
 
 | Candidate group | Reason to defer | Safer next step |
 | --- | --- | --- |
-| `flip_arm`, `flip_get_status`, `flip_load`, `flip_loop`, `flip_play`, `flip_record` | Requires a known Flip feature state and saved or recordable Flip content. | Build a focused Flip harness after confirming Flip availability and how recording is gated. |
+| ~~`flip_arm`, `flip_get_status`, `flip_load`, `flip_loop`, `flip_play`, `flip_record`~~ | **CLOSED 2026-09-06.** No feature gate existed — a loaded track was enough. All six characterised over HTTP; see the `flip_*` detail note. | Nothing further, beyond watching whether `flip_loop` repeats and `flip_arm` auto-starts. |
 | `setting_if_unchanged` | Settings mutation tests can be noisy or profile-specific. | Start with a harmless custom-button query against a known setting before any mutation. |
-| `all_decks`, `combine_query` | These may be grammar/combinator helpers, not ordinary actions. | Test bare readbacks and tiny harmless boolean expressions in custom buttons before adding pad fixtures. |
+| `all_decks`, `combine_query` | **Half answered 2026-09-06:** both return `error:-2147467259` in query position, bare and deck-scoped, while every other editor-hidden verb in the same sweep answered — consistent with grammar/combinator helpers that only parse in execute position. | Test them in execute position in a custom button; query position is settled and says no. |
 | `browser_colorfilter_edit`, `load_security_shown` | Browser UI/security state depends on context. | Observe query-only `load_security_shown` first; use a throwaway profile before trying color-filter editor actions. |
 | `remote_action` | Official forum evidence ties it to VirtualDJ Remote. | Test only in a current Remote skin, with desktop-vs-remote variable/action state visible. |
 
@@ -216,16 +216,27 @@ safe readback candidates. They should be compared against already documented
 public helpers such as `filter_label 'name'`, `effect_beats`,
 `effect_has_beats`, and selected normal deck FX state before promotion.
 
-### `flip_*`
+### `flip_*` — **CLOSED 2026-09-06, the whole family works**
 
-Evidence varies by candidate: most have bundled language descriptions, and
-`flip_get_status`, `flip_load`, `flip_play`, and `flip_record` have exact
-method-symbol hints.
+Driven end to end over HTTP on a disposable generated fixture track with the deck
+volume at zero. No licensing or build gate was hit; nothing beyond a loaded track
+was needed. Recorded on each verb (`just get-verb flip_record`) and in the
+tracker's "Editor-Hidden Verbs" section.
 
-Public web context currently points users toward Track Cleaner or community
-Routine-style workflows for Serato-Flip-like behavior, not toward public
-`flip_*` VDJScript verbs. Build a focused Flip harness only after confirming
-the feature state, saved Flip content, and expected licensing/build gates.
+`flip_record` is a toggle: the first press puts `flip_get_status` at `Rec Standby`,
+**recording begins on the first cue press**, the status then counts up, and a
+second press stops it — at which moment `flip_load` flips from `no` to `yes`
+because a flip now exists. `flip_play` jumps to the flip start and plays it;
+`flip_loop` and `flip_arm` toggle cleanly. The observed sequence
+(`Rec Standby` → `Rec 00:02` → `Rec 00:15` → stop → `Play 00:02`) matches the
+bundled descriptions exactly.
+
+The find worth reusing: **`flip_get_status` is a text query and is not in the
+catalog at all** — `''` / `Rec Standby` / `Rec MM:SS` / `Play MM:SS`. It is the
+display string a Flip skin control wants, and nothing else exposes it.
+
+Not watched: whether `flip_loop` really repeats at the flip end, and whether
+`flip_arm` really auto-starts when the playhead reaches the flip.
 
 ## The Verb Table — Existence And Aliases Are Settled (2026-07-27)
 

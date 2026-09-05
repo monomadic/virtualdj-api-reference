@@ -1488,3 +1488,94 @@ person restoring this state checks the read-back rather than assuming.
 Whether enabling one of the four category-unknown effects (`Lottery`, `Sweep`,
 `Title`, `Vocals`) in the FX list editor puts it into a `+1` cycle. That is a
 settings-UI action with no verb, and it is the last piece of task 1.
+
+## Editor-Hidden Verbs: Behavior, Not Existence
+
+Build 18.0.9598, HTTP, 2026-09-06. Task 6's framing was right — all 38 names with
+`flags == 256` are already proven real by verb-table membership, so this pass was
+about what they *do*. Every one is now recorded as Pass, Partial, Fail or
+explicitly blocked; none is left as active untested work. State restored: pad page
+back to `1 CUE`, deck volume back to `1`, both decks empty.
+
+Two names were never executed, deliberately: **`crash`**, which is named exactly
+what it does and is now marked blocked, and `browser_colorfilter_edit`, which
+opens a modal dialog nothing here needed.
+
+### The Flip family — the whole feature, characterised
+
+Six verbs, and the catalog documents five of them despite the editor hiding them.
+Driven end to end on a disposable generated fixture track with the deck volume at
+zero, so nothing was audible:
+
+| Verb | Behavior |
+| --- | --- |
+| `flip_record` | Toggle. First press → `flip_get_status` reads `Rec Standby`; **recording begins on the first cue press**, after which the status counts up. Second press stops it. |
+| `flip_get_status` | **Text query, and the display string a skin wants**: `''` idle, `Rec Standby`, `Rec MM:SS`, `Play MM:SS`. Not in the catalog at all. |
+| `flip_load` | Reports whether a flip exists for the loaded track — read `no` on a fresh track and flipped to `yes` the instant recording stopped. |
+| `flip_play` | Jumps to the flip start and plays it; query `yes` during playback. Pausing the deck does **not** clear it; unloading does. |
+| `flip_loop` | Toggle, query `no` → `yes`. Whether it actually repeats at the flip end was not watched. |
+| `flip_arm` | Toggle, query `no` → `yes`. The catalog's auto-start-on-reaching-the-flip claim was not watched. |
+
+The observed sequence — `Rec Standby` → `Rec 00:02` → `Rec 00:15` → stop →
+`flip_load` yes → `Play 00:02` → `Play 00:04` — matches the catalog text exactly,
+so these are the vendor's own semantics confirmed, not inference.
+
+### `effect_beats_sliderindex` — verified against an independent oracle
+
+Takes an effect **name** and returns the 1-based index of that effect's
+beats/length slider. Checked against the FX catalog, which was built by a separate
+sweep, on effects with three distinct answers:
+
+| Effect | Length slider in the catalog | Verb returns |
+| --- | --- | --- |
+| `BrakeStart` | S1 | **1** |
+| `Backspin`, `Echo`, `VinylBrake` | S2 | **2** |
+| `Beat Brake`, `Reverb` | none | **0** |
+| `qzqzqz` (control) | — | **0** |
+
+So it is genuinely per-effect and not a constant `2`. The one limit: `0` conflates
+"no beats slider" with "unknown effect", so it cannot be used to probe existence.
+
+### The pad-page trio, and a trap in it
+
+- **`get_pad_page_name <n>`** — a 1-based index into the ordered page list, returning
+  `1 CUE`, `2 SYNC`, `3 FX`, `3-FX`, `4 PHRASE` … in the same order as
+  `settings.xml`'s `padsPagesOrder`. Index only: bare and a page *name* both error.
+- **`pad_page_favorite <n>`** — yes/no, but only for **1–4**; index 5 and up return
+  `E_INVALIDARG` on an instance with dozens of pages. So it addresses a four-slot
+  favourites bank, not a per-page flag.
+- **`pad_page_insplit '<name>'`** — takes a page **name**, not an index (numeric
+  arguments all answer `no`), and it discriminates properly: `'1 CUE'` answered
+  `yes` while every other real page name and two nonsense controls answered `no`.
+  **But it tracks the current page.** Switching to `2 SYNC` moved the `yes` with it
+  and switching back moved it back. With no split layout configured, "is part of a
+  split" and "is the current page" cannot be separated, so the catalog's split
+  meaning stays unconfirmed — do not build a split indicator on it yet.
+- `pad_page_split` returns `''` bare and `no` with any argument, real or nonsense.
+  Two return shapes, nothing established.
+
+### `all_decks` and `combine_query` are not query-position verbs
+
+Both return `error:-2147467259` bare and deck-scoped, while every other
+editor-hidden verb in the same sweep answered something. That is the
+not-implemented code, consistent with script-structural prefixes that only parse
+in execute position — which was not tested. `browser_colorfilter_edit` gives a
+*different* code, `error:-2147467263`, matching its action-only kind.
+
+### Return shapes only
+
+`is_colorfx` `no`, `masterbpm` `120` (the app default with nothing loaded, so it
+does not separate "reads the master BPM" from "reads a constant"),
+`pad_pressure_switch` `yes`, `sampler_inputgain` `1`, `send_nothing` `''`,
+`shoutout` `no`, `stem_volume` `0`, `timecode_no_jump` `no`,
+`load_security_shown` `no`. `hot_cue_stutter` and `setting_if_unchanged` both
+require an argument (`E_INVALIDARG` bare). Each is recorded Partial with the state
+that would move it named, rather than as a behavior claim.
+
+### Ten hardware-gated names marked blocked
+
+`rane_motor_enable`, `rane_screen_input`, `rane_screen_output`, `rane_timecode`,
+`rane_timecode_enable`, `ns7_get_drift`, `motorwheel2`, `motorwheel3`,
+`controllerscreen_action`, `assign_related_controller`. No local probe reaches any
+of them and a query-position answer would say nothing about behavior, so they were
+moved out of the active queue rather than left looking startable.
