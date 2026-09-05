@@ -62,6 +62,12 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
     ),
 ]
 
+# Fixtures that deliberately carry names the parser is *not* expected to know —
+# a candidate attribute under test, and its nonsense controls. Folding these
+# into the inventory would make the corpus baseline agree with whatever is being
+# probed against it, which is precisely what `extract_skin_readers.py` diffs.
+EXCLUDE = ("tests/Skins/clickthrough-probe/",)
+
 NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_.:-]*")
 
 
@@ -146,6 +152,8 @@ def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[P
     seen: set[Path] = set()
     for pattern in patterns:
         for path in sorted(ROOT.glob(pattern)):
+            if any(str(path.relative_to(ROOT)).startswith(x) for x in EXCLUDE):
+                continue
             if path.is_file() and path not in seen:
                 seen.add(path)
                 files.append(path)

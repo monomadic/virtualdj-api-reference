@@ -307,6 +307,35 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
             needs_audio_file=False,
         ),
         Fixture(
+            name="known_positions",
+            describes="deck 1 stopped with cue 1, a loop start and a loop end at three "
+                      "DISTINCT known positions — the state that separates get_time's "
+                      "position arguments from a token it does not recognise. Every "
+                      "position is asserted through an oracle that is not get_time. Distinctness of the\n                      three is checked by probe_known_positions.py, which reads them back\n                      and refuses to probe if any two coincide",
+            setup=[
+                load1, "deck 1 pause", "deck 1 goto_start",
+                "deck 1 set_cue 1 15000ms",
+                "deck 1 goto_start", "deck 1 goto +70",
+                # `loop N` lays an N-beat loop ENDING at the playhead.
+                "deck 1 loop 32",
+                # Off the loop-out point, so the playhead is distinct from every target.
+                "deck 1 goto -16",
+            ],
+            assertions=[
+                Assertion("deck 1 loaded", yes, "deck 1 reports a track"),
+                Assertion("deck 1 play", no, "the deck is stopped — no playback drift"),
+                Assertion("deck 1 has_cue 1", yes, "cue 1 exists"),
+                Assertion("deck 1 loop", yes, "a loop is active"),
+                Assertion("deck 1 cue_pos 1 mseconly", nonzero_number,
+                          "cue 1 has a position, read without get_time"),
+                Assertion("deck 1 get_loop_in_time on", nonzero_number,
+                          "the loop start has a position, read without get_time"),
+                Assertion("deck 1 get_loop_out_time on", nonzero_number,
+                          "the loop end has a position, read without get_time"),
+            ],
+            teardown=["deck 1 loop_exit", "deck 1 delete_cue 1", "deck 1 unload"],
+        ),
+        Fixture(
             name="sampler_slot_loaded",
             describes="sampler slot 1 holds a sample (shipped bank, not loaded by us)",
             setup=[],

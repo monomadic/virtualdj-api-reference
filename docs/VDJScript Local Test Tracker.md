@@ -1072,3 +1072,213 @@ sweep calls `query` — a verb that answers bare, like `pitch_range` (`0.33`), s
 the `surface-gated` branch even when it refuses every argument. Argument-surface
 gating and structural rejection are therefore not yet distinguished automatically,
 and the controls above have to be run by hand.
+
+## Skin Reader Vocabulary And The `clickthrough` Attribute
+
+Build 18.0.9598 (arm64), deck-skin surface, 2026-09-05. Two channels: a static
+read of the binary's skin readers, then a live deck-skin fixture over HTTP.
+
+### Where the readers are
+
+Extraction is `tools/extract_skin_readers.py` (`just skin-readers`), the
+stripped-build ADRP+ADD xref method with the enumeration heuristics removed —
+a skin reader is exactly the "dispatcher referencing far more strings than it
+hits" that `extract_binary_vocabularies.py` deliberately discards. Each reader
+is anchored by strings only it compares, and the window is the tightest stretch
+of `__text` holding an xref to every anchor. Addresses are for **this build**;
+they are not expected to survive a bump, which is why `--check` skips itself
+when `CFBundleVersion` changes rather than failing.
+
+| Reader | `__text` range | Anchors | What it reads |
+| --- | --- | --- | --- |
+| `skin_object_base` | `0x10037c54c`–`0x10037cebc` | `condition`, `canstretch`, `clickthrough`, `mousemask`, `mousecircle` | the attributes every skin object gets, `<panel>` and `<group>` included |
+| `element_dispatch` | `0x10037dfd4`–`0x10037ebf8` | `multibutton`, `resizepanel`, `keyboardmap`, `pannel` | the element-name switch |
+| `panel_builder` | `0x1007959a4`–`0x100795f40` | `forceshow`, `childtooltip`, `breakline1`, `grabzone` | panel/menu-item construction |
+
+Query the vocabulary with `just skin-reader <name>` and the diff with
+`just skin-candidates`; the summary field that answers "how many are in neither
+the shipped corpus nor the SDK doc" is `summary.candidates`.
+
+**Boundary of this pass.** Three readers, one window each, one call level: the
+windows are string-reference extents, not disassembled control flow, so no call
+target was followed, no branch coverage was measured, and a name a reader passes
+to a helper is invisible here. `<panel>` and `<group>` share `skin_object_base` —
+`group` has no builder of its own in this extraction, which is a finding about
+where to look next rather than proof that none exists. Names are labelled by
+address and reader, never by a guessed function name; the readers have no
+symbols on a stripped build and none is claimed.
+
+**A wall this pass did not hit but named.** Many attributes shipped skins use
+heavily — `sourcecolor` (460 uses), `textaction` (678), `panelname`, `swapdeck`,
+`firstvisible`, `textwidth`, `dblaction` — are **absent from the binary
+entirely**, in any case. They are not reader vocabulary at all: they are
+`class=""` template placeholders, substituted by the skin's own `<define>`
+mechanism (the binary carries `[TEXTACTION]`, `[ACTION1]`, `[bordercolor]` and
+friends as placeholder tokens). `lint_skins.py` already skips attribute checks
+on elements with `class=""` for this reason. The consequence for this method:
+absence from the binary is evidence a name is **not** reader vocabulary, and
+says nothing about whether a skin may legitimately use it.
+
+### The candidate taken live: `clickthrough`
+
+`clickthrough` is compared once, in `skin_object_base`, against the value
+`pass`. It appears in no shipped skin and no SDK doc. Fixture and full method:
+[tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/) — five
+generated deck skins, identical apart from one attribute, two overlapping
+buttons each writing its own global so the answer is read over HTTP rather than
+judged from a screenshot.
+
+| Variant | Attribute on the top button | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- | --- |
+| `baseline` | *(none)* | 1 | 0 |
+| `visible-off` | `visibility="param_equal 'no' 'yes'"` | 0 | 1 |
+| **`pass`** | `clickthrough="pass"` | **1** | **1** |
+| `value-control` | `clickthrough="qzqzqz"` | 1 | 0 |
+| `attr-control` | `zzclickthrough="pass"` | 1 | 0 |
+
+Two independent runs, variant order reversed in the second, identical results.
+
+**Reading.** `clickthrough="pass"` makes an element run its own action *and*
+let the click continue to whatever is underneath — it is additive, not a
+redirect. Both controls separate from it, so the attribute name and the value
+each carry the behavior; a nonsense value behaves exactly like the attribute
+being absent, which is the silent-ignore rule skin readers share with verbs.
+`visible-off` is the calibration: it proves in the same fixture that the click
+coordinate is over the bottom button and that attributes on the top button are
+honored, so the negatives are negatives about `clickthrough` and not about aim.
+
+**Unresolved next question.** Only `pass` was tested, because it is the only
+value the reader compares in that window. Whether `clickthrough` accepts other
+values, what it does on a container (`<panel>`/`<group>`) rather than a
+`<button>`, and whether the pass-through reaches more than one layer down are
+all open. The other 20 candidates are untested leads.
+
+### Two facts the fixture setup established
+
+- **A skin folder needs an image beside the XML.** With only `skin.xml` present,
+  VirtualDJ refuses the skin with a modal *"Impossible to open skin `<name>`"*
+  and keeps the current one — while `load_skin` still returns `true`. The
+  identical XML loaded once `skin.png` and `preview.png` were added. This is a
+  transport-result trap of the kind Evidence Standards warns about: the channel's
+  own `true` said nothing, and the failure was only visible on screen.
+- **The skin list is not cached.** A folder created while VirtualDJ is running
+  loads immediately, verified by copying a known-good skin to a new name — so
+  the refusal above was never a stale-index effect.
+
+### `load_skin`, incidentally
+
+Confirmed on the same run and recorded on the verb (`just get-verb load_skin`):
+
+- **In query position it returns the current skin**, as `<Folder>/:<xml basename>`
+  (`DeathDisco Grave Raver v1/:skin`) or a bare folder name for a skin whose
+  identity has no variation part. That makes it its own restore oracle.
+- **In execute position it switches skins by name**, and the argument must match
+  the identity the query form returns: `load_skin 'DeathDisco Grave Raver v1'`
+  did nothing, `load_skin 'DeathDisco Grave Raver v1/:skin'` switched.
+- **The result is always `true`**, including for a skin that fails to open. Do
+  not read it as success.
+
+## Known-Position Fixture And `get_time` Discrimination
+
+Build 18.0.9598, HTTP, 2026-09-06. Deck 1 loaded and **stopped** (no playback
+drift, no audio), `display_time` left on the operator's `remain` setting.
+
+### Why a new fixture was needed
+
+The stored arg-form probe could not tell `get_time 'cue1'` from
+`get_time 'a-word-it-has-never-seen'`. Both answer, and none of the ten existing
+fixtures puts a cue, a loop start and a loop end at *different* positions — so
+in every state available, the forms that were supposed to disagree returned the
+same number. Separation was impossible by construction, not absent.
+
+`known_positions` (`tools/fixtures.py`, `just fixtures`) is that state, and
+`tools/probe_known_positions.py` (`just known-positions`) establishes it, proves
+it, probes it and restores it. The positions are read by an oracle that is **not**
+`get_time`:
+
+| Position | Oracle |
+| --- | --- |
+| cue 1 | `cue_pos 1 mseconly` |
+| loop start | `get_loop_in_time on` |
+| loop end | `get_loop_out_time on` |
+| playhead | `get_position` × `get_time 'total'` |
+
+Nothing assumes the numbers it asked for. Quantize moves them —
+`set_cue 1 15000ms` landed on **14496** on a 120 BPM fixture whose grid is offset
+from zero — so the run reads all four back and **aborts rather than probe** if any
+two coincide. Two independent runs, the fixture torn down and rebuilt between
+them with different numbers, and the form order reversed in the second.
+
+### Result
+
+Two runs × two phases (before and after moving cue 1), all four agreeing.
+Run 1, phase 1: cue 14496, loop in 18496, loop out 34496, playhead 11000,
+total 90000, `display_time` = `remain`.
+
+| Form | Value | Reads |
+| --- | --- | --- |
+| *(bare)* | 79000 | `remain` — follows the `display_time` setting |
+| `elapsed` | 11000 | the playhead |
+| `remain` | 79000 | |
+| `total` | 90000 | |
+| `absolute` | 79000 | **keeps the `display_time` mode** — a modifier, not a mode |
+| **`cue1`** | **14496** | **cue 1, exactly** |
+| `cue` | 0 | the *active* cue — nothing is active yet |
+| **`loopin`** | **18496** | **the loop start, exactly** |
+| **`loopout`** | **34496** | **the loop end, exactly** |
+| `to_lyrics` | 0 | no lyrics in the fixture — unresolved |
+| `short` | 11000 | behaves as an unrecognized tail |
+| `qzqzqz` / `wvwvwv` | 11000 / 11000 | **CONTROL: both fall back to `elapsed`** |
+
+**The controls are the point.** An unrecognized tail does not fall back to the
+bare form — it falls back to `elapsed`, while bare returned `remain` throughout.
+So "bare differs from my argument" was never evidence the argument was read, and
+the three targets are confirmed by matching their *own* oracle exactly, in four
+phases, and by tracking a position when it moves.
+
+### The perturbation, and the one conditional rule
+
+Moving cue 1 (14496 → 70496 in run 1, 24496 → 60496 in run 2) while the loop
+endpoints were held: `cue1` tracked it exactly both times, `loopout` did not
+move, and the nonsense controls tracked the playhead. That is what separates
+"reads this position" from "happened to equal it once".
+
+The move seeks outside the active loop, which **deactivates** the loop while
+leaving both stored endpoints readable — and that exposed the one conditional
+result:
+
+- **`get_time 'loopin'` reads the loop start only while a loop is active.** With
+  the loop exited it returns the loop-**out** value (34496 / 44496) while
+  `get_loop_in_time on` still reports the in point (18496 / 28496). Reproduced in
+  both runs. Recorded as `reads_its_position_only_while_a_loop_is_active`, not as
+  instability: the rule is reproducible, and the two channels genuinely disagree
+  in that state.
+- `loopout` and `cue1` are unconditional — exact in all four phases.
+- `cue` is not a synonym for `cue1`: it reads the **active** cue, which was `0`
+  until the one-argument `set_cue 1` (which stores the playhead) made cue 1 the
+  active one, after which it matched `cue1`. Consistent across both runs.
+
+### Setup verbs established on the way
+
+Recorded on the verbs (`just get-verb <name>`):
+
+- **`loop N` lays an N-beat loop ENDING at the playhead** — the in point is N
+  beats *before* the current position. Not stated in the catalog and easy to get
+  backwards.
+- **`loop_out` after `loop_in` did not produce the expected loop** on a stopped
+  deck: it made a 4-beat loop unrelated to either the loop-in point or the
+  playhead. Not chased — `loop N` was used instead — and recorded here as an
+  open observation rather than a claim about `loop_out`.
+- **`goto <signed number>` is beats**, relative to the playhead.
+- **`set_cue 1 <ms>` and bare `set_cue 1` both work**, and the bare form also
+  makes that cue the *active* cue.
+- **`get_position` is a coarse oracle** — two decimals, so ±450 ms on a 90 s
+  track. Fine for asserting distinctness, not for matching a position exactly.
+
+### What was not resolved
+
+`to_lyrics` returned `0` in every phase; the fixture has no lyrics, so the state
+does not discriminate it, and that is a property of the fixture rather than of
+the verb. `cue` was only ever seen reading cue 1; whether `cue2`, `cue3` … exist
+as tails was not probed. Nothing here tested a *playing* deck, deliberately — a
+stopped deck was chosen so no result could be drift.

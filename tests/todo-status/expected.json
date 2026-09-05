@@ -1,0 +1,27 @@
+{
+  "legacy-decorated.md": {
+    "next": null,
+    "parsed": [],
+    "errors": [
+      "task '11' has unreadable status '**Ready.** Added 2026-08-11.'",
+      "task '6' has unreadable status 'Ready — reframed",
+      "task '7' has unreadable status 'Ready, but low expected yield",
+      "task '2' has unreadable status 'DONE (2026-07-26, HTTP)."
+    ]
+  },
+  "normalized.md": {
+    "next": "11",
+    "parsed": ["2", "11", "5", "7"],
+    "errors": []
+  },
+  "structural.md": {
+    "next": null,
+    "parsed": ["13", "13"],
+    "errors": [
+      "task '3' has no `Status:` line",
+      "task '9' has 2 `Status:` lines",
+      "task '12' has its `Status:` line below other prose",
+      "duplicate task identifier '13'"
+    ]
+  }
+}

@@ -1,0 +1,665 @@
+{
+ "summary": {
+  "build": "18.0.9598",
+  "readers": 3,
+  "names": 119,
+  "candidates": [
+   "16pads",
+   "1fx",
+   "3fx",
+   "6fx",
+   "8pads",
+   "applyfx",
+   "foldersearch",
+   "r",
+   "setdeck",
+   "song_pos"
+  ]
+ },
+ "readers": {
+  "skin_object_base": {
+   "what": "attributes read for every skin object (panel, group, button, ...)",
+   "anchors": {
+    "canstretch": "0x10037c984",
+    "clickthrough": "0x10037cc44",
+    "condition": "0x10037c54c",
+    "mousecircle": "0x10037cdc8",
+    "mousemask": "0x10037cebc"
+   },
+   "text_range": [
+    "0x10037c54c",
+    "0x10037cebc"
+   ],
+   "refs": 43,
+   "vocabulary": [
+    {
+     "name": "condition",
+     "first_ref": "0x10037c54c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "deck",
+     "first_ref": "0x10037c710",
+     "where": "shipped_element"
+    },
+    {
+     "name": "chan",
+     "first_ref": "0x10037c730",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "size",
+     "first_ref": "0x10037c774",
+     "where": "shipped_element"
+    },
+    {
+     "name": "pos",
+     "first_ref": "0x10037c788",
+     "where": "shipped_element"
+    },
+    {
+     "name": "center",
+     "first_ref": "0x10037c79c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "width",
+     "first_ref": "0x10037c7b4",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "height",
+     "first_ref": "0x10037c7d8",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "x",
+     "first_ref": "0x10037c858",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "y",
+     "first_ref": "0x10037c880",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "minwidth",
+     "first_ref": "0x10037c940",
+     "where": "documented_only"
+    },
+    {
+     "name": "maxwidth",
+     "first_ref": "0x10037c960",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "canstretch",
+     "first_ref": "0x10037c984",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "tooltip",
+     "first_ref": "0x10037c9a4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "tooltipaction",
+     "first_ref": "0x10037ca3c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "tooltips",
+     "first_ref": "0x10037ca80",
+     "where": "documented_only"
+    },
+    {
+     "name": "localized",
+     "first_ref": "0x10037cadc",
+     "where": "documented_only"
+    },
+    {
+     "name": "visibility",
+     "first_ref": "0x10037cb5c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "novisibility",
+     "first_ref": "0x10037cbbc",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "clickthrough",
+     "first_ref": "0x10037cc44",
+     "where": "documented_only"
+    },
+    {
+     "name": "pass",
+     "first_ref": "0x10037cc64",
+     "where": "documented_only"
+    },
+    {
+     "name": "panel",
+     "first_ref": "0x10037cca4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "pannel",
+     "first_ref": "0x10037ccac",
+     "where": "documented_only"
+    },
+    {
+     "name": "mouserect",
+     "first_ref": "0x10037ccf4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "mousecircle",
+     "first_ref": "0x10037cdc8",
+     "where": "shipped_element"
+    },
+    {
+     "name": "r",
+     "first_ref": "0x10037ce78",
+     "where": "candidate"
+    },
+    {
+     "name": "mousemask",
+     "first_ref": "0x10037cebc",
+     "where": "shipped_element"
+    }
+   ]
+  },
+  "element_dispatch": {
+   "what": "the element-name switch: which tags the skin parser knows",
+   "anchors": {
+    "keyboardmap": "0x10037ebf8",
+    "multibutton": "0x10037dfd4",
+    "pannel": "0x10037e178",
+    "resizepanel": "0x10037e1c0"
+   },
+   "text_range": [
+    "0x10037dfd4",
+    "0x10037ebf8"
+   ],
+   "refs": 71,
+   "vocabulary": [
+    {
+     "name": "multibutton",
+     "first_ref": "0x10037dfd4",
+     "where": "documented_only"
+    },
+    {
+     "name": "logo",
+     "first_ref": "0x10037e008",
+     "where": "shipped_element"
+    },
+    {
+     "name": "slider",
+     "first_ref": "0x10037e038",
+     "where": "shipped_element"
+    },
+    {
+     "name": "visual",
+     "first_ref": "0x10037e06c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "text",
+     "first_ref": "0x10037e0a0",
+     "where": "shipped_element"
+    },
+    {
+     "name": "textzone",
+     "first_ref": "0x10037e0b4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "group",
+     "first_ref": "0x10037e0c8",
+     "where": "shipped_element"
+    },
+    {
+     "name": "grabzone",
+     "first_ref": "0x10037e11c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "resizezone",
+     "first_ref": "0x10037e130",
+     "where": "documented_only"
+    },
+    {
+     "name": "panel",
+     "first_ref": "0x10037e164",
+     "where": "shipped_element"
+    },
+    {
+     "name": "pannel",
+     "first_ref": "0x10037e178",
+     "where": "documented_only"
+    },
+    {
+     "name": "resizepanel",
+     "first_ref": "0x10037e1c0",
+     "where": "documented_only"
+    },
+    {
+     "name": "split",
+     "first_ref": "0x10037e1f4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "equalizer",
+     "first_ref": "0x10037e228",
+     "where": "shipped_element"
+    },
+    {
+     "name": "tooltip",
+     "first_ref": "0x10037e258",
+     "where": "shipped_element"
+    },
+    {
+     "name": "dialogs",
+     "first_ref": "0x10037e29c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "darkmode",
+     "first_ref": "0x10037e2b8",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "window",
+     "first_ref": "0x10037e2e0",
+     "where": "documented_only"
+    },
+    {
+     "name": "onload",
+     "first_ref": "0x10037e334",
+     "where": "shipped_element"
+    },
+    {
+     "name": "oninit",
+     "first_ref": "0x10037e350",
+     "where": "shipped_element"
+    },
+    {
+     "name": "action",
+     "first_ref": "0x10037e36c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "onexit",
+     "first_ref": "0x10037e3d8",
+     "where": "documented_only"
+    },
+    {
+     "name": "font",
+     "first_ref": "0x10037e430",
+     "where": "shipped_element"
+    },
+    {
+     "name": "rack",
+     "first_ref": "0x10037e458",
+     "where": "documented_only"
+    },
+    {
+     "name": "browser",
+     "first_ref": "0x10037e48c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "customicons",
+     "first_ref": "0x10037e4cc",
+     "where": "shipped_element"
+    },
+    {
+     "name": "file",
+     "first_ref": "0x10037e4e0",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "x",
+     "first_ref": "0x10037e524",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "y",
+     "first_ref": "0x10037e53c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "iconsize",
+     "first_ref": "0x10037e554",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "nb",
+     "first_ref": "0x10037e570",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "nbx",
+     "first_ref": "0x10037e58c",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "folderlist",
+     "first_ref": "0x10037e5d4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "foldersearch",
+     "first_ref": "0x10037e5e8",
+     "where": "candidate"
+    },
+    {
+     "name": "fileview",
+     "first_ref": "0x10037e624",
+     "where": "shipped_element"
+    },
+    {
+     "name": "sideview",
+     "first_ref": "0x10037e678",
+     "where": "shipped_element"
+    },
+    {
+     "name": "filelist",
+     "first_ref": "0x10037e6ac",
+     "where": "documented_only"
+    },
+    {
+     "name": "browserinfo",
+     "first_ref": "0x10037e6e4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "browsertoolbar",
+     "first_ref": "0x10037e714",
+     "where": "documented_only"
+    },
+    {
+     "name": "browsertoolbartree",
+     "first_ref": "0x10037e744",
+     "where": "shipped_element"
+    },
+    {
+     "name": "dropzone",
+     "first_ref": "0x10037e770",
+     "where": "shipped_element"
+    },
+    {
+     "name": "prelisten",
+     "first_ref": "0x10037e7a4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "songpos",
+     "first_ref": "0x10037e7d0",
+     "where": "shipped_element"
+    },
+    {
+     "name": "orientation",
+     "first_ref": "0x10037e7e4",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "circle",
+     "first_ref": "0x10037e7ec",
+     "where": "shipped_element"
+    },
+    {
+     "name": "vertical",
+     "first_ref": "0x10037e810",
+     "where": "documented_only"
+    },
+    {
+     "name": "song_pos",
+     "first_ref": "0x10037e848",
+     "where": "candidate"
+    },
+    {
+     "name": "rhythm",
+     "first_ref": "0x10037e87c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "rhythmzone",
+     "first_ref": "0x10037e890",
+     "where": "shipped_element"
+    },
+    {
+     "name": "scratchwave",
+     "first_ref": "0x10037e8e0",
+     "where": "shipped_element"
+    },
+    {
+     "name": "search",
+     "first_ref": "0x10037e914",
+     "where": "shipped_element"
+    },
+    {
+     "name": "edit",
+     "first_ref": "0x10037e928",
+     "where": "documented_only"
+    },
+    {
+     "name": "coverflow",
+     "first_ref": "0x10037e95c",
+     "where": "documented_only"
+    },
+    {
+     "name": "scratch",
+     "first_ref": "0x10037e98c",
+     "where": "shipped_element"
+    },
+    {
+     "name": "video",
+     "first_ref": "0x10037e9c0",
+     "where": "shipped_element"
+    },
+    {
+     "name": "pluginzone",
+     "first_ref": "0x10037e9f4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "effects",
+     "first_ref": "0x10037ea14",
+     "where": "documented_only"
+    },
+    {
+     "name": "cover",
+     "first_ref": "0x10037ea48",
+     "where": "shipped_element"
+    },
+    {
+     "name": "sampler",
+     "first_ref": "0x10037ea7c",
+     "where": "documented_only"
+    },
+    {
+     "name": "menu",
+     "first_ref": "0x10037eab0",
+     "where": "shipped_element"
+    },
+    {
+     "name": "beattunnel",
+     "first_ref": "0x10037eae4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "blockwave",
+     "first_ref": "0x10037eb10",
+     "where": "shipped_element"
+    },
+    {
+     "name": "square",
+     "first_ref": "0x10037eb40",
+     "where": "shipped_element"
+    },
+    {
+     "name": "line",
+     "first_ref": "0x10037eb68",
+     "where": "shipped_element"
+    },
+    {
+     "name": "stack",
+     "first_ref": "0x10037eb94",
+     "where": "shipped_element"
+    },
+    {
+     "name": "sampleicon",
+     "first_ref": "0x10037ebc8",
+     "where": "shipped_element"
+    },
+    {
+     "name": "keyboardmap",
+     "first_ref": "0x10037ebf8",
+     "where": "documented_only"
+    }
+   ]
+  },
+  "panel_builder": {
+   "what": "panel/menu-item construction, including the forceshow vocabulary",
+   "anchors": {
+    "breakline1": "0x100795c98",
+    "childtooltip": "0x100795c64",
+    "forceshow": "0x1007959d4",
+    "grabzone": "0x100795f40"
+   },
+   "text_range": [
+    "0x1007959d4",
+    "0x100795f40"
+   ],
+   "refs": 25,
+   "vocabulary": [
+    {
+     "name": "forceshow",
+     "first_ref": "0x1007959d4",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "1fx",
+     "first_ref": "0x100795a04",
+     "where": "candidate"
+    },
+    {
+     "name": "3fx",
+     "first_ref": "0x100795a44",
+     "where": "candidate"
+    },
+    {
+     "name": "6fx",
+     "first_ref": "0x100795a70",
+     "where": "candidate"
+    },
+    {
+     "name": "8pads",
+     "first_ref": "0x100795a9c",
+     "where": "candidate"
+    },
+    {
+     "name": "16pads",
+     "first_ref": "0x100795ac8",
+     "where": "candidate"
+    },
+    {
+     "name": "timecode",
+     "first_ref": "0x100795af4",
+     "where": "documented_only"
+    },
+    {
+     "name": "visible",
+     "first_ref": "0x100795b30",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "yes",
+     "first_ref": "0x100795b48",
+     "where": "boolean_value"
+    },
+    {
+     "name": "true",
+     "first_ref": "0x100795b60",
+     "where": "boolean_value"
+    },
+    {
+     "name": "no",
+     "first_ref": "0x100795b94",
+     "where": "boolean_value"
+    },
+    {
+     "name": "false",
+     "first_ref": "0x100795ba8",
+     "where": "boolean_value"
+    },
+    {
+     "name": "applyfx",
+     "first_ref": "0x100795c0c",
+     "where": "candidate"
+    },
+    {
+     "name": "item",
+     "first_ref": "0x100795c28",
+     "where": "shipped_element"
+    },
+    {
+     "name": "childtooltip",
+     "first_ref": "0x100795c64",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "skin",
+     "first_ref": "0x100795c80",
+     "where": "shipped_element"
+    },
+    {
+     "name": "breakline1",
+     "first_ref": "0x100795c98",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "breakline2",
+     "first_ref": "0x100795cb4",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "deck",
+     "first_ref": "0x100795dd8",
+     "where": "shipped_element"
+    },
+    {
+     "name": "setdeck",
+     "first_ref": "0x100795de8",
+     "where": "candidate"
+    },
+    {
+     "name": "window",
+     "first_ref": "0x100795e60",
+     "where": "documented_only"
+    },
+    {
+     "name": "group",
+     "first_ref": "0x100795eb4",
+     "where": "shipped_element"
+    },
+    {
+     "name": "visibility",
+     "first_ref": "0x100795ec8",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "novisibility",
+     "first_ref": "0x100795ee0",
+     "where": "shipped_attribute"
+    },
+    {
+     "name": "grabzone",
+     "first_ref": "0x100795f40",
+     "where": "shipped_element"
+    }
+   ]
+  }
+ }
+}

@@ -6,9 +6,35 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 
 ## Queue Rules
 
-- `Ready`: startable now with the listed files and fixtures.
-- `Blocked`: needs hardware, a live VirtualDJ setup, or a clearer external source.
-- `Parking lot`: useful later, but not the next best use of time.
+### Status convention
+
+Every `### <id>. <title>` task carries exactly one status line, and it is the first line under
+the heading:
+
+```
+Status: <state>
+```
+
+The state is one word from a closed vocabulary and nothing else — no date, no bold, no
+qualifier, no trailing prose. Everything else goes in a `Note:` paragraph directly below it.
+This is machine-readable on purpose: `just next-task` parses it, and a status line it cannot
+read stops the run instead of quietly skipping the task.
+
+| State | Meaning |
+| --- | --- |
+| `Ready` | Startable now with the listed files and fixtures. Launching VirtualDJ locally counts as startable. |
+| `Blocked` | Needs hardware or an external source not available here. |
+| `Conditional` | Start only when the named trigger occurs; the `Note:` names it. |
+| `Parking lot` | Useful later, but not the next best use of time. |
+| `Done` | Complete; kept as the record of what was established. |
+
+The state describes the task **now**. For a task whose first pass landed with work remaining,
+it describes that remaining work — `Ready` if the remainder is startable, `Blocked` if it is
+not — and the `Note:` carries what already landed. Task identifiers must be unique;
+`just check` fails on a duplicate.
+
+### Working rules
+
 - Record manual VirtualDJ observations in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md).
 - Promote stable conclusions into the topical docs named by the task.
 - Run `just check` after documentation, fixture, or status edits.
@@ -23,84 +49,174 @@ remain the owners of their broader work. Read their scoped evidence before probi
 
 ### R1. Repair queue selection
 
-Status: Ready
+Status: Done
 
-Owner: queue tooling. The selector in `justfile` matches only exact `Status: Ready`;
-bold/suffixed statuses silently disappear. Normalize a machine-readable status line and
-separate explanations; make selection reject malformed status metadata rather than skip it.
-Do not treat historical ready wording as current without reading the completion narrative.
+Note: 2026-09-05. The convention, the parser, and the regression fixtures are in place; every
+task in this file now carries a readable status.
 
-Documentation corrections made in this amendment: the second task 13 is now 13b; task 14
-is marked done with the expanded-corpus commit identified; task 15 is marked done. Remaining
-work is selector/status-convention implementation and reconciliation of other stale labels.
+What the selector used to do: `just next-task` was an `awk` pass matching `^Status: Ready$`
+exactly. Of the 25 tasks here, 22 carried a decorated status — `Status: **Ready.**`,
+`Status: Ready — reframed`, `Status: Ready, but low expected yield`, `Status: DONE (2026-07-26,
+HTTP). A bank is…` — so the selector saw three tasks, would have gone silent the moment R1-R3
+closed, and had no way to tell a finished task from an invisible one.
 
-Done when task identifiers are unique, completed/blocked entries cannot be selected, and a
-malformed status line fails the check loudly instead of being skipped. The regression fixture
-must contain the real forms already in this file — `Status: **Ready.**`, `Status: Ready —
-reframed`, `Status: Ready, but low expected yield` — plus a completed entry.
+What replaced it:
 
-A passing `just next-task` is **not** evidence this task is done: it returns R1 only because
-R1-R3 happen to use a bare `Status: Ready`. Every other startable task here is still invisible
-to the selector, so when R1-R3 close the selector goes silent again. `just status` shows the
-extent — most `###` headings have no status line under them at all.
+- **A machine-readable status line**, specified in Queue Rules above: one state word from the
+  closed vocabulary `Ready` / `Blocked` / `Conditional` / `Parking lot` / `Done`, first line
+  under the heading, explanation moved to the `Note:` paragraph below it. All 22 decorated
+  lines were rewritten this way, each one's prose preserved verbatim in its `Note:`.
+- **[tools/todo_queue.py](tools/todo_queue.py)** as the single parser behind `just next-task`,
+  `just task-queue`, `just status`, and `just check`. It refuses to select when *anything* in
+  the file is malformed, so an unreadable status stops the run instead of removing a task from
+  the queue. It rejects a missing status, two status lines in one block, a status buried below
+  narrative, a state outside the vocabulary, and a duplicate task identifier.
+- **Regression fixtures** in [tests/todo-status/](tests/todo-status/), run by
+  `just check`: `legacy-decorated.md` holds the four real decorated forms this file carried
+  (all four must now error, none may be skipped), `normalized.md` proves selection skips a
+  `Done` entry and returns the first `Ready` one, and `structural.md` covers the four
+  structural faults including the duplicate `13`.
+
+States assigned by reading each task's completion narrative rather than its old wording — the
+rule is that the state describes the *remaining* work. That reclassified several: task 0 and R4
+are `Conditional` (both move only when task 10 names a record the store cannot hold), task 5 is
+`Blocked` (needs unrecognized hardware or a virtual MIDI port), and tasks 1, 3, 10a and 10b are
+`Ready` on their remainders even though their first pass landed. Identifiers were already
+unique after the 13/13b split; `just check` now enforces it.
+
+Not done here: the states are one agent's reading of each narrative, so a task whose remainder
+is finer-grained than its heading still needs its own pass. The vocabulary is deliberately
+small — add a state only when a task genuinely does not fit one of the five.
 
 ### R2. Panel and group parser pilot
 
-Status: Ready
+Status: Done
 
-Owner: extends task 10a's real deck-skin fixture work. First discovery slot after R1.
-Inspect `<panel>` and `<group>` readers, calibrating against known `visibility`, `condition`,
-and position handling. Read task 10a's plugin-panel limitations and Skin Runtime Findings:
-the plugin panel is not a substitute for the deck-skin surface, and the known crashing
-`group class` construct is not a baseline fixture. Check `just vdj-up` before live planning.
+Note: 2026-09-05, build 18.0.9598 (arm64) + live deck-skin fixture. The reader inspection,
+the candidate diff, and one candidate carried to a confirmed local test. Full evidence:
+the tracker's "Skin Reader Vocabulary And The `clickthrough` Attribute" section.
 
-Deliver a candidate diff against documented and shipped attributes. Record the inspected
-binary/build/architecture, reader and dispatch function names or addresses, call depth and
-caps, unresolved call targets/string references, and unvisited branches or unsupported
-instructions. Function/proximity guesses remain labelled as such.
+**The inspection.** Three readers located and recorded, each anchored by strings only it
+compares, each window the tightest stretch of `__text` holding an xref to every anchor:
+`skin_object_base` (`0x10037c54c`-`0x10037cebc`) — the attributes every skin object reads,
+`<panel>` and `<group>` included; `element_dispatch` (`0x10037dfd4`-`0x10037ebf8`) — the
+element-name switch; `panel_builder` (`0x1007959a4`-`0x100795f40`). Packaged as
+[tools/extract_skin_readers.py](tools/extract_skin_readers.py) (`just skin-readers`,
+`just skin-reader <name>`, `just skin-candidates`) over
+`tests/skin-reader-vocabulary.json`, so the diff is regenerable rather than transcribed.
+`--check` is build-anchored: it skips itself on a `CFBundleVersion` change rather than
+failing on addresses that were never expected to survive a bump.
 
-For the first credible undocumented candidate, use otherwise identical minimal deck skins:
-attribute omitted, contrasting candidate values, and a nonsense attribute control. Calibrate
-with one known working attribute. Record the visible or independently read effect. A negative
-result is acceptable with that code-level boundary and the unresolved next question; do not
-claim exhaustive SDK coverage. Do not require a new feature to be found.
+**Boundary, stated as R2 asked.** String references only, one call level, no call target
+followed, no branch coverage measured, no disassembly of control flow, and no function
+names — the build is stripped and none is guessed. A name a reader passes to a helper is
+invisible to this method. `<group>` has no builder of its own in this extraction, which
+locates the next question rather than proving none exists.
 
-A helper-resolution wall triggers only the targeted work in R4. Existing task 10a waveform
-questions remain open; this pilot does not close them by sharing a deck-skin fixture.
+**The wall this pass hit, and it is not a helper-resolution wall.** Attributes shipped skins
+use heavily — `sourcecolor` (460 uses), `textaction` (678), `panelname`, `swapdeck`,
+`firstvisible`, `textwidth`, `dblaction` — are absent from the binary in any case. They are
+not reader vocabulary at all: they are `class=""` template placeholders (the binary carries
+`[TEXTACTION]`, `[ACTION1]`, `[bordercolor]` as placeholder tokens), which is why
+`lint_skins.py` already skips attribute checks on elements with `class=""`. So absence from
+the binary is evidence a name is *not* reader vocabulary, and says nothing about whether a
+skin may use it. **No R4 trigger came out of this task** — nothing here was a finding the
+current record could not hold, and no extractor failed to resolve a reference it needed.
+
+**The candidate taken live: `clickthrough`.** Read by every skin object, compared against
+the single value `pass`, present in no shipped skin and no SDK doc. Five generated deck
+skins in [tests/Skins/clickthrough-probe/](tests/Skins/clickthrough-probe/), identical apart
+from one attribute on one element: two buttons on the same rectangle, each writing its own
+global, so the answer is read over HTTP instead of judged from a screenshot.
+
+| Variant | Attribute on the top button | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- | --- |
+| `baseline` | *(none)* | 1 | 0 |
+| `visible-off` | `visibility="param_equal 'no' 'yes'"` | 0 | 1 |
+| **`pass`** | `clickthrough="pass"` | **1** | **1** |
+| `value-control` | `clickthrough="qzqzqz"` | 1 | 0 |
+| `attr-control` | `zzclickthrough="pass"` | 1 | 0 |
+
+Two independent runs, variant order reversed in the second, identical both times.
+`clickthrough="pass"` makes an element fire its own action *and* let the click continue to
+what is underneath — additive, not a redirect. Both controls separate, so the attribute name
+and the value each carry the behavior. `visible-off` is the calibration with a known working
+attribute: it proves in the same fixture that the click was over the bottom button and that
+attributes on the top button are honored, so the negatives are about `clickthrough` and not
+about aim. Documented in `docs/Skin SDK.md` under "Attributes Every Skin Object Reads".
+
+**Two facts the setup established, both needed by anyone repeating this.** A skin folder with
+no image beside the XML is refused — a modal "Impossible to open skin `<name>`" while
+`load_skin` still returns `true`, so the channel's own result says nothing. And the skin list
+is *not* cached: a folder created while VirtualDJ runs loads immediately, verified by copying
+a known-good skin to a new name. `load_skin` also turned out to be its own restore oracle —
+in query position it returns the current skin identity — and is recorded on the verb.
+
+**Still open, deliberately.** Only `pass` was tested, because it is the only value that
+window compares; `clickthrough` on a container rather than a button, and whether the
+pass-through reaches more than one layer, are untested. `just skin-candidates` still lists
+`applyfx`, `setdeck`, `song_pos`, `foldersearch` and the `forceshow` values as untested
+leads, and the element switch knows `multibutton`, `resizepanel`, `keyboardmap`, `rack`,
+`onexit`, `os` and `darkmode` — existence only. Task 10a's waveform questions are untouched:
+this pilot shared no fixture with them and closes none of them.
 
 ### R3. Known-position fixture and get_time discrimination
 
-Status: Ready
+Status: Done
 
-Owners: tasks 10b, 13 and 13b. Start by reading `just verb get_time` and
-`just verb-arg-forms get_time`; retain existing confirmations and isolate unresolved semantics.
-Targets: `cue` against `cue1`, `loopin`, and `loopout`, with independently known distinct
-positions. None of the ten existing fixtures establishes those positions: building and
-verifying this fixture is a prerequisite, not an incidental setup step.
+Note: 2026-09-06, HTTP, build 18.0.9598, deck stopped. The fixture exists and proves itself,
+and each of the three targets has a reproducible position relationship across both runs.
+Full evidence: the tracker's "Known-Position Fixture And `get_time` Discrimination" section
+and `tests/get-time-positions.json`.
 
-Use a disposable test track. Establish and independently verify cue and loop endpoints at
-three different positions, distinct from the playhead. Record positions, units, loaded/deck
-state and display mode. Verify setup and restoration without using `get_time` as the sole
-oracle. Consult grammar and verb records before writing setup actions; abort if preparation
-or restoration cannot be verified. A stopped-deck baseline avoids avoidable playback drift.
+**The fixture, which was the prerequisite.** `known_positions` in
+[tools/fixtures.py](tools/fixtures.py) — deck 1 stopped, cue 1, a loop start and a loop end at
+three distinct positions — plus
+[tools/probe_known_positions.py](tools/probe_known_positions.py) (`just known-positions`),
+which establishes it, proves it, probes it and restores it. Every position is read by an
+oracle that is not `get_time`: `cue_pos 1 mseconly`, `get_loop_in_time on`,
+`get_loop_out_time on`, and `get_position` × `get_time 'total'` for the playhead. Nothing
+assumes the numbers it asked for — quantize moved `set_cue 1 15000ms` to 14496 — so all four
+are read back and the run **aborts rather than probe** if any two coincide. Restoration is
+verified: cue deleted (`has_cue 1` → `no`), loop exited, deck returned to the contents found
+at start, `display_time` never touched.
 
-Compare the candidate forms with each other and with the known positions, then change one
-position while holding the others fixed and check which forms track it. Bare, `elapsed`, and
-two nonsense tokens are floor controls only: earlier evidence already showed arbitrary
-arguments switching to elapsed-like output. Bare-versus-argument separation is not recognition.
+**The result.** Two runs, the fixture torn down and rebuilt between them with different
+numbers and the form order reversed; two phases each; all four phases agreeing.
 
-Re-establish the fixture for two independent runs, vary query order, and require the same
-position-dependent relationships in both. `--repeat` alone is insufficient: the stored probe
-marks drift in `deck2_playing` and `loop_active`. Record nondiscrimination and instability
-without promoting either to absence or recognition. Preserve both runs with fixture metadata;
-use a separate capture if the existing merge contract cannot represent this new fixture.
+- `get_time 'cue1'` equals `cue_pos 1 mseconly` exactly, and **tracked the cue when it moved**
+  (14496→70496, 24496→60496) while the loop endpoints were held fixed.
+- `get_time 'loopout'` equals `get_loop_out_time` exactly, in all four phases.
+- `get_time 'loopin'` equals `get_loop_in_time` **only while a loop is active**. With the loop
+  exited it returns the loop-*out* value while the oracle still reports the in point.
+  Reproduced in both runs, so it is recorded as a conditional rule, not as instability.
 
-Done when the new fixture proves its positions and restoration, and each target has either
-a reproducible position relationship across both runs or an explicit unresolved result.
+**The controls did the work R3 said they would.** An unrecognized tail falls back to
+**`elapsed`**, not to the bare form — bare followed the operator's `display_time 'remain'`
+throughout — so bare-versus-argument separation was never recognition, and the three targets
+are confirmed by matching their *own* oracle and by tracking a moved position. `short` alone
+behaves as an unrecognized tail. `absolute` keeps the `display_time` mode, so it is a modifier
+rather than a mode. `cue` is not `cue1`: it reads the *active* cue, `0` until one is activated.
+
+**Recorded elsewhere:** `get_time`, `cue_pos`, `get_loop_in_time`, `get_loop_out_time`, `loop`,
+`set_cue` and `goto` all now carry local-test evidence in the store, and
+`docs/VirtualDJ Reference.md` gained the tested rule with both traps. Two setup facts worth
+their own line: `loop N` lays an N-beat loop **ending** at the playhead, and a bare signed
+number to `goto` is beats.
+
+**Unresolved, explicitly.** `to_lyrics` returned `0` in every phase — the fixture has no
+lyrics, so this says nothing about the tail. Whether `cue2`, `cue3`, … exist as tails was not
+probed. `loop_out` after `loop_in` on a stopped deck produced a 4-beat loop unrelated to
+either point; `loop N` was used instead and that observation was not chased. Nothing was
+tested on a *playing* deck, deliberately, so that no result could be drift. **No R4 trigger:**
+the existing capture contract held this fixture without change, and no extractor failed to
+resolve anything.
 
 ### R4. Only the infrastructure change demonstrated by R2 or R3
 
-Status: Conditional — start only with a concrete blocker from R2 or R3.
+Status: Conditional
+
+Note: Start only with a concrete blocker from R2 or R3. **Neither produced one (2026-09-06).** R2's wall was that many shipped skin attributes are `class=""` template placeholders rather than reader vocabulary — a fact about the format, not a reference the extractor failed to resolve. R3's fixture fitted the existing capture contract without change. So this stays Conditional and waits for a later finding the current record genuinely cannot hold; index inversion remains task 11 and is not a prerequisite for anything here.
 
 Owners: task 0/10 for representation, 10/10b for shared runtime helpers. A specific extractor
 repair is new work; index inversion remains task 11 and is not a pilot prerequisite.
@@ -115,7 +231,9 @@ general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
 ### 0. Build The Verb Record Store And `just` Data API
 
-Status: Foundation landed (2026-07-22) — generation + migration remain
+Status: Conditional
+
+Note: Foundation landed (2026-07-22) — generation + migration remain
 
 The store and its query/edit API exist and are wired into `just check`. This is the compounding-cost reducer: it replaces the record-in-tracker-then-promote-to-three-docs cycle with one `just put-verb`, and lets agents query verb state without loading the 6,300-line monolith.
 
@@ -142,7 +260,9 @@ Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same
 
 ### 0b. Topic Search Across Every Corpus
 
-Status: First cut landed (2026-07-26) — coverage tagging remains
+Status: Ready
+
+Note: First cut landed (2026-07-26) — coverage tagging remains
 
 The done-when is met: `just topic <term>` ([tools/topic.py](tools/topic.py)) answers a topic
 question with matching verbs, effects, and XML elements *and* the real example files that
@@ -170,7 +290,9 @@ Read first:
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
-Status: Structural sweep COMPLETE (2026-07-22) — only rendering behavior is left
+Status: Ready
+
+Note: Structural sweep COMPLETE (2026-07-22) — only rendering behavior is left
 
 [tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured counts, short+full labels, normalized **defaults**, live value text, and length/beats flags for all **119** installed effects into [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json), plus the enabled cycle for all three targets. Query it with `just get-fx <effect>` / `just find-fx [--category=deck_fx|video_fx|transition] [--has-length]` / `just fx-stats` — do not read the dump and do not hand-transcribe it.
 
@@ -209,7 +331,12 @@ Done when:
 
 ### 2. Characterize FX Bank Save And Load
 
-Status: DONE (2026-07-26, HTTP). A bank is a rack of effect SELECTIONS for slots 1-6 — not active state, not slider values, and global across decks. `effect_bank_load` returns true/false as a bank-populated probe. Recorded in the tracker and on `effect_bank_save`/`effect_bank_load` (`just get-verb effect_bank_save`).
+Status: Done
+
+Note: 2026-07-26, HTTP. A bank is a rack of effect SELECTIONS for slots 1-6 — not active
+state, not slider values, and global across decks. `effect_bank_load` returns true/false as
+a bank-populated probe. Recorded in the tracker and on `effect_bank_save`/`effect_bank_load`
+(`just get-verb effect_bank_save`).
 
 Start here:
 
@@ -235,7 +362,13 @@ Done when:
 
 ### 3. Separate Release FX From Normal Slot FX
 
-Status: PARTIAL (2026-07-26, HTTP). Confirmed the release-FX path is separate from deck slots 1-6 (`is_releasefx` never flips from loading effects into numbered slots); the release sliders are accepted but inert without an armed release FX, which needs a momentary control HTTP can't drive. Remaining: arm a release FX on a pad/mapper surface and characterize activation. Recorded in the tracker and verb store.
+Status: Ready
+
+Note: 2026-07-26, HTTP. Confirmed the release-FX path is separate from deck slots 1-6
+(`is_releasefx` never flips from loading effects into numbered slots); the release sliders
+are accepted but inert without an armed release FX, which needs a momentary control HTTP
+can't drive. Remaining: arm a release FX on a pad/mapper surface and characterize
+activation. Recorded in the tracker and verb store.
 
 Start here:
 
@@ -261,7 +394,11 @@ Done when:
 
 ### 4. Keep BeatGrid `effect_command` Plugin-Specific
 
-Status: DONE (2026-07-26, HTTP). Confirmed plugin-instance-scoped (targets the BeatGrid slot), with a bare form and an unquoted-slot-number form; get/set/cur are BeatGrid's own vocabulary. Recorded as BeatGrid-specific, not generic. See `just get-verb effect_command`.
+Status: Done
+
+Note: 2026-07-26, HTTP. Confirmed plugin-instance-scoped (targets the BeatGrid slot), with a
+bare form and an unquoted-slot-number form; get/set/cur are BeatGrid's own vocabulary.
+Recorded as BeatGrid-specific, not generic. See `just get-verb effect_command`.
 
 Start here:
 
@@ -287,7 +424,20 @@ Done when:
 
 ### 5. Author And Load-Test A Minimal Custom Device Definition
 
-Status: MAPPER FIRING DONE (2026-07-27, DDJ-GRV6 hardware) — device-definition schema still open. HTTP-verified on real hardware that the mapper `<map value action>` schema binds and fires (ONINIT on load, PLAY_PAUSE on press), plus three gotchas: control names must match the device definition exactly (wrong name fails silently), loading a mapping resets `$` globals, and editing an active mapper file needs a full restart (re-select does not reload). See the tracker's "Mapper Firing" section and `docs/Mapper XML.md`. Factory-mapping export (Factory default -> Save) was tried as a shortcut to the device definition: it yields the factory `<mapper>` (control names + canonical actions, 293 bindings, lints clean) but NOT the `<device>` definition, so it does not unblock this. STILL OPEN: the custom `<device>` definition schema is untested because the DDJ-GRV6 is factory-recognized — needs unrecognized hardware or a virtual MIDI port + injection to exercise a custom device definition.
+Status: Blocked
+
+Note: MAPPER FIRING DONE (2026-07-27, DDJ-GRV6 hardware) — device-definition schema still
+open. HTTP-verified on real hardware that the mapper `<map value action>` schema binds and
+fires (ONINIT on load, PLAY_PAUSE on press), plus three gotchas: control names must match
+the device definition exactly (wrong name fails silently), loading a mapping resets `$`
+globals, and editing an active mapper file needs a full restart (re-select does not reload).
+See the tracker's "Mapper Firing" section and `docs/Mapper XML.md`. Factory-mapping export
+(Factory default -> Save) was tried as a shortcut to the device definition: it yields the
+factory `<mapper>` (control names + canonical actions, 293 bindings, lints clean) but NOT
+the `<device>` definition, so it does not unblock this. STILL OPEN: the custom `<device>`
+definition schema is untested because the DDJ-GRV6 is factory-recognized — needs
+unrecognized hardware or a virtual MIDI port + injection to exercise a custom device
+definition.
 
 The mapper reference's device-definition schema is official-doc-derived but never load-tested locally. A `SIMPLE_MIDI` device context already exists in the local install's Mappers folder. Mappers are one of the repo's named coverage cliffs, so this is the highest-value task outside the FX cluster.
 
@@ -304,12 +454,15 @@ Done when:
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 
-Status: Ready — reframed 2026-07-29: these are no longer "candidates". All 37 hidden names are
-proven real by verb-table membership (`flags == 256`), every one now has a verb-store record,
-and 34/37 have HTTP-proven kind. What this task probes is **behavior only**. The hidden flag's
+Status: Ready
+
+Note: Reframed 2026-07-29: these are no longer "candidates". All 37 hidden names are proven
+real by verb-table membership (`flags == 256`), every one now has a verb-store record, and
+34/37 have HTTP-proven kind. What this task probes is **behavior only**. The hidden flag's
 UI meaning was confirmed live 2026-09-03: the redesigned editor's "VDJScript list of verbs"
 window omits `flip_play`, `rane_timecode`, `shoutout` and `stem_volume` while listing alias
-spellings such as `skin_pannel` (see [docs/Button Editor Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)).
+spellings such as `skin_pannel` (see [docs/Button Editor
+Taxonomy.md](docs/Button%20Editor%20Taxonomy.md)).
 
 Start here:
 
@@ -338,7 +491,9 @@ Done when:
 
 ### 7. Repeat `dualdeckmode_decks` In A Better Context
 
-Status: Ready, but low expected yield until a concrete context is identified
+Status: Ready
+
+Note: Low expected yield until a concrete context is identified
 
 The first pad-context run (v2026-m b9336) recorded `dualdeckmode` toggling on while current and deck-scoped `dualdeckmode_decks` readbacks stayed false on both decks. The promotion condition is a visible dual-deck pair or controller context (deck pairs 1/3 or 2/4), which realistically means a 4-deck skin setup or a controller. Do not repeat the same pad-context probe; identify the better context first, or treat this as semi-blocked.
 
@@ -366,8 +521,10 @@ Done when:
 
 ### 8. Characterize The VirtualDJ Remote App Wire Protocol
 
-Status: DONE (2026-07-27) — transport, wire format, subscriptions, and actions are all
-verified in both directions; only minor open questions remain (see end of this task)
+Status: Done
+
+Note: 2026-07-27 — transport, wire format, subscriptions, and actions are all verified in
+both directions; only minor open questions remain (see end of this task)
 
 Settled with a live session (socket watcher + `dns-sd` + per-connection `nettop` deltas;
 recorded in the tracker, [docs/HTTP Control Interface.md](docs/HTTP%20Control%20Interface.md),
@@ -427,7 +584,9 @@ Done when:
 
 ### 9. Map Verbs To Button Editor Categories
 
-Status: DONE (2026-07-27) — verb set, aliases, hidden flag, and categories all extracted
+Status: Done
+
+Note: 2026-07-27 — verb set, aliases, hidden flag, and categories all extracted
 
 The exact verb set is settled: [tools/extract_verb_table.py](tools/extract_verb_table.py)
 extracts VirtualDJ's own verb table (1,028 sorted 16-byte records
@@ -462,10 +621,12 @@ example column is corrected in place.
 
 ### 9b. Remaining Verb-Name Structure Notes
 
-Status: DONE (2026-07-29) — both "done when" conditions are met: every HTTP-proven name is
-accounted for by a named structure (the verb table covers 1,007/1,007), and every
-structure-found name absent from the store has been added (the 35 hidden verbs, 2026-07-29).
-Kept because the corroborating sources are still wired.
+Status: Done
+
+Note: 2026-07-29 — both "done when" conditions are met: every HTTP-proven name is accounted
+for by a named structure (the verb table covers 1,007/1,007), and every structure-found name
+absent from the store has been added (the 35 hidden verbs, 2026-07-29). Kept because the
+corroborating sources are still wired.
 
 Three structures are extracted so far ([tools/extract_binary_verbs.py](tools/extract_binary_verbs.py),
 1,019 names): 954 `ACTION_` implementation classes, 812 language-catalog entries, and the
@@ -503,10 +664,12 @@ Done when:
 
 ### 10. Discover The Full Function Contract Per Verb
 
-Status: Ready (2026-07-29) — the ratified priority now that existence, aliases, hidden flag,
-and categories are settled. Goal: for every verb, the complete calling contract — **query
-return type, accepted argument forms, and undocumented overloads** — established at Tier 1
-where possible and recorded as structured per-verb data, not prose.
+Status: Ready
+
+Note: 2026-07-29 — the ratified priority now that existence, aliases, hidden flag, and
+categories are settled. Goal: for every verb, the complete calling contract — **query return
+type, accepted argument forms, and undocumented overloads** — established at Tier 1 where
+possible and recorded as structured per-verb data, not prose.
 
 Contract fields to establish per verb:
 
@@ -580,7 +743,9 @@ Contract fields to establish per verb:
 
 ### 10a. A read-only introspection plugin — the only instrument for four questions
 
-Status: **The channel is OPEN (2026-08-15).** The plugin builds, loads, and has returned its
+Status: Ready
+
+Note: **The channel is OPEN (2026-08-15).** The plugin builds, loads, and has returned its
 first full capture: 1,028 verbs × both query callbacks, in `tests/plugin-introspection.json`
 (`just plugin-probe <name>`). See the tracker's "Plugin Channel (VDJIntrospect)" section for
 the evidence table. Headline results:
@@ -824,8 +989,10 @@ Done when:
 
 ### 10b. State-fixture harness + argument prober (do this first — it is the cheap unblock)
 
-Status: **Steps 1-2 built 2026-09-02; the sweep itself is unrun.** Python over the existing HTTP channel; no
-build toolchain, no SDK, no new evidence tier. Added 2026-08-11.
+Status: Ready
+
+Note: **Steps 1-2 built 2026-09-02; the sweep itself is unrun.** Python over the existing
+HTTP channel; no build toolchain, no SDK, no new evidence tier. Added 2026-08-11.
 
 Step 1 shipped as [tools/fixtures.py](tools/fixtures.py) (`just fixtures`,
 `just fixture-verify <name>`, `just fixture-establish <name>`): six named states —
@@ -1023,7 +1190,9 @@ state-dependent, with the fixture that decided it recorded alongside.
 
 ### 11. Build The Verb Index From The Artifacts, Not From Prose
 
-Status: **Ready.** Added 2026-08-11.
+Status: Ready
+
+Note: Added 2026-08-11.
 
 `docs/vdjscript-verb-index.json` is generated by
 [tools/extract_verb_index.py](tools/extract_verb_index.py), which **parses
@@ -1093,8 +1262,10 @@ reconciliation is recorded.
 
 ### 12. Mine Argument Tails From The Vendor Corpus
 
-Status: **Ready, and the cheapest source left** — static extraction, no live VirtualDJ, no
-fixtures. Added 2026-09-03.
+Status: Ready
+
+Note: The cheapest source left — static extraction, no live VirtualDJ, no fixtures. Added
+2026-09-03.
 
 Measured before queueing: splitting every snippet in
 [tests/vdjscript-corpus.json](tests/vdjscript-corpus.json) on `& ? : ( )` and reading the token
@@ -1161,7 +1332,9 @@ shapes. Confirming a shape live still needs a fixture; probing by shape (`DUR DU
 
 ### 13. Probe The Shared Enumerations The Binary Serialises
 
-Status: **Ready** (2026-09-03) — candidates extracted, fixtures exist, needs `just vdj-up`.
+Status: Ready
+
+Note: 2026-09-03 — candidates extracted, fixtures exist, needs `just vdj-up`.
 
 [tests/binary-vocabularies.json](tests/binary-vocabularies.json) (`just binary-vocab`) holds
 21 argument groups recovered as *structures* — pointer tables and switch functions — with
@@ -1193,7 +1366,9 @@ make a claim.
 
 ### 13b. Fixtures For The Documented-But-Unconfirmed Parameters
 
-Status: **Ready, needs a live instance** — the expensive one of this group. Added 2026-09-03.
+Status: Ready
+
+Note: Needs a live instance — the expensive one of this group. Added 2026-09-03.
 
 `just action-catalog --cross-check` lists, under `documented_but_not_probe_confirmed`, the
 verbs whose parameters the vendor documents and no local probe has confirmed. They are
@@ -1259,7 +1434,9 @@ verdict had silently deleted four confirmations.
 
 ### 14. Run The Corpus As A Parse-Regression Set
 
-Status: Done — expanded corpus regression shipped in `675addf`.
+Status: Done
+
+Note: Expanded corpus regression shipped in `675addf`.
 
 The 2026-09-05 review verified 1,610 snippets through `just check`. The counts and
 results below describe the earlier 2026-09-03 run, not the current corpus. Query the current
@@ -1304,7 +1481,9 @@ is exactly what a regression set is for.
 
 ### 15. Two Loose Ends
 
-Status: Done — both loose ends closed; details below. Added 2026-09-03.
+Status: Done
+
+Note: Both loose ends closed; details below. Added 2026-09-03.
 
 - **`timecode_cd_mode` — CLOSED 2026-09-03.** VirtualDJ restarted at 09:42 and the verb reads
   `no` on all four decks, back to its pre-probe value. So it is **runtime-only state**: settable

@@ -8,13 +8,14 @@ set positional-arguments
 default:
     @just --list
 
+# The first startable task in TODO.md. Refuses to select if any status line
+# in the file is malformed, rather than skipping the task it cannot read.
 next-task:
-    @awk '\
-      /^### / { if (seen && ready) exit; title=$0; block=$0 "\n"; seen=1; ready=0; next } \
-      seen { block=block $0 "\n" } \
-      /^Status: Ready$/ && seen { ready=1 } \
-      END { if (seen && ready) printf "%s", block } \
-    ' TODO.md
+    @python3 tools/todo_queue.py next
+
+# Every task with its state; `*` marks the startable ones.
+task-queue *args:
+    @python3 tools/todo_queue.py list "$@"
 
 # Grep the authored verb prose/examples. For record lookups use `just get-verb`.
 grep-verb-docs name:
@@ -54,14 +55,17 @@ thin-verbs:
 
 status:
     @python3 -c 'from pathlib import Path; import re; text=Path("docs/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
-    @printf "\nReady queue:\n"
-    @rg -n "^### |^Status: Ready$" TODO.md
+    @printf "\nTask queue:\n"
+    @python3 tools/todo_queue.py list
 
+# `"$@"` rather than an interpolated {{script}}: interpolation puts the script
+# through zsh, which expands a VDJScript global like $ct_top before the request
+# is built and leaves `get_var "$ct_top"` querying an empty name.
 vdj-query script:
-    @curl -sS -m 5 -G 'http://localhost/query' --data-urlencode "script={{script}}"; echo
+    @curl -sS -m 5 -G 'http://localhost/query' --data-urlencode "script=$1"; echo
 
 vdj-execute script:
-    @curl -sS -m 5 -G 'http://localhost/execute' --data-urlencode "script={{script}}"; echo
+    @curl -sS -m 5 -G 'http://localhost/execute' --data-urlencode "script=$1"; echo
 
 vdj-up:
     @curl -sS -m 3 -G 'http://localhost/query' --data-urlencode 'script=get_version' >/dev/null 2>&1 \
@@ -309,6 +313,7 @@ check:
     python3 tools/topic.py check
     python3 tools/fixtures.py --check
     python3 tools/probe_arg_forms.py --check
+    python3 tools/probe_known_positions.py --check
     python3 tools/probe_execute_forms.py --check
     python3 tools/extract_action_catalog.py --check
     python3 tools/extract_script_corpus.py --check
@@ -317,8 +322,30 @@ check:
     python3 tools/extract_action_modules.py --check
     python3 tools/check_corpus_parses.py --check
     python3 tools/extract_xml_inventory.py --check
+    python3 tools/extract_skin_readers.py --check
     python3 tools/check_reference_status.py
+    python3 tools/todo_queue.py check
+    python3 tools/todo_queue.py selftest
     git diff --check
+
+# What the skin XML readers in the binary actually compare against, and which
+# of those names appear in no shipped skin and no SDK doc.
+skin-readers:
+    @python3 tools/extract_skin_readers.py > tests/skin-reader-vocabulary.json
+    @echo "wrote tests/skin-reader-vocabulary.json"
+
+skin-reader name:
+    @python3 tools/extract_skin_readers.py --get "{{name}}"
+
+skin-candidates:
+    @python3 tools/extract_skin_readers.py --candidates
+
+# get_time's position arguments against three independently known positions.
+# Writes to a live VirtualDJ (deck 1, stopped, no audio) and restores it.
+known-positions:
+    @python3 tools/probe_known_positions.py --run > tests/get-time-positions.json
+    @echo "wrote tests/get-time-positions.json"
+    @python3 tools/probe_known_positions.py --check
 
 # Confirm argument keywords against their nonsense controls in any capture.
 plugin-keyword-report capture *args:

@@ -1,0 +1,476 @@
+{
+ "summary": {
+  "targets": {
+   "cue1": {
+    "verdict": "reads_its_position",
+    "matched_by_loop_state": {
+     "yes": [
+      true,
+      true
+     ],
+     "no": [
+      true,
+      true
+     ]
+    },
+    "otherwise_matched": []
+   },
+   "loopin": {
+    "verdict": "reads_its_position_only_while_a_loop_is_active",
+    "matched_by_loop_state": {
+     "yes": [
+      true,
+      true
+     ],
+     "no": [
+      false,
+      false
+     ]
+    },
+    "otherwise_matched": [
+     "loop_out"
+    ]
+   },
+   "loopout": {
+    "verdict": "reads_its_position",
+    "matched_by_loop_state": {
+     "yes": [
+      true,
+      true
+     ],
+     "no": [
+      true,
+      true
+     ]
+    },
+    "otherwise_matched": []
+   }
+  },
+  "nonsense_falls_back_to_elapsed_not_to_the_bare_form": true,
+  "absolute_keeps_the_display_time_mode": true,
+  "runs": 2,
+  "phases_per_run": [
+   "before",
+   "after_moving_cue_1"
+  ],
+  "has_cue_1_after_restore": "no",
+  "deck_restored_to": {
+   "loaded": "no",
+   "path": "error:-2147024891",
+   "playing": "no"
+  }
+ },
+ "method": {
+  "oracles": {
+   "cue_1": "cue_pos 1 mseconly",
+   "loop_in": "get_loop_in_time on",
+   "loop_out": "get_loop_out_time on",
+   "playhead_from_position": "get_position x get_time 'total'"
+  },
+  "forms": {
+   "": "floor: whatever display_time selects",
+   "elapsed": "floor: documented, position of the playhead",
+   "remain": "documented",
+   "total": "documented",
+   "absolute": "documented: ignore pitch",
+   "cue1": "TARGET: cue point 1",
+   "cue": "vocabulary-group member, never probed",
+   "loopin": "TARGET: loop start",
+   "loopout": "TARGET: loop end",
+   "to_lyrics": "documented, no lyrics in the fixture",
+   "short": "documented as a text format, not a position",
+   "qzqzqz": "CONTROL: nonsense",
+   "wvwvwv": "CONTROL: a second, different nonsense token"
+  }
+ },
+ "runs": [
+  {
+   "label": "run-1",
+   "query_order": [
+    "",
+    "elapsed",
+    "remain",
+    "total",
+    "absolute",
+    "cue1",
+    "cue",
+    "loopin",
+    "loopout",
+    "to_lyrics",
+    "short",
+    "qzqzqz",
+    "wvwvwv"
+   ],
+   "before": {
+    "oracles": {
+     "cue_1": 14496,
+     "loop_in": 18496,
+     "loop_out": 34496,
+     "playhead_from_position": 10800,
+     "total": 90000,
+     "loop_active": "yes",
+     "display_time_mode": "remain"
+    },
+    "forms": {
+     "": {
+      "value": "79000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "elapsed": {
+      "value": "11000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "remain": {
+      "value": "79000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "total": {
+      "value": "90000",
+      "matches_oracle": [
+       "total"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "absolute": {
+      "value": "79000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "cue1": {
+      "value": "14496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "cue": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "loopin": {
+      "value": "18496",
+      "matches_oracle": [
+       "loop_in"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopout": {
+      "value": "34496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "to_lyrics": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "short": {
+      "value": "11000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "qzqzqz": {
+      "value": "11000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "wvwvwv": {
+      "value": "11000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     }
+    }
+   },
+   "after_moving_cue_1": {
+    "oracles": {
+     "cue_1": 70496,
+     "loop_in": 18496,
+     "loop_out": 34496,
+     "playhead_from_position": 70200,
+     "total": 90000,
+     "loop_active": "no",
+     "display_time_mode": "remain"
+    },
+    "note": "seeking outside an active loop deactivates it; the stored endpoints survive and `get_loop_*_time on` still reads them",
+    "verification": "distinct",
+    "forms": {
+     "": {
+      "value": "20000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "elapsed": {
+      "value": "70000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "remain": {
+      "value": "20000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "total": {
+      "value": "90000",
+      "matches_oracle": [
+       "total"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "absolute": {
+      "value": "20000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "cue1": {
+      "value": "70496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "cue": {
+      "value": "70496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopin": {
+      "value": "34496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopout": {
+      "value": "34496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "to_lyrics": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "short": {
+      "value": "70000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "qzqzqz": {
+      "value": "70000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "wvwvwv": {
+      "value": "70000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     }
+    }
+   }
+  },
+  {
+   "label": "run-2",
+   "query_order": [
+    "wvwvwv",
+    "qzqzqz",
+    "short",
+    "to_lyrics",
+    "loopout",
+    "loopin",
+    "cue",
+    "cue1",
+    "absolute",
+    "total",
+    "remain",
+    "elapsed",
+    ""
+   ],
+   "before": {
+    "oracles": {
+     "cue_1": 24496,
+     "loop_in": 28496,
+     "loop_out": 44496,
+     "playhead_from_position": 20700,
+     "total": 90000,
+     "loop_active": "yes",
+     "display_time_mode": "remain"
+    },
+    "forms": {
+     "": {
+      "value": "69000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "elapsed": {
+      "value": "21000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "remain": {
+      "value": "69000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "total": {
+      "value": "90000",
+      "matches_oracle": [
+       "total"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "absolute": {
+      "value": "69000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "cue1": {
+      "value": "24496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "cue": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "loopin": {
+      "value": "28496",
+      "matches_oracle": [
+       "loop_in"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopout": {
+      "value": "44496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "to_lyrics": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "short": {
+      "value": "21000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "qzqzqz": {
+      "value": "21000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "wvwvwv": {
+      "value": "21000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     }
+    }
+   },
+   "after_moving_cue_1": {
+    "oracles": {
+     "cue_1": 60496,
+     "loop_in": 28496,
+     "loop_out": 44496,
+     "playhead_from_position": 60300,
+     "total": 90000,
+     "loop_active": "no",
+     "display_time_mode": "remain"
+    },
+    "note": "seeking outside an active loop deactivates it; the stored endpoints survive and `get_loop_*_time on` still reads them",
+    "verification": "distinct",
+    "forms": {
+     "": {
+      "value": "30000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "elapsed": {
+      "value": "60000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "remain": {
+      "value": "30000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "total": {
+      "value": "90000",
+      "matches_oracle": [
+       "total"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "absolute": {
+      "value": "30000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "cue1": {
+      "value": "60496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "cue": {
+      "value": "60496",
+      "matches_oracle": [
+       "cue_1"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopin": {
+      "value": "44496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "loopout": {
+      "value": "44496",
+      "matches_oracle": [
+       "loop_out"
+      ],
+      "equals_nonsense_floor": false
+     },
+     "to_lyrics": {
+      "value": "0",
+      "matches_oracle": [],
+      "equals_nonsense_floor": false
+     },
+     "short": {
+      "value": "60000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "qzqzqz": {
+      "value": "60000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     },
+     "wvwvwv": {
+      "value": "60000",
+      "matches_oracle": [],
+      "equals_nonsense_floor": true
+     }
+    }
+   }
+  }
+ ]
+}

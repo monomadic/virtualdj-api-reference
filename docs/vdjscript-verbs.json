@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 14,
-    "Pass": 40,
-    "Untested": 978
+    "Pass": 48,
+    "Untested": 970
    },
    "documented": 768,
-   "tested_pass": 40,
+   "tested_pass": 48,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -1782,13 +1782,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: 'cue_pos 1 mseconly' returns the cue position in ms and 'cue_pos 1' as a percentage, both verified against a cue set at a known position and again after moving it. Used as the independent oracle for get_time 'cue1' in tests/get-time-positions.json."
+   ],
    "section": "Cue Points",
    "description": "Get cue position",
-   "example": "cue_pos 1"
+   "example": "cue_pos 1",
+   "confidence": "local_test"
   },
   "cue_select": {
    "name": "cue_select",
@@ -5746,13 +5749,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: 'get_loop_in_time on' returns the loop start in ms and keeps reporting it after the loop is exited, which is what the documented 'on' argument is for. Note the disagreement it exposes: with the loop inactive, get_time 'loopin' returns the loop-OUT value while this verb still returns the in point. See tests/get-time-positions.json."
+   ],
    "section": "Loops",
    "description": "Loop start time",
-   "example": "get_loop_in_time \"sec\""
+   "example": "get_loop_in_time \"sec\"",
+   "confidence": "local_test"
   },
   "get_loop_out_time": {
    "name": "get_loop_out_time",
@@ -5760,13 +5766,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: 'get_loop_out_time on' returns the loop end in ms, verified against get_time 'loopout' in four phases across two runs, loop active and inactive. See tests/get-time-positions.json."
+   ],
    "section": "Loops",
    "description": "Loop end time",
-   "example": "get_loop_out_time \"sec\""
+   "example": "get_loop_out_time \"sec\"",
+   "confidence": "local_test"
   },
   "get_lyrics_language": {
    "name": "get_lyrics_language",
@@ -6494,16 +6503,18 @@
     "Map",
     "Button"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP, 2026-07-30): accepts a trailing argument — bare returns one time mode (286667) while ANY argument, including an unrecognized word, returns another (161780, matching 'elapsed'/'short'). Distinguishing 'short' from fallback needs value-format comparison; unknown args are silently defaulted, never E_INVALIDARG."
+    "VirtualDJ 2026 (HTTP, 2026-07-30): accepts a trailing argument — bare returns one time mode (286667) while ANY argument, including an unrecognized word, returns another (161780, matching 'elapsed'/'short'). Distinguishing 'short' from fallback needs value-format comparison; unknown args are silently defaulted, never E_INVALIDARG.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598, known-position fixture (tests/get-time-positions.json, 2 runs x 2 phases, order varied). Position arguments discriminate against two nonsense controls and against each other: 'cue1' equals cue_pos 1 mseconly exactly and tracks the cue when it is moved; 'loopout' equals get_loop_out_time exactly; 'loopin' equals get_loop_in_time ONLY while a loop is active — with the loop exited it returns the loop-OUT value while the oracle still reports the in point. An unrecognized tail falls back to 'elapsed', NOT to the bare form (bare followed display_time 'remain' throughout), so bare-versus-argument separation is not recognition. 'short' alone behaves as an unrecognized tail. 'absolute' is a modifier, not a mode: it keeps the display_time setting. 'cue' reads the ACTIVE cue (0 until one is activated, then the active cue's position). 'to_lyrics' returned 0 with no lyrics — unresolved."
    ],
    "section": "Get (Query Actions)",
    "description": "Elapsed time",
    "example": "get_time \"remain\" \"short\"",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_time_hour": {
    "name": "get_time_hour",
@@ -6907,13 +6918,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: a bare signed number is BEATS relative to the playhead ('goto +70' from goto_start reached 35000 ms on a 120 BPM track). Percentage and relative-ms forms are documented but untested here."
+   ],
    "section": "Audio Playback",
    "description": "Change position",
-   "example": "goto +10ms"
+   "example": "goto +10ms",
+   "confidence": "local_test"
   },
   "goto_bar": {
    "name": "goto_bar",
@@ -8291,13 +8305,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-05, HTTP, build 18.0.9598: query position returns the current skin identity as '<Folder>/:<xml basename>' (DeathDisco Grave Raver v1/:skin), so it is its own restore oracle. Execute position switches skins, and the argument must match that identity exactly — the bare folder name did nothing while the /:skin form switched. Result is always 'true', including for a skin VirtualDJ then refuses to open ('Impossible to open skin'), so it is not a success signal. See the tracker's Skin Reader Vocabulary section."
+   ],
    "section": "Skin Control",
    "description": "Load new skin/variation",
-   "example": "load_skin ':newvariation'"
+   "example": "load_skin ':newvariation'",
+   "confidence": "local_test"
   },
   "loaded": {
    "name": "loaded",
@@ -8416,14 +8433,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: 'loop 32' lays a 32-beat loop ENDING at the playhead — the in point lands 32 beats BEFORE the current position, not after it. Verified twice against get_loop_in_time/get_loop_out_time. Seeking outside an active loop deactivates it while both stored endpoints survive."
+   ],
    "section": "Loops",
    "description": "Set/remove loop",
    "example": "loop 4",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "loop_adjust": {
    "name": "loop_adjust",
@@ -13144,13 +13164,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: both documented forms work — 'set_cue 1 15000ms' stores an absolute position and bare 'set_cue 1' stores the playhead. Quantize moves the result: 15000ms landed on 14496 on a 120 BPM fixture whose grid is offset from zero, so the stored position must be read back (cue_pos 1 mseconly) rather than assumed. The one-argument form also makes that cue the ACTIVE cue, which is what get_time 'cue' then reads."
+   ],
    "section": "Cue Points",
    "description": "Store cue position",
-   "example": "set_cue 1 500ms"
+   "example": "set_cue 1 500ms",
+   "confidence": "local_test"
   },
   "set_deck": {
    "name": "set_deck",

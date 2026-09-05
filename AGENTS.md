@@ -20,7 +20,7 @@ tests/README.md               — documentation test harnesses and reproducible 
 
 ## Open-ended work
 
-For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task.
+For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task. `just next-task` prints that task; `just task-queue` lists every task with its state. Each task carries one machine-readable `Status:` line — one word from `Ready`/`Blocked`/`Conditional`/`Parking lot`/`Done`, with the explanation in the `Note:` paragraph below it — and selection fails loudly rather than skipping a status it cannot read, so keep that shape when editing the queue.
 
 ## Session efficiency rules
 

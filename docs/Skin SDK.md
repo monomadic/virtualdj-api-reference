@@ -36,6 +36,16 @@ Built-in plugin UI XML is a narrower surface than a desktop or Remote skin. The 
 
 Source: `Built-in skin` (`examples/Skins/Built-In/Plugin-UI/AFX_beatgrid.xml`), `Inference`
 
+**An installed skin folder needs an image beside the XML.** With only a
+`skin.xml` present, VirtualDJ refuses the skin — a modal *"Impossible to open
+skin `<name>`"* — and keeps the current one; adding a `skin.png` and a
+`preview.png` made the byte-identical XML load. `image=""` need not be declared,
+but a file must be there. Note the trap: `load_skin` returns `true` either way,
+so the refusal is visible only on screen (Local test 2026-09-05, build
+18.0.9598).
+
+Source: `Local test`
+
 ### Runtime Deck Count
 
 In addition to the root `nbdecks` attribute, working skins can set the exposed deck count with child `<nbdecks>` elements. These can be conditional, which lets a skin switch between two-deck and four-deck structures from stored skin state:
@@ -149,6 +159,73 @@ Non-visual or window-level elements placed directly under `<skin>`
 
 ---
 
+## Attributes Every Skin Object Reads
+
+`<panel>`, `<group>`, `<button>` and the rest do not each parse their own
+geometry and visibility. One shared reader in the binary handles a common set
+before the element-specific builder runs, which is why `condition=""` and
+`visibility=""` behave the same wherever you put them.
+
+The list below is that reader's vocabulary on **build 18.0.9598 (arm64)**, read
+out of `__text` at `0x10037c54c`–`0x10037cebc`. Extract it yourself with
+`just skin-readers`, query it with `just skin-reader skin_object_base`, and see
+the tracker's "Skin Reader Vocabulary" section for the method and its limits.
+
+| Name | Status |
+| --- | --- |
+| `condition`, `visibility`, `novisibility` | documented; see [Conditional Structure vs Visibility](#conditional-structure-vs-visibility) |
+| `x`, `y`, `width`, `height`, `size`, `pos`, `center` | documented geometry |
+| `deck`, `chan` | deck / channel scoping |
+| `maxwidth`, `canstretch` | layout, shipped but thinly documented |
+| `tooltip`, `tooltipaction` | tooltip text and its action |
+| `panel` (and the misspelling `pannel`, which the reader accepts as well) | panel membership |
+| `mouserect`, `mousecircle`, `mousemask`, `r` | hit-area shaping |
+| **`clickthrough`** | **undocumented; confirmed by local test — see below** |
+| `minwidth`, `tooltips`, `localized` | in the reader, in no shipped skin and no doc: untested leads |
+
+### `clickthrough=""`
+
+**Source: Local test** (2026-09-05, build 18.0.9598, deck-skin surface).
+
+`clickthrough="pass"` makes an element run its own action **and** let the click
+continue to whatever is underneath it. It is additive, not a redirect: in the
+fixture the covering button's action fired *and* the covered button's action
+fired from the same click.
+
+```xml
+<!-- lower button: declared first, underneath -->
+<button action="deck 1 play_pause">
+    <pos x="300" y="180"/><size width="300" height="160"/>
+</button>
+
+<!-- upper button: fires its own action, and the click still reaches the one below -->
+<button action="deck 1 cue" clickthrough="pass">
+    <pos x="300" y="180"/><size width="300" height="160"/>
+</button>
+```
+
+`pass` is the only value the reader compares. Any other value behaves exactly
+like the attribute being absent — the covering element swallows the click — as
+does misspelling the attribute, so a typo here fails silently like every other
+unknown skin attribute. What `clickthrough` does on a container rather than a
+button, and whether the pass-through reaches more than one layer down, are
+untested.
+
+Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
+(five generated deck skins, one attribute apart, with a calibration variant and
+both a nonsense-value and a nonsense-attribute control).
+
+### Elements the parser knows that this doc does not describe
+
+From the same extraction, the element-name switch
+(`just skin-reader element_dispatch`) accepts these tags, none of which appears
+in any skin in this repo: `multibutton`, `resizepanel`, `keyboardmap`, `rack`,
+`onexit`, `os`, `darkmode`, and `pannel` as a spelling of `panel`. Existence
+only — the switch knowing a tag says nothing about what it builds. Treat them
+as leads, not as API.
+
+---
+
 ## Element Details
 
 ### `<deck>`
@@ -186,6 +263,12 @@ Container for grouping elements that can be shown/hidden together. Panels are ve
 - `group=""` - (optional) Group name. Only one panel from a common group can be shown at a time. Showing a panel hides others in the same group
 
 **Children:** Any skin element
+
+A `<panel>` also reads everything in [Attributes Every Skin Object Reads](#attributes-every-skin-object-reads), including the undocumented `clickthrough="pass"`.
+
+**`forceshow=""` — the layout-variant vocabulary.** Undocumented, but used by Atomix's own shipped skins: it pins a panel to one of the app's layout variants rather than to a query. The panel builder on build 18.0.9598 compares the argument against exactly six values — `1fx`, `3fx`, `6fx`, `8pads`, `16pads`, `timecode` (`just skin-reader panel_builder`). The Built-In Desktop skins use five of them; `8pads` is the one the reader knows and no shipped skin writes. Existence and vocabulary only — no behavior was tested.
+
+Source: `Built-in skin` (Desktop `Pro.xml`, `Vertical.xml`) for the five used values, binary reader vocabulary for `8pads`
 
 **Usage Patterns:**
 
@@ -1279,6 +1362,11 @@ Avoid relying on conditional child `<pos>` elements to move a `<group>`:
 In local tests, the child-`<pos>` group rendered but did not move horizontally, while equivalent conditional branches with direct group `x` / `y` behaved correctly.
 
 **Children:** Any skin element
+
+A `<group>` has no builder of its own: it reads the shared set in
+[Attributes Every Skin Object Reads](#attributes-every-skin-object-reads) and
+nothing else, which is why `condition` and `visibility` are the whole of its
+behavior.
 
 **Example:**
 ```xml

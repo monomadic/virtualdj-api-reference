@@ -130,6 +130,13 @@ Source labels used below:
   Why: there is a dedicated verb for the job, and current forum guidance explicitly recommends using it instead of toggling your own skin vars for remain versus elapsed displays.
   Source: `Official`, `Official forum`
 
+- Reading a cue or loop position as a time:
+  Use `get_time 'cue1'`, `get_time 'loopout'` and, **while a loop is active**, `get_time 'loopin'`. All three return the position in ms and were confirmed against independent oracles (`cue_pos 1 mseconly`, `get_loop_out_time on`, `get_loop_in_time on`).
+  Two traps. First, with the loop **exited**, `get_time 'loopin'` returns the loop *out* value while `get_loop_in_time on` still returns the in point — so outside an active loop, read the loop start with `get_loop_in_time on`, not with `get_time`. Second, an argument `get_time` does not recognize is silently answered with **elapsed**, not with the bare form's value, so a wrong or misspelled tail looks like a working time display rather than an error.
+  `get_time 'cue'` is not `'cue1'`: it reads whichever cue is *active*, and returns `0` until one is.
+  Why: these are the only position tails confirmed by local test; the rest of the documented list is untested.
+  Source: `Local test` (2026-09-06, build 18.0.9598 — see the tracker's "Known-Position Fixture" section)
+
 - Remote browser/settings views:
   For simple full-screen Remote layouts, follow the bundled pattern: `toggle '$rmbrowser'` drives deck/browser panels with `visibility="var '$rmbrowser' 0/1"`, and `toggle '$rmsettings'` drives a settings overlay initialized with `set '$rmsettings' 0`. In wide phone layouts where browser is one tab among deck/mixer panels, use `skin_panel 'rmbrowser' on` and hide deck-only groups with a `skin_panel 'rmbrowser'` visibility query. Use `browser_window 'folders'` / `'songs'` for touch buttons that focus specific browser panes.
   Source: `Built-in skin`
