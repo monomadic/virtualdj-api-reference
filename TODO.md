@@ -297,9 +297,9 @@ still matched by a whole-record substring search, which is generous and occasion
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
-Status: Ready
+Status: Conditional
 
-Note: Structural sweep COMPLETE (2026-07-22) — only rendering behavior is left
+Note: Structural sweep complete 2026-07-22; the rendering half closed 2026-09-06. One settings-UI question is left, named at the end.
 
 [tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured counts, short+full labels, normalized **defaults**, live value text, and length/beats flags for all **119** installed effects into [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json), plus the enabled cycle for all three targets. Query it with `just get-fx <effect>` / `just find-fx [--category=deck_fx|video_fx|transition] [--has-length]` / `just fx-stats` — do not read the dump and do not hand-transcribe it.
 
@@ -329,17 +329,28 @@ FX Over HTTP" section; state was recorded and restored.
   containing none of `Lottery`, `Sweep`, `Title`, `Vocals`. Whether *enabling* one in the FX
   list editor puts it in a cycle is still a GUI question.
 
-Genuinely remaining, and all of it behind the same gate:
+Rendering half closed 2026-09-06 — **the gate was the video window, not video output.**
+`video_fx` could not be activated with no track, with an audio track, or even with a real video
+loaded; what was missing was the window itself. `video` ("Open/close video window") opens it, a
+paused deck is enough to render a frame, and the identical `video_fx on` call then works. Four
+rendering passes recorded, each watched on screen, all state restored (tracker: "Video FX
+Rendering: The Gate Was The Video Window"):
 
-- **`video_fx` cannot be activated over HTTP.** Every scope returned `false` and left the query
-  at `no`, with and without an audio track loaded. Selection and sliders work, so activation is
-  gated on video output the channel cannot supply. Recorded as a bounded negative, not a broken
-  verb — but it means *nothing about rendering can be tested from this channel*.
-- So what is left needs a real video source and eyes on the output: what `video_fx_slider`,
-  `video_fx_clear` and `video_transition_slider` actually render, and the FX list editor half
-  of the category question. `video_fx_clear` has only been seen returning `true` with nothing
-  active, which shows only that it does not deselect.
-- **Promotion stays deferred to TODO task 0**: the data is queried from the artifact, not copied into `Effects Engines.md`. Do not hand-transcribe the dump.
+| Verb | Watched | Result |
+| --- | --- | --- |
+| `video_fx` | `Negative` on a colour-bar pattern | every colour inverted |
+| `video_fx_slider` | `Colorize` hue `0.1` → `0.7` | tint went amber → magenta |
+| `video_fx_clear` | `Colorize` actively tinting | render returned to the source |
+| `video_transition_slider` | `Blinds` NB `0.15` → `0.95` at crossfader `0.5` | ~5 thick blinds → ~15 thin |
+
+`video_fx_clear` **deactivates only** — selection and slider values survive it, which the earlier
+pass could not tell because it had only ever run with nothing active. Fixtures were generated
+with ffmpeg (a `testsrc2` pattern and a white clip), never the user's library; the transition
+needed two *different* videos or the crossfade would have been invisible.
+
+**Conditional on one settings-UI action:** enable one of the four category-unknown effects
+(`Lottery`, `Sweep`, `Title`, `Vocals`) in the FX list editor and re-walk the `+1` cycles to see
+whether it joins one. There is no verb for that step. Everything else in this task is done.
 
 Start here:
 

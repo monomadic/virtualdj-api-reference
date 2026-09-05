@@ -12,13 +12,13 @@
     "unofficial": 42
    },
    "by_test_status": {
-    "Fail": 8,
+    "Fail": 7,
     "Partial": 14,
-    "Pass": 49,
-    "Untested": 967
+    "Pass": 53,
+    "Untested": 964
    },
    "documented": 768,
-   "tested_pass": 49,
+   "tested_pass": 53,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -14830,13 +14830,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: opens and closes the video window and is the PRECONDITION for video FX. Query returns yes/no for the window state; execute toggles it and returned true. With the window closed no video effect can be activated (video_fx stays 'no' however it is called); with it open the same call works. Renders a loaded video on a paused deck, so no playback is needed to observe video FX."
+   ],
    "section": "Video",
    "description": "Open/close video window",
-   "example": "video"
+   "example": "video",
+   "confidence": "local_test"
   },
   "video_crossfader": {
    "name": "video_crossfader",
@@ -14914,11 +14917,12 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Fail",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-06, HTTP, build 18.0.9598: could not be activated over HTTP in any scope. 'video_fx on', bare 'video_fx', 'deck 1 video_fx on' and 'deck master video_fx on' all returned false and left the query at 'no', both with no track loaded and with an audio-only track on deck 1. A bounded negative: selection and sliders work over this channel, activation appears gated on video output that HTTP alone cannot supply — not evidence the verb is broken."
+    "Local test 2026-09-06, HTTP, build 18.0.9598: could not be activated over HTTP in any scope. 'video_fx on', bare 'video_fx', 'deck 1 video_fx on' and 'deck master video_fx on' all returned false and left the query at 'no', both with no track loaded and with an audio-only track on deck 1. A bounded negative: selection and sliders work over this channel, activation appears gated on video output that HTTP alone cannot supply — not evidence the verb is broken.",
+    "Local test 2026-09-06, HTTP + video window, build 18.0.9598. SUPERSEDES the same-day Fail: activation is gated on the VIDEO WINDOW being open, not on a video source. With the window closed, 'video_fx on' returned false and left the query at 'no' — with no track, with an audio track, and with a real video loaded. After 'video' (open/close video window), the identical call flipped the query to 'yes' and the effect rendered: Negative inverted every colour of the test pattern (screenshots before/after). The execute result stays 'false' either way, so read video_fx back rather than trusting it."
    ],
    "section": "Effects",
    "description": "Activate/deactivate selected video effect",
@@ -14945,13 +14949,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP + video window, build 18.0.9598: with Colorize actively rendering a magenta tint, video_fx_clear returned true, flipped video_fx to 'no', and the video window returned to the unprocessed source frame. It DEACTIVATES only — the selection stayed 'Colorize' and slider 1 kept its 0.7 value, so it is not a deselect and not a reset."
+   ],
    "section": "Effects",
    "description": "Deactivate all video effects",
-   "example": "video_fx_clear"
+   "example": "video_fx_clear",
+   "confidence": "local_test"
   },
   "video_fx_select": {
    "name": "video_fx_select",
@@ -14983,7 +14990,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-06, HTTP, build 18.0.9598: indexes correctly in BOTH positions, unlike its label helper. Query 'video_fx_slider n' returned Colorize's five slider values (0,1,1,0,0.5) matching effect_slider 'Colorize' n; execute 'video_fx_slider 3 0.25' moved slider 3 only, and restoring it to 1 restored exactly that slider. Scope is master by default."
+    "Local test 2026-09-06, HTTP, build 18.0.9598: indexes correctly in BOTH positions, unlike its label helper. Query 'video_fx_slider n' returned Colorize's five slider values (0,1,1,0,0.5) matching effect_slider 'Colorize' n; execute 'video_fx_slider 3 0.25' moved slider 3 only, and restoring it to 1 restored exactly that slider. Scope is master by default.",
+    "Local test 2026-09-06, HTTP + video window, build 18.0.9598: RENDERING confirmed, not just state. With Colorize active on a test-pattern video, moving slider 1 (COL/hue) from 0.1 to 0.7 changed the rendered output from an amber tint to magenta. Indexing was separately confirmed: query 'video_fx_slider n' returns Colorize's five values matching effect_slider 'Colorize' n, and execute moves the named slider only. Default scope is master."
    ],
    "section": "Effects",
    "description": "Move video FX slider",
@@ -15111,13 +15119,16 @@
     "video_transition_slider_slider"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP + video window, build 18.0.9598: RENDERING confirmed. Two different videos on decks 1 and 2, video_crossfader at 0.5 so the Blinds transition was mid-crossfade, then slider 2 (NB / Nb Slides) moved from 0.15 to 0.95: the rendered blind count went from about 5 thick stripes to about 15 thin ones. Blinds' own slider map (S1 Direction, S2 Nb Slides) is what the indexes address."
+   ],
    "section": "Effects",
    "description": "Move transition slider",
-   "example": "video_transition_slider 1 50%"
+   "example": "video_transition_slider 1 50%",
+   "confidence": "local_test"
   },
   "video_transition_slider_slider": {
    "name": "video_transition_slider_slider",

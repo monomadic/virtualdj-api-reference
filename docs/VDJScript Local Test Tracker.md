@@ -1432,3 +1432,59 @@ No armed release slot was ever seen, so no release-FX *behavior* has been
 watched. That needs an operator to assign a release effect in VirtualDJ's FX
 lists first; the harness for the moment after that already exists at
 `tests/Pads/Reference - Release FX Test.xml`.
+
+## Video FX Rendering: The Gate Was The Video Window
+
+Build 18.0.9598, HTTP plus the video window, 2026-09-06. This supersedes the
+bounded negative recorded earlier the same day and closes task 1's rendering
+half. Everything was restored and verified: video effect back to `Karaoke` with
+slider 1 at `1`, `Colorize` sliders back to `0,1,1,0,0.5`, transition back to
+`Fade` with both sliders at `0`, crossfader `0`, window closed, both decks empty.
+
+### The precondition
+
+`video_fx` could not be activated over HTTP with no track, with an audio track,
+or **even with a real video loaded** — every scope returned `false` and left the
+query at `no`. The missing piece was not a video source and not a momentary
+control: it was the **video window**. `video` (catalog: "Open/close video window")
+opens it, and the identical `video_fx on` call then flipped the query to `yes`.
+
+A paused deck is enough — the window renders the current frame — so none of this
+needs playback or makes sound.
+
+The execute result is `false` whether or not it works, so read `video_fx` back.
+
+### Four rendering passes
+
+Fixtures generated with ffmpeg into the fixture cache, never the user's library:
+a 30 s `testsrc2` colour-bar pattern and a 30 s white clip.
+
+| Verb | What was watched | Result |
+| --- | --- | --- |
+| `video_fx` | `Negative` on the colour-bar pattern | every colour inverted (red→cyan, green→magenta, yellow→blue) |
+| `video_fx_slider` | `Colorize` slider 1 (COL/hue) `0.1` → `0.7` | rendered tint went amber → magenta |
+| `video_fx_clear` | `Colorize` actively tinting | render returned to the unprocessed source |
+| `video_transition_slider` | `Blinds` slider 2 (NB) `0.15` → `0.95`, crossfader at `0.5` | ~5 thick blinds → ~15 thin ones |
+
+**`video_fx_clear` deactivates only.** After it, `video_fx` read `no` while the
+selection stayed `Colorize` and slider 1 kept its `0.7` value — so it is neither
+a deselect nor a slider reset. That is the question the earlier pass could not
+answer, having only ever run it with nothing active.
+
+The transition test needed two *different* videos, so the crossfade would be
+visible at all: the same file on both decks renders identically at any
+crossfader position and would have proved nothing.
+
+### One loose observation, not a claim
+
+`video_crossfader 0%` did not stick while both decks held videos — the query
+kept reading `0.52` — and the same call set it to `0` immediately once the decks
+were empty. `video_crossfader_auto` ("automatically move video crossfader based
+on deck activity") is the obvious suspect and was not tested. Noted so the next
+person restoring this state checks the read-back rather than assuming.
+
+### Still open
+
+Whether enabling one of the four category-unknown effects (`Lottery`, `Sweep`,
+`Title`, `Vocals`) in the FX list editor puts it into a `+1` cycle. That is a
+settings-UI action with no verb, and it is the last piece of task 1.
