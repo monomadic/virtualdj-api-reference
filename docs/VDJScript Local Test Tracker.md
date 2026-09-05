@@ -1572,10 +1572,23 @@ does not separate "reads the master BPM" from "reads a constant"),
 require an argument (`E_INVALIDARG` bare). Each is recorded Partial with the state
 that would move it named, rather than as a behavior claim.
 
-### Ten hardware-gated names marked blocked
+### Ten hardware-gated names — but two different gates
 
-`rane_motor_enable`, `rane_screen_input`, `rane_screen_output`, `rane_timecode`,
-`rane_timecode_enable`, `ns7_get_drift`, `motorwheel2`, `motorwheel3`,
-`controllerscreen_action`, `assign_related_controller`. No local probe reaches any
-of them and a query-position answer would say nothing about behavior, so they were
-moved out of the active queue rather than left looking startable.
+Corrected the same day: "hardware-gated" was too flat a label, and the two tiers
+have very different prospects.
+
+**Needs an attached controller** — `controllerscreen_action` (one with a screen)
+and `assign_related_controller`. This is the *weaker* gate: the operator owns
+controllers, and a DDJ-GRV6 drove the task 5 mapper work, so these become testable
+whenever one is plugged in. Nothing was attached during this pass —
+`get_controller_name` returned `''`, which is the presence oracle to check first.
+
+**Needs specific vendor hardware that is not here and cannot be substituted** —
+the five `rane_*` names (Rane hardware), `ns7_get_drift` (a Numark NS7), and
+`motorwheel2` / `motorwheel3` (motorised platters). These stay out of reach.
+
+Query position separates none of this: `controllerscreen_action` and
+`assign_related_controller` both return `error:-2147467263`, the action-only code,
+which says nothing about whether hardware is present. Verb-table membership already
+proves every one of these names; blocked is a statement about reachability, not
+about existence.

@@ -13,9 +13,9 @@
    },
    "by_test_status": {
     "Fail": 9,
-    "Partial": 27,
+    "Partial": 28,
     "Pass": 62,
-    "Untested": 940
+    "Untested": 939
    },
    "documented": 768,
    "tested_pass": 62,
@@ -196,7 +196,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 392, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only.",
-    "Hardware-gated (controller assignment): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (controller assignment): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on ATTACHED HARDWARE, not on vendor hardware: needs an attached controller to assign. This is the weaker of the two controller gates — the operator owns controllers (a DDJ-GRV6 drove the task 5 mapper work), so this becomes testable whenever one is plugged in, unlike the rane_*/ns7_/motorwheel names. Nothing was attached during the 2026-09-06 pass: get_controller_name returned ''. Query position says nothing either way — error:-2147467263, the action-only code, the same one browser_colorfilter_edit gives. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -1373,7 +1374,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 360, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only.",
-    "Hardware-gated (controller screen): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (controller screen): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on ATTACHED HARDWARE, not on vendor hardware: needs a controller with a screen. This is the weaker of the two controller gates — the operator owns controllers (a DDJ-GRV6 drove the task 5 mapper work), so this becomes testable whenever one is plugged in, unlike the rane_*/ns7_/motorwheel names. Nothing was attached during the 2026-09-06 pass: get_controller_name returned ''. Query position says nothing either way — error:-2147467263, the action-only code, the same one browser_colorfilter_edit gives. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -4786,13 +4788,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: returns the attached controller's name, and '' when none is attached — verified in the no-controller state. That makes it the presence oracle for the controller-gated verbs: a probe of those is only meaningful when this returns a name."
+   ],
    "section": "Controllers",
    "description": "Controller name(s) assigned to deck",
-   "example": "get_controller_name"
+   "example": "get_controller_name",
+   "confidence": "local_test"
   },
   "get_controller_screen": {
    "name": "get_controller_screen",
@@ -9485,7 +9490,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 401, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "Hardware-gated (motorised platter 2): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (motorised platter 2): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs motorised platters, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -9502,7 +9508,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 402, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "Hardware-gated (motorised platter 3): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (motorised platter 3): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs motorised platters, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -9671,7 +9678,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 426, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "Hardware-gated (Numark NS7 drift): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Numark NS7 drift): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs a Numark NS7, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -11548,7 +11556,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 398, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind action-only.",
-    "Hardware-gated (Rane motorised-platter control): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Rane motorised-platter control): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs Rane hardware, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -11565,7 +11574,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 840, flags 256 (Button-Editor-hidden), category rane. HTTP existence sweep 2026-07-27: exists, kind action-only.",
-    "Hardware-gated (Rane screen input): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Rane screen input): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs Rane hardware, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category rane. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -11582,7 +11592,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 841, flags 256 (Button-Editor-hidden), category rane. HTTP existence sweep 2026-07-27: exists, kind action-only.",
-    "Hardware-gated (Rane screen output): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Rane screen output): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs Rane hardware, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category rane. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -11599,7 +11610,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 400, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "Hardware-gated (Rane timecode): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Rane timecode): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs Rane hardware, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",
@@ -11616,7 +11628,8 @@
    "blocked": true,
    "evidence": [
     "Verb table (arm64 slice, VirtualDJ 2026 bundle 18.0.9482, 2026-07-27): present, id 399, flags 256 (Button-Editor-hidden), category controllers. HTTP existence sweep 2026-07-27: exists, kind query.",
-    "Hardware-gated (Rane timecode enable): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real."
+    "Hardware-gated (Rane timecode enable): no local probe on this machine can reach it, and a query-position answer would say nothing about behavior. Marked blocked 2026-09-06 during the editor-hidden behavior pass so it stops appearing as active untested work; verb-table membership already proves the name is real.",
+    "Blocked on VENDOR-SPECIFIC hardware: needs Rane hardware, which is not available here and is not substitutable by the controllers the operator does own. Verb-table membership already proves the name is real; no local probe can say anything about behavior. (corrected 2026-09-06 after the operator pointed out that 'controller' verbs are not one gate: some need any attached controller, others need one specific vendor's hardware.)"
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category controllers. Existence and kind proven; behavior untested.",
    "section": "Hidden Button Editor",

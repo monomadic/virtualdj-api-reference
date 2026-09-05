@@ -540,8 +540,12 @@ already proves the name and that is all this repo wants from it — and `browser
 which opens a modal dialog (query position gives `error:-2147467263`, a different code from the
 two above, matching its action-only kind).
 
-**Ten hardware-gated names marked blocked** rather than left looking startable: the five `rane_*`,
-`ns7_get_drift`, `motorwheel2`/`3`, `controllerscreen_action`, `assign_related_controller`.
+**Ten hardware-gated names marked blocked**, under *two different gates* — the first labelling
+flattened them and was corrected the same day. `controllerscreen_action` (needs a controller with a
+screen) and `assign_related_controller` need only *an attached controller*, which the operator has,
+so they become testable whenever one is plugged in; `get_controller_name` returned `''` during this
+pass and is the presence oracle to check first. The five `rane_*` names, `ns7_get_drift` and
+`motorwheel2`/`3` need specific vendor hardware that is not here and cannot be substituted.
 
 Fifteen more are recorded Partial as return shapes only — `is_colorfx`, `masterbpm`,
 `pad_pressure_switch`, `sampler_inputgain`, `send_nothing`, `shoutout`, `stem_volume`,
