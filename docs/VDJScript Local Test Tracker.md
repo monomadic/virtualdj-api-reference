@@ -1282,3 +1282,68 @@ does not discriminate it, and that is a property of the fixture rather than of
 the verb. `cue` was only ever seen reading cue 1; whether `cue2`, `cue3` … exist
 as tails was not probed. Nothing here tested a *playing* deck, deliberately — a
 stopped deck was chosen so no result could be drift.
+
+## Video FX Over HTTP: What The Channel Can And Cannot Reach
+
+Build 18.0.9598, HTTP, 2026-09-06. Task 1's remainder was framed as "rendering
+behavior, needs video output". Most of it is — but three of the four questions
+turned out to be answerable without rendering anything, and one of them found a
+verb that does not do what its parameter says.
+
+State was recorded and restored: video effect `Karaoke` with slider 1 at `1`,
+inactive, cycle index `0.18`; all four values verified identical afterwards.
+
+### `get_video_fx_slider_label` ignores its index
+
+| Selected effect | Its slider labels | `get_video_fx_slider_label 0…99` |
+| --- | --- | --- |
+| `Karaoke` (1 slider) | `PRES` | `PRES` for every index |
+| `Colorize` (5 sliders) | `COL` `STR` `SAT` `SPD` `BRI` | **`COL` for every index** |
+
+The control is the name-addressed helper on the same effect:
+`get_effect_slider_label 'Colorize' 1…5` returns all five labels and `''` for
+index 6, so the labels exist and are reachable — this verb simply never reads
+its argument. **Use `get_effect_slider_label '<effect>' <n>`**, which also needs
+no selection. Recorded as `Fail` on the verb.
+
+### `video_fx_slider` does index — in both positions
+
+Not the same defect. Query `video_fx_slider n` returned Colorize's five values
+(`0, 1, 1, 0, 0.5`), matching `effect_slider 'Colorize' n` exactly; execute
+`video_fx_slider 3 0.25` moved slider 3 and nothing else, and setting it back to
+`1` restored precisely that slider. So the label helper is broken on its own,
+not as part of a broken family.
+
+### Default scope is `master`, not the active deck
+
+`video_fx_select` bare and `deck master video_fx_select` both read `0.18`, while
+`deck 1 video_fx_select` reads `0`. The video FX chain hangs off the master
+output, and an unscoped video verb addresses it.
+
+### `video_fx` could not be activated over this channel
+
+`video_fx on`, bare `video_fx`, `deck 1 video_fx on` and `deck master video_fx on`
+all returned `false` and left the query at `no` — with no track loaded and again
+with an audio-only track on deck 1. **A bounded negative, not a broken verb:**
+selection and sliders work fine over HTTP, so activation is gated on video output
+this channel cannot supply. That gate is exactly what still keeps the rendering
+half of task 1 open.
+
+`video_fx_clear` returned `true` and left the *selection* intact, but nothing was
+active when it ran, so all that shows is that it does not deselect.
+
+### The video `+1` cycle, walked
+
+Stepping `video_fx_select +1` from Colorize traversed **17** effects and wrapped
+cleanly on the 18th: Colorize, Blur Black Bars, Blur, Boom Auto, Boom, Slideshow,
+Visuals, Camera, Cover, Text, Screen Grab, Lyrics, Karaoke, Strobe, Shake,
+Spectral, Negative. That matches the FX catalog's `video_fx` category exactly and
+contains **none** of the four category-unknown effects (`Lottery`, `Sweep`,
+`Title`, `Vocals`) — so as currently enabled they are in no cycle. Whether
+enabling one in the FX list editor puts it there is still a GUI question.
+
+### Trap worth repeating
+
+`video_fx_select 'Colorize'` returns **`false`** and selects Colorize. The body
+is the verb's own result, never transport success — read the selection back with
+`deck master get_effect_name 'video'`.

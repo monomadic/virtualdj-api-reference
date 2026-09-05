@@ -311,10 +311,34 @@ What the sweep settled:
 - **`Brake` and `Shader` resolved.** `Brake` is not a selector name on this build at all — a docs-catalog error; the real ones are `BrakeStart`, `VinylBrake`, `Beat Brake`. `Shader` is an alias for `Visuals`, which loads into a deck slot perfectly well; the original sweep only ever asked for it by the wrong name. `BeatGrid` is likewise a spacing error for `Beat Grid`. Nothing here was ever "video-only".
 - **`*_skip_length` re-indexes, it does not blank.** Index *i* is the *i*-th slider with the length slider removed, so the last index is always empty. Verified on all 47 length-bearing effects; the length slider is not always index 2 and not always labelled `LEN`.
 
-Remaining (rendering behavior, needs video output — not introspection):
+Narrowed 2026-09-06 (HTTP, build 18.0.9598). Three of the four remaining questions turned out
+not to need rendering at all, and answering them found a broken verb. See the tracker's "Video
+FX Over HTTP" section; state was recorded and restored.
 
-- `video_fx_slider`, `video_fx_clear`, `video_transition_slider`, and `deck master` scoping: what they actually render.
-- Whether the 4 category-unknown effects land in a target's list when enabled in the FX list editor.
+- **`deck master` scoping: answered.** The video FX chain hangs off the master output, and an
+  unscoped video verb addresses it — `video_fx_select` bare and `deck master video_fx_select`
+  both read `0.18` while `deck 1 video_fx_select` reads `0`.
+- **`video_fx_slider`: answered.** It indexes correctly in both positions; execute moves the
+  named slider and nothing else. Recorded `Pass`.
+- **`get_video_fx_slider_label`: answered, and it is broken.** The index argument is never
+  read: with Colorize selected (labels COL/STR/SAT/SPD/BRI) every index 0–99 returned `COL`.
+  Recorded `Fail`; use `get_effect_slider_label '<effect>' <n>`, which indexes correctly and
+  needs no selection.
+- **The 4 category-unknown effects: half answered.** Walking `video_fx_select +1` traversed
+  exactly 17 effects and wrapped cleanly, matching the catalog's `video_fx` category and
+  containing none of `Lottery`, `Sweep`, `Title`, `Vocals`. Whether *enabling* one in the FX
+  list editor puts it in a cycle is still a GUI question.
+
+Genuinely remaining, and all of it behind the same gate:
+
+- **`video_fx` cannot be activated over HTTP.** Every scope returned `false` and left the query
+  at `no`, with and without an audio track loaded. Selection and sliders work, so activation is
+  gated on video output the channel cannot supply. Recorded as a bounded negative, not a broken
+  verb — but it means *nothing about rendering can be tested from this channel*.
+- So what is left needs a real video source and eyes on the output: what `video_fx_slider`,
+  `video_fx_clear` and `video_transition_slider` actually render, and the FX list editor half
+  of the category question. `video_fx_clear` has only been seen returning `true` with nothing
+  active, which shows only that it does not deselect.
 - **Promotion stays deferred to TODO task 0**: the data is queried from the artifact, not copied into `Effects Engines.md`. Do not hand-transcribe the dump.
 
 Start here:

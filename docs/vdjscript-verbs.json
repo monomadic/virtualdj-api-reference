@@ -12,13 +12,13 @@
     "unofficial": 42
    },
    "by_test_status": {
-    "Fail": 6,
+    "Fail": 8,
     "Partial": 14,
-    "Pass": 48,
-    "Untested": 970
+    "Pass": 49,
+    "Untested": 967
    },
    "documented": 768,
-   "tested_pass": 48,
+   "tested_pass": 49,
    "needs_test": 19,
    "blocked": 17,
    "active_incomplete": 2
@@ -6753,13 +6753,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: the index argument is IGNORED. With Colorize selected (5 sliders, labels COL/STR/SAT/SPD/BRI) every index 0,1,2,3,4,5,6,99 returned 'COL' — slider 1's label — while the name-addressed get_effect_slider_label 'Colorize' n returned all five correctly. Repeated with Karaoke (1 slider): every index returned 'PRES'. Use get_effect_slider_label '<effect>' <n> instead; it also needs no selection."
+   ],
    "section": "Effects",
    "description": "Get video FX slider label",
-   "example": "get_video_fx_slider_label 1"
+   "example": "get_video_fx_slider_label 1",
+   "confidence": "local_test"
   },
   "get_videofx_name": {
    "name": "get_videofx_name",
@@ -14908,13 +14911,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: could not be activated over HTTP in any scope. 'video_fx on', bare 'video_fx', 'deck 1 video_fx on' and 'deck master video_fx on' all returned false and left the query at 'no', both with no track loaded and with an audio-only track on deck 1. A bounded negative: selection and sliders work over this channel, activation appears gated on video output that HTTP alone cannot supply — not evidence the verb is broken."
+   ],
    "section": "Effects",
    "description": "Activate/deactivate selected video effect",
-   "example": "video_fx"
+   "example": "video_fx",
+   "confidence": "local_test"
   },
   "video_fx_button": {
    "name": "video_fx_button",
@@ -14954,7 +14960,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' cycles the enabled video-FX list (17 entries on this install); readback via get_videofx_name. By-name it accepts ANY installed effect name, audio ones included (`video_fx_select 'Echo'` really does set the video slot to Echo), so the selector is not type-restricted and loadability cannot be used to classify an effect."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' cycles the enabled video-FX list (17 entries on this install); readback via get_videofx_name. By-name it accepts ANY installed effect name, audio ones included (`video_fx_select 'Echo'` really does set the video slot to Echo), so the selector is not type-restricted and loadability cannot be used to classify an effect.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598: name form and relative +1 both work. TRAP: the execute result is 'false' even when the selection changes — video_fx_select 'Colorize' returned false and selected Colorize. Read the selection back with deck master get_effect_name 'video'. Query position returns a normalized cycle index (Karaoke 0.18, Colorize 0.47), not a name. Walking +1 from Colorize traversed exactly 17 effects and wrapped cleanly: Colorize, Blur Black Bars, Blur, Boom Auto, Boom, Slideshow, Visuals, Camera, Cover, Text, Screen Grab, Lyrics, Karaoke, Strobe, Shake, Spectral, Negative — matching the FX catalog's video_fx category and containing none of Lottery, Sweep, Title, Vocals."
    ],
    "section": "Effects",
    "description": "Select video effect",
@@ -14969,13 +14976,16 @@
     "video_fx_slider_slider"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598: indexes correctly in BOTH positions, unlike its label helper. Query 'video_fx_slider n' returned Colorize's five slider values (0,1,1,0,0.5) matching effect_slider 'Colorize' n; execute 'video_fx_slider 3 0.25' moved slider 3 only, and restoring it to 1 restored exactly that slider. Scope is master by default."
+   ],
    "section": "Effects",
    "description": "Move video FX slider",
-   "example": "video_fx_slider 1 50%"
+   "example": "video_fx_slider 1 50%",
+   "confidence": "local_test"
   },
   "video_fx_slider_slider": {
    "name": "video_fx_slider_slider",
