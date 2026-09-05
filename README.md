@@ -172,13 +172,14 @@ rather than assembled from documentation.
    prose wins silently and nothing gates it. The reconciliation diff is the real prize: every
    discrepancy is either a documented claim the artifacts contradict, or a curated fact the
    store has no field for.
-2. **Confirm the documented-but-unprobed parameters** ([TODO.md](TODO.md) task 13). The
-   fixture harness and argument prober are built and have run: 10 named states
-   (`just fixtures`), 483 verbs × 4,430 forms probed against nonsense controls, 986 recognized
-   (`just verb-arg-forms <name>`). What is left is the state, not the tooling —
-   `just action-catalog --cross-check` names **79 verbs whose parameters the vendor documents
-   and no probe has confirmed**, each one a state the 10 fixtures never build. The 71
-   probe-confirmed-but-undocumented forms are the mirror worklist.
+2. **Confirm the documented-but-unprobed parameters** ([TODO.md](TODO.md) task 13b). The
+   fixture harness and argument prober are built and have run: `just fixtures` lists the named
+   states, `just check` reports the probe run's verb/form/recognized totals, and
+   `just verb-arg-forms <name>` shows one verb's. What is left is the state, not the tooling —
+   `just action-catalog --cross-check` names, under `documented_but_not_probe_confirmed`, every
+   verb whose parameters the vendor documents and no probe has confirmed, each one a state the
+   existing fixtures never build. Its `probe_confirmed_but_undocumented` set is the mirror
+   worklist.
 3. **Spend the native channel on what only it reaches** ([TODO.md](TODO.md) task 10a). The
    plugin is built and the verb sweep is done, so the remaining value is not throughput:
    `GetSongBuffer` and `OnProcessSamples` give the actual PCM behind every waveform element;

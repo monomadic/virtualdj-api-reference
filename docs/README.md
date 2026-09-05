@@ -154,3 +154,7 @@ Source labels used in the curated docs:
 - `Binary string-table`: command-looking string observed in the VirtualDJ executable; use for discovery only, not as behavior evidence.
 - `Local test`: behavior reproduced in VirtualDJ locally.
 - `Inference`: conclusion drawn from official docs plus repo testing or architecture.
+
+## Dated review records
+
+- [Repository assessment, 2026-09-05](Repository%20Assessment%20and%20Prioritized%20Tasks.md) — diagnosis and review decisions; accepted work is maintained only in TODO.md.

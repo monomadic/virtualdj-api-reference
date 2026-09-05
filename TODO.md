@@ -15,6 +15,102 @@ Agents should start here for maintenance, cleanup, documentation, and evidence-p
 - `Read first` lists are section-scoped: read only the named rows/sections. Use `just grep-verb-docs <name>` for verb lookups instead of opening `docs/VDJScript Verbs.md`.
 - [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) and [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md) are frozen design references. Do not refresh, reorder, or re-scope them; this file is the only active queue.
 
+## Accepted next sequence (2026-09-05 review)
+
+This sequence takes precedence over the historical task ordering below. It reconciles the
+review into this queue; the dated assessment is not another worklist. Existing task numbers
+remain the owners of their broader work. Read their scoped evidence before probing.
+
+### R1. Repair queue selection
+
+Status: Ready
+
+Owner: queue tooling. The selector in `justfile` matches only exact `Status: Ready`;
+bold/suffixed statuses silently disappear. Normalize a machine-readable status line and
+separate explanations; make selection reject malformed status metadata rather than skip it.
+Do not treat historical ready wording as current without reading the completion narrative.
+
+Documentation corrections made in this amendment: the second task 13 is now 13b; task 14
+is marked done with the expanded-corpus commit identified; task 15 is marked done. Remaining
+work is selector/status-convention implementation and reconciliation of other stale labels.
+
+Done when task identifiers are unique, completed/blocked entries cannot be selected, and a
+malformed status line fails the check loudly instead of being skipped. The regression fixture
+must contain the real forms already in this file — `Status: **Ready.**`, `Status: Ready —
+reframed`, `Status: Ready, but low expected yield` — plus a completed entry.
+
+A passing `just next-task` is **not** evidence this task is done: it returns R1 only because
+R1-R3 happen to use a bare `Status: Ready`. Every other startable task here is still invisible
+to the selector, so when R1-R3 close the selector goes silent again. `just status` shows the
+extent — most `###` headings have no status line under them at all.
+
+### R2. Panel and group parser pilot
+
+Status: Ready
+
+Owner: extends task 10a's real deck-skin fixture work. First discovery slot after R1.
+Inspect `<panel>` and `<group>` readers, calibrating against known `visibility`, `condition`,
+and position handling. Read task 10a's plugin-panel limitations and Skin Runtime Findings:
+the plugin panel is not a substitute for the deck-skin surface, and the known crashing
+`group class` construct is not a baseline fixture. Check `just vdj-up` before live planning.
+
+Deliver a candidate diff against documented and shipped attributes. Record the inspected
+binary/build/architecture, reader and dispatch function names or addresses, call depth and
+caps, unresolved call targets/string references, and unvisited branches or unsupported
+instructions. Function/proximity guesses remain labelled as such.
+
+For the first credible undocumented candidate, use otherwise identical minimal deck skins:
+attribute omitted, contrasting candidate values, and a nonsense attribute control. Calibrate
+with one known working attribute. Record the visible or independently read effect. A negative
+result is acceptable with that code-level boundary and the unresolved next question; do not
+claim exhaustive SDK coverage. Do not require a new feature to be found.
+
+A helper-resolution wall triggers only the targeted work in R4. Existing task 10a waveform
+questions remain open; this pilot does not close them by sharing a deck-skin fixture.
+
+### R3. Known-position fixture and get_time discrimination
+
+Status: Ready
+
+Owners: tasks 10b, 13 and 13b. Start by reading `just verb get_time` and
+`just verb-arg-forms get_time`; retain existing confirmations and isolate unresolved semantics.
+Targets: `cue` against `cue1`, `loopin`, and `loopout`, with independently known distinct
+positions. None of the ten existing fixtures establishes those positions: building and
+verifying this fixture is a prerequisite, not an incidental setup step.
+
+Use a disposable test track. Establish and independently verify cue and loop endpoints at
+three different positions, distinct from the playhead. Record positions, units, loaded/deck
+state and display mode. Verify setup and restoration without using `get_time` as the sole
+oracle. Consult grammar and verb records before writing setup actions; abort if preparation
+or restoration cannot be verified. A stopped-deck baseline avoids avoidable playback drift.
+
+Compare the candidate forms with each other and with the known positions, then change one
+position while holding the others fixed and check which forms track it. Bare, `elapsed`, and
+two nonsense tokens are floor controls only: earlier evidence already showed arbitrary
+arguments switching to elapsed-like output. Bare-versus-argument separation is not recognition.
+
+Re-establish the fixture for two independent runs, vary query order, and require the same
+position-dependent relationships in both. `--repeat` alone is insufficient: the stored probe
+marks drift in `deck2_playing` and `loop_active`. Record nondiscrimination and instability
+without promoting either to absence or recognition. Preserve both runs with fixture metadata;
+use a separate capture if the existing merge contract cannot represent this new fixture.
+
+Done when the new fixture proves its positions and restoration, and each target has either
+a reproducible position relationship across both runs or an explicit unresolved result.
+
+### R4. Only the infrastructure change demonstrated by R2 or R3
+
+Status: Conditional — start only with a concrete blocker from R2 or R3.
+
+Owners: task 0/10 for representation, 10/10b for shared runtime helpers. A specific extractor
+repair is new work; index inversion remains task 11 and is not a pilot prerequisite.
+
+Name the exact finding the current record cannot hold or the reader/reference the extractor
+cannot resolve. Make the smallest data-command or extraction change that represents it or
+recovers it, with a focused regression. Follow `CSkinEngine::createAction` or another shared
+helper only when the investigation supplies a concrete question. No upfront coverage schema,
+general extractor rebuild, or agent-cost bookkeeping is part of this task.
+
 ## Ready Tasks
 
 ### 0. Build The Verb Record Store And `just` Data API
@@ -1095,16 +1191,17 @@ reproduced (`crossfader_curve` cut/full/smooth, `loop_adjust` in/move/out, `is_u
 effect/equalizer/pads/sample, `get_time` remain/total). That is as settled as this project can
 make a claim.
 
-### 13. Fixtures For The 81 Documented-But-Unconfirmed Parameters
+### 13b. Fixtures For The Documented-But-Unconfirmed Parameters
 
 Status: **Ready, needs a live instance** — the expensive one of this group. Added 2026-09-03.
 
-`just action-catalog --cross-check` lists 81 verbs whose parameters the vendor documents and no
-local probe has confirmed. They are overwhelmingly **contextual**, not wrong: `broadcast`
-direct/podcast/server/video, `effect_arm_deck` aux/mic/sampler, `automix_editor_movetrack`
-current/next/previous, `browser_move` top/bottom. The six fixtures in
-[tools/fixtures.py](tools/fixtures.py) never build the state in which these would differ, so the
-probe reads them as indistinguishable from nonsense and that verdict means nothing.
+`just action-catalog --cross-check` lists, under `documented_but_not_probe_confirmed`, the
+verbs whose parameters the vendor documents and no local probe has confirmed. They are
+overwhelmingly **contextual**, not wrong: `broadcast` direct/podcast/server/video,
+`effect_arm_deck` aux/mic/sampler, `automix_editor_movetrack` current/next/previous,
+`browser_move` top/bottom. The fixtures in [tools/fixtures.py](tools/fixtures.py) (`just
+fixtures`) never build the state in which these would differ, so the probe reads them as
+indistinguishable from nonsense and that verdict means nothing.
 
 The meaning is already written down for every one of them, so this is confirmation work, not
 discovery: each needs a state, then a re-probe with `--from-catalog --verbs <name>`.
@@ -1162,8 +1259,14 @@ verdict had silently deleted four confirmations.
 
 ### 14. Run The Corpus As A Parse-Regression Set
 
-Status: **Ready.** Added 2026-09-03. The first thing in this project that can *falsify* a
-grammar claim rather than extend one.
+Status: Done — expanded corpus regression shipped in `675addf`.
+
+The 2026-09-05 review verified 1,610 snippets through `just check`. The counts and
+results below describe the earlier 2026-09-03 run, not the current corpus. Query the current
+artifact/check for current results; this task is not startable work.
+
+Historical setup (2026-09-03): the first check that could falsify a grammar claim rather than
+extend one.
 
 Every one of the 1,427 snippets in the corpus is a form the vendor considers valid — 1,131 from
 shipped Built-In XML, 269 quoted in the catalog's own descriptions, 41 from the wiki. Send each
@@ -1201,7 +1304,7 @@ is exactly what a regression set is for.
 
 ### 15. Two Loose Ends
 
-Status: Ready, small. Added 2026-09-03.
+Status: Done — both loose ends closed; details below. Added 2026-09-03.
 
 - **`timecode_cd_mode` — CLOSED 2026-09-03.** VirtualDJ restarted at 09:42 and the verb reads
   `no` on all four decks, back to its pre-probe value. So it is **runtime-only state**: settable
