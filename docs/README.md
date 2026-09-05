@@ -79,6 +79,9 @@ Start here:
 - [Skin XML Inventory (JSON)](skin-xml-inventory.json)
   Element×attribute usage data across built-in/curated skin, pad, samplerbank, video-skin, and mapper XML, cross-checked against the docs. Refresh with `just inventory`; query with `just get-xml-element <name>`, `just find-xml-elements --undocumented`, `just xml-stats`. Do not hand-edit and do not generate a Markdown copy.
 
+- [Topic Tags (JSON)](topic-tags.json)
+  The only hand-maintained input to `just topic <term>`. Everything else that command reports is derived — verb `section`, element name, grep — so this file exists purely for what a topic cannot reach by name: the elements that draw the waveform are called `rhythmzone`, `scratchwave`, `zoomed` and `songpos`, and say so nowhere. Also carries the alias table that folds `color fx` into `colorfx` and `beat grid` into `waveform`. Tags are navigation, never evidence. `just check` fails on a tag that names a verb, element or doc which does not exist, and on a topic with no stated reason.
+
 - [VDJScript Verb Index (JSON)](vdjscript-verb-index.json)
   Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.
 

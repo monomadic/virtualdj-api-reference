@@ -260,33 +260,40 @@ Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same
 
 ### 0b. Topic Search Across Every Corpus
 
-Status: Ready
+Status: Done
 
-Note: First cut landed (2026-07-26) — coverage tagging remains
+Note: 2026-09-06. The metadata layer landed, and with it the two problems it was meant to fix
+plus one it exposed.
 
-The done-when is met: `just topic <term>` ([tools/topic.py](tools/topic.py)) answers a topic
-question with matching verbs, effects, and XML elements *and* the real example files that
-use them (grep-verified, ranked by coverage), plus topical docs and local-test quirks. It
-is pure aggregation over the already-gated stores — no artifact, no hand-tagging — deriving
-everything from verb `section`, inventory families, and word-boundary grep. Wired into
-`AGENTS.md`, `INDEX.yml`, and `just check` (cross-store smoke test).
+**The gap was worse than described.** `just topic waveform` returned four *hardware* helpers
+(`get_numark_waveform`, `gemini_waveform_zoomlevel`, …) and not one skin element — the entire
+waveform surface (`wave`, `scratchwave`, `rhythm`, `rhythmzone`, `zoomed`, `songpos`, `grid`,
+`gridlines`, `beattunnel`, `blockwave`) was unreachable, and only the doc pointer saved it.
 
-Remaining — the metadata layer, which is the part that needs real tagging:
+**[docs/topic-tags.json](docs/topic-tags.json)** is the fix: 15 topics and 23 aliases, the only
+hand-maintained input to `just topic`. Tagged hits are marked `+` in the report and the topic
+prints *why* it needed a tag. `just topic "color fx"` now redirects to `colorfx`, `"beat grid"`
+to `waveform`, and `waveform` returns the eleven elements plus the built-in skins that use them.
 
-- **Topic reach for name-opaque items.** An item is only found under a topic if the topic
-  appears in its name, section, or a grep of it. That misses families whose topic is not in
-  the element name — searching `waveform` does not surface `rhythmzone`, `scratchwave`,
-  `blockwave`, `beattunnel` (only the doc pointer saves it). These need an explicit topic
-  tag. This is the "rich metadata to each searchable item" idea, and it is good mechanical
-  subagent work: add a `topics: [...]` field to store records and an element→topics map,
-  then have `topic.py` consult it alongside the derived matches.
-- Multi-word terms are treated as one string (`color fx` ≠ `colorfx`); a synonym/alias map
-  would fold those together.
-- Keep it a query — no generated topic pages. Same rule as everywhere else.
+**Not a `topics: []` field on each verb record, deliberately.** Topics are cross-cutting, so a
+per-record field scatters one topic's membership across a thousand records and makes it
+unreviewable; it would also put a navigation aid inside the store that is authoritative for
+per-verb *evidence*. One map, reviewed whole, is the maintainable shape. The reason is recorded
+in the file's own `_meta` so the next agent does not re-litigate it.
 
-Read first:
+**Tags cannot rot.** `just check` fails on a tag naming a verb, element or doc that does not
+exist, on an alias pointing at an undefined topic, and on a topic with no stated reason. A tag
+that names nothing is worse than no tag: it silently promises reach it does not have.
 
-- [tools/topic.py](tools/topic.py) — the aggregator to extend with a tag lookup.
+**The bug the work exposed.** "EXAMPLE FILES — real usage, grep-verified" was dominated by
+`tests/*.json` — the verb table, the sweeps, the corpus. A verb name appears in those because
+it *exists*, not because anything uses it, and they were crowding out the working examples the
+section exists for. The evidence artifacts are now excluded from that grep, so `just topic
+sampler` leads with real pad XML instead of `tests/verb-table.json`.
+
+**Left open.** Tag coverage is the 15 topics where the gap was demonstrable, not a taxonomy —
+add a topic when a search visibly misses something, and state why in the entry. Effects are
+still matched by a whole-record substring search, which is generous and occasionally noisy.
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 

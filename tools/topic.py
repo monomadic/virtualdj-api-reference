@@ -34,8 +34,13 @@ FX = ROOT / "tests" / "fx-introspection-dump.json"
 XML = ROOT / "docs" / "skin-xml-inventory.json"
 TRACKER = ROOT / "docs" / "VDJScript Local Test Tracker.md"
 CANDIDATES = ROOT / "docs" / "Undocumented VDJScript Candidates.md"
+TAGS = ROOT / "docs" / "topic-tags.json"
 # Corpora to grep for real usage. Kept to authored/curated + built-in examples.
 CORPORA = ["examples", "tests"]
+# `tests/*.json` are the evidence artifacts — the verb table, the sweeps, the
+# corpus. A verb name appears in them because it exists, not because anything
+# uses it, so they crowd out the working examples this section is for.
+ARTIFACT_RE = re.compile(r"^tests/[^/]+\.json$")
 
 
 def load(path: Path, key: str | None = None):
@@ -45,16 +50,46 @@ def load(path: Path, key: str | None = None):
     return data
 
 
+def tags() -> dict:
+    if not TAGS.exists():
+        return {"aliases": {}, "topics": {}}
+    return json.loads(TAGS.read_text())
+
+
+def normalize(term: str) -> tuple[str, str | None]:
+    """(topic to search, the alias it came from). Multi-word terms are folded
+    through the alias table, so `color fx` reaches `colorfx`."""
+    t = term.strip().lower()
+    aliases = tags().get("aliases", {})
+    for candidate in (t, t.replace(" ", "")):
+        if candidate in aliases:
+            return aliases[candidate], term
+    if t not in tags().get("topics", {}) and t.replace(" ", "") in tags().get("topics", {}):
+        return t.replace(" ", ""), term
+    return t, None
+
+
+def tagged(term: str) -> dict:
+    """The hand-maintained members of a topic, for items no derivation reaches."""
+    return tags().get("topics", {}).get(term, {})
+
+
 def verb_records() -> dict:
     d = load(VERBS)
     recs = d["verbs"] if isinstance(d, dict) and "verbs" in d else d
     return {k: v for k, v in recs.items() if isinstance(v, dict) and "name" in v}
 
 
-def match_verbs(term: str, recs: dict) -> list[dict]:
+def match_verbs(term: str, recs: dict, tag_names: list[str] | None = None) -> list[dict]:
     t = term.lower()
+    wanted = set(tag_names or [])
     hits = []
     for r in recs.values():
+        if r["name"] in wanted:
+            # A tag is the strongest signal there is: someone decided this verb
+            # belongs to this topic when no derivation could find it.
+            hits.append((-1, dict(r, matched_by="tag")))
+            continue
         section = (r.get("section") or "").lower()
         hay = f"{r['name']} {r.get('description','')}".lower()
         # section match is the strongest signal; then name; then description
@@ -66,7 +101,7 @@ def match_verbs(term: str, recs: dict) -> list[dict]:
             score = 2
         else:
             continue
-        hits.append((score, r))
+        hits.append((score, dict(r, matched_by="name")))
     hits.sort(key=lambda s: (s[0], s[1]["name"]))
     return [r for _, r in hits]
 
@@ -83,15 +118,18 @@ def match_effects(term: str) -> list[dict]:
     return sorted(out, key=lambda e: e["effect"].lower())
 
 
-def match_elements(term: str) -> list[tuple[str, str, dict]]:
+def match_elements(term: str, tag_names: list[str] | None = None) -> list[tuple[str, str, dict]]:
     if not XML.exists():
         return []
     t = term.lower()
+    wanted = set(tag_names or [])
     out = []
     for fam_name, fam in load(XML, "families").items():
         for el_name, el in (fam.get("elements") or {}).items():
-            if t in el_name.lower() or t in fam_name.lower():
-                out.append((fam_name, el_name, el))
+            if el_name in wanted:
+                out.append((fam_name, el_name, dict(el, matched_by="tag")))
+            elif t in el_name.lower() or t in fam_name.lower():
+                out.append((fam_name, el_name, dict(el, matched_by="name")))
     return out
 
 
@@ -122,12 +160,13 @@ def grep_files(needles: list[str]) -> dict[str, set[str]]:
     return found
 
 
-def match_docs(term: str) -> list[str]:
+def match_docs(term: str, tag_docs: list[str] | None = None) -> list[str]:
     t = term.lower()
-    out = []
+    out = list(tag_docs or [])
     for p in sorted((ROOT / "docs").glob("*.md")):
-        if t in p.stem.lower():
-            out.append(str(p.relative_to(ROOT)))
+        rel = str(p.relative_to(ROOT))
+        if t in p.stem.lower() and rel not in out:
+            out.append(rel)
     return out
 
 
@@ -153,10 +192,12 @@ def grep_md(path: Path, term: str, limit: int = 4) -> list[str]:
 
 
 def gather(term: str, limit: int) -> dict:
+    topic, via_alias = normalize(term)
+    tag = tagged(topic)
     recs = verb_records()
-    verbs = match_verbs(term, recs)
-    effects = match_effects(term)
-    elements = match_elements(term)
+    verbs = match_verbs(topic, recs, tag.get("verbs"))
+    effects = match_effects(topic)
+    elements = match_elements(topic, tag.get("elements"))
 
     # grep the corpora for the matched verb names + element names, so the
     # example files we surface are ones that actually use this topic.
@@ -167,19 +208,21 @@ def gather(term: str, limit: int) -> dict:
     # not official or curated, so they rank behind everything else instead of
     # crowding out reference examples.
     ranked_files = sorted(
-        files.items(),
+        ((path, hits) for path, hits in files.items() if not ARTIFACT_RE.match(path)),
         key=lambda kv: ("/Quarantine/" in kv[0], -len(kv[1]), kv[0]),
     )
 
     return {
-        "topic": term,
+        "topic": topic,
+        "searched_as": term if via_alias else None,
+        "tag_note": tag.get("why"),
         "verbs": verbs,
         "effects": effects,
         "elements": elements,
         "example_files": ranked_files,
-        "docs": match_docs(term),
-        "tracker_quirks": grep_md(TRACKER, term),
-        "candidates": grep_md(CANDIDATES, term),
+        "docs": match_docs(topic, tag.get("docs")),
+        "tracker_quirks": grep_md(TRACKER, topic),
+        "candidates": grep_md(CANDIDATES, topic),
         "limit": limit,
     }
 
@@ -187,7 +230,12 @@ def gather(term: str, limit: int) -> dict:
 def report(g: dict) -> None:
     term = g["topic"]
     lim = g["limit"]
-    print(f"TOPIC: {term}\n")
+    print(f"TOPIC: {term}")
+    if g.get("searched_as"):
+        print(f"  (searched as {g['searched_as']!r})")
+    if g.get("tag_note"):
+        print(f"  tagged: {g['tag_note']}")
+    print()
 
     verbs = g["verbs"]
     if verbs:
@@ -197,7 +245,8 @@ def report(g: dict) -> None:
             st = r.get("test_status", "Untested")
             flag = f" ✓{st}" if st in {"Pass", "Partial", "Fail"} else ""
             desc = (r.get("description") or "").split(". ")[0][:70]
-            print(f"  {r['name']:<26} {sec:<20}{flag}  {desc}")
+            mark = "+" if r.get("matched_by") == "tag" else " "
+            print(f" {mark}{r['name']:<26} {sec:<20}{flag}  {desc}")
         if len(verbs) > lim:
             print(f"  … {len(verbs)-lim} more — just find-verbs {term}")
         print()
@@ -213,7 +262,8 @@ def report(g: dict) -> None:
         for fam, el, info in g["elements"][:lim]:
             uses = info.get("uses", "?")
             doc = "documented" if info.get("documented") else "UNDOCUMENTED"
-            print(f"  <{el}>  ({fam}, {uses} uses, {doc})")
+            mark = "+" if info.get("matched_by") == "tag" else " "
+            print(f" {mark}<{el}>  ({fam}, {uses} uses, {doc})")
         print()
 
     if g["example_files"]:
@@ -266,12 +316,44 @@ def selfcheck() -> None:
                 errors.append("topic 'sampler' returned no example files (grep broken?)")
         except Exception as e:  # noqa: BLE001
             errors.append(f"gather('sampler') raised {type(e).__name__}: {e}")
+    errors += check_tags()
     if errors:
         print("topic check FAILED:")
         for e in errors:
             print(f"  - {e}")
         sys.exit(1)
-    print("topic check passed: cross-corpus aggregation runs, 'sampler' resolves")
+    tag = tags()
+    print(f"topic check passed: cross-corpus aggregation runs, 'sampler' resolves, "
+          f"{len(tag['topics'])} tagged topics and {len(tag['aliases'])} aliases resolve")
+
+
+def check_tags() -> list[str]:
+    """Every tagged name must exist. A tag that names nothing is worse than no
+    tag: it silently promises a topic reaches something it does not."""
+    tag = tags()
+    if not tag["topics"]:
+        return [f"{TAGS.relative_to(ROOT)} is missing or empty"]
+    errors = []
+    known_verbs = set(verb_records())
+    known_elements = {el for fam in load(XML, "families").values()
+                      for el in (fam.get("elements") or {})} if XML.exists() else set()
+    for name, rec in tag["topics"].items():
+        for verb in rec.get("verbs", []):
+            if verb not in known_verbs:
+                errors.append(f"topic {name!r} tags verb {verb!r}, which is not in the store")
+        for el in rec.get("elements", []):
+            if el not in known_elements:
+                errors.append(f"topic {name!r} tags element {el!r}, "
+                              "which is not in the XML inventory")
+        for doc in rec.get("docs", []):
+            if not (ROOT / doc).exists():
+                errors.append(f"topic {name!r} tags doc {doc!r}, which does not exist")
+        if not rec.get("why"):
+            errors.append(f"topic {name!r} has no `why` — a tag without a reason is unreviewable")
+    for alias, target in tag["aliases"].items():
+        if target not in tag["topics"]:
+            errors.append(f"alias {alias!r} points at undefined topic {target!r}")
+    return errors
 
 
 def main(argv):

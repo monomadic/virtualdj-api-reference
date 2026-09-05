@@ -1,0 +1,131 @@
+{
+ "_meta": {
+  "note": "Hand-maintained topic tags for `just topic <term>`. Everything else that command reports is DERIVED (verb section, element name, grep), so it needs no maintenance and cannot go stale. This file exists only for the items a topic cannot reach by name: a skin element called `rhythmzone` is part of the waveform surface and says so nowhere. Tags are a navigation aid, never evidence — a tag makes an item findable, it claims nothing about what the item does.",
+  "why_not_a_field_on_each_record": "Topics are cross-cutting, so a `topics: []` field per verb record would scatter one topic's membership across a thousand records and make it unreviewable. It would also put a navigation aid into the store that is authoritative for per-verb EVIDENCE. One map, reviewed as a whole, is the maintainable shape.",
+  "checked_by": "tools/topic.py check — every name here must exist in the verb store, the XML inventory, or docs/, and every alias must point at a defined topic"
+ },
+
+ "aliases": {
+  "color fx": "colorfx",
+  "colour fx": "colorfx",
+  "colourfx": "colorfx",
+  "hot cue": "hotcue",
+  "hot cues": "hotcue",
+  "cue point": "cue",
+  "cue points": "cue",
+  "wave": "waveform",
+  "waveforms": "waveform",
+  "beatgrid": "waveform",
+  "beat grid": "waveform",
+  "hit area": "mouse",
+  "hitarea": "mouse",
+  "click area": "mouse",
+  "button state": "states",
+  "button states": "states",
+  "pad page": "pads",
+  "pad pages": "pads",
+  "controller": "mapper",
+  "mapping": "mapper",
+  "sample": "sampler",
+  "stem": "stems",
+  "font": "fonts"
+ },
+
+ "topics": {
+  "waveform": {
+   "why": "the elements that draw the waveform surface do not carry the word — `rhythmzone`, `scratchwave`, `zoomed` and `songpos` are all invisible to a name search for `waveform`",
+   "elements": ["wave", "scratchwave", "rhythm", "rhythmzone", "zoomed", "songpos",
+                "grid", "gridlines", "grids", "beattunnel", "blockwave"],
+   "verbs": ["zoom", "get_beatpos", "get_beat"],
+   "docs": ["docs/Skin Waveforms.md"]
+  },
+  "browser": {
+   "why": "the browser is assembled from a dozen elements, most of which are named after the part rather than the browser",
+   "elements": ["browser", "browserinfo", "browsertoolbartree", "fileview", "folderlist",
+                "sideview", "search", "lists", "columns", "scrollbars", "toolbars",
+                "prelisten", "dropzone", "cover", "info"],
+   "verbs": [],
+   "docs": []
+  },
+  "sampler": {
+   "why": "the sampler's own XML format and its skin elements use `sample`/`slot`, not `sampler`",
+   "elements": ["sampleicon", "slot", "sample", "samplerbank"],
+   "verbs": [],
+   "docs": []
+  },
+  "pads": {
+   "why": "a pad page's structural elements are named for their role, not for pads",
+   "elements": ["custompadsmode", "page", "param1", "param2"],
+   "verbs": [],
+   "docs": ["docs/Pad Page XML.md"]
+  },
+  "mouse": {
+   "why": "hit-area and clipping shaping is spread across six differently named elements, and nothing groups them",
+   "elements": ["mousecircle", "mousemask", "mouserect", "clipmask", "mask", "grabzone"],
+   "verbs": [],
+   "docs": []
+  },
+  "states": {
+   "why": "an element's visual states are child elements with bare names — `on`, `over`, `down` — that a topic search will never reach",
+   "elements": ["on", "off", "over", "down", "up", "active", "selected",
+                "overselected", "downselected", "default",
+                "textover", "textdown", "textselected", "textoverselected"],
+   "verbs": [],
+   "docs": []
+  },
+  "menu": {
+   "why": "menus are built from `item` and `submenu`, neither of which contains the word",
+   "elements": ["menu", "menuover", "submenu", "item"],
+   "verbs": [],
+   "docs": []
+  },
+  "fonts": {
+   "why": "the browser's per-zone font overrides are named for the zone",
+   "elements": ["font", "fontgridtitle", "fontheader", "fontsearch", "fonttoolbar"],
+   "verbs": [],
+   "docs": []
+  },
+  "colorfx": {
+   "why": "reachable by name, but the alias table folds `color fx` and the British spellings into it",
+   "elements": [],
+   "verbs": ["filter_selectcolorfx", "effect_colorfx", "effect_colorslider"],
+   "docs": []
+  },
+  "hotcue": {
+   "why": "the skin elements are `cue`/`cues`, and the verb is spelled both ways",
+   "elements": ["cue", "cues"],
+   "verbs": ["hot_cue", "cue_pos", "has_cue", "delete_cue", "set_cue", "goto_cue"],
+   "docs": []
+  },
+  "cue": {
+   "why": "same surface as hotcue, reachable under either word",
+   "elements": ["cue", "cues"],
+   "verbs": [],
+   "docs": []
+  },
+  "loop": {
+   "why": "the skin element is the plural `loops`, which a singular search misses",
+   "elements": ["loops"],
+   "verbs": ["get_loop_in_time", "get_loop_out_time", "get_active_loop"],
+   "docs": []
+  },
+  "mapper": {
+   "why": "the mapper format's elements are `map`/`mapper`/`info`, and controller work reaches for the word `controller`",
+   "elements": ["map", "mapper", "info"],
+   "verbs": [],
+   "docs": ["docs/Mapper XML.md"]
+  },
+  "stems": {
+   "why": "stem controls live under Equalizer & Stems and several are named for the part",
+   "elements": [],
+   "verbs": ["stem_color", "stems_split", "effect_stems", "mute_stem", "only_stem"],
+   "docs": []
+  },
+  "video": {
+   "why": "the video skin family has its own element vocabulary that a name search does not join up",
+   "elements": ["gradient", "stack", "beattunnel", "blockwave", "sampleicon"],
+   "verbs": [],
+   "docs": []
+  }
+ }
+}
