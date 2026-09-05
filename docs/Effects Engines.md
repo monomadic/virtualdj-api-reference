@@ -1366,9 +1366,17 @@ effect_releaseslider_active 50%
 is_releasefx ? on : off
 ```
 
-Use `effect_releaseslider_active` when moving the release control should also activate the release effect. Use `effect_slider` / `effect_slider_active` for ordinary deck FX slots. Exact release-FX slot selection and plugin-specific behavior still needs a focused local fixture before this becomes a canonical pad pattern.
+Use `effect_releaseslider_active` when moving the release control should also activate the release effect. Use `effect_slider` / `effect_slider_active` for ordinary deck FX slots.
 
-Source: `Official`
+**There is no verb that puts an effect into the release slot.** The verb table holds exactly three release names — `effect_releaseslider`, `effect_releaseslider_active`, `is_releasefx` — and no selector; `effect_select 'releasefx' '<name>'` returns `false` and changes nothing. The slot is armed in the app's own FX lists (the binary carries per-deck and master "release effects" categories, and `settings.xml` stores eight entries per deck where script reaches only six), never from script.
+
+The practical consequences for a skin or pad:
+
+- With no release effect configured, both sliders are **accepted and completely inert**: they return `true` while their own query form stays `0`, no slot activates, and no slider moves — deck empty, loaded or playing. The `true` is the verb's own result, not evidence an effect received anything.
+- `effect_releaseslider_active`'s documented auto-activation does **not** fire in that state either, so a momentary press is not what is missing.
+- `is_releasefx` reads `no` under every form tried, including the names of effects the instance really has loaded. Guard release controls on it and expect `no` unless the operator configured a release effect.
+
+Source: `Official`, `Local test` (2026-09-06, build 18.0.9598 — see the tracker's "Release FX: The Arming Path Does Not Exist In Script")
 
 Status: Needs local test.
 

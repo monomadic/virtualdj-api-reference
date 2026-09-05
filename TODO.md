@@ -393,35 +393,41 @@ Done when:
 
 ### 3. Separate Release FX From Normal Slot FX
 
-Status: Ready
+Status: Conditional
 
-Note: 2026-07-26, HTTP. Confirmed the release-FX path is separate from deck slots 1-6
-(`is_releasefx` never flips from loading effects into numbered slots); the release sliders
-are accepted but inert without an armed release FX, which needs a momentary control HTTP
-can't drive. Remaining: arm a release FX on a pad/mapper surface and characterize
-activation. Recorded in the tracker and verb store.
+Note: 2026-09-06. The done-when is met — the release path is now described separately from
+ordinary deck FX, in `docs/Effects Engines.md` §Release FX and `docs/Effects Usage.md`, with
+local-test evidence on all three verbs. What is left waits on one operator action, named at the
+bottom. Full narrative: the tracker's "Release FX: The Arming Path Does Not Exist In Script".
 
-Start here:
+**This pass overturned the task's own diagnosis.** The 2026-07-26 note said the sliders were
+inert because arming "needs a momentary control HTTP can't drive". That is not the obstacle.
+`effect_releaseslider_active` is documented to activate *without* one — "and auto activate the
+effect" — and it does nothing: `true` returned, `is_releasefx` still `no`, its own query still
+`0`, every numbered slot inactive, with deck 1 empty, loaded and playing, scoped and unscoped.
+And a pad would run the same script — `tests/Pads/Reference - Release FX Test.xml` fires plain
+`effect_releaseslider 25%`, no `down`/`up` wrapper — so that surface adds nothing.
 
-- [tests/Pads/Reference - Release FX Test.xml](tests/Pads/Reference%20-%20Release%20FX%20Test.xml)
+**What is actually missing has no verb.** The verb table, where absence disproves a name, holds
+exactly three release names: `effect_releaseslider`, `effect_releaseslider_active`,
+`is_releasefx`. There is **no selector**. `effect_select 'releasefx' 'Echo Out'` returns `false`
+and changes nothing, scoped or unscoped, leaving the numbered slots untouched. The slot is armed
+in the app's own FX lists — the binary carries `Deck %i release effects` and `Master release
+effects` beside the other FX-list-editor categories, and `settings.xml` stores eight entries per
+deck where script reaches only six. So VDJScript can *drive* the release slot and can never
+*create* it.
 
-Read first:
+`is_releasefx` was tried bare, deck-scoped, with slot arguments 0-10, and with the names of
+effects this instance really has configured (`Echo Out`, `Phaser`, `Delay`, `Reverb`, `Cut`,
+`Backspin`) — `no` throughout, so the earlier negative was never about naming the wrong effect.
 
-- [docs/Effects Engines.md](docs/Effects%20Engines.md) (release-FX rows only — `rg -n releaseslider`)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-
-Record results in:
-
-- [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md)
-
-Promote to:
-
-- [docs/Effects Engines.md](docs/Effects%20Engines.md)
-- [docs/Effects Usage.md](docs/Effects%20Usage.md)
-
-Done when:
-
-- `effect_releaseslider*` and `is_releasefx` behavior is described separately from normal deck FX controls.
+**Conditional on one operator action:** assign a release effect in VirtualDJ's own FX lists, then
+re-run against `tests/Pads/Reference - Release FX Test.xml` (or over HTTP — the surface does not
+matter, as established above) to watch an armed slot for the first time. Until then no release-FX
+*behavior* has been observed, and `is_releasefx` has never been seen returning `yes` on any
+surface, so its catalog wording "query if **this effect** is in the release effect slot" — which
+reads as effect-scoped, the question a plugin GUI asks about itself — stays plausible but
+unestablished.
 
 ### 4. Keep BeatGrid `effect_command` Plugin-Specific
 

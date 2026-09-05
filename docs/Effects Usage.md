@@ -403,6 +403,12 @@ effect_releaseslider_active 50%
 is_releasefx ? on : off
 ```
 
+No verb arms the release slot — the verb table has these three names and no
+selector — so with nothing configured in the app's own FX lists both sliders
+return `true` and do nothing at all, and `is_releasefx` stays `no`. Guard
+release controls on `is_releasefx` rather than assuming the slider took.
+See `docs/Effects Engines.md` §Release FX.
+
 Treat this as its own release-FX path, not a normal deck slot slider.
 
 Armed FX:

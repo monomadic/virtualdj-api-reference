@@ -2997,7 +2997,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-26): accepted (execute returns true) but INERT without an armed release FX — 'effect_releaseslider 50%' left the readback at 0 and did not flip is_releasefx. It controls the dedicated release-FX slider, not a deck-FX slot slider (use effect_slider for those). Arming a release FX needs a momentary control this channel cannot drive."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): accepted (execute returns true) but INERT without an armed release FX — 'effect_releaseslider 50%' left the readback at 0 and did not flip is_releasefx. It controls the dedicated release-FX slider, not a deck-FX slot slider (use effect_slider for those). Arming a release FX needs a momentary control this channel cannot drive.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598: accepted and completely inert with no release effect armed. Execute returned 'true' for 'effect_releaseslider 50%' and the deck-scoped form, while its own QUERY form stayed 0, no numbered slot activated and no slot slider moved — reproduced with deck 1 empty, loaded, and playing. The 'true' is the verb's own result, not evidence of an effect. Distinct from effect_slider, which moves the addressed slot's slider immediately (see the video FX section for the same read-back method)."
    ],
    "section": "Effects",
    "description": "Control release-FX slider",
@@ -3020,7 +3021,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-26): like effect_releaseslider, accepted but inert without an armed release FX ('effect_releaseslider_active 50%' -> true, but is_releasefx stayed no and the slider read 0). The _active variant is meant to move the release slider AND activate the release effect; activation could not be observed over HTTP."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): like effect_releaseslider, accepted but inert without an armed release FX ('effect_releaseslider_active 50%' -> true, but is_releasefx stayed no and the slider read 0). The _active variant is meant to move the release slider AND activate the release effect; activation could not be observed over HTTP.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598: its documented auto-activation did NOT fire. 'effect_releaseslider_active 50%' returned 'true' and left is_releasefx at 'no', its own query at 0, and every numbered slot inactive — deck empty, loaded and playing, scoped and unscoped. This disproves the earlier diagnosis that release FX merely needed a momentary press a pad could supply: the verb documented to activate without one does nothing either. What is missing is an armed release slot, and no verb exists to arm it."
    ],
    "section": "Effects",
    "description": "Control release-FX slider and activate",
@@ -7666,7 +7668,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-26): the release-FX path is SEPARATE from deck-FX slots 1-6. is_releasefx stayed 'no' with every effect loaded into slot 1, including release-type effects (Backspin, BrakeStart, VinylBrake, Beat Brake) — loading into a numbered slot never arms it. Forms is_releasefx, is_releasefx <slot>, is_releasefx '<effect>' all returned 'no'. It reflects the dedicated release-FX slot's armed state, which over HTTP could not be set (no momentary press/release); full activation needs a pad/mapper surface."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-26): the release-FX path is SEPARATE from deck-FX slots 1-6. is_releasefx stayed 'no' with every effect loaded into slot 1, including release-type effects (Backspin, BrakeStart, VinylBrake, Beat Brake) — loading into a numbered slot never arms it. Forms is_releasefx, is_releasefx <slot>, is_releasefx '<effect>' all returned 'no'. It reflects the dedicated release-FX slot's armed state, which over HTTP could not be set (no momentary press/release); full activation needs a pad/mapper surface.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598, extending the 2026-07-26 pass. Returned 'no' in EVERY form and state tried: bare, deck-scoped, with slot arguments 0-10, and with the names of effects actually configured in this instance's deck FX arrays ('Echo Out', 'Phaser', 'Delay', 'Reverb', 'Cut', 'Backspin') — so the earlier negative was not a matter of naming the wrong effect. Never observed returning 'yes', because nothing in this instance arms the release slot. STRUCTURAL RESULT that reframes the task: the verb table holds exactly three release names — effect_releaseslider, effect_releaseslider_active, is_releasefx — and NO selection verb, so there is no VDJScript path to put an effect into the release slot at all. effect_select 'releasefx' '<name>' returned false and changed nothing, scoped and unscoped. Arming is a UI configuration step (the binary names per-deck and master 'release effects' lists, the FX-list-editor categories); until one is configured this query can only answer 'no'."
    ],
    "section": "Effects",
    "description": "Query release-FX slot state",

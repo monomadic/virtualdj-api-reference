@@ -1347,3 +1347,88 @@ enabling one in the FX list editor puts it there is still a GUI question.
 `video_fx_select 'Colorize'` returns **`false`** and selects Colorize. The body
 is the verb's own result, never transport success — read the selection back with
 `deck master get_effect_name 'video'`.
+
+## Release FX: The Arming Path Does Not Exist In Script
+
+Build 18.0.9598, HTTP, 2026-09-06. This closes the description half of task 3 and
+**overturns its working diagnosis**. Nothing was left changed: the deck 1 slot
+assignments (`Phaser`, ``, `Delay`, `Flanger`, `Echo Out`, `Echo Out`) were
+identical before and after.
+
+### The diagnosis that was wrong
+
+The 2026-07-26 pass concluded the release sliders were "inert without an armed
+release FX, which needs a momentary control HTTP can't drive". That is not the
+obstacle. Two independent reasons:
+
+1. **`effect_releaseslider_active` is documented to activate without one** —
+   "Control the effect release specific slider *and auto activate the effect*" —
+   and it does nothing. `effect_releaseslider_active 50%` returned `true` and left
+   `is_releasefx` at `no`, its own query at `0`, and every numbered slot inactive,
+   with deck 1 empty, loaded, and playing, scoped and unscoped.
+2. **The pad surface would run the same script.**
+   `tests/Pads/Reference - Release FX Test.xml` fires plain
+   `effect_releaseslider 25%`, with no `down`/`up` wrapper, so a pad press is the
+   same call this channel already makes.
+
+### What is actually missing: there is no verb to arm the slot
+
+The verb table — VirtualDJ's own list, where absence disproves a name — holds
+exactly **three** release names:
+
+| Verb | Kind |
+| --- | --- |
+| `effect_releaseslider` | drive a slider on the release slot |
+| `effect_releaseslider_active` | the same, plus auto-activate |
+| `is_releasefx` | query whether *this* effect is the release one |
+
+There is **no selection verb**. Nothing named `effect_releasefx`,
+`effect_release_select`, `releasefx` or any near spelling exists, and
+`effect_select 'releasefx' 'Echo Out'` returned `false` and changed nothing
+(scoped and unscoped, numbered slots untouched). So the three verbs *drive* a
+slot armed somewhere else; VDJScript cannot arm it.
+
+Where "somewhere else" is: the binary carries `Deck %i release effects` and
+`Master release effects` beside `Deck %i color effects`, `Sampler color effects`,
+`Deck %i merge effects` and `MIX FX` — the FX-list-editor category headings. And
+`settings.xml` stores `<effects>` as **eight** comma-separated entries per deck
+(six script slots plus two more, the eighth being `Echo Out` on all four decks)
+with `<masterEffects>` holding nine. Positions past the six exist; script slot
+numbers do not reach them — `get_effect_name 7` and `8` read empty and
+`is_releasefx 0…10` is `no` throughout.
+
+`releasefx` appears in script in exactly one vocabulary: the `effect_gui` group
+(`effect_show_gui` / `effect_dock_gui`). `effect_show_gui 'releasefx'` returned
+`true` with the query still `no` and nothing on screen; `effect_dock_gui
+'releasefx'` returned `false`.
+
+### `is_releasefx` never answered `yes`
+
+Tried bare, deck-scoped, with slot arguments `0`–`10`, and with the names of
+effects this instance really has configured — `Echo Out`, `Phaser`, `Delay`,
+`Reverb`, `Cut`, `Backspin`. All `no`. The earlier negative was therefore not a
+matter of naming the wrong effect; the slot is simply unarmed, and with no verb
+to arm it this query cannot be made to answer `yes` from script.
+
+Its catalog wording, "query if **this effect** is in the release effect slot",
+reads as effect-scoped — the question an effect's own plugin GUI would ask about
+itself. That is consistent with every reading here but is **not** established:
+no surface was found where it answers `yes`.
+
+### How to describe these separately from ordinary deck FX
+
+- Ordinary deck FX: `effect_select <slot> '<name>'`, `effect_slider <slot> <n> <v>`,
+  `effect_active <slot>` — all three addressable and all three verifiable by
+  read-back.
+- Release FX: **no selector**, and the two sliders write to a slot the script
+  cannot create. Their `true` is the verb's own result and means nothing about
+  whether an effect exists to receive it. Guard a skin or pad on
+  `is_releasefx` before showing release controls, and expect it to read `no`
+  unless a release effect was configured in the app's own FX lists.
+
+### The one thing still unobserved
+
+No armed release slot was ever seen, so no release-FX *behavior* has been
+watched. That needs an operator to assign a release effect in VirtualDJ's FX
+lists first; the harness for the moment after that already exists at
+`tests/Pads/Reference - Release FX Test.xml`.
