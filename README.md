@@ -11,7 +11,7 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 - **`examples/Mappers/`** — real working controller/keyboard mapper XML copied from a local install; ground truth for the mapper format
 - **`examples/Samplerbanks/`** — sampler-bank XML copied from the app bundle (a third XML format alongside skins and pads)
 - **`examples/VideoSkins/`** — built-in video skins (broadcast, karaoke, live) copied from the app bundle; same `<skin>` format as deck skins, rendered onto the video output
-- **`tests/`** — reproducible documentation test harnesses, pad-page XML fixtures, and the **extracted data artifacts**: `verb-table.json` (the authoritative verb set), `action-contracts.json` (per-verb implementation contract), `verb-return-types.json` (observed types and boolean truth), `verb-existence-sweep.json`, `action-catalog.json` (816 vendor descriptions), `attested-tails.json` (argument tails and shapes Atomix wrote), `binary-vocabularies.json` (argument enumerations as groups), `vdjscript-corpus.json` (1,516 vendor snippets) and `verb-arg-forms.json` (probe results), plus the `plugin-introspection*.json` captures from the native channel
+- **`tests/`** — reproducible documentation test harnesses, pad-page XML fixtures, and the **extracted data artifacts**: `verb-table.json` (the authoritative verb set), `action-contracts.json` (per-verb implementation contract), `verb-return-types.json` (observed types and boolean truth), `verb-existence-sweep.json`, `action-catalog.json` (816 vendor descriptions), `attested-tails.json` (argument tails and shapes Atomix wrote), `binary-vocabularies.json` (argument enumerations as groups), `vdjscript-corpus.json` (vendor snippets from every mined source) and `verb-arg-forms.json` (probe results), plus the `plugin-introspection*.json` captures from the native channel
 - **`tools/`** — extractors, sweeps, linters and the `just` query API; every artifact is regenerable and gated by `just check`
 
 ## Where to start
@@ -86,7 +86,7 @@ prints them against each other:
   (`languages.zip` carries the official appendix's prose, so it is available offline). The only
   source that says what a parameter *means*.
 - **`tests/attested-tails.json`** — 214 tails Atomix wrote into shipped skins, pad pages and
-  the app's own compiled menu scripts, plus 410 argument *shapes* (`` fadeout DUR DUR `BOOL` ``,
+  the app's own compiled menu scripts, plus argument *shapes* (`` fadeout DUR DUR `BOOL` ``,
   `param_bigger EXP:NUM EXP:NUM`, the `deck SEL EXP` wrapper) with
   the return type the vendor's attribute implies, for the verbs whose arguments are values
   rather than keywords. Attested without a probe, which reaches where no test state can.
@@ -122,7 +122,7 @@ rather than assembled from documentation.
 
 | Question | Answer | How |
 | --- | --- | --- |
-| Is `x` a verb? | **Decided, both ways** | VirtualDJ's own verb table — 1,032 records, 958 distinct verbs, 62 alias groups, 38 editor-hidden on build 18.0.9598. Membership proves; absence disproves. `just verb-table <name>` is the live answer |
+| Is `x` a verb? | **Decided, both ways** | VirtualDJ's own verb table — 1,032 records / 958 distinct verbs / 62 alias groups / 38 editor-hidden on build 18.0.9598 (arm64, extracted 2026-09-05; `just verb-table-stamp`). Membership proves; absence disproves on that build. `just verb-table <name>` is the live answer |
 | What category is it in? | All of them mapped | Compiled Button Editor category tables, confirmed against the live UI |
 | Can it execute / query / return text? | All of them | `ACTION_` class RTTI — a checked 958↔958 bijection of verbs to implementation classes. `just verb-contract <name>` |
 | What type does it return? | 623 of 652 query verbs | Live HTTP sweep. `just verb-return-type <name>` |

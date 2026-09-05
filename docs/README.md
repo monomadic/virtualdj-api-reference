@@ -32,7 +32,7 @@ Start here:
   Extracted Button Editor category mapping from the compiled executable tables, including visible/hidden counts and symbol-capability joins.
 
 - [Undocumented VDJScript Candidates](Undocumented%20VDJScript%20Candidates.md)
-  Where the **verb table** lives: VirtualDJ's own serialised verb set (1,028 records — name, id, flags, Button Editor category), which decides existence and non-existence outright (`just verb-table <name>`, Evidence Standards rule 1). Also the hidden-verb notes, probe order, and promotion rules.
+  Where the **verb table** lives: VirtualDJ's own serialised verb set (1,032 records on build 18.0.9598, arm64, extracted 2026-09-05 — name, id, flags, Button Editor category; `just verb-table-stamp`), which decides existence and non-existence outright (`just verb-table <name>`, Evidence Standards rule 1). Also the hidden-verb notes, probe order, and promotion rules.
 
 - [VDJScript Grammar](VDJScript%20Grammar.md)
   The language itself: chaining, conditionals, quoting, scope prefixes, and the traps. Read its summary before writing VDJScript; jump via its Contents for detail. Per-verb argument rules are not here — those are `just get-verb <name>`.
@@ -134,7 +134,7 @@ Current status:
 - `Stem File Format.md` is the focused file-format reference for `.vdjstems` sidecars.
 - `Resources.md` is the source index.
 - Current official coverage and local-test gap counts are tracked in `Official VDJScript Coverage Audit.md`.
-- **Existence is settled** (2026-07-27): the verb table in the binary is the complete verb set — 1,028 records, 955 distinct verbs, 61 alias groups, 37 editor-hidden names, every one categorised. `just verb-table <name>` answers membership, aliasing, hidden flag, and category in one query. Absence from the table is disproof on the inspected build. The older catalog/string-table counts below it in the history are corroboration only.
+- **Existence is settled** (method established 2026-07-27): the verb table in the binary is the complete verb set for the build it was read from — 1,032 records / 958 distinct verbs / 62 alias groups / 38 editor-hidden on build 18.0.9598 (arm64, extracted 2026-09-05), every one categorised. Quote that stamp from `just verb-table-stamp`; the July figures (1,028 / 955 / 61 / 37) were an earlier build's and are superseded, not corrected. `just verb-table <name>` answers membership, aliasing, hidden flag, and category in one query. Absence from the table is disproof on the inspected build. The older catalog/string-table counts below it in the history are corroboration only.
 - The compiled Button Editor taxonomy doc remains useful as category *metadata* (and its example column has been corrected against the verb table), but the verb table is the authority; neither is behavior proof.
 - Button Editor syntax highlighting and hover tokenization are now tracked as parser evidence, with `DLGActionWizard::STree`, `customDraw`, `getCurrentWord`, and related symbols as the current binary anchors.
 - The other topical files still contain useful raw material, but they are not yet normalized to the same reliability standard.

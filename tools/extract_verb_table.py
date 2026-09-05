@@ -36,10 +36,15 @@ outward while records stay valid. Note `nothing` legitimately has `id == 0`.
     python3 tools/extract_verb_table.py > tests/verb-table.json
     python3 tools/extract_verb_table.py --get hotcue
     python3 tools/extract_verb_table.py --check
+    python3 tools/extract_verb_table.py --stamp   # the phrase to quote in prose
 """
+import datetime
 import json
+import plistlib
+import re
 import struct
 import sys
+from pathlib import Path
 
 BINARY = "/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ"
 ARTIFACT = "tests/verb-table.json"
@@ -60,6 +65,44 @@ CATEGORY_NAMES = [
 ]
 ARM64 = 0x0100000C
 RECORD = 16
+ARCH_NAMES = {0x0100000C: "arm64", 0x01000007: "x86_64"}
+
+
+def build_identity(binary: str, cputype: int = ARM64) -> dict:
+    """Which binary these counts describe.
+
+    Every count in this artifact is a measurement of one build, so the build
+    belongs *in* the artifact: a stamped figure in prose ("1,032 records on
+    18.0.9598") is only trustworthy if the writer can copy the stamp instead
+    of recalling it. `CFBundleVersion` is the build number VirtualDJ uses
+    (`CFBundleShortVersionString` is the legacy 8.x display version).
+    """
+    path = Path(binary)
+    ident = {"binary": binary, "arch": ARCH_NAMES.get(cputype, hex(cputype))}
+    plist = path.parent.parent / "Info.plist"
+    try:
+        info = plistlib.loads(plist.read_bytes())
+        ident["build"] = str(info.get("CFBundleVersion", "unknown"))
+        if info.get("CFBundleShortVersionString"):
+            ident["display_version"] = str(info["CFBundleShortVersionString"])
+    except (OSError, plistlib.InvalidFileException):
+        ident["build"] = "unknown"
+    try:
+        st = path.stat()
+        ident["binary_bytes"] = st.st_size
+        ident["binary_mtime"] = datetime.date.fromtimestamp(st.st_mtime).isoformat()
+    except OSError:
+        pass
+    ident["extracted"] = datetime.date.today().isoformat()
+    return ident
+
+
+def stamp(summary: dict) -> str:
+    """The exact phrase to quote in prose. Never write a bare count."""
+    return (f"{summary['records']} records / {summary['distinct_ids']} distinct verbs / "
+            f"{summary['alias_groups']} alias groups / {summary['hidden']} editor-hidden "
+            f"on build {summary.get('build', 'unknown')} "
+            f"({summary.get('arch', '?')}, extracted {summary.get('extracted', '?')})")
 
 
 def slice_offset(data: bytes, cputype: int = ARM64) -> int:
@@ -222,6 +265,7 @@ def build(binary: str = BINARY) -> dict:
             counts[rec["category"]] = counts.get(rec["category"], 0) + 1
     return {
         "summary": {
+            **build_identity(binary),
             "address": hex(dseg[2] + start),
             "records": len(recs),
             "distinct_ids": len(by_id),
@@ -268,7 +312,11 @@ def cmd_check() -> None:
         sys.exit(f"category mapping incomplete: {s.get('categorised')}/{s['records']}")
     print(f"verb table check passed: {s['records']} records @ {s['address']}, "
           f"{s['alias_groups']} alias groups, {s['alias_forms']} alias forms, "
-          f"{s['hidden']} hidden, {s['categories']} categories")
+          f"{s['hidden']} hidden, {s['categories']} categories "
+          f"on build {s.get('build', 'unstamped')} ({s.get('arch', '?')})")
+    if s.get("build", "unknown") == "unknown":
+        sys.exit("verb table artifact carries no build stamp: re-extract so prose "
+                 "can quote `--stamp` instead of recalling a build number")
 
 
 def main() -> None:
@@ -282,6 +330,8 @@ def main() -> None:
         return cmd_get(argv[1])
     if argv and argv[0] == "--check":
         return cmd_check()
+    if argv and argv[0] == "--stamp":
+        return print(stamp(json.load(open(ARTIFACT))["summary"]))
     print(json.dumps(build(binary), indent=1, sort_keys=True))
 
 

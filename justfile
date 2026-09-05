@@ -132,6 +132,10 @@ verb-probe name:
 verb-table name:
     @python3 tools/extract_verb_table.py --get "{{name}}"
 
+# The exact build-stamped phrase to quote in prose. Copy it; never recall a build number.
+verb-table-stamp:
+    @python3 tools/extract_verb_table.py --stamp
+
 extract-verb-table:
     @python3 tools/extract_verb_table.py > tests/verb-table.json
 
