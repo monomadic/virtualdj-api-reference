@@ -308,6 +308,19 @@ def joined_view(name: str, rec: dict) -> dict:
         r = rtypes["verbs"][name]
         out["observed_return"] = {"type": r["observed_type"],
                                   "sample": next(iter(r["samples"].values()), None)}
+    # Where Atomix compiled the verb, from the unstripped build's STABS entries.
+    # The section backfill copied a module's section across only where the
+    # module graded `clean`, so most verbs still have a module and no section —
+    # which is exactly when knowing the module helps.
+    modules = artifact("tests/action-modules-9246.json")
+    if modules:
+        for module, verbs in modules.get("modules", {}).items():
+            if name in verbs:
+                grade = (modules.get("sections", {}).get(module) or {}).get("grade")
+                out["module"] = {"name": module,
+                                 "build": modules["summary"]["build"],
+                                 **({"section_grade": grade} if grade else {})}
+                break
     return out
 
 
@@ -436,7 +449,16 @@ def cmd_stats(args):
     print(json.dumps(counts(load_store()), indent=1, ensure_ascii=False))
 
 
-FILTERS = {"surface", "section", "tier", "status", "kind"}
+FILTERS = {"surface", "section", "tier", "status", "kind", "module"}
+
+
+def module_map() -> dict[str, str]:
+    """verb -> module, joined at read time like every other artifact."""
+    try:
+        art = json.load(open(ROOT / "tests/action-modules-9246.json"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return {v: module for module, verbs in art.get("modules", {}).items() for v in verbs}
 
 
 def cmd_search(args):
@@ -467,9 +489,12 @@ def cmd_search(args):
                  "just get-verb search")
 
     store = load_store()
+    modules = module_map() if "module" in opts else {}
     hits = []
     for name, rec in store.items():
         if opts.get("needs_test") and not rec.get("needs_test"):
+            continue
+        if "module" in opts and opts["module"].lower() not in modules.get(name, "").lower():
             continue
         if "surface" in opts and opts["surface"].lower() not in \
                 [s.lower() for s in rec.get("surfaces", [])]:
@@ -588,7 +613,7 @@ USAGE = """usage: verbdb.py <command> ... | verbdb.py <verb-name>
   <verb-name>            shorthand for `get <verb-name>`
   get <name>             one record (follows aliases)
   put <name> f=v ...     set fields
-  search [term] [--surface= --section= --tier= --status= --kind=
+  search [term] [--surface= --section= --tier= --status= --kind= --module=
                   --needs-test --format=json --limit=N]
   next-incomplete        next active (non-hardware-blocked) work item
   stats                  counts by tier / test status

@@ -1850,3 +1850,26 @@ returned value moved when that position changed — it does not prove the verb
 interprets the argument the way the docs say. And `ignored` is a statement about
 *this state*: a position that changes nothing with the current decks and effects
 may well be read in another.
+
+## Source Modules, Joined At Read Time
+
+2026-09-06. The module extraction itself landed separately (`tests/action-modules-9246.json`,
+`tools/extract_action_modules.py`), including the grading pass that backfilled
+`section` only where a module's already-sectioned members agree — 31 verbs of the
+233 that had none, leaving 124 deliberately unsectioned rather than guessed.
+
+Those 124 are exactly why the module is worth reaching from the query layer, so
+it is now joined at read time the way the verb table and contracts already are:
+
+- **`just get-verb <name>`** gains a `module` block with the module name, the
+  build it was read from, and the module's section grade where it has one.
+- **`just find-verbs --module=<name>`** filters on it. The case that shows the
+  value: `--module=action_macro` returns `macro_play`, `macro_record` and the
+  whole `flip_*` family together. Their store `section` is `Hidden Button
+  Editor`, which is a *flag* rather than a topic and appears across a dozen
+  modules, so section search could never have grouped them.
+- **`just topic <term>`** consults it as a derived signal — no tag needed, since
+  Atomix's own module names are already topical.
+
+Nothing is copied into the store by this change; the artifact stays
+authoritative and a re-extraction is picked up without a migration.

@@ -35,6 +35,7 @@ XML = ROOT / "docs" / "skin-xml-inventory.json"
 TRACKER = ROOT / "docs" / "VDJScript Local Test Tracker.md"
 CANDIDATES = ROOT / "docs" / "Undocumented VDJScript Candidates.md"
 TAGS = ROOT / "docs" / "topic-tags.json"
+MODULES = ROOT / "tests" / "action-modules-9246.json"
 # Corpora to grep for real usage. Kept to authored/curated + built-in examples.
 CORPORA = ["examples", "tests"]
 # `tests/*.json` are the evidence artifacts — the verb table, the sweeps, the
@@ -72,6 +73,24 @@ def normalize(term: str) -> tuple[str, str | None]:
 def tagged(term: str) -> dict:
     """The hand-maintained members of a topic, for items no derivation reaches."""
     return tags().get("topics", {}).get(term, {})
+
+
+def module_verbs(term: str) -> set[str]:
+    """Verbs whose source module names the topic.
+
+    Derived, so it needs no tag. It matters most for the verbs the section
+    backfill could not reach: a module only donated its section where it graded
+    `clean`, leaving most module-known verbs still unsectioned — and those are
+    invisible to a section match but not to this one.
+    """
+    if not MODULES.exists():
+        return set()
+    try:
+        modules = json.loads(MODULES.read_text())["modules"]
+    except (KeyError, json.JSONDecodeError):
+        return set()
+    t = term.lower()
+    return {v for module, verbs in modules.items() if t in module.lower() for v in verbs}
 
 
 def verb_records() -> dict:
@@ -195,7 +214,7 @@ def gather(term: str, limit: int) -> dict:
     topic, via_alias = normalize(term)
     tag = tagged(topic)
     recs = verb_records()
-    verbs = match_verbs(topic, recs, tag.get("verbs"))
+    verbs = match_verbs(topic, recs, (tag.get("verbs") or []) + sorted(module_verbs(topic)))
     effects = match_effects(topic)
     elements = match_elements(topic, tag.get("elements"))
 
