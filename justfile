@@ -314,6 +314,7 @@ check:
     python3 tools/fixtures.py --check
     python3 tools/probe_arg_forms.py --check
     python3 tools/probe_known_positions.py --check
+    python3 tools/probe_arg_positions.py --check
     python3 tools/probe_execute_forms.py --check
     python3 tools/extract_action_catalog.py --check
     python3 tools/extract_script_corpus.py --check
@@ -346,6 +347,15 @@ known-positions:
     @python3 tools/probe_known_positions.py --run > tests/get-time-positions.json
     @echo "wrote tests/get-time-positions.json"
     @python3 tools/probe_known_positions.py --check
+
+# Which ARGUMENT POSITIONS a verb reads: hold the attested shape, vary one
+# position within its own class, see whether the answer moves. Query-only.
+probe-arg-positions:
+    @python3 tools/probe_arg_positions.py --run > tests/verb-arg-positions.json
+    @python3 tools/probe_arg_positions.py --check
+
+verb-arg-positions name:
+    @python3 tools/probe_arg_positions.py --get "{{name}}"
 
 # Confirm argument keywords against their nonsense controls in any capture.
 plugin-keyword-report capture *args:

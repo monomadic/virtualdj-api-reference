@@ -1,0 +1,1103 @@
+{
+ "summary": {
+  "verbs_probed": 37,
+  "unstable": [],
+  "verbs_reading_a_position": 8,
+  "reads_beyond_first": [
+   "effect_arm_slider",
+   "effect_slider_active",
+   "get_effect_slider_label",
+   "get_next_karaoke_song"
+  ],
+  "no_answer": [
+   "eq_mode",
+   "get_beat_num",
+   "get_loaded_song_color",
+   "os2l_cmd",
+   "speedwheel"
+  ]
+ },
+ "verbs": {
+  "auto_crossfade": {
+   "shape": "DUR PCT",
+   "form": "auto_crossfade 1000ms 25%",
+   "bare": "0.5",
+   "baseline": "0.5",
+   "baseline_again": "0.5",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "0.5",
+     "nonsense_value": "0.5",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "0.5",
+     "nonsense_value": "0.5",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "blink": {
+   "shape": "DUR PCT",
+   "form": "blink 1000ms 25%",
+   "bare": "yes",
+   "baseline": "yes",
+   "baseline_again": "yes",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "color": {
+   "shape": "NUM NUM NUM",
+   "form": "color 1 1 1",
+   "bare": "error:-2147024809",
+   "baseline": "error:-2147024809",
+   "baseline_again": "error:-2147024809",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024809",
+     "nonsense_value": "transparent",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024809",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 3,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024809",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "cue_play": {
+   "shape": "NUM DUR",
+   "form": "cue_play 1 1000ms",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "effect_active": {
+   "shape": "STR BOOL",
+   "form": "effect_active 'flanger' on",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'flanger'",
+     "variant": "'sampler'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "effect_arm_slider": {
+   "shape": "NUM NUM",
+   "form": "effect_arm_slider 1 1",
+   "bare": "0.73",
+   "baseline": "0.73",
+   "baseline_again": "0.73",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "0.73",
+     "nonsense_value": "0.73",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "0.5",
+     "nonsense_value": "0.73",
+     "verdict": "reads"
+    }
+   ]
+  },
+  "effect_button": {
+   "shape": "NUM NUM",
+   "form": "effect_button 1 1",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "effect_has_button": {
+   "shape": "NUM NUM",
+   "form": "effect_has_button 1 1",
+   "bare": "yes",
+   "baseline": "yes",
+   "baseline_again": "yes",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "effect_has_slider": {
+   "shape": "NUM NUM BOOL",
+   "form": "effect_has_slider 1 1 on",
+   "bare": "yes",
+   "baseline": "yes",
+   "baseline_again": "yes",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "",
+     "nonsense_value": "",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    },
+    {
+     "index": 3,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "effect_select": {
+   "shape": "NUM REL",
+   "form": "effect_select 1 +1",
+   "bare": "0.65",
+   "baseline": "",
+   "baseline_again": "",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "",
+     "nonsense_value": "no",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "REL",
+     "baseline": "+1",
+     "variant": "-1",
+     "variant_value": "",
+     "nonsense_value": "no",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "effect_slider": {
+   "shape": "NUM NUM PCT",
+   "form": "effect_slider 1 1 25%",
+   "bare": "0.73",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "0.73",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 3,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "no",
+     "nonsense_value": "0.73",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "effect_slider_active": {
+   "shape": "NUM NUM",
+   "form": "effect_slider_active 1 1",
+   "bare": "0.73",
+   "baseline": "0.73",
+   "baseline_again": "0.73",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "0.99",
+     "nonsense_value": "0.73",
+     "verdict": "reads"
+    }
+   ]
+  },
+  "effect_slider_skip_length": {
+   "shape": "NUM NUM PCT",
+   "form": "effect_slider_skip_length 1 1 25%",
+   "bare": "0.73",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "0.73",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 3,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "no",
+     "nonsense_value": "0.73",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "eq_mode": {
+   "shape": "REL KW",
+   "form": "eq_mode +1 'frequency'",
+   "bare": "error:-2147467263",
+   "baseline": "error:-2147467263",
+   "baseline_again": "error:-2147467263",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "REL",
+     "baseline": "+1",
+     "variant": "-1",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "KW",
+     "baseline": "'frequency'",
+     "variant": "'stems'",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "fadeout": {
+   "shape": "DUR DUR",
+   "form": "fadeout 1000ms 1000ms",
+   "bare": "0",
+   "baseline": "0",
+   "baseline_again": "0",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "get_beat_num": {
+   "shape": "NUM NUM",
+   "form": "get_beat_num 1 1",
+   "bare": "error:-2147024891",
+   "baseline": "error:-2147024891",
+   "baseline_again": "error:-2147024891",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024891",
+     "nonsense_value": "error:-2147024891",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024891",
+     "nonsense_value": "error:-2147024891",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "get_effect_slider_label": {
+   "shape": "NUM NUM",
+   "form": "get_effect_slider_label 1 1",
+   "bare": "STR",
+   "baseline": "STR",
+   "baseline_again": "STR",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "",
+     "nonsense_value": "",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "SPD",
+     "nonsense_value": "STR",
+     "verdict": "reads"
+    }
+   ]
+  },
+  "get_loaded_song_color": {
+   "shape": "KW NUM",
+   "form": "get_loaded_song_color 'red' 1",
+   "bare": "error:-2147024891",
+   "baseline": "error:-2147024891",
+   "baseline_again": "error:-2147024891",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "KW",
+     "baseline": "'red'",
+     "variant": "'white'",
+     "variant_value": "error:-2147024891",
+     "nonsense_value": "error:-2147024891",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024891",
+     "nonsense_value": "error:-2147024891",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "get_next_karaoke_song": {
+   "shape": "STR NUM",
+   "form": "get_next_karaoke_song 'artist' 1",
+   "bare": "error:-2147024809",
+   "baseline": "Deadmau5",
+   "baseline_again": "Deadmau5",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'artist'",
+     "variant": "'singer'",
+     "variant_value": "",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147467259",
+     "nonsense_value": "David Guetta & Bebe Rexha",
+     "verdict": "reads"
+    }
+   ]
+  },
+  "get_spectrum_band": {
+   "shape": "NUM NUM",
+   "form": "get_spectrum_band 1 1",
+   "bare": "error:-2147024809",
+   "baseline": "0",
+   "baseline_again": "0",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147024809",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "is_using": {
+   "shape": "STR DUR DUR",
+   "form": "is_using 'cue' 1000ms 1000ms",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'cue'",
+     "variant": "'effect'",
+     "variant_value": "no",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 3,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "load_pulse_active": {
+   "shape": "DUR DUR",
+   "form": "load_pulse_active 1000ms 1000ms",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "mic_talkover": {
+   "shape": "PCT DUR",
+   "form": "mic_talkover 25% 1000ms",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "os2l_cmd": {
+   "shape": "NUM BOOL",
+   "form": "os2l_cmd 1 on",
+   "bare": "error:-2147024809",
+   "baseline": "error:-2147467263",
+   "baseline_again": "error:-2147467263",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "os2l_scene": {
+   "shape": "STR STR",
+   "form": "os2l_scene 'mypage' 'mypage'",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'mypage'",
+     "variant": "'scene1'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "STR",
+     "baseline": "'mypage'",
+     "variant": "'scene1'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "pad_page": {
+   "shape": "NUM KW",
+   "form": "pad_page 1 'btn1'",
+   "bare": "1 CUE",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "KW",
+     "baseline": "'btn1'",
+     "variant": "'btn2'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "pitch_bend": {
+   "shape": "PCT DUR",
+   "form": "pitch_bend 25% 1000ms",
+   "bare": "no",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "no",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "sampler_volume_master": {
+   "shape": "PCT BOOL",
+   "form": "sampler_volume_master 25% on",
+   "bare": "1",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "no",
+     "nonsense_value": "1",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "set": {
+   "shape": "STR NUM",
+   "form": "set 'fxparam' 1",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'fxparam'",
+     "variant": "'fxslot'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "sideview": {
+   "shape": "STR STR",
+   "form": "sideview 'automix' 'automix'",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'automix'",
+     "variant": "'clone'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "STR",
+     "baseline": "'automix'",
+     "variant": "'clone'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "skin_panel": {
+   "shape": "STR BOOL",
+   "form": "skin_panel 'audiomixer' on",
+   "bare": "error:-2147024809",
+   "baseline": "yes",
+   "baseline_again": "yes",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'audiomixer'",
+     "variant": "'barcounter'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "reads"
+    },
+    {
+     "index": 2,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "yes",
+     "nonsense_value": "yes",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "skin_panelgroup": {
+   "shape": "STR REL",
+   "form": "skin_panelgroup 'decktimer_deck3mini' +1",
+   "bare": "error:-2147024809",
+   "baseline": "error:1",
+   "baseline_again": "error:1",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'decktimer_deck3mini'",
+     "variant": "'decktimer_deck4mini'",
+     "variant_value": "error:1",
+     "nonsense_value": "error:1",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "REL",
+     "baseline": "+1",
+     "variant": "-1",
+     "variant_value": "error:1",
+     "nonsense_value": "no",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "speedwheel": {
+   "shape": "REL NUM",
+   "form": "speedwheel +1 1",
+   "bare": "error:-2147467263",
+   "baseline": "error:-2147467263",
+   "baseline_again": "error:-2147467263",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "REL",
+     "baseline": "+1",
+     "variant": "-1",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "no-answer"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "error:-2147467263",
+     "nonsense_value": "error:-2147467263",
+     "verdict": "no-answer"
+    }
+   ]
+  },
+  "var": {
+   "shape": "STR NUM",
+   "form": "var 'fxparam' 1",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'fxparam'",
+     "variant": "'fxslot'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "yes",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "var_equal": {
+   "shape": "STR NUM",
+   "form": "var_equal 'xp2_slotselect1' 1",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'xp2_slotselect1'",
+     "variant": "'xp2_slotselect2'",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "NUM",
+     "baseline": "1",
+     "variant": "2",
+     "variant_value": "no",
+     "nonsense_value": "yes",
+     "verdict": "rejects-nonsense-only"
+    }
+   ]
+  },
+  "video_transition": {
+   "shape": "DUR PCT",
+   "form": "video_transition 1000ms 25%",
+   "bare": "0",
+   "baseline": "0",
+   "baseline_again": "0",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "DUR",
+     "baseline": "1000ms",
+     "variant": "4000ms",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "ignored"
+    },
+    {
+     "index": 2,
+     "class": "PCT",
+     "baseline": "25%",
+     "variant": "75%",
+     "variant_value": "0",
+     "nonsense_value": "0",
+     "verdict": "ignored"
+    }
+   ]
+  },
+  "view_options": {
+   "shape": "STR BOOL",
+   "form": "view_options 'showkaraoke' on",
+   "bare": "error:-2147024809",
+   "baseline": "no",
+   "baseline_again": "no",
+   "stable": true,
+   "positions": [
+    {
+     "index": 1,
+     "class": "STR",
+     "baseline": "'showkaraoke'",
+     "variant": "'showmusic'",
+     "variant_value": "no",
+     "nonsense_value": "error:-2147024809",
+     "verdict": "rejects-nonsense-only"
+    },
+    {
+     "index": 2,
+     "class": "BOOL",
+     "baseline": "on",
+     "variant": "off",
+     "variant_value": "no",
+     "nonsense_value": "no",
+     "verdict": "ignored"
+    }
+   ]
+  }
+ }
+}

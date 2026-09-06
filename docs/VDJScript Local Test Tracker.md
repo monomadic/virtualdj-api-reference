@@ -1810,3 +1810,43 @@ right argument **shape**, and one only needed a loop saved. The remaining
 `documented_but_not_probe_confirmed` count is what
 `just action-catalog --cross-check` reports; it is worth re-checking each entry's
 documented *example* for its shape before assuming a state is missing.
+
+## Argument Positions: A Question The Other Probers Cannot Ask
+
+Build 18.0.9598, HTTP, query-only, 2026-09-06. Task 12's named next feature,
+motivated by the `get_sample_info` result the same day: every existing prober
+asks "is this token recognized", one token at a time, and is blind to a verb
+whose keyword lives in the second position. `get_sample_info <slot> <field>`
+errors on every single-token probe — real fields included — so all three of its
+documented fields were filed as indistinguishable from nonsense when they were
+simply being asked in the wrong shape.
+
+**Method** (`tools/probe_arg_positions.py`, `just probe-arg-positions`): hold a
+verb's attested shape, vary ONE position between two values *of its own class*,
+and see whether the returned value moves. Varying within the class is the point
+— a difference then means the position was read, not that the verb rejected a
+type it never accepts. Nonsense is still sent, but only to separate "reads it"
+from "ignores everything here". Keyword positions are varied only with keywords
+the verb is actually attested to take; inventing two words would test the floor
+and nothing else. The baseline is re-read last, so a verb whose own value drifts
+is reported `unstable` rather than scored as reading every position.
+
+**Result: 37 verbs probed, 0 unstable, 8 read at least one position, and 4 read
+one beyond the first** — the class of fact no artifact here carried.
+
+| Verb | Shape | Finding |
+| --- | --- | --- |
+| `get_effect_slider_label` | `NUM NUM` | both read — slot, and slider index (`STR` → `SPD`, real Colorize labels). Independently confirmed earlier the same day, so it doubles as the method's calibration |
+| `effect_slider_active` | `NUM NUM` | both read: slot 1 → `0.73` vs slot 2 → `0`, index 1 → `0.73` vs index 2 → `0.99` |
+| **`effect_arm_slider`** | `NUM NUM` | **position 1 IGNORED**, position 2 read. Slot 1 and slot 2 both return `0.73`, as does nonsense there; only the slider index moves the value |
+| `get_next_karaoke_song` | `STR NUM` | both read. `'artist' 1` → `Deadmau5`; `'singer'` → `''`; index `2` → error, while a *nonsense* index returned a different song title, so position 2 selects the upcoming song and falls back to a default rather than erroring on garbage |
+
+`effect_arm_slider` against `effect_slider_active` is the pair worth keeping:
+identical shapes, and one of them is not slot-scoped. Nothing short of varying
+the slot position on its own would have shown that.
+
+**Two limits, stated so the verdicts are not over-read.** `reads` means the
+returned value moved when that position changed — it does not prove the verb
+interprets the argument the way the docs say. And `ignored` is a statement about
+*this state*: a position that changes nothing with the current decks and effects
+may well be read in another.

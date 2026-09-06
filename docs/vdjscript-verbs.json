@@ -13,9 +13,9 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 32,
+    "Partial": 35,
     "Pass": 67,
-    "Untested": 928
+    "Untested": 925
    },
    "documented": 768,
    "tested_pass": 67,
@@ -2475,13 +2475,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, positional-sensitivity probe (tests/verb-arg-positions.json): the attested shape is held and ONE position varied within its own class, so a changed answer means that position is read. Shape 'NUM NUM'. Position 1 is IGNORED — slot 1 and slot 2 both returned 0.73, as did a nonsense token there — while position 2 is read (index 1 -> 0.73, index 2 -> 0.5, nonsense -> 0.73). So the arm slider is not slot-scoped the way effect_slider is: only the slider index matters. Contrast effect_slider_active, whose shape is identical and which reads BOTH positions."
+   ],
    "section": "Effects",
    "description": "Move armed effect parameter",
-   "example": "effect_arm_slider 1 2"
+   "example": "effect_arm_slider 1 2",
+   "confidence": "local_test"
   },
   "effect_arm_slider_label": {
    "name": "effect_arm_slider_label",
@@ -3186,13 +3189,16 @@
     "effect_slider_activate"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, positional-sensitivity probe (tests/verb-arg-positions.json): the attested shape is held and ONE position varied within its own class, so a changed answer means that position is read. Shape 'NUM NUM': both positions read. Slot 1 -> 0.73 vs slot 2 -> 0, and slider index 1 -> 0.73 vs index 2 -> 0.99, with a nonsense index returning the baseline. Slot-scoped and index-scoped, unlike effect_arm_slider which ignores its slot position."
+   ],
    "section": "Effects",
    "description": "Move slider while activating effect",
-   "example": "effect_slider_active 1"
+   "example": "effect_slider_active 1",
+   "confidence": "local_test"
   },
   "effect_slider_reset": {
    "name": "effect_slider_reset",
@@ -5881,13 +5887,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, positional-sensitivity probe (tests/verb-arg-positions.json): the attested shape is held and ONE position varied within its own class, so a changed answer means that position is read. Shape 'STR NUM': both positions read. With 'artist' 1 it returned 'Deadmau5'; changing the field to 'singer' returned '' and changing the index to 2 errored, while a nonsense index returned a DIFFERENT song title — so position 2 selects which upcoming song and falls back to a default rather than erroring on garbage. Field names and the index are separate axes."
+   ],
    "section": "Karaoke",
    "description": "Get upcoming track info",
-   "example": "get_next_karaoke_song \"singer\" +1"
+   "example": "get_next_karaoke_song \"singer\" +1",
+   "confidence": "local_test"
   },
   "get_ns7_platter": {
    "name": "get_ns7_platter",
