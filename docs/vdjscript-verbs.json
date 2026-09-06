@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 9,
     "Partial": 28,
-    "Pass": 62,
-    "Untested": 939
+    "Pass": 65,
+    "Untested": 936
    },
    "documented": 768,
-   "tested_pass": 62,
+   "tested_pass": 65,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -6539,7 +6539,8 @@
    "blocked": false,
    "evidence": [
     "VirtualDJ 2026 (HTTP, 2026-07-30): accepts a trailing argument — bare returns one time mode (286667) while ANY argument, including an unrecognized word, returns another (161780, matching 'elapsed'/'short'). Distinguishing 'short' from fallback needs value-format comparison; unknown args are silently defaulted, never E_INVALIDARG.",
-    "Local test 2026-09-06, HTTP, build 18.0.9598, known-position fixture (tests/get-time-positions.json, 2 runs x 2 phases, order varied). Position arguments discriminate against two nonsense controls and against each other: 'cue1' equals cue_pos 1 mseconly exactly and tracks the cue when it is moved; 'loopout' equals get_loop_out_time exactly; 'loopin' equals get_loop_in_time ONLY while a loop is active — with the loop exited it returns the loop-OUT value while the oracle still reports the in point. An unrecognized tail falls back to 'elapsed', NOT to the bare form (bare followed display_time 'remain' throughout), so bare-versus-argument separation is not recognition. 'short' alone behaves as an unrecognized tail. 'absolute' is a modifier, not a mode: it keeps the display_time setting. 'cue' reads the ACTIVE cue (0 until one is activated, then the active cue's position). 'to_lyrics' returned 0 with no lyrics — unresolved."
+    "Local test 2026-09-06, HTTP, build 18.0.9598, known-position fixture (tests/get-time-positions.json, 2 runs x 2 phases, order varied). Position arguments discriminate against two nonsense controls and against each other: 'cue1' equals cue_pos 1 mseconly exactly and tracks the cue when it is moved; 'loopout' equals get_loop_out_time exactly; 'loopin' equals get_loop_in_time ONLY while a loop is active — with the loop exited it returns the loop-OUT value while the oracle still reports the in point. An unrecognized tail falls back to 'elapsed', NOT to the bare form (bare followed display_time 'remain' throughout), so bare-versus-argument separation is not recognition. 'short' alone behaves as an unrecognized tail. 'absolute' is a modifier, not a mode: it keeps the display_time setting. 'cue' reads the ACTIVE cue (0 until one is activated, then the active cue's position). 'to_lyrics' returned 0 with no lyrics — unresolved.",
+    "Local test 2026-09-06 (second pass, HTTP, build 18.0.9598), STRENGTHENING the same-day known-position result: 'absolute' is a pitch-removing modifier that keeps the display_time mode, now measured where the two timelines actually differ. At deck pitch +8.33% with the playhead fixed, get_time 'absolute' returned 55000 while 'remain' returned 50769 — and 55000 is exactly 90000 minus 35000, i.e. the REMAINING time computed on the unpitched 90 s timeline rather than the pitched 83076 ms one. The earlier run could not separate them because pitch was 0 there, which is why 'absolute' looked equal to 'remain'. get_time_sec 'absolute' agreed at 55."
    ],
    "section": "Get (Query Actions)",
    "description": "Elapsed time",
@@ -6564,10 +6565,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, fixture track paused at a known position with deck pitch +8.33% (so pitched and unpitched timelines differ). Context: elapsed 32307, remain 50769, total 83076 (pitched), file length 90000. Corroborates get_time_sec: only 'total' differs (1), every other form 0, including both nonsense controls and 'display_time'."
+   ],
+   "confidence": "local_test"
   },
   "get_time_ms": {
    "name": "get_time_ms",
@@ -6575,10 +6579,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, fixture track paused at a known position with deck pitch +8.33% (so pitched and unpitched timelines differ). Context: elapsed 32307, remain 50769, total 83076 (pitched), file length 90000. Corroborates get_time_sec: bare 76 = 'remain' 76, 'elapsed' 30, 'total' 7, 'absolute' 0; 'display_time' and both nonsense controls all 30."
+   ],
+   "confidence": "local_test"
   },
   "get_time_msf": {
    "name": "get_time_msf",
@@ -6597,10 +6604,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, fixture track paused at a known position with deck pitch +8.33% (so pitched and unpitched timelines differ). Context: elapsed 32307, remain 50769, total 83076 (pitched), file length 90000. Four documented parameters CONFIRMED with two agreeing nonsense controls: 'elapsed' (sec 32), 'remain' (50, equal to bare because display_time is 'remain'), 'total' (23 — 83076 ms is 1m23s), 'absolute' (55). REFUTED: 'display_time' returned exactly what both nonsense tokens returned (the elapsed fallback), so it is NOT a parameter — the catalog only mentions the setting by name in prose and the tokenizer had been extracting it as one."
+   ],
+   "confidence": "local_test"
   },
   "get_time_sign": {
    "name": "get_time_sign",

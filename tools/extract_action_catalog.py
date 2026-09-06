@@ -47,7 +47,13 @@ ACTION_ENTRY = re.compile(r"<([a-z0-9_]+)>(.*?)</\1>", re.S)
 # 10000ms 3000ms', 'action_deck 1 ? actionA : actionB'. The character class must admit
 # chains, ternaries and backtick expressions or the multi-token examples are lost
 # (2026-09-03: every `fadeout` example was, and 114 verbs with them).
-QUOTED = re.compile(r"['\"]([a-z0-9_ +\-&?:`.%$#]{2,80})['\"]")
+# Scanned SEPARATELY per quote type. One combined pattern desynchronises on the
+# catalog's nested quoting — in `'get time_min "absolute"'` the inner `"` closes
+# the outer `'` span, and the scanner then resumes mid-example, silently dropping
+# the real parameters that follow ("elapsed", "remain", "total"). Two passes let
+# the outer example and the inner keyword both come out.
+QUOTED_SINGLE = re.compile(r"'([a-z0-9_ +\-&?:`.%$#\"]{2,80})'")
+QUOTED_DOUBLE = re.compile(r"\"([a-z0-9_ +\-&?:`.%$#']{2,80})\"")
 # A documented PARAMETER is a bare keyword ('red', 'absolute'); values and
 # expressions are examples, not vocabulary.
 KEYWORD = re.compile(r"^[a-z0-9_+-]{2,40}$")
@@ -73,7 +79,8 @@ def catalog(app: Path, language: str) -> dict[str, dict]:
         text = unescape(body)
         if not text:
             continue
-        quoted = list(dict.fromkeys(QUOTED.findall(text)))
+        quoted = list(dict.fromkeys(QUOTED_SINGLE.findall(text)
+                                    + QUOTED_DOUBLE.findall(text)))
         tokens = [t for t in quoted if " " not in t and KEYWORD.match(t)]
         phrases = [t for t in quoted if " " in t]
         out[name] = {
@@ -86,6 +93,73 @@ def catalog(app: Path, language: str) -> dict[str, dict]:
     return out
 
 
+def binary_blob() -> str | None:
+    """The binary's whole string pool as one searchable blob, or None.
+
+    Used only to DISPROVE: a keyword the parser compares has to exist in the
+    binary somewhere. A documented "parameter" that appears nowhere in it is an
+    example placeholder the doc author invented (`loop_load "myloop"`,
+    `os2l_scene "myscene"`), not vocabulary — no amount of probing will ever
+    confirm one, so it does not belong in the worklist.
+
+    SUBSTRING, not whole-string, and the difference matters: `stutter` and
+    `unmute` are real, probe-confirmed `sampler_mode` keywords that appear only
+    inside longer strings, and a whole-string test wrongly called them
+    placeholders. Erring permissive keeps a real token in the worklist; erring
+    strict silently deletes work.
+    """
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from extract_binary_vocabularies import Image  # noqa: PLC0415
+        return "\n".join(Image(DEFAULT_APP).by_text)
+    except Exception:  # noqa: BLE001 — absence of the binary is not an error here
+        return None
+
+
+# Tokens a focused local test measured directly, outside the arg-form capture.
+# Each entry names the run that established it. Confirmations stop the worklist
+# sending the next agent to re-probe settled ground; REFUTATIONS stop it sending
+# them after a token that has already been shown to behave like nonsense.
+LOCAL_CONFIRMED: dict[str, set[str]] = {
+    # 2026-09-06, pitched fixture: elapsed/remain/total/absolute all separated
+    # from two agreeing nonsense controls on the seconds/minutes/ms variants.
+    "get_time_sec": {"elapsed", "remain", "total", "absolute"},
+    "get_time_min": {"elapsed", "remain", "total", "absolute"},
+    "get_time_ms": {"elapsed", "remain", "total", "absolute"},
+}
+LOCAL_REFUTED: dict[str, set[str]] = {
+    # 2026-09-06: `display_time` returned exactly what both nonsense controls
+    # returned on every variant. The catalog only names the SETTING in prose
+    # ("depending on \"display_time\""); it was never a parameter.
+    "get_time_hour": {"display_time"}, "get_time_min": {"display_time"},
+    "get_time_ms": {"display_time"}, "get_time_msf": {"display_time"},
+    "get_time_sec": {"display_time"}, "get_time_sign": {"display_time"},
+    "get_time": {"display_time"},
+}
+
+
+def extra_confirmations() -> dict[str, set[str]]:
+    """Local-test confirmations that live outside the arg-form capture.
+
+    A focused probe writes its own artifact — the known-position fixture proved
+    `get_time cue1/loopin/loopout` against oracles the arg-form sweep has no way
+    to build — and without this the cross-check keeps listing those tokens as
+    unconfirmed and sends the next agent to re-probe settled ground.
+    """
+    out: dict[str, set[str]] = {k: set(v) for k, v in LOCAL_CONFIRMED.items()}
+    positions = Path("tests/get-time-positions.json")
+    if positions.exists():
+        art = json.load(open(positions))
+        confirmed = {tail for tail, rec in art["summary"]["targets"].items()
+                     if rec["verdict"].startswith("reads_its_position")}
+        # The floors are confirmed by the same run: they are what the nonsense
+        # controls fall back to, measured in every phase.
+        confirmed |= {"elapsed", "short"}
+        if confirmed:
+            out.setdefault("get_time", set()).update(confirmed)
+    return out
+
+
 def cross_check(entries: dict[str, dict]) -> dict:
     """Where the catalog and the probe agree, and where each is alone."""
     if not ARG_FORMS.exists():
@@ -93,11 +167,35 @@ def cross_check(entries: dict[str, dict]) -> dict:
     probed = json.load(open(ARG_FORMS))["verbs"]
     attested_path = Path("tests/attested-tails.json")
     attested = json.load(open(attested_path))["tails"] if attested_path.exists() else {}
+    blob = binary_blob()
+    extra = extra_confirmations()
     both, catalog_only, probe_only = {}, {}, {}
-    three_ways = {}
+    three_ways, placeholders, refuted = {}, {}, {}
     for verb, rec in entries.items():
         documented = set(rec["documented_parameters"])
+        # The catalog quotes whole examples, so the verb's own name comes out of
+        # the tokenizer as if it were one of its parameters.
+        documented.discard(verb)
+        gone = documented & LOCAL_REFUTED.get(verb, set())
+        if gone:
+            refuted[verb] = sorted(gone)
+            documented -= gone
         found = {t[0] for t in probed.get(verb, {}).get("recognized_tokens", []) if len(t) == 1}
+        found |= extra.get(verb, set())
+        # A token any other source vouches for is never a placeholder, whatever
+        # the binary search says.
+        vouched = found | set(attested.get(verb, {}))
+        if blob is not None:
+            # A signed token (`browser_sort "+bpm"`) is a real key wearing a
+            # direction prefix; the binary stores the bare field, so strip the
+            # sign before asking. Without this the sort keys were called
+            # placeholders, which is the one direction of error that deletes
+            # real work.
+            absent = {t for t in documented - vouched
+                      if t.lstrip("+-") not in blob}
+            if absent:
+                placeholders[verb] = sorted(absent)
+                documented -= absent
         if not documented and not found:
             continue
         if documented & found:
@@ -116,6 +214,12 @@ def cross_check(entries: dict[str, dict]) -> dict:
         "documented_but_not_probe_confirmed": catalog_only,
         "probe_confirmed_but_undocumented": probe_only,
         "confirmed_by_all_three": three_ways,
+        # Not a worklist: quoted names the binary never carries as strings, so
+        # they are the doc's own examples rather than vocabulary to confirm.
+        "documented_example_placeholders": placeholders,
+        # Also not a worklist: tokens a local test measured behaving exactly like
+        # its nonsense controls. Documented, tried, and not vocabulary.
+        "documented_but_locally_refuted": refuted,
     }
 
 

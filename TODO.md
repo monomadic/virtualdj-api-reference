@@ -555,9 +555,11 @@ in particular still wants a stem-analysed track, which is the candidates doc's o
 
 ### 7. Repeat `dualdeckmode_decks` In A Better Context
 
-Status: Ready
+Status: Parking lot
 
-Note: Low expected yield until a concrete context is identified
+Note: Low expected yield until a concrete context is identified. Deprioritised by the operator
+2026-09-06 in favour of tasks 10b/11/12/13; move it back to Ready when a concrete context turns
+up, not on a schedule.
 
 The first pad-context run (v2026-m b9336) recorded `dualdeckmode` toggling on while current and deck-scoped `dualdeckmode_decks` readbacks stayed false on both decks. The promotion condition is a visible dual-deck pair or controller context (deck pairs 1/3 or 2/4), which realistically means a 4-deck skin setup or a controller. Do not repeat the same pad-context probe; identify the better context first, or treat this as semi-blocked.
 
@@ -1142,9 +1144,47 @@ merging a narrow re-probe over a broad sweep deleted measurements (950 recognize
 collapsed to 535) and manufactured disputes for verbs whose pairs the new run never sent. It
 now UNIONs form lists and disputes only a form both runs actually measured.
 
-Still next: (1) fixtures for the 81 contextual parameters; (2) mine corpus tails as a third
-independent source of argument forms; (3) use the corpus as a parse-regression set for every
-grammar claim in [VDJScript Grammar](docs/VDJScript%20Grammar.md).
+Still next: (1) fixtures for the contextual parameters — the count is
+`just action-catalog --cross-check` → `documented_but_not_probe_confirmed`, not a figure to
+quote; (2) mine corpus tails as a third independent source of argument forms; (3) use the corpus
+as a parse-regression set for every grammar claim in
+[VDJScript Grammar](docs/VDJScript%20Grammar.md). (2) and (3) have since landed.
+
+**The worklist itself was wrong, and was repaired 2026-09-06 before more probing.** Three defects
+in the catalog's parameter tokenizer, each distorting it in a different direction:
+
+- **Nested quotes desynchronised the scanner.** In `'get time_min "absolute"'` the inner `"`
+  closed the outer `'` span, so the scanner resumed mid-example and silently dropped the real
+  parameters that followed. Single- and double-quoted spans are now scanned separately, which
+  raised the verbs with documented parameters from 96 to **146** — fifty verbs whose documented
+  vocabulary had never been visible to the cross-check at all.
+- **The verb's own name came out as one of its parameters** (`browser_gotofolder`,
+  `get_beat_num`, `loop`, `pad_page` …), because the catalog quotes whole examples.
+- **Doc example names were treated as vocabulary to confirm** — `loop_load "myloop"`,
+  `rack "unit1"`, `set "varname"`, `os2l_scene "myscene"`. These can never be confirmed. They now
+  land in `documented_example_placeholders`, classified by absence from the binary's string pool,
+  with two guards learned the hard way: a token any other source vouches for is never a
+  placeholder (whole-string matching had called the real `sampler_mode` keywords `stutter` and
+  `unmute` placeholders, since they only occur inside longer strings), and a signed token is
+  stripped before the lookup (`browser_sort "+bpm"` is a real key wearing a direction prefix).
+
+**Two new inputs so focused work stops being invisible.** A probe that writes its own artifact —
+the known-position fixture proving `get_time cue1/loopin/loopout` — now feeds the cross-check, so
+it stops listing settled tokens as unconfirmed. And a `documented_but_locally_refuted` bucket
+holds tokens a local test measured behaving exactly like its nonsense controls, so nobody is sent
+after them again.
+
+**First worklist entries actually closed, same day.** The `get_time_*` family, probed on a fixture
+paused at a known position with deck pitch at **+8.33%** so the pitched and unpitched timelines
+differ: `elapsed`, `remain`, `total` and `absolute` all separate from two agreeing nonsense
+controls on `get_time_sec` (32 / 50 / 23 / 55), corroborated on `_min` and `_ms`. `display_time`
+returned exactly what both nonsense tokens returned on every variant — it was never a parameter,
+only the setting named in prose, and it is refuted on all seven verbs that listed it.
+
+That pitch also sharpened an earlier result: `get_time 'absolute'` returned **55000** where
+`remain` returned 50769, and 55000 is exactly 90000 − 35000 — the remaining time on the
+*unpitched* timeline. The known-position run could not separate the two because pitch was 0 there,
+which is why `absolute` had looked merely equal to `remain`.
 
 **Execute-position pass run 2026-09-03** ([tools/probe_execute_forms.py](tools/probe_execute_forms.py),
 `just probe-execute-forms`, artifact `tests/verb-execute-forms.json`). Motivated by `deck all`:

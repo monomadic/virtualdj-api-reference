@@ -1,14 +1,16 @@
 {
  "summary": {
   "actions": 816,
-  "with_parameters": 96,
+  "with_parameters": 146,
   "multi_argument": 18,
   "language": "English.xml",
   "cross_check_counts": {
-   "confirmed_by_both": 27,
-   "documented_but_not_probe_confirmed": 79,
-   "probe_confirmed_but_undocumented": 71,
-   "confirmed_by_all_three": 9
+   "confirmed_by_both": 38,
+   "documented_but_not_probe_confirmed": 78,
+   "probe_confirmed_but_undocumented": 66,
+   "confirmed_by_all_three": 17,
+   "documented_example_placeholders": 30,
+   "documented_but_locally_refuted": 7
   }
  },
  "cross_check": {
@@ -23,6 +25,13 @@
    "auto_cue": [
     "always"
    ],
+   "browser_scroll": [
+    "bottom",
+    "top"
+   ],
+   "browser_window": [
+    "songs"
+   ],
    "color": [
     "red"
    ],
@@ -34,6 +43,9 @@
     "full",
     "scratch",
     "smooth"
+   ],
+   "device_side": [
+    "left"
    ],
    "display_time": [
     "elapsed",
@@ -54,6 +66,9 @@
    "effect_select_multi": [
     "video"
    ],
+   "effects_used": [
+    "master"
+   ],
    "file_count": [
     "automix",
     "karaoke",
@@ -72,6 +87,9 @@
    "get_key": [
     "harmonic"
    ],
+   "get_next_karaoke_song": [
+    "singer"
+   ],
    "get_song_event": [
     "hasbeats",
     "remaining",
@@ -80,11 +98,25 @@
    ],
    "get_time": [
     "absolute",
+    "cue1",
+    "elapsed",
+    "loopin",
+    "loopout",
+    "remain",
+    "short",
+    "total"
+   ],
+   "get_time_min": [
+    "absolute",
+    "elapsed",
     "remain",
     "total"
    ],
    "get_vu_meter": [
     "sampler"
+   ],
+   "has_stems": [
+    "ready"
    ],
    "is_using": [
     "cue",
@@ -96,16 +128,28 @@
     "pads",
     "sample"
    ],
+   "leftvideo": [
+    "auto"
+   ],
    "loop_adjust": [
     "in",
     "move",
     "out"
    ],
    "maximize": [
-    "fullscreen"
+    "fullscreen",
+    "maximized",
+    "windowed"
    ],
    "mixermode": [
     "external"
+   ],
+   "play_mode": [
+    "numark",
+    "pioneer"
+   ],
+   "rightvideo": [
+    "auto"
    ],
    "sampler_mode": [
     "hold",
@@ -113,6 +157,7 @@
     "unmute"
    ],
    "sampler_options": [
+    "locked",
     "stemswap"
    ],
    "scratch_dna_option": [
@@ -122,6 +167,9 @@
    "timecode_mode": [
     "relative",
     "smart"
+   ],
+   "view_options": [
+    "showkaraoke"
    ],
    "wheel_mode": [
     "browser",
@@ -157,15 +205,28 @@
     "red",
     "reset"
    ],
-   "browser_gotofolder": [
-    "browser_gotofolder"
+   "browsed_song": [
+    "rating"
    ],
    "browser_move": [
     "bottom",
     "top"
    ],
-   "browser_shortcut": [
-    "browser_shortcut"
+   "browser_sort": [
+    "+bpm",
+    "-bpm",
+    "artist",
+    "lastplay"
+   ],
+   "browser_window": [
+    "automix",
+    "folders",
+    "sampler",
+    "sidelist",
+    "sideview"
+   ],
+   "cross_assign": [
+    "left"
    ],
    "cue_color": [
     "yellow"
@@ -175,6 +236,9 @@
    ],
    "effect_arm_stem": [
     "stems"
+   ],
+   "effect_colorfx": [
+    "echo"
    ],
    "effect_disable_all": [
     "aux",
@@ -192,8 +256,8 @@
    "effect_select_multi": [
     "echo"
    ],
-   "eventscheduler_start": [
-    "summer_wedding"
+   "effects_used": [
+    "deck"
    ],
    "filter_label": [
     "name"
@@ -201,21 +265,34 @@
    "get_artist_before_feat": [
     "featuring"
    ],
-   "get_beat_num": [
-    "get_beat_num"
+   "get_automix_song": [
+    "title"
    ],
-   "get_decks": [
-    "get_decks"
+   "get_browsed_song": [
+    "playcount",
+    "title"
+   ],
+   "get_date": [
+    "format"
    ],
    "get_key": [
     "musical"
    ],
+   "get_level": [
+    "mic",
+    "sampler",
+    "vocal"
+   ],
    "get_limiter": [
     "booth",
-    "get_limiter"
+    "headphones",
+    "master"
    ],
-   "get_phrase_num": [
-    "get_phrase_num"
+   "get_loaded_song": [
+    "album"
+   ],
+   "get_pitch_zero": [
+    "absolute"
    ],
    "get_sample_info": [
     "group",
@@ -225,6 +302,7 @@
    "get_saved_loop": [
     "length",
     "name",
+    "next",
     "pos"
    ],
    "get_slip_time": [
@@ -242,37 +320,25 @@
     "title"
    ],
    "get_time": [
-    "cue1",
-    "display_time",
-    "elapsed",
-    "loopin",
-    "loopout",
-    "short",
     "to_lyrics"
    ],
    "get_time_hour": [
-    "display_time"
-   ],
-   "get_time_min": [
-    "display_time"
-   ],
-   "get_time_ms": [
-    "display_time"
-   ],
-   "get_time_msf": [
-    "display_time"
-   ],
-   "get_time_sec": [
-    "display_time"
+    "absolute",
+    "elapsed",
+    "remain",
+    "total"
    ],
    "get_time_sign": [
-    "display_time"
+    "elapsed",
+    "remain",
+    "total"
    ],
    "get_version": [
     "2026"
    ],
-   "goto_cue": [
-    "goto_cue"
+   "get_vu_meter": [
+    "mic",
+    "vocal"
    ],
    "hot_cue": [
     "cue",
@@ -280,25 +346,26 @@
     "cue_stop"
    ],
    "invert_deck": [
-    "invert_deck"
+    "left",
+    "right"
    ],
-   "is_pc": [
-    "is_pc"
+   "karaoke_load": [
+    "append"
    ],
-   "loop": [
-    "loop"
+   "leftcross": [
+    "none",
+    "only"
+   ],
+   "linein": [
+    "aux",
+    "mic",
+    "trs"
+   ],
+   "loaded_song": [
+    "rating"
    ],
    "loop_color": [
     "yellow"
-   ],
-   "loop_load": [
-    "myloop"
-   ],
-   "loop_load_prepare": [
-    "myloop"
-   ],
-   "loop_save": [
-    "myloop"
    ],
    "mix_and_load_next": [
     "nosync"
@@ -307,25 +374,23 @@
     "internal"
    ],
    "motorwheel": [
-    "motorwheel"
+    "move",
+    "timestamp"
    ],
    "os2l_button": [
-    "mybutton",
     "off",
     "on"
    ],
    "os2l_scene": [
     "mypage",
-    "myscene",
     "on",
     "scene1"
    ],
-   "pad_page": [
-    "pad_page"
-   ],
    "padfx": [
+    "echo",
     "off",
-    "on"
+    "on",
+    "reverb"
    ],
    "padshift": [
     "pad"
@@ -337,7 +402,9 @@
     "pad_pressure"
    ],
    "param_cast": [
+    "000",
     "absolute",
+    "artist",
     "beats",
     "boolean",
     "float",
@@ -357,52 +424,57 @@
    "pitch": [
     "bpm"
    ],
-   "rack": [
-    "unit1"
+   "pitch_zero": [
+    "center"
    ],
-   "rack_prioritize": [
-    "unit1"
+   "playlist_load": [
+    "append"
    ],
-   "rack_solo": [
-    "unit1"
+   "prelisten_output": [
+    "auto"
    ],
    "sampler_bank": [
     "birthday"
    ],
-   "sampler_play": [
-    "sampler_play"
+   "sampler_loop": [
+    "current",
+    "play"
    ],
-   "sampler_stop": [
-    "sampler_stop"
+   "sampler_output": [
+    "headphones",
+    "popup"
+   ],
+   "sampler_pad_volume": [
+    "siren"
+   ],
+   "sampler_rec": [
+    "master",
+    "mic"
    ],
    "sampler_volume": [
-    "sampler_volume"
+    "siren"
    ],
-   "sampler_volume_master": [
-    "sampler_volume_master"
+   "search_options": [
+    "composer"
    ],
-   "saved_loop": [
-    "myloop"
+   "show_splitpanel": [
+    "sidelist",
+    "sideview"
    ],
-   "saved_loop_prepare": [
-    "myloop"
+   "sidelist_load": [
+    "append"
    ],
-   "set": [
-    "var2",
-    "varname"
+   "sideview_sort": [
+    "artist",
+    "lastplay"
    ],
-   "set_var_dialog": [
-    "varname"
-   ],
-   "skin_panelgroup": [
-    "groupname",
-    "panelname"
+   "slicer": [
+    "hold",
+    "length",
+    "step"
    ],
    "stem_pad": [
     "isolate"
-   ],
-   "stems_split": [
-    "stems_split"
    ],
    "sync_hint": [
     "phase",
@@ -413,9 +485,6 @@
    ],
    "timecode_reset_pitch": [
     "software"
-   ],
-   "var_equal": [
-    "that_var"
    ],
    "video_transition": [
     "left"
@@ -436,12 +505,7 @@
     "pioneer"
    ],
    "browser_scroll": [
-    "bottom",
-    "parent",
-    "top"
-   ],
-   "browser_window": [
-    "songs"
+    "parent"
    ],
    "color": [
     "green"
@@ -472,7 +536,6 @@
     "remote_init_status"
    ],
    "device_side": [
-    "left",
     "right"
    ],
    "effect_colorslider": [
@@ -493,9 +556,6 @@
    "effect_stems": [
     "all",
     "vocal"
-   ],
-   "effects_used": [
-    "master"
    ],
    "font_size": [
     "big"
@@ -525,7 +585,6 @@
    ],
    "get_next_karaoke_song": [
     "artist",
-    "singer",
     "title"
    ],
    "get_position": [
@@ -542,14 +601,23 @@
     "active",
     "all"
    ],
+   "get_time_ms": [
+    "absolute",
+    "elapsed",
+    "remain",
+    "total"
+   ],
    "get_time_msf": [
     "absolute"
    ],
+   "get_time_sec": [
+    "absolute",
+    "elapsed",
+    "remain",
+    "total"
+   ],
    "get_title_before_remix": [
     "clean"
-   ],
-   "has_stems": [
-    "ready"
    ],
    "is_using": [
     "loopsize",
@@ -557,9 +625,6 @@
    ],
    "karaoke": [
     "Off"
-   ],
-   "leftvideo": [
-    "auto"
    ],
    "load_pulse": [
     "all"
@@ -580,9 +645,7 @@
     "all"
    ],
    "maximize": [
-    "maximized",
-    "original",
-    "windowed"
+    "original"
    ],
    "pad_page": [
     "btn1"
@@ -599,13 +662,6 @@
     "play_stutter",
     "tooltips"
    ],
-   "play_mode": [
-    "numark",
-    "pioneer"
-   ],
-   "rightvideo": [
-    "auto"
-   ],
    "sampler_color": [
     "all"
    ],
@@ -614,9 +670,6 @@
    ],
    "sampler_loaded": [
     "all"
-   ],
-   "sampler_options": [
-    "locked"
    ],
    "sampler_pad_volume": [
     "all"
@@ -668,7 +721,6 @@
     "no_sources"
    ],
    "view_options": [
-    "showkaraoke",
     "showmusic",
     "showvideo"
    ],
@@ -683,17 +735,27 @@
    "auto_bpm_transition_options": [
     "stems"
    ],
+   "browser_scroll": [
+    "bottom"
+   ],
+   "browser_window": [
+    "songs"
+   ],
    "color": [
     "red"
    ],
    "crossfader_curve": [
     "cut",
     "full",
+    "scratch",
     "smooth"
    ],
    "display_time": [
     "elapsed",
     "remain"
+   ],
+   "file_count": [
+    "automix"
    ],
    "filter_label": [
     "clean"
@@ -701,20 +763,164 @@
    "get_crossfader_result": [
     "full"
    ],
+   "get_next_karaoke_song": [
+    "singer"
+   ],
    "get_time": [
+    "elapsed",
     "remain",
     "total"
    ],
    "is_using": [
+    "cue",
     "effect",
     "equalizer",
+    "filter",
+    "load",
+    "loop",
     "pads",
     "sample"
+   ],
+   "leftvideo": [
+    "auto"
    ],
    "loop_adjust": [
     "in",
     "move",
     "out"
+   ],
+   "play_mode": [
+    "numark"
+   ],
+   "rightvideo": [
+    "auto"
+   ],
+   "view_options": [
+    "showkaraoke"
+   ]
+  },
+  "documented_example_placeholders": {
+   "add_to_list": [
+    "my_list"
+   ],
+   "cycle": [
+    "my_var"
+   ],
+   "eventscheduler_start": [
+    "summer_wedding"
+   ],
+   "load": [
+    "path_to_my_song"
+   ],
+   "loop_load": [
+    "myloop"
+   ],
+   "loop_load_prepare": [
+    "myloop"
+   ],
+   "loop_save": [
+    "myloop"
+   ],
+   "multibutton": [
+    "my_button"
+   ],
+   "multibutton_select": [
+    "my_button"
+   ],
+   "os2l_button": [
+    "blackout",
+    "mybutton",
+    "mypage"
+   ],
+   "os2l_scene": [
+    "myscene"
+   ],
+   "rack": [
+    "rack1",
+    "unit1"
+   ],
+   "rack_prioritize": [
+    "rack1",
+    "unit1"
+   ],
+   "rack_solo": [
+    "rack1",
+    "unit1"
+   ],
+   "reinit_controller": [
+    "mycontroller"
+   ],
+   "saved_loop": [
+    "myloop"
+   ],
+   "saved_loop_prepare": [
+    "myloop"
+   ],
+   "set": [
+    "var2",
+    "varname"
+   ],
+   "set_var_dialog": [
+    "varname"
+   ],
+   "skin_panel": [
+    "my_panel"
+   ],
+   "skin_panelgroup": [
+    "groupname",
+    "panelname"
+   ],
+   "toggle": [
+    "my_var"
+   ],
+   "var": [
+    "my_var"
+   ],
+   "var_equal": [
+    "my_var",
+    "that_var",
+    "this_var"
+   ],
+   "var_greater": [
+    "my_var"
+   ],
+   "var_not_equal": [
+    "my_var"
+   ],
+   "var_smaller": [
+    "my_var"
+   ],
+   "video_fx_select": [
+    "my_plugin"
+   ],
+   "video_source_select": [
+    "webcam"
+   ],
+   "video_transition_select": [
+    "my_plugin"
+   ]
+  },
+  "documented_but_locally_refuted": {
+   "get_time": [
+    "display_time"
+   ],
+   "get_time_hour": [
+    "display_time"
+   ],
+   "get_time_min": [
+    "display_time"
+   ],
+   "get_time_ms": [
+    "display_time"
+   ],
+   "get_time_msf": [
+    "display_time"
+   ],
+   "get_time_sec": [
+    "display_time"
+   ],
+   "get_time_sign": [
+    "display_time"
    ]
   }
  },
@@ -749,9 +955,11 @@
   },
   "add_to_list": {
    "text": "Add the currently selected songs in the browser to the specified List. 'add_to_list \"my_list\"'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_list"
+   ],
    "quoted_phrases": [
-    "add_to_list "
+    "add_to_list \"my_list\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -770,9 +978,7 @@
    "text": "Assign a specific controller to this deck. \n'deck 1 assign_controller \"CDJ400\" 2' assigns the second CDJ400 to deck 1\nOr in a controller mapping 'deck 1 assign_controller' will assign the controller the action was executed from to deck 1.",
    "documented_parameters": [],
    "quoted_phrases": [
-    " 2",
-    "deck 1 assign_controller",
-    "deck 1 assign_controller "
+    "deck 1 assign_controller"
    ],
    "multi_argument": false,
    "lines": 3
@@ -1100,10 +1306,11 @@
   },
   "browsed_song": {
    "text": "set a property of the currently browsed file: \"browsed_song 'rating' 5\", ...",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "rating"
+   ],
    "quoted_phrases": [
-    " 5",
-    "browsed_song "
+    "browsed_song 'rating' 5"
    ],
    "multi_argument": false,
    "lines": 1
@@ -1112,7 +1319,8 @@
    "text": "add or remove a hash tag from user1, user2 or comment of the currently browsed file: \"browsed_song_hashtag 'user 1' '#high_energy'\"",
    "documented_parameters": [],
    "quoted_phrases": [
-    "browsed_song_hashtag "
+    "browsed_song_hashtag 'user 1' '#high_energy'",
+    "user 1"
    ],
    "multi_argument": false,
    "lines": 1
@@ -1153,7 +1361,6 @@
     "browser_gotofolder"
    ],
    "quoted_phrases": [
-    "browser_gotofolder ",
     "browser_gotofolder 4"
    ],
    "multi_argument": false,
@@ -1209,9 +1416,13 @@
   },
   "browser_scroll": {
    "text": "scroll through the songs or folders.\n'browser_scroll +1' or 'browser_scroll -1' to scroll one line, or \"browser_scroll 'top'\", \"browser_scroll 'bottom'\" to scroll to the beginning or end\nWhen the folder list is selected, 'browser_scroll parent' will scroll up to the parent folder",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "bottom",
+    "top"
+   ],
    "quoted_phrases": [
-    "browser_scroll ",
+    "browser_scroll 'bottom'",
+    "browser_scroll 'top'",
     "browser_scroll +1",
     "browser_scroll -1",
     "browser_scroll parent"
@@ -1230,18 +1441,38 @@
   },
   "browser_sort": {
    "text": "Sort the browser files on the specified column: 'browser_sort \"artist\"', 'browser_sort \"lastplay\"',...\nTo sort in descending order, add a - in front of the column name: 'browser_sort \"-bpm\"'\nTo explicitly sort in ascending order, add a + in front of the column name: 'browser_sort \"+bpm\"'\nTo reset the sort order of a playlist to it's original order, use 'browser_sort \"Original Sort Order\"'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "+bpm",
+    "-bpm",
+    "artist",
+    "lastplay"
+   ],
    "quoted_phrases": [
-    "browser_sort "
+    "browser_sort \"+bpm\"",
+    "browser_sort \"-bpm\"",
+    "browser_sort \"artist\"",
+    "browser_sort \"lastplay\""
    ],
    "multi_argument": false,
    "lines": 4
   },
   "browser_window": {
    "text": "Change the active browser zone. \"browser_window 'folders'\", \"browser_window 'songs'\", \"browser_window 'sideview'\", or \"browser_window 'automix'\", \"browser_window 'sidelist'\", \"browser_window 'sampler'\"\nCycle through available browser zones. \"browser_window +1\", \"browser_window -1\"\nCycle through specified zones. Example \"browser_window 'folders,songs'\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "automix",
+    "folders",
+    "sampler",
+    "sidelist",
+    "sideview",
+    "songs"
+   ],
    "quoted_phrases": [
-    "browser_window ",
+    "browser_window 'automix'",
+    "browser_window 'folders'",
+    "browser_window 'sampler'",
+    "browser_window 'sidelist'",
+    "browser_window 'sideview'",
+    "browser_window 'songs'",
     "browser_window +1",
     "browser_window -1"
    ],
@@ -1326,9 +1557,7 @@
    "text": "Assign a mapping to a controller\n'controller_mapping \"My Mapping\"' assigns the mapping 'My Mapping' to the controller the command was executed on\n'controller_mapping \"CDJ400\" \"My Mapping\"' assigns the mapping 'My Mapping' to all CDJ400s\n'controller_mapping \"CDJ400\" \"My Mapping\" 2' assigns the mapping 'My Mapping' to the second CDJ400",
    "documented_parameters": [],
    "quoted_phrases": [
-    " 2",
-    " assigns the mapping ",
-    "controller_mapping "
+    " assigns the mapping "
    ],
    "multi_argument": false,
    "lines": 4
@@ -1364,11 +1593,12 @@
   "cross_assign": {
    "text": "assign this deck to a side of the crossfader: \"deck 3 cross_assign 'left'\" or \"deck 3 cross_assign 'thru'\"",
    "documented_parameters": [
+    "left",
     "thru"
    ],
    "quoted_phrases": [
-    " or ",
-    "deck 3 cross_assign "
+    "deck 3 cross_assign 'left'",
+    "deck 3 cross_assign 'thru'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -1388,9 +1618,7 @@
     "scratch",
     "smooth"
    ],
-   "quoted_phrases": [
-    "crossfader_curve "
-   ],
+   "quoted_phrases": [],
    "multi_argument": false,
    "lines": 1
   },
@@ -1575,11 +1803,12 @@
   },
   "cycle": {
    "text": "syntax: 'cycle \"my_var\" 42'. increment my_var, and goes back to 0 when it reaches 42. 'cycle \"my_var\" -42' decrements my_var, and goes to 41 after it reached 0.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    " -42",
-    " 42",
-    "cycle "
+    "cycle \"my_var\" -42",
+    "cycle \"my_var\" 42"
    ],
    "multi_argument": false,
    "lines": 1
@@ -1607,10 +1836,11 @@
   },
   "device_side": {
    "text": "Assign a different action for a button or slider of a device depending on which side of the device it is on: \"device_side 'left' ? action_for_left : action_for_right\"\nFor more than 2-deck controllers, you can use \"device_side 1 ? action1 : device_side 2 ? action2 ? device_side 3 ? action3 : etc...\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "left"
+   ],
    "quoted_phrases": [
-    " ? action_for_left : action_for_right",
-    "device_side "
+    "device_side 'left' ? action_for_left : action_for_right"
    ],
    "multi_argument": false,
    "lines": 2
@@ -1897,9 +2127,11 @@
   },
   "effect_colorfx": {
    "text": "'effect_colorfx 1 \"echo\"' to use echo on custom color fx slot 1 (up to 4 custom slots available)",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "echo"
+   ],
    "quoted_phrases": [
-    "effect_colorfx 1 "
+    "effect_colorfx 1 \"echo\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -2113,9 +2345,13 @@
   },
   "effects_used": {
    "text": "Active when there are any effects activated. Use \"effects_used 'deck'\" to get the effects on the selected deck, or \"effects_used 'master'\" to get effects activated on master.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "deck",
+    "master"
+   ],
    "quoted_phrases": [
-    "effects_used "
+    "effects_used 'deck'",
+    "effects_used 'master'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -2518,10 +2754,12 @@
   },
   "get_automix_song": {
    "text": "get a property from the next song in automix: \"get_automix_song 'title'\"\nyou can also get properties from songs further down: \"get_automix_song 'title' 2\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "title"
+   ],
    "quoted_phrases": [
-    " 2",
-    "get_automix_song "
+    "get_automix_song 'title'",
+    "get_automix_song 'title' 2"
    ],
    "multi_argument": false,
    "lines": 2
@@ -2676,10 +2914,13 @@
   },
   "get_browsed_song": {
    "text": "get a property from the currently browsed file: \"get_browsed_song 'title'\", \"get browsed_song 'playcount'\", etc...",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "playcount",
+    "title"
+   ],
    "quoted_phrases": [
-    "get browsed_song ",
-    "get_browsed_song "
+    "get browsed_song 'playcount'",
+    "get_browsed_song 'title'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -2739,9 +2980,11 @@
   },
   "get_date": {
    "text": "get the current date (use 'get_date \"format\"' to get the date in a specific format. format can include %Y, %m, %d for year, month and day, %A for weekday)",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "format"
+   ],
    "quoted_phrases": [
-    "get_date "
+    "get_date \"format\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -2759,8 +3002,8 @@
     "absolute"
    ],
    "quoted_phrases": [
-    " or ",
-    "get_deck_color ",
+    "get_deck_color \"absolute\"",
+    "get_deck_color \"absolute\" 50%",
     "get_deck_color 50%"
    ],
    "multi_argument": false,
@@ -3067,9 +3310,15 @@
   },
   "get_level": {
    "text": "Get level of signal before master volume. If no deck is specified will get master level\nUse \"get_level 'mic'\" for microphone level, or \"get_level 'sampler'\" for sampler level\nUse \"get_level 'vocal'\" for vocal vu meter, other stem names also supported",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "mic",
+    "sampler",
+    "vocal"
+   ],
    "quoted_phrases": [
-    "get_level "
+    "get_level 'mic'",
+    "get_level 'sampler'",
+    "get_level 'vocal'"
    ],
    "multi_argument": false,
    "lines": 3
@@ -3120,21 +3369,25 @@
    "text": "return true if the limiter is compressing because the signal was saturated. Use 'deck 1 get limiter' to get the limiter on a deck in external mixer mode, or 'get_limiter' (or 'get_limiter \"master\") to get the limiter on the master for internal mixing mode (also can use 'get_limiter \"headphones\"' and 'get_limiter \"booth\"')",
    "documented_parameters": [
     "booth",
-    "get_limiter"
+    "get_limiter",
+    "headphones",
+    "master"
    ],
    "quoted_phrases": [
-    " and ",
     "deck 1 get limiter",
-    "get_limiter "
+    "get_limiter \"booth\"",
+    "get_limiter \"headphones\""
    ],
    "multi_argument": false,
    "lines": 1
   },
   "get_loaded_song": {
    "text": "get a property from the song loaded on the deck: \"deck 2 get_loaded_song 'album'\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "album"
+   ],
    "quoted_phrases": [
-    "deck 2 get_loaded_song "
+    "deck 2 get_loaded_song 'album'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -3193,10 +3446,11 @@
   },
   "get_next_karaoke_song": {
    "text": "Get info about the upcoming karaoke tracks\nExample 'get_next_karaoke_song \"singer\" +1'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "singer"
+   ],
    "quoted_phrases": [
-    " +1",
-    "get_next_karaoke_song "
+    "get_next_karaoke_song \"singer\" +1"
    ],
    "multi_argument": false,
    "lines": 2
@@ -3228,10 +3482,11 @@
   },
   "get_pitch_zero": {
    "text": "Is true if the pitch is zero, with an optional precision parameter: 'get pitch_zero 5%' (the % is relative to the pitch range. Use \"get pitch_zero 'absolute' 0.1%\" to use absolute precision)",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "absolute"
+   ],
    "quoted_phrases": [
-    " 0.1%",
-    "get pitch_zero ",
+    "get pitch_zero 'absolute' 0.1%",
     "get pitch_zero 5%"
    ],
    "multi_argument": false,
@@ -3409,11 +3664,12 @@
    "documented_parameters": [
     "length",
     "name",
+    "next",
     "pos"
    ],
    "quoted_phrases": [
-    "get_saved_loop ",
-    "get_saved_loop 1 "
+    "get_saved_loop 'next' 'name'",
+    "get_saved_loop 1 'name'"
    ],
    "multi_argument": false,
    "lines": 3
@@ -3478,7 +3734,8 @@
     "title"
    ],
    "quoted_phrases": [
-    "get text "
+    "get text 'you are listening to %title by %author'",
+    "you are listening to %title by %author"
    ],
    "multi_argument": false,
    "lines": 1
@@ -3506,12 +3763,15 @@
   "get_time_hour": {
    "text": "Get the hours of the elapsed time (or remaining or total, depending on \"display_time\")\nUse 'get_time_hour \"absolute\"' if you don't want to take the pitch variations into account\nYou can write 'get_time_hour \"elapsed\"' or \"remain\" or \"total\" to bypass the setting of display_time",
    "documented_parameters": [
-    "display_time"
+    "absolute",
+    "display_time",
+    "elapsed",
+    "remain",
+    "total"
    ],
    "quoted_phrases": [
-    " if you don",
-    " or ",
-    "get_time_hour "
+    "get_time_hour \"absolute\"",
+    "get_time_hour \"elapsed\""
    ],
    "multi_argument": false,
    "lines": 3
@@ -3519,12 +3779,15 @@
   "get_time_min": {
    "text": "get the minutes of the elapsed time (or remaining or total, depending on \"display_time\"). use 'get time_min \"absolute\"' if you don't want to take the pitch variations in account. you can write 'get time_min \"elapsed\"' or \"remain\" or \"total\" to bypass the setting of display_time",
    "documented_parameters": [
-    "display_time"
+    "absolute",
+    "display_time",
+    "elapsed",
+    "remain",
+    "total"
    ],
    "quoted_phrases": [
-    " if you don",
-    " or ",
-    "get time_min "
+    "get time_min \"absolute\"",
+    "t want to take the pitch variations in account. you can write "
    ],
    "multi_argument": false,
    "lines": 1
@@ -3561,11 +3824,13 @@
   "get_time_sign": {
    "text": "Get the sign (-1 or +1) of the elapsed time (or remaining or total, depending on \"display_time\")\nYou can write 'get_time_sign \"elapsed\"' or \"remain\" or \"total\" to bypass the setting of display_time",
    "documented_parameters": [
-    "display_time"
+    "display_time",
+    "elapsed",
+    "remain",
+    "total"
    ],
    "quoted_phrases": [
-    " or ",
-    "get_time_sign "
+    "get_time_sign \"elapsed\""
    ],
    "multi_argument": false,
    "lines": 2
@@ -3666,12 +3931,14 @@
   "get_vu_meter": {
    "text": "Get level of signal after master volume. If no deck is specified will get master level.\nUse \"get_vu_meter 'mic'\" for microphone level or \"get_vu_meter 'sampler'\" for sampler level\nUse \"get_level 'vocal'\" for vocal vu meter, other stem names also supported",
    "documented_parameters": [
-    "sampler"
+    "mic",
+    "sampler",
+    "vocal"
    ],
    "quoted_phrases": [
-    " for microphone level or ",
-    "get_level ",
-    "get_vu_meter "
+    "get_level 'vocal'",
+    "get_vu_meter 'mic'",
+    "get_vu_meter 'sampler'"
    ],
    "multi_argument": false,
    "lines": 3
@@ -3861,9 +4128,12 @@
   },
   "has_stems": {
    "text": "Return true if the track has stems available. Can also be called with 'has_stems \"2.0\"' to check for new engine, or 'has_stems \"ready\"' to check if stems are ready at the current playing position",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "ready"
+   ],
    "quoted_phrases": [
-    "has_stems "
+    "has_stems \"2.0\"",
+    "has_stems \"ready\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -3962,10 +4232,13 @@
   "invert_deck": {
    "text": "switch leftdeck between deck 1 and deck 3 or rightdeck between deck 2 and deck 4\n\"invert_deck\" to swap the calling deck, or \"invert_deck 'left'\", \"invert_deck 'right'\" to specifically switch left or right deck",
    "documented_parameters": [
-    "invert_deck"
+    "invert_deck",
+    "left",
+    "right"
    ],
    "quoted_phrases": [
-    "invert_deck "
+    "invert_deck 'left'",
+    "invert_deck 'right'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -4113,9 +4386,11 @@
   },
   "karaoke_load": {
    "text": "Load the folder or playlist selected in the browser in the karaoke list\nUse \"karaoke_load 'append'\" to add the selected folder to the karaoke list instead of replacing the existing karaoke",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "append"
+   ],
    "quoted_phrases": [
-    "karaoke_load "
+    "karaoke_load 'append'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -4213,11 +4488,14 @@
   },
   "leftcross": {
    "text": "assign this deck to the left of the crossfader: \"deck 3 leftcross\"\n\"deck 3 leftcross 'only'\" to assign only deck 3 to left of the crossfader\n\"leftcross 'none'\" to disable the left crossfader",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "none",
+    "only"
+   ],
    "quoted_phrases": [
     "deck 3 leftcross",
-    "deck 3 leftcross ",
-    "leftcross "
+    "deck 3 leftcross 'only'",
+    "leftcross 'none'"
    ],
    "multi_argument": false,
    "lines": 3
@@ -4234,10 +4512,12 @@
   },
   "leftvideo": {
    "text": "assign this deck to the left of the video crossfader: \"deck 3 leftvideo\" or \"leftvideo +1\" or \"leftvideo 'auto'\".",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "auto"
+   ],
    "quoted_phrases": [
     "deck 3 leftvideo",
-    "leftvideo ",
+    "leftvideo 'auto'",
     "leftvideo +1"
    ],
    "multi_argument": false,
@@ -4268,11 +4548,16 @@
   },
   "linein": {
    "text": "Activate or deactivate the linein on this deck.\nYou can also specify a linein number to assign another linein: \"deck 1 linein 2 on\"\nOr you can assign the microphone or aux input: \"deck 3 linein 'mic' on\" or \"deck 3 linein 'aux' on\"\nIf you don't want the line in to become the master deck automatically, you can use \"deck 3 linein 'trs'\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "aux",
+    "mic",
+    "trs"
+   ],
    "quoted_phrases": [
-    " on",
     "deck 1 linein 2 on",
-    "deck 3 linein "
+    "deck 3 linein 'aux' on",
+    "deck 3 linein 'mic' on",
+    "deck 3 linein 'trs'"
    ],
    "multi_argument": false,
    "lines": 4
@@ -4286,9 +4571,11 @@
   },
   "load": {
    "text": "load the selected song on the deck. you can also specify a fullpath to load 'load \"path_to_my_song\"'.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "path_to_my_song"
+   ],
    "quoted_phrases": [
-    "load "
+    "load \"path_to_my_song\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -4336,7 +4623,7 @@
    "text": "load a new skin. Use syntax \" load_skin ':newvariation' \" to load a different variation inside the same skin file.",
    "documented_parameters": [],
    "quoted_phrases": [
-    " load_skin "
+    " load_skin ':newvariation' "
    ],
    "multi_argument": false,
    "lines": 1
@@ -4350,10 +4637,11 @@
   },
   "loaded_song": {
    "text": "set a property of the currently loaded file: \"loaded_song 'rating' 5\", ...",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "rating"
+   ],
    "quoted_phrases": [
-    " 5",
-    "loaded_song "
+    "loaded_song 'rating' 5"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4362,7 +4650,8 @@
    "text": "add or remove a hash tag from user1, user2 or comment of the currently loaded song: \"loaded_song_hashtag 'user 1' '#high_energy'\"",
    "documented_parameters": [],
    "quoted_phrases": [
-    "loaded_song_hashtag "
+    "loaded_song_hashtag 'user 1' '#high_energy'",
+    "user 1"
    ],
    "multi_argument": false,
    "lines": 1
@@ -4491,7 +4780,7 @@
     "myloop"
    ],
    "quoted_phrases": [
-    "loop_load ",
+    "loop_load \"myloop\"",
     "loop_load 1"
    ],
    "multi_argument": false,
@@ -4503,7 +4792,7 @@
     "myloop"
    ],
    "quoted_phrases": [
-    "loop_load_prepare ",
+    "loop_load_prepare \"myloop\"",
     "loop_load_prepare 1"
    ],
    "multi_argument": false,
@@ -4588,7 +4877,7 @@
     "myloop"
    ],
    "quoted_phrases": [
-    "loop_save ",
+    "loop_save \"myloop\"",
     "loop_save 1"
    ],
    "multi_argument": false,
@@ -4676,20 +4965,21 @@
   "match_key": {
    "text": "change the key of the song to match the given key. you can use standard notation ('match_key \"A#m\"') or numeric ('match_key \"03A\"'). if no given key, it will use the other deck. the change will be the smallest change to make it compatible with the given key.",
    "documented_parameters": [],
-   "quoted_phrases": [
-    "match_key "
-   ],
+   "quoted_phrases": [],
    "multi_argument": false,
    "lines": 1
   },
   "maximize": {
    "text": "maximize the application to maximized, full screen, or back to windowed.\nA specific mode can be selected using \"maximize 'windowed'\", \"maximize 'maximized'\" or \"maximize 'fullscreen'\"",
    "documented_parameters": [
-    "fullscreen"
+    "fullscreen",
+    "maximized",
+    "windowed"
    ],
    "quoted_phrases": [
-    " or ",
-    "maximize "
+    "maximize 'fullscreen'",
+    "maximize 'maximized'",
+    "maximize 'windowed'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -4704,9 +4994,7 @@
   "menu_button": {
    "text": "defines a button whose behaviour can be changed by a menu. Syntax: 'menu_button 1 \"hotcue,sampler,effect,loop\"'.",
    "documented_parameters": [],
-   "quoted_phrases": [
-    "menu_button 1 "
-   ],
+   "quoted_phrases": [],
    "multi_argument": false,
    "lines": 1
   },
@@ -4871,12 +5159,13 @@
   "motorwheel": {
    "text": "used for a motorized jogwheel. Each time the jogwheel moves, send 'motorwheel \"move\" +1.0' followed by 'motorwheel \"timestamp\" 1000.0'. 'move +1.0' means a full platter rotation. 'timestamp 1.0' means 1ms since last message. You should query 'motorwheel' and turn the motor on when it returns true and off when false.",
    "documented_parameters": [
-    "motorwheel"
+    "motorwheel",
+    "move",
+    "timestamp"
    ],
    "quoted_phrases": [
-    " +1.0",
-    " 1000.0",
-    "motorwheel ",
+    "motorwheel \"move\" +1.0",
+    "motorwheel \"timestamp\" 1000.0",
     "move +1.0",
     "timestamp 1.0"
    ],
@@ -4899,19 +5188,23 @@
   },
   "multibutton": {
    "text": "Click on the named multibutton: 'multibutton \"my_button\"'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_button"
+   ],
    "quoted_phrases": [
-    "multibutton "
+    "multibutton \"my_button\""
    ],
    "multi_argument": false,
    "lines": 1
   },
   "multibutton_select": {
    "text": "Open the selection menu for the named multibutton.\nIf a second text parameter is provided after the name, use it as the new action to load in the multibutton: 'multibutton_select \"my_button\" \"goto_cue 2 & play\"'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_button"
+   ],
    "quoted_phrases": [
     "goto_cue 2 & play",
-    "multibutton_select "
+    "multibutton_select \"my_button\" \"goto_cue 2 & play\""
    ],
    "multi_argument": false,
    "lines": 2
@@ -4979,14 +5272,19 @@
   "os2l_button": {
    "text": "Send a command to a DMX software over OS2L: 'os2l_button \"blackout\"', 'os2l_button \"fog machine\" while_pressed', etc.\nIf you want to specify a page, you can use 'os2l_button \"mypage\" \"mybutton\"'.\nIf the DMX software doesn't send feedback commands, os2l_button acts as a flash button (it sends 'on' when pressed, 'off' when released) - use 'os2l_button \"mybutton\" on' to not send commands on release.\nIf the DMX software sends feedback commands, os2l_button acts as a toggle button (it sends the opposite of the last feedback when pressed, nothing on release) - use 'os2l_button \"mybutton\" while_pressed' to send a command on release.",
    "documented_parameters": [
+    "blackout",
     "mybutton",
+    "mypage",
     "off",
     "on"
    ],
    "quoted_phrases": [
-    " on",
-    " while_pressed",
-    "os2l_button "
+    "fog machine",
+    "os2l_button \"blackout\"",
+    "os2l_button \"fog machine\" while_pressed",
+    "os2l_button \"mybutton\" on",
+    "os2l_button \"mybutton\" while_pressed",
+    "os2l_button \"mypage\" \"mybutton\""
    ],
    "multi_argument": false,
    "lines": 4
@@ -5135,16 +5433,19 @@
   "padfx": {
    "text": "Activate/deactivate named effect with a single key. Effect parameters can be specified as well.\n'padfx \"echo\" 40% 90%' to start/stop the echo effect with first parameter at 40% and second parameter at 90%. When the effect is stopped, the parameters return to their original values.\n'padfx \"echo\" 40% 1bt' to start/stop the echo effect with first parameter at 40% and length of 1 beat\n'padfx \"echo\" 40% 90% smart_pressed' smart_pressed works as a toggle when pressing the button shortly, or as a temporary while holding the button pressed\n'padfx \"echo\" 40% 90% \"TRAIL:on\"' after the sliders, it is possible to add strings to disable or enable switch parameters by defining their name, a colon and \"on\" to enable or \"off\" to disable\n'padfx \"echo out\" 80% \"solostem:vocal\"' as the last parameter, you can add solostem:stemname to only let that stem be audible while applying the effect\n'padfx \"echo out\" \"mutestem:rhythm\"' as the last parameter, you can add mutestem:stemname to mute that stem while applying the effect\n'padfx \"reverb\" \"stemfx:vocal\"' as the last parameter, you can add stemfx:stemname to apply the effect only to that stem (other stems will continue playing normally)\n stem names can be Vocal,HiHat,Bass,Instru,Kick,Melody,Rhythm,MeloVocal,MeloRhythm",
    "documented_parameters": [
+    "echo",
     "off",
-    "on"
+    "on",
+    "reverb"
    ],
    "quoted_phrases": [
-    " 40% 1bt",
-    " 40% 90%",
-    " 40% 90% ",
-    " 40% 90% smart_pressed",
-    " 80% ",
-    "padfx "
+    "echo out",
+    "padfx \"echo out\" \"mutestem:rhythm\"",
+    "padfx \"echo out\" 80% \"solostem:vocal\"",
+    "padfx \"echo\" 40% 1bt",
+    "padfx \"echo\" 40% 90%",
+    "padfx \"echo\" 40% 90% smart_pressed",
+    "padfx \"reverb\" \"stemfx:vocal\""
    ],
    "multi_argument": true,
    "lines": 9
@@ -5214,7 +5515,9 @@
   "param_cast": {
    "text": "cast the value of the previous query action into a new type: 'pitch_range & param_cast \"percentage\"'. Valid types are 'integer', 'float', 'percentage', 'ms', 'boolean', 'beats', 'text'.\ncasting to text can also optionally limit the number of characters: 'get_browsed_song \"artist\" & param_cast \"text\" 5'\nto format a number as text with a specific number of digits: 'get_bpm & param_cast \"000\"'\nparam_cast 'int_trunc' : provides the integer part of a number without rounding to the nearest integer\nparam_cast 'frac' : provides the decimal part of a number.\nparam_cast 'relative' and param_cast 'absolute' : change the parameter to be a relative or absolute value",
    "documented_parameters": [
+    "000",
     "absolute",
+    "artist",
     "beats",
     "boolean",
     "float",
@@ -5227,11 +5530,9 @@
     "text"
    ],
    "quoted_phrases": [
-    " & param_cast ",
-    " 5",
-    "get_bpm & param_cast ",
-    "get_browsed_song ",
-    "pitch_range & param_cast "
+    "get_bpm & param_cast \"000\"",
+    "get_browsed_song \"artist\" & param_cast \"text\" 5",
+    "pitch_range & param_cast \"percentage\""
    ],
    "multi_argument": false,
    "lines": 6
@@ -5295,7 +5596,8 @@
    "text": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'\nCan also be used with two parameters, in which case both parameters can be actions or values: 'param_multiply `get_var a` `get_var b`' or 'param_multiply 50% `get_sampler_loop`'",
    "documented_parameters": [],
    "quoted_phrases": [
-    "cue_pos 0 & param_multiply ",
+    "cue_pos 0 & param_multiply \"get_time total 1000\"",
+    "get_time total 1000",
     "param_multiply 300% & effect slider",
     "param_multiply 50% `get_sampler_loop`",
     "param_multiply `get_var a` `get_var b`"
@@ -5425,8 +5727,6 @@
    "text": "set the range for the pitch slider. 'pitch_range 12%' set the range from -12% to +12%. \n'pitch_range +1' scrolls through the default pitch ranges. 'pitch_range \"12,16,25\" +1' scrolls through the provided list of pitch ranges.\n'pitch_range +1 deck' changes the pitch range only for the specific deck",
    "documented_parameters": [],
    "quoted_phrases": [
-    " +1",
-    "pitch_range ",
     "pitch_range +1",
     "pitch_range +1 deck",
     "pitch_range 12%"
@@ -5454,9 +5754,11 @@
   },
   "pitch_zero": {
    "text": "Set pitch to 0% (normal playing speed)\nUse 'pitch_zero \"center\"' on controllers that send a message when the pitch slider is at the center. This prevents unwanted behavior in gradual or relative mode.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "center"
+   ],
    "quoted_phrases": [
-    "pitch_zero "
+    "pitch_zero \"center\""
    ],
    "multi_argument": false,
    "lines": 2
@@ -5484,9 +5786,13 @@
   },
   "play_mode": {
    "text": "set the mode for play/stop/cue buttons: 'play_mode \"numark\"', or 'play_mode \"pioneer\"'.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "numark",
+    "pioneer"
+   ],
    "quoted_phrases": [
-    "play_mode "
+    "play_mode \"numark\"",
+    "play_mode \"pioneer\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -5549,9 +5855,11 @@
   },
   "playlist_load": {
    "text": "Load the folder or playlist selected in the browser in the playlist.\nUse \"playlist_load 'append'\" to add the selected folder to the playlist instead of replacing the existing playlist",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "append"
+   ],
    "quoted_phrases": [
-    "playlist_load "
+    "playlist_load 'append'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -5635,10 +5943,12 @@
   },
   "prelisten_output": {
    "text": "Set this deck to be used for the prelisten player\nExample: \"deck 1 prelisten_output\", or to put it back to default: \"prelisten_output 'auto'\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "auto"
+   ],
    "quoted_phrases": [
     "deck 1 prelisten_output",
-    "prelisten_output "
+    "prelisten_output 'auto'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -5698,10 +6008,11 @@
   "rack": {
    "text": "Open/close a unit in specified rack. Example: \"rack 'rack1' 'unit1'\"",
    "documented_parameters": [
+    "rack1",
     "unit1"
    ],
    "quoted_phrases": [
-    "rack "
+    "rack 'rack1' 'unit1'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -5709,10 +6020,11 @@
   "rack_prioritize": {
    "text": "Prioritizes a unit of the specified rack. When more configurations with same size are available, the prioritized unit will get most space. Example: \"rack_prioritize 'rack1' 'unit1'\"",
    "documented_parameters": [
+    "rack1",
     "unit1"
    ],
    "quoted_phrases": [
-    "rack_prioritize "
+    "rack_prioritize 'rack1' 'unit1'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -5720,10 +6032,11 @@
   "rack_solo": {
    "text": "Open/close a unit in full size on the specified rack. Closing the unit will re-open the previous configuration. Example: \"rack_solo 'rack1' 'unit1'\"",
    "documented_parameters": [
+    "rack1",
     "unit1"
    ],
    "quoted_phrases": [
-    "rack_solo "
+    "rack_solo 'rack1' 'unit1'"
    ],
    "multi_argument": false,
    "lines": 1
@@ -5809,10 +6122,11 @@
   },
   "reinit_controller": {
    "text": "Reinit the specified controller (or all if none specified), going through the exit and init sequences (you can specify a delay between exit and init: \"reinit_controllers 'mycontroller' 200ms\".",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "mycontroller"
+   ],
    "quoted_phrases": [
-    " 200ms",
-    "reinit_controllers "
+    "reinit_controllers 'mycontroller' 200ms"
    ],
    "multi_argument": false,
    "lines": 1
@@ -5929,10 +6243,12 @@
   },
   "rightvideo": {
    "text": "assign this deck to the right of the video crossfader: \"deck 3 rightvideo\" or \"rightvideo +1\" or \"rightvideo 'auto'\".",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "auto"
+   ],
    "quoted_phrases": [
     "deck 3 rightvideo",
-    "rightvideo ",
+    "rightvideo 'auto'",
     "rightvideo +1"
    ],
    "multi_argument": false,
@@ -5958,7 +6274,8 @@
    "text": "'sampler_assign 1 \"path to vdjsample\"' adds the sample to sample slot 1. (For use in drag&drop in pad page)",
    "documented_parameters": [],
    "quoted_phrases": [
-    "sampler_assign 1 "
+    "path to vdjsample",
+    "sampler_assign 1 \"path to vdjsample\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -6046,12 +6363,13 @@
   },
   "sampler_loop": {
    "text": "use 'sampler_loop -1' or 'sampler_loop +1' to change the length of a playing sample\nuse 'sampler_loop \"current\" 1' to set the sample to loop for 1 beat or 'sampler_loop 1 1' to set sample 1 to 1 beat loop\nuse 'sampler_loop \"current\" 0.5 \"play\" while_pressed' to loop the sample as long as long as the button is pressed for 0.5 beats",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "current",
+    "play"
+   ],
    "quoted_phrases": [
-    " 0.5 ",
-    " 1",
-    " while_pressed",
-    "sampler_loop ",
+    "sampler_loop \"current\" 0.5 \"play\" while_pressed",
+    "sampler_loop \"current\" 1",
     "sampler_loop +1",
     "sampler_loop -1",
     "sampler_loop 1 1"
@@ -6067,9 +6385,7 @@
     "unmute"
    ],
    "quoted_phrases": [
-    " to set sample 1 mode or ",
-    "sampler_mode ",
-    "sampler_mode 1 "
+    " to set sample 1 mode or "
    ],
    "multi_argument": false,
    "lines": 2
@@ -6084,23 +6400,27 @@
   "sampler_options": {
    "text": "popup the sample menu.\ncan also be used with 'sampler_options \"locked\"' or 'sampler_options \"stemswap\"' to change the bank's settings.",
    "documented_parameters": [
+    "locked",
     "stemswap"
    ],
    "quoted_phrases": [
-    " or ",
-    " to change the bank",
-    "sampler_options "
+    "sampler_options \"locked\"",
+    "sampler_options \"stemswap\""
    ],
    "multi_argument": false,
    "lines": 2
   },
   "sampler_output": {
    "text": "Select sampler output channel. 'deck master sampler_output', 'sampler_output \"headphones\"', 'deck 1 sampler_output', 'sampler_output \"popup\"'",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "headphones",
+    "popup"
+   ],
    "quoted_phrases": [
     "deck 1 sampler_output",
     "deck master sampler_output",
-    "sampler_output "
+    "sampler_output \"headphones\"",
+    "sampler_output \"popup\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -6132,10 +6452,11 @@
   },
   "sampler_pad_volume": {
    "text": "'sampler_pad_volume 1' sets the volume of the sample on the first pad\n'sampler_pad_volume \"siren\"' sets the volume of the sample 'siren.vdjsample'.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "siren"
+   ],
    "quoted_phrases": [
-    " sets the volume of the sample ",
-    "sampler_pad_volume ",
+    "sampler_pad_volume \"siren\"",
     "sampler_pad_volume 1"
    ],
    "multi_argument": false,
@@ -6184,14 +6505,17 @@
   },
   "sampler_rec": {
    "text": "On first press, start to record a new sample. On second press, stop to record\nUse 'sampler_rec \"mic\"' to record a sample from microphone, or 'sampler_rec \"master\"' to record from master output\nIf the deck is on loop, a loop sample will immediately be created. If the deck is playing, it will record what's playing until the stop. If the deck is paused, it sets the 'entry point', and the second push will set the 'exit point' and use the deck's file between those two points.\n'sampler_rec 1' or 'sampler_rec 1 \"mic\"' will store the sample in the first slot of the \"Record\" sample bank, so that it can be used immediately after recording",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "master",
+    "mic"
+   ],
    "quoted_phrases": [
-    " will store the sample in the first slot of the ",
     "entry point",
     "exit point",
-    "sampler_rec ",
+    "sampler_rec \"master\"",
+    "sampler_rec \"mic\"",
     "sampler_rec 1",
-    "sampler_rec 1 "
+    "sampler_rec 1 \"mic\""
    ],
    "multi_argument": false,
    "lines": 4
@@ -6255,11 +6579,11 @@
   "sampler_volume": {
    "text": "'sampler_volume' sets the volume of the sample that has the focus, on the selected deck.\n'sampler_volume 1' sets the volume of the sample in slot 1 in the current bank.\n'sampler_volume \"siren\"' sets the volume of the sample 'siren.vdjsample'.",
    "documented_parameters": [
-    "sampler_volume"
+    "sampler_volume",
+    "siren"
    ],
    "quoted_phrases": [
-    " sets the volume of the sample ",
-    "sampler_volume ",
+    "sampler_volume \"siren\"",
     "sampler_volume 1"
    ],
    "multi_argument": false,
@@ -6308,7 +6632,7 @@
     "myloop"
    ],
    "quoted_phrases": [
-    "saved_loop ",
+    "saved_loop \"myloop\"",
     "saved_loop 1"
    ],
    "multi_argument": false,
@@ -6339,7 +6663,7 @@
     "myloop"
    ],
    "quoted_phrases": [
-    "saved_loop_prepare ",
+    "saved_loop_prepare \"myloop\"",
     "saved_loop_prepare 1"
    ],
    "multi_argument": false,
@@ -6426,9 +6750,11 @@
   },
   "search_options": {
    "text": "popup the list of search options. to set one directly, you can use 'search_options \"composer\"' to toggle search of the field on or off",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "composer"
+   ],
    "quoted_phrases": [
-    "search_options "
+    "search_options \"composer\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -6540,10 +6866,7 @@
   "set_key": {
    "text": "change the key of the song to match the given key. you can use standard notation ('set_key \"A#m\"') or numeric ('set key \"03A\"'). if no given key, it will use the other deck. the change will match the exact key.",
    "documented_parameters": [],
-   "quoted_phrases": [
-    "set key ",
-    "set_key "
-   ],
+   "quoted_phrases": [],
    "multi_argument": false,
    "lines": 1
   },
@@ -6660,11 +6983,14 @@
   },
   "show_splitpanel": {
    "text": "Show/hide the specified split panel\nExamples: \"show_splitpanel 'sidelist'\", \"show_splitpanel 'sideview' on\", \"show_splitpanel 'sidelist' 50%\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "sidelist",
+    "sideview"
+   ],
    "quoted_phrases": [
-    " 50%",
-    " on",
-    "show_splitpanel "
+    "show_splitpanel 'sidelist'",
+    "show_splitpanel 'sidelist' 50%",
+    "show_splitpanel 'sideview' on"
    ],
    "multi_argument": false,
    "lines": 2
@@ -6673,8 +6999,7 @@
    "text": "Show text on controller display. (If your controller uses get_display for the displays)\n\"show_text 'Line 1|Line 2' 3000ms\" will show 2 lines of text for 3 seconds (time optional, | separates lines)\n\"show_text '$myvar$'\" shows the contents of the variable $myvar",
    "documented_parameters": [],
    "quoted_phrases": [
-    " 3000ms",
-    "show_text "
+    "show_text '$myvar$'"
    ],
    "multi_argument": false,
    "lines": 3
@@ -6702,9 +7027,11 @@
   },
   "sidelist_load": {
    "text": "Load the folder or playlist selected in the browser in the sidelist\nUse \"sidelist_load 'append'\" to add the selected folder to the sidelist instead of replacing the existing sidelist",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "append"
+   ],
    "quoted_phrases": [
-    "sidelist_load "
+    "sidelist_load 'append'"
    ],
    "multi_argument": false,
    "lines": 2
@@ -6756,9 +7083,13 @@
   },
   "sideview_sort": {
    "text": "Sort the sideview on the specified column: 'sideview_sort \"artist\"', 'sideview_sort \"lastplay\"',...",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "artist",
+    "lastplay"
+   ],
    "quoted_phrases": [
-    "sideview_sort "
+    "sideview_sort \"artist\"",
+    "sideview_sort \"lastplay\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -6786,10 +7117,11 @@
   },
   "skin_panel": {
    "text": "show or hide a panel on the skin. \"skin_panel 'my_panel' on\"",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_panel"
+   ],
    "quoted_phrases": [
-    " on",
-    "skin_panel "
+    "skin_panel 'my_panel' on"
    ],
    "multi_argument": false,
    "lines": 1
@@ -6801,8 +7133,9 @@
     "panelname"
    ],
    "quoted_phrases": [
-    " or ",
-    "skin_panelgroup "
+    "skin_panelgroup 'groupname' 'panelname'",
+    "skin_panelgroup 'groupname' +1",
+    "skin_panelgroup 'groupname' 0.75"
    ],
    "multi_argument": false,
    "lines": 1
@@ -6816,12 +7149,16 @@
   },
   "slicer": {
    "text": "\"slicer 1\" to \"slicer 8\" for 8 slicer buttons\n\"slicer 1 'hold'\" to hold the current position on first activate\n\"slicer 'length' +1\" to increase length\n\"slicer 'step' +1\" to increase step size\n\"slicer video\" to toggle video slicer on or off",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "hold",
+    "length",
+    "step"
+   ],
    "quoted_phrases": [
-    " +1",
-    "slicer ",
+    "slicer 'length' +1",
+    "slicer 'step' +1",
     "slicer 1",
-    "slicer 1 ",
+    "slicer 1 'hold'",
     "slicer 8",
     "slicer video"
    ],
@@ -7111,9 +7448,11 @@
   },
   "toggle": {
    "text": "syntax: 'toggle \"my_var\"'. toggle my_var between true and false.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    "toggle "
+    "toggle \"my_var\""
    ],
    "multi_argument": false,
    "lines": 1
@@ -7168,11 +7507,12 @@
   },
   "var": {
    "text": "'var \"my_var\" ? my_action1 : my_action2'. execute my_action1 if my_var is true (non zero), execute my_action2 otherwise.\nYou can also compare var with a specific value: 'var \"my_var\" 1 ? my_action1 : my_action2' execute my_action1 is my_var is 1, or my_action2 otherwise",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    " 1 ? my_action1 : my_action2",
-    " ? my_action1 : my_action2",
-    "var "
+    "var \"my_var\" 1 ? my_action1 : my_action2",
+    "var \"my_var\" ? my_action1 : my_action2"
    ],
    "multi_argument": false,
    "lines": 2
@@ -7180,21 +7520,24 @@
   "var_equal": {
    "text": "syntax: 'var_equal \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var equals 42, execute my_action2 otherwise.\nsyntax: 'var_equal \"this_var\" \"that_var\" ? action1 : action2' execute action1 if this_var equals that_var, execute action2 otherwise",
    "documented_parameters": [
-    "that_var"
+    "my_var",
+    "that_var",
+    "this_var"
    ],
    "quoted_phrases": [
-    " 42 ? my_action1 : my_action2",
-    "var_equal "
+    "var_equal \"my_var\" 42 ? my_action1 : my_action2",
+    "var_equal \"this_var\" \"that_var\" ? action1 : action2"
    ],
    "multi_argument": false,
    "lines": 2
   },
   "var_greater": {
    "text": "syntax: 'var_greater \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var is greater than 42, execute my_action2 otherwise.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    " 42 ? my_action1 : my_action2",
-    "var_greater "
+    "var_greater \"my_var\" 42 ? my_action1 : my_action2"
    ],
    "multi_argument": false,
    "lines": 1
@@ -7208,20 +7551,22 @@
   },
   "var_not_equal": {
    "text": "syntax: 'var_not_equal \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var doesn't equal 42, execute my_action2 otherwise.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    " 42 ? my_action1 : my_action2",
-    "var_not_equal "
+    "var_not_equal \"my_var\" 42 ? my_action1 : my_action2"
    ],
    "multi_argument": false,
    "lines": 1
   },
   "var_smaller": {
    "text": "syntax: 'var_smaller \"my_var\" 42 ? my_action1 : my_action2'. execute my_action1 if my_var is smaller than 42, execute my_action2 otherwise.",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_var"
+   ],
    "quoted_phrases": [
-    " 42 ? my_action1 : my_action2",
-    "var_smaller "
+    "var_smaller \"my_var\" 42 ? my_action1 : my_action2"
    ],
    "multi_argument": false,
    "lines": 1
@@ -7297,9 +7642,11 @@
   },
   "video_fx_select": {
    "text": "select a video effect plugin. you can specify by name ('video_fx_select \"my_plugin\"'), relative ('video_fx_select +1') or without parameters to open a popup window listing the available plugins",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_plugin"
+   ],
    "quoted_phrases": [
-    "video_fx_select ",
+    "video_fx_select \"my_plugin\"",
     "video_fx_select +1"
    ],
    "multi_argument": false,
@@ -7340,9 +7687,11 @@
   },
   "video_source_select": {
    "text": "select the plugin used for video source. you can specify by name ('video_source_select \"webcam\"'), relative ('video_source_select +1') or without parameters to open a popup window listing the available plugins",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "webcam"
+   ],
    "quoted_phrases": [
-    "video_source_select ",
+    "video_source_select \"webcam\"",
     "video_source_select +1"
    ],
    "multi_argument": false,
@@ -7354,8 +7703,8 @@
     "left"
    ],
    "quoted_phrases": [
-    " or ",
-    "video_transition ",
+    "video_transition \"left\"",
+    "video_transition \"left\" 1000ms",
     "video_transition 1000ms",
     "video_transition 1000ms 50%",
     "video_transition 50%"
@@ -7372,9 +7721,11 @@
   },
   "video_transition_select": {
    "text": "select the plugin used for video transitions. you can specify by name ('video_transition_select \"my_plugin\"'), relative ('video_transition_select +1') or without parameters to open a popup window listing the available plugins",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "my_plugin"
+   ],
    "quoted_phrases": [
-    "video_transition_select ",
+    "video_transition_select \"my_plugin\"",
     "video_transition_select +1"
    ],
    "multi_argument": false,
@@ -7389,10 +7740,11 @@
   },
   "view_options": {
    "text": "popup the list of view options. to set one directly, you can use 'view_options \"showkaraoke\" on' etc...",
-   "documented_parameters": [],
+   "documented_parameters": [
+    "showkaraoke"
+   ],
    "quoted_phrases": [
-    " on",
-    "view_options "
+    "view_options \"showkaraoke\" on"
    ],
    "multi_argument": false,
    "lines": 1
@@ -7424,10 +7776,7 @@
     "loop_out",
     "search"
    ],
-   "quoted_phrases": [
-    " +1",
-    "wheel_mode "
-   ],
+   "quoted_phrases": [],
    "multi_argument": false,
    "lines": 1
   },
