@@ -1592,3 +1592,89 @@ Query position separates none of this: `controllerscreen_action` and
 which says nothing about whether hardware is present. Verb-table membership already
 proves every one of these names; blocked is a statement about reachability, not
 about existence.
+
+## Verb Index Inversion: What The Prose And The Artifacts Disagreed About
+
+2026-09-06, offline. `tools/extract_verb_index.py` now builds
+`docs/vdjscript-verb-index.json` from `tests/verb-table.json` +
+`docs/vdjscript-verbs.json` + the coverage audit, instead of parsing
+`docs/VDJScript Verbs.md`. The output schema is unchanged and both consumers —
+`lint_mappers.py` and `verbdb.py bootstrap` — keep working. The reconciliation
+below is the point of the task; the rewrite is not.
+
+### The defect was live, and it is reproducible
+
+`lint_mappers.py` reads the index. Before the inversion, a mapper containing
+verbs this repo has *locally tested* was linted like this:
+
+```
+WARN  <map value='F13'> unknown verb 'flip_record' (closest known: 'record')
+WARN  <map value='F14'> unknown verb 'flip_play' (closest known: 'blink_play')
+WARN  <map value='F15'> unknown verb 'get_pad_page_name' (closest known: 'get_sample_name')
+```
+
+All three are real — verb-table membership proves it and the editor-hidden pass
+characterised all three the day before. Every one of the 37 editor-hidden names
+was missing from the index, because the prose never listed them. After the
+inversion the same file lints with **0 verb warnings**.
+
+### The whole diff was 36 entries, and it split exactly as predicted
+
+959 of the 995 shared entries differed only by an empty `"aliases": []` the old
+generator emitted. Of the 36 real differences:
+
+**Artifacts correcting the prose — 30 alias facts.** The verb table decides
+aliases structurally (records sharing an `id`; `flags & 1` marks the alias
+spelling), and it knows 17 pairs the prose did not:
+
+| Canonical | Alias the prose missed |
+| --- | --- |
+| `browser_zoom` | `browser` |
+| `eq_high` / `eq_low` / `eq_mid` | `eq_high_slider` / `eq_low_slider` / `eq_mid_slider`, `eq_med` |
+| `eq_kill_mid` | `eq_kill_med` |
+| `get_hasheadphones` | `get_hasheadphone` |
+| `goto_beat_in_bar` | `goto_bar` |
+| `jogwheel` | `jog_wheel` |
+| `pitch` | `pitch_slider`, `pitch2_slider` |
+| `prelisten` | `preview` |
+| `scratchbank_unload` | `sampler_unload_from_deck` |
+| `touchwheel` | `scratch_wheel` |
+| `touchwheel_touch` | `scratch_wheel_touch`, `scratchwheel_touch`, `speedwheel_touch` |
+
+And **three claims the table contradicts outright**, both cases of the prose
+naming the wrong canonical:
+
+- The prose made `pitch2` canonical for `pitch2_slider`. All four of `pitch`,
+  `pitch2`, `pitch_slider`, `pitch2_slider` share **id 722**, and `pitch` is the
+  member without the alias flag — `pitch2` is itself an alias.
+- The prose made `scratch_wheel_touch` canonical for `scratchwheel_touch` and
+  `speedwheel_touch`. All four share **id 153** under `touchwheel_touch`.
+
+No index name was contradicted on *existence*: every one of the 995 prose names
+is in the verb table. The prose never invented a verb — it only mis-ranked
+aliases and omitted the hidden set.
+
+**Curated facts with no artifact home — 2, and they were repaired rather than
+dropped.** `auto_bpm_transition` and `auto_bpm_transition_options` carried richer
+prose than the store ("an optional parameter forces which BPM it lands on",
+`auto_bpm_transition_options 'stems' 'vocal'`), so the store was updated to hold
+them before switching. Every other alias row that lost a description had only
+`Official alias of X` boilerplate, which the row's `canonical` field now states
+structurally.
+
+### The schema gap the inversion exposed
+
+Six names the store carries are absent from the verb table, and the table is
+*silent* on them rather than negative: `ONINIT`, `while_pressed` and `deck` are
+mapper/skin structural keywords rather than verbs, and `browser_filter`,
+`browser_search` and `none` are names this repo disproved. Both groups need to
+stay addressable and neither is a verb, so index rows now carry
+`not_in_verb_table: true` rather than being silently promoted or dropped. A
+proper `kind` for "structural keyword, not a verb" is the store field this
+exposes; it is not added yet.
+
+### Also fixed
+
+`lint_mappers.py` raised `ValueError` on any path outside the repo — `relative_to`
+throws — so asking it to lint a scratch file produced a traceback instead of a
+lint. It reports the absolute path now.

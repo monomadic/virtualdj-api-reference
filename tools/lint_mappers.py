@@ -71,7 +71,13 @@ def leading_verbs(action: str) -> list[str]:
 
 
 def lint_file(path: Path, verbs: set[str], errors: list[str], warnings: list[str]) -> None:
-    rel = path.relative_to(ROOT)
+    # A lint tool asked about a file outside the repo should lint it, not raise:
+    # `relative_to` throws on any absolute path elsewhere, which turned a normal
+    # "lint this scratch file" into a traceback.
+    try:
+        rel = path.relative_to(ROOT)
+    except ValueError:
+        rel = path
     try:
         root = ET.fromstring(path.read_text())
     except ET.ParseError as exc:

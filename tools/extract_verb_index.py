@@ -1,15 +1,31 @@
 #!/usr/bin/env python3
-"""Generate a machine-readable VDJScript verb index from docs/VDJScript Verbs.md.
+"""Generate the machine-readable VDJScript verb index from the ARTIFACTS.
 
-Offline. Parses three layers of the curated verb reference:
+This used to parse `docs/VDJScript Verbs.md` — correct when hand-authored prose
+was the best evidence here, backwards once the verb table decided existence.
+The index is consumed by `lint_mappers.py` and `verbdb.py bootstrap`, so
+building it from the weaker source was a live correctness defect, not a tidiness
+one: every editor-hidden verb was missing, and `lint_mappers.py` called
+`flip_record`, `flip_play` and `get_pad_page_name` "unknown verbs" while all
+three were real and locally tested.
 
-- the High-Frequency Alias Index table (canonical -> official aliases),
-- curated ``### `verb` `` entries (Aliases / Kind / Typical surfaces fields),
-- broad-catalog table rows after the "## Broad Verb Index" marker.
+Sources now, strongest first:
 
-Output: docs/vdjscript-verb-index.json, sorted by name. Curated entries win
-over catalog rows for the same name. Alias names get their own rows pointing
-at the canonical verb so lookup tools can resolve either spelling.
+- `tests/verb-table.json` — VirtualDJ's own verb table. Decides EXISTENCE
+  (membership proves, absence disproves) and ALIASES (records sharing an `id`
+  are one verb; `flags & 1` marks the alias spelling, so the canonical is the
+  member without it).
+- `docs/vdjscript-verbs.json` — the record store, for the curated layer the
+  table has no room for: tier, section, description, example, kind, surfaces.
+- `docs/Official VDJScript Coverage Audit.md` — the official-name set.
+
+The output schema is unchanged, so both consumers keep working.
+
+Store names absent from the verb table are kept and marked `not_in_verb_table`,
+because they are the cases the table is silent on rather than negative about:
+mapper/skin structural keywords (`ONINIT`, `while_pressed`, `deck`) and names
+this repo disproved (`browser_filter`, `browser_search`, `none`), whose disproof
+is worth keeping addressable.
 
 Usage:
   python3 tools/extract_verb_index.py           # regenerate the JSON
@@ -27,7 +43,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "docs" / "VDJScript Verbs.md"
 AUDIT = ROOT / "docs" / "Official VDJScript Coverage Audit.md"
+VERB_TABLE = ROOT / "tests" / "verb-table.json"
+STORE = ROOT / "docs" / "vdjscript-verbs.json"
 OUTPUT = ROOT / "docs" / "vdjscript-verb-index.json"
+# Curated fields the verb table has no room for; copied through from the store.
+STORE_FIELDS = ("section", "description", "example", "kind", "surfaces")
 
 CURATED_HEADING = re.compile(r"^### `([^`]+)`\s*$")
 SECTION_HEADING = re.compile(r"^## (.+?)\s*$")
@@ -152,40 +172,71 @@ def parse_official_names() -> set[str]:
     return set(re.findall(r"`([a-z0-9_]+)`", match.group(1)))
 
 
+def load_json(path: Path, key: str = "verbs") -> dict:
+    data = json.loads(path.read_text())
+    return data[key] if isinstance(data, dict) and key in data else data
+
+
+def alias_groups(table: dict) -> tuple[dict[str, str], dict[str, list[str]]]:
+    """(alias -> canonical, canonical -> aliases), straight from shared ids."""
+    by_id: dict[int, list[tuple[str, int]]] = {}
+    for name, rec in table.items():
+        if isinstance(rec, dict) and "id" in rec:
+            by_id.setdefault(rec["id"], []).append((name, rec.get("flags", 0)))
+    canonical_of, aliases_of = {}, {}
+    for members in by_id.values():
+        if len(members) < 2:
+            continue
+        heads = [n for n, f in members if not f & 1]
+        # A group with no unflagged member has no canonical to point at; take
+        # the first name alphabetically and keep the group rather than drop it.
+        head = heads[0] if heads else sorted(n for n, _ in members)[0]
+        rest = sorted(n for n, _ in members if n != head)
+        if not rest:
+            continue
+        aliases_of[head] = rest
+        for alias in rest:
+            canonical_of[alias] = head
+    return canonical_of, aliases_of
+
+
 def build_index() -> dict:
-    lines = SOURCE.read_text().splitlines()
-    alias_index = parse_alias_index(lines)
-    curated = parse_curated(lines)
-    catalog = parse_catalog(lines)
+    table = load_json(VERB_TABLE)
+    store = load_json(STORE)
     official_names = parse_official_names()
+    canonical_of, aliases_of = alias_groups(table)
 
     verbs: dict[str, dict] = {}
-    for name, entry in catalog.items():
+    for name in table:
+        if name in canonical_of:
+            verbs[name] = {"tier": "alias", "canonical": canonical_of[name]}
+            continue
+        record = store.get(name) or {}
+        entry: dict = {"tier": record.get("tier") or "official-name-only"}
+        for field in STORE_FIELDS:
+            value = record.get(field)
+            if value:
+                entry[field] = value
+        if name in aliases_of:
+            entry["aliases"] = aliases_of[name]
         verbs[name] = entry
-    for name, entry in curated.items():
-        merged = dict(verbs.get(name, {}))
-        merged.update(entry)
-        # curated tier wins, but keep catalog description/section for context
-        merged["tier"] = "curated"
-        verbs[name] = merged
-    for canonical, official in alias_index.items():
-        if canonical in verbs:
-            existing = set(verbs[canonical].get("aliases", []))
-            existing.update(official)
-            existing.discard("none")
-            if existing:
-                verbs[canonical]["aliases"] = sorted(existing)
 
-    # alias rows resolve to their canonical verb
-    for name in list(verbs):
-        for alias in verbs[name].get("aliases", []):
-            if alias and alias != "none" and alias not in verbs:
-                verbs[alias] = {"tier": "alias", "canonical": name}
+    # Names the store carries that the table does not list. The table is silent
+    # on these rather than negative, so they stay addressable and say so.
+    for name, record in store.items():
+        if name in verbs or not isinstance(record, dict):
+            continue
+        entry = {"tier": record.get("tier") or "official-name-only",
+                 "not_in_verb_table": True}
+        for field in STORE_FIELDS:
+            value = record.get(field)
+            if value:
+                entry[field] = value
+        verbs[name] = entry
 
-    # official appendix names without a dedicated row become name-only entries
     for name in official_names:
-        if name not in verbs:
-            verbs[name] = {"tier": "official-name-only"}
+        verbs.setdefault(name, {"tier": "official-name-only",
+                                "not_in_verb_table": True})
 
     for name, entry in verbs.items():
         entry["official"] = name in official_names
@@ -194,10 +245,13 @@ def build_index() -> dict:
     for tier in ("curated", "catalog", "alias", "official-name-only"):
         counts[tier] = sum(1 for v in verbs.values() if v["tier"] == tier)
     counts["official"] = sum(1 for v in verbs.values() if v["official"])
+    counts["not_in_verb_table"] = sum(1 for v in verbs.values()
+                                      if v.get("not_in_verb_table"))
     return {
         "_meta": {
             "generated_by": "tools/extract_verb_index.py",
-            "source": "docs/VDJScript Verbs.md + docs/Official VDJScript Coverage Audit.md",
+            "source": ("tests/verb-table.json + docs/vdjscript-verbs.json + "
+                       "docs/Official VDJScript Coverage Audit.md"),
             "counts": counts,
         },
         "verbs": {name: verbs[name] for name in sorted(verbs)},
