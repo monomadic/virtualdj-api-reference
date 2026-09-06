@@ -416,6 +416,23 @@ typeinfo-name string, `std::type_info` object, and vtable survive in
   `RSDS` record names `C:\atomix\virtualdj\compiled\Release_x64\virtualdj.pdb`, which is
   not shipped. MSVC RTTI gives class names only, never method names — so Windows binaries
   are corroboration, never a source of slot names.
+- **Older unstripped builds add nothing (2026-09-06).** Two earlier macOS installers were
+  expanded and compared against `18.0.9246` the same way (`pkgutil --expand-full`, arm64
+  slice, `vtable for ACTION_*` classes, STABS `N_SO` source list, `languages.zip` appendix):
+
+  | Package | Bundle / app | `ACTION_` classes | Shared with 9246 | Source files | Appendix verbs |
+  | --- | --- | ---: | ---: | ---: | ---: |
+  | `install_virtualdj_2020_b5308_mac.pkg` (x86_64, 2019-09-22) | 8 / b5308 | 785 | 780 | 585 | 690 |
+  | `VirtualDJ_2023_b7607_mac.pkg` (universal, 2023-07-11) | 9.0.7607 / 8.5.7555 | 888 | 885 | 632 | 758 |
+
+  Both are unstripped with STABS, so they would have been usable — but every class they hold
+  that 9246 lacks is one of the three virtualfolder renames already stored as aliases
+  (`add_virtualfolder` → `add_list`, `create_virtualfolder_from_playlist` →
+  `create_list_from_playlist`, `virtualfolder_add` → `add_to_list`; b5308 also has
+  `get_constant` and `pad_page_favorite_select`, likewise aliases), and every verb in either
+  appendix is already a store name or alias. Their only extra source files are non-action code
+  (`base64.cpp`, `ConfigWindowRemote.cpp`, two Objective-C model files). Neither is worth
+  re-expanding; `18.0.9246` remains the one unstripped build to read.
 - **A flag was mislabeled for a month (2026-08-29).** `query_text` was calibrated from
   `get_title`, whose extra override is slot **4** — the bool query. Regenerating with
   `effect_bpm_deck` (overrides exactly 2/3/5) as the text-query pin moved **154 verbs**; the
