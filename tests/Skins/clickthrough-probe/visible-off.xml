@@ -35,7 +35,8 @@
       <text font="arial" size="16" weight="bold" color="#E7EEF7" align="center" format="BOTTOM"/>
     </button>
 
-    <!-- TOP button, declared second, exactly over the bottom one. -->
+    <!-- TOP button, declared last, exactly over the others. -->
+
     <button action="set '$ct_top' 1" visibility="param_equal 'no' 'yes'">
       <pos x="300" y="180"/>
       <size width="300" height="160"/>
@@ -44,11 +45,12 @@
       <text font="arial" size="16" weight="bold" color="#E7EEF7" align="center" format="TOP"/>
     </button>
 
+
     <!-- Readback, so the window itself shows what HTTP reads. -->
     <textzone>
       <pos x="24" y="380"/>
       <size width="852" height="18"/>
-      <text font="arial" size="12" color="#63D2FF" align="left" format="top=`get_var '$ct_top'` bottom=`get_var '$ct_bottom'`"/>
+      <text font="arial" size="12" color="#63D2FF" align="left" format="top=`get_var '$ct_top'` mid=`get_var '$ct_mid'` bottom=`get_var '$ct_bottom'`"/>
     </textzone>
   </panel>
 

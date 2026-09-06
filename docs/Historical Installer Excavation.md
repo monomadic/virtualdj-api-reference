@@ -89,10 +89,18 @@ the ordinary object factory.
 current UI contract or a claim that every group avoids allocation. It motivates
 checking whether generic object attributes are honored on a plain group.
 
-**Test to settle it:** use identical nested buttons under a panel, a plain group,
-a group with a constant-true visibility expression, and a group with a constant-false
-novisibility expression. Compare a wrapper's `clickthrough="pass"` using independent
-button counters, with plain wrappers as controls. Verify rendered placement too.
+**Settled live (2026-09-07, build 18.0.9598).** The clickthrough fixture wrapped
+its top button in a `<panel>`, a plain `<group>`, and a `<group>` with a
+constant-true `visibility`, each with no attribute, `clickthrough="pass"` and
+`clickthrough="yes"`; two reversed-order runs agreed on every row. The panel and
+the visibility-bearing group honored both values exactly as a button does. The
+plain group honored neither: the wrapped button behaved as if unwrapped. All
+three no-attribute wrappers rendered and delivered the click, so the difference
+is attribute handling, not placement. That is the runtime counterpart of the
+branch above — attributes from the shared skin-object reader are not read on
+the plain-group path. A constant-false `novisibility` variant was not run.
+Recorded in [Skin SDK](Skin%20SDK.md#group). The same run established that
+`pass` moves a click exactly one layer down.
 
 Evidence: `*-panel-children.asm` in the capture directory. This is separate from
 the panel constructor; function boundaries come from the next distinct text-symbol

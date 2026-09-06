@@ -1157,6 +1157,35 @@ additive and the stored `0` swallows. `TRUE` agreeing with `yes` confirms the
 case-insensitive compare that the named `getBoolParam` disassembly predicted
 (`tests/build-history-2026-09-06/*-bool-param.asm`).
 
+**Third pass (2026-09-07, same build, same surface): containers and layers.**
+The TOP button carries nothing and a wrapper carries the candidate; the layer
+rows add a MIDDLE button with its own global. Forward then reversed, identical.
+
+| Variant | Wrapper around TOP | Attribute on the wrapper | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- | --- | --- |
+| `panel-none` | `<panel>` | *(none)* | 1 | 0 |
+| `panel-pass` | `<panel>` | `clickthrough="pass"` | 1 | **1** |
+| `panel-yes` | `<panel>` | `clickthrough="yes"` | **0** | **1** |
+| `group-none` | `<group>` | *(none)* | 1 | 0 |
+| **`group-pass`** | `<group>` | `clickthrough="pass"` | 1 | **0** |
+| **`group-yes`** | `<group>` | `clickthrough="yes"` | **1** | **0** |
+| `group-vis-none` | `<group visibility="…true">` | *(none)* | 1 | 0 |
+| `group-vis-pass` | `<group visibility="…true">` | `clickthrough="pass"` | 1 | **1** |
+| `group-vis-yes` | `<group visibility="…true">` | `clickthrough="yes"` | **0** | **1** |
+
+| Variant | TOP | MIDDLE | `$ct_top` | `$ct_mid` | `$ct_bottom` |
+| --- | --- | --- | --- | --- | --- |
+| `3-top-pass` | `pass` | *(none)* | 1 | 1 | **0** |
+| `3-both-pass` | `pass` | `pass` | 1 | 1 | **1** |
+| `3-top-yes` | `yes` | *(none)* | 0 | 1 | 0 |
+
+A `<panel>` and a `<group visibility="…">` honor `clickthrough` as a button
+does; a plain `<group>` ignores it in both values — the live counterpart of the
+historical `CSkinPanel::loadChildren` split, which tests the *presence* of
+`visibility`/`novisibility` and takes a non-object path otherwise. `pass`
+carries a click exactly one layer down; each layer decides for itself.
+Recorded in Skin SDK under `clickthrough` and `<group>`.
+
 **Reading.** `clickthrough="pass"` makes an element run its own action *and*
 let the click continue to whatever is underneath — it is additive, not a
 redirect. Both controls separate from it, so the attribute name and the value
@@ -1171,7 +1200,7 @@ value the reader compares in that window. The historical-installer excavation
 (2026-09-07) later read the named boolean parser the loader falls back to: it
 accepts only `yes`/`true`/`no`/`false`, so the one untested state was boolean
 true; the `yes` and `TRUE` variants settled it on 2026-09-07 (second-pass table
-above). What it does on a container (`<panel>`/`<group>`) rather than a
+above), and the third pass settled containers and layers. What it does on a container (`<panel>`/`<group>`) rather than a
 `<button>`, and whether the pass-through reaches more than one layer down are
 all open. The other 20 candidates are untested leads.
 

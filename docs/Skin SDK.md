@@ -224,9 +224,18 @@ builds 9.0.5308, 9.0.7607 and 18.0.9246 (x86_64) stores a special marker for
 default, and that parser accepts only `yes`/`true`/`no`/`false`. Live, `TRUE`
 agreed with `yes`, and the nonsense control agreed with absent. See the
 [historical installer excavation](Historical%20Installer%20Excavation.md) for
-the ranges. Still untested: the attribute on a container (`<panel>`/`<group>`)
-rather than a `<button>`, and whether the pass-through reaches more than one
-layer down.
+the ranges.
+
+**On containers and across layers** (Local test, 2026-09-07, same build):
+
+- A `<panel>` or a `<group>` that carries `visibility=""` honors `clickthrough`
+  exactly as a button does, for the elements inside it.
+- A **plain `<group>`** — no `visibility` and no `novisibility` — ignores it in
+  both values. See [`<group>`](#group).
+- `pass` moves the click **one layer down** and no further: with three stacked
+  buttons, `pass` on the top one reaches the middle and stops, and the middle
+  needs its own `pass` for the click to reach the bottom. `yes` likewise hands
+  the click to the next layer, which then decides for itself.
 
 Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
 (seven generated deck skins, one attribute apart, with a calibration variant,
@@ -1380,10 +1389,26 @@ In local tests, the child-`<pos>` group rendered but did not move horizontally, 
 
 **Children:** Any skin element
 
-A `<group>` has no builder of its own: it reads the shared set in
-[Attributes Every Skin Object Reads](#attributes-every-skin-object-reads) and
-nothing else, which is why `condition` and `visibility` are the whole of its
-behavior.
+A `<group>` has no builder of its own, and which attributes it reads depends
+on whether it carries `visibility` or `novisibility`:
+
+- **With either attribute**, it is built as an ordinary skin object and reads
+  the shared set in
+  [Attributes Every Skin Object Reads](#attributes-every-skin-object-reads).
+- **Without both** (a plain group), it is processed by a separate path that
+  only evaluates `condition`, applies the `x`/`y` offset and recurses into the
+  children. Shared attributes placed on a plain group are **not read**:
+  `clickthrough` in either value did nothing on a plain group while the same
+  attribute worked on a `<group visibility="…">` and on a `<panel>` (Local
+  test, 2026-09-07, build 18.0.9598; fixture
+  [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)).
+  The split was first seen in named `CSkinPanel::loadChildren` disassembly on
+  builds 9.0.5308, 9.0.7607 and 18.0.9246, which tests the *presence* of those
+  two attributes, not their value — see the
+  [historical installer excavation](Historical%20Installer%20Excavation.md).
+
+If a group needs a shared attribute honored, give it a constant-true
+`visibility` so it takes the object path.
 
 **Example:**
 ```xml

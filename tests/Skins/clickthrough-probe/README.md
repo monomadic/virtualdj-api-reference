@@ -111,3 +111,44 @@ So the attribute has **three states**, exactly the three the loader can store:
 `TRUE` agreeing with `yes` is the live confirmation of the parser's
 case-insensitive compare. `no`/`false` were not run: the parser stores the same
 `0` for them as for `value-control`, which was.
+
+## Second series: containers and layers (2026-09-07, build 18.0.9598)
+
+Twelve more skins from the same template. In the wrapper series the TOP button
+carries nothing and a container around it carries the candidate; in the layer
+series a MIDDLE button with its own global sits between TOP and BOTTOM. Two
+runs, forward then reversed, every row identical both times.
+
+| Variant | Wrapper around TOP | Attribute on the wrapper | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- | --- | --- |
+| `panel-none` | `<panel>` | *(none)* | 1 | 0 |
+| `panel-pass` | `<panel>` | `clickthrough="pass"` | 1 | **1** |
+| `panel-yes` | `<panel>` | `clickthrough="yes"` | **0** | **1** |
+| `group-none` | `<group>` | *(none)* | 1 | 0 |
+| **`group-pass`** | `<group>` | `clickthrough="pass"` | 1 | **0** |
+| **`group-yes`** | `<group>` | `clickthrough="yes"` | **1** | **0** |
+| `group-vis-none` | `<group visibility="…true">` | *(none)* | 1 | 0 |
+| `group-vis-pass` | `<group visibility="…true">` | `clickthrough="pass"` | 1 | **1** |
+| `group-vis-yes` | `<group visibility="…true">` | `clickthrough="yes"` | **0** | **1** |
+
+| Variant | TOP | MIDDLE | `$ct_top` | `$ct_mid` | `$ct_bottom` |
+| --- | --- | --- | --- | --- | --- |
+| `3-top-pass` | `pass` | *(none)* | 1 | 1 | **0** |
+| `3-both-pass` | `pass` | `pass` | 1 | 1 | **1** |
+| `3-top-yes` | `yes` | *(none)* | 0 | 1 | 0 |
+
+**Containers honor `clickthrough` exactly as a button does — except a plain
+`<group>`.** A `<panel>` wrapper and a `<group>` carrying a `visibility`
+attribute both behave as the button did: `pass` lets the click continue,
+`yes` makes the wrapped button transparent. A `<group>` with neither
+`visibility` nor `novisibility` ignores the attribute completely, in both
+values. That is the live counterpart of the historical `CSkinPanel::loadChildren`
+finding: a plain group is processed by a separate path that never constructs
+it as a skin object, so the attributes every skin object reads are not read
+on it. The three `-none` rows show every wrapper renders and delivers the
+click normally, so the difference is in attribute handling, not placement.
+
+**Pass-through is one layer per attribute.** `pass` on TOP reaches MIDDLE and
+stops there; MIDDLE needs its own `pass` for the click to reach BOTTOM. `yes`
+on TOP hands the click to MIDDLE, which swallows it as any plain element does.
+Each layer decides for itself; nothing is inherited or accumulated.
