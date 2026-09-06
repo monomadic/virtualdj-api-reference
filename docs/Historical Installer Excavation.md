@@ -24,17 +24,49 @@ In `ISkinObject::load(CXMLNode*, CImage*)`, the historical binaries:
 | 18.0.9246 | `0x100381a58`–`0x100381ab3` | `CXMLNode::getBoolParam` |
 
 The named accessor call is the additional evidence that the earlier literal-only
-scan missed. It does **not** establish accepted boolean spellings or what the
-stored boolean does to event delivery. The current build's demonstrated additive
-`pass` behavior remains valid; the universal negative has been corrected in
+scan missed. It does **not** establish what the stored boolean does to event
+delivery. The current build's demonstrated additive `pass` behavior remains
+valid; the universal negative has been corrected in
 [Skin SDK](Skin%20SDK.md#clickthrough).
 
-**Test to settle it:** extend the existing overlapping-button fixture with `yes`,
-`no`, `true`, `false`, `1` and `0`, alongside absent, `pass`, nonsense value and
-misspelled attribute controls. Independently read both action counters after each
-click; repeat in reversed order. Do not classify a value from skin-load success.
+### The accepted spellings are readable (2026-09-07)
 
-Evidence: `*-object-load.asm` in the [capture directory](../tests/build-history-2026-09-06/).
+The boolean accessor itself is short enough to read in full, and it is the same
+in all three named builds (`*-bool-param.asm`; 5308 is the `getBoolParamNS`
+variant that its `ISkinObject::load` calls). It looks the attribute up by
+case-insensitive name and returns the caller's default when it is absent. Then
+it compares the value, by exact length and case-insensitively, against four
+literals and nothing else:
+
+| Value | Result |
+| --- | --- |
+| `yes`, `true` | true |
+| `no`, `false` | false |
+| any other value | the caller's default |
+
+| Build (x86_64) | Symbol | Range |
+| --- | --- | --- |
+| 9.0.5308 | `CXMLNode::getBoolParamNS(char const*, int, bool)` | `0x10022aaf6`–`0x10022ac54` |
+| 9.0.7607 | `CXMLNode::getBoolParam(string_view, bool)` | `0x10037625a`–`0x1003763ec` |
+| 18.0.9246 | `CXMLNode::getBoolParam(string_view, bool)` | `0x10044fbee`–`0x10044fd58` |
+
+Since `ISkinObject::load` passes a false default, the field can hold only three
+values: `-2` for `pass`, `1` for `yes`/`true`, and `0` for everything else,
+including `no`, `false`, `1`, `0`, `on`, `off`, nonsense, and the attribute
+being absent. The 2026-09-05 live run already observed `-2` (`pass`) and `0`
+(`value-control`). The only stored state never observed is `1`.
+
+**Test to settle it,** now one state rather than six: the fixture carries
+`clickthrough="yes"` and `clickthrough="TRUE"` variants (the second exercises the
+case rule and must agree with the first) beside the existing baseline, `pass`,
+and control skins. Independently read both action counters after each click;
+repeat in reversed order. Do not classify a value from skin-load success.
+The parser is a 2024-era binary's, so its acceptance table is a lead about the
+current build, not a runtime result; what the app does with a stored `1` is
+exactly what the live variant answers.
+
+Evidence: `*-object-load.asm` and `*-bool-param.asm` in the
+[capture directory](../tests/build-history-2026-09-06/).
 
 ## Plain groups have a separate construction path
 

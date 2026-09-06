@@ -1123,7 +1123,7 @@ says nothing about whether a skin may legitimately use it.
 
 `clickthrough` is compared once, in `skin_object_base`, against the value
 `pass`. It appears in no shipped skin and no SDK doc. Fixture and full method:
-[tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/) — five
+[tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/) — originally five
 generated deck skins, identical apart from one attribute, two overlapping
 buttons each writing its own global so the answer is read over HTTP rather than
 judged from a screenshot.
@@ -1148,8 +1148,11 @@ coordinate is over the bottom button and that attributes on the top button are
 honored, so the negatives are negatives about `clickthrough` and not about aim.
 
 **Unresolved next question.** Only `pass` was tested, because it is the only
-value the reader compares in that window. Whether `clickthrough` accepts other
-values, what it does on a container (`<panel>`/`<group>`) rather than a
+value the reader compares in that window. The historical-installer excavation
+(2026-09-07) later read the named boolean parser the loader falls back to: it
+accepts only `yes`/`true`/`no`/`false`, so the one untested state is boolean
+true, and the fixture now carries `yes` and `TRUE` variants for it. What it
+does on a container (`<panel>`/`<group>`) rather than a
 `<button>`, and whether the pass-through reaches more than one layer down are
 all open. The other 20 candidates are untested leads.
 

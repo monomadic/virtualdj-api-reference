@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the five clickthrough-probe deck skins from one template.
+"""Generate the seven clickthrough-probe deck skins from one template.
 
 R2 wants "otherwise identical minimal deck skins": one attribute differs
 between variants and nothing else, so the skins are generated rather than
@@ -35,6 +35,16 @@ VARIANTS = [
      "nonsense VALUE on the real attribute"),
     ("attr-control", 'zzclickthrough="pass"',
      "nonsense ATTRIBUTE carrying the real value"),
+    # The boolean path. Named disassembly of CXMLNode::getBoolParam on builds
+    # 9.0.5308, 9.0.7607 and 18.0.9246 accepts exactly yes/true/no/false,
+    # case-insensitively, and returns the caller's default (false here) for
+    # anything else — so `no`, `1`, `0` collapse onto value-control, and the
+    # only unobserved stored state is the boolean TRUE.
+    ("yes", 'clickthrough="yes"',
+     "boolean TRUE via the generic parser: the one stored state never observed"),
+    ("true", 'clickthrough="TRUE"',
+     "boolean TRUE in the other accepted spelling, upper-cased to exercise the "
+     "case-insensitive compare; must agree with `yes`"),
 ]
 
 TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>

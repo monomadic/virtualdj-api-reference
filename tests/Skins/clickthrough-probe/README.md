@@ -1,4 +1,4 @@
-# `clickthrough` probe — five minimal deck skins
+# `clickthrough` probe — seven minimal deck skins
 
 The first candidate from the binary skin-reader extraction
 (`just skin-candidates`) taken to a live deck-skin test. `clickthrough` is
@@ -7,7 +7,7 @@ object reads it — and it appears in **no** shipped skin and **no** SDK doc.
 
 ## The fixture
 
-`generate.py` renders all five skins from one template so they are identical
+`generate.py` renders all seven skins from one template so they are identical
 apart from one attribute on one element; do not hand-edit the `.xml` files.
 
 Two buttons occupy the same rectangle, the lower one declared first. Each
@@ -26,6 +26,19 @@ a screenshot:
 | `pass` | `clickthrough="pass"` | the candidate, at the value the reader compares |
 | `value-control` | `clickthrough="qzqzqz"` | nonsense **value** on the real attribute |
 | `attr-control` | `zzclickthrough="pass"` | nonsense **attribute** carrying the real value |
+| `yes` | `clickthrough="yes"` | the **boolean path**: stored TRUE, the one state never observed |
+| `true` | `clickthrough="TRUE"` | same state in the other accepted spelling, upper-cased for the case rule |
+
+The two boolean variants (added 2026-09-07) come from the historical-installer
+finding that `ISkinObject::load` stores `-2` for `pass` and otherwise the result
+of `CXMLNode::getBoolParam` with a false default. That parser, read by name on
+builds 9.0.5308, 9.0.7607 and 18.0.9246, accepts exactly `yes`/`true` → true
+and `no`/`false` → false, case-insensitively and by exact length, and returns
+the default for every other value. So `no`, `false`, `1`, `0`, `on`, `off`
+and nonsense all store the same `0` that `value-control` already tested;
+the only stored state with no live observation is `1`. Evidence:
+`tests/build-history-2026-09-06/*-bool-param.asm`. Binary lead about the
+current build, not a runtime result, until the two variants run.
 
 `visible-off` is the control that makes a negative interpretable: it proves in
 the same fixture that the click coordinate really is over the bottom button and

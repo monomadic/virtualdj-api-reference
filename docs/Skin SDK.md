@@ -209,11 +209,15 @@ fired from the same click.
 control. The live test established that result for `qzqzqz` and for a misspelled
 attribute, not for boolean values. Named `ISkinObject::load` disassembly on
 builds 9.0.5308, 9.0.7607 and 18.0.9246 (x86_64) shows a special `pass` branch
-and a separate boolean-parser branch for other values. This is a binary lead,
-not a runtime result: boolean forms, container behavior, and pass-through
-through more than one layer remain untested. See the
-[historical installer excavation](Historical%20Installer%20Excavation.md) for
-exact ranges, evidence, and the discriminating test.
+and a separate boolean-parser branch for other values. That parser, read in
+full on the same builds, accepts only `yes`/`true` and `no`/`false`
+(case-insensitive) and returns its false default for anything else, so the
+attribute can hold just three states: `pass`, boolean true, and everything
+else. Boolean true is the one state never observed live. This is a binary
+lead, not a runtime result: the `yes`/`TRUE` fixture variants, container
+behavior, and pass-through through more than one layer remain untested. See
+the [historical installer excavation](Historical%20Installer%20Excavation.md)
+for exact ranges, evidence, and the discriminating test.
 
 Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
 (five generated deck skins, one attribute apart, with a calibration variant and
