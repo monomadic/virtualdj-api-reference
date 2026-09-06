@@ -1962,3 +1962,34 @@ one dropped (one sample; both read the same, so it is consistent, not proven).
 (`2:26.15`), which is what the current appendix's "1/100th seconds" means and
 what the 2019 "milliseconds" text got wrong. A nonsense tail on
 `get_totaltime_min` was ignored.
+
+## Documented Parameters Taken Live 2026-09-07
+
+HTTP, build 18.0.9598. Entries from `just action-catalog --cross-check` →
+`documented_but_not_probe_confirmed` that a query and a loaded library track
+can settle. Deck 1 empty before and after; the same saved-loop track as the
+section above loaded for the probe; pitch read, moved `+1%`, and set back;
+`get_pitch` read `0` on reload and after unload. Two nonsense controls
+(`qzqzqz`, `zzqqx`) beside every candidate.
+
+| Verb | Confirmed | Undiscriminated (not refuted) | Note |
+| --- | --- | --- | --- |
+| `get_loaded_song` | `album`, `title`, `artist`, `playcount` | | nonsense field → `error:-2147024809`; bare → empty; `playcount` → empty on a never-played track |
+| `get_key` | `harmonic` (`08A`) | `musical` | bare, `musical` and both controls all `Am` because keyDisplay was already musical |
+| `get_saved_loop` | `next` | `pos` | `'next' 'length'` → `8bt`; a nonsense selector → `error:1`; `pos` is what an unrecognized tail falls back to, so it cannot separate |
+| `get_pitch_zero` | `absolute` | | at pitch +4.17% in a ±33% range: `'absolute' 5%` → `yes`; bare `5%`, `20%`, `'absolute' 0.1%`, `'qzqzqz' 5%` → `no` |
+| `get_date` | format string | | `'%Y'` → `2026`, `'%A'` → `Monday`; a tail without a `%` directive is echoed, so the catalog's `format` is a placeholder |
+| `get_limiter` | | `master`, `booth`, `headphones` | everything `0` with nothing playing |
+| `get_time_sign` | | `elapsed`, `remain`, `total` | `1` at 43 ms and at 14,812 ms, every tail and both controls; a negative sign needs a state not built here |
+| `get_time_hour` | | `elapsed`, `remain` | `0` throughout on a 2:26 track |
+
+**Setup trap.** After the track loaded, `get_pitch` read `3.17` although the
+slider had been `0`; `pitch +1%` moved it to `4.17`, and `pitch 3.17` (no unit)
+put it at `33`. Reloading the track later read `0`, so the transient value was
+not the slider. When restoring pitch, write the unit (`pitch 3.17%`) or use
+`pitch_reset`, and verify with a reload rather than trusting the readback on an
+empty deck.
+
+**Side observation, not chased.** The database stores this track's key as
+`Abm` and `get_key` returned `Am` while the deck read a non-zero pitch; the
+display may fold pitch into the key.

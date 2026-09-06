@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 11,
     "Partial": 34,
-    "Pass": 70,
-    "Untested": 923
+    "Pass": 74,
+    "Untested": 919
    },
    "documented": 771,
-   "tested_pass": 70,
+   "tested_pass": 74,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -4886,13 +4886,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598: bare returned 07/09/2026; '%Y' 2026, '%Y-%m-%d' 2026-09-07, '%A' Monday; a tail with no % directive is echoed verbatim ('format', 'qzqzqz'), so the argument is a strftime-style format string and the catalog's 'format' is a placeholder, not a keyword. Tracker: Documented Parameters Taken Live 2026-09-07."
+   ],
    "section": "System Info",
    "description": "Current date",
-   "example": "get_date \"%Y/%m/%d\""
+   "example": "get_date \"%Y/%m/%d\"",
+   "confidence": "local_test"
   },
   "get_deck": {
    "name": "get_deck",
@@ -5552,15 +5555,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Plugin channel, prepared state (2026-08-15): confirmed argument enum for controller-specific key notation — 'pioneer' -> 14, 'rane' -> 13, 'roland' -> 2, 'harmonic' -> 02A, against a bare/unknown-argument default of 'Ebm'. Unknown arguments fall back to the default text rather than erroring."
+    "Plugin channel, prepared state (2026-08-15): confirmed argument enum for controller-specific key notation — 'pioneer' -> 14, 'rane' -> 13, 'roland' -> 2, 'harmonic' -> 02A, against a bare/unknown-argument default of 'Ebm'. Unknown arguments fall back to the default text rather than erroring.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1: get_key 'harmonic' returned 08A where bare, 'musical' and two nonsense tails all returned Am — 'harmonic' is recognized; 'musical' is undiscriminated because keyDisplay was already musical, not refuted. Tracker: Documented Parameters Taken Live 2026-09-07."
    ],
    "section": "Get (Query Actions)",
    "description": "Song key",
-   "example": "get_key \"musical\""
+   "example": "get_key \"musical\"",
+   "confidence": "local_test"
   },
   "get_key_color": {
    "name": "get_key_color",
@@ -5751,13 +5756,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1 (unloaded after): 'album', 'title', 'artist' return the tag fields and 'playcount' returns empty on a never-played track, while two nonsense fields return error:-2147024809 (E_INVALIDARG) and the bare form returns empty — so every named field separates from nonsense. Tracker: Documented Parameters Taken Live 2026-09-07."
+   ],
    "section": "Get (Query Actions)",
    "description": "Loaded file property",
-   "example": "get_loaded_song 'album'"
+   "example": "get_loaded_song 'album'",
+   "confidence": "local_test"
   },
   "get_loaded_song_color": {
    "name": "get_loaded_song_color",
@@ -6068,13 +6076,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, deck 1 pitch moved +1% then restored: get_pitch_zero 'absolute' 5% returned yes while bare 5%, 20%, 'absolute' 0.1% and two nonsense selectors with 5% all returned no — 'absolute' switches the tolerance from range-relative to absolute, as the catalog says. Tracker: Documented Parameters Taken Live 2026-09-07."
+   ],
    "section": "Key & Pitch",
    "description": "Check whether pitch is zero/original",
-   "example": "get_pitch_zero 'absolute' 0.1%"
+   "example": "get_pitch_zero 'absolute' 0.1%",
+   "confidence": "local_test"
   },
   "get_playlist_time": {
    "name": "get_playlist_time",

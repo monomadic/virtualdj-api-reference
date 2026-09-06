@@ -1282,6 +1282,15 @@ which is why `absolute` had looked merely equal to `remain`.
 made it obvious. Method is two baselines per form — from `off` and from `on` — which is what
 separates *set* from *flip* from *no-op*; from one baseline they are indistinguishable.
 
+**Query-side entries closed 2026-09-07** (tracker: "Documented Parameters Taken Live
+2026-09-07"): `get_loaded_song` album/title/artist/playcount, `get_key` harmonic,
+`get_saved_loop` next (and the undocumented `len`, seconds), `get_pitch_zero` absolute, and
+`get_date` as a strftime format string with the catalog's `format` reclassified as a
+placeholder. Undiscriminated, not refuted, and needing a state no fixture builds:
+`get_limiter` outputs (nothing playing), `get_time_sign` (never negative here),
+`get_time_hour` (short track), `get_key musical` (keyDisplay already musical). Recorded in
+`LOCAL_CONFIRMED` so the cross-check stops listing them.
+
 **Corrected same day:** the pass reported `auto_bpm_transition`'s own candidates
 (`source_original`, `target_original`, `target_current`) as behaving like junk, and this file
 first recorded that as corroborating the query negative. The official verbs appendix documents

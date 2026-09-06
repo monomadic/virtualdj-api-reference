@@ -131,7 +131,30 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     "get_sample_info": {"group", "length", "pos"},
     # 2026-09-06, a 32-beat loop saved on a disposable track. `pos` is NOT here:
     # it equals the bare/default value, so it never separated from the floor.
-    "get_saved_loop": {"length", "name"},
+    # 2026-09-07, a library track with saved loops: `next` (a nonsense selector
+    # errors where `next` answers) and the undocumented `len` (seconds, where
+    # `length` answers in beats) — tracker "Old Appendix Keywords Re-Probed".
+    "get_saved_loop": {"length", "name", "next", "len"},
+    # 2026-09-07, library track on deck 1 — tracker "Documented Parameters Taken
+    # Live 2026-09-07". Nonsense fields raise E_INVALIDARG; named fields answer.
+    "get_loaded_song": {"album", "title", "artist", "playcount"},
+    # `harmonic` answered 08A where bare, `musical` and both controls answered
+    # Am (keyDisplay already musical, so `musical` stays undiscriminated).
+    "get_key": {"harmonic"},
+    # `'absolute' 5%` yes at +4.17% pitch where bare 5% and nonsense-selector 5% no.
+    "get_pitch_zero": {"absolute"},
+}
+
+# Catalog tokens a local test showed to be the doc's own example rather than
+# vocabulary, where the binary-string test cannot tell (the word exists in the
+# binary for other reasons). Read like LOCAL_REFUTED: documented, tried, and
+# not a keyword — but for a different reason, so they land in
+# `documented_example_placeholders` rather than the refuted bucket.
+LOCAL_PLACEHOLDERS: dict[str, set[str]] = {
+    # 2026-09-07: get_date takes a strftime-style format string ('%Y' → 2026,
+    # '%A' → Monday); a tail without a % directive is echoed verbatim, and
+    # 'format' echoed itself exactly as the nonsense controls did.
+    "get_date": {"format"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls
@@ -191,6 +214,10 @@ def cross_check(entries: dict[str, dict]) -> dict:
         # A token any other source vouches for is never a placeholder, whatever
         # the binary search says.
         vouched = found | set(attested.get(verb, {}))
+        known_placeholders = documented & LOCAL_PLACEHOLDERS.get(verb, set())
+        if known_placeholders:
+            placeholders[verb] = sorted(known_placeholders)
+            documented -= known_placeholders
         if blob is not None:
             # A signed token (`browser_sort "+bpm"`) is a real key wearing a
             # direction prefix; the binary stores the bare field, so strip the
@@ -200,7 +227,7 @@ def cross_check(entries: dict[str, dict]) -> dict:
             absent = {t for t in documented - vouched
                       if t.lstrip("+-") not in blob}
             if absent:
-                placeholders[verb] = sorted(absent)
+                placeholders[verb] = sorted(set(placeholders.get(verb, [])) | absent)
                 documented -= absent
         if not documented and not found:
             continue
