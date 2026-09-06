@@ -1426,8 +1426,27 @@ as `color 0.8 0.5 0.25` now enter the corpus); `attested-tails.json` carries `sh
 262 verbs, 167 with no keyword tail; classes DUR/PCT/NUM/REL/STR/VAR/BOOL/KW/NAME, expressions reduced to their inner return type (`` `BOOL` ``, `EXP:NUM`), and
 the `deck SEL EXP` wrapper unwrapped so inner verbs are shaped) with per-shape return evidence from the vendor's
 attribute, the catalog prose and the bare-form sweep; and `verb-arg-forms` points at the
-shapes. Confirming a shape live still needs a fixture; probing by shape (`DUR DUR` against
-`DUR` and nonsense) is the next prober feature.
+shapes. Confirming a shape live still needs a fixture.
+
+**Shape probing landed 2026-09-06** as [tools/probe_arg_positions.py](tools/probe_arg_positions.py)
+(`just probe-arg-positions`, `just verb-arg-positions <name>`), asking a better question than the
+planned "`DUR DUR` against `DUR` and nonsense": hold the attested shape and vary ONE position
+*within its own class*, so a changed answer means that position is read. Nonsense is still sent,
+but only to separate "reads it" from "ignores everything here". Query-only; the baseline is
+re-read last so a drifting verb is reported unstable rather than scored as reading everything.
+
+37 verbs probed, 0 unstable, 8 read at least one position and **4 read one beyond the first** — a
+class of fact no artifact here carried. The keeper is a pair with identical `NUM NUM` shapes:
+`effect_slider_active` reads both slot and index, while **`effect_arm_slider` ignores its slot
+position entirely** (slot 1 and slot 2 both return `0.73`, as does nonsense) and reads only the
+index. Nothing short of varying the slot on its own would have shown that.
+`get_effect_slider_label`, independently confirmed the same day, doubles as the method's
+calibration. Full table: the tracker's "Argument Positions: A Question The Other Probers Cannot
+Ask".
+
+Still next here: a keyword position can only be varied where the verb has two attested keywords,
+so the multi-token shapes that were skipped want either attested tails or the catalog's own
+parameter list as a second value source.
 
 ### 13. Probe The Shared Enumerations The Binary Serialises
 
