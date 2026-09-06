@@ -197,7 +197,7 @@ they extend specific captured branches and have bounded live validation fixtures
 | Investigation | Available lead | Useful output and validation boundary |
 | --- | --- | --- |
 | Settings types, enums and conversion | Named `CSettingEnum` methods, including `unserialize`, `getActionParam` and `setActionParam`, survive in the named samples. On build 18.0.9246 (x86_64), `CSettingEnum::unserialize` starts at `0x10078a142`. | Recover typed candidate values and conversion rules by following registration and accessor code. Associate defaults with concrete keys only when the initializer establishes that association. Confirm accepted values and effects independently on a prepared instance; any persistent writes need round-trip restoration. A type name alone does not establish a key's schema. |
-| Historical vendor descriptions and examples | Each older payload retains `languages.zip` and skin archives; the historical corpus has not been compared in this pass. | Diff descriptions and script-bearing XML against the current vendor corpus. Preserve archive path, member, build and exact source text for lost examples or parameter explanations. Deduplicate unchanged material. Historical vendor usage remains a lead for current behavior, not a supported-form promotion. |
+| Historical vendor descriptions and examples | **Done 2026-09-07** — see [What the older vendor text and skins still say](#what-the-older-vendor-text-and-skins-still-say). | `just vendor-history-diff` regenerates `vendor-text-diff.json`; `just verb <name>` shows a verb's share of it. |
 | Runtime argument parsing | `IAction::create(char const*, char const**, int)` is named in the older samples; its entry on build 18.0.9246 (x86_64) is `0x100596f1c`. | Follow argument consumption, delimiter handling and fallback branches in the runtime path. Contrast with the separately documented editor parser. Each proposed rule needs a discriminating current runtime test; editor highlighting and parser acceptance cannot substitute for an observed result. |
 | Configuration serialization | Named `CSettingCrossfaderCustom::serialize` and `unserialize` survive in the older samples; on build 18.0.9246 (x86_64) they start at `0x1002a6e56` and `0x1002a6b9e`, respectively. | Recover a narrowly scoped format description if configuration tooling needs it. Validate with app-produced samples and isolated round trips, preserving the original configuration. Serializer symbols alone do not establish delimiters, field meanings or compatibility. |
 
@@ -217,6 +217,51 @@ precise feature-introduction dates cannot be recovered from these widely spaced
 samples alone. The next useful excavation should end in a bounded mechanism,
 a provenance-preserved vendor example, or a falsifiable runtime test.
 
+## What the older vendor text and skins still say
+
+Comparison date 2026-09-07, current app 18.0.9598 against the four samples,
+produced by [tools/diff_vendor_history.py](../tools/diff_vendor_history.py)
+(`just vendor-history-diff`) into
+[vendor-text-diff.json](../tests/build-history-2026-09-06/vendor-text-diff.json).
+Everything in it is vendor prose or vendor script, Tier 2: a lead about what a
+verb or keyword means, never a claim that the current build accepts it. Sizes
+are the artifact's own `summary` block; do not copy them into prose.
+
+**Descriptions.** Every verb described in an older appendix but not the current
+one is either a rename already stored as an alias (`goto_bar`,
+`add_virtualfolder`, `get_constant`, …) or one of three unofficial verbs the
+store carried without prose — `setting_if_unchanged`, `get_pad_page_name`,
+`pad_page_favorite` — which now carry the 9.0.5308 appendix text through
+`put-verb`, stamped with the build it came from. Of the descriptions that
+changed, nearly all grew: the current text is the old text plus examples. The
+exceptions worth knowing are parameter spellings that moved:
+`get_saved_loop 'len'` → `'length'`, `browsed_file_analyze 'multi'` → `'fluid'`,
+`show_splitpanel 'sidelist'` → `'sideview'`, `video_source 'shader'` →
+`'visuals'`, `padfx 'smart_temporary'` → `'smart_pressed'`; one correction,
+`get_totaltime_ms` now says 1/100th seconds where 9.0.5308 said milliseconds;
+and one dropped equivalence, `get_totaltime_min` ≡ `get time_min "total"`.
+Whether an old spelling is still accepted is a `probe_arg_forms.py` question
+(task 10b), and `documented_parameters_lost` in the artifact is its worklist.
+
+**Shipped skins.** `skin2018.zip` (2 Decks, 4 Decks, 6 Decks, Tablet, Welcome)
+shipped in 9.0.5308 and 9.0.7607 and is gone from 18.0.9246 onward; the `skin.zip`
+five persist with edits. `skin_usages_lost` lists every verb a historical
+shipped skin used in a script attribute and no current shipped skin uses, with
+archive, member and the exact attribute value: `clone_deck`, `loop_back`,
+`loop_roll_mode`, `mixer_order 3124`, `pad_has_16pads`, `skin_pannel 'left_cues' on`,
+`video_source_select`, `setting_if_unchanged skinWaveformType 1` and the rest.
+These are the only vendor-written usages of those verbs the repo has. Read the
+snippet, not only the name: a verb name inside a quoted argument
+(`sampler_mode 'hold'`) matches too. The old archives themselves were not
+copied into `examples/`; the artifact holds the attribute values, and the
+installers hold the files.
+
+**In the store view.** `just verb <name>` now ends with a History block: the
+samples that carried the name, flag and same-id-peer changes by build, and the
+verb's lines from this diff. The data is joined from `summary.json` →
+`verb_history` and from `vendor-text-diff.json` at read time; nothing was
+copied into store records except the three descriptions above.
+
 ## Reproduction and limits
 
 After expanding each installer into `/tmp/vdj-history-20260906/BUILD`, run:
@@ -225,7 +270,14 @@ After expanding each installer into `/tmp/vdj-history-20260906/BUILD`, run:
 python3 tools/extract_build_history.py \
   --root /tmp/vdj-history-20260906 \
   --output tests/build-history-2026-09-06
+just vendor-history-diff   # tools/diff_vendor_history.py, same root
 ```
+
+The installers are `~/Downloads/install_virtualdj_2020_b5308_mac.pkg`,
+`~/Downloads/VirtualDJ_2023_b7607_mac.pkg`,
+`~/Downloads/install_virtualdj_2026_b9246_mac.pkg` and the 18.0.9583 package;
+the expanded tree under `/tmp` is not kept. `summary.json` carries each
+executable's SHA-256 so a re-expansion can be checked against this capture.
 
 The capture includes bundle identities, executable SHA-256 digests, both-slice
 comparison results, complete historical verb tables, and narrowly bounded named

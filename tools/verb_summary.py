@@ -115,6 +115,8 @@ def summary(name: str, limit: int = 6) -> dict:
         },
         "vocabulary_groups": {g: {"known_via": v, "unprobed_members": novel_in_groups[g]}
                               for g, v in groups.items()},
+        "history": rec.get("history"),
+        "vendor_history": rec.get("vendor_history"),
         "returns": {"observed_bare": ret.get("observed_type"), "samples": ret.get("samples"),
                     "structural": {k: contract.get(k) for k in ("queries", "query_bool", "query_text")
                                    if k in contract},
@@ -192,6 +194,39 @@ def render(s: dict) -> str:
              + (f"; structural {r['structural']}" if r["structural"] else "")
              + (f"; demands an argument in slots {r['arg_demand_slots']}" if r["arg_demand_slots"] else ""))
     L.append("")
+    h = s.get("history")
+    if h:
+        line = f"History (sampled installers): in {', '.join(h['present_in_samples'])}"
+        if h.get("absent_from_prior_sample"):
+            line += f"; absent from the {h['absent_from_prior_sample']} sample"
+        L.append(line)
+        order = lambda d: [b for b in h["samples"] if b in d]  # sample order, not lexical
+        if h.get("flags_by_build"):
+            fb = h["flags_by_build"]
+            L.append("  flags by build     : " + ", ".join(f"{b}={fb[b]}" for b in order(fb)))
+        if h.get("alias_peers_by_build"):
+            ab = h["alias_peers_by_build"]
+            L.append("  same-id peers      : " + "; ".join(
+                f"{b}: {', '.join(ab[b]) or '—'}" for b in order(ab)))
+    vh = s.get("vendor_history")
+    if vh:
+        if vh.get("described_only_historically"):
+            d = vh["described_only_historically"]
+            for b in (h["samples"] if h else sorted(d)):
+                if b in d:
+                    L.append(f"  appendix {b} only  : {d[b]}")
+        if vh.get("description_changed_in"):
+            L.append(f"  description differs in appendix {', '.join(vh['description_changed_in'])}"
+                     " (see vendor-text-diff.json)")
+        if vh.get("documented_parameters_lost"):
+            L.append("  keywords quoted only in older appendix: " + "; ".join(
+                f"{b}: {', '.join(k)}" for b, k in vh["documented_parameters_lost"].items()))
+        if vh.get("shipped_skin_usages_lost"):
+            b, uses = next(iter(vh["shipped_skin_usages_lost"].items()))
+            u = uses[0]
+            L.append(f"  shipped-skin usage no longer shipping ({b} {u['archive']}/{u['member']}): {u['source'][:100]}")
+    if h or vh:
+        L.append("")
     L.append("Tiers: examples/shapes/attested and catalog are vendor material (Tier 2); binary "
              "keywords and vocabulary groups are structural leads (Tier 2); probed, observed "
              "return and status are local tests (Tier 1).")

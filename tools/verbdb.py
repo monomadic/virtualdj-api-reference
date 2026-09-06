@@ -321,6 +321,27 @@ def joined_view(name: str, rec: dict) -> dict:
                                  "build": modules["summary"]["build"],
                                  **({"section_grade": grade} if grade else {})}
                 break
+    # Sampled compatibility history from the historical installers: which
+    # sampled builds carried the name, and where its flags or alias peers moved.
+    # Brackets appearance between samples; it is never a release date.
+    history = artifact("tests/build-history-2026-09-06/summary.json")
+    if history and name in history.get("verb_history", {}).get("verbs", {}):
+        out["history"] = {"samples": history["verb_history"]["samples"],
+                          **history["verb_history"]["verbs"][name]}
+    vendor = artifact("tests/build-history-2026-09-06/vendor-text-diff.json")
+    if vendor:
+        v = {}
+        if name in vendor["described_only_historically"]:
+            v["described_only_historically"] = vendor["described_only_historically"][name]
+        if name in vendor["description_changed"]:
+            v["description_changed_in"] = sorted(
+                b for b in vendor["description_changed"][name] if b != "current")
+        if name in vendor["documented_parameters_lost"]:
+            v["documented_parameters_lost"] = vendor["documented_parameters_lost"][name]
+        if name in vendor["skin_usages_lost"]:
+            v["shipped_skin_usages_lost"] = vendor["skin_usages_lost"][name]
+        if v:
+            out["vendor_history"] = v
     return out
 
 

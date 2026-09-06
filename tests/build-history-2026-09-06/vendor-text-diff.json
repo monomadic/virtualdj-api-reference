@@ -1,0 +1,1536 @@
+{
+  "current_build": "18.0.9598",
+  "described_only_historically": {
+    "add_virtualfolder": {
+      "9.0.5308": "create a new virtual folder (unmonitored folder).",
+      "9.0.7607": "create a new virtual folder (unmonitored folder)."
+    },
+    "create_virtualfolder_from_playlist": {
+      "9.0.5308": "Save the automix list in a virtual folder",
+      "9.0.7607": "Save the automix list in a virtual folder"
+    },
+    "get_constant": {
+      "9.0.5308": "return the given constant: 'get constant 75%' always returns 75%"
+    },
+    "get_pad_page_name": {
+      "9.0.5308": "returns the name of a pad page with a given index"
+    },
+    "goto_bar": {
+      "18.0.9246": "put the song on its nth beat after the downbeat without loosing sync: 'goto_bar 4'",
+      "9.0.5308": "put the song on its nth beat after the downbeat without loosing sync: 'goto_bar 4'",
+      "9.0.7607": "put the song on its nth beat after the downbeat without loosing sync: 'goto_bar 4'"
+    },
+    "pad_page_favorite": {
+      "9.0.5308": "Select a pad page from your favorites (pad_page_favorite 1, pad_page_favorite 2, etc...)"
+    },
+    "pad_page_favorite_select": {
+      "9.0.5308": "Select which pad page you want as favorite in favorite slot x (pad_page_favorite_select 1)"
+    },
+    "setting_if_unchanged": {
+      "9.0.5308": "update setting only if it is in automatic mode"
+    },
+    "virtualfolder_add": {
+      "9.0.5308": "Add the currently selected songs in the browser to the specified Virtual Folder or Playlist. 'virtualfolder_add \"my_vfolder\"'",
+      "9.0.7607": "Add the currently selected songs in the browser to the specified Virtual Folder or Playlist. 'virtualfolder_add \"my_vfolder\"'"
+    }
+  },
+  "description_changed": {
+    "automix_editor_movetrack": {
+      "9.0.7607": "When the automix editor is opened, move the selected track's position\nautomix_editor_movetrack 'current' +10\nAlso accepts 'next' to move the next track. When the number is not given it can be mapped to rotary knobs or jog wheels",
+      "current": "When the automix editor is opened, move the selected track's position\nautomix_editor_movetrack 'current' +10\nAlso accepts 'next' or 'previous' to move the next or previous track. When the number is not given it can be mapped to rotary knobs or jog wheels"
+    },
+    "backspin": {
+      "9.0.5308": "Do a backspin. It is possible to specify the length: 'backspin 5000ms'",
+      "current": "Do a backspin. It is possible to specify the length: 'backspin 5000ms' or 'backspin 4bt'"
+    },
+    "blink": {
+      "9.0.5308": "turn on and off the LED, once per second. You can specify the speed: 'blink 1000ms'",
+      "current": "turn on and off the LED, once per second. You can specify the speed: 'blink 1000ms'\nSpeed can also be specified in number of beats: 'blink 1bt'. The time blinking can also be specified: 'blink 1bt 25%'"
+    },
+    "broadcast": {
+      "9.0.5308": "start or stop to broadcast",
+      "current": "start or stop to broadcast\nOptionally add parameter to specify \"video\", \"direct\", \"server\" or \"podcast\". Without parameters it will use the last used mode."
+    },
+    "browsed_file_analyze": {
+      "9.0.5308": "reanalyze the current file selected in the browser\nuse 'browsed_file_analyze multi' to do a scan for multiple bpms",
+      "9.0.7607": "reanalyze the current file selected in the browser\nuse 'browsed_file_analyze multi' to do a scan for multiple bpms",
+      "current": "reanalyze the current file selected in the browser\nuse 'browsed_file_analyze fluid' to force a scan using fluid grid"
+    },
+    "browser_geniusdj": {
+      "9.0.5308": "Lookup recommendations based on the items currently selected in the browser",
+      "9.0.7607": "Lookup recommendations based on the items currently selected in the browser",
+      "current": "Lookup recommendations based on the items currently selected in the browser\nUse 'browser_geniusdj playing' to use the currently playing track instead of the track selected in the browser"
+    },
+    "browser_scroll": {
+      "18.0.9246": "scroll through the songs or folders.\n'browser_scroll +1' or 'browser_scroll -1' to scroll one line, or \"browser_scroll 'top'\", \"browser_scroll 'bottom'\" to scroll to the beginning or end",
+      "9.0.5308": "scroll through the songs or folders.\n'browser_scroll +1' or 'browser_scroll -1' to scroll one line, or \"browser_scroll 'top'\", \"browser_scroll 'bottom'\" to scroll to the beginning or end",
+      "9.0.7607": "scroll through the songs or folders.\n'browser_scroll +1' or 'browser_scroll -1' to scroll one line, or \"browser_scroll 'top'\", \"browser_scroll 'bottom'\" to scroll to the beginning or end",
+      "current": "scroll through the songs or folders.\n'browser_scroll +1' or 'browser_scroll -1' to scroll one line, or \"browser_scroll 'top'\", \"browser_scroll 'bottom'\" to scroll to the beginning or end\nWhen the folder list is selected, 'browser_scroll parent' will scroll up to the parent folder"
+    },
+    "constant": {
+      "9.0.5308": "return the specified value",
+      "current": "Return the specified value\nExample: 'get constant 75%' always returns 75%"
+    },
+    "countdown": {
+      "9.0.7607": "Count down to a specific date or time. Example: countdown '2023/01/01 00:00'\nSecond parameter can be used to optionally format the return value. Use %full, %HH, %MM, %SS, %DD",
+      "current": "Count down to a specific date or time. Example: countdown '2027/01/01 00:00'\nSecond parameter can be used to optionally format the return value. Use %full, %HH, %MM, %SS, %DD"
+    },
+    "cue_countdown": {
+      "9.0.5308": "count down to the next cue (or end) in beats",
+      "9.0.7607": "count down to the next cue (or end) in beats",
+      "current": "count down to the next cue (or end) in beats\nuse 'cue_countdown color' or 'cue_countdown name' to get the name or color of the next cue point"
+    },
+    "cue_counter": {
+      "9.0.7607": "count up or down to the nearest cue point in beats",
+      "current": "count up or down to the nearest cue point in beats\nuse 'cue_counter color' or 'cue_counter name' to get the name or color of the nearest cue point"
+    },
+    "cue_countup": {
+      "9.0.5308": "count up from the last cue point (or start) in beats",
+      "9.0.7607": "count up from the last cue point (or start) in beats",
+      "current": "count up from the last cue point (or start) in beats\nuse 'cue_countup color' or 'cue_countup name' to get the name or color of the last cue point"
+    },
+    "cue_loop": {
+      "9.0.5308": "Jump to a cue and stay in a loop. Use cue_loop_hold to select if loop is temporary, or stays until pressed again. Respects smart_cue when jumping to the cue",
+      "9.0.7607": "Jump to a cue and stay in a loop. Use cue_loop_hold to select if loop is temporary, or stays until pressed again. Respects smart_cue when jumping to the cue",
+      "current": "Jump to a cue and stay in a loop. Use cue_loop_hold to select if loop is temporary, or stays until pressed again. When the cueLoopAutoSync option is enabled, jumping to the cue is beat synchronized"
+    },
+    "cue_pos": {
+      "9.0.5308": "\"cue_pos 1\" returns the position of cue point #1 as a percentage\n\"cue_pos 1 msec\", \"cue_pos 1 sec\", \"cue_pos 1 min\" returns the position of cue point #1, msec, sec and min parts\n\"cue_pos 1 mseconly\" returns the position of cue point #1 in milliseconds",
+      "current": "\"cue_pos 1\" returns the position of cue point #1 as a percentage\n\"cue_pos 1 msec\", \"cue_pos 1 sec\", \"cue_pos 1 min\" returns the position of cue point #1, msec, sec and min parts\n\"cue_pos 1 mseconly\" returns the position of cue point #1 in milliseconds\n\"cue_pos 1 beats\" returns the position of the cue point in number of beats from first beat"
+    },
+    "dump": {
+      "9.0.5308": "reverse the playback direction while dump is active, then when deactivated, start again forward from where the song should have been if it had been playing forward during the dump.",
+      "9.0.7607": "reverse the playback direction while dump is active, then when deactivated, start again forward from where the song should have been if it had been playing forward during the dump.",
+      "current": "reverse the playback direction while dump is active, then when deactivated, start again forward from where the song should have been if it had been playing forward during the dump.\nwhen quantize_all is active, dump will be quantized to match the beats. This can also be forced by using 'dump quantized' or 'dump notquantized'\nto dump only while the key is pressed, use 'dump while_pressed'"
+    },
+    "edit_comment": {
+      "18.0.9246": "open a window to edit the comment on the selected track.",
+      "9.0.5308": "open a window to edit the comment on the selected track.",
+      "9.0.7607": "open a window to edit the comment on the selected track.",
+      "current": "Open a window to edit the comment of the selected deck\nTo edit the comment of the track selected in the browser, use 'edit_comment browser'"
+    },
+    "effect_bank_load": {
+      "9.0.7607": "load the effects in deck fx slots 1,2,3 from the bank specified by the parameter",
+      "current": "load the effects in deck fx slots 1 to 6 from the bank specified by the parameter"
+    },
+    "effect_bank_save": {
+      "9.0.7607": "save the effects in deck fx slots 1,2,3 to the bank specified by the parameter",
+      "current": "save the effects in deck fx slots 1 to 6 to the bank specified by the parameter"
+    },
+    "effect_disable_all": {
+      "9.0.5308": "'deck 1 effect_disable_all' Disables all effects on deck 1\n'deck master effect_disable_all' Disables all master effects",
+      "9.0.7607": "'deck 1 effect_disable_all' Disables all effects on deck 1\n'deck master effect_disable_all' Disables all master effects",
+      "current": "'deck 1 effect_disable_all' Disables all effects on deck 1\n'deck master effect_disable_all' Disables all master effects\n'effect_disable_all sampler' Disables all sampler effects. 'aux' or 'mic' can be used for mic or aux effects"
+    },
+    "effect_select": {
+      "9.0.5308": "effect_select 2 \"echo\" -> select effect echo in slot 2\neffect_select 1 -1 -> select previous effect in slot 1\neffect_select +1 -> select next effect in slot 1\neffect_select -> show popup window for slot 1\neffect_select 1 -> show popup window for slot 1\neffect_select 1 0.2 -> select the 2/10th effect from the list in slot 1\neffect_select deactivates the previous plugin in the specified slot",
+      "current": "effect_select 2 \"echo\" -> select effect echo in slot 2\neffect_select 1 -1 -> select previous effect in slot 1\neffect_select +1 -> select next effect in slot 1\neffect_select -> show popup window for slot 1\neffect_select 1 -> show popup window for slot 1\neffect_select 1 0.2 -> select the 2/10th effect from the list in slot 1\neffect_select \"audioonlyvisualisation\" -> select visualisation used when song has no video\neffect_select deactivates the previous plugin in the specified slot"
+    },
+    "effects_used": {
+      "9.0.5308": "Active when there are any audio effects activated. Use \"effects_used 'deck'\" to get the effects on the selected deck, or \"effects_used 'master'\" to get effects activated on master.",
+      "current": "Active when there are any effects activated. Use \"effects_used 'deck'\" to get the effects on the selected deck, or \"effects_used 'master'\" to get effects activated on master."
+    },
+    "eq_crossfader_high": {
+      "9.0.5308": "crossfade the trebble between both decks.",
+      "current": "crossfade the treble between both decks"
+    },
+    "eq_crossfader_low": {
+      "9.0.5308": "crossfade the bass between both decks.",
+      "current": "crossfade the bass between both decks"
+    },
+    "eq_crossfader_mid": {
+      "9.0.5308": "crossfade the medium between both decks.",
+      "current": "crossfade the center frequencies between both decks."
+    },
+    "eq_high": {
+      "9.0.5308": "set the trebble equalizer.",
+      "current": "change the amount of HiHat, Vocal or High (depending on EQ control mode)."
+    },
+    "eq_kill_high": {
+      "9.0.5308": "mute the trebble.",
+      "current": "mute the treble"
+    },
+    "eq_low": {
+      "9.0.5308": "set the bass equalizer.",
+      "current": "change the amount of Kick or Low in the mix (depending on EQ control mode)."
+    },
+    "eq_mid": {
+      "9.0.5308": "set the medium equalizer.",
+      "current": "change the amount of Melody, Vocals or Medium (depending on EQ control mode)."
+    },
+    "eq_mode": {
+      "9.0.7607": "Select the behavior of the EQs knobs (frequency, modernEQ or EZRemix)\nCan be used to switch between Frequency and your preferred stems mode using 'eq_mode +1'\nTo select a specific behavior, you can use \"setting eqMode frequency\" or \"setting eqMode modernEQ\" for example",
+      "current": "Select the behavior of the EQs knobs (frequency, modernEQ or EZRemix)\nCan be used to switch between Frequency and your preferred stems mode using 'eq_mode +1'\nTo change the eq mode only for a single deck, use \"eq_mode +1 deck\" (or \"deck 1 eq_mode +1 deck\" to specify deck 1 in your script)\nTo select a specific behavior, you can use \"eq_mode frequency\", \"eq_mode modernEQ\", \"eq_mode ezRemix\" or \"eq_mode stems\""
+    },
+    "file_count": {
+      "9.0.5308": "Get number of files currently shown in browser",
+      "9.0.7607": "Get number of files currently shown in browser\nYou can also use \"file_count automix\" and \"file_count sideview\" to get the number of files in automix or sideview",
+      "current": "Get number of files currently shown in browser\nYou can also use 'automix', 'sideview', 'karaoke' or 'sidelist' as parameter to get the count in other lists. \"file_count automix\""
+    },
+    "get_beatdiff": {
+      "9.0.5308": "Get the distance between the beat from this deck and the beat from the active deck\n50% means the deck are aligned, 0% means this deck is late half a beat, 100% means it is ahead half a beat",
+      "current": "Get the distance between the beat from this deck and the beat from the active deck\n50% means the deck are aligned, 0% means this deck is late half a beat, 100% means it is ahead half a beat\n'get_beatdiff 4' will return the distance percentage between bars instead of beats"
+    },
+    "get_effects_used": {
+      "9.0.5308": "Returns the number of audio effects currently active",
+      "current": "Returns the number of effects currently active"
+    },
+    "get_level": {
+      "9.0.5308": "Get level of signal before master volume. If no deck is specified will get master level\nUse \"get_level 'mic'\" for microphone level, or \"get_level 'sampler'\" for sampler level",
+      "9.0.7607": "Get level of signal before master volume. If no deck is specified will get master level\nUse \"get_level 'mic'\" for microphone level, or \"get_level 'sampler'\" for sampler level",
+      "current": "Get level of signal before master volume. If no deck is specified will get master level\nUse \"get_level 'mic'\" for microphone level, or \"get_level 'sampler'\" for sampler level\nUse \"get_level 'vocal'\" for vocal vu meter, other stem names also supported"
+    },
+    "get_limiter": {
+      "9.0.5308": "return true if the limiter is compressing because the signal was saturated. Use 'deck 1 get limiter' to get the limiter on a deck in external mixer mode, or 'get limiter' (or 'get limiter \"master\") to get the limiter on the master for internal mixing mode (also can use 'get limiter \"headphones\"' and 'get limiter \"booth\"')",
+      "9.0.7607": "return true if the limiter is compressing because the signal was saturated. Use 'deck 1 get limiter' to get the limiter on a deck in external mixer mode, or 'get limiter' (or 'get limiter \"master\") to get the limiter on the master for internal mixing mode (also can use 'get limiter \"headphones\"' and 'get limiter \"booth\"')",
+      "current": "return true if the limiter is compressing because the signal was saturated. Use 'deck 1 get limiter' to get the limiter on a deck in external mixer mode, or 'get_limiter' (or 'get_limiter \"master\") to get the limiter on the master for internal mixing mode (also can use 'get_limiter \"headphones\"' and 'get_limiter \"booth\"')"
+    },
+    "get_sample_info": {
+      "18.0.9246": "get additional information about the sample, such as 'get_sample_info 1 fullpath'\nIn addition to the regular column names, 'group' is also supported, and 'length' returns beat values for loops",
+      "current": "get additional information about the sample, such as 'get_sample_info 1 fullpath'\nIn addition to the regular column names, 'group' and 'pos' are also supported, and 'length' returns beat values for loops"
+    },
+    "get_saved_loop": {
+      "9.0.5308": "get information about a saved loop: get_saved_loop 'pos', get_saved_loop 'len', get_saved_loop 'name'",
+      "9.0.7607": "get information about a saved loop: get_saved_loop 'pos', get_saved_loop 'len', get_saved_loop 'name'",
+      "current": "get information about a saved loop: get_saved_loop 'pos', get_saved_loop 'length', get_saved_loop 'name'\n\"get_saved_loop 'next' 'name'\" can be used to get information about the upcoming saved loop\n\"get_saved_loop 1 'name'\" can be used to get information about the first saved loop"
+    },
+    "get_spectrum_band": {
+      "9.0.7607": "get the level of a single spectrum band. 'get_spectrum_band 1'\nUse 'deck master' in front to get spectrum of the master deck 'deck master get_spectrum_band 1'\nBy default there are 32 bands",
+      "current": "get the level of a single spectrum band. 'get_spectrum_band 1'\nUse 'deck master' in front to get spectrum of the master deck 'deck master get_spectrum_band 1'\nBy default there are 32 bands, to use a smaller number of bands, use 'get_spectrum_band 1 3' to get the first of 3 bands\nThe third parameter can be used to get a spectrum of stems 'get_spectrum_band 1 32 vocals'"
+    },
+    "get_time": {
+      "9.0.5308": "get the elapsed time (or remaining or total depending on \"display_time\"), in milliseconds.\nUse 'get time 1000' to get another unit than ms (1000=ms, 25=1/25th of seconds, 44100=frames, etc). \nUse \"elapsed\", \"remain\" or \"total\" to bypass the setting of display_time. Use \"absolute\" not to take the pitch into account.\nOn texts, use \"short\" to hide the decimals. Example: get_time \"remain\" \"short\"",
+      "9.0.7607": "get the elapsed time (or remaining or total depending on \"display_time\"), in milliseconds.\nUse 'get time 1000' to get another unit than ms (1000=ms, 25=1/25th of seconds, 44100=frames, etc). \nUse \"elapsed\", \"remain\" or \"total\" to bypass the setting of display_time. Use \"absolute\" not to take the pitch into account.\nOn texts, use \"short\" to hide the decimals. Example: get_time \"remain\" \"short\"",
+      "current": "get the elapsed time (or remaining or total depending on \"display_time\"), in milliseconds.\nUse 'get time 1000' to get another unit than ms (1000=ms, 25=1/25th of seconds, 44100=frames, etc). \nUse \"elapsed\", \"remain\" or \"total\" to bypass the setting of display_time. Use \"absolute\" not to take the pitch into account.\nUse \"to_lyrics\", \"loopin\", \"loopout\", \"cue1\" etc for time to specific points\nOn texts, use \"short\" to hide the decimals. Example: get_time \"remain\" \"short\""
+    },
+    "get_time_ms": {
+      "9.0.5308": "get the 1/100th seconds of the elapsed time (or remaining or total, depending on \"display_time\").",
+      "current": "get the 1/100th seconds of the elapsed time (or remaining or total, depending on \"display_time\")\nuse 'get_time_ms 1000' to get the actual milliseconds"
+    },
+    "get_totaltime_min": {
+      "9.0.5308": "get the minutes of the length of the song (this is equivalent to 'get time_min \"total\"').",
+      "current": "get the minutes of the length of the song"
+    },
+    "get_totaltime_ms": {
+      "9.0.5308": "get the milliseconds of the length of the song.",
+      "current": "get the 1/100th seconds of the length of the song"
+    },
+    "get_totaltime_msf": {
+      "9.0.5308": "get the frames of the length of the song.",
+      "current": "get the frames of the length of the song"
+    },
+    "get_totaltime_sec": {
+      "9.0.5308": "get the seconds of the length of the song.",
+      "current": "get the seconds of the length of the song"
+    },
+    "get_version": {
+      "9.0.5308": "Returns version as text such as \"8.3\"",
+      "9.0.7607": "Returns version as text such as \"2023\"",
+      "current": "Returns version as text such as \"2026\""
+    },
+    "get_vu_meter": {
+      "9.0.5308": "Get level of signal after master volume. If no deck is specified will get master level.\nUse \"get_vu_meter 'mic'\" for microphone level",
+      "9.0.7607": "Get level of signal after master volume. If no deck is specified will get master level.\nUse \"get_vu_meter 'mic'\" for microphone level or \"get_vu_meter 'sampler'\" for sampler level",
+      "current": "Get level of signal after master volume. If no deck is specified will get master level.\nUse \"get_vu_meter 'mic'\" for microphone level or \"get_vu_meter 'sampler'\" for sampler level\nUse \"get_level 'vocal'\" for vocal vu meter, other stem names also supported"
+    },
+    "goto": {
+      "9.0.5308": "change the position in the song. 'goto +10ms' jumps 10ms forward. 'goto -4' jumps 4 beats backward. 'goto 20%' goes at 20% of the song's length.",
+      "current": "change the position in the song. 'goto +10ms' jumps 10ms forward. 'goto -4' jumps 4 beats backward. 'goto 20%' jumps to 20% of the song's length."
+    },
+    "level": {
+      "9.0.5308": "set the volume of the deck.",
+      "current": "set the volume of the deck"
+    },
+    "linein": {
+      "9.0.5308": "Activate or deactivate the linein on this deck.\nYou can also specify a linein number to assign another linein: \"deck 1 linein 2 on\".\nOr you can assign the microphone input: \"deck 3 linein 'mic' on\".",
+      "9.0.7607": "Activate or deactivate the linein on this deck.\nYou can also specify a linein number to assign another linein: \"deck 1 linein 2 on\".\nOr you can assign the microphone input: \"deck 3 linein 'mic' on\".",
+      "current": "Activate or deactivate the linein on this deck.\nYou can also specify a linein number to assign another linein: \"deck 1 linein 2 on\"\nOr you can assign the microphone or aux input: \"deck 3 linein 'mic' on\" or \"deck 3 linein 'aux' on\"\nIf you don't want the line in to become the master deck automatically, you can use \"deck 3 linein 'trs'\""
+    },
+    "load_next": {
+      "9.0.5308": "Load next track",
+      "current": "Load next track. You can use 'load_next keepplay' to start playing the loaded song if the currently loaded song was playing"
+    },
+    "mic": {
+      "9.0.5308": "activate or desactivate the microphone input",
+      "current": "activate or deactivate the microphone input"
+    },
+    "microphone": {
+      "9.0.5308": "activate or desactivate the microphone input",
+      "current": "activate or deactivate the microphone input"
+    },
+    "mix_and_load_next": {
+      "9.0.5308": "automatically mix to the next deck, then stop the current track and load a new song if something is available in the playlist or sidelist",
+      "current": "automatically mix to the next deck, then stop the current track and load a new song if something is available in the playlist or sidelist\nby default this will to a tempo mix and sync bpm if the bpm is in range. You can add 'nosync' to mix without tempo synchronization. 'mix_and_load_next nosync'"
+    },
+    "mix_now": {
+      "9.0.5308": "Smoothly crossfade from one side to the other, matching beats when the tempo of both songs is close together\nWhen automix is off, fade speed can be adjusted: \"mix_now 4000ms\"",
+      "current": "Smoothly crossfade from one side to the other, matching beats when the tempo of both songs is close together\nWhen automix is off, fade speed can be adjusted: \"mix_now 4000ms\" or \"mix_now 4bt\""
+    },
+    "mix_now_nosync": {
+      "9.0.5308": "Smoothly crossfade from one side to the other\nWhen automix is off, fade speed can be adjusted: \"mix_now_nosync 4000ms\"",
+      "current": "Smoothly crossfade from one side to the other\nWhen automix is off, fade speed can be adjusted: \"mix_now_nosync 4000ms\" or \"mix_now_nosync 4bt\""
+    },
+    "os2l_button": {
+      "9.0.5308": "Send a command to a DMX software over OS2L: 'os2l_button \"blackout\"', 'os2l_button \"fog machine\" while_pressed', etc.\nIf you want to specify a page, you can use 'os2l_button \"mypage\" \"mybutton\"'.",
+      "current": "Send a command to a DMX software over OS2L: 'os2l_button \"blackout\"', 'os2l_button \"fog machine\" while_pressed', etc.\nIf you want to specify a page, you can use 'os2l_button \"mypage\" \"mybutton\"'.\nIf the DMX software doesn't send feedback commands, os2l_button acts as a flash button (it sends 'on' when pressed, 'off' when released) - use 'os2l_button \"mybutton\" on' to not send commands on release.\nIf the DMX software sends feedback commands, os2l_button acts as a toggle button (it sends the opposite of the last feedback when pressed, nothing on release) - use 'os2l_button \"mybutton\" while_pressed' to send a command on release."
+    },
+    "os2l_cmd": {
+      "18.0.9246": "Send a numeric command to a DMX software over OS2L: 'os2l_cmd 42 on' or 'os2l_cmd 43 50%'",
+      "9.0.5308": "Send a numeric command to a DMX software over OS2L: 'os2l_cmd 42 on' or 'os2l_cmd 43 50%'",
+      "9.0.7607": "Send a numeric command to a DMX software over OS2L: 'os2l_cmd 42 on' or 'os2l_cmd 43 50%'",
+      "current": "Send a numeric command to a DMX software over OS2L: 'os2l_cmd 42 on' or 'os2l_cmd 43 50%'\nSecond parameter can be script 'os2l_cmd 42 `get_var x`'"
+    },
+    "pad_button_color": {
+      "9.0.5308": "returns the color of the ith pad as should be used on a controller button (changing the color for standby/active/pressed according to the controller's RGB capability).\nif the pad is active and has no color, white is returned.\nif the pad is inactive and has a color, and the controller support full RGB pads, a dimmed color is returned.\nif the pad is active and has a color, and the controller doesn't support full RGB pads, the color is blinking.",
+      "9.0.7607": "returns the color of the ith pad as should be used on a controller button (changing the color for standby/active/pressed according to the controller's RGB capability).\nif the pad is active and has no color, white is returned.\nif the pad is inactive and has a color, and the controller support full RGB pads, a dimmed color is returned.\nif the pad is active and has a color, and the controller doesn't support full RGB pads, the color is blinking.",
+      "current": "returns the color of the ith pad as should be used on a controller button (changing the color for standby/active/pressed according to the controller's RGB capability).\nif the pad is active and has no color, white is returned.\nif the pad is inactive and has a color, and the controller support full RGB pads, a dimmed color is returned.\nif the pad is active and has a color, and the controller doesn't support full RGB pads, the color is blinking.\nTo adjust the dim level, the second parameter can be used (default dim is 50%). pad_button_color 1 25%"
+    },
+    "pad_page": {
+      "9.0.5308": "change the current page for the pads\nExample: pad_page 'hotcues'",
+      "current": "Syntax: 'pad_page 1' to activate a the first page, 'pad_page 1 hotcues' to override the default for a page, 'pad_page btn1' for first button (that could be page 1 or page 5 depending on shift), 'pad_page' to show the dropdown menu"
+    },
+    "padfx": {
+      "9.0.5308": "Activate/deactivate named effect with a single key. Effect parameters can be specified as well.\n'padfx \"echo\" 40% 90%' to start/stop the echo effect with first parameter at 40% and second parameter at 90%. When the effect is stopped, the parameters return to their original values.\n'padfx \"echo\" 40% 90% smart_temporary' smart_temporary works as a toggle when pressing the button shortly, or as a temporary while holding the button pressed\n'padfx \"echo\" 40% 90% \"TRAIL:on\"' after the sliders, it is possible to add strings to disable or enable switch parameters by defining their name, a colon and \"on\" to enable or \"off\" to disable",
+      "9.0.7607": "Activate/deactivate named effect with a single key. Effect parameters can be specified as well.\n'padfx \"echo\" 40% 90%' to start/stop the echo effect with first parameter at 40% and second parameter at 90%. When the effect is stopped, the parameters return to their original values.\n'padfx \"echo\" 40% 90% smart_pressed' smart_pressed works as a toggle when pressing the button shortly, or as a temporary while holding the button pressed\n'padfx \"echo\" 40% 90% \"TRAIL:on\"' after the sliders, it is possible to add strings to disable or enable switch parameters by defining their name, a colon and \"on\" to enable or \"off\" to disable\n'padfx \"echo out\" 80% \"solostem:vocal\"' as the last parameter, you can add solostem:stemname to only let that stem be audible while applying the effect. stem names can be Vocal,HiHat,Bass,Instru,Kick,Melody,Rhythm,MeloVocal,MeloRhythm\n'padfx \"echo out\" \"mutestem:rhythm\"' as the last parameter, you can add mutestem:stemname to mute that stem while applying the effect\n'padfx \"reverb\" \"stemfx:vocal\"' as the last parameter, you can add stemfx:stemname to apply the effect only to that stem (other stems will continue playing normally). stem names can be vocals, hihat, bass, instru, kick, rhythm and instrumental",
+      "current": "Activate/deactivate named effect with a single key. Effect parameters can be specified as well.\n'padfx \"echo\" 40% 90%' to start/stop the echo effect with first parameter at 40% and second parameter at 90%. When the effect is stopped, the parameters return to their original values.\n'padfx \"echo\" 40% 1bt' to start/stop the echo effect with first parameter at 40% and length of 1 beat\n'padfx \"echo\" 40% 90% smart_pressed' smart_pressed works as a toggle when pressing the button shortly, or as a temporary while holding the button pressed\n'padfx \"echo\" 40% 90% \"TRAIL:on\"' after the sliders, it is possible to add strings to disable or enable switch parameters by defining their name, a colon and \"on\" to enable or \"off\" to disable\n'padfx \"echo out\" 80% \"solostem:vocal\"' as the last parameter, you can add solostem:stemname to only let that stem be audible while applying the effect\n'padfx \"echo out\" \"mutestem:rhythm\"' as the last parameter, you can add mutestem:stemname to mute that stem while applying the effect\n'padfx \"reverb\" \"stemfx:vocal\"' as the last parameter, you can add stemfx:stemname to apply the effect only to that stem (other stems will continue playing normally)\n stem names can be Vocal,HiHat,Bass,Instru,Kick,Melody,Rhythm,MeloVocal,MeloRhythm"
+    },
+    "param_add": {
+      "9.0.5308": "add the given value to the value of the calling slider/encoder/button\nadd the value of the first parameter with the value of the second parameter. Both parameters can be actions instead of values: 'param_add \"get_var a\" \"get_var b\"'",
+      "current": "add the given value to the value of the calling slider/encoder/button\nadd the value of the first parameter with the value of the second parameter. Both parameters can be actions instead of values: 'param_add `get_var a` `get_var b`'"
+    },
+    "param_cast": {
+      "9.0.5308": "cast the value of the previous query action into a new type: 'pitch_range & param_cast \"percentage\"'. Valid types are 'integer', 'float', 'percentage', 'ms', 'boolean', 'text'.\ncasting to text can also optionally limit the number of characters: 'get_browsed_song \"artist\" & param_cast \"text\" 5'\nto format a number as text with a specific number of digits: 'get_bpm & param_cast \"000\"'\nparam_cast 'int_trunc' : provides the integer part of a number without rounding to the nearest integer\nparam_cast 'frac' : provides the decimal part of a number.",
+      "current": "cast the value of the previous query action into a new type: 'pitch_range & param_cast \"percentage\"'. Valid types are 'integer', 'float', 'percentage', 'ms', 'boolean', 'beats', 'text'.\ncasting to text can also optionally limit the number of characters: 'get_browsed_song \"artist\" & param_cast \"text\" 5'\nto format a number as text with a specific number of digits: 'get_bpm & param_cast \"000\"'\nparam_cast 'int_trunc' : provides the integer part of a number without rounding to the nearest integer\nparam_cast 'frac' : provides the decimal part of a number.\nparam_cast 'relative' and param_cast 'absolute' : change the parameter to be a relative or absolute value"
+    },
+    "param_contains": {
+      "9.0.5308": "check if the value of the calling action contains the string in the parameter",
+      "9.0.7607": "check if the value of the calling action contains the string in the parameter",
+      "current": "Check if the value of the calling action contains the string in the parameter."
+    },
+    "param_equal": {
+      "9.0.5308": "Check if the value of the calling slider/encoder/button is equal to something\nTo compare a string with the result of an action, use param_equal \"`action param`\" \"string\". For example: param_equal \"`get_browsed_song 'type'`\" \"audio\"",
+      "current": "Check if the value of the calling slider/encoder/button is equal to something\nTo compare a string with the result of an action, use param_equal `action param` \"string\". For example: param_equal `get_browsed_song 'type'` \"audio\""
+    },
+    "param_multiply": {
+      "18.0.9246": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'",
+      "9.0.5308": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'",
+      "9.0.7607": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'",
+      "current": "multiply the value of the calling slider/encoder/button by the given value: 'param_multiply 300% & effect slider'\nThe parameter can also be an action 'cue_pos 0 & param_multiply \"get_time total 1000\"'\nCan also be used with two parameters, in which case both parameters can be actions or values: 'param_multiply `get_var a` `get_var b`' or 'param_multiply 50% `get_sampler_loop`'"
+    },
+    "param_pow": {
+      "18.0.9246": "param_pow y : computes the power of the caller to the power of y. Can be 0.5 for calculating square root.",
+      "9.0.5308": "param_pow y : computes the power of the caller to the power of y. Can be 0.5 for calculating square root.",
+      "9.0.7607": "param_pow y : computes the power of the caller to the power of y. Can be 0.5 for calculating square root.",
+      "current": "param_pow y : computes the power of the caller to the power of y. Can be 0.5 for calculating square root.\nCan also be used with 2 parameters, both of which can be actions or values. Note that the first parameter is the power, and the second parameter is the base. 'param_pow `get_var a` `get_var b`' or 'param_pow 2 `get_sampler_loop`'"
+    },
+    "pitch": {
+      "9.0.5308": "Set the pitch of the deck. Without parameters it can be assigned to sliders\nUsed with a number, it gives the position on the slider (and therefore account for pitch_range). ('pitch 0.25' set pitch at -10% if pitch range is 20%)\nUsed with a percent it gives an absolute position.  'pitch 112%' set pitch at +12%\nRelative values are possible too. 'pitch +0.1%', 'pitch +0.1 bpm'",
+      "9.0.7607": "Set the pitch of the deck. Without parameters it can be assigned to sliders\nUsed with a number, it gives the position on the slider (and therefore account for pitch_range). ('pitch 0.25' set pitch at -10% if pitch range is 20%)\nUsed with a percent it gives an absolute position.  'pitch 112%' set pitch at +12%\nRelative values are possible too. 'pitch +0.1%', 'pitch +0.1 bpm'",
+      "current": "Set the pitch of the deck. Without parameters it can be assigned to sliders\nUsed with a number, it gives the position on the slider (and therefore account for pitch_range). ('pitch 0.25' set pitch at -10% if pitch range is 20%)\nUsed with a percent it gives an absolute position.  'pitch 112%' set pitch at +12%\nRelative values are possible too. 'pitch +0.1%', 'pitch +0.1 bpm'\nWhen used with 'bpm', the pitch is set to match the bpm. 'pitch 130 bpm' set pitch to match 130 bpm"
+    },
+    "pitch_range": {
+      "9.0.5308": "set the range for the pitch slider. 'pitch_range 12%' set the range from -12% to +12%. \n'pitch_range +1' scrolls through the default pitch ranges. 'pitch_range \"12,16,25\" +1' scrolls through the provided list of pitch ranges.",
+      "9.0.7607": "set the range for the pitch slider. 'pitch_range 12%' set the range from -12% to +12%. \n'pitch_range +1' scrolls through the default pitch ranges. 'pitch_range \"12,16,25\" +1' scrolls through the provided list of pitch ranges.",
+      "current": "set the range for the pitch slider. 'pitch_range 12%' set the range from -12% to +12%. \n'pitch_range +1' scrolls through the default pitch ranges. 'pitch_range \"12,16,25\" +1' scrolls through the provided list of pitch ranges.\n'pitch_range +1 deck' changes the pitch range only for the specific deck"
+    },
+    "pitch_reset": {
+      "9.0.5308": "slowly brings the pitch back to 0%. you can specify the speed in % per second (default 1% per second): 'pitch_reset 5%'",
+      "9.0.7607": "slowly brings the pitch back to 0%. you can specify the speed in % per second (default 1% per second): 'pitch_reset 5%'",
+      "current": "Slowly brings the pitch back to 0%. You can specify the speed in % per second (default uses the pitchResetSpeed option): 'pitch_reset 5%'\nYou can also specify the speed in ms or beats: 'pitch_reset 500ms' or 'pitch_reset 4bt'"
+    },
+    "reanalyze": {
+      "9.0.5308": "reanalyze bpm etc... for the file loaded on the deck\n'reanalyze multi' can be used to scan for multiple bpm's",
+      "9.0.7607": "reanalyze bpm etc... for the file loaded on the deck\n'reanalyze multi' can be used to scan for multiple bpm's",
+      "current": "reanalyze bpm etc... for the file loaded on the deck\n'reanalyze fluid' can be used to force a scan using fluid grid"
+    },
+    "repeat_start": {
+      "9.0.5308": "Repeat an action at a specified interval: 'repeat_start 'myrepeatname' 1000ms 5 & browser_scroll +1' (first parameter is an identifier name, second parameter is the interval and the third optional parameter can specify a number of times to repeat). The first action will be performed after an interval has passed.",
+      "9.0.7607": "Repeat an action at a specified interval: 'repeat_start 'myrepeatname' 1000ms 5 & browser_scroll +1' (first parameter is an identifier name, second parameter is the interval and the third optional parameter can specify a number of times to repeat). The first action will be performed after an interval has passed.",
+      "current": "Repeat an action at a specified interval: 'repeat_start 'myrepeatname' 1000ms 5 & browser_scroll +1' (first parameter is an identifier name, second parameter is the interval and the third optional parameter can specify a number of times to repeat). The first action will be performed after an interval has passed.\nThe interval can be specified in milliseconds, beats, or can be an action of itself. 'repeat_start 'myrepeatname' 1bt' or 'repeat_start 'myrepeatname `get_var a`'"
+    },
+    "sampler_color": {
+      "9.0.5308": "get the color of the sample on this slot if it has one",
+      "9.0.7607": "get the color of the sample on this slot if it has one",
+      "current": "get the color of the sample on this slot if it has one\nThe sample number takes the sampler_pad_page into account, so should be used in combination with sampler_pad"
+    },
+    "sampler_options": {
+      "9.0.5308": "popup the sample menu.",
+      "9.0.7607": "popup the sample menu.",
+      "current": "popup the sample menu.\ncan also be used with 'sampler_options \"locked\"' or 'sampler_options \"stemswap\"' to change the bank's settings."
+    },
+    "search_folder": {
+      "18.0.9246": "show or hide the searchbar for searching folders and lists\nUse 'search_folder dialog' to open a separate dialog instead",
+      "9.0.7607": "open a dialog to search for folders or playlists by name",
+      "current": "show or hide the searchbar for searching folders and lists\nUse 'search_folder dialog' to open a separate dialog instead\nUse 'search_folder clear' to clear the folder search\nUse 'search_folder focus' to focus the folder search"
+    },
+    "search_playlists": {
+      "9.0.7607": "open a dialog to search which playlist or virtual folder contains a specific song\nby default it searches for the song selected in the browser. Use \"search_playlists deck\" to search for the song loaded on the deck.",
+      "current": "open a dialog to search which list contains a specific song\nby default it searches for the song selected in the browser. Use \"search_playlists deck\" to search for the song loaded on the deck."
+    },
+    "show_splitpanel": {
+      "9.0.5308": "Show/hide the specified split panel\nExamples: \"show_splitpanel 'sidelist'\", \"show_splitpanel 'sidelist' on\", \"show_splitpanel 'sidelist' 50%\"",
+      "current": "Show/hide the specified split panel\nExamples: \"show_splitpanel 'sidelist'\", \"show_splitpanel 'sideview' on\", \"show_splitpanel 'sidelist' 50%\""
+    },
+    "sidelist_clear": {
+      "18.0.9246": "clear the sidelist.",
+      "9.0.5308": "clear the sidelist.",
+      "9.0.7607": "clear the sidelist.",
+      "current": "clear the sidelist"
+    },
+    "sideview": {
+      "9.0.5308": "Show a specific folder in the sideview. Available sideviews are automix,sidelist,karaoke,sampler,clone\nUse 'sideview +1' or 'sideview -1' to scroll between available sideviews",
+      "9.0.7607": "Show a specific folder in the sideview. Available sideviews are automix,sidelist,karaoke,sampler,clone\nUse 'sideview +1' or 'sideview -1' to scroll between available sideviews",
+      "current": "Show a specific folder in the sideview. Available sideviews are automix,sidelist,karaoke,sampler,remixes,clone\nUse 'sideview +1' or 'sideview -1' to scroll between available sideviews"
+    },
+    "stem": {
+      "9.0.7607": "Change the amount of a stem in the mix. Stem names are: \"HiHat\", \"Vocal\", \"Instru\", \"Bass\", \"Kick\", or you can use aggregate stems: \"Melody\" (Instru+Bass), \"Rhythm\" (HiHat+Kick), \"MeloVocal\" (Melody/Vocal).\nTo get kill on left side and isolate on right side of the slider, you can use \"FullVocal\", \"FullMelo\" and \"FullRhythm\"",
+      "current": "Change the amount of a stem in the mix. Stem names are: \"HiHat\", \"Vocal\", \"Instru\", \"Bass\", \"Kick\", or you can use aggregate stems: \"Melody\" (Instru+Bass), \"Rhythm\" (HiHat+Kick), \"MeloVocal\" (Melody/Vocal), \"MeloRhythm\" (Melody/Rhythm).\nTo get kill on left side and isolate on right side of the slider, you can use \"FullVocal\", \"FullMelo\" and \"FullRhythm\"\nTo map a slider to always control the equalizer, regardless of EQ mode, you can use \"stem FreqHi\", \"stem FreqMid\", and \"stem FreqLo\""
+    },
+    "stem_pad": {
+      "9.0.7607": "mute a stem (or isolate if pressed with Shift). Stem names are: \"HiHat\", \"Vocal\", \"Instru\", \"Bass\", \"Kick\", \"Rhythm\", \"MeloRhythm\", \"Acapella\", \"Instrumental\"",
+      "current": "mute a stem (or isolate if pressed with Shift). Stem names are: \"HiHat\", \"Vocal\", \"Instru\", \"Bass\", \"Kick\", \"Rhythm\", \"MeloRhythm\", \"Acapella\", \"Instrumental\"\nlong press will work as temporary toggle. Second parameter can be \"isolate\" to isolate instead of mute (\"stem_pad vocal isolate\")"
+    },
+    "stems_split": {
+      "9.0.7607": "'stems_split' will duplicate deck 1 to deck 3 or deck 2 to 4, with the vocals playing on the first deck and the instruments on the other deck",
+      "current": "'stems_split' will duplicate deck 1 to deck 3 or deck 2 to 4, with the vocals playing on the first deck and the instruments on the other deck\n'stems_split vocal target' will duplicate the opposite deck to the deck stems_split was called from"
+    },
+    "undo_load": {
+      "9.0.5308": "unload the song and reload the previous song",
+      "current": "Unload the song and reload the previous song. Use 'undo_load any' to unload from the last deck a song was loaded on. Otherwise the deck the action is called from is used."
+    },
+    "var": {
+      "9.0.5308": "syntax: 'var \"my_var\" ? my_action1 : my_action2'. execute my_action1 if my_var is true (non zero), execute my_action2 otherwise.",
+      "current": "'var \"my_var\" ? my_action1 : my_action2'. execute my_action1 if my_var is true (non zero), execute my_action2 otherwise.\nYou can also compare var with a specific value: 'var \"my_var\" 1 ? my_action1 : my_action2' execute my_action1 is my_var is 1, or my_action2 otherwise"
+    },
+    "video_source": {
+      "18.0.9246": "activate video if not active yet, and open the shader selection dialog if shader is the source",
+      "9.0.5308": "activate video if not active yet, and open the shader selection dialog if shader is the source",
+      "9.0.7607": "activate video if not active yet, and open the shader selection dialog if shader is the source",
+      "current": "activate video if not active yet, and open the shader selection dialog if visuals is the source"
+    }
+  },
+  "documented_parameters_lost": {
+    "get_saved_loop": {
+      "9.0.5308": [
+        "len"
+      ],
+      "9.0.7607": [
+        "len"
+      ]
+    },
+    "get_totaltime_min": {
+      "9.0.5308": [
+        "total"
+      ]
+    },
+    "get_version": {
+      "9.0.7607": [
+        "2023"
+      ]
+    },
+    "pad_page": {
+      "9.0.5308": [
+        "hotcues"
+      ]
+    }
+  },
+  "evidence": "vendor prose and vendor script from installer payloads; Tier 2 leads, no runtime results",
+  "samples": {
+    "5308": {
+      "build": "9.0.5308",
+      "described_verbs": 690
+    },
+    "7607": {
+      "build": "9.0.7607",
+      "described_verbs": 758
+    },
+    "9246": {
+      "build": "18.0.9246",
+      "described_verbs": 811
+    },
+    "9583": {
+      "build": "18.0.9583",
+      "described_verbs": 816
+    }
+  },
+  "skin_usages_lost": {
+    "browser_padding": {
+      "9.0.5308": [
+        {
+          "archive": "skin.zip",
+          "member": "Vertical.xml",
+          "source": "browser_padding 25%"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Essentials.xml",
+          "source": "browser_padding 50%"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Performance.xml",
+          "source": "browser_padding 25%"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Pro.xml",
+          "source": "browser_padding 25%"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Starter.xml",
+          "source": "browser_padding 100%"
+        }
+      ]
+    },
+    "clone_deck": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "deck right clone_deck left"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "deck right clone_deck left"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "deck right clone_deck left"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "deck right clone_deck left"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "deck right clone_deck left"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "deck right clone_deck left"
+        }
+      ]
+    },
+    "cue_color": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "cue_color 1 ? true : false"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "cue_color 1 ? true : false"
+        }
+      ]
+    },
+    "fake_mixer": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "fake_mixer"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "fake_mixer"
+        }
+      ]
+    },
+    "get_harmonic": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_harmonic"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_harmonic"
+        }
+      ]
+    },
+    "get_hasmaster": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_hasmaster"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "get_hasmaster"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_hasmaster"
+        }
+      ]
+    },
+    "get_key_modifier": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_key_modifier"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_key_modifier"
+        }
+      ]
+    },
+    "get_level": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_level 'db'"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "get_level 'db'"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Welcome.xml",
+          "source": "get_level 'db'"
+        }
+      ]
+    },
+    "get_sampler_bank": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "get_sampler_bank"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "get_sampler_bank"
+        }
+      ]
+    },
+    "has_system_volume": {
+      "9.0.5308": [
+        {
+          "archive": "skin.zip",
+          "member": "Starter.xml",
+          "source": "has_system_volume"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin.zip",
+          "member": "Starter.xml",
+          "source": "has_system_volume"
+        }
+      ]
+    },
+    "hold": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_mode 'hold'"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_mode 'hold'"
+        }
+      ]
+    },
+    "hot_cue": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "hot_cue 1"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "hot_cue 1"
+        }
+      ]
+    },
+    "key_lock": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "key_lock"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "key_lock"
+        }
+      ]
+    },
+    "loop_back": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_back"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_back"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_back"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_back"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_back"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_back"
+        }
+      ]
+    },
+    "loop_load": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_load"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_load"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_load"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_load"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_load"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_load"
+        }
+      ]
+    },
+    "loop_load_prepare": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_load_prepare"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_load_prepare"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_load_prepare"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_load_prepare"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_load_prepare"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_load_prepare"
+        }
+      ]
+    },
+    "loop_roll_mode": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "loop_roll_mode"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_roll_mode"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "loop_roll_mode"
+        }
+      ]
+    },
+    "loop_save": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_save"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_save"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_save"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "loop_save"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "loop_save"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "loop_save"
+        }
+      ]
+    },
+    "mixer_order": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "mixer_order 3124"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "mixer_order 3124"
+        }
+      ]
+    },
+    "pad_bank2": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_bank2"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_bank2"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_bank2"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_bank2"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_bank2"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_bank2"
+        }
+      ]
+    },
+    "pad_color": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "pad_color 1 ? true"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_color 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "pad_color 1 ? true"
+        }
+      ]
+    },
+    "pad_has_16pads": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_has_16pads"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "not pad_has_16pads"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_has_16pads"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_has_16pads"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "not pad_has_16pads"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_has_16pads"
+        }
+      ]
+    },
+    "pad_page_favorite": {
+      "9.0.5308": [
+        {
+          "archive": "skin.zip",
+          "member": "Vertical.xml",
+          "source": "pad_page_favorite 1"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Essentials.xml",
+          "source": "pad_page_favorite 1"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Performance.xml",
+          "source": "pad_page_favorite 1"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Pro.xml",
+          "source": "pad_page_favorite 1"
+        }
+      ]
+    },
+    "pad_pressure": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "pad_pressure 1 ? true"
+        }
+      ]
+    },
+    "param_add": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"
+        }
+      ]
+    },
+    "quantize_loop": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "quantize_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "quantize_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "quantize_loop"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "quantize_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "quantize_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "quantize_loop"
+        }
+      ]
+    },
+    "sampler_bank": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_bank"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_bank"
+        }
+      ]
+    },
+    "sampler_mode": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_mode 'on/off'"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "sampler_mode 'on/off'"
+        }
+      ]
+    },
+    "sampler_stop": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "var $samplerstop ? sampler_stop 'all' &amp;&amp; sampler_bank +1 : sampler_bank +1"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "var $samplerstop ? sampler_stop 'all' &amp;&amp; sampler_bank +1 : sampler_bank +1"
+        }
+      ]
+    },
+    "setting_if_unchanged": {
+      "9.0.5308": [
+        {
+          "archive": "skin.zip",
+          "member": "Vertical.xml",
+          "source": "setting_if_unchanged skinWaveformType 1"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Essentials.xml",
+          "source": "setting_if_unchanged skinWaveformType 0"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Performance.xml",
+          "source": "setting_if_unchanged skinWaveformType changed"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Pro.xml",
+          "source": "setting_if_unchanged skinWaveformType 1"
+        },
+        {
+          "archive": "skin.zip",
+          "member": "Starter.xml",
+          "source": "setting_if_unchanged coverflow 1"
+        }
+      ]
+    },
+    "skin_empty_buttons": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "skin_empty_buttons"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "skin_empty_buttons"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "skin_empty_buttons"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "skin_empty_buttons"
+        }
+      ]
+    },
+    "skin_pannel": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "skin_pannel 'left_cues' on"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "skin_pannel 'left_cues' on"
+        }
+      ]
+    },
+    "smart_cue": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "smart_cue"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "smart_cue"
+        }
+      ]
+    },
+    "smart_loop": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "smart_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "smart_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "smart_loop"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "smart_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "smart_loop"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "smart_loop"
+        }
+      ]
+    },
+    "video_fx_select": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "video_fx_select +1"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_fx_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "video_fx_select +1"
+        }
+      ]
+    },
+    "video_source": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_source"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_source"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_source"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_source"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_source"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_source"
+        }
+      ]
+    },
+    "video_source_select": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_source_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_source_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_source_select"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_source_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_source_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_source_select"
+        }
+      ]
+    },
+    "video_transition_select": {
+      "9.0.5308": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "video_transition_select"
+        }
+      ],
+      "9.0.7607": [
+        {
+          "archive": "skin2018.zip",
+          "member": "2 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "4 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "6 Decks.xml",
+          "source": "video_transition_select"
+        },
+        {
+          "archive": "skin2018.zip",
+          "member": "Tablet.xml",
+          "source": "video_transition_select"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "described_only_historically": 9,
+    "description_changed": 83,
+    "documented_parameters_lost": 4,
+    "skin_usages_lost": 38
+  }
+}

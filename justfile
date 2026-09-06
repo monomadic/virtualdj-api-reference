@@ -181,6 +181,10 @@ attested-tails *args:
 
 # The Button Editor's own action descriptions — the official appendix prose,
 # offline. `--cross-check` diffs documented parameters against probe findings.
+# Historical installers: vendor prose and shipped-skin usages the current app no longer carries.
+vendor-history-diff root="/tmp/vdj-history-20260906":
+    @python3 tools/diff_vendor_history.py --root {{root}} --output tests/build-history-2026-09-06/vendor-text-diff.json
+
 action-catalog *args:
     @python3 tools/extract_action_catalog.py {{args}}
 

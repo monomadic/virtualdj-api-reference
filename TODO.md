@@ -268,9 +268,19 @@ on a live instance is not a fixture.
 
 ### H3. Historical vendor corpus diff and store-visible compatibility history
 
-Status: Ready
+Status: Done
 
-Note: Offline, delegable to a cheap model, no runtime claims. Two deliverables from the three
+Note: 2026-09-07. Both deliverables landed as artifacts and joins, not prose:
+[tools/diff_vendor_history.py](tools/diff_vendor_history.py) (`just vendor-history-diff`) writes
+`tests/build-history-2026-09-06/vendor-text-diff.json`; `summary.json` gained `verb_history`;
+`joined_view` and `just verb` show both per verb. Three unofficial verbs (`setting_if_unchanged`,
+`get_pad_page_name`, `pad_page_favorite`) received their 9.0.5308 appendix descriptions via
+`put-verb`. Findings and the probe worklist they open (old parameter spellings such as
+`get_saved_loop 'len'`, `video_source 'shader'`) are in the excavation doc's "What the older
+vendor text and skins still say". The historical skin archives were not copied into
+`examples/`. Original brief follows.
+
+Offline, delegable to a cheap model, no runtime claims. Two deliverables from the three
 older payloads (`~/Downloads/install_virtualdj_2020_b5308_mac.pkg`,
 `~/Downloads/VirtualDJ_2023_b7607_mac.pkg`, `~/Downloads/install_virtualdj_2026_b9246_mac.pkg`,
 expanded with `pkgutil --expand-full`; the memory notes hold the same paths):
