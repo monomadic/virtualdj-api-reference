@@ -1993,3 +1993,27 @@ empty deck.
 **Side observation, not chased.** The database stores this track's key as
 `Abm` and `get_key` returned `Am` while the deck read a non-zero pitch; the
 display may fold pitch into the key.
+
+## Documented Parameters Taken Live 2026-09-07 (second batch)
+
+Same method and same track as the section above; browser selection left as
+found (a different track, rating 0); sampler and automix state as found.
+
+| Verb | Confirmed | Placeholder (doc's own words) | Undiscriminated (not refuted) | Note |
+| --- | --- | --- | --- | --- |
+| `get_browsed_song` | `title`, `playcount`, `artist` | | | nonsense field → `error:-2147024809`; bare → empty |
+| `browsed_song` | `rating` | | | in query position it is an equality predicate: `'rating' 0` → `yes`, `'rating' 9` → `no`, nonsense field with `0` → `no`; the catalog only documents the setter |
+| `sampler_loop` | `current` | | `play` | `current` → `yes` like bare; `play` alone → `error:-2147024809` like nonsense — it is the fourth token of the documented 4-token action form, not a query tail, so it stays untested rather than refuted |
+| `get_time` | `to_lyrics` | | | `0` with no lyrics where nonsense fell back to elapsed (`44`) |
+| `get_version` | | `2026` | | bare, `'2026'` and nonsense all `2026`; the prose quotes an example result |
+| `get_text` | | `title`, `on`, `off` | | the verb echoes its argument; each quoted word echoed exactly as nonsense did |
+| `get_artist_before_feat` | | `featuring` | | "with 'featuring' stripped" is prose; all three forms returned the artist |
+| `get_song_event` | | | `current`, `next` | `error:-2147467259` (E_FAIL) on every form on a loaded, stopped deck; the earlier direct-query confirmation used a state this run did not build |
+| `get_automix_song` | | | `title` | E_FAIL on every form with the automix list as found |
+| `get_slip_time` | | | `sec`, `min`, `msec` | E_FAIL on every form with slip off |
+| `filter_label` | | | `name` | `DELAY` on every form |
+| `effects_used` | | | `deck` | `no` on every form with no effect active |
+
+Recorded in `LOCAL_CONFIRMED` / `LOCAL_PLACEHOLDERS` in
+[tools/extract_action_catalog.py](../tools/extract_action_catalog.py) and on the
+verbs. Deck 1 empty before and after.

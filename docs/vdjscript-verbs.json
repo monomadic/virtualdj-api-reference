@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 34,
-    "Pass": 74,
-    "Untested": 919
+    "Partial": 35,
+    "Pass": 76,
+    "Untested": 916
    },
    "documented": 771,
-   "tested_pass": 74,
+   "tested_pass": 76,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -779,13 +779,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, query position only: browsed_song 'rating' 0 returned yes on a rating-0 browsed track, 'rating' 9 no, and a nonsense field with 0 no — an equality predicate on the field, where the catalog documents only the setter. The setter was not executed. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
+   ],
    "section": "Browser",
    "description": "Set browsed file property",
-   "example": "browsed_song 'rating' 5"
+   "example": "browsed_song 'rating' 5",
+   "confidence": "local_test"
   },
   "browsed_song_hashtag": {
    "name": "browsed_song_hashtag",
@@ -4692,14 +4695,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, browser selection as found: 'title', 'playcount', 'artist' return the browsed track's fields; two nonsense fields return error:-2147024809 (E_INVALIDARG); bare returns empty. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
+   ],
    "section": "Get (Query Actions)",
    "description": "Browsed file property",
    "example": "get_browsed_song 'title'",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_browsed_title": {
    "name": "get_browsed_title",
@@ -6578,7 +6584,8 @@
    "evidence": [
     "VirtualDJ 2026 (HTTP, 2026-07-30): accepts a trailing argument — bare returns one time mode (286667) while ANY argument, including an unrecognized word, returns another (161780, matching 'elapsed'/'short'). Distinguishing 'short' from fallback needs value-format comparison; unknown args are silently defaulted, never E_INVALIDARG.",
     "Local test 2026-09-06, HTTP, build 18.0.9598, known-position fixture (tests/get-time-positions.json, 2 runs x 2 phases, order varied). Position arguments discriminate against two nonsense controls and against each other: 'cue1' equals cue_pos 1 mseconly exactly and tracks the cue when it is moved; 'loopout' equals get_loop_out_time exactly; 'loopin' equals get_loop_in_time ONLY while a loop is active — with the loop exited it returns the loop-OUT value while the oracle still reports the in point. An unrecognized tail falls back to 'elapsed', NOT to the bare form (bare followed display_time 'remain' throughout), so bare-versus-argument separation is not recognition. 'short' alone behaves as an unrecognized tail. 'absolute' is a modifier, not a mode: it keeps the display_time setting. 'cue' reads the ACTIVE cue (0 until one is activated, then the active cue's position). 'to_lyrics' returned 0 with no lyrics — unresolved.",
-    "Local test 2026-09-06 (second pass, HTTP, build 18.0.9598), STRENGTHENING the same-day known-position result: 'absolute' is a pitch-removing modifier that keeps the display_time mode, now measured where the two timelines actually differ. At deck pitch +8.33% with the playhead fixed, get_time 'absolute' returned 55000 while 'remain' returned 50769 — and 55000 is exactly 90000 minus 35000, i.e. the REMAINING time computed on the unpitched 90 s timeline rather than the pitched 83076 ms one. The earlier run could not separate them because pitch was 0 there, which is why 'absolute' looked equal to 'remain'. get_time_sec 'absolute' agreed at 55."
+    "Local test 2026-09-06 (second pass, HTTP, build 18.0.9598), STRENGTHENING the same-day known-position result: 'absolute' is a pitch-removing modifier that keeps the display_time mode, now measured where the two timelines actually differ. At deck pitch +8.33% with the playhead fixed, get_time 'absolute' returned 55000 while 'remain' returned 50769 — and 55000 is exactly 90000 minus 35000, i.e. the REMAINING time computed on the unpitched 90 s timeline rather than the pitched 83076 ms one. The earlier run could not separate them because pitch was 0 there, which is why 'absolute' looked equal to 'remain'. get_time_sec 'absolute' agreed at 55.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, track with no lyrics on deck 1: get_time 'to_lyrics' returned 0 where a nonsense tail fell back to elapsed (44), so the tail is recognized even with nothing to report. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
    ],
    "section": "Get (Query Actions)",
    "description": "Elapsed time",
@@ -12355,13 +12362,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, query position: sampler_loop 'current' returned yes like bare, while 'play' alone and a nonsense tail returned error:-2147024809 — 'current' is a recognized selector; 'play' is the fourth token of the documented action form and untested there. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
+   ],
    "section": "Sampler",
    "description": "Change the loop length of a sample or set it explicitly",
-   "example": "sampler_loop 1 1"
+   "example": "sampler_loop 1 1",
+   "confidence": "local_test"
   },
   "sampler_mode": {
    "name": "sampler_mode",

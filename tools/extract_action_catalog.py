@@ -143,6 +143,19 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     "get_key": {"harmonic"},
     # `'absolute' 5%` yes at +4.17% pitch where bare 5% and nonsense-selector 5% no.
     "get_pitch_zero": {"absolute"},
+    # 2026-09-07, second batch — tracker "Documented Parameters Taken Live
+    # 2026-09-07 (second batch)". Browser selection as found; nonsense fields
+    # raise E_INVALIDARG where named fields answer.
+    "get_browsed_song": {"title", "playcount", "artist"},
+    # In query position `browsed_song 'rating' <n>` is an equality predicate:
+    # yes at the browsed track's rating, no at another value or a nonsense field.
+    "browsed_song": {"rating"},
+    # `sampler_loop 'current'` answers like bare (`yes`); nonsense → E_INVALIDARG.
+    "sampler_loop": {"current"},
+    # `get_time 'to_lyrics'` → 0 on a track with no lyrics where an unrecognized
+    # tail falls back to elapsed (44), so the tail is read even when it has
+    # nothing to say.
+    "get_time": {"to_lyrics"},
 }
 
 # Catalog tokens a local test showed to be the doc's own example rather than
@@ -155,6 +168,15 @@ LOCAL_PLACEHOLDERS: dict[str, set[str]] = {
     # '%A' → Monday); a tail without a % directive is echoed verbatim, and
     # 'format' echoed itself exactly as the nonsense controls did.
     "get_date": {"format"},
+    # 2026-09-07: the prose quotes an example RESULT ("such as \"2026\""); bare,
+    # '2026' and a nonsense tail all returned 2026.
+    "get_version": {"2026"},
+    # get_text echoes its argument; 'title', 'on', 'off' are the prose's own
+    # words and echoed exactly as a nonsense tail was.
+    "get_text": {"title", "on", "off"},
+    # "with 'featuring' stripped" describes the behavior, not a parameter; bare,
+    # 'featuring' and nonsense all returned the same artist.
+    "get_artist_before_feat": {"featuring"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls

@@ -1289,7 +1289,13 @@ separates *set* from *flip* from *no-op*; from one baseline they are indistingui
 placeholder. Undiscriminated, not refuted, and needing a state no fixture builds:
 `get_limiter` outputs (nothing playing), `get_time_sign` (never negative here),
 `get_time_hour` (short track), `get_key musical` (keyDisplay already musical). Recorded in
-`LOCAL_CONFIRMED` so the cross-check stops listing them.
+`LOCAL_CONFIRMED` so the cross-check stops listing them. A second batch the same day added
+`get_browsed_song` title/playcount/artist, `browsed_song` rating (a predicate in query
+position), `sampler_loop` current, `get_time` to_lyrics; reclassified `get_version` 2026,
+`get_text` title/on/off and `get_artist_before_feat` featuring as the doc's own words
+(`LOCAL_PLACEHOLDERS`); and left `get_song_event`, `get_automix_song`, `get_slip_time`,
+`filter_label`, `effects_used` undiscriminated — each returned E_FAIL or one constant on every
+form in the state built, so they want a playing deck, an automix list, slip, or an active effect.
 
 **Corrected same day:** the pass reported `auto_bpm_transition`'s own candidates
 (`source_original`, `target_original`, `target_current`) as behaving like junk, and this file
