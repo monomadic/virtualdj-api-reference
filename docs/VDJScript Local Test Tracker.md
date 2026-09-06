@@ -1924,3 +1924,41 @@ it is now joined at read time the way the verb table and contracts already are:
 
 Nothing is copied into the store by this change; the artifact stays
 authoritative and a re-extraction is picked up without a migration.
+
+## Old Appendix Keywords Re-Probed
+
+2026-09-07, HTTP, build 18.0.9598. The historical vendor-text diff
+(`tests/build-history-2026-09-06/vendor-text-diff.json` →
+`documented_parameters_lost`) lists keywords the 2019 and 2023 appendices quoted
+and the current one does not. The one usable in query position was taken live.
+State: deck 1 empty before and after; a library track carrying saved loops
+(`Lick It [Mix] … Valentino Khan`, 146,150 ms) loaded onto it for the probe and
+unloaded afterwards. Two nonsense controls, `qzqzqz` and `zzqqx`.
+
+| Query | Result |
+| --- | --- |
+| `get_saved_loop 1 'name'` | `INTRO` |
+| `get_saved_loop 1 'pos'` | `0.04` |
+| `get_saved_loop 1 'length'` | `8bt` |
+| **`get_saved_loop 1 'len'`** | **`3.81`** |
+| `get_saved_loop 1 'qzqzqz'`, `'zzqqx'`, bare `get_saved_loop 1` | `0.04` |
+| `get_saved_loop 'next' 'length'` / `'len'` / `'qzqzqz'` | `8bt` / `3.81` / `0.04` |
+| `get_saved_loop 'length'` / `'len'` / `'qzqzqz'` | `8bt` / `3.81` / `error:1` |
+| `get_saved_loop 2 …` (any tail) | `error:1` |
+
+**Reading.** `len` and `length` both separate from the controls and from each
+other, so `len` is a recognized form in its own right, not a retired spelling of
+`length`: it answers in seconds (3.81 s at 126 BPM is 8 beats), `length` in
+beats. An unrecognized tail falls back to the position, and with no index the
+verb reads the next saved loop, where an unrecognized tail is an error rather
+than a fallback. Index `2` erroring on a track the database shows with several
+loops was not chased; the index may be a slot number rather than an ordinal.
+
+**Total-time family, same track.** `get_totaltime_min` = `get_time_min 'total'`
+= `2`, consistent with the equivalence the 2019 appendix stated and the current
+one dropped (one sample; both read the same, so it is consistent, not proven).
+`get_totaltime_ms` = `get_time_ms 'total'` = `15` while `get_time 'total'` =
+`146150`: the `_ms` verbs return the hundredths digits of the displayed time
+(`2:26.15`), which is what the current appendix's "1/100th seconds" means and
+what the 2019 "milliseconds" text got wrong. A nonsense tail on
+`get_totaltime_min` was ignored.

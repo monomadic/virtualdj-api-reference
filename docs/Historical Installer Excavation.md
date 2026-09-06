@@ -243,6 +243,18 @@ and one dropped equivalence, `get_totaltime_min` ≡ `get time_min "total"`.
 Whether an old spelling is still accepted is a `probe_arg_forms.py` question
 (task 10b), and `documented_parameters_lost` in the artifact is its worklist.
 
+The first item on that worklist was taken live the same day (HTTP, build
+18.0.9598, a library track with saved loops on deck 1, unloaded afterwards) and
+it was not a rename: `get_saved_loop 1 'len'` returned `3.81` and
+`get_saved_loop 1 'length'` returned `8bt`, both separating from two nonsense
+controls, which fell back to the `pos` value. **`len` is a distinct form that
+answers in seconds where `length` answers in beats**, and the same held with
+`'next'` in place of the index. The current appendix stopped mentioning `len`;
+the binary still reads it. The corrected `get_totaltime_ms` text was confirmed
+from the other direction: on a 146,150 ms track it returned `15`, the hundredths
+digits of the `2:26.15` display, not milliseconds. Recorded on the verbs and in
+the tracker.
+
 **Shipped skins.** `skin2018.zip` (2 Decks, 4 Decks, 6 Decks, Tablet, Welcome)
 shipped in 9.0.5308 and 9.0.7607 and is gone from 18.0.9246 onward; the `skin.zip`
 five persist with edits. `skin_usages_lost` lists every verb a historical

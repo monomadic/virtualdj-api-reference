@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 35,
-    "Pass": 67,
-    "Untested": 925
+    "Partial": 34,
+    "Pass": 70,
+    "Untested": 923
    },
    "documented": 771,
-   "tested_pass": 67,
+   "tested_pass": 70,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -6416,12 +6416,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Partial",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
     "Source module (bundle 18.0.9246 STABS): ACTION_get_saved_loop is compiled in action_loop.cpp, whose 39 already-sectioned verbs are 100% 'Loops'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
-    "Local test 2026-09-06, HTTP, build 18.0.9598. Fixture: a 32-beat loop laid on a disposable track with loop_save, then deleted and the deletion verified. CONFIRMED with two agreeing nonsense controls: 'length' -> 32bt (matching the loop actually saved) and 'name' -> 'Saved Loop 1'. The index is optional — get_saved_loop 'name' and get_saved_loop 1 'name' agree. UNDISCRIMINATED: 'pos' -> 18.5 (which does match the saved loop-in at 18496 ms) but bare and both nonsense tokens ALSO return 18.5, so pos is the default and this observable cannot separate it from the floor. 'next' returned error:1 in every form — with one saved loop behind the playhead there is no upcoming loop, so that is missing context, not a refutation."
+    "Local test 2026-09-06, HTTP, build 18.0.9598. Fixture: a 32-beat loop laid on a disposable track with loop_save, then deleted and the deletion verified. CONFIRMED with two agreeing nonsense controls: 'length' -> 32bt (matching the loop actually saved) and 'name' -> 'Saved Loop 1'. The index is optional — get_saved_loop 'name' and get_saved_loop 1 'name' agree. UNDISCRIMINATED: 'pos' -> 18.5 (which does match the saved loop-in at 18496 ms) but bare and both nonsense tokens ALSO return 18.5, so pos is the default and this observable cannot separate it from the floor. 'next' returned error:1 in every form — with one saved loop behind the playhead there is no upcoming loop, so that is missing context, not a refutation.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, library track with saved loops on deck 1 (unloaded after). Tails 'name' INTRO, 'pos' 0.04, 'length' 8bt, and the undocumented 'len' 3.81 (seconds; 8 beats at 126 BPM) — 'len' and 'length' separate from each other and from two nonsense controls, which fall back to pos. Same with 'next' in place of the index; with no index an unrecognized tail is error:1. 'len' was quoted in the 9.0.5308/9.0.7607 appendices and dropped from the current one; the binary still reads it. Tracker: Old Appendix Keywords Re-Probed."
    ],
    "section": "Loops",
    "confidence": "local_test"
@@ -6719,10 +6720,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, 146,150 ms track on deck 1: returned 2, equal to get_time_min 'total' — consistent with the equivalence the 9.0.5308 appendix stated and the current one dropped (one sample, both read the same). A nonsense tail was ignored. Tracker: Old Appendix Keywords Re-Probed."
+   ],
+   "confidence": "local_test"
   },
   "get_totaltime_ms": {
    "name": "get_totaltime_ms",
@@ -6730,10 +6734,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test 2026-09-07, HTTP, build 18.0.9598, 146,150 ms track on deck 1: returned 15, equal to get_time_ms 'total', while get_time 'total' returned 146150 — the hundredths digits of the displayed 2:26.15, as the current appendix's '1/100th seconds' says and the 2019 appendix's 'milliseconds' did not. Tracker: Old Appendix Keywords Re-Probed."
+   ],
+   "confidence": "local_test"
   },
   "get_totaltime_msf": {
    "name": "get_totaltime_msf",
