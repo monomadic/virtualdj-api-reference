@@ -12,13 +12,13 @@
     "unofficial": 42
    },
    "by_test_status": {
-    "Fail": 9,
-    "Partial": 28,
-    "Pass": 65,
-    "Untested": 936
+    "Fail": 10,
+    "Partial": 31,
+    "Pass": 66,
+    "Untested": 931
    },
    "documented": 768,
-   "tested_pass": 65,
+   "tested_pass": 66,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -692,13 +692,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). Query position echoes ANY argument back verbatim, including nonsense: 'red'->red, 'marine'->marine, 'qzqzqz'->qzqzqz, stable over repeated runs. It resolves nothing, so it cannot confirm a colour name and must not be used as one — unlike `color`, which returns 'transparent' for an unknown name."
+   ],
    "section": "Browser",
    "description": "Set file color",
-   "example": "browsed_file_color \"red\""
+   "example": "browsed_file_color \"red\"",
+   "confidence": "local_test"
   },
   "browsed_file_info": {
    "name": "browsed_file_info",
@@ -1215,13 +1218,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). The binary's colour table IS this verb's vocabulary, and query position resolves a name without changing anything: color '<name>' ECHOES the canonical name for a recognized colour and returns 'transparent' for anything else. 24 of the table's 26 members echo themselves — beige, black, blue, cyan, darkblue, darkcyan, darkgray, darkgreen, darkmagenta, darkorange, darkred, darkyellow, gray, green, lightgray, magenta, marine, orange, pink, red, transparent, violet, white, yellow. Three nonsense controls (qzqzqz, wvwvwv, zzz123) and the two-word 'bright red' all returned transparent. Case-insensitive: 'RED' returned 'red'. UNDISCRIMINATED, not disproved: 'none' and 'reset' also return 'transparent' — which is itself a real member — so this observable cannot separate them from the floor."
+   ],
    "section": "Parameters & Constants",
    "description": "Return color value",
-   "example": "color \"red\""
+   "example": "color \"red\"",
+   "confidence": "local_test"
   },
   "color_mix": {
    "name": "color_mix",
@@ -4480,12 +4486,14 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Plugin channel (2026-08-15): 'red'/'green'/'blue' are colour-COMPONENT selectors, returning 243/198/211 where the bare/unknown-argument form returns the hex string '#F3C6D3' — the same three bytes. An unrecognized argument falls back to the hex form rather than erroring."
-   ]
+    "Plugin channel (2026-08-15): 'red'/'green'/'blue' are colour-COMPONENT selectors, returning 243/198/211 where the bare/unknown-argument form returns the hex string '#F3C6D3' — the same three bytes. An unrecognized argument falls back to the hex form rather than erroring.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). Reproducible but not interpretable in this state, recorded rather than guessed: bare, 'red' and 'blue' all returned error:-2147024891 while 'marine' returned 'marine' and 'qzqzqz' returned 'transparent' — identical across three consecutive runs, so it is stable behavior and not flakiness. An earlier sweep confirmed red/green/blue in some other fixture, so the difference is context (what is browsed and whether it carries a colour), not the tokens. Needs a browsed file with a known colour before anything is claimed."
+   ],
+   "confidence": "local_test"
   },
   "get_browsed_comment": {
    "name": "get_browsed_comment",
@@ -10071,14 +10079,17 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). Cannot be used to confirm page names: it accepts ANY string. Executing pad_page 'qzqzqz' returned true and the query then reported the current page as 'qzqzqz', exactly as it did for the real built-in names 'sampler' and 'cueloop'. So the nonsense control does not separate, and the binary's 17-name pad-page table is UNDISCRIMINATED through this verb rather than unconfirmed by it. In query position with an argument it is an is-current predicate ('1 CUE' -> yes while every other name, real or invented, -> no). Restored to '1 CUE' afterwards."
+   ],
    "section": "Pads",
    "description": "Activate current deck's pad page",
    "example": "pad_page 1",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "pad_page_favorite": {
    "name": "pad_page_favorite",
@@ -12138,14 +12149,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). Bare query returned a HEX value (#4D94F6), not a colour name — so it reports the slot's actual colour rather than resolving a name, unlike `color`. With any argument it returned error:-2147467263 in this state (no sampler context prepared)."
+   ],
    "section": "Sampler",
    "description": "Get the color of the visible sampler pad slot",
    "example": "sampler_color 1",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "sampler_default": {
    "name": "sampler_default",

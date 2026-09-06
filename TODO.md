@@ -1433,7 +1433,28 @@ shapes. Confirming a shape live still needs a fixture; probing by shape (`DUR DU
 
 Status: Ready
 
-Note: 2026-09-03 — candidates extracted, fixtures exist, needs `just vdj-up`.
+Note: 2026-09-03 — candidates extracted, fixtures exist, needs `just vdj-up`. **Two groups done
+2026-09-06**, with opposite outcomes; the rest of the list below is still open. Full evidence:
+the tracker's "Shared Enumerations: The Colour Table Confirmed, The Pad-Page Table Unreachable".
+
+- **`colors`: confirmed, and cheaply.** `color '<name>'` resolves in *query* position — it echoes
+  the canonical spelling for a recognized colour and returns `transparent` for anything else — so
+  the whole group is classifiable read-only with a free floor. **24 of 26 members echo
+  themselves**, 16 of them names no per-verb source knew. Three nonsense controls and a two-word
+  control all returned `transparent`; `RED` returned `red`, so matching is case-insensitive.
+  `none` and `reset` are **undiscriminated, not disproved**: they return `transparent`, which is
+  itself a real member, so this observable cannot separate them from the floor. Group-level
+  conclusion recorded: for `color`, the serialised table *is* the accepted vocabulary.
+- **`pad_pages`: unreachable through `pad_page`, and this is the more instructive half.**
+  `pad_page 'sampler'` and `pad_page 'cueloop'` both returned `true` and the query then reported
+  that page as current — which looks like confirmation until the control runs.
+  **`pad_page 'qzqzqz'` behaved identically.** The verb takes an arbitrary string and reports it
+  back, so the 17 table names are undiscriminated *through this verb*, not unconfirmed by it.
+  Confirming them needs an observable reflecting what a page contains, not what it is called.
+- Also settled while the colour vocabulary was in hand: the sibling verbs do **not** share the
+  resolver. `browsed_file_color` echoes any argument verbatim, nonsense included — it looks like a
+  resolver and confirms nothing. `sampler_color` bare returns hex, not a name. `get_browsed_color`
+  is stable over three runs but context-dependent and not interpretable in this state.
 
 [tests/binary-vocabularies.json](tests/binary-vocabularies.json) (`just binary-vocab`) holds
 21 argument groups recovered as *structures* — pointer tables and switch functions — with

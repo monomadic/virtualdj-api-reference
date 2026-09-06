@@ -1678,3 +1678,69 @@ exposes; it is not added yet.
 `lint_mappers.py` raised `ValueError` on any path outside the repo — `relative_to`
 throws — so asking it to lint a scratch file produced a traceback instead of a
 lint. It reports the absolute path now.
+
+## Shared Enumerations: The Colour Table Confirmed, The Pad-Page Table Unreachable
+
+Build 18.0.9598, HTTP, 2026-09-06. Task 13 probes the enumerations
+`binary-vocabularies.json` recovered as *structures*. Two groups were taken far
+enough to conclude something; the conclusions are opposite, and the second is the
+more instructive.
+
+### `colors` — the table is the vocabulary, and it is readable without touching anything
+
+`color '<name>'` in **query position resolves a name**: it echoes the canonical
+spelling for a recognized colour and returns `transparent` for everything else.
+That makes the whole 26-member group classifiable read-only, with a free floor.
+
+**24 of 26 echo themselves** — `beige`, `black`, `blue`, `cyan`, `darkblue`,
+`darkcyan`, `darkgray`, `darkgreen`, `darkmagenta`, `darkorange`, `darkred`,
+`darkyellow`, `gray`, `green`, `lightgray`, `magenta`, `marine`, `orange`,
+`pink`, `red`, `transparent`, `violet`, `white`, `yellow`. Sixteen of those were
+in the group's `novel` list: named by the binary table and by no per-verb source.
+
+Controls: `qzqzqz`, `wvwvwv`, `zzz123` and the two-word `bright red` all returned
+`transparent`. `RED` returned `red`, so matching is case-insensitive.
+
+**`none` and `reset` are undiscriminated, not disproved.** They also return
+`transparent` — but `transparent` is itself a real member, so this observable
+cannot separate "recognized, means transparent" from "unrecognized, fell to the
+floor". They stay unconfirmed.
+
+**Group-level conclusion:** for `color`, the serialised table *is* the accepted
+vocabulary. Nothing outside it resolved, and everything inside it resolved except
+the two whose meaning collides with the floor.
+
+### `pad_pages` — the verb accepts anything, so the table cannot be probed through it
+
+The opposite outcome, and worth recording precisely so nobody retries it.
+
+Executing `pad_page 'sampler'` and `pad_page 'cueloop'` both returned `true` and
+the query then reported that name as the current page — which looks like
+confirmation until the control is run. **`pad_page 'qzqzqz'` behaved identically**:
+`true`, and the current page became `qzqzqz`. The verb accepts an arbitrary
+string and reports it back.
+
+So the binary's 17 pad-page names are **undiscriminated through this verb**, not
+unconfirmed by it — a distinction the probe rules exist for. Confirming them needs
+an observable that reflects what the page actually *contains*, not what it is
+called. (Restored to `1 CUE` afterwards.)
+
+In query position with an argument, `pad_page` is an is-current predicate:
+`'1 CUE'` → `yes`, every other name → `no`, real or invented. That is also why the
+first read looked like a clean negative for the whole table: nothing was current.
+
+### Colour siblings do not share the resolver
+
+Checked while the colour vocabulary was in hand, because it is tempting to assume
+one colour vocabulary across the family:
+
+| Verb | Query-position behavior |
+| --- | --- |
+| `color` | resolves: canonical name, or `transparent` |
+| `browsed_file_color` | **echoes ANY argument verbatim**, `qzqzqz` included — resolves nothing |
+| `sampler_color` | bare returns a **hex** value (`#4D94F6`), not a name |
+| `get_browsed_color` | bare/`red`/`blue` error, `marine` echoes, `qzqzqz` → `transparent`; identical across three runs, so stable but context-dependent and not interpretable here |
+| `cue_color`, `loop_color`, `pad_color` | error in every form with no cue/loop/pad context prepared |
+
+`browsed_file_color` is the trap: it looks like a resolver and confirms nothing,
+because a nonsense token comes straight back.
