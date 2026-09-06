@@ -201,6 +201,16 @@ binary-vocab *args:
 extract-binary-vocabularies:
     @python3 tools/extract_binary_vocabularies.py > tests/binary-vocabularies.json
 
+# SOURCE MODULE: which of Atomix's own `action_*.cpp` files implements a verb,
+# from the unstripped build's STABS. Tier 2 — it groups a verb, and says nothing
+# about whether it works. `--sections` says which modules map cleanly onto a
+# store section; `extract-action-modules` needs the b9246 pkg expanded.
+action-modules *args:
+    @python3 tools/extract_action_modules.py {{args}}
+
+extract-action-modules app:
+    @python3 tools/extract_action_modules.py --app "{{app}}" > tests/action-modules-9246.json
+
 # TAIL GRAMMAR: which trailing tokens a verb actually recognizes (Tier 1).
 # Every candidate is measured against nonsense controls, in every fixture.
 verb-arg-forms name:
@@ -304,6 +314,7 @@ check:
     python3 tools/extract_script_corpus.py --check
     python3 tools/extract_attested_tails.py --check
     python3 tools/extract_binary_vocabularies.py --check
+    python3 tools/extract_action_modules.py --check
     python3 tools/check_corpus_parses.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/check_reference_status.py
