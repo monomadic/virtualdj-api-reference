@@ -25,6 +25,9 @@ Start here:
 - [Completeness Roadmap](Completeness%20Roadmap.md)
   Evidence backlog for turning searchable names and source hints into locally observed, curated guidance.
 
+- [Historical Installer Excavation](Historical%20Installer%20Excavation.md)
+  Build-stamped compatibility history and named skin-reader leads from the older macOS installers, including the clickthrough boolean-path correction.
+
 - [Button Editor Catalog Audit](Button%20Editor%20Catalog%20Audit.md)
   Local cross-check of the VDJScript action descriptions bundled in VirtualDJ's Button Editor language resources, plus binary string-table counts.
 

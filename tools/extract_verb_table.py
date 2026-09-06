@@ -107,6 +107,8 @@ def stamp(summary: dict) -> str:
 
 def slice_offset(data: bytes, cputype: int = ARM64) -> int:
     if struct.unpack_from(">I", data, 0)[0] not in (0xCAFEBABE, 0xCAFEBABF):
+        if struct.unpack_from("<II", data, 0) != (0xFEEDFACF, cputype):
+            raise SystemExit("not a 64-bit Mach-O matching the requested architecture")
         return 0
     for i in range(struct.unpack_from(">I", data, 4)[0]):
         cpu, _sub, off, _size, _al = struct.unpack_from(">5I", data, 8 + i * 20)
@@ -133,9 +135,9 @@ def sections(data: bytes, base: int):
     return out
 
 
-def build(binary: str = BINARY) -> dict:
+def build(binary: str = BINARY, cputype: int = ARM64) -> dict:
     data = open(binary, "rb").read()
-    base = slice_offset(data)
+    base = slice_offset(data, cputype)
     secs = sections(data, base)
     cseg = next(s for s in secs if s[1] == "__cstring")
     dseg = next(s for s in secs if s[0] == "__DATA" and s[1] == "__data")
@@ -265,7 +267,7 @@ def build(binary: str = BINARY) -> dict:
             counts[rec["category"]] = counts.get(rec["category"], 0) + 1
     return {
         "summary": {
-            **build_identity(binary),
+            **build_identity(binary, cputype),
             "address": hex(dseg[2] + start),
             "records": len(recs),
             "distinct_ids": len(by_id),
@@ -322,6 +324,14 @@ def cmd_check() -> None:
 def main() -> None:
     argv = sys.argv[1:]
     binary = BINARY
+    cputype = ARM64
+    if "--arch" in argv:
+        i = argv.index("--arch")
+        names = {name: cpu for cpu, name in ARCH_NAMES.items()}
+        if i + 1 >= len(argv) or argv[i + 1] not in names:
+            sys.exit("--arch requires arm64 or x86_64")
+        cputype = names[argv[i + 1]]
+        del argv[i:i + 2]
     if "--binary" in argv:
         i = argv.index("--binary")
         binary = argv[i + 1]
@@ -332,7 +342,7 @@ def main() -> None:
         return cmd_check()
     if argv and argv[0] == "--stamp":
         return print(stamp(json.load(open(ARTIFACT))["summary"]))
-    print(json.dumps(build(binary), indent=1, sort_keys=True))
+    print(json.dumps(build(binary, cputype), indent=1, sort_keys=True))
 
 
 if __name__ == "__main__":
