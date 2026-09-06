@@ -56,14 +56,16 @@ including `no`, `false`, `1`, `0`, `on`, `off`, nonsense, and the attribute
 being absent. The 2026-09-05 live run already observed `-2` (`pass`) and `0`
 (`value-control`). The only stored state never observed is `1`.
 
-**Test to settle it,** now one state rather than six: the fixture carries
-`clickthrough="yes"` and `clickthrough="TRUE"` variants (the second exercises the
-case rule and must agree with the first) beside the existing baseline, `pass`,
-and control skins. Independently read both action counters after each click;
-repeat in reversed order. Do not classify a value from skin-load success.
-The parser is a 2024-era binary's, so its acceptance table is a lead about the
-current build, not a runtime result; what the app does with a stored `1` is
-exactly what the live variant answers.
+**Settled live (2026-09-07, build 18.0.9598).** The fixture gained
+`clickthrough="yes"` and `clickthrough="TRUE"` variants beside the existing
+baseline, `pass`, and control skins; two runs, forward then reversed, both
+counters read over HTTP after each click. Boolean true is a third behavior: the
+element stays drawn but its own action does not fire and the click reaches the
+element underneath (`top=0 bottom=1`), where `pass` fires both (`1`/`1`) and the
+stored `0` swallows the click (`1`/`0`). `TRUE` agreed with `yes`, confirming
+the case-insensitive compare on the current build. The historical parser was
+the lead; the counters are the result. Recorded in
+[Skin SDK](Skin%20SDK.md#clickthrough) and the tracker.
 
 Evidence: `*-object-load.asm` and `*-bool-param.asm` in the
 [capture directory](../tests/build-history-2026-09-06/).

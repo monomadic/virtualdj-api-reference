@@ -152,8 +152,11 @@ is *not* cached: a folder created while VirtualDJ runs loads immediately, verifi
 a known-good skin to a new name. `load_skin` also turned out to be its own restore oracle —
 in query position it returns the current skin identity — and is recorded on the verb.
 
-**Still open, deliberately.** Only `pass` was tested, because it is the only value that
-window compares; `clickthrough` on a container rather than a button, and whether the
+**Still open, deliberately.** Only `pass` was tested here, because it is the only value that
+window compares. *(2026-09-07: the historical-installer excavation read the boolean parser
+the loader falls back to, and the `yes`/`TRUE` fixture variants then confirmed a third state
+live — drawn but transparent to clicks, own action not fired. Recorded in Skin SDK.)*
+`clickthrough` on a container rather than a button, and whether the
 pass-through reaches more than one layer, are untested. `just skin-candidates` still lists
 `applyfx`, `setdeck`, `song_pos`, `foldersearch` and the `forceshow` values as untested
 leads, and the element switch knows `multibutton`, `resizepanel`, `keyboardmap`, `rack`,

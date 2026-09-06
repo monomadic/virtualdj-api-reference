@@ -185,12 +185,21 @@ the tracker's "Skin Reader Vocabulary" section for the method and its limits.
 
 ### `clickthrough=""`
 
-**Source: Local test** (2026-09-05, build 18.0.9598, deck-skin surface).
+**Source: Local test** (2026-09-05 and 2026-09-07, build 18.0.9598, deck-skin
+surface). Three values, three behaviors, all reproduced in reversed-order runs:
 
-`clickthrough="pass"` makes an element run its own action **and** let the click
-continue to whatever is underneath it. It is additive, not a redirect: in the
-fixture the covering button's action fired *and* the covered button's action
-fired from the same click.
+| Value | Element's own action | Click continues underneath |
+| --- | --- | --- |
+| absent, `no`, `false`, or anything unrecognized | fires | no |
+| `pass` | fires | **yes** |
+| `yes` or `true` (case-insensitive) | **does not fire** | **yes** |
+
+`clickthrough="pass"` is additive: the covering button's action fired *and*
+the covered button's action fired from the same click. `clickthrough="yes"`
+makes the element transparent to clicks while it stays drawn: it still renders,
+but the click goes straight to what is underneath and its own action never
+runs. It is not the same as hiding it with `visibility`, which stops the
+render as well.
 
 ```xml
 <!-- lower button: declared first, underneath -->
@@ -202,26 +211,26 @@ fired from the same click.
 <button action="deck 1 cue" clickthrough="pass">
     <pos x="300" y="180"/><size width="300" height="160"/>
 </button>
+
+<!-- a drawn overlay that never intercepts the mouse -->
+<button action="deck 1 cue" clickthrough="yes">
+    <pos x="300" y="180"/><size width="300" height="160"/>
+</button>
 ```
 
-**Correction (2026-09-06):** the previous statement that *any* value other than
-`pass` behaves like an absent attribute overgeneralized the nonsense-value
-control. The live test established that result for `qzqzqz` and for a misspelled
-attribute, not for boolean values. Named `ISkinObject::load` disassembly on
-builds 9.0.5308, 9.0.7607 and 18.0.9246 (x86_64) shows a special `pass` branch
-and a separate boolean-parser branch for other values. That parser, read in
-full on the same builds, accepts only `yes`/`true` and `no`/`false`
-(case-insensitive) and returns its false default for anything else, so the
-attribute can hold just three states: `pass`, boolean true, and everything
-else. Boolean true is the one state never observed live. This is a binary
-lead, not a runtime result: the `yes`/`TRUE` fixture variants, container
-behavior, and pass-through through more than one layer remain untested. See
-the [historical installer excavation](Historical%20Installer%20Excavation.md)
-for exact ranges, evidence, and the discriminating test.
+The value set follows from the loader: named `ISkinObject::load` disassembly on
+builds 9.0.5308, 9.0.7607 and 18.0.9246 (x86_64) stores a special marker for
+`pass` and otherwise the result of `CXMLNode::getBoolParam` with a false
+default, and that parser accepts only `yes`/`true`/`no`/`false`. Live, `TRUE`
+agreed with `yes`, and the nonsense control agreed with absent. See the
+[historical installer excavation](Historical%20Installer%20Excavation.md) for
+the ranges. Still untested: the attribute on a container (`<panel>`/`<group>`)
+rather than a `<button>`, and whether the pass-through reaches more than one
+layer down.
 
 Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
-(five generated deck skins, one attribute apart, with a calibration variant and
-both a nonsense-value and a nonsense-attribute control).
+(seven generated deck skins, one attribute apart, with a calibration variant,
+both a nonsense-value and a nonsense-attribute control, and the two boolean forms).
 
 ### Elements the parser knows that this doc does not describe
 

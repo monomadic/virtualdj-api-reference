@@ -37,8 +37,8 @@ and `no`/`false` → false, case-insensitively and by exact length, and returns
 the default for every other value. So `no`, `false`, `1`, `0`, `on`, `off`
 and nonsense all store the same `0` that `value-control` already tested;
 the only stored state with no live observation is `1`. Evidence:
-`tests/build-history-2026-09-06/*-bool-param.asm`. Binary lead about the
-current build, not a runtime result, until the two variants run.
+`tests/build-history-2026-09-06/*-bool-param.asm`. The two variants ran on
+2026-09-07; see the result below.
 
 `visible-off` is the control that makes a negative interpretable: it proves in
 the same fixture that the click coordinate really is over the bottom button and
@@ -80,3 +80,34 @@ Reproduced in two independent runs with the variant order reversed in the
 second. `clickthrough="pass"` fires the top element's own action **and** lets
 the click continue to the element underneath; both controls separate from it,
 so the attribute name and the value each matter.
+
+## Result, all seven (2026-09-07, build 18.0.9598, deck-skin surface)
+
+| Variant | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- |
+| `baseline` | 1 | 0 |
+| `visible-off` | 0 | 1 |
+| **`pass`** | **1** | **1** |
+| `value-control` | 1 | 0 |
+| `attr-control` | 1 | 0 |
+| **`yes`** | **0** | **1** |
+| **`true`** (written `TRUE`) | **0** | **1** |
+
+Two runs, forward then reversed, every row identical both times. Each variant
+was loaded, confirmed with `load_skin` in query position, both globals reset to
+`0` over HTTP, clicked once at the overlap's centre by a CGEvent helper, then
+both globals read back. A screenshot of the `yes` skin shows the TOP button
+still drawn, so the boolean form is transparency to clicks and not hidden
+geometry — `visible-off` reaches the same counters by not rendering.
+
+So the attribute has **three states**, exactly the three the loader can store:
+
+| Value | Top element's action | Element underneath |
+| --- | --- | --- |
+| absent, `no`, `false`, nonsense | fires | not reached |
+| `pass` | fires | reached |
+| `yes`, `true` (any case) | **does not fire** | reached |
+
+`TRUE` agreeing with `yes` is the live confirmation of the parser's
+case-insensitive compare. `no`/`false` were not run: the parser stores the same
+`0` for them as for `value-control`, which was.

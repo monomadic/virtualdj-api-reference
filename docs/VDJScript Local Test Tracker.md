@@ -1138,6 +1138,25 @@ judged from a screenshot.
 
 Two independent runs, variant order reversed in the second, identical results.
 
+**Second pass (2026-09-07, same build, same surface, all seven variants):**
+
+| Variant | `$ct_top` | `$ct_bottom` |
+| --- | --- | --- |
+| `baseline` | 1 | 0 |
+| `visible-off` | 0 | 1 |
+| **`pass`** | **1** | **1** |
+| `value-control` | 1 | 0 |
+| `attr-control` | 1 | 0 |
+| **`yes`** | **0** | **1** |
+| **`true`** (written `TRUE`) | **0** | **1** |
+
+Forward then reversed, identical both times; the `yes` skin screenshotted with
+the TOP button still drawn. Boolean true is a third state: the element renders
+but is transparent to clicks and its own action does not fire, where `pass` is
+additive and the stored `0` swallows. `TRUE` agreeing with `yes` confirms the
+case-insensitive compare that the named `getBoolParam` disassembly predicted
+(`tests/build-history-2026-09-06/*-bool-param.asm`).
+
 **Reading.** `clickthrough="pass"` makes an element run its own action *and*
 let the click continue to whatever is underneath — it is additive, not a
 redirect. Both controls separate from it, so the attribute name and the value
@@ -1150,9 +1169,9 @@ honored, so the negatives are negatives about `clickthrough` and not about aim.
 **Unresolved next question.** Only `pass` was tested, because it is the only
 value the reader compares in that window. The historical-installer excavation
 (2026-09-07) later read the named boolean parser the loader falls back to: it
-accepts only `yes`/`true`/`no`/`false`, so the one untested state is boolean
-true, and the fixture now carries `yes` and `TRUE` variants for it. What it
-does on a container (`<panel>`/`<group>`) rather than a
+accepts only `yes`/`true`/`no`/`false`, so the one untested state was boolean
+true; the `yes` and `TRUE` variants settled it on 2026-09-07 (second-pass table
+above). What it does on a container (`<panel>`/`<group>`) rather than a
 `<button>`, and whether the pass-through reaches more than one layer down are
 all open. The other 20 candidates are untested leads.
 
