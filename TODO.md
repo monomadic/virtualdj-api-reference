@@ -230,6 +230,79 @@ recovers it, with a focused regression. Follow `CSkinEngine::createAction` or an
 helper only when the investigation supplies a concrete question. No upfront coverage schema,
 general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
+## Historical-installer follow-ups (2026-09-07 review)
+
+Translated from the assessment in
+[docs/Historical Installer Excavation.md](docs/Historical%20Installer%20Excavation.md). Same
+rule as the R sequence: existing task numbers own their broader work, and these entries name
+only the bounded piece the excavation made startable. The two live pieces ran the same day.
+
+### H1. Clickthrough value matrix
+
+Status: Done
+
+Note: 2026-09-07, build 18.0.9598, deck-skin surface. The named `CXMLNode::getBoolParam`
+disassembly (captured for 9.0.5308, 9.0.7607 and 18.0.9246 as `bool-param` in
+`tests/build-history-2026-09-06/`) accepts only `yes`/`true`/`no`/`false`, case-insensitively,
+and returns the caller's false default otherwise — so the proposed six-value test collapsed to
+one unobserved state. `yes` and `TRUE` variants on the overlapping-button fixture, two
+reversed-order runs: **boolean true is a third state** — the element stays drawn, its own action
+does not fire, the click reaches the element underneath — beside additive `pass` and the
+swallowing default. Recorded in Skin SDK `clickthrough`, the tracker's second-pass table, and
+the fixture README.
+
+### H2. Wrapper construction paths
+
+Status: Done
+
+Note: 2026-09-07, same build. Twelve more generated skins: the top button wrapped in a `<panel>`,
+a plain `<group>`, and a `<group visibility="…true">`, each with no attribute, `pass`, and
+`yes`; plus three-layer stacks. Panels and visibility-bearing groups honor `clickthrough`
+exactly as a button does; **a plain group ignores it in both values**, the live counterpart of
+the historical `CSkinPanel::loadChildren` split that tests the *presence* of
+`visibility`/`novisibility`. `pass` carries a click exactly one layer down. Recorded in Skin SDK
+`<group>` (two construction paths, constant-true `visibility` as the workaround) and
+`clickthrough`. Not run: a constant-false `novisibility` wrapper. Not probed, deliberately: whether
+the recorded `<group class="…">` crash is a plain-group artefact — a hypothesis only, and a crash
+on a live instance is not a fixture.
+
+### H3. Historical vendor corpus diff and store-visible compatibility history
+
+Status: Ready
+
+Note: Offline, delegable to a cheap model, no runtime claims. Two deliverables from the three
+older payloads (`~/Downloads/install_virtualdj_2020_b5308_mac.pkg`,
+`~/Downloads/VirtualDJ_2023_b7607_mac.pkg`, `~/Downloads/install_virtualdj_2026_b9246_mac.pkg`,
+expanded with `pkgutil --expand-full`; the memory notes hold the same paths):
+
+- **Description and example diff.** Compare each historical `languages.zip` → `English.xml` →
+  `<Actions>` and each shipped skin/pad archive against the current vendor corpus. Every verb
+  *name* in the old appendices is already in the store (checked 2026-09-06), so the target is
+  *text*: descriptions or parameter explanations that were shortened or dropped, and
+  script-bearing XML that no longer ships. Output is a provenance-stamped list (archive path,
+  member, build, exact source text), deduplicated against unchanged material. Historical vendor
+  usage is a lead about current behavior, never a supported-form promotion.
+- **`first_seen_build` and alias transitions in the store.** `summary.json` → `transitions`
+  already holds the sampled name additions and primary-to-alias flag changes (`goto_bar` →
+  `goto_beat_in_bar` between 18.0.9246 and 18.0.9583). Carry them into the verb store through
+  the extractor/bootstrap path so `just verb <name>` prints them — never by hand, and never as a
+  release date: the samples bracket table appearance, nothing finer.
+
+### H4. Runtime argument parsing from the named `IAction::create`
+
+Status: Conditional
+
+Note: Trigger: task 10b's harness has landed, because every rule this walk recovers is a
+10b test and nothing else. Folded into task 10 as its first sub-step; listed here so the
+lead is not lost.
+`IAction::create(char const*, char const**, int)` is named on 18.0.9246 (x86_64 entry
+`0x100596f1c`; resolve it again with `nm` before use). Follow argument consumption, delimiter
+handling and fallback branches, and contrast with the separately documented editor parser.
+Every recovered rule becomes a discriminating test for the 10b harness, not a documented rule
+on its own — editor acceptance and parser tolerance cannot substitute for an observed result.
+This has the highest ceiling of the excavation's leads because VDJScript grammar is the
+repo's stated cliff and the parser reports no errors.
+
 ## Ready Tasks
 
 ### 0. Build The Verb Record Store And `just` Data API
@@ -758,6 +831,10 @@ Contract fields to establish per verb:
   undocumented-overload queue (`summary.optional_arg_queries`), invisible to the bare sweep.
   `method_strings` recovers per-method keywords (`loaded` → `opposite`, `get_time` →
   `short`). Remaining streams for the *forms and types*:
+
+  0. **Runtime parser walk (H4, added 2026-09-07).** Before more sweeps, follow the named
+     `IAction::create` on the unstripped 18.0.9246 build for delimiter, quoting and fallback
+     rules; each rule becomes a discriminating 10b test. See H4 above for the boundary.
   1. **Argument keywords — DONE (2026-07-30)**; **types — closed as not-extractable.**
      `__stubs` are now named via DYSYMTAB's indirect symbol table (this build is classic
      `LC_DYLD_INFO_ONLY`, not chained fixups), so methods that compare an argument against
@@ -1491,6 +1568,13 @@ the tracker's "Shared Enumerations: The Colour Table Confirmed, The Pad-Page Tab
 - `pad_page`: the 17 table names, several with spaces (`'loop roll'`, `'saved loops'`).
 - `stem_pad instrumental`, `get_time cue`, `effect_show_gui` × 14.
 
+Read first (added 2026-09-07): the named `CSettingEnum::unserialize`, `getActionParam` and
+`setActionParam` on 18.0.9246 (`unserialize` at `0x10078a142` x86_64; re-resolve with `nm`)
+walk the typed candidate values and conversion rules for the `settings` pages and other
+enum-typed keys. Associate a default with a key only where the initializer does; a type name
+alone is not a schema. Any persistent write in the live confirmation needs round-trip
+restoration.
+
 Probe with `probe_arg_forms.py` against nonsense controls in a discriminating fixture (colours
 need a coloured track; settings pages need the dialog observable), `--repeat 2`, union-merge.
 Record confirmations with `just put-verb`; record a group-level conclusion (the table IS the
@@ -1677,6 +1761,17 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 ## Parking Lot
 
+- **Crossfader-curve serialization format** (from the 2026-09-06 excavation): named
+  `CSettingCrossfaderCustom::serialize`/`unserialize` survive on 18.0.9246. Recover a narrow
+  format description only if configuration tooling ever needs it; validate with app-produced
+  samples and isolated round trips. Serializer symbols alone establish nothing about delimiters
+  or field meaning.
+- **Category-index mapping for the historical x86_64 verb tables**: the older extractions carry
+  category names but no index mapping, and none was guessed. Resolve only if a compatibility
+  question needs per-category history; the current build's mapping is not evidence for them.
+- **Plain-group `class` crash hypothesis** (H2): the recorded `<group class="…">` crash may be the
+  plain-group construction path applying a template to no object. Test only with a disposable
+  instance and a saved configuration, never on the operator's running app.
 - **HTML reference export for humans** (requested 2026-07-29, deliberately deferred until the
   contract data exists): generate a static, browsable HTML reference from the verb store +
   verb table + contracts artifact — one page per verb plus category/alias indexes. Generation
