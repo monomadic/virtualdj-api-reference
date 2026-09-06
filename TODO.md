@@ -1488,7 +1488,29 @@ make a claim.
 
 Status: Ready
 
-Note: Needs a live instance — the expensive one of this group. Added 2026-09-03.
+Note: Needs a live instance — the expensive one of this group. Added 2026-09-03. **Three more
+verbs closed 2026-09-06, and the premise needs qualifying**: two of the three were not waiting on
+a fixture at all. Tracker: "Contextual Parameters: Three Verbs Off The Worklist, One Wall".
+
+- **`get_sample_info`: all three documented fields confirmed** (`group` → `Drums`, `length` →
+  `4bt`, `pos` → `00:00.0`), two nonsense controls returning `''`. **The obstacle was the argument
+  SHAPE, not the state** — the form is slot-first, `get_sample_info <slot> <field>`, and a
+  single-argument probe errors on every token including the real ones, so the sweep read the
+  documented fields as indistinguishable from nonsense. The state had been there since
+  `sampler_slots_differ` landed. This is exactly the failure task 12 predicted when it measured
+  114 verbs whose vendor examples are value-shaped.
+- **`get_saved_loop`: `length` and `name` confirmed** against two agreeing controls, on a fixture
+  built and torn down (a 32-beat loop saved, then deleted with the deletion verified). `pos` is
+  **undiscriminated** — it returns the right value but so do bare and both nonsense tokens, so it
+  is the default. `next` is **out of context** rather than refuted: nothing upcoming to report.
+- **`get_slip_time`: a wall.** E_FAIL in every form, bare included, with a track loaded,
+  `slip_mode` on, playing, and the playhead jumped. Because the *bare* form errors, no token can
+  separate, so the three documented units are untested rather than refuted.
+
+**So before building a fixture for an entry, re-read its documented example for the shape.** The
+count to work from is `just action-catalog --cross-check` →
+`documented_but_not_probe_confirmed`, and it now excludes doc example placeholders, verb-name
+self-references and locally refuted tokens.
 
 `just action-catalog --cross-check` lists, under `documented_but_not_probe_confirmed`, the
 verbs whose parameters the vendor documents and no local probe has confirmed. They are

@@ -12,13 +12,13 @@
     "unofficial": 42
    },
    "by_test_status": {
-    "Fail": 10,
-    "Partial": 31,
-    "Pass": 66,
-    "Untested": 931
+    "Fail": 11,
+    "Partial": 32,
+    "Pass": 67,
+    "Untested": 928
    },
    "documented": 768,
-   "tested_pass": 66,
+   "tested_pass": 67,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -6274,13 +6274,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598. All three documented fields confirmed, with two nonsense controls separating cleanly (both returned ''). The SHAPE is slot-first — 'get_sample_info <slot> <field>' — which is why a single-argument probe had errored on every token including the real ones. On sampler slot 1 (a shipped sample): 'group' -> Drums, 'length' -> 4bt (beat value for a loop, exactly as documented), 'pos' -> 00:00.0, and the regular column names work too ('fullpath' -> the .vdjsample path, 'bpm' -> 135.0). 'name' returns '' — use get_sample_name for that."
+   ],
    "section": "Sampler",
    "description": "Read sample metadata such as `fullpath`, `group`, or `length`",
-   "example": "get_sample_info 9 fullpath"
+   "example": "get_sample_info 9 fullpath",
+   "confidence": "local_test"
   },
   "get_sample_name": {
    "name": "get_sample_name",
@@ -6403,13 +6406,15 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Source module (bundle 18.0.9246 STABS): ACTION_get_saved_loop is compiled in action_loop.cpp, whose 39 already-sectioned verbs are 100% 'Loops'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works."
+    "Source module (bundle 18.0.9246 STABS): ACTION_get_saved_loop is compiled in action_loop.cpp, whose 39 already-sectioned verbs are 100% 'Loops'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
+    "Local test 2026-09-06, HTTP, build 18.0.9598. Fixture: a 32-beat loop laid on a disposable track with loop_save, then deleted and the deletion verified. CONFIRMED with two agreeing nonsense controls: 'length' -> 32bt (matching the loop actually saved) and 'name' -> 'Saved Loop 1'. The index is optional — get_saved_loop 'name' and get_saved_loop 1 'name' agree. UNDISCRIMINATED: 'pos' -> 18.5 (which does match the saved loop-in at 18496 ms) but bare and both nonsense tokens ALSO return 18.5, so pos is the default and this observable cannot separate it from the floor. 'next' returned error:1 in every form — with one saved loop behind the playhead there is no upcoming loop, so that is missing context, not a refutation."
    ],
-   "section": "Loops"
+   "section": "Loops",
+   "confidence": "local_test"
   },
   "get_scratch_direction": {
    "name": "get_scratch_direction",
@@ -6456,13 +6461,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Fail",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-06, HTTP, build 18.0.9598. Not reachable over HTTP: error:-2147467259 (E_FAIL) in EVERY form — bare, 'min', 'sec', 'msec' and two nonsense controls — with no track, and again with a track loaded, slip_mode confirmed on, the deck playing and the playhead jumped so a slip divergence should exist. Since even the bare form errors, no token can separate and the three documented units are untested rather than refuted. Likely needs a live slip divergence this channel cannot create, or is a controller-display helper."
+   ],
    "section": "Scratch & Jogwheel",
    "description": "Time that will resume when slip exits",
-   "example": "get_slip_time \"sec\""
+   "example": "get_slip_time \"sec\"",
+   "confidence": "local_test"
   },
   "get_song_event": {
    "name": "get_song_event",

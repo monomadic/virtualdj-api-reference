@@ -1744,3 +1744,69 @@ one colour vocabulary across the family:
 
 `browsed_file_color` is the trap: it looks like a resolver and confirms nothing,
 because a nonsense token comes straight back.
+
+## Contextual Parameters: Three Verbs Off The Worklist, One Wall
+
+Build 18.0.9598, HTTP, 2026-09-06. Task 13b's method — build the state a
+documented parameter needs, then re-probe — applied to three verbs from the
+repaired cross-check worklist. Deck 1 was restored and the restoration verified;
+deck 2 held one of the operator's own tracks throughout and was never touched.
+
+### `get_sample_info` — the shape was the obstacle, not the state
+
+All three documented fields confirmed, both nonsense controls returning `''`:
+
+| Form | Value |
+| --- | --- |
+| `get_sample_info 1 'group'` | `Drums` |
+| `get_sample_info 1 'length'` | `4bt` — a beat value for a loop, exactly as documented |
+| `get_sample_info 1 'pos'` | `00:00.0` |
+| `get_sample_info 1 'fullpath'` | the `.vdjsample` path |
+| `get_sample_info 1 'bpm'` | `135.0` |
+| `get_sample_info 1 'qzqzqz'` / `'wvwvwv'` | *(empty)* |
+
+**The shape is slot-first** — `get_sample_info <slot> <field>` — and that is the
+whole reason this sat unconfirmed. A single-argument probe errors on every token,
+real ones included, so the sweep read the documented fields as indistinguishable
+from nonsense. No new fixture was needed at all; the state had been there since
+the `sampler_slots_differ` fixture landed. This is the failure mode task 12
+predicted when it measured 114 verbs whose vendor examples are value-shaped.
+
+`'name'` returns `''` here — `get_sample_name` is the verb for that.
+
+### `get_saved_loop` — two confirmed, one undiscriminated, one out of context
+
+Fixture built and torn down: a 32-beat loop laid on a disposable track with
+`loop_save`, then `loop_delete 1`, with the deletion verified (`error:1`
+afterwards).
+
+- **`length` → `32bt`**, matching the loop actually saved, and **`name` →
+  `Saved Loop 1`**. Both separate from two agreeing nonsense controls.
+- The index is optional: `get_saved_loop 'name'` and `get_saved_loop 1 'name'`
+  agree.
+- **`pos` is undiscriminated.** It returns `18.5`, which does match the saved
+  loop-in at 18496 ms — but bare and both nonsense tokens return `18.5` too, so
+  `pos` is the default and this observable cannot separate it from the floor.
+- **`next` is out of context, not refuted.** `error:1` in every form; with one
+  saved loop behind the playhead there is no upcoming loop to report.
+
+### `get_slip_time` — a wall, and the bare form is why
+
+`error:-2147467259` (E_FAIL) in **every** form — bare, `'min'`, `'sec'`, `'msec'`
+and two nonsense controls — with no track, and again with a track loaded,
+`slip_mode` confirmed `yes`, the deck playing, and the playhead jumped so a slip
+divergence should exist.
+
+Because the **bare** form errors too, no token can separate from anything: the
+three documented units are untested, not refuted. Either it needs a live slip
+divergence this channel cannot create, or it is a controller-display helper.
+Recorded `Fail` for reachability over HTTP, which is not the same as the verb
+being broken.
+
+### What this says about the worklist
+
+Two of the three were not waiting on a *fixture* at all — one was waiting on the
+right argument **shape**, and one only needed a loop saved. The remaining
+`documented_but_not_probe_confirmed` count is what
+`just action-catalog --cross-check` reports; it is worth re-checking each entry's
+documented *example* for its shape before assuming a state is missing.

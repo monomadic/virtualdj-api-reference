@@ -126,6 +126,12 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     "get_time_sec": {"elapsed", "remain", "total", "absolute"},
     "get_time_min": {"elapsed", "remain", "total", "absolute"},
     "get_time_ms": {"elapsed", "remain", "total", "absolute"},
+    # 2026-09-06, sampler slot 1 (shipped sample), slot-first shape:
+    # get_sample_info <slot> <field>. Two nonsense controls both returned ''.
+    "get_sample_info": {"group", "length", "pos"},
+    # 2026-09-06, a 32-beat loop saved on a disposable track. `pos` is NOT here:
+    # it equals the bare/default value, so it never separated from the floor.
+    "get_saved_loop": {"length", "name"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls
