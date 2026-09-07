@@ -120,7 +120,7 @@ def label_hit(e: dict, needle: str, kind: str) -> bool:
 
 def cmd_search(args):
     terms, opts = [], {}
-    fmt, limit = "table", 50
+    fmt, limit = "table", 0
     for a in args:
         if a.startswith("--"):
             key, _, val = a[2:].partition("=")

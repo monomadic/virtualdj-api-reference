@@ -68,7 +68,7 @@ def summary(name: str, limit: int = 6) -> dict:
     store = load_store()
     canon, rec, alias_of = resolve(name, store)
     if rec is None:
-        sys.exit(f"no record for '{name}' — try: just find-verbs {name}")
+        sys.exit(f"no record for '{name}' — try: just list-verbs {name}")
     rec = joined_view(canon, rec)
     catalog = load("action-catalog.json", "actions").get(canon, {})
     corpus = load("vdjscript-corpus.json", "snippets")

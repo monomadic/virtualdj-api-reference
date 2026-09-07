@@ -390,7 +390,7 @@ def cmd_get(args):
     msg = f"no record for '{name}'"
     if near:
         msg += "\ndid you mean: " + ", ".join(near)
-    msg += f"\nor try: just find-verbs {name}"
+    msg += f"\nor try: just list-verbs {name}"
     sys.exit(msg)
 
 
@@ -551,7 +551,7 @@ def cmd_search(args):
     """Filtered query. Terms AND with filters; category listings are just an
     unfiltered query, so no grouped dump needs to exist on disk."""
     terms, opts = [], {}
-    fmt, limit = "table", 50
+    fmt, limit = "table", 0
     for a in args:
         if a.startswith("--"):
             key, _, val = a[2:].partition("=")
@@ -568,11 +568,6 @@ def cmd_search(args):
                          f"{sorted(FILTERS)} + --needs-test, --format, --limit")
         else:
             terms.append(a.lower())
-
-    if not terms and not opts:
-        sys.exit("search needs a term or a filter (e.g. --surface=Pad, "
-                 "--needs-test).\nFor the VDJScript verb named `search`, use: "
-                 "just get-verb search")
 
     store = load_store()
     modules = module_map() if "module" in opts else {}
@@ -767,7 +762,7 @@ def main(argv):
         return
     # Not a command: treat a bare argument as a verb lookup, for direct
     # `python3 tools/verbdb.py leftdeck` use. The `just` recipes are flat
-    # (get-verb / find-verbs / ...) and always pass an explicit subcommand.
+    # (get-verb / list-verbs / ...) and always pass an explicit subcommand.
     cmd_get(argv)
 
 

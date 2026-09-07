@@ -267,7 +267,7 @@ def report(g: dict) -> None:
             mark = "+" if r.get("matched_by") == "tag" else " "
             print(f" {mark}{r['name']:<26} {sec:<20}{flag}  {desc}")
         if len(verbs) > lim:
-            print(f"  … {len(verbs)-lim} more — just find-verbs {term}")
+            print(f"  … {len(verbs)-lim} more — just list-verbs {term}")
         print()
 
     if g["effects"]:
@@ -314,7 +314,7 @@ def report(g: dict) -> None:
         print()
 
     if not any([verbs, g["effects"], g["elements"], g["example_files"], g["docs"]]):
-        print("no matches. Try a broader term, or `just find-verbs "
+        print("no matches. Try a broader term, or `just list-verbs "
               f"{term}` / `rg -i {term} docs/`.")
 
 

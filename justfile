@@ -77,10 +77,17 @@ inventory:
 
 # --- skin/pad/mapper XML element inventory ----------------------------------
 
+# One element, every source joined — inventory row, its doc section, the binary's
+# reader vocabulary, live probe results (negatives included), real usage, and which
+# attributes no doc explains. The counterpart to `just verb`.
+element name *args:
+    @python3 tools/element_summary.py "$@"
+
+# The bare inventory row, as `get-verb` is to `verb`.
 get-xml-element element:
     @python3 tools/xmldb.py get "{{element}}"
 
-find-xml-elements *args:
+list-xml-elements *args:
     @python3 tools/xmldb.py search "$@"
 
 xml-stats:
@@ -102,7 +109,7 @@ get-verb name:
 verb name *args:
     @python3 tools/verb_summary.py "{{name}}" {{args}}
 
-find-verbs *args:
+list-verbs *args:
     @python3 tools/verbdb.py search "$@"
 
 put-verb name *assignments:
@@ -125,7 +132,7 @@ coverage *args:
 get-fx effect:
     @python3 tools/fxdb.py get "{{effect}}"
 
-find-fx *args:
+list-fx *args:
     @python3 tools/fxdb.py search "$@"
 
 fx-stats:

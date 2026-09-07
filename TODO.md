@@ -482,13 +482,13 @@ The store and its query/edit API exist and are wired into `just check`. This is 
 
 Done in this pass:
 
-- [tools/verbdb.py](tools/verbdb.py) over the authoritative store [docs/vdjscript-verbs.json](docs/vdjscript-verbs.json), fronted by `just get-verb / put-verb / find-verbs / next-incomplete-verb / verb-stats`. Storage is private behind the API so it can later become one-file-per-verb without retraining agents.
+- [tools/verbdb.py](tools/verbdb.py) over the authoritative store [docs/vdjscript-verbs.json](docs/vdjscript-verbs.json), fronted by `just get-verb / put-verb / list-verbs / next-incomplete-verb / verb-stats`. Storage is private behind the API so it can later become one-file-per-verb without retraining agents.
 - Merge-safe `bootstrap` seeded all 991 records from the index + coverage audit (official names + Needs-Local-Test gap) + tracker status tables. It correctly finds the 19-name gap (17 hardware-blocked → skipped by `next-incomplete`), leaving `dualdeckmode_decks` and `system` as the 2 active items, and auto-detected 7 tracker `Pass` rows.
-- `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the flat `just get-verb` / `find-verbs` / `put-verb` commands.
+- `verbdb.py check` (schema, alias resolution, index coverage, count freshness) is in `just check`. Entrypoints (`AGENTS.md`, `INDEX.yml`, `docs/README.md`, `tools/README.md`) route verb lookups and result-recording to the flat `just get-verb` / `list-verbs` / `put-verb` commands.
 
 Reports are queries, not files (2026-07-22):
 
-- `just find-verbs` filters on `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`, with `--format=json` for structured output and `--limit`. A category listing is just an unfiltered query, so **no derived Markdown is written to disk** — nothing can drift, and there is no staleness gate to maintain. An earlier pass generated `docs/VDJScript/generated/*.md` and was reverted for exactly this reason.
+- `just list-verbs` filters on `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`, with `--format=json` for structured output and `--limit`. A category listing is just an unfiltered query, so **no derived Markdown is written to disk** — nothing can drift, and there is no staleness gate to maintain. An earlier pass generated `docs/VDJScript/generated/*.md` and was reverted for exactly this reason.
 - Rule for future work: do not add a generator that writes a Markdown copy of store data. If a view is wanted, add a query or a flag. Building reader-facing documentation is a later phase, driven by findings — not something to design for now.
 
 Remaining:
@@ -497,7 +497,7 @@ Remaining:
 - Grow the query layer where a real question is awkward to ask (e.g. verbs by evidence source, or by presence of a local-test note).
 - The monolith still holds the authored prose. Retiring it follows the frozen plan's phased, one-family-at-a-time migration; do not delete hand-authored docs ahead of that.
 
-Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just get-fx / find-fx / fx-stats` answers slider/button questions straight from the sweep artifact, gated by `fxdb.py check` in `just check`. No Markdown copy — same rule as the verb store.
+Effect catalog is queryable (2026-07-22): [tools/fxdb.py](tools/fxdb.py) / `just get-fx / list-fx / fx-stats` answers slider/button questions straight from the sweep artifact, gated by `fxdb.py check` in `just check`. No Markdown copy — same rule as the verb store.
 
 Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same deck-FX context. Batch them into one local-test session where possible. Preferred readback channel: the [HTTP control interface](docs/HTTP%20Control%20Interface.md) (`just vdj-query`), which returns exact strings and makes the sweeps scriptable — the older `name=`-interpolation pad technique (proven on v2026-m b9482) is now needed only for pad/skin-surface-specific checks.
 
@@ -544,7 +544,7 @@ Status: Conditional
 
 Note: Structural sweep complete 2026-07-22; the rendering half closed 2026-09-06. One settings-UI question is left, named at the end.
 
-[tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured counts, short+full labels, normalized **defaults**, live value text, and length/beats flags for all **119** installed effects into [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json), plus the enabled cycle for all three targets. Query it with `just get-fx <effect>` / `just find-fx [--category=deck_fx|video_fx|transition] [--has-length]` / `just fx-stats` — do not read the dump and do not hand-transcribe it.
+[tools/sweep_fx_introspection.py](tools/sweep_fx_introspection.py) captured counts, short+full labels, normalized **defaults**, live value text, and length/beats flags for all **119** installed effects into [tests/fx-introspection-dump.json](tests/fx-introspection-dump.json), plus the enabled cycle for all three targets. Query it with `just get-fx <effect>` / `just list-fx [--category=deck_fx|video_fx|transition] [--has-length]` / `just fx-stats` — do not read the dump and do not hand-transcribe it.
 
 What the sweep settled:
 
@@ -1772,6 +1772,32 @@ the tracker's "Shared Enumerations: The Colour Table Confirmed, The Pad-Page Tab
   resolver. `browsed_file_color` echoes any argument verbatim, nonsense included — it looks like a
   resolver and confirms nothing. `sampler_color` bare returns hex, not a name. `get_browsed_color`
   is stable over three runs but context-dependent and not interpretable in this state.
+
+**Three more groups done 2026-09-08, and they sharpen the question.** Tracker: "Shared
+Enumerations, 2026-09-08: Three Groups, One Pattern".
+
+- **`song_fields`**: `get_loaded_song` and `get_browsed_song` accept exactly the same 16 of the
+  41 members and reject the same 25, on two different tracks. The floor is unusually clean —
+  a real but empty field returns `''` where an unknown one raises E_INVALIDARG — and `author`
+  is an alias of `artist`. The 25 rejected members are visibly another consumer's vocabulary
+  (RIFF chunk ids `iart`/`icmt`/…, two-letter forms `al`/`ar`/`ti`/…).
+- **`audio_channels`**: `effect_arm_deck` reads four of fifteen — `master` (new; the catalog
+  documents only aux/mic/sampler), `mic`, `sampler`, `aux`. The negative is directional rather
+  than merely undiscriminated: in the `effect_armed` fixture bare and an ignored tail both read
+  `yes` while a channel the verb actually reads must read `no`.
+- **`settings_pages`**: the verb's vocabulary is the **dialog's tab list**, not the table —
+  audio, broadcast, controllers, extensions, interface, licenses, options, record, tutorials.
+  Four of those nine are absent from the serialised table and fourteen of the table's members
+  are not accepted, so reading that table as the argument list would have produced fourteen
+  wrong entries and missed four right ones.
+
+**So the pattern to carry into the remaining groups: a serialised table is a table, not a
+signature.** Each is shared by several consumers, every verb takes its own subset, and that
+subset is not always contained in the table. A group-level conclusion must name which verb it
+holds for. Two operational notes for the settings group specifically: opening the dialog stalls
+the HTTP interface for several seconds (a timeout there is not a result), and it **cannot be
+closed from script** — bare `settings`, `'close'` and `'off'` all return false — so budget a
+GUI click for the way out before opening it.
 
 [tests/binary-vocabularies.json](tests/binary-vocabularies.json) (`just binary-vocab`) holds
 21 argument groups recovered as *structures* — pointer tables and switch functions — with

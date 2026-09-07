@@ -5,7 +5,7 @@ Scans skins, pads, samplerbanks, and mapper XML with a tolerant tokenizer
 (built-in skin XML is not strict XML: raw `&`, `&&`, and `>` appear inside
 quoted attribute values), cross-checks element names against the reference
 docs, and writes the data artifact `docs/skin-xml-inventory.json`.
-Query it with `just get-xml-element` / `find-xml-elements` / `xml-stats`;
+Query it with `just get-xml-element` / `list-xml-elements` / `xml-stats`;
 no Markdown view is written to disk.
 
 Scope, and the reason `undocumented` reads 0: this measures *mentions of the
@@ -315,7 +315,7 @@ def build_inventory() -> dict:
                     "cross-checked against the reference docs. Built-in skin XML is "
                     "not strict XML (raw `&`, `&&`, `>` inside quoted values), so this "
                     "comes from a tolerant quote-aware tokenizer, not an XML parser. "
-                    "Query via `just get-xml-element` / `find-xml-elements` / "
+                    "Query via `just get-xml-element` / `list-xml-elements` / "
                     "`xml-stats`; do not generate a Markdown copy.",
         },
         "totals": {

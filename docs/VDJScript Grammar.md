@@ -5,7 +5,7 @@ document to read *before* writing VDJScript, because none of it is discoverable 
 lookup — the parser accepts almost anything and tells you nothing.
 
 Not here: what an individual verb does or which argument forms it honours. Those are
-per-verb facts — `just get-verb <name>`, `just find-verbs <term>`.
+per-verb facts — `just get-verb <name>`, `just list-verbs <term>`.
 
 Provenance is per rule. `HTTP` = the [HTTP control interface](HTTP%20Control%20Interface.md)
 on VirtualDJ 2026, 2026-07-22. `Pad` = the

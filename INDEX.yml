@@ -66,7 +66,7 @@ vdjscript:
     - just binary-vocab --get GROUP      # a shared enumeration and its hidden members
     - just binary-vocab --verb NAME      # which enumerations a verb draws from
     - just script-corpus --verb NAME     # vendor examples mentioning a verb
-    - just find-verbs TERM [--surface=X --section=X --status=X --format=json]
+    - just list-verbs TERM [--surface=X --section=X --status=X --format=json]
     - just put-verb NAME field=value ...
     - just next-incomplete-verb
     - just verb-stats
@@ -109,7 +109,7 @@ fx:
     - tests/fx-introspection-dump.json
   commands:
     - just get-fx EFFECT
-    - just find-fx [--has-button=X --min-sliders=N --format=json]
+    - just list-fx [--has-button=X --min-sliders=N --format=json]
     - just fx-stats
   fixtures:
     - tests/Pads/Reference - FX Introspection Test.xml
@@ -181,7 +181,7 @@ skin_sdk:
     - examples/Skins/Built-In/README.md
   commands:
     - just get-xml-element NAME
-    - just find-xml-elements [--family=X --undocumented --has-attr=X]
+    - just list-xml-elements [--family=X --undocumented --has-attr=X]
     - just xml-stats
     - just inventory
     - just lint-skins

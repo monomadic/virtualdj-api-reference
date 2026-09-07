@@ -2,7 +2,7 @@
 
 Video skins copied as-is from the local VirtualDJ application bundle. Video skins are a distinct category from deck skins: VirtualDJ renders them onto the video/broadcast output (the master video mix, karaoke, and streaming overlays), and installs them under a separate `VideoSkins/` folder rather than `Skins/`.
 
-They use the **same `<skin>` XML format** as deck skins — see [docs/Skin SDK.md](../../../docs/Skin%20SDK.md), [docs/Skin Waveforms.md](../../../docs/Skin%20Waveforms.md), and the XML element inventory (`just find-xml-elements --family=video_skins`) — so they are useful reference material for skin authoring, especially for `<visual>` video sources and effect-introspection idioms.
+They use the **same `<skin>` XML format** as deck skins — see [docs/Skin SDK.md](../../../docs/Skin%20SDK.md), [docs/Skin Waveforms.md](../../../docs/Skin%20Waveforms.md), and the XML element inventory (`just list-xml-elements --family=video_skins`) — so they are useful reference material for skin authoring, especially for `<visual>` video sources and effect-introspection idioms.
 
 Source:
 
