@@ -160,6 +160,37 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     # Live 2026-09-07 (fixtures)". current/next answer differently (volume 1 vs
     # 0.74, hasbeats yes vs no); a nonsense selector or field returns ''.
     "get_song_event": {"current", "next", "volume", "hasbeats", "remaining"},
+    # 2026-09-07, query-position pass with no fixture at all — `param_cast` is a
+    # pipeline verb, so a chained expression IS the state. Input 12.7 through
+    # `get_var … & param_cast <type>`: integer 13 vs int_trunc 12 (the
+    # documented rounding/truncation split), frac 0.7, 000 -> 013,
+    # percentage 1270%, ms 13ms, beats 12.7bt, boolean yes (0 -> no), float and
+    # text 12.7; `text 5` truncated 'Chapter & Verse' to 'Chapt' and `text 3`
+    # to 'Cha'. Bare and both nonsense types raise E_INVALIDARG.
+    "param_cast": {"integer", "int_trunc", "frac", "float", "percentage", "ms",
+                   "boolean", "beats", "text", "000"},
+    # 2026-09-07: with `keyDisplay` flipped to Harmonic, bare and a nonsense
+    # tail both returned 02A where `musical` returned Ebm. Setting restored.
+    "get_key": {"musical"},
+    # 2026-09-07: with the filter knob at 0.75, `name` returned MOBIUS TRI where
+    # bare and both controls returned '> 50%'; at the centre `clean` returned
+    # OFF where bare and both controls returned the name. Each token separates
+    # in the knob position where it can.
+    "filter_label": {"name", "clean"},
+    # 2026-09-07, execute + readback with the zone restored: each token made
+    # exactly its own zone active, junk changed nothing. automix/sidelist/
+    # sampler additionally activate `sideview` — they are panes inside it.
+    "browser_window": {"folders", "songs", "sideview", "automix", "sidelist",
+                       "sampler"},
+    # 2026-09-07, query position: each answers where bare and two agreeing
+    # nonsense controls do not (E_INVALIDARG), or answers differently from both.
+    "auto_cue": {"on", "off"},
+    "cross_assign": {"left"},
+    "prelisten_output": {"auto"},
+    "search_options": {"composer"},
+    # `sidelist` is NOT here: it failed exactly as the controls did, and panel
+    # names are skin-dependent, so that is a fact about the loaded skin.
+    "show_splitpanel": {"sideview"},
 }
 
 # Catalog tokens a local test showed to be the doc's own example rather than
@@ -189,6 +220,21 @@ LOCAL_PLACEHOLDERS: dict[str, set[str]] = {
     "effect_active": {"flanger"},
     "effect_select": {"echo"},
     "effect_select_multi": {"echo"},
+    # 2026-09-07: `artist` is the doc example's argument to get_browsed_song
+    # ("get_browsed_song 'artist' & param_cast 'text' 5"), not a cast type —
+    # it raises E_INVALIDARG exactly as the nonsense types do.
+    "param_cast": {"artist"},
+    # `param_equal` is a plain string compare: 'zzqqx' equals 'zzqqx' and
+    # 'audio' does not equal 'zzqqx', so audio/string/type are the doc
+    # example's operands rather than vocabulary. The documented backtick shape
+    # does hold: param_equal `get_browsed_song 'type'` 'audio' -> yes, 'video' -> no.
+    "param_equal": {"audio", "string", "type"},
+    # 2026-09-07: `siren` is the doc's example sample FILE ("sampler_volume
+    # 'siren'" sets the volume of siren.vdjsample), not vocabulary — it returns
+    # 0 exactly as a nonsense name does. The name form itself is confirmed with
+    # a sample that is actually loaded: `sampler_volume 'Dystopia Breaks'` -> 1.
+    "sampler_volume": {"siren"},
+    "sampler_pad_volume": {"siren"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls

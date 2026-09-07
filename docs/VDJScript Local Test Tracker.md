@@ -2259,3 +2259,81 @@ as `Drums` — and left ungrouped slot 5 alone; `sampler_volume_nogroup current
 0.4` moved only slot 1. The slot argument selects *which sample*, and the verb
 name decides whether its group comes with it. Every volume was read before,
 restored after, and verified back at 1.
+
+## Documented Parameters, 2026-09-07: Nine Verbs Closed And A Triage Of The Rest
+
+Task 13b's premise is that the remaining documented-but-unconfirmed parameters
+need *fixtures*. This pass says that is true of only part of them, and sorts the
+rest by what they actually need. HTTP, build 18.0.9598. Every reading below has
+two nonsense controls that agree with each other; a token counts only where it
+differs from **both the controls and the bare form**.
+
+### Closed without any fixture at all
+
+- **`param_cast` — ten of thirteen types, from a chained expression.** It is a
+  pipeline verb, so `get_var '$v' & param_cast <type>` *is* the state. With
+  v = 12.7: `integer` 13 against `int_trunc` 12 (the documented
+  rounding-versus-truncation split, settled in one read), `frac` 0.7, `000`
+  013, `percentage` 1270%, `ms` 13ms, `beats` 12.7bt, `float`/`text` 12.7, and
+  `boolean` yes at 12.7 / no at 0. On a string source `text 5` cut
+  "Chapter & Verse" to "Chapt" and `text 3` to "Cha", so the optional character
+  limit holds too. `artist` raises E_INVALIDARG exactly as the nonsense types
+  do — it is the doc example's argument to `get_browsed_song`, and is now a
+  placeholder. `relative` and `absolute` returned the input unchanged: they act
+  on a slider parameter, and a query chain has none, so they stay
+  undiscriminated.
+- **`param_equal` is a plain string compare**, so its three "parameters" are the
+  example's operands: `param_equal 'zzqqx' 'zzqqx'` is yes and
+  `param_equal 'audio' 'zzqqx'` is no. The documented backtick shape does hold —
+  ``param_equal `get_browsed_song 'type'` 'audio'`` yes, `'video'` no.
+- **`get_key 'musical'`**, by flipping the app's own `keyDisplay` setting rather
+  than by building a deck state. At `keyDisplay = Harmonic` bare and a nonsense
+  tail both read `02A` while `musical` read `Ebm`; the earlier run had the
+  mirror image. Each tail forces its own notation and the setting only decides
+  what *bare* shows. Restored.
+- **`filter_label 'name'` and `'clean'`**, each in the knob position where it can
+  separate: at filter 0.75 `name` gave the ColorFX name where bare and both
+  controls gave `> 50%`; at the centre `clean` gave `OFF` where bare and both
+  controls gave the name. Bare shows the name at rest and the value while the
+  knob moves.
+- **The sampler `siren` entries are placeholders, and the shape they belong to is
+  confirmed.** `sampler_volume 'Dystopia Breaks'` (a sample actually loaded)
+  returns that sample's volume, where the catalog's `siren` and a nonsense name
+  both return 0.
+
+### Closed by execute-with-readback, restored afterwards
+
+**`browser_window`: all six zone names.** Each token makes exactly its own zone
+active and two nonsense tokens change nothing; the zone was read first and put
+back. The by-product is structural: `automix`, `sidelist` and `sampler` leave
+**both** their own name and `sideview` reading yes, so those three are panes
+*inside* the sideview rather than peers of it, while `folders` and `songs` are
+standalone.
+
+### Recognized in query position, where the floor is an error
+
+`auto_cue on`/`off`, `cross_assign left`, `prelisten_output auto`,
+`search_options composer` and `show_splitpanel sideview` each answer where the
+bare form and both controls do not (or answer differently from both). For a verb
+with no bare query form, a field name that answers *at all* is the discriminator.
+These are recorded as recognized vocabulary, not as confirmed behavior — which
+mode or output is selected was not established. `show_splitpanel 'sidelist'`
+failed exactly as the controls did, but panel names belong to the loaded skin,
+so that is a fact about this skin rather than about the verb.
+
+### The triage: why each remaining entry is stuck
+
+The error code the *bare* query returns sorts the rest, and it says which
+instrument each needs:
+
+| Bare returns | Meaning | Verbs | What they need |
+| --- | --- | --- | --- |
+| `error:-2147467263` (E_NOTIMPL) | **no query implementation at all** | `automix_editor_movetrack`, `browser_move`, `cue_color`, `effect_disable_all`, `effect_list_edit`, `invert_deck`, `karaoke_load`, `playlist_load`, `sidelist_load`, `stem_pad` | execute position plus an **external** observable; no fixture can help, because the query channel cannot see them at all |
+| `error:-2147467259` (E_FAIL) | query exists, failed in this state | `get_automix_song`, `mix_and_load_next`, `padfx` | the missing state — an automix list, a pad context |
+| answers, but token = bare = controls | reads, cannot discriminate here | `broadcast`, `effects_used`, `hot_cue`, `leftcross`, `linein`, `mixermode`, `pitch_zero`, `sampler_output`, `sampler_rec`, `slicer`, `timecode_mode`, `timecode_reset_pitch`, `video_transition`, `effect_arm_stem`, `sync_hint` | a state where the tokens would differ — the fixture case 13b was written for |
+
+**That E_NOTIMPL row is the useful half of this pass.** Ten of the remaining
+verbs are action-only: they are on a worklist that is being worked by a
+query-position prober, and no amount of fixture-building will move them. They
+belong with `auto_bpm_transition` — execute the verb, watch something else —
+and that is a different instrument, exactly as the 13b note predicted.

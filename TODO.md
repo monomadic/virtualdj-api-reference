@@ -1891,6 +1891,33 @@ is worth more than a probe that leaves them somewhere else.
 The rest of the 80 likely need an observable other than the verb's own value — the
 `auto_bpm_transition` lesson. That is a different instrument, not another fixture.
 
+**Confirmed, and made specific, 2026-09-07.** A pass that built *no* new fixture closed nine
+verbs and then sorted what was left by the error code its **bare** query returns, which says
+which instrument each remainder needs. Tracker: "Documented Parameters, 2026-09-07: Nine Verbs
+Closed And A Triage Of The Rest".
+
+- Closed with no state at all, because the verb *is* the state: `param_cast` — ten of thirteen
+  types through a chained expression, including the documented `integer` 13 vs `int_trunc` 12
+  split and the `text N` character limit — plus `param_equal` (a plain string compare, so its
+  three "parameters" are the example's operands), `get_key musical` (by flipping `keyDisplay`
+  rather than by building a deck state), `filter_label` name/clean (each in the knob position
+  where it separates), and the sampler `siren` entries (the doc's example file; the NAME shape
+  itself confirmed with a sample that is loaded).
+- Closed by execute-with-readback and restored: `browser_window`, all six zones — with the
+  structural by-product that `automix`, `sidelist` and `sampler` activate `sideview` as well,
+  so they are panes inside it.
+- Recognized where the floor is an error: `auto_cue` on/off, `cross_assign left`,
+  `prelisten_output auto`, `search_options composer`, `show_splitpanel sideview`.
+- **Ten of the remainder answer E_NOTIMPL to their own bare query** — `automix_editor_movetrack`,
+  `browser_move`, `cue_color`, `effect_disable_all`, `effect_list_edit`, `invert_deck`,
+  `karaoke_load`, `playlist_load`, `sidelist_load`, `stem_pad`. They have no query
+  implementation at all, so no fixture can move them however good it is: they need execute plus
+  an external observable. Three more (`get_automix_song`, `mix_and_load_next`, `padfx`) answer
+  E_FAIL, which is the genuine fixture case; the fifteen that answer-but-cannot-discriminate are
+  the rest of it.
+
+Cross-check middle column: 80 → 56 across this session.
+
 Two merge rules were fixed while doing this, both found by watching totals rather than by a
 test: a re-probe must use a **superset** of the artifact's fixtures (a swapped fixture set
 produces verdicts that are not comparable), and **separation is positive evidence while failure

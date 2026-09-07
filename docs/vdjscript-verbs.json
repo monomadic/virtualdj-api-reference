@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 34,
-    "Pass": 85,
-    "Untested": 908
+    "Partial": 39,
+    "Pass": 90,
+    "Untested": 898
    },
    "documented": 771,
-   "tested_pass": 85,
+   "tested_pass": 90,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -268,10 +268,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): 'on' and 'off' are recognized — both answer 'no' where the bare form answers 'yes' and two nonsense tails raise E_INVALIDARG. Read as mode predicates ('is auto-cue set to this mode'), which is consistent with the earlier confirmation of 'always'. Which mode is actually selected was not established, so the tails are confirmed as vocabulary rather than as behavior."
+   ],
+   "confidence": "local_test"
   },
   "auto_match_bpm": {
    "name": "auto_match_bpm",
@@ -1109,14 +1112,17 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07): in query position `browser_window '<zone>'` answers whether that zone is active — 'songs' yes, everything else no, in the state as found. In execute position, each documented token makes exactly its own zone active and two nonsense tokens change nothing; the zone was restored to 'songs' and verified. Structural finding: 'automix', 'sidelist' and 'sampler' leave BOTH that name and 'sideview' reading yes, so those three are panes inside the sideview rather than peers of it, while 'folders' and 'songs' are standalone zones."
+   ],
    "section": "Browser",
    "description": "Change browser zone",
    "example": "browser_window 'folders'",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "browser_zoom": {
    "name": "browser_zoom",
@@ -1489,13 +1495,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): 'left' is recognized — it answers 'no' where the bare form and two nonsense tails raise E_INVALIDARG. The earlier run confirmed 'thru' the same way."
+   ],
    "section": "Deck Selection",
    "description": "Assign deck to crossfader side or through state",
-   "example": "deck 3 cross_assign 'left'"
+   "example": "deck 3 cross_assign 'left'",
+   "confidence": "local_test"
   },
   "crossfader": {
    "name": "crossfader",
@@ -3890,14 +3899,16 @@
     "Button",
     "Pad"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Source module (bundle 18.0.9246 STABS): ACTION_filter_label is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works."
+    "Source module (bundle 18.0.9246 STABS): ACTION_filter_label is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): both documented tails confirmed, each in the knob position where it can separate. With the deck filter at 0.75, 'name' returned the ColorFX name (MOBIUS TRI) where bare and two nonsense tails returned the value '> 50%'; with the filter centred, 'clean' returned 'OFF' where bare and both controls returned the name. So bare shows the name at rest and the value while the knob is moved, and the two tails pin it to one or the other. Filter restored to 0.5."
    ],
    "kind": "Query",
-   "section": "Equalizer & Stems"
+   "section": "Equalizer & Stems",
+   "confidence": "local_test"
   },
   "filter_resonance": {
    "name": "filter_resonance",
@@ -5575,7 +5586,8 @@
    "blocked": false,
    "evidence": [
     "Plugin channel, prepared state (2026-08-15): confirmed argument enum for controller-specific key notation — 'pioneer' -> 14, 'rane' -> 13, 'roland' -> 2, 'harmonic' -> 02A, against a bare/unknown-argument default of 'Ebm'. Unknown arguments fall back to the default text rather than erroring.",
-    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1: get_key 'harmonic' returned 08A where bare, 'musical' and two nonsense tails all returned Am — 'harmonic' is recognized; 'musical' is undiscriminated because keyDisplay was already musical, not refuted. Tracker: Documented Parameters Taken Live 2026-09-07."
+    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1: get_key 'harmonic' returned 08A where bare, 'musical' and two nonsense tails all returned Am — 'harmonic' is recognized; 'musical' is undiscriminated because keyDisplay was already musical, not refuted. Tracker: Documented Parameters Taken Live 2026-09-07.",
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): the documented 'musical' tail is confirmed by flipping the app's own keyDisplay setting. With keyDisplay=Harmonic, bare and a nonsense tail both returned 02A while 'musical' returned Ebm; with keyDisplay=Musical (the earlier run) bare returned Ebm and 'harmonic' returned 02A. So each tail forces its own notation regardless of the setting, and the setting only decides what the bare form shows. Setting restored to Musical."
    ],
    "section": "Get (Query Actions)",
    "description": "Song key",
@@ -10474,13 +10486,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query position, build 18.0.9598, 2026-09-07): a pipeline verb, so a chained expression is the whole state — no fixture needed. Through `get_var '$v' & param_cast <type>` with v=12.7: integer 13 and int_trunc 12 (the documented rounding-vs-truncation split, confirmed in one read), frac 0.7, '000' 013, percentage 1270%, ms 13ms, beats 12.7bt, float 12.7, text 12.7; boolean yes at 12.7 and no at 0. On a string source, 'text' 5 truncated 'Chapter & Verse' to 'Chapt' and 'text' 3 to 'Cha', so the optional character limit holds. Bare and two nonsense types raise E_INVALIDARG, as does 'artist' — that token is the doc example's argument to get_browsed_song, not a cast type. 'relative' and 'absolute' returned the input unchanged: they act on a slider parameter, which a query chain has none of, so they stay undiscriminated rather than refuted."
+   ],
    "section": "Parameter Comparison & Math",
    "description": "Cast to new type",
-   "example": "param_cast \"percentage\""
+   "example": "param_cast \"percentage\"",
+   "confidence": "local_test"
   },
   "param_contains": {
    "name": "param_contains",
@@ -10521,14 +10536,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): a plain string comparison — `param_equal 'zzqqx' 'zzqqx'` is yes and `param_equal 'audio' 'zzqqx'` is no, so the catalog's audio/string/type are the example's operands, not vocabulary. The documented backtick shape holds: `param_equal \\`get_browsed_song 'type'\\` 'audio'` returns yes and the same against 'video' returns no, with get_browsed_song 'type' reading audio."
+   ],
    "section": "Parameter Comparison & Math",
    "description": "Check if value equals something",
    "example": "param_equal \\",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test"
   },
   "param_greater": {
    "name": "param_greater",
@@ -11467,10 +11485,13 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": []
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): the documented 'auto' tail is recognized — it answers 'no' where the bare form and two nonsense tails all answer 'yes'. Separation is from both the floor and the controls, so the token is read; which output is selected was not established."
+   ],
+   "confidence": "local_test"
   },
   "prelisten_pos": {
    "name": "prelisten_pos",
@@ -12504,13 +12525,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07, sampler_slots_differ fixture): the documented sample-NAME argument shape is confirmed with a sample that is actually loaded — `sampler_pad_volume 'Dystopia Breaks'` returns 1, the same as the slot form `sampler_pad_volume 1`, while the catalog's example name 'siren' and a nonsense name both return 0. So 'siren' is the doc's example file, not vocabulary."
+   ],
    "section": "Sampler",
    "description": "Set sample volume by visible sampler pad position",
-   "example": "sampler_pad_volume 1 75%"
+   "example": "sampler_pad_volume 1 75%",
+   "confidence": "local_test"
   },
   "sampler_pfl": {
    "name": "sampler_pfl",
@@ -13184,13 +13208,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): the documented 'composer' field is recognized — it answers 'no' where the bare form and two nonsense tails all raise E_INVALIDARG. The verb has no bare query form, so a field name that answers at all is the discriminator."
+   ],
    "section": "Browser",
    "description": "Search field options",
-   "example": "search_options 'composer'"
+   "example": "search_options 'composer'",
+   "confidence": "local_test"
   },
   "search_playlists": {
    "name": "search_playlists",
@@ -13696,13 +13723,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): 'sideview' answers 'no' where two nonsense tails raise E_POINTER and the bare form raises E_INVALIDARG, so that panel name is read. 'sidelist' failed exactly as the controls did — but panel names are a property of the loaded skin (DeathDisco Grave Raver v1 here), so that is a fact about this skin, not about the verb."
+   ],
    "section": "Skin Control",
    "description": "Show/hide split panel",
-   "example": "show_splitpanel 'sidelist'"
+   "example": "show_splitpanel 'sidelist'",
+   "confidence": "local_test"
   },
   "show_text": {
    "name": "show_text",
