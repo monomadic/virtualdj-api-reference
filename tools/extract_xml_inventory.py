@@ -8,6 +8,16 @@ docs, and writes the data artifact `docs/skin-xml-inventory.json`.
 Query it with `just get-xml-element` / `find-xml-elements` / `xml-stats`;
 no Markdown view is written to disk.
 
+Scope, and the reason `undocumented` reads 0: this measures *mentions of the
+elements shipped files happen to use*, so an element no shipped file writes is
+invisible here however thoroughly the reader supports it, and attributes and
+behavior contracts are out of scope entirely (`clickthrough` is read by every
+skin object, is in no shipped skin and no doc, and never moved this count). The
+binary's own reader vocabulary is the other side of that blind spot, so
+`totals.reader_vocabulary_unused` joins in the candidates from
+`tools/extract_skin_readers.py` — build-anchored, and reported as stale rather
+than listed when the installed build has moved past the vocabulary artifact.
+
 Usage:
     python3 tools/extract_xml_inventory.py           # (re)write the report
     python3 tools/extract_xml_inventory.py --check   # fail on new undocumented elements
@@ -16,6 +26,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import plistlib
 import re
 import sys
 from collections import Counter
@@ -26,6 +37,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs" / "skin-xml-inventory.json"
+READER_VOCABULARY = ROOT / "tests" / "skin-reader-vocabulary.json"
+APP = Path("/Applications/VirtualDJ.app")
 
 # family name -> (glob patterns, reference docs to cross-check)
 FAMILIES: list[tuple[str, list[str], list[str]]] = [
@@ -213,6 +226,46 @@ def format_attributes(attributes: Counter) -> str:
     return ", ".join(parts)
 
 
+def installed_build() -> str | None:
+    """CFBundleVersion of the installed app, or None when it is not here."""
+    try:
+        with open(APP / "Contents/Info.plist", "rb") as fh:
+            return plistlib.load(fh).get("CFBundleVersion")
+    except (OSError, plistlib.InvalidFileException):
+        return None
+
+
+def reader_vocabulary_unused() -> dict:
+    """The reader-vocabulary names no shipped file writes — this inventory's
+    own blind spot, named beside the count that cannot see it.
+
+    Build-anchored the way `extract_skin_readers.py --check` is: the names are
+    only listed while the vocabulary artifact and the installed app agree on a
+    build, because a reader vocabulary read off one build says nothing about
+    another. On a mismatch the field says so instead of listing names.
+    """
+    try:
+        summary = json.loads(READER_VOCABULARY.read_text(encoding="utf-8"))["summary"]
+    except (OSError, KeyError, json.JSONDecodeError):
+        return {"status": "unavailable",
+                "note": f"{READER_VOCABULARY.relative_to(ROOT)} not extracted; "
+                        f"run `just skin-readers`"}
+    build = summary.get("build", "?")
+    running = installed_build()
+    if running is None:
+        return {"status": "unverified", "build": build,
+                "note": "VirtualDJ is not installed here, so the vocabulary's "
+                        "build could not be confirmed against a running app",
+                "names": summary.get("candidates", [])}
+    if running != build:
+        return {"status": "stale", "build": build, "installed_build": running,
+                "note": f"vocabulary was read off build {build}, installed is "
+                        f"{running}; re-extract with `just skin-readers` before "
+                        f"reading these names as this build's blind spot"}
+    return {"status": "current", "build": build,
+            "names": summary.get("candidates", [])}
+
+
 def build_inventory() -> dict:
     families: dict[str, dict] = {}
     total_elements = 0
@@ -259,7 +312,13 @@ def build_inventory() -> dict:
                     "Query via `just get-xml-element` / `find-xml-elements` / "
                     "`xml-stats`; do not generate a Markdown copy.",
         },
-        "totals": {"elements": total_elements, "undocumented": total_undocumented},
+        "totals": {
+            "elements": total_elements,
+            # `undocumented` counts only elements a shipped file writes; the
+            # reader accepts names no shipped file uses, and those are here.
+            "undocumented": total_undocumented,
+            "reader_vocabulary_unused": reader_vocabulary_unused(),
+        },
         "families": families,
     }
 
@@ -274,8 +333,19 @@ def run_check(inventory: dict) -> int:
         OUTPUT.write_text(serialize(inventory), encoding="utf-8")
         print(f"{OUTPUT.relative_to(ROOT)}: did not exist, wrote initial inventory")
         return 0
-    committed = json.loads(OUTPUT.read_text(encoding="utf-8")).get("families", {})
+    report = json.loads(OUTPUT.read_text(encoding="utf-8"))
+    committed = report.get("families", {})
     failures: list[str] = []
+
+    # Not a failure — a build bump is not a broken inventory — but the blind
+    # spot must never read as current when it is not. Same shape as
+    # `extract_skin_readers.py --check`, which skips rather than fails.
+    was = report.get("totals", {}).get("reader_vocabulary_unused", {})
+    now = inventory["totals"]["reader_vocabulary_unused"]
+    if was.get("status") != now.get("status") or was.get("names") != now.get("names"):
+        print(f"XML inventory notice: reader_vocabulary_unused is {was.get('status')} "
+              f"in the committed report, {now.get('status')} on a re-join — "
+              f"refresh with `python3 tools/extract_xml_inventory.py`")
     for family, data in inventory["families"].items():
         was = set(committed.get(family, {}).get("undocumented", []))
         new = sorted(set(data["undocumented"]) - was)

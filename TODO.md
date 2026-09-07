@@ -288,9 +288,28 @@ before the next 10b sweep.
 
 ### R6. Make `just xml-stats` name its own blind spot
 
-Status: Ready
+Status: Done
 
-Note: Added 2026-09-07. The review named the limitation ("XML inventory documented means an
+Note: 2026-09-07. `just xml-stats` now prints `reader_vocabulary_unused` beside `undocumented`
+in `totals`: the reader-vocabulary names no shipped file writes, joined from
+`tests/skin-reader-vocabulary.json` at generation time.
+
+- Build-anchored the way `extract_skin_readers.py --check` is. The join carries a `status`:
+  `current` lists the names with the build they were read off; a `CFBundleVersion` mismatch
+  between that artifact and the installed app reports `stale` and lists nothing, since a
+  reader vocabulary read off one build says nothing about another; `unverified` (no app
+  installed) and `unavailable` (vocabulary not extracted) are distinguished. `--check` prints
+  a non-fatal notice when the committed join no longer matches a re-join — a build bump is
+  not a broken inventory, but the blind spot must not read as current when it is not.
+- The extractor docstring and the `docs/README.md` inventory entry now say what the count
+  measures: mentions of the elements shipped files happen to use, with attributes and
+  behavior contracts out of scope. Neither carries a number.
+- Regenerating the inventory also picked up R2's `tests/Skins/clickthrough-probe/` fixtures
+  (21 → 27 skin files scanned); element sets are unchanged, only use counts moved.
+
+The task as written:
+
+Added 2026-09-07. The review named the limitation ("XML inventory documented means an
 element mention, not a full attribute/behavior contract"); R2 then proved it — `clickthrough`
 is read by every skin object, was in no shipped skin and no doc, and `undocumented: 0` never
 moved. It still reads `undocumented: 0` across all elements, and the next agent will read
