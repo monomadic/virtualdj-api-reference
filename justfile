@@ -441,6 +441,11 @@ plugin-keylog:
 skin-classes *args:
     @python3 tools/extract_skin_classes.py "$@"
 
+# Every skin object class, one line each. Filters: --base, --has-attr,
+# --element-backed, --format=json. Untruncated, as the other list-* are.
+list-skin-classes *args:
+    @python3 tools/extract_skin_classes.py --list "$@"
+
 # Historical skin class source provenance (Tier 2; many-to-many STABS relation).
 skin-modules *args:
     @python3 tools/extract_skin_modules.py {{args}}

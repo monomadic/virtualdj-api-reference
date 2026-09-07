@@ -151,12 +151,50 @@ def template_parameters() -> set[str]:
     return _placeholders
 
 
-def classify_attribute(attr: str, families: list[str]) -> str:
-    """documented | template_param | not_vocabulary | unexplained."""
+SKIN_CLASSES = ROOT / "tests" / "skin-classes.json"
+_reader_attrs: dict[str, set[str]] | None = None
+
+
+def reader_attributes() -> dict[str, set[str]]:
+    """element name -> attributes the class that builds it is seen reading.
+
+    From tests/skin-classes.json: the factory maps the element to a class, and
+    the class carries the attribute names recovered as x1 literals at the XML
+    getters. Tier 2 — the reader touching a name is not the name working — but
+    it is positive evidence where the placeholder test only ever gives negative.
+    """
+    global _reader_attrs
+    if _reader_attrs is None:
+        _reader_attrs = {}
+        try:
+            data = json.loads(SKIN_CLASSES.read_text())
+        except (OSError, json.JSONDecodeError):
+            return _reader_attrs
+        classes = data.get("classes", {})
+        for element, names in data.get("factory", {}).get("element_classes", {}).items():
+            attrs: set[str] = set()
+            for cls in names:
+                attrs |= set(classes.get(cls, {}).get("attribute_candidates", []))
+            _reader_attrs[element] = attrs
+    return _reader_attrs
+
+
+def classify_attribute(attr: str, families: list[str], element: str | None = None) -> str:
+    """documented | undocumented_but_read | template_param | unexplained | not_vocabulary
+
+    Order matters, and `undocumented_but_read` outranks `template_param` because
+    the two overlap: `available` has an `[AVAILABLE]` placeholder AND appears in
+    CSkinPanel's candidates. Ranking the placeholder first would file a confirmed
+    reader attribute as "not a gap", which is the one direction of error that
+    deletes real work — the same mistake, in miniature, as calling a template
+    parameter a dead attribute.
+    """
     if attr in NOT_SKIN_VOCABULARY:
         return "not_vocabulary"
     if doc_mentions_attribute(attr, families):
         return "documented"
+    if element and attr in reader_attributes().get(element, ()):
+        return "undocumented_but_read"
     if attr.lower() in template_parameters():
         return "template_param"
     return "unexplained"
@@ -258,7 +296,7 @@ def summary(name: str, limit: int) -> dict:
     for _, entry in found:
         for attr, n in entry["attributes"].items():
             attributes[attr] = attributes.get(attr, 0) + n
-    kind = {a: classify_attribute(a, families) for a in attributes}
+    kind = {a: classify_attribute(a, families, name) for a in attributes}
 
     return {
         "element": name,
@@ -271,6 +309,8 @@ def summary(name: str, limit: int) -> dict:
         # Genuinely unexplained: template parameters and XInclude's own
         # attributes are excluded, because neither is reader vocabulary and
         # neither could ever be documented as such.
+        "attributes_undocumented_but_read": sorted(a for a, k in kind.items()
+                                                   if k == "undocumented_but_read"),
         "attributes_unexplained": sorted(a for a, k in kind.items() if k == "unexplained"),
         "attributes_template_params": sorted(a for a, k in kind.items()
                                              if k == "template_param"),
@@ -318,20 +358,29 @@ def render(s: dict) -> str:
 
     attrs = s["attributes"]
     if attrs:
+        read = s["attributes_undocumented_but_read"]
         unexplained = s["attributes_unexplained"]
         tmpl = s["attributes_template_params"]
-        head = f"Attributes written by shipped files ({len(attrs)}; "
-        head += f"{len(unexplained)} unexplained"
+        bits = []
+        if read:
+            bits.append(f"{len(read)} read but undocumented")
+        if unexplained:
+            bits.append(f"{len(unexplained)} unexplained")
         if tmpl:
-            head += f", {len(tmpl)} template parameters"
-        L.append(head + ")")
-        MARK = {"documented": " ", "unexplained": "!", "template_param": "~",
-                "not_vocabulary": "·"}
+            bits.append(f"{len(tmpl)} template parameters")
+        L.append(f"Attributes written by shipped files ({len(attrs)}"
+                 + ("; " + ", ".join(bits) if bits else "") + ")")
+        MARK = {"documented": " ", "undocumented_but_read": "!", "unexplained": "?",
+                "template_param": "~", "not_vocabulary": "·"}
         for a in attrs:
             L.append(f"  {MARK[a['kind']]} {a['name']:<24} {a['uses']:>5}")
+        if read:
+            L.append("  ! = the class that builds this element is seen reading it, and no "
+                     "doc explains it")
+            L.append("      — confirmed vocabulary with a real documentation gap")
         if unexplained:
-            L.append("  ! = no backticked mention and no fenced-block use in this "
-                     "family's docs — a lead, not a finding")
+            L.append("  ? = no doc, and not among the reader's recovered candidates — a "
+                     "weak lead either way")
         if tmpl:
             L.append("  ~ = substituted, not read: the corpus writes `[NAME]` for it, so "
                      "this is a template")

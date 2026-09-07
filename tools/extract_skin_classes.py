@@ -12,6 +12,7 @@ import json
 import plistlib
 import re
 import struct
+import sys
 from pathlib import Path
 
 ARTIFACT = Path('tests/skin-classes.json')
@@ -188,6 +189,13 @@ def main():
     p.add_argument('--get', metavar='CLASS', help='one class record')
     p.add_argument('--element', metavar='NAME', help='which class(es) build this XML element')
     p.add_argument('--attributes', metavar='CLASS', help='just the attribute candidates')
+    p.add_argument('--list', action='store_true', help='every class, one line each')
+    p.add_argument('--base', help='--list filter: immediate base class')
+    p.add_argument('--has-attr', metavar='NAME',
+                   help='--list filter: classes whose reader is seen reading NAME')
+    p.add_argument('--element-backed', action='store_true',
+                   help='--list filter: only classes the factory maps an element to')
+    p.add_argument('--format', choices=('table', 'json'), default='table')
     p.add_argument('--check', action='store_true')
     args = p.parse_args()
     if args.historical_app:
@@ -198,6 +206,27 @@ def main():
     data = json.loads(ARTIFACT.read_text())
     if args.check:
         return check(data, args.app)
+    if args.list:
+        rows = []
+        for name, c in sorted(data['classes'].items()):
+            if args.base and (not c['bases'] or c['bases'][0] != args.base):
+                continue
+            if args.has_attr and args.has_attr not in c['attribute_candidates']:
+                continue
+            if args.element_backed and not c['elements']:
+                continue
+            rows.append({'class': name, 'base': c['bases'][0] if c['bases'] else None,
+                         'elements': c['elements'],
+                         'attribute_candidates': len(c['attribute_candidates'])})
+        if args.format == 'json':
+            print(json.dumps(rows, indent=2))
+        else:
+            for r in rows:
+                els = ', '.join('<%s>' % e for e in r['elements']) or '—'
+                print('%-32s %-22s attrs=%-4d %s'
+                      % (r['class'], r['base'] or '?', r['attribute_candidates'], els))
+            print('\n%d class(es)' % len(rows), file=sys.stderr)
+        return 0
     if args.get:
         rec = data['classes'].get(args.get)
         if rec is None:
