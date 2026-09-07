@@ -114,6 +114,12 @@ next-incomplete-verb:
 verb-stats:
     @python3 tools/verbdb.py stats
 
+# Contract coverage across every verb, per dimension, recounted from the
+# artifacts. `--settled` names the finished verbs, `--frontier` names what each
+# dimension is waiting on. Read-only; touches no live instance.
+coverage *args:
+    @python3 tools/coverage_report.py "$@"
+
 # --- native effects catalog (swept via the HTTP interface) -------------------
 
 get-fx effect:
