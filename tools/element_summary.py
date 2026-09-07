@@ -17,7 +17,7 @@ reads `documented` while most of its attributes are unexplained — `<panel>`
 writes 29 distinct attributes across the shipped skins. Per-element is the only
 altitude at which that gap is actionable.
 
-Two directions of blindness, both reported rather than papered over:
+Three directions of blindness, all reported rather than papered over:
 
 - The inventory sees only what a shipped file happens to WRITE. `r` is the
   `<mousecircle>` radius, confirmed live, and appears in no shipped skin — so it
@@ -26,6 +26,11 @@ Two directions of blindness, both reported rather than papered over:
   discussed in prose without backticks reads as undocumented. Undocumented here
   means "not written the way the checker recognises", which is a lead, not a
   finding — see docs/Evidence Standards.md.
+- Not every attribute in shipped XML is an attribute the reader READS. The skin
+  format substitutes template parameters textually before any reader runs, so
+  those names are author-invented and can never be vocabulary; they are marked
+  `~`, not counted as gaps, and `template_parameters()` explains the test.
+  Counting them was overstating the gap by 30 attributes and 3,065 uses.
 
 Nothing here is new evidence: the existing artifacts and docs, read together.
 """
@@ -104,6 +109,56 @@ def doc_mentions_attribute(attr: str, families: list[str]) -> bool:
             if re.search(r"\b" + re.escape(attr) + r"\s*=", fenced):
                 return True
     return False
+
+
+# XInclude injects this during processing; it is an XML standard attribute, not
+# skin vocabulary, and no VirtualDJ doc will ever explain it.
+NOT_SKIN_VOCABULARY = {"xml:base"}
+
+_placeholders: set[str] | None = None
+_placeholder_scan_ok = True
+
+
+def template_parameters() -> set[str]:
+    """Attribute names the skin format substitutes rather than reads.
+
+    `<panel class="rm_hc" action1="hot_cue 1">` instantiates a template: `class=`
+    names it, and the remaining attributes supply values that the loader
+    substitutes for `[ACTION1]` in the template body, textually, before any
+    reader sees the XML. So the name is author-invented, unbounded, and can
+    never be reader vocabulary or appear in a doc.
+
+    Detected by the placeholder token, which is the substitution's own evidence:
+    an attribute is a template parameter when the corpus writes `[NAME]`
+    somewhere. Without this the metric badly overstates — 29 of the 67
+    attributes no doc explains are template parameters, and they carry 3,065 of
+    the 4,206 uses.
+
+    Note the overlap is real: `width` and `action2` are BOTH reader attributes
+    and template parameters, so this never overrides a documented attribute — it
+    only reclassifies what would otherwise be reported as an unexplained one.
+    """
+    global _placeholders, _placeholder_scan_ok
+    if _placeholders is None:
+        try:
+            proc = subprocess.run(["rg", "-oIN", r"\[[A-Z0-9_]+\]", "examples", "tests"],
+                                  cwd=ROOT, capture_output=True, text=True, timeout=60)
+            _placeholders = {t.strip("[]").lower() for t in proc.stdout.split()}
+            _placeholder_scan_ok = bool(_placeholders)
+        except (OSError, subprocess.SubprocessError):
+            _placeholders, _placeholder_scan_ok = set(), False
+    return _placeholders
+
+
+def classify_attribute(attr: str, families: list[str]) -> str:
+    """documented | template_param | not_vocabulary | unexplained."""
+    if attr in NOT_SKIN_VOCABULARY:
+        return "not_vocabulary"
+    if doc_mentions_attribute(attr, families):
+        return "documented"
+    if attr.lower() in template_parameters():
+        return "template_param"
+    return "unexplained"
 
 
 def reader_vocabulary(name: str) -> dict:
@@ -202,16 +257,23 @@ def summary(name: str, limit: int) -> dict:
     for _, entry in found:
         for attr, n in entry["attributes"].items():
             attributes[attr] = attributes.get(attr, 0) + n
-    explained = {a: doc_mentions_attribute(a, families) for a in attributes}
+    kind = {a: classify_attribute(a, families) for a in attributes}
 
     return {
         "element": name,
         "families": {fam: {"uses": e["uses"], "files": e["files"],
                            "name_documented": e["documented"]}
                      for fam, e in found},
-        "attributes": [{"name": a, "uses": attributes[a], "documented": explained[a]}
+        "attributes": [{"name": a, "uses": attributes[a], "kind": kind[a],
+                        "documented": kind[a] == "documented"}
                        for a in sorted(attributes, key=lambda a: (-attributes[a], a))],
-        "attributes_undocumented": sorted(a for a, ok in explained.items() if not ok),
+        # Genuinely unexplained: template parameters and XInclude's own
+        # attributes are excluded, because neither is reader vocabulary and
+        # neither could ever be documented as such.
+        "attributes_unexplained": sorted(a for a, k in kind.items() if k == "unexplained"),
+        "attributes_template_params": sorted(a for a, k in kind.items()
+                                             if k == "template_param"),
+        "template_detection": "ok" if _placeholder_scan_ok else "unavailable (rg failed)",
         "doc_sections": doc_sections(name, families),
         "reader_vocabulary": reader_vocabulary(name),
         "probes": probes(name),
@@ -255,15 +317,30 @@ def render(s: dict) -> str:
 
     attrs = s["attributes"]
     if attrs:
-        undoc = s["attributes_undocumented"]
-        L.append(f"Attributes written by shipped files ({len(attrs)}; "
-                 f"{len(undoc)} explained in no doc)")
+        unexplained = s["attributes_unexplained"]
+        tmpl = s["attributes_template_params"]
+        head = f"Attributes written by shipped files ({len(attrs)}; "
+        head += f"{len(unexplained)} unexplained"
+        if tmpl:
+            head += f", {len(tmpl)} template parameters"
+        L.append(head + ")")
+        MARK = {"documented": " ", "unexplained": "!", "template_param": "~",
+                "not_vocabulary": "·"}
         for a in attrs:
-            mark = " " if a["documented"] else "!"
-            L.append(f"  {mark} {a['name']:<24} {a['uses']:>5}")
-        if undoc:
+            L.append(f"  {MARK[a['kind']]} {a['name']:<24} {a['uses']:>5}")
+        if unexplained:
             L.append("  ! = no backticked mention and no fenced-block use in this "
                      "family's docs — a lead, not a finding")
+        if tmpl:
+            L.append("  ~ = substituted, not read: the corpus writes `[NAME]` for it, so "
+                     "this is a template")
+            L.append("      parameter supplied at the `class=` call site, never reader "
+                     "vocabulary")
+        if any(a["kind"] == "not_vocabulary" for a in attrs):
+            L.append("  · = not skin vocabulary (XInclude injects it)")
+        if s["template_detection"] != "ok":
+            L.append("  NOTE: template detection " + s["template_detection"]
+                     + " — unexplained counts are overstated")
     else:
         L.append("Attributes: none written by any shipped file")
     L.append("")
