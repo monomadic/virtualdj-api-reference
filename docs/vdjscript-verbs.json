@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 35,
-    "Pass": 76,
-    "Untested": 916
+    "Partial": 33,
+    "Pass": 79,
+    "Untested": 915
    },
    "documented": 771,
-   "tested_pass": 76,
+   "tested_pass": 79,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": -9
@@ -2375,11 +2375,12 @@
     "SkinAction",
     "SkinQuery"
    ],
-   "test_status": "Partial",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, fx_slot_1_on fixture (Phaser in slot 1), query position: effect_active 'Phaser' yes, 'flanger' no, nonsense no, bare yes — the effect-name argument is a recognized predicate beside the slot-number form. Tracker: Documented Parameters Taken Live 2026-09-07 (fixtures)."
    ],
    "section": "Effects",
    "description": "Activate/deactivate",
@@ -3070,7 +3071,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' walks only the ENABLED/favorites subset (63 of 119 installed on this install), so cycling never reaches the rest; by-name reaches them. By-name matching is stricter than get_effect_title's: it rejects 'Shader' (which title resolves to 'Visuals') and 'BeatGrid' (real name 'Beat Grid'). A name it does not know leaves the slot untouched, which is why sweeps park on a sentinel first."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): '+1' walks only the ENABLED/favorites subset (63 of 119 installed on this install), so cycling never reaches the rest; by-name reaches them. By-name matching is stricter than get_effect_title's: it rejects 'Shader' (which title resolves to 'Visuals') and 'BeatGrid' (real name 'Beat Grid'). A name it does not know leaves the slot untouched, which is why sweeps park on a sentinel first.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, fx_slot_1_on fixture, query position: effect_select 1 'Phaser' yes, 1 'echo' no, 1 nonsense no; without the slot, 'Phaser' yes and nonsense no — a selected-name predicate. Selection itself was not executed. Tracker: Documented Parameters Taken Live 2026-09-07 (fixtures)."
    ],
    "section": "Effects",
    "description": "Select effect (deactivate previous)",
@@ -3089,11 +3091,12 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Partial",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`."
+    "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, fx_slot_1_on fixture, query position: effect_select_multi 'Phaser' yes, nonsense no. Tracker: Documented Parameters Taken Live 2026-09-07 (fixtures)."
    ],
    "section": "Effects",
    "description": "Select effect (keep previous)",
@@ -6506,12 +6509,14 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Plugin channel, prepared state (2026-08-15): 'hasbeats', 'remaining', 'volume', 'volume_end' and 'next' are confirmed keywords (S_OK where an unrecognized argument gives E_INVALIDARG); 'next' also returns a different event (B4-93) from the bare form (bB4-53)."
-   ]
+    "Plugin channel, prepared state (2026-08-15): 'hasbeats', 'remaining', 'volume', 'volume_end' and 'next' are confirmed keywords (S_OK where an unrecognized argument gives E_INVALIDARG); 'next' also returns a different event (B4-93) from the bare form (bB4-53).",
+    "Local test 2026-09-07, HTTP, build 18.0.9598, deck2_playing fixture: 'current' 'volume' 1 vs 'next' 'volume' 0.74, 'current' 'hasbeats' yes vs 'next' no, 'remaining' 154 vs 158; a nonsense selector or field returns empty; with no selector the field reads current. Every form is error:-2147467259 on a loaded but stopped deck, so the verb needs a playing deck. Tracker: Documented Parameters Taken Live 2026-09-07 (fixtures)."
+   ],
+   "confidence": "local_test"
   },
   "get_songlength": {
    "name": "get_songlength",

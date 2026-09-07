@@ -156,6 +156,10 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     # tail falls back to elapsed (44), so the tail is read even when it has
     # nothing to say.
     "get_time": {"to_lyrics"},
+    # 2026-09-07, deck2_playing fixture — tracker "Documented Parameters Taken
+    # Live 2026-09-07 (fixtures)". current/next answer differently (volume 1 vs
+    # 0.74, hasbeats yes vs no); a nonsense selector or field returns ''.
+    "get_song_event": {"current", "next", "volume", "hasbeats", "remaining"},
 }
 
 # Catalog tokens a local test showed to be the doc's own example rather than
@@ -177,6 +181,14 @@ LOCAL_PLACEHOLDERS: dict[str, set[str]] = {
     # "with 'featuring' stripped" describes the behavior, not a parameter; bare,
     # 'featuring' and nonsense all returned the same artist.
     "get_artist_before_feat": {"featuring"},
+    # 2026-09-07, fx_slot_1_on fixture (Phaser in slot 1): the NAME argument is
+    # confirmed — effect_active 'Phaser' yes / 'flanger' no / nonsense no, and
+    # effect_select [slot] 'Phaser' yes / 'echo' no / nonsense no, likewise
+    # effect_select_multi. The quoted names are members of the FX catalog used
+    # as examples, not keywords; confirm a specific one by loading it.
+    "effect_active": {"flanger"},
+    "effect_select": {"echo"},
+    "effect_select_multi": {"echo"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls

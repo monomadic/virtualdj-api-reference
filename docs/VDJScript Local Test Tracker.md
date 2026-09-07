@@ -2017,3 +2017,56 @@ found (a different track, rating 0); sampler and automix state as found.
 Recorded in `LOCAL_CONFIRMED` / `LOCAL_PLACEHOLDERS` in
 [tools/extract_action_catalog.py](../tools/extract_action_catalog.py) and on the
 verbs. Deck 1 empty before and after.
+
+## Documented Parameters Taken Live 2026-09-07 (fixtures)
+
+HTTP, build 18.0.9598, the `fx_slot_1_on` and `deck2_playing` fixtures from
+[tools/fixtures.py](../tools/fixtures.py), two nonsense controls per candidate.
+Deck 1 empty before and after; deck 2's own track restored, stopped.
+
+**`fx_slot_1_on` (Phaser in slot 1).**
+
+| Query | Result |
+| --- | --- |
+| `effect_active 'Phaser'` / `'flanger'` / `'qzqzqz'` / bare | `yes` / `no` / `no` / `yes` |
+| `effect_select 1 'Phaser'` / `'echo'` / `'qzqzqz'` | `yes` / `no` / `no` |
+| `effect_select 'Phaser'` / `'qzqzqz'` | `yes` / `no` |
+| `effect_select_multi 'Phaser'` / `'qzqzqz'` | `yes` / `no` |
+| `effects_used` bare / `'deck'` / nonsense | all `yes`; `get_effects_used` all `1` |
+| `effect_colorfx` any tail, `effect_list` any tail | `error:-2147024809` (no ColorFX selected; `get_colorfx_name` was E_FAIL) |
+| `filter_label` any tail | `DELAY` |
+
+**Reading.** The effect-name argument is confirmed in query position for
+`effect_active`, `effect_select` (with and without a slot) and
+`effect_select_multi`: the loaded name answers `yes`, another catalog name and
+nonsense answer `no`. The catalog's `flanger` and `echo` are example members of
+the FX catalog, not keywords, and are recorded as placeholders. `effects_used
+'deck'` is undiscriminated: every tail answered the same in both fixtures.
+
+**`deck2_playing` (deck 2 playing the fixture track).**
+
+| Query | Result |
+| --- | --- |
+| `get_song_event 'current' 'volume'` / `'next' 'volume'` | `1` / `0.74` |
+| `get_song_event 'current' 'hasbeats'` / `'next' 'hasbeats'` | `yes` / `no` |
+| `get_song_event 'current' 'remaining'` / `'next' 'remaining'` | `154` / `158` |
+| `get_song_event 'qzqzqz' 'volume'`, `'current' 'qzqzqz'` | empty |
+| `get_song_event 'volume'` (no selector) | `1` — selector defaults to `current` |
+| `get_song_event` bare, and every form on a stopped deck | `error:-2147467259` |
+| `get_level` bare / `vocal` / `sampler` / `mic` / `db` / nonsense, two reads | all `0` |
+| `get_vu_meter` bare / `vocal` / `mic` / `sampler` / nonsense | all `0` |
+| `get_limiter` bare / `master` / `booth` / `headphones` / nonsense | all `0` |
+| `get_time_sign` any tail | `1` |
+
+**Reading.** `current`/`next` and the fields `volume`, `hasbeats`, `remaining`
+are confirmed, and both nonsense positions separate (empty). The verb needs a
+*playing* deck: every form on the loaded-but-stopped deck in the earlier batch
+was E_FAIL. The level and VU meters read `0` on a playing deck in this setup,
+so their tails stay undiscriminated — the fixture track plays but the metered
+path shows nothing here, which is a setup question (output routing, deck
+volume) before it is a verb question.
+
+**Fixture trap.** `--establish X --teardown` establishes and *then* tears down
+in one run; running it after a separate `--establish X` restores the state the
+second establish saw, which left deck 1 holding the fixture track. Use
+`--establish X --hold N --teardown` in one process and query during the hold.

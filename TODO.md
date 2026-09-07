@@ -1296,6 +1296,12 @@ position), `sampler_loop` current, `get_time` to_lyrics; reclassified `get_versi
 (`LOCAL_PLACEHOLDERS`); and left `get_song_event`, `get_automix_song`, `get_slip_time`,
 `filter_label`, `effects_used` undiscriminated — each returned E_FAIL or one constant on every
 form in the state built, so they want a playing deck, an automix list, slip, or an active effect.
+A third pass the same day used the `fx_slot_1_on` and `deck2_playing` fixtures: `get_song_event`
+current/next and volume/hasbeats/remaining confirmed on a playing deck; the effect-name argument
+confirmed on `effect_active`, `effect_select`, `effect_select_multi` with the loaded Phaser, and
+the catalog's `flanger`/`echo` recorded as example names; level/VU/limiter tails still
+undiscriminated because the meters read 0 on a playing deck in this setup (routing, not the
+verb). Tracker: "Documented Parameters Taken Live 2026-09-07 (fixtures)".
 
 **Corrected same day:** the pass reported `auto_bpm_transition`'s own candidates
 (`source_original`, `target_original`, `target_current`) as behaving like junk, and this file
