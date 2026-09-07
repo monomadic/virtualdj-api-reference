@@ -330,6 +330,43 @@ Fixture and full tables: [tests/Skins/reader-candidates-probe/](../tests/Skins/r
 
 ---
 
+## Element-Specific Attributes Recovered From The Reader
+
+The section above covers the shared reader. Each element class has its own
+builder on top of it, and those read attributes that no section here explained.
+The eight below are the ones shipped skins actually write.
+
+**Source: binary structure (Tier 2), build 18.0.9598 (arm64).** Recovered by
+following the element dispatcher at `0x10037df04` to each class's constructor
+and tracking the string literals it hands to the three XML getters — so what is
+established is that *the class reads this name*, and how it reads it. **None of
+this is confirmed behavior**, and absence from these lists establishes nothing:
+traversal stops at direct callees. Query with `just skin-classes --attributes
+CSkinPanel` and read the artifact's own `limitations` before citing.
+
+Values are **Source: Built-in skin** — what Atomix writes, which attests a form
+and not an effect.
+
+| Attribute | Element | Read as | Values in shipped skins | Status |
+| --- | --- | --- | --- | --- |
+| `disabled` | `<slider>` | string | a VDJScript query, e.g. `not effect_has_slider 1 1` (437 uses) | Needs test: confirm it greys/blocks the slider when the query is true |
+| `available` | `<panel>` | boolean | `yes` (64), `no` (37) | Needs test: distinguish from `visibility` and from `firstvisible` |
+| `displayname` | `<panel>` | string | human labels — `Saved Loops`, `Hotcues`, `Custom Buttons` | Needs test: where the label surfaces (panel picker?) |
+| `click` | `<textzone>` | value comparison | `temporary` (188), `scroll` (74), and VDJScript actions like `gain 50%` | Needs test: which values are keywords and which fall through as actions |
+| `childtooltip` | `<panel>` | boolean | `true` (14) only | Needs test: whether children inherit the panel's tooltip |
+| `direction2` | `<slider>` | string | `up` (9) only | Needs test: the second axis of a 2D slider — pairs with `direction` |
+| `action2` | `<slider>` | presence **and** string | `effect_select 1`, `cue_name 5`, … (9 uses as a literal) | Needs test: what distinguishes it from `action` |
+| `letterboxing` | `<video>` | string | `crop` (5) only | Needs test: other accepted values |
+
+`action2` is the one member of the `action1`/`action2`/`action3` family the
+reader actually reads. The other two appear only as **template parameters** —
+`<panel class="rm_hc" action1="hot_cue 1">` supplies a value the skin loader
+substitutes for `[ACTION1]` before any reader sees the XML, so `action1` and
+`action3` are author-invented names, not vocabulary. Their absence from the
+binary is predicted by that, and is not evidence that anything is dead.
+
+---
+
 ## Element Details
 
 ### `<deck>`
