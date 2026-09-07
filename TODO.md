@@ -230,6 +230,90 @@ recovers it, with a focused regression. Follow `CSkinEngine::createAction` or an
 helper only when the investigation supplies a concrete question. No upfront coverage schema,
 general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
+### R5. Repair `next-incomplete-verb`, which fails the way the queue selector did
+
+Status: Ready
+
+Note: Added 2026-09-07 from the review's metric finding ("the store's incomplete selector
+follows an assigned `needs_test` flag, not every missing contract"). The finding has since
+turned from a limitation into a defect: `just verb-stats` reports `active_incomplete` as a
+**negative** number, and `just next-incomplete-verb` reports one active item while task 10
+has open contracts on most of the store. Same failure shape R1 repaired for the task queue:
+a selector that goes quiet is read as completion.
+
+Cause, measured on the store as of 2026-09-07: `active_incomplete` is
+`needs_test - blocked - tested_and_needs`, but eleven records are `blocked` without being
+`needs_test` (the Rane, NS7 and motorwheel names), so the subtraction crosses zero. The
+selector then draws only from the audit's `needs_test` set, which is nearly exhausted, and
+never from records with no return-type or argument-form evidence — the very records task 10
+exists to close.
+
+Do, in [tools/verbdb.py](tools/verbdb.py) and nothing else:
+
+1. Fix the arithmetic: count a record active only if it is `needs_test` and not `blocked`
+   and not already `Pass`. The figure can never be negative.
+2. Let the selector fall through: once the `needs_test` set is empty, select the next record
+   with no Tier-1 contract evidence (no return-type row in `tests/verb-return-types.json`, no
+   argument-form row in `tests/verb-arg-forms.json`), skipping `HARDWARE_BLOCKED`. Report which
+   pool the pick came from so a reader can tell "audit gap" from "contract gap".
+3. A selftest fixture in the style of [tests/todo-status/](tests/todo-status/), run by
+   `verbdb.py check`: a store with a blocked-not-needs-test record must not go negative, and
+   an exhausted `needs_test` pool must yield a contract-gap pick rather than nothing.
+
+Acceptance: `just verb-stats` prints a non-negative `active_incomplete` with the pool split
+shown, and `just next-incomplete-verb` returns a task-10 worklist item after the audit pool
+is exhausted. No prose, no schema change; this is the worklist source for 10/10b and belongs
+before the next 10b sweep.
+
+### R6. Make `just xml-stats` name its own blind spot
+
+Status: Ready
+
+Note: Added 2026-09-07. The review named the limitation ("XML inventory documented means an
+element mention, not a full attribute/behavior contract"); R2 then proved it — `clickthrough`
+is read by every skin object, was in no shipped skin and no doc, and `undocumented: 0` never
+moved. It still reads `undocumented: 0` across all elements, and the next agent will read
+that as completeness. The fix is a data-command change, not a warning paragraph.
+
+Do:
+
+1. In [tools/extract_xml_inventory.py](tools/extract_xml_inventory.py), have the stats output
+   carry a second field alongside `undocumented`: the reader-vocabulary names no shipped file
+   writes, joined from `tests/skin-reader-vocabulary.json` (the same list
+   `just skin-candidates` prints). Build-anchored like that artifact's own `--check`: on a
+   `CFBundleVersion` change the field says the vocabulary is stale rather than listing it.
+2. One sentence in the extractor docstring and in the inventory entry of
+   [docs/README.md](docs/README.md): the count measures mentions of elements shipped files
+   happen to use; attributes and unused features are out of scope, see `extract_skin_readers.py`.
+
+Acceptance: `just xml-stats` shows the candidates beside `undocumented`, and neither doc line
+carries a number. Cheap-model delegable; can ride with R5.
+
+### R7. Carry the skin-reader candidates R2 left untested to live tests
+
+Status: Ready
+
+Note: Added 2026-09-07. This is the review's "systematic Skin SDK discovery" gap, sized to what
+R2 already extracted rather than to a new sweep. `just skin-candidates` lists the reader
+vocabulary that no shipped skin and no doc names — `applyfx`, `setdeck`, `song_pos`,
+`foldersearch`, `r`, and the `forceshow` value `8pads` on build 18.0.9598 — and R2's note adds
+seven element names the dispatch switch knows only by existence (`multibutton`,
+`resizepanel`, `keyboardmap`, `rack`, `onexit`, `os`, `darkmode`). Needs `just vdj-up`.
+
+Method is the `clickthrough` series in [tests/Skins/clickthrough-probe/](tests/Skins/clickthrough-probe/)
+and H1: one generated deck skin per candidate, identical apart from the attribute or element
+under test, each variant writing its own global so the answer is read over HTTP rather than
+judged from a screenshot; a nonsense-attribute and nonsense-value control per candidate; the
+reader window (`just skin-reader <name>`) read first to size the value set, as H1 did with
+`getBoolParam`. A candidate the window compares against a fixed set gets that set; one that
+takes free text gets the argument shapes attested tails show for the nearest verb.
+
+Deliver per candidate one of: confirmed behavior recorded in
+[docs/Skin SDK.md](docs/Skin%20SDK.md) with the fixture path; existence-only (parsed, no
+observable effect in the fixture) recorded as such; or not reached, with the reason. A
+negative needs the R2 boundary — which reader, which values tried, which branch was not
+exercised. Do not extend to the waveform questions in 10a; they share no fixture with this.
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 Translated from the assessment in
