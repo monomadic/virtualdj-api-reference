@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 11,
     "Partial": 34,
-    "Pass": 83,
-    "Untested": 910
+    "Pass": 85,
+    "Untested": 908
    },
    "documented": 771,
-   "tested_pass": 83,
+   "tested_pass": 85,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -12743,13 +12743,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07, sampler_slots_differ fixture): the slot argument selects a sample but the volume applies to that sample's GROUP — `sampler_volume 1 0.5` moved slots 1, 2 and 3 together, which `get_sample_info <slot> 'group'` shows are all in group 'Drums', while ungrouped slot 5 stayed at 1. `sampler_volume current 0.6` did the same to the focused sample's group. `sampler_volume all 0.7` changed nothing at all, as did a nonsense slot token. In query position every accepted form (bare, 'all', 'current', '0', a loaded slot number) returns the focused sample's volume; an empty slot returns 0 and an unrecognized token returns 0. All volumes read 1 before and after."
+   ],
    "section": "Sampler",
    "description": "Set sample volume by absolute slot or sample name",
-   "example": "sampler_volume 9 75%"
+   "example": "sampler_volume 9 75%",
+   "confidence": "local_test"
   },
   "sampler_volume_master": {
    "name": "sampler_volume_master",
@@ -12771,13 +12774,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07, sampler_slots_differ fixture): the counterpart of sampler_volume — `sampler_volume_nogroup current 0.4` moved ONLY slot 1, where `sampler_volume current 0.6` moved the whole 'Drums' group (slots 1, 2, 3). `sampler_volume_nogroup all 0.3` changed nothing. Volumes restored to 1 and verified."
+   ],
    "section": "Sampler",
    "description": "Adjust one sample without also changing other samples in its group",
-   "example": "sampler_volume_nogroup 9 75%"
+   "example": "sampler_volume_nogroup 9 75%",
+   "confidence": "local_test"
   },
   "sandbox": {
    "name": "sandbox",

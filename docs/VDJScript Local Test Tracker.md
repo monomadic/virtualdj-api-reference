@@ -2210,3 +2210,52 @@ to its floor. Restore with `pitch (100 + reading)%`.
 turned it on and nothing turned it back off, and the prediction was that it is
 runtime-only and would clear on restart. Re-read 2026-09-07, after VirtualDJ had
 restarted: `no`. Recorded on the verb record; still one-way within a session.
+
+## `all`: Recognized By The Sweep, Inert Where It Was Tested
+
+The other open follow-up in 10b: the shared-lexicon pass found `all` recognized
+on 26 verbs — the whole sampler family plus `loop_load`, `loop_select`,
+`load_skin`, `load_pulse`, `effect_stems`, `effect_dock_gui`,
+`apply_audio_config` — with what it *does* unknown, and named the
+`sampler_slots_differ` fixture as the follow-up. That fixture now exists (slots
+1, 2, 3 hold different samples of group `Drums`, slot 5 is ungrouped, slot 8 is
+empty), so the question is answerable. Run 2026-09-07, build 18.0.9598.
+
+**Query position: `all` returns exactly what bare returns, on every verb tried.**
+`sampler_loaded`, `get_sample_name`, `sampler_play` and `sampler_volume` each
+answered identically for bare, `all`, `current`, `0` and the focused slot's own
+number, while an empty slot and a junk token returned `no` / `error:1` / `0`.
+
+**Which is a correction to how the sweep read it.** On these verbs an
+unrecognized tail *errors*, so "separates from the nonsense control" is
+satisfied by any token the parser accepts, whether or not it changes the
+answer. That is why `all` scored `recognized` on 26 verbs. **Where junk errors,
+separation from junk is evidence of parsing, not of meaning** — the second
+comparison, against the *bare* form, is what distinguishes a token that says
+something from one that is merely accepted. The arg-form artifact records
+`same_as_bare_everywhere`, and for this class of verb that flag is the finding.
+
+**Vocabulary of the sampler slot argument**, from the same reads: `all`,
+`current`, `0`, `on` and `off` are accepted (all answering as the focused slot);
+`auto`, `every`, `any`, `selected`, `first`, `last`, `group`, `deck`, `sampler`
+and two junk controls are not. `auto` is worth noting — `sampler_loaded <n>
+'auto'` is a documented pad-page form, and bare `sampler_loaded auto` is not
+accepted, which matches the earlier finding that the `auto` form tested
+unreliable.
+
+**Execute position, on a verb whose state is readable and restorable:** `all`
+did nothing. `sampler_volume all 0.7` and `sampler_volume_nogroup all 0.3` left
+every slot untouched, exactly as a nonsense slot token did, while `current` and
+a slot number both moved volumes in the same session. So on these two verbs
+`all` is parsed and inert. That is not a claim about the other 24 — `sampler_stop
+all` is the shape one would expect to mean "every slot", and confirming it needs
+samples actually playing, which is audible and was not run.
+
+**The by-product is worth more than the answer.** The same probes settled the
+`sampler_volume` / `sampler_volume_nogroup` pair, which no source here
+described: **`sampler_volume` is group-scoped.** `sampler_volume 1 0.5` moved
+slots 1, 2 and 3 together — `get_sample_info <slot> 'group'` reports all three
+as `Drums` — and left ungrouped slot 5 alone; `sampler_volume_nogroup current
+0.4` moved only slot 1. The slot argument selects *which sample*, and the verb
+name decides whether its group comes with it. Every volume was read before,
+restored after, and verified back at 1.

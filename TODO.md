@@ -1517,9 +1517,20 @@ state is not a single readable value.
 verb, 215 candidate-less verbs, 5,375 forms read 2x per fixture). Yield: **`all` is a reserved
 tail token on 22 verbs** — the whole sampler family plus `loop_load`, `loop_select`,
 `load_skin`, `load_pulse`, `effect_stems`, `effect_dock_gui`, `apply_audio_config` — and
-`wheel_mode` takes `browser`/`search`. What `all` *does* is still unknown: it returned the bare
-value everywhere, so the fixtures never built a state where it could differ. A
-`sampler_slots_differ` fixture (several slots loaded with different tracks) is the follow-up.
+`wheel_mode` takes `browser`/`search`. What `all` *does* was answered on 2026-09-07, in the
+`sampler_slots_differ` fixture that follow-up asked for: **`all` returns exactly the bare value in
+query position and does nothing in execute position** on the two verbs whose state is readable and
+restorable — `sampler_volume all 0.7` and `sampler_volume_nogroup all 0.3` moved nothing, where
+`current` and a slot number both did. The `recognized` verdict was an artifact of how these verbs
+fail: an unrecognized tail *errors*, so separation from a nonsense control is satisfied by any
+token the parser accepts. **Where junk errors, separation from junk is evidence of parsing, not of
+meaning** — the comparison that carries meaning there is against the *bare* form, which the
+artifact already records as `same_as_bare_everywhere`. Not a claim about the other 24 verbs:
+`sampler_stop all` is the shape that would mean "every slot", and confirming it needs samples
+actually playing, which is audible and was not run. By-product, and worth more than the answer:
+**`sampler_volume` is group-scoped** — `sampler_volume 1 0.5` moved all three `Drums` slots
+together and left the ungrouped slot alone, where `sampler_volume_nogroup` moved exactly one.
+Tracker: "`all`: Recognized By The Sweep, Inert Where It Was Tested".
 
 The pass also needed a second guard. `record_vu` matched 24 of the 25 arbitrary tokens and
 `pioneer_cue` 15 — a verb separating from nonsense on half a vocabulary that was not written for
