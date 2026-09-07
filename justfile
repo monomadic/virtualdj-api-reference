@@ -342,6 +342,7 @@ check:
     python3 tools/check_corpus_parses.py --check
     python3 tools/extract_xml_inventory.py --check
     python3 tools/extract_skin_readers.py --check
+    python3 tools/extract_skin_classes.py --check
     python3 tools/check_reference_status.py
     python3 tools/todo_queue.py check
     python3 tools/todo_queue.py selftest
@@ -431,6 +432,14 @@ plugin-songbuffer-report:
 # OnKey/mouse events — the only channel that might carry press vs release.
 plugin-keylog:
     @python3 tools/plugin_introspect.py keylog
+
+# The skin object classes and the elements that build them (Tier 2 leads).
+# Bare: a read-time summary. `--element panel` says which class builds an element,
+# `--get CSkinPanel` the whole record, `--attributes CSkinPanel` just its attribute
+# candidates. Read the artifact's own `limitations` before citing: absence
+# establishes nothing.
+skin-classes *args:
+    @python3 tools/extract_skin_classes.py "$@"
 
 # Historical skin class source provenance (Tier 2; many-to-many STABS relation).
 skin-modules *args:

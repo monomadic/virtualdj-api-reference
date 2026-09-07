@@ -3,8 +3,10 @@
 All names are Tier-2 leads, never functional confirmation.
 """
 import functools
+from collections import Counter
 import argparse
 import bisect
+import difflib
 import hashlib
 import json
 import plistlib
@@ -118,18 +120,111 @@ def inspect(app, historical):
     return cur, old, graph, linked
 
 
+def summarise(data: dict) -> dict:
+    """Computed at read time, never stored. The artifact ships `summary` empty
+    on purpose: a count written into a regenerable file goes wrong on the next
+    regeneration, usually in a commit that never opened it."""
+    classes, factory = data['classes'], data['factory']
+    dispatch = factory.get('dispatch', [])
+    mapped = {e for e, cs in factory.get('element_classes', {}).items() if cs}
+    return {
+        'build': data['source']['build'],
+        'architecture': data['source']['architecture'],
+        'evidence_tier': data['source']['evidence_tier'],
+        'classes': len(classes),
+        'classes_with_vtable': sum(1 for c in classes.values() if c['vtable']),
+        'bases': {b: n for b, n in sorted(
+            Counter(tuple(c['bases']) and c['bases'][0] if c['bases'] else None
+                    for c in classes.values()).items(),
+            key=lambda kv: -kv[1]) if b},
+        'factory_function': factory.get('function'),
+        'dispatch_entries': len(dispatch),
+        'elements_mapped': len(mapped),
+        'classes_reached_by_an_element': sum(1 for c in classes.values() if c['elements']),
+        'attribute_candidates': len({a for c in classes.values()
+                                     for a in c['attribute_candidates']}),
+        'reader_anchors': len(data.get('xml_reader_anchors', {})),
+    }
+
+
+def check(data: dict, app: Path) -> int:
+    """Structural self-consistency, plus a NON-FATAL build notice.
+
+    Regenerating needs numpy, capstone and the unstripped 18.0.9246 bundle, so a
+    build bump must not turn `just check` red for everyone — it is reported and
+    the artifact keeps saying which build it describes."""
+    problems = []
+    classes = data['classes']
+    for entry in data['factory'].get('dispatch', []):
+        for ctor in entry.get('constructors', []):
+            if ctor['class'] not in classes:
+                problems.append(f"dispatch {entry['element']} names unknown class {ctor['class']}")
+    for name, c in classes.items():
+        for e in c['elements']:
+            if e not in data['factory'].get('element_classes', {}):
+                problems.append(f"{name} claims element <{e}> the factory does not map")
+    if problems:
+        for p in problems[:10]:
+            print(f"skin classes check FAILED: {p}")
+        return 1
+    s = summarise(data)
+    print(f"skin classes check passed: {s['classes']} classes, {s['dispatch_entries']} "
+          f"dispatch entries, {s['attribute_candidates']} attribute candidates "
+          f"on build {s['build']}")
+    try:
+        installed = plistlib.loads((app / 'Contents/Info.plist').read_bytes())['CFBundleVersion']
+        if installed != s['build']:
+            print(f"  notice: artifact describes {s['build']}, installed build is "
+                  f"{installed} — regenerate with --historical-app when convenient")
+    except OSError:
+        pass
+    return 0
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     p.add_argument('--historical-app', type=Path)
-    p.add_argument('--get')
+    p.add_argument('--get', metavar='CLASS', help='one class record')
+    p.add_argument('--element', metavar='NAME', help='which class(es) build this XML element')
+    p.add_argument('--attributes', metavar='CLASS', help='just the attribute candidates')
     p.add_argument('--check', action='store_true')
     args = p.parse_args()
     if args.historical_app:
         print(json.dumps(generate(args.app, args.historical_app), indent=2))
+        return 0
+    if not ARTIFACT.exists():
+        raise SystemExit(f"missing {ARTIFACT}; regenerate with --historical-app")
+    data = json.loads(ARTIFACT.read_text())
+    if args.check:
+        return check(data, args.app)
+    if args.get:
+        rec = data['classes'].get(args.get)
+        if rec is None:
+            near = difflib.get_close_matches(args.get, sorted(data['classes']), n=5, cutoff=0.5)
+            raise SystemExit(f"no class {args.get}" +
+                             ("\ndid you mean: " + ", ".join(near) if near else ""))
+        out = rec
+    elif args.attributes:
+        rec = data['classes'].get(args.attributes)
+        if rec is None:
+            raise SystemExit(f"no class {args.attributes}")
+        out = rec['attribute_candidates']
+    elif args.element:
+        name = args.element.strip('<>')
+        out = {'element': name,
+               'classes': data['factory'].get('element_classes', {}).get(name, []),
+               'dispatch': [d for d in data['factory'].get('dispatch', [])
+                            if d['element'] == name]}
+        if not out['classes']:
+            near = difflib.get_close_matches(
+                name, sorted(data['factory'].get('element_classes', {})), n=5, cutoff=0.5)
+            out['note'] = ("no class in the factory builds this element" +
+                           (" — did you mean: " + ", ".join(near) if near else ""))
     else:
-        data = json.loads(ARTIFACT.read_text())
-        print(json.dumps(data['classes'][args.get] if args.get else data['summary'], indent=2))
+        out = summarise(data)
+    print(json.dumps(out, indent=2))
+    return 0
 
 
 # Decoder used only to regenerate; offline queries do not import capstone/numpy.
