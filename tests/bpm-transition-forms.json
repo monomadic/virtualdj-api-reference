@@ -1,0 +1,1519 @@
+{
+ "summary": {
+  "runs": 2,
+  "landmarks": {
+   "source_original": 100.0,
+   "target_original": 120.0,
+   "target_current": 132.0
+  },
+  "controls_agree": true,
+  "confirmed": [
+   "all",
+   "source_original",
+   "target_current"
+  ],
+  "forms": {
+   "(bare)": {
+    "verdict": "bare-lands-on-target_original",
+    "landing": "target_original",
+    "bpms": [
+     120.0,
+     120.0
+    ]
+   },
+   "source_original": {
+    "verdict": "recognized-lands-on-source_original",
+    "landing": "source_original",
+    "bpms": [
+     100.0,
+     100.0
+    ]
+   },
+   "target_original": {
+    "verdict": "names-the-default-landing-so-cannot-separate",
+    "landing": "target_original",
+    "bpms": [
+     120.0,
+     120.0
+    ]
+   },
+   "target_current": {
+    "verdict": "recognized-lands-on-target_current",
+    "landing": "target_current",
+    "bpms": [
+     132.0,
+     132.0
+    ]
+   },
+   "all": {
+    "verdict": "recognized-lands-on-target_current",
+    "landing": "target_current",
+    "bpms": [
+     132.0,
+     132.0
+    ]
+   },
+   "zzqqx": {
+    "verdict": "control",
+    "landing": "target_original",
+    "bpms": [
+     120.0,
+     120.0
+    ]
+   },
+   "vfnrbq": {
+    "verdict": "control",
+    "landing": "target_original",
+    "bpms": [
+     120.0,
+     120.0
+    ]
+   }
+  },
+  "restored_to": {
+   "1": {
+    "loaded": "yes",
+    "path": "/Users/nom/Library/Caches/virtualdj-api-reference/fixtures/fixture-100bpm.wav",
+    "playing": "no",
+    "pitch": "20"
+   },
+   "2": {
+    "loaded": "yes",
+    "path": "/Users/nom/Library/Caches/virtualdj-api-reference/fixtures/fixture-120bpm.wav",
+    "playing": "no",
+    "pitch": "0"
+   }
+  },
+  "pitch_after_restore": {
+   "1": "20",
+   "2": "0"
+  }
+ },
+ "method": {
+  "app_settings": {
+   "smartPlay": "yes",
+   "autoBPMMatch": "smart"
+  },
+  "state": {
+   "source_deck": 1,
+   "target_deck": 2,
+   "source_track_bpm": 100.0,
+   "target_track_bpm": 120.0,
+   "target_pitched_to": 132.0
+  },
+  "observable": "where deck 1 and deck 2 get_bpm settle after the transition, not whether a transition is running",
+  "decks_stopped": true,
+  "forms": {
+   "(bare)": "floor: the default landing point",
+   "source_original": "documented: force the source deck's original BPM",
+   "target_original": "documented: force the target deck's original BPM",
+   "target_current": "documented: force the target deck's current BPM",
+   "all": "the token the execute-position sweep found on this verb",
+   "zzqqx": "nonsense control 1",
+   "vfnrbq": "nonsense control 2"
+  }
+ },
+ "runs": [
+  {
+   "run": "run-1",
+   "order": [
+    "",
+    "source_original",
+    "target_original",
+    "target_current",
+    "all",
+    "zzqqx",
+    "vfnrbq"
+   ],
+   "forms": [
+    {
+     "form": "",
+     "script": "deck 1 auto_bpm_transition",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.96,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.97,
+       "target": 131.95
+      },
+      {
+       "t": 0.55,
+       "source": 131.05,
+       "target": 131.03
+      },
+      {
+       "t": 1.07,
+       "source": 130.12,
+       "target": 130.08
+      },
+      {
+       "t": 1.6,
+       "source": 129.19,
+       "target": 129.17
+      },
+      {
+       "t": 2.12,
+       "source": 128.3,
+       "target": 128.26
+      },
+      {
+       "t": 2.64,
+       "source": 127.39,
+       "target": 127.37
+      },
+      {
+       "t": 3.17,
+       "source": 126.52,
+       "target": 126.5
+      },
+      {
+       "t": 3.69,
+       "source": 125.65,
+       "target": 125.63
+      },
+      {
+       "t": 4.21,
+       "source": 124.8,
+       "target": 124.78
+      },
+      {
+       "t": 4.73,
+       "source": 123.95,
+       "target": 123.93
+      },
+      {
+       "t": 5.26,
+       "source": 123.12,
+       "target": 123.1
+      },
+      {
+       "t": 5.79,
+       "source": 122.28,
+       "target": 122.27
+      },
+      {
+       "t": 6.31,
+       "source": 121.47,
+       "target": 121.46
+      },
+      {
+       "t": 6.83,
+       "source": 120.68,
+       "target": 120.66
+      },
+      {
+       "t": 7.36,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.88,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.41,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.93,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "source_original",
+     "script": "deck 1 auto_bpm_transition source_original",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 100.0,
+     "target_bpm": 100.0,
+     "source_pitch": 0.0,
+     "target_pitch": -16.67,
+     "seconds": 8.96,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.97,
+       "target": 131.84
+      },
+      {
+       "t": 0.55,
+       "source": 129.01,
+       "target": 128.88
+      },
+      {
+       "t": 1.07,
+       "source": 126.17,
+       "target": 126.11
+      },
+      {
+       "t": 1.6,
+       "source": 123.4,
+       "target": 123.34
+      },
+      {
+       "t": 2.12,
+       "source": 120.8,
+       "target": 120.74
+      },
+      {
+       "t": 2.65,
+       "source": 118.31,
+       "target": 118.26
+      },
+      {
+       "t": 3.16,
+       "source": 115.92,
+       "target": 115.87
+      },
+      {
+       "t": 3.69,
+       "source": 113.63,
+       "target": 113.58
+      },
+      {
+       "t": 4.21,
+       "source": 111.47,
+       "target": 111.42
+      },
+      {
+       "t": 4.73,
+       "source": 109.34,
+       "target": 109.3
+      },
+      {
+       "t": 5.25,
+       "source": 107.3,
+       "target": 107.26
+      },
+      {
+       "t": 5.78,
+       "source": 105.29,
+       "target": 105.25
+      },
+      {
+       "t": 6.3,
+       "source": 103.39,
+       "target": 103.35
+      },
+      {
+       "t": 6.82,
+       "source": 101.6,
+       "target": 101.52
+      },
+      {
+       "t": 7.34,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 7.87,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 8.4,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 8.93,
+       "source": 100.0,
+       "target": 100.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "target_original",
+     "script": "deck 1 auto_bpm_transition target_original",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.92,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.98,
+       "target": 131.96
+      },
+      {
+       "t": 0.55,
+       "source": 131.04,
+       "target": 131.02
+      },
+      {
+       "t": 1.07,
+       "source": 130.11,
+       "target": 130.09
+      },
+      {
+       "t": 1.59,
+       "source": 129.19,
+       "target": 129.17
+      },
+      {
+       "t": 2.12,
+       "source": 128.29,
+       "target": 128.27
+      },
+      {
+       "t": 2.64,
+       "source": 127.4,
+       "target": 127.38
+      },
+      {
+       "t": 3.16,
+       "source": 126.53,
+       "target": 126.51
+      },
+      {
+       "t": 3.68,
+       "source": 125.66,
+       "target": 125.64
+      },
+      {
+       "t": 4.21,
+       "source": 124.81,
+       "target": 124.79
+      },
+      {
+       "t": 4.73,
+       "source": 123.96,
+       "target": 123.95
+      },
+      {
+       "t": 5.25,
+       "source": 123.15,
+       "target": 123.12
+      },
+      {
+       "t": 5.77,
+       "source": 122.31,
+       "target": 122.3
+      },
+      {
+       "t": 6.3,
+       "source": 121.5,
+       "target": 121.49
+      },
+      {
+       "t": 6.82,
+       "source": 120.71,
+       "target": 120.69
+      },
+      {
+       "t": 7.34,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.86,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.38,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.9,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "target_current",
+     "script": "deck 1 auto_bpm_transition target_current",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 132.0,
+     "target_bpm": 132.0,
+     "source_pitch": 32.0,
+     "target_pitch": 10.0,
+     "seconds": 4.25,
+     "series": [
+      {
+       "t": 0.02,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 0.54,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.07,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.6,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.12,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.65,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.17,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.69,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 4.22,
+       "source": 132.0,
+       "target": 132.0
+      }
+     ],
+     "transition_running_after": "yes",
+     "moved": false
+    },
+    {
+     "form": "all",
+     "script": "deck 1 auto_bpm_transition all",
+     "returned": "false",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 132.0,
+     "target_bpm": 132.0,
+     "source_pitch": 32.0,
+     "target_pitch": 10.0,
+     "seconds": 4.31,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 0.55,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.07,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.68,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.2,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.73,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.24,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.77,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 4.29,
+       "source": 132.0,
+       "target": 132.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": false
+    },
+    {
+     "form": "zzqqx",
+     "script": "deck 1 auto_bpm_transition zzqqx",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.96,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.99,
+       "target": 131.95
+      },
+      {
+       "t": 0.55,
+       "source": 131.05,
+       "target": 131.03
+      },
+      {
+       "t": 1.07,
+       "source": 130.12,
+       "target": 130.1
+      },
+      {
+       "t": 1.6,
+       "source": 129.2,
+       "target": 129.16
+      },
+      {
+       "t": 2.12,
+       "source": 128.28,
+       "target": 128.26
+      },
+      {
+       "t": 2.64,
+       "source": 127.39,
+       "target": 127.37
+      },
+      {
+       "t": 3.16,
+       "source": 126.53,
+       "target": 126.52
+      },
+      {
+       "t": 3.69,
+       "source": 125.65,
+       "target": 125.63
+      },
+      {
+       "t": 4.2,
+       "source": 124.82,
+       "target": 124.8
+      },
+      {
+       "t": 4.73,
+       "source": 123.97,
+       "target": 123.96
+      },
+      {
+       "t": 5.26,
+       "source": 123.12,
+       "target": 123.11
+      },
+      {
+       "t": 5.78,
+       "source": 122.31,
+       "target": 122.29
+      },
+      {
+       "t": 6.31,
+       "source": 121.5,
+       "target": 121.48
+      },
+      {
+       "t": 6.82,
+       "source": 120.7,
+       "target": 120.68
+      },
+      {
+       "t": 7.35,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.87,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.4,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.93,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "vfnrbq",
+     "script": "deck 1 auto_bpm_transition vfnrbq",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.95,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.98,
+       "target": 131.96
+      },
+      {
+       "t": 0.55,
+       "source": 131.04,
+       "target": 131.02
+      },
+      {
+       "t": 1.07,
+       "source": 130.11,
+       "target": 130.09
+      },
+      {
+       "t": 1.6,
+       "source": 129.19,
+       "target": 129.17
+      },
+      {
+       "t": 2.12,
+       "source": 128.29,
+       "target": 128.27
+      },
+      {
+       "t": 2.64,
+       "source": 127.4,
+       "target": 127.38
+      },
+      {
+       "t": 3.16,
+       "source": 126.53,
+       "target": 126.51
+      },
+      {
+       "t": 3.68,
+       "source": 125.66,
+       "target": 125.64
+      },
+      {
+       "t": 4.21,
+       "source": 124.81,
+       "target": 124.79
+      },
+      {
+       "t": 4.74,
+       "source": 123.96,
+       "target": 123.95
+      },
+      {
+       "t": 5.26,
+       "source": 123.13,
+       "target": 123.12
+      },
+      {
+       "t": 5.78,
+       "source": 122.31,
+       "target": 122.3
+      },
+      {
+       "t": 6.31,
+       "source": 121.49,
+       "target": 121.47
+      },
+      {
+       "t": 6.83,
+       "source": 120.69,
+       "target": 120.67
+      },
+      {
+       "t": 7.36,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.88,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.4,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.92,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    }
+   ]
+  },
+  {
+   "run": "run-2",
+   "order": [
+    "vfnrbq",
+    "zzqqx",
+    "all",
+    "target_current",
+    "target_original",
+    "source_original",
+    ""
+   ],
+   "forms": [
+    {
+     "form": "vfnrbq",
+     "script": "deck 1 auto_bpm_transition vfnrbq",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.97,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 132.0,
+       "target": 131.96
+      },
+      {
+       "t": 0.55,
+       "source": 131.04,
+       "target": 131.02
+      },
+      {
+       "t": 1.08,
+       "source": 130.11,
+       "target": 130.09
+      },
+      {
+       "t": 1.6,
+       "source": 129.19,
+       "target": 129.15
+      },
+      {
+       "t": 2.13,
+       "source": 128.27,
+       "target": 128.25
+      },
+      {
+       "t": 2.65,
+       "source": 127.38,
+       "target": 127.36
+      },
+      {
+       "t": 3.18,
+       "source": 126.51,
+       "target": 126.49
+      },
+      {
+       "t": 3.7,
+       "source": 125.64,
+       "target": 125.62
+      },
+      {
+       "t": 4.23,
+       "source": 124.79,
+       "target": 124.75
+      },
+      {
+       "t": 4.75,
+       "source": 123.95,
+       "target": 123.91
+      },
+      {
+       "t": 5.28,
+       "source": 123.1,
+       "target": 123.08
+      },
+      {
+       "t": 5.8,
+       "source": 122.28,
+       "target": 122.26
+      },
+      {
+       "t": 6.32,
+       "source": 121.47,
+       "target": 121.45
+      },
+      {
+       "t": 6.84,
+       "source": 120.67,
+       "target": 120.65
+      },
+      {
+       "t": 7.37,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.89,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.42,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.94,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "zzqqx",
+     "script": "deck 1 auto_bpm_transition zzqqx",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.96,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.98,
+       "target": 131.96
+      },
+      {
+       "t": 0.55,
+       "source": 131.04,
+       "target": 131.02
+      },
+      {
+       "t": 1.08,
+       "source": 130.11,
+       "target": 130.09
+      },
+      {
+       "t": 1.59,
+       "source": 129.2,
+       "target": 129.18
+      },
+      {
+       "t": 2.11,
+       "source": 128.32,
+       "target": 128.28
+      },
+      {
+       "t": 2.64,
+       "source": 127.41,
+       "target": 127.39
+      },
+      {
+       "t": 3.17,
+       "source": 126.53,
+       "target": 126.51
+      },
+      {
+       "t": 3.69,
+       "source": 125.66,
+       "target": 125.64
+      },
+      {
+       "t": 4.21,
+       "source": 124.81,
+       "target": 124.77
+      },
+      {
+       "t": 4.74,
+       "source": 123.95,
+       "target": 123.93
+      },
+      {
+       "t": 5.26,
+       "source": 123.12,
+       "target": 123.1
+      },
+      {
+       "t": 5.79,
+       "source": 122.3,
+       "target": 122.28
+      },
+      {
+       "t": 6.31,
+       "source": 121.49,
+       "target": 121.47
+      },
+      {
+       "t": 6.84,
+       "source": 120.69,
+       "target": 120.68
+      },
+      {
+       "t": 7.36,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.89,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.41,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.94,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "all",
+     "script": "deck 1 auto_bpm_transition all",
+     "returned": "false",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 132.0,
+     "target_bpm": 132.0,
+     "source_pitch": 32.0,
+     "target_pitch": 10.0,
+     "seconds": 4.25,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 0.55,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.07,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.6,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.13,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.65,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.17,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.69,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 4.22,
+       "source": 132.0,
+       "target": 132.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": false
+    },
+    {
+     "form": "target_current",
+     "script": "deck 1 auto_bpm_transition target_current",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 132.0,
+     "target_bpm": 132.0,
+     "source_pitch": 32.0,
+     "target_pitch": 10.0,
+     "seconds": 4.23,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 0.55,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.07,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 1.59,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.12,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 2.65,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.17,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 3.68,
+       "source": 132.0,
+       "target": 132.0
+      },
+      {
+       "t": 4.2,
+       "source": 132.0,
+       "target": 132.0
+      }
+     ],
+     "transition_running_after": "yes",
+     "moved": false
+    },
+    {
+     "form": "target_original",
+     "script": "deck 1 auto_bpm_transition target_original",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 17.37,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.97,
+       "target": 131.95
+      },
+      {
+       "t": 0.55,
+       "source": 131.05,
+       "target": 131.03
+      },
+      {
+       "t": 1.06,
+       "source": 130.13,
+       "target": 130.11
+      },
+      {
+       "t": 1.59,
+       "source": 129.21,
+       "target": 129.19
+      },
+      {
+       "t": 2.12,
+       "source": 128.31,
+       "target": 128.29
+      },
+      {
+       "t": 2.64,
+       "source": 127.4,
+       "target": 127.38
+      },
+      {
+       "t": 3.16,
+       "source": 126.54,
+       "target": 126.5
+      },
+      {
+       "t": 3.69,
+       "source": 125.68,
+       "target": 125.64
+      },
+      {
+       "t": 4.21,
+       "source": 124.8,
+       "target": 124.78
+      },
+      {
+       "t": 4.74,
+       "source": 123.96,
+       "target": 123.94
+      },
+      {
+       "t": 15.25,
+       "source": 123.13,
+       "target": 120.0
+      },
+      {
+       "t": 15.77,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 16.29,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 16.82,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 17.35,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "source_original",
+     "script": "deck 1 auto_bpm_transition source_original",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 100.0,
+     "target_bpm": 100.0,
+     "source_pitch": 0.0,
+     "target_pitch": -16.67,
+     "seconds": 8.99,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.95,
+       "target": 131.89
+      },
+      {
+       "t": 0.55,
+       "source": 128.99,
+       "target": 128.86
+      },
+      {
+       "t": 1.08,
+       "source": 126.09,
+       "target": 126.03
+      },
+      {
+       "t": 1.6,
+       "source": 123.38,
+       "target": 123.33
+      },
+      {
+       "t": 2.13,
+       "source": 120.79,
+       "target": 120.73
+      },
+      {
+       "t": 2.66,
+       "source": 118.3,
+       "target": 118.19
+      },
+      {
+       "t": 3.18,
+       "source": 115.86,
+       "target": 115.81
+      },
+      {
+       "t": 3.72,
+       "source": 113.57,
+       "target": 113.52
+      },
+      {
+       "t": 4.24,
+       "source": 111.32,
+       "target": 111.27
+      },
+      {
+       "t": 4.77,
+       "source": 109.2,
+       "target": 109.11
+      },
+      {
+       "t": 5.3,
+       "source": 107.12,
+       "target": 107.07
+      },
+      {
+       "t": 5.82,
+       "source": 105.16,
+       "target": 105.11
+      },
+      {
+       "t": 6.34,
+       "source": 103.27,
+       "target": 103.22
+      },
+      {
+       "t": 6.87,
+       "source": 101.44,
+       "target": 101.4
+      },
+      {
+       "t": 7.39,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 7.92,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 8.44,
+       "source": 100.0,
+       "target": 100.0
+      },
+      {
+       "t": 8.96,
+       "source": 100.0,
+       "target": 100.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    },
+    {
+     "form": "",
+     "script": "deck 1 auto_bpm_transition",
+     "returned": "true",
+     "established": {
+      "source_current": 132.0,
+      "transition_running_before": "no",
+      "source_original": 100.0,
+      "target_current": 132.0,
+      "target_original": 120.0
+     },
+     "settled": true,
+     "source_bpm": 120.0,
+     "target_bpm": 120.0,
+     "source_pitch": 20.0,
+     "target_pitch": 0.0,
+     "seconds": 8.97,
+     "series": [
+      {
+       "t": 0.03,
+       "source": 131.98,
+       "target": 131.96
+      },
+      {
+       "t": 0.56,
+       "source": 131.04,
+       "target": 131.0
+      },
+      {
+       "t": 1.08,
+       "source": 130.09,
+       "target": 130.07
+      },
+      {
+       "t": 1.61,
+       "source": 129.18,
+       "target": 129.16
+      },
+      {
+       "t": 2.13,
+       "source": 128.28,
+       "target": 128.26
+      },
+      {
+       "t": 2.66,
+       "source": 127.39,
+       "target": 127.35
+      },
+      {
+       "t": 3.18,
+       "source": 126.49,
+       "target": 126.47
+      },
+      {
+       "t": 3.71,
+       "source": 125.62,
+       "target": 125.61
+      },
+      {
+       "t": 4.22,
+       "source": 124.79,
+       "target": 124.77
+      },
+      {
+       "t": 4.75,
+       "source": 123.95,
+       "target": 123.93
+      },
+      {
+       "t": 5.27,
+       "source": 123.1,
+       "target": 123.08
+      },
+      {
+       "t": 5.8,
+       "source": 122.28,
+       "target": 122.26
+      },
+      {
+       "t": 6.31,
+       "source": 121.49,
+       "target": 121.47
+      },
+      {
+       "t": 6.84,
+       "source": 120.69,
+       "target": 120.66
+      },
+      {
+       "t": 7.37,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 7.89,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.41,
+       "source": 120.0,
+       "target": 120.0
+      },
+      {
+       "t": 8.94,
+       "source": 120.0,
+       "target": 120.0
+      }
+     ],
+     "transition_running_after": "no",
+     "moved": true
+    }
+   ]
+  }
+ ]
+}

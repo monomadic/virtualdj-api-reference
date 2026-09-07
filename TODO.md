@@ -1467,8 +1467,26 @@ all three as parameters forcing which BPM the transition lands on — the probe'
 a boolean saying whether a transition is *running*, which cannot see which BPM it targets. The
 appendix also documents `auto_bpm_transition_options 'stems' 'vocal'`, a two-token tail, which
 independently confirms what `verb-arg-forms.json` found structurally. **Read
-`tail-ignored-in-execute` as "not visible in this observable".** Open task: re-test those three
-with two decks at different BPMs, reading the resulting BPM over time.
+`tail-ignored-in-execute` as "not visible in this observable".** ~~Open task: re-test those three
+with two decks at different BPMs, reading the resulting BPM over time.~~
+
+**That open task is closed (2026-09-07)**, and it settled the reading above.
+[tools/probe_bpm_transition.py](tools/probe_bpm_transition.py) (`just bpm-transition`, artifact
+`tests/bpm-transition-forms.json`, gated in `just check`) builds the state no fixture has — a
+100 BPM track on deck 1 against a 120 BPM track pitched to 132 on deck 2, both stopped, so
+`source_original`/`target_original`/`target_current` are three distinct numbers — and reads
+**where the pair of decks settles** instead of whether a transition is running. Two runs, order
+reversed. `source_original` lands on 100 and `target_current` on 132, neither reachable by
+anything else, so both are confirmed; `all` lands like `target_current` but disengages, where
+`target_current` alone leaves the transition running. Bare and both nonsense controls land on
+120, which is also where `target_original` lands: it **names the default**, so this observable
+cannot separate it from an ignored tail — retested with `smart_play` off, same default — and it
+stays on the worklist with the reason recorded rather than being called refuted. Two method
+findings came out of it, both of which had corrupted a run first: the verb is a **toggle**, so a
+form that leaves a transition engaged makes the next form stop it instead of starting one (the
+prober now waits for disengagement and aborts if one will not stop), and a form that lands where
+the deck already sits is stable from the first read, so the settle loop needs a minimum window.
+Tracker: "`auto_bpm_transition`: The Observable Was Wrong, Not The Parameters".
 
 Yield: the tail-handling rule is **verb-specific**, not universal. On 9 of 10 toggles a junk
 tail suppresses the action entirely; on `auto_bpm_transition` it is ignored and the toggle
@@ -1479,8 +1497,9 @@ sweep's negatives are corroborated rather than overturned.
 
 **Two safety lessons, both worth keeping.** The first run aborted on `timecode_cd_mode`, which
 went `on` and would not come back — `off`, `0`, bare toggle and deck-scoped forms all left it
-`yes`. It is not in `settings.xml`, so it should be runtime-only and clear on restart; verify
-after the next VirtualDJ restart. It reached the probe because of a plain bug: `table.get(name)`
+`yes`. It is not in `settings.xml`, so it should be runtime-only and clear on restart; **verified
+2026-09-07 — after a restart the query reads `no`**, recorded on the verb record. Still one-way
+within a session: no form found here turns it off. It reached the probe because of a plain bug: `table.get(name)`
 against an artifact shaped `{"summary":…, "verbs":{…}}` returns `None` for every verb, so the
 **entire category deny-list was inert** — `timecode`, `browser`, `cues`, `database` were never
 excluded and only the name and audible filters were doing any work. Fixed, and the tool now

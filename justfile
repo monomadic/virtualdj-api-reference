@@ -318,6 +318,7 @@ check:
     python3 tools/fixtures.py --check
     python3 tools/probe_arg_forms.py --check
     python3 tools/probe_known_positions.py --check
+    python3 tools/probe_bpm_transition.py --check
     python3 tools/probe_arg_positions.py --check
     python3 tools/probe_execute_forms.py --check
     python3 tools/extract_action_catalog.py --check
@@ -351,6 +352,14 @@ known-positions:
     @python3 tools/probe_known_positions.py --run > tests/get-time-positions.json
     @echo "wrote tests/get-time-positions.json"
     @python3 tools/probe_known_positions.py --check
+
+# auto_bpm_transition's three documented parameters, read by WHERE the pair of
+# decks settles rather than by whether a transition is running. Writes to a live
+# VirtualDJ (decks 1 and 2, stopped, no audio) and restores both.
+bpm-transition:
+    @python3 tools/probe_bpm_transition.py --run > tests/bpm-transition-forms.json
+    @echo "wrote tests/bpm-transition-forms.json"
+    @python3 tools/probe_bpm_transition.py --check
 
 # Which ARGUMENT POSITIONS a verb reads: hold the attested shape, vary one
 # position within its own class, see whether the answer moves. Query-only.

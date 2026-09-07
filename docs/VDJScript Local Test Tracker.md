@@ -2135,3 +2135,78 @@ known before any series runs. Probe fixtures are excluded from the XML
 inventory (`EXCLUDE` in `tools/extract_xml_inventory.py`): they carry nonsense
 tags by design, and counting them corrupts the one thing that inventory
 measures.
+
+## `auto_bpm_transition`: The Observable Was Wrong, Not The Parameters
+
+The open task the 10b note left: re-test `source_original`, `target_original` and
+`target_current` with two decks at different BPMs, reading the resulting BPM over
+time. Run 2026-09-07, build 18.0.9598, both decks **stopped** (the transition
+runs on a stopped deck, so this made no sound). Prober:
+[tools/probe_bpm_transition.py](../tools/probe_bpm_transition.py), artifact
+`tests/bpm-transition-forms.json`, two runs with the form order reversed.
+
+**The state no fixture builds.** Three landmarks have to be distinct at once:
+deck 1 holds a 100 BPM track, deck 2 a 120 BPM track pitched to 132
+(`pitch 132 bpm`), so `source_original` = 100, `target_original` = 120 and
+`target_current` = 132 are three different numbers and the *landing point* says
+which the verb was told to use. `fixtures.py` generates one tempo, and one
+tempo cannot separate a source original from a target original — both would be
+120 — so the prober generates a 100 BPM counterpart beside it.
+
+| Form | Lands on | Verdict |
+| --- | --- | --- |
+| bare | 120 | the default is the target's **original** BPM |
+| `source_original` | **100** | **confirmed** — nothing else lands there |
+| `target_current` | **132** | **confirmed**, and the only form that leaves the transition engaged |
+| `all` | 132 | lands like `target_current`, but disengages |
+| `target_original` | 120 | names the default; cannot separate from an ignored tail |
+| `zzqqx`, `vfnrbq` | 120 | the floor, and they agree |
+
+**So the earlier negative was an observable failure, not a verb fact.** Both the
+arg-form sweep and the execute-position pass had one observable — the boolean
+saying whether a transition is *running* — and what these parameters change is
+where it lands. Two of the three separate cleanly the moment the observable can
+see the landing.
+
+**`target_original` is undiscriminated, not refuted, and it cannot be
+discriminated by this route at all**: it names the default, so it lands exactly
+where an ignored tail lands. The catalog's note that behavior differs when
+`smartPlay` or `autoBPMMatch` are on was the obvious lever — `smart_play`
+executed bare toggles the setting, and `setting 'smartPlay'` follows it — but
+with it off the default is still 120. Separating it needs a different
+observable, not a different state. It stays on the worklist
+(`documented_but_not_probe_confirmed`) with the reason recorded here, since the
+cross-check only takes `recognized-…` forms from the artifact.
+
+**Two method findings, both of which corrupted a run before they were fixed.**
+
+- **The verb is a toggle, so a form that leaves a transition engaged poisons the
+  next form.** `target_current` leaves it running; the next `auto_bpm_transition`
+  then *stops* that transition instead of starting one, and the deck sits still
+  — which reads exactly like a settled result. The first full run recorded
+  `target_original` as landing on 132 in one order and 120 in the other purely
+  because of what preceded it. The prober now waits for disengagement before
+  every form and aborts if one will not stop; both runs then agreed on every row.
+- **A form that lands where the deck already sits is stable from the first
+  read.** A settle loop that stops as soon as the value repeats calls that
+  settled before the transition has begun, so the loop watches for a minimum
+  window regardless.
+
+**Incidental, and worth knowing before the next two-deck probe:** with this
+machine's `autoBPMMatch` = `smart`, the two decks are BPM-linked — setting either
+deck's pitch drags the other, in both directions, with `beatlock` reporting `no`
+on both decks and no transition running. Turning `smart_play` off does not
+release it. So a two-deck probe cannot hold the source at its own original BPM
+while the target sits pitched; the prober asserts the three landmarks, which are
+properties of the tracks plus the target's pitch, and merely records the
+source's current BPM rather than requiring it.
+
+**`pitch` arithmetic, since it cost a restore.** `get_pitch` reports a percent
+*change* (0 = none) but `pitch N%` sets an absolute slider position where `100%`
+is no change, so feeding a reading straight back (`pitch 0%`) drives the slider
+to its floor. Restore with `pitch (100 + reading)%`.
+
+**`timecode_cd_mode` closed the same day.** The 2026-09-03 execute-form probe
+turned it on and nothing turned it back off, and the prediction was that it is
+runtime-only and would clear on restart. Re-read 2026-09-07, after VirtualDJ had
+restarted: `no`. Recorded on the verb record; still one-way within a session.

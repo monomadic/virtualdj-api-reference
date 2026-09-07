@@ -210,6 +210,16 @@ def extra_confirmations() -> dict[str, set[str]]:
     unconfirmed and sends the next agent to re-probe settled ground.
     """
     out: dict[str, set[str]] = {k: set(v) for k, v in LOCAL_CONFIRMED.items()}
+    transition = Path("tests/bpm-transition-forms.json")
+    if transition.exists():
+        forms = json.load(open(transition))["summary"]["forms"]
+        # `recognized-…` only: a parameter naming the DEFAULT landing lands
+        # where an ignored tail lands, so this run cannot confirm it and must
+        # not claim to. It stays on the worklist, correctly.
+        confirmed = {f for f, rec in forms.items()
+                     if rec["verdict"].startswith("recognized")}
+        if confirmed:
+            out.setdefault("auto_bpm_transition", set()).update(confirmed)
     positions = Path("tests/get-time-positions.json")
     if positions.exists():
         art = json.load(open(positions))

@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 33,
-    "Pass": 81,
-    "Untested": 913
+    "Partial": 34,
+    "Pass": 83,
+    "Untested": 910
    },
    "documented": 771,
-   "tested_pass": 81,
+   "tested_pass": 83,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -209,13 +209,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07, tools/probe_bpm_transition.py, two runs with the form order reversed, artifact tests/bpm-transition-forms.json): with a 100 BPM track on deck 1, a 120 BPM track on deck 2 pitched to 132, both decks stopped, the pair settles on a landing BPM that depends on the tail. Bare and both nonsense controls land on 120 (the target's ORIGINAL BPM) — so that is the default. 'source_original' lands on 100 and 'target_current' on 132, neither of which anything else reaches, so both are confirmed. 'target_current' is the only form that leaves the transition still engaged afterwards (query stays yes); every other form disengages. 'all' lands on 132 like 'target_current' but disengages. 'target_original' lands on 120, the same as bare and as the controls, so this observable cannot separate it from an ignored tail — it names the default; retested with smart_play off, where the default is still 120. Earlier probes reported these tokens as junk because their observable was the boolean 'is a transition running', which cannot see which BPM it targets. The verb is a TOGGLE: a second execute while one is running stops it, which is how an in-run form silently measured nothing until the prober started waiting for disengagement."
+   ],
    "section": "Sync",
    "description": "Gradually move BPM toward the other deck; an optional parameter forces which BPM it lands on",
-   "example": "auto_bpm_transition 'target_current'"
+   "example": "auto_bpm_transition 'target_current'",
+   "confidence": "local_test"
   },
   "auto_bpm_transition_options": {
    "name": "auto_bpm_transition_options",
@@ -14164,14 +14167,17 @@
     "Map",
     "Button"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07): executing it bare toggles the app setting the query reports — smart_play yes -> no, and `setting 'smartPlay'` follows it to no, so the verb and the setting name are two views of one state. The aliases auto_sync and the neighbouring match_bpm both read yes in the same state. Restored to yes after the run."
+   ],
    "section": "Configuration",
    "description": "Auto-sync on play",
    "example": "smart_play",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "smart_scratch": {
    "name": "smart_scratch",
@@ -14634,13 +14640,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598): executing it during the 2026-09-03 execute-form probe turned CD mode on and nothing turned it back off — 'off', '0', a bare toggle and deck-scoped forms all left the query at yes, which is why that run aborted. Re-read 2026-09-07 after VirtualDJ had restarted (process up 1d18h, so the restart happened after that run): the query reads 'no'. So the mode is runtime-only and a restart clears it, as predicted; it is not persisted to settings.xml. The verb acts, but no form observed here reverses it within a session — treat it as one-way until an off form is found."
+   ],
    "section": "Timecode",
    "description": "Force timecode to CD mode",
-   "example": "timecode_cd_mode on"
+   "example": "timecode_cd_mode on",
+   "confidence": "local_test"
   },
   "timecode_config": {
    "name": "timecode_config",
