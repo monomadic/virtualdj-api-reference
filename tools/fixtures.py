@@ -140,6 +140,12 @@ class Fixture:
     describes: str
     setup: list[str]
     assertions: list[Assertion]
+    # Checked ONCE before setup runs, never polled. A fixture whose teardown
+    # restores shared user state by resetting it — emptying a list rather than
+    # putting back what was there — is only safe when that state is already at
+    # the value teardown will leave it, so it says so here and refuses to
+    # establish otherwise.
+    preconditions: list[Assertion] = field(default_factory=list)
     teardown: list[str] = field(default_factory=list)
     decks: tuple[int, ...] = (1, 2)
     plays_audio: bool = False
@@ -271,6 +277,29 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
             needs_audio_file=False,
         ),
         Fixture(
+            name="automix_populated",
+            describes="the automix playlist holds the browser selection. Refuses "
+                      "to run unless the playlist is EMPTY first, because its "
+                      "teardown empties it rather than putting anything back. "
+                      "Note `playlist_add` also LOADS the first queued track onto "
+                      "an empty deck, which the deck restore undoes. It is not "
+                      "enough for `get_automix_song`, which wants automix "
+                      "actually running; `get_playlist_time` reads the list "
+                      "directly and is what this state confirms",
+            setup=["playlist_add"],
+            preconditions=[
+                Assertion("file_count 'automix'", lambda v: v == "0",
+                          "the automix playlist is empty, so clearing it restores "
+                          "exactly what was found"),
+            ],
+            assertions=[
+                Assertion("file_count 'automix'", nonzero_number,
+                          "the automix playlist holds at least one track"),
+            ],
+            teardown=["playlist_clear"],
+            needs_audio_file=False,
+        ),
+        Fixture(
             name="sideview_populated",
             describes="the sideview list holds tracks — needed by file_count and the "
                       "browser/list parameters. Assert-only",
@@ -349,6 +378,19 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
 
 def establish(channel: Channel, fixture: Fixture, verbose: bool = True) -> dict[int, dict]:
     """Run setup, then poll the assertions. Raise unless every one holds."""
+    unmet = []
+    for a in fixture.preconditions:
+        ok, value = a.check(channel)
+        if not ok:
+            unmet.append(f"{a.describes}: `{a.script}` -> {value!r}")
+    if unmet:
+        raise FixtureError(
+            f"fixture {fixture.name!r} refuses to establish — its teardown would "
+            f"not restore what it found:\n    - " + "\n    - ".join(unmet))
+    if verbose and fixture.preconditions:
+        for a in fixture.preconditions:
+            print(f"  precond {a.describes}: ok")
+
     before = {d: deck_state(channel, d) for d in fixture.decks}
     for script in fixture.setup:
         result = channel.execute(script)

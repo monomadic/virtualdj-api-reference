@@ -2337,3 +2337,31 @@ verbs are action-only: they are on a worklist that is being worked by a
 query-position prober, and no amount of fixture-building will move them. They
 belong with `auto_bpm_transition` — execute the verb, watch something else —
 and that is a different instrument, exactly as the 13b note predicted.
+
+### The automix fixture, and what it did not unblock
+
+Built the same day, since `get_automix_song` was one of the three E_FAIL
+entries and an automix-list fixture was on 13b's still-to-build list.
+`automix_populated` adds the browser selection with `playlist_add` and empties
+the list again with `playlist_clear`.
+
+**It needed a new guard, and the guard is the point.** Every other fixture
+restores what it found; this one restores by *resetting* — it empties a list.
+That is only safe when the list was already empty, so `Fixture` now takes
+`preconditions`, checked once before setup and never polled, and the fixture
+refuses to establish when they do not hold. It refused for real during this run,
+on a list left populated by hand, which is the behavior wanted.
+
+**And it did not unblock the verb it was built for.** With one track queued and
+then two — `get_playlist_time` moving `error:1` → `04:30` → `09:01`, so the
+state is demonstrably live — `get_automix_song` returned E_FAIL on every form,
+bare and both nonsense controls included, and so did `get_automix_position`.
+`automix` read `no` throughout: these want automix actually **running**, which
+plays audio, not merely a queued list. So `title` stays untested rather than
+refuted, for the same structural reason as `get_slip_time`: where the bare form
+fails, no tail can separate. What the fixture did confirm is `get_playlist_time`,
+which reads the list directly.
+
+One side effect worth knowing: `playlist_add` also **loads the first queued
+track onto an empty deck**. The fixture's own deck restore undoes it; a hand-run
+`playlist_add` will not.

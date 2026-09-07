@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 11,
-    "Partial": 39,
-    "Pass": 90,
-    "Untested": 898
+    "Partial": 40,
+    "Pass": 91,
+    "Untested": 896
    },
    "documented": 771,
-   "tested_pass": 90,
+   "tested_pass": 91,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -4310,13 +4310,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07): NOT a missing-fixture case. With the automix playlist populated (one track, then two, confirmed by get_playlist_time moving 04:30 -> 09:01) every form still returned E_FAIL — bare, the documented 'title', 'artist', and two nonsense controls alike. `automix` read no throughout, so the verb wants automix actually RUNNING, not merely a queued list; get_automix_position behaves identically. Starting automix plays audio and was not run. So 'title' is untested rather than refuted: because the bare form fails, no tail can separate."
+   ],
    "section": "Automix",
    "description": "Next automix song property",
-   "example": "get_automix_song 'title'"
+   "example": "get_automix_song 'title'",
+   "confidence": "local_test"
   },
   "get_bar": {
    "name": "get_bar",
@@ -6120,13 +6123,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-07, new automix_populated fixture): a live readout of the automix playlist, not a static value — error:1 with the list empty, 04:30 with one track queued, 09:01 with two. That progression is what confirms the fixture builds the state it claims."
+   ],
    "section": "Automix",
    "description": "Time left in automix playlist",
-   "example": "get_playlist_time"
+   "example": "get_playlist_time",
+   "confidence": "local_test"
   },
   "get_plugindeck": {
    "name": "get_plugindeck",

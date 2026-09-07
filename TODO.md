@@ -1883,8 +1883,16 @@ Cross-check: **27 / 80 / 71**, with 9 verbs now confirmed by all three sources. 
 column has moved only 90 → 80 across three fixture rounds, which is the honest measure of how
 state-specific the remainder is.
 
-Still to build: `broadcast_configured` (blocked — needs a server), a karaoke fixture, and an
-automix-list fixture. `browser_folder_deep` was deliberately *not* built: navigating the browser
+Still to build: `broadcast_configured` (blocked — needs a server) and a karaoke fixture. The
+**automix-list fixture landed 2026-09-07** as `automix_populated` (`playlist_add` in,
+`playlist_clear` out) and brought one piece of harness with it: a fixture that restores by
+*resetting* shared state rather than by putting back what it found now declares
+`preconditions`, checked once before setup, and refuses to establish when they do not hold —
+this one will not run unless the automix list is already empty. It refused for real during the
+run. It did **not** unblock the verb it was built for: with the list demonstrably live
+(`get_playlist_time` moving `error:1` → `04:30` → `09:01`), `get_automix_song` and
+`get_automix_position` returned E_FAIL on every form including bare, because they want automix
+actually *running*, which is audible. `get_playlist_time` is what the fixture confirmed. `browser_folder_deep` was deliberately *not* built: navigating the browser
 tree has no verified way back, and an assert-only fixture that reads the user's current position
 is worth more than a probe that leaves them somewhere else.
 
