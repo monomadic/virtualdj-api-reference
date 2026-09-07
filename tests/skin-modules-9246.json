@@ -1,0 +1,420 @@
+{
+ "summary": {
+  "build": "18.0.9246",
+  "architectures_in_dsymutil_dump": [
+   "arm64",
+   "x86_64"
+  ],
+  "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+  "classes": 56,
+  "modules": 45,
+  "skin_prefix_object_files": 40,
+  "classes_in_multiple_modules": 5,
+  "evidence_tier": 2
+ },
+ "method": "N_OSO object-file basename and subsequent N_FUN Itanium class name, using extract_action_modules.class_module_sets with prefix CSkin. Architecture slices are unioned; repeated definitions are deduplicated.",
+ "limits": [
+  "This is a many-to-many relation, not a partition: methods of a class can originate in multiple translation units.",
+  "Skin*.o is case-sensitive; the class map also includes matching methods from other object files, including skinEqualizer.o.",
+  "Only class-prefixed N_FUN records are attributed. Missing classes or empty modules do not establish absence of implementation.",
+  "The reused parser matches _ZN followed directly by a class-name length; const-qualified _ZNK and other mangling forms are outside its traversal.",
+  "Historical source provenance does not establish current-build vocabulary or runtime behavior. Test a controlled live skin fixture with independent visual or state readback to establish behavior."
+ ],
+ "skin_prefix_object_files": [
+  "SkinAds.o",
+  "SkinBrowser.o",
+  "SkinBrowserInfo.o",
+  "SkinBrowserToolbar.o",
+  "SkinButton.o",
+  "SkinClass.o",
+  "SkinContainer.o",
+  "SkinCover.o",
+  "SkinCoverflow.o",
+  "SkinDragDrop.o",
+  "SkinDropZone.o",
+  "SkinEdit.o",
+  "SkinEngine.o",
+  "SkinFileView.o",
+  "SkinGeometric.o",
+  "SkinGrabzone.o",
+  "SkinKeyboardMap.o",
+  "SkinList.o",
+  "SkinLogo.o",
+  "SkinMenu.o",
+  "SkinMultiButton.o",
+  "SkinObject.o",
+  "SkinPanel.o",
+  "SkinPluginZone.o",
+  "SkinRack.o",
+  "SkinResizePanel.o",
+  "SkinRhythm.o",
+  "SkinSampler.o",
+  "SkinScratch.o",
+  "SkinScratchWave.o",
+  "SkinSideView.o",
+  "SkinSlider.o",
+  "SkinSongPos.o",
+  "SkinSplit.o",
+  "SkinStack.o",
+  "SkinText.o",
+  "SkinTooltip.o",
+  "SkinTree.o",
+  "SkinVideo.o",
+  "SkinWindow.o"
+ ],
+ "skin_objects_without_cskin_methods": [
+  "SkinContainer.o"
+ ],
+ "classes_in_multiple_modules": {
+  "CSkinButton": [
+   "SkinButton.o",
+   "SkinSlider.o"
+  ],
+  "CSkinDragSource": [
+   "SkinDragDrop.o",
+   "Soundcloud.o"
+  ],
+  "CSkinKeyboardMap": [
+   "ConfigWindowController.o",
+   "SkinKeyboardMap.o",
+   "SkinObject.o"
+  ],
+  "CSkinWaveformDeck": [
+   "SkinRhythm.o",
+   "SkinScratchWave.o"
+  ],
+  "CSkinWindow": [
+   "MainWindow.o",
+   "SkinWindow.o"
+  ]
+ },
+ "classes": {
+  "CSkinAds": [
+   "SkinAds.o"
+  ],
+  "CSkinBeatTunnel": [
+   "SkinRhythm.o"
+  ],
+  "CSkinBlockWave": [
+   "SkinScratchWave.o"
+  ],
+  "CSkinBrowser": [
+   "SkinBrowser.o"
+  ],
+  "CSkinBrowserFolderSearch": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinBrowserInfo": [
+   "SkinBrowserInfo.o"
+  ],
+  "CSkinBrowserToolbarSampler": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinBrowserToolbarSearch": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinBrowserToolbarSideviewDown": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinBrowserToolbarSideviewUp": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinBrowserToolbarTree": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinButton": [
+   "SkinButton.o",
+   "SkinSlider.o"
+  ],
+  "CSkinClass": [
+   "SkinClass.o"
+  ],
+  "CSkinCover": [
+   "SkinCover.o"
+  ],
+  "CSkinCoverflow": [
+   "SkinCoverflow.o"
+  ],
+  "CSkinDragSource": [
+   "SkinDragDrop.o",
+   "Soundcloud.o"
+  ],
+  "CSkinDropDown": [
+   "SkinBrowserToolbar.o"
+  ],
+  "CSkinDropZone": [
+   "SkinDropZone.o"
+  ],
+  "CSkinEdit": [
+   "SkinEdit.o"
+  ],
+  "CSkinEngine": [
+   "SkinEngine.o"
+  ],
+  "CSkinEqualizer": [
+   "skinEqualizer.o"
+  ],
+  "CSkinFileView": [
+   "SkinFileView.o"
+  ],
+  "CSkinGeometric": [
+   "SkinGeometric.o"
+  ],
+  "CSkinGrabZone": [
+   "SkinGrabzone.o"
+  ],
+  "CSkinKeyboardMap": [
+   "ConfigWindowController.o",
+   "SkinKeyboardMap.o",
+   "SkinObject.o"
+  ],
+  "CSkinList": [
+   "SkinList.o"
+  ],
+  "CSkinLogo": [
+   "SkinLogo.o"
+  ],
+  "CSkinMenu": [
+   "SkinMenu.o"
+  ],
+  "CSkinMultiButton": [
+   "SkinMultiButton.o"
+  ],
+  "CSkinPanel": [
+   "SkinPanel.o"
+  ],
+  "CSkinPluginZone": [
+   "SkinPluginZone.o"
+  ],
+  "CSkinPluginZonePlugin": [
+   "SkinPluginZone.o"
+  ],
+  "CSkinPrelisten": [
+   "Prelisten.o"
+  ],
+  "CSkinRack": [
+   "SkinRack.o"
+  ],
+  "CSkinResizePanel": [
+   "SkinResizePanel.o"
+  ],
+  "CSkinRhythm": [
+   "SkinRhythm.o"
+  ],
+  "CSkinSampler": [
+   "SkinSampler.o"
+  ],
+  "CSkinSamplerIcon": [
+   "SkinSampler.o"
+  ],
+  "CSkinSamplerSlot": [
+   "SkinSampler.o"
+  ],
+  "CSkinScratch": [
+   "SkinScratch.o"
+  ],
+  "CSkinScratchWave": [
+   "SkinScratchWave.o"
+  ],
+  "CSkinSideView": [
+   "SkinSideView.o"
+  ],
+  "CSkinSlider": [
+   "SkinSlider.o"
+  ],
+  "CSkinSliderFader": [
+   "SkinSlider.o"
+  ],
+  "CSkinSongPos": [
+   "SkinSongPos.o"
+  ],
+  "CSkinSplit": [
+   "SkinSplit.o"
+  ],
+  "CSkinSplitHandle": [
+   "SkinSplit.o"
+  ],
+  "CSkinStack": [
+   "SkinStack.o"
+  ],
+  "CSkinText": [
+   "SkinText.o"
+  ],
+  "CSkinTextGroup": [
+   "SkinText.o"
+  ],
+  "CSkinTooltip": [
+   "SkinTooltip.o"
+  ],
+  "CSkinTree": [
+   "SkinTree.o"
+  ],
+  "CSkinVideo": [
+   "SkinVideo.o"
+  ],
+  "CSkinWaveFormCache": [
+   "SkinSongPos.o"
+  ],
+  "CSkinWaveformDeck": [
+   "SkinRhythm.o",
+   "SkinScratchWave.o"
+  ],
+  "CSkinWindow": [
+   "MainWindow.o",
+   "SkinWindow.o"
+  ]
+ },
+ "modules": {
+  "ConfigWindowController.o": [
+   "CSkinKeyboardMap"
+  ],
+  "MainWindow.o": [
+   "CSkinWindow"
+  ],
+  "Prelisten.o": [
+   "CSkinPrelisten"
+  ],
+  "SkinAds.o": [
+   "CSkinAds"
+  ],
+  "SkinBrowser.o": [
+   "CSkinBrowser"
+  ],
+  "SkinBrowserInfo.o": [
+   "CSkinBrowserInfo"
+  ],
+  "SkinBrowserToolbar.o": [
+   "CSkinBrowserFolderSearch",
+   "CSkinBrowserToolbarSampler",
+   "CSkinBrowserToolbarSearch",
+   "CSkinBrowserToolbarSideviewDown",
+   "CSkinBrowserToolbarSideviewUp",
+   "CSkinBrowserToolbarTree",
+   "CSkinDropDown"
+  ],
+  "SkinButton.o": [
+   "CSkinButton"
+  ],
+  "SkinClass.o": [
+   "CSkinClass"
+  ],
+  "SkinContainer.o": [],
+  "SkinCover.o": [
+   "CSkinCover"
+  ],
+  "SkinCoverflow.o": [
+   "CSkinCoverflow"
+  ],
+  "SkinDragDrop.o": [
+   "CSkinDragSource"
+  ],
+  "SkinDropZone.o": [
+   "CSkinDropZone"
+  ],
+  "SkinEdit.o": [
+   "CSkinEdit"
+  ],
+  "SkinEngine.o": [
+   "CSkinEngine"
+  ],
+  "SkinFileView.o": [
+   "CSkinFileView"
+  ],
+  "SkinGeometric.o": [
+   "CSkinGeometric"
+  ],
+  "SkinGrabzone.o": [
+   "CSkinGrabZone"
+  ],
+  "SkinKeyboardMap.o": [
+   "CSkinKeyboardMap"
+  ],
+  "SkinList.o": [
+   "CSkinList"
+  ],
+  "SkinLogo.o": [
+   "CSkinLogo"
+  ],
+  "SkinMenu.o": [
+   "CSkinMenu"
+  ],
+  "SkinMultiButton.o": [
+   "CSkinMultiButton"
+  ],
+  "SkinObject.o": [
+   "CSkinKeyboardMap"
+  ],
+  "SkinPanel.o": [
+   "CSkinPanel"
+  ],
+  "SkinPluginZone.o": [
+   "CSkinPluginZone",
+   "CSkinPluginZonePlugin"
+  ],
+  "SkinRack.o": [
+   "CSkinRack"
+  ],
+  "SkinResizePanel.o": [
+   "CSkinResizePanel"
+  ],
+  "SkinRhythm.o": [
+   "CSkinBeatTunnel",
+   "CSkinRhythm",
+   "CSkinWaveformDeck"
+  ],
+  "SkinSampler.o": [
+   "CSkinSampler",
+   "CSkinSamplerIcon",
+   "CSkinSamplerSlot"
+  ],
+  "SkinScratch.o": [
+   "CSkinScratch"
+  ],
+  "SkinScratchWave.o": [
+   "CSkinBlockWave",
+   "CSkinScratchWave",
+   "CSkinWaveformDeck"
+  ],
+  "SkinSideView.o": [
+   "CSkinSideView"
+  ],
+  "SkinSlider.o": [
+   "CSkinButton",
+   "CSkinSlider",
+   "CSkinSliderFader"
+  ],
+  "SkinSongPos.o": [
+   "CSkinSongPos",
+   "CSkinWaveFormCache"
+  ],
+  "SkinSplit.o": [
+   "CSkinSplit",
+   "CSkinSplitHandle"
+  ],
+  "SkinStack.o": [
+   "CSkinStack"
+  ],
+  "SkinText.o": [
+   "CSkinText",
+   "CSkinTextGroup"
+  ],
+  "SkinTooltip.o": [
+   "CSkinTooltip"
+  ],
+  "SkinTree.o": [
+   "CSkinTree"
+  ],
+  "SkinVideo.o": [
+   "CSkinVideo"
+  ],
+  "SkinWindow.o": [
+   "CSkinWindow"
+  ],
+  "Soundcloud.o": [
+   "CSkinDragSource"
+  ],
+  "skinEqualizer.o": [
+   "CSkinEqualizer"
+  ]
+ }
+}

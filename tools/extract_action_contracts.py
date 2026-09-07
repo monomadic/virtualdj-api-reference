@@ -129,8 +129,7 @@ def sections(data: bytes, base: int):
     return out
 
 
-def build() -> dict:
-    data = open(BINARY, "rb").read()
+def rtti_graph(data: bytes, prefixes=("ACTION",), _context=False):
     base = slice_offset(data)
     secs = sections(data, base)
 
@@ -161,7 +160,7 @@ def build() -> dict:
     ti_by_name, name_of_ti = {}, {}
     for i in range(0, len(dblob) - 8, 8):
         s = class_name_at(struct.unpack_from("<Q", dblob, i)[0] & MASK)
-        if s and s.startswith("ACTION"):
+        if s and s.startswith(prefixes):
             ti = dconst[2] + i - 8
             ti_by_name[s], name_of_ti[ti] = ti, s
 
@@ -206,6 +205,22 @@ def build() -> dict:
                 break
             out.append(t)
         return out
+
+    if _context:
+        return locals()
+    return {nm: {"typeinfo": ti, "vtable": find_vtable(ti),
+                 "bases": bases_of(ti), "slots": slots(find_vtable(ti)) if find_vtable(ti) else []}
+            for nm, ti in ti_by_name.items()}
+
+
+def build() -> dict:
+    data = open(BINARY, "rb").read()
+    ctx = rtti_graph(data, _context=True)
+    base, secs = ctx["base"], ctx["secs"]
+    text, dconst, dblob = ctx["text"], ctx["dconst"], ctx["dblob"]
+    dword, class_name_at = ctx["dword"], ctx["class_name_at"]
+    find_vtable, slots = ctx["find_vtable"], ctx["slots"]
+    ti_by_name, bases_of = ctx["ti_by_name"], ctx["bases_of"]
 
     # --- method-body analysis helpers (light arm64 decoding) ------------------
     text_lo, text_hi = text[2], text[2] + text[3]

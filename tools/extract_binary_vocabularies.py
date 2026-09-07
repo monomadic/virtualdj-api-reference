@@ -76,6 +76,7 @@ NOISE = {"true", "false", "yes", "no", "on", "off", "and", "or", "not", "the",
 # names the group, it does not fix its membership — a member that the binary
 # does not corroborate is reported as `seed_unconfirmed`.
 SEEDS = {
+    "skin_elements": (["multibutton", "resizepanel", "keyboardmap", "pannel"], []),
     # name: (seed words, verbs known or suspected to take the enumeration)
     "stems": (["vocal", "hihat", "instru", "kick"],
               ["stem_color", "stems_split", "effect_stems", "stem_pad", "stem_volume",
@@ -182,6 +183,14 @@ class Image:
         """string vm -> [pc of referencing ADRP]"""
         if self._xrefs is not None:
             return self._xrefs
+        self._xrefs = self.address_xrefs(self.strings)
+        return self._xrefs
+
+    def address_xrefs(self, targets):
+        """The same ADRP/ADD scan for an explicit address set (e.g. vtables)."""
+        targets = set(targets)
+        if not targets:
+            return {}
         seg, name, vaddr, size, fileoff = self.text
         raw = self.data[self.base + fileoff: self.base + fileoff + (size & ~3)]
         w = np.frombuffer(raw, dtype="<u4")
@@ -194,7 +203,7 @@ class Image:
         page = (pcs & ~0xFFF) + (imm << 12)
         rd = w & 0x1F
         out: dict[int, list[int]] = defaultdict(list)
-        lo, hi = self.cstr[2], self.cstr[2] + self.cstr[3]
+        lo, hi = min(targets), max(targets) + 1
         for skip in (1, 2):
             nxt = np.roll(w, -skip)
             is_add = (nxt & 0xFF800000) == 0x91000000
@@ -204,9 +213,8 @@ class Image:
             target = page + ((nxt >> 10) & 0xFFF).astype(np.int64)
             hit = ok & (target >= lo) & (target < hi)
             for pc, t in zip(pcs[hit].tolist(), target[hit].tolist()):
-                if t in self.strings:
+                if t in targets:
                     out[t].append(pc)
-        self._xrefs = out
         return out
 
     def regions(self, members: list[int]) -> list[dict]:

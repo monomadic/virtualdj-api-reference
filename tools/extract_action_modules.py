@@ -65,8 +65,8 @@ def stabs(binary: Path) -> str:
                                    text=True, errors="replace")
 
 
-def class_modules(dump: str) -> dict[str, str]:
-    """ACTION_ class -> object file that defined it."""
+def class_module_sets(dump: str, prefix: str = "ACTION_") -> dict[str, set[str]]:
+    """Classes -> defining object files, preserving cross-module methods."""
     current = None
     found: dict[str, set[str]] = defaultdict(set)
     for line in dump.splitlines():
@@ -86,8 +86,14 @@ def class_modules(dump: str) -> dict[str, str]:
         if len(rest) < length:
             continue
         name = rest[:length]
-        if name.startswith("ACTION_"):
+        if name.startswith(prefix):
             found[name].add(current)
+    return dict(found)
+
+
+def class_modules(dump: str, prefix: str = "ACTION_") -> dict[str, str]:
+    """Class with the requested prefix -> its unique defining object file."""
+    found = class_module_sets(dump, prefix)
     # Every class should live in exactly one module; a split would mean the
     # partition is not one, and silently taking the first would hide it.
     split = {c: sorted(m) for c, m in found.items() if len(m) > 1}

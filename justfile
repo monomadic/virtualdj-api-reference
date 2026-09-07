@@ -431,3 +431,10 @@ plugin-songbuffer-report:
 # OnKey/mouse events — the only channel that might carry press vs release.
 plugin-keylog:
     @python3 tools/plugin_introspect.py keylog
+
+# Historical skin class source provenance (Tier 2; many-to-many STABS relation).
+skin-modules *args:
+    @python3 tools/extract_skin_modules.py {{args}}
+
+extract-skin-modules app:
+    @python3 tools/extract_skin_modules.py --app "{{app}}" > tests/skin-modules-9246.json

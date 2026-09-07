@@ -111,9 +111,10 @@ def doc_mentions_attribute(attr: str, families: list[str]) -> bool:
     return False
 
 
-# XInclude injects this during processing; it is an XML standard attribute, not
-# skin vocabulary, and no VirtualDJ doc will ever explain it.
-NOT_SKIN_VOCABULARY = {"xml:base"}
+# XInclude's own: `xml:base` is injected during processing and `xmlns:xi` declares
+# the namespace. Both are XML standard attributes, not skin vocabulary, and no
+# VirtualDJ doc will ever explain them.
+NOT_SKIN_VOCABULARY = {"xml:base", "xmlns:xi"}
 
 _placeholders: set[str] | None = None
 _placeholder_scan_ok = True
