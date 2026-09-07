@@ -232,9 +232,30 @@ general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
 ### R5. Repair `next-incomplete-verb`, which fails the way the queue selector did
 
-Status: Ready
+Status: Done
 
-Note: Added 2026-09-07 from the review's metric finding ("the store's incomplete selector
+Note: 2026-09-07. Both pools now report; the selftest fixtures hold the two silent failures.
+`just verb-stats` prints `active_incomplete: 2` with `incomplete_pools: {audit: 2,
+contract_gap: 224}`, and once the audit pool empties the selector hands back a task-10
+worklist item labelled with the pool it came from.
+
+- **Arithmetic by inclusion** (`audit_pool`): a record is active if it is `needs_test`, not
+  `blocked`, and not already `Pass`. The old `needs_test - blocked - tested_and_needs`
+  subtracted a set that only partly overlaps — records are `blocked` without ever having been
+  flagged `needs_test` — so the figure crossed zero into -9.
+- **Fall-through** (`contract_gap_pool`, `select_next`): with the audit pool empty, the pick
+  comes from records with no row in `tests/verb-return-types.json` and none in
+  `tests/verb-arg-forms.json`, resolving aliases to their canonical and skipping
+  `HARDWARE_BLOCKED`. Both the picked record's pool and the pool sizes are reported; the split
+  is computed at read time and never written into the store, since the artifacts regenerate.
+- **Regression fixtures** in [tests/verbdb-selection/](tests/verbdb-selection/), run by
+  `verbdb.py check`: `blocked-not-needs-test.json` is the store shape that went negative,
+  `audit-pool-exhausted.json` must yield a contract-gap pick rather than silence, and
+  `both-pools-empty.json` keeps real completion distinguishable from a stalled selector.
+
+The diagnosis this task was written from, kept as the record of the defect:
+
+Added 2026-09-07 from the review's metric finding ("the store's incomplete selector
 follows an assigned `needs_test` flag, not every missing contract"). The finding has since
 turned from a limitation into a defect: `just verb-stats` reports `active_incomplete` as a
 **negative** number, and `just next-incomplete-verb` reports one active item while task 10

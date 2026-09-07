@@ -117,13 +117,24 @@ def counts(store: dict) -> dict:
         "tested_pass": tested,
         "needs_test": needs,
         "blocked": blocked,
-        "active_incomplete": needs - blocked - tested_and_needs(store),
+        "active_incomplete": len(audit_pool(store)),
     }
 
 
-def tested_and_needs(store: dict) -> int:
-    return sum(1 for r in store.values()
-              if r.get("needs_test") and r.get("test_status") == "Pass")
+def audit_pool(store: dict) -> list[dict]:
+    """The coverage audit's own worklist: records it flagged `needs_test` that
+    are startable here and not already closed.
+
+    Counted by inclusion, never by subtracting `blocked` from `needs_test`: the
+    two sets overlap only partially (records are blocked without ever having
+    been flagged `needs_test`), so the subtraction crossed zero and reported a
+    negative backlog.
+    """
+    return [
+        r for r in store.values()
+        if r.get("needs_test") and not r.get("blocked")
+        and r.get("test_status") != "Pass"
+    ]
 
 
 def save_store(store: dict) -> None:
@@ -447,27 +458,81 @@ def priority(rec: dict) -> tuple:
     )
 
 
+# Tier-1 contract artifacts, joined at read time like every other artifact so
+# nothing derived from them is ever written into the store.
+CONTRACT_ARTIFACTS = ("tests/verb-return-types.json", "tests/verb-arg-forms.json")
+
+
+def contract_names(paths=CONTRACT_ARTIFACTS) -> set[str]:
+    """Names carrying Tier-1 contract evidence: a return-type row, an
+    argument-form row, or both."""
+    names: set[str] = set()
+    for rel in paths:
+        try:
+            names |= set(json.load(open(ROOT / rel))["verbs"])
+        except (OSError, KeyError, json.JSONDecodeError):
+            continue
+    return names
+
+
+def contract_gap_pool(store: dict, known: set[str]) -> list[dict]:
+    """Records with no Tier-1 contract evidence at all — task 10's worklist.
+
+    An alias inherits its canonical's contract, and hardware-blocked names are
+    skipped for the same reason the audit pool skips them.
+    """
+    return [
+        r for r in store.values()
+        if r["name"] not in known
+        and (r.get("canonical") or r["name"]) not in known
+        and not r.get("blocked")
+        and r["name"] not in HARDWARE_BLOCKED
+    ]
+
+
+def select_next(store: dict, known: set[str]) -> tuple[list[dict], str]:
+    """The audit pool first; once it is empty, fall through to the contract
+    gap. Returns the sorted pool and its label, so a reader can tell an
+    'audit gap' pick from a 'contract gap' one instead of reading an empty
+    selector as completion."""
+    pool, label = audit_pool(store), "audit"
+    if not pool:
+        pool, label = contract_gap_pool(store, known), "contract-gap"
+    return sorted(pool, key=priority), label
+
+
+POOL_DESC = {
+    "audit": "coverage-audit needs_test",
+    "contract-gap": "no return-type or argument-form row (task 10)",
+}
+
+
 def cmd_next_incomplete(args):
     store = load_store()
-    candidates = [
-        r for r in store.values()
-        if r.get("needs_test") and not r.get("blocked")
-        and r.get("test_status") != "Pass"
-    ]
+    candidates, pool = select_next(store, contract_names())
     if not candidates:
-        print("no active (non-blocked) incomplete verbs; "
+        print("no active incomplete verbs in either pool; "
               "check `stats` for the blocked/hardware queue")
         return
-    candidates.sort(key=priority)
     print(json.dumps(candidates[0], indent=1, ensure_ascii=False))
+    print(f"\n# pool: {pool} ({POOL_DESC[pool]}), {len(candidates)} item(s)",
+          file=sys.stderr)
     if len(candidates) > 1:
         rest = ", ".join(r["name"] for r in candidates[1:8])
-        print(f"\n# {len(candidates)-1} more active: {rest}"
+        print(f"# next up: {rest}"
               f"{' ...' if len(candidates) > 9 else ''}", file=sys.stderr)
 
 
 def cmd_stats(args):
-    print(json.dumps(counts(load_store()), indent=1, ensure_ascii=False))
+    store = load_store()
+    out = counts(store)
+    # The pool split is a query, not stored state: the contract gap is derived
+    # from artifacts that regenerate, so it is reported and never written.
+    out["incomplete_pools"] = {
+        "audit": len(audit_pool(store)),
+        "contract_gap": len(contract_gap_pool(store, contract_names())),
+    }
+    print(json.dumps(out, indent=1, ensure_ascii=False))
 
 
 FILTERS = {"surface", "section", "tier", "status", "kind", "module"}
@@ -548,6 +613,44 @@ def cmd_search(args):
     print(f"\n{note} for [{where.strip()}]", file=sys.stderr)
 
 
+SELECTION_FIXTURES = ROOT / "tests" / "verbdb-selection"
+
+
+def selection_selftest() -> list[str]:
+    """Replay the selector over the recorded stores.
+
+    Both failures this guards against were silent: a backlog that went negative
+    and read as done, and a selector that printed nothing while most of the
+    store had no contract evidence at all.
+    """
+    expectations = json.loads((SELECTION_FIXTURES / "expected.json").read_text())
+    failures: list[str] = []
+    for fname, want in sorted(expectations.items()):
+        fixture = json.loads((SELECTION_FIXTURES / fname).read_text())
+        store, known = fixture["store"], set(fixture["contract_names"])
+        got_counts = counts(store)
+        if got_counts["active_incomplete"] < 0:
+            failures.append(f"{fname}: active_incomplete is negative "
+                            f"({got_counts['active_incomplete']})")
+        if got_counts["active_incomplete"] != want["active_incomplete"]:
+            failures.append(f"{fname}: active_incomplete "
+                            f"{got_counts['active_incomplete']}, "
+                            f"expected {want['active_incomplete']}")
+        got_pools = {"audit": len(audit_pool(store)),
+                     "contract_gap": len(contract_gap_pool(store, known))}
+        if got_pools != want["pools"]:
+            failures.append(f"{fname}: pools {got_pools}, expected {want['pools']}")
+        pool_recs, pool = select_next(store, known)
+        got_next = pool_recs[0]["name"] if pool_recs else None
+        if got_next != want["next"]:
+            failures.append(f"{fname}: selected {got_next!r}, "
+                            f"expected {want['next']!r}")
+        if pool != want["pool"]:
+            failures.append(f"{fname}: picked from pool {pool!r}, "
+                            f"expected {want['pool']!r}")
+    return failures
+
+
 def cmd_check(args):
     if not STORE.exists():
         sys.exit("store missing; run `python3 tools/verbdb.py bootstrap`")
@@ -603,6 +706,8 @@ def cmd_check(args):
             if al not in store and al not in index:
                 errors.append(f"{name}: alias '{al}' unresolved")
 
+    errors.extend(f"selection selftest: {f}" for f in selection_selftest())
+
     # staleness: store counts must match what save would write
     payload = json.loads(STORE.read_text())
     if payload["_meta"]["counts"] != counts(store):
@@ -614,9 +719,11 @@ def cmd_check(args):
             print(f"  - {e}")
         sys.exit(1)
     c = counts(store)
+    gap = len(contract_gap_pool(store, contract_names()))
     print(f"verbdb check passed: {c['total']} records, "
           f"needs_test={c['needs_test']} (blocked={c['blocked']}), "
-          f"tested_pass={c['tested_pass']}")
+          f"tested_pass={c['tested_pass']}, "
+          f"incomplete: {c['active_incomplete']} audit / {gap} contract-gap")
 
 
 COMMANDS = {
