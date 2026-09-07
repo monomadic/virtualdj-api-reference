@@ -14,6 +14,17 @@ Two things make that comparison hard, and this tool is built around both:
    recognized; a token that matches garbage is not a token at all. Two
    independent controls must agree with each other, or the reading is discarded
    as unstable rather than reported.
+
+   **Not every verb ignores a bad tail, and on the ones that do not, this test
+   is weaker than it looks.** The sampler family ERRORS on an unrecognized slot
+   token (`get_sample_name zzqqx` -> `error:1`), so separating from the controls
+   is satisfied by any token the parser merely accepts — which is how `all`
+   came to be scored `recognized` on 26 verbs while returning the bare value
+   everywhere and doing nothing at all in execute position (2026-09-07, tracker
+   "`all`: Recognized By The Sweep, Inert Where It Was Tested"). When the
+   controls ERROR rather than answer, read `same_as_bare_everywhere` as the
+   real verdict: separation from junk is then evidence of parsing, and only
+   separation from BARE is evidence of meaning.
 2. **A form can only be told from another in a state where they would
    disagree.** `loaded opposite` says nothing with both decks empty. So every
    probe runs inside each named state from tools/fixtures.py, and a candidate
