@@ -148,6 +148,7 @@ Available elements as children of `<skin>`:
 Non-visual or window-level elements placed directly under `<skin>`
 (see "Root-Level Support Elements" below for details):
 - `<oninit>` / `<onload>` - Run a VDJScript action once when the skin loads
+- `<onexit>` - Run a VDJScript action when the skin is *replaced* (undocumented; confirmed by local test — see [`<onexit>`](#onexit))
 - `<font>` - Default skin font, plus browser variants `<fonttoolbar>`, `<fontsearch>`, `<fontheader>`, `<fontgridtitle>`, `<fontplugins>`
 - `<customicons>` - Replace/override the default icon sprite
 - `<background>` - Window background fill or tile
@@ -179,7 +180,8 @@ the tracker's "Skin Reader Vocabulary" section for the method and its limits.
 | `maxwidth`, `canstretch` | layout, shipped but thinly documented |
 | `tooltip`, `tooltipaction` | tooltip text and its action |
 | `panel` (and the misspelling `pannel`, which the reader accepts as well) | panel membership |
-| `mouserect`, `mousecircle`, `mousemask`, `r` | hit-area shaping |
+| `mouserect`, `mousecircle`, `mousemask` | hit-area shaping |
+| **`r`** | **the `<mousecircle>` radius; confirmed by local test — see [`<mousecircle>` and `r`](#mousecircle-and-r)** |
 | **`clickthrough`** | **undocumented; confirmed by local test — see below** |
 | `minwidth`, `tooltips`, `localized` | in the reader, in no shipped skin and no doc: untested leads |
 
@@ -241,14 +243,90 @@ Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
 (seven generated deck skins, one attribute apart, with a calibration variant,
 both a nonsense-value and a nonsense-attribute control, and the two boolean forms).
 
+### `<mousecircle>` and `r`
+
+**Source: Local test** (2026-09-07, build 18.0.9598, deck-skin surface). `r`
+is the last candidate the shared skin-object reader compares that no shipped
+skin and no doc names; it is the radius of the `<mousecircle>` hit zone, and
+testing it also settled how `x`/`y` on that element are read.
+
+```xml
+<button action="…">
+    <pos x="300" y="180"/>
+    <size width="300" height="160"/>
+    <mousecircle r="20"/>          <!-- hit area: r=20 about the element's centre -->
+</button>
+```
+
+- **`r` sets the radius, in skin units.** `r="20"` excludes a point 55 px from
+  the centre that the default includes; `r="150"` includes a point 134 px out
+  that the default excludes. The same value written on a nonsense attribute
+  (`zzr="150"`) behaves exactly like no attribute at all, so the name carries
+  the effect.
+- **Without `r`, the circle is the element's half-height** — with a 300×160
+  element it included a point 55 px out and excluded one at 134 px. A bare
+  `<mousecircle/>` therefore already narrows the hit area from the rectangle to
+  a circle; it is not a no-op.
+- **`x`/`y` are absolute skin coordinates, not element-local.**
+  `<mousecircle x="150" y="80" r="40"/>` on an element at (300, 180) loses the
+  hit area entirely — the circle lands at (150, 80) in the skin, off the
+  element. `x="450" y="260"`, the same centre written absolutely, restores it.
+  Since a hit zone is normally wanted where the element is, prefer the bare
+  `r=""` form and let it centre itself.
+
+Fixture: [tests/Skins/reader-candidates-probe/](../tests/Skins/reader-candidates-probe/),
+series `r-*` — three probe points per variant, with both a nonsense-attribute
+control and a local-versus-absolute pair.
+
+### `<onexit>`
+
+**Source: Local test** (2026-09-07, build 18.0.9598). A root-level element the
+parser accepts, in no shipped skin and no doc: the unload counterpart of
+`<oninit>` / `<onload>`.
+
+```xml
+<onexit action="set '$mystate' 1"/>
+```
+
+Its action runs when the skin is **replaced**, not when it loads: the global it
+writes was still `0` while the skin was up and `1` after the next `load_skin`.
+The same element spelled `<zzonexit>` never fired, so the tag name is what
+matters, not the shape. Use it for state a skin needs to hand back when the
+user switches away.
+
+Fixture: [tests/Skins/reader-candidates-probe/](../tests/Skins/reader-candidates-probe/),
+series `ev-*` — no click needed; the whole test is two `load_skin` calls and a
+`get_var`.
+
 ### Elements the parser knows that this doc does not describe
 
 From the same extraction, the element-name switch
 (`just skin-reader element_dispatch`) accepts these tags, none of which appears
 in any skin in this repo: `multibutton`, `resizepanel`, `keyboardmap`, `rack`,
-`onexit`, `os`, `darkmode`, and `pannel` as a spelling of `panel`. Existence
-only — the switch knowing a tag says nothing about what it builds. Treat them
-as leads, not as API.
+`onexit`, `os`, `darkmode`, and `pannel` as a spelling of `panel`. All eight
+were taken to a live test on 2026-09-07 (build 18.0.9598, deck-skin surface),
+each one standing alone with its own `pos`/`size` over a button, then wrapping
+that button, then hung off the skin root — against a known element, a known
+container, and a nonsense tag as controls:
+
+| Tag | Result |
+| --- | --- |
+| `onexit` | **confirmed**: runs its action when the skin is replaced — see [`<onexit>`](#onexit) |
+| `multibutton` | **builds an object**: it absorbs a click while drawing nothing, so it has a hit area and no default rendering. It does not build child elements |
+| `pannel` | **builds a container**: a button inside one is built and clickable, exactly as inside `<group>` |
+| `resizepanel`, `rack`, `keyboardmap`, `os`, `darkmode` | indistinguishable from a nonsense tag in this surface: no hit area of their own, and a button inside them is not built |
+| `song_pos` | same, and unlike `<songpos>`, which does take the click — so this is very likely the `song_pos` *verb* name referenced as that element's default action, not an element spelling |
+| `foldersearch` | same, tested a second time beside `<folderlist>` (which does take the click) so the calibration comes from its own browser family |
+
+A negative here says the tag builds nothing *in a deck-skin panel or at the
+skin root on this build* — not that the name is unreal, since the switch
+demonstrably holds it and a tag can need a context this fixture never built
+(a browser skin proper, a `<split>`, a video skin, a layout request from a
+mapper). The controls are what make the negatives readable: a dropped tag takes
+its subtree with it, so "the child was not built" is exactly what an unknown
+tag looks like.
+
+Fixture and full tables: [tests/Skins/reader-candidates-probe/](../tests/Skins/reader-candidates-probe/).
 
 ---
 
@@ -293,6 +371,20 @@ Container for grouping elements that can be shown/hidden together. Panels are ve
 A `<panel>` also reads everything in [Attributes Every Skin Object Reads](#attributes-every-skin-object-reads), including the undocumented `clickthrough="pass"`.
 
 **`forceshow=""` — the layout-variant vocabulary.** Undocumented, but used by Atomix's own shipped skins: it pins a panel to one of the app's layout variants rather than to a query. The panel builder on build 18.0.9598 compares the argument against exactly six values — `1fx`, `3fx`, `6fx`, `8pads`, `16pads`, `timecode` (`just skin-reader panel_builder`). The Built-In Desktop skins use five of them; `8pads` is the one the reader knows and no shipped skin writes. Existence and vocabulary only — no behavior was tested.
+
+**Behavior: not reached** (local test, 2026-09-07, build 18.0.9598). A lone
+panel is shown whatever it forces, including a nonsense value; two panels in
+one `group=`, written as the shipped skins write them, kept showing the same
+member under `forceshow="3fx"` / `"6fx"` in both states of `skin3FxLayout` and
+`skin6FxLayout` (the only `skin*Layout` settings in the binary), with the skin
+reloaded after each change and once more after `effect_3slots_layout`. So the
+value is compared by something this fixture never triggered. `8pads` /
+`16pads` / `timecode` cannot be keyed to a setting of that shape at all;
+`pad_has_16pads` ("returns true when a controller is connected with a 4x4 pad
+layout") is the nearest candidate the action catalog offers, which would make
+the pads values controller-conditional. Fixture:
+[tests/Skins/reader-candidates-probe/](../tests/Skins/reader-candidates-probe/),
+series `fs-*` and `fsg-*`.
 
 Source: `Built-in skin` (Desktop `Pro.xml`, `Vertical.xml`) for the five used values, binary reader vocabulary for `8pads`
 
@@ -955,7 +1047,9 @@ while a drag is hovering.
   transparent fill with a deck-colored border
 - `<mousemask x="" y=""/>` - Optional B&W graphic mask for hit detection (`Official`; not used by any built-in skin)
 - `<mouserect x="" y="" width="" height=""/>` - Optional rectangular hit zone (`Official`; not used by any built-in skin)
-- `<mousecircle x="" y="" r=""/>` - Optional circular hit zone (`Official`; not used by any built-in skin)
+- `<mousecircle x="" y="" r=""/>` - Optional circular hit zone (`Official`; not used by any built-in skin).
+  `r` is the radius in skin units and `x`/`y` are *absolute* skin coordinates,
+  both confirmed by local test — see [`<mousecircle>` and `r`](#mousecircle-and-r)
 
 **Example (`examples/Skins/Built-In/Desktop/Vertical.xml`):**
 ```xml

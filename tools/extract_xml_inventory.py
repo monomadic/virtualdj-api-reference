@@ -79,7 +79,13 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
 # a candidate attribute under test, and its nonsense controls. Folding these
 # into the inventory would make the corpus baseline agree with whatever is being
 # probed against it, which is precisely what `extract_skin_readers.py` diffs.
-EXCLUDE = ("tests/Skins/clickthrough-probe/",)
+# Probe fixtures are deliberately synthetic — they carry nonsense tags and
+# attributes as controls — so counting them would corrupt the one thing this
+# inventory measures: what the shipped corpus actually writes.
+EXCLUDE = (
+    "tests/Skins/clickthrough-probe/",
+    "tests/Skins/reader-candidates-probe/",
+)
 
 NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_.:-]*")
 

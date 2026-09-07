@@ -331,9 +331,42 @@ carries a number. Cheap-model delegable; can ride with R5.
 
 ### R7. Carry the skin-reader candidates R2 left untested to live tests
 
-Status: Ready
+Status: Done
 
-Note: Added 2026-09-07. This is the review's "systematic Skin SDK discovery" gap, sized to what
+Note: 2026-09-07. Ran on build 18.0.9598 against a live VirtualDJ, deck-skin surface.
+Fixture: [tests/Skins/reader-candidates-probe/](tests/Skins/reader-candidates-probe/) —
+`generate.py` renders every variant from one template, `run.py` loads each one, resets the
+globals, clicks a named point with a CGEvent helper it compiles itself, and reads the globals
+back. Six series, each run forward and reversed with identical rows both times. Full tables in
+the fixture README; the run narrative and its method notes are in the tracker's
+"Skin Reader Candidates Taken Live 2026-09-07" section; the confirmed behavior is in
+[docs/Skin SDK.md](docs/Skin%20SDK.md).
+
+Per candidate, as the task asked:
+
+| Candidate | Outcome |
+| --- | --- |
+| `r` | **Confirmed**: the `<mousecircle>` radius in skin units, with a nonsense-attribute control separating it; the default without it is the element's half-height, and `x`/`y` turned out to be absolute skin coordinates, not element-local |
+| `onexit` | **Confirmed**: `<onexit action="…">` runs when the skin is *replaced*; nonsense-tag control never fired |
+| `multibutton` | **Existence + behavior**: builds an object that absorbs a click while drawing nothing, and does not build child elements |
+| `pannel` | **Confirmed as a container**: a button inside one is built and clickable, as inside `<group>` |
+| `song_pos` | **Negative**: behaves like the nonsense control where `<songpos>` takes the click — very likely the verb name referenced as that element's default action, not an element spelling |
+| `foldersearch` | **Negative**, calibrated against `<folderlist>` in the same placement, which does take the click |
+| `resizepanel`, `rack`, `keyboardmap`, `os`, `darkmode` | **Negative** in a deck-skin panel and at the skin root: no hit area, no children built |
+| `8pads` (and the whole `forceshow` vocabulary) | **Not reached**: a lone panel shows whatever it forces, and a two-panel `group=` kept showing the same member under both `skin3FxLayout`/`skin6FxLayout` states and through `effect_3slots_layout`. Boundary in the tracker |
+| `applyfx`, `setdeck` | **Not reached**: no attribute or element to attach them to, and click routing cannot discriminate them. Needs the H4-style read of the panel builder |
+
+Knock-on changes the run forced, all small: probe fixtures are excluded from the XML
+inventory (they carry nonsense tags by design); `extract_skin_readers.py` now also counts a
+backtick-quoted token as documented, since its `{2,}` pattern could never see a one-letter
+name like `r`, which would have stayed a "candidate" forever after being confirmed. Writing
+`r`, `song_pos` and `foldersearch` into the SDK doc shrank `summary.candidates` to the
+`forceshow` values plus `applyfx`/`setdeck` — the intended reading of that field. `setting`
+and `effect_3slots_layout` picked up local-test records along the way.
+
+The task as written:
+
+Added 2026-09-07. This is the review's "systematic Skin SDK discovery" gap, sized to what
 R2 already extracted rather than to a new sweep. `just skin-candidates` lists the reader
 vocabulary that no shipped skin and no doc names — `applyfx`, `setdeck`, `song_pos`,
 `foldersearch`, `r`, and the `forceshow` value `8pads` on build 18.0.9598 — and R2's note adds

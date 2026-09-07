@@ -118,7 +118,13 @@ def sources() -> tuple[dict[str, set[str]], set[str]]:
     documented: set[str] = set()
     if SDK.exists():
         import re
-        documented = set(re.findall(r"[a-z][a-z0-9_]{2,}", SDK.read_text(encoding="utf-8").lower()))
+        text = SDK.read_text(encoding="utf-8").lower()
+        documented = set(re.findall(r"[a-z][a-z0-9_]{2,}", text))
+        # Short names are invisible to that pattern, so a one- or two-letter
+        # attribute stays a "candidate" however thoroughly it is written up.
+        # A backtick-quoted token is the doc naming something deliberately, so
+        # take those at any length — `r` is why.
+        documented |= set(re.findall(r"`([a-z][a-z0-9_]*)`", text))
     return elements, documented
 
 

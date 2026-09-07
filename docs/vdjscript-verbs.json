@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 11,
     "Partial": 33,
-    "Pass": 79,
-    "Untested": 915
+    "Pass": 81,
+    "Untested": 913
    },
    "documented": 771,
-   "tested_pass": 79,
+   "tested_pass": 81,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -2341,13 +2341,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07): executing it flipped the app setting skin3FxLayout from yes to no, and executing it again restored yes — so it toggles that setting rather than taking an argument. skin3FxLayout and skin6FxLayout are the only skin*Layout settings in the binary; skin6FxLayout was unaffected."
+   ],
    "section": "Effects",
    "description": "Toggle 1-slot/3-slot FX layout",
-   "example": "effect_3slots_layout"
+   "example": "effect_3slots_layout",
+   "confidence": "local_test"
   },
   "effect_activate": {
    "name": "effect_activate",
@@ -13484,14 +13487,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-07): in QUERY position `setting '<name>'` returns yes/no for a real setting and error:-2147024809 for an unknown name, which is a usable existence discriminator for setting names. In EXECUTE position on skin6FxLayout, from a known start value: `setting 'name' 1` sets true and is idempotent (not a toggle), `setting 'name' 0` sets false, a bare `setting 'name'` TOGGLES, and a quoted value (`setting 'name' 'yes'`) returns true but leaves the value unchanged — so the value argument must be unquoted. An unknown setting name returns false in execute position while every accepted form returns true. Value restored to its original after the run."
+   ],
    "section": "Configuration",
    "description": "Read/write setting",
    "example": "setting \"jogSensitivityScratch\" 80%",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test"
   },
   "setting_if_unchanged": {
    "name": "setting_if_unchanged",

@@ -2070,3 +2070,68 @@ volume) before it is a verb question.
 in one run; running it after a separate `--establish X` restores the state the
 second establish saw, which left deck 1 holding the fixture track. Use
 `--establish X --hold N --teardown` in one process and query during the hold.
+
+## Skin Reader Candidates Taken Live 2026-09-07
+
+The clickthrough series carried the first name out of the binary skin-reader
+extraction to a live test; this run carried the rest — the `just skin-candidates`
+list and the eight element names `element_dispatch` accepts that appear in no
+skin and no doc. Build 18.0.9598, deck-skin surface, fixture
+[tests/Skins/reader-candidates-probe/](../tests/Skins/reader-candidates-probe/),
+every series run forward and reversed with identical rows both times. The
+per-candidate outcomes and their tables live in the fixture README and in
+[Skin SDK.md](Skin%20SDK.md); what belongs here is the run.
+
+**The discriminator needed a second form before it could read anything.**
+Standing a candidate tag alone over a button separates a click-taking element
+from a dropped one, but not from a *container*: an empty `<pannel>` — a tag the
+switch is known to accept — lets the click through exactly as an unknown tag
+does. Wrapping the button in the candidate instead fixed it, and the nonsense
+control answered the question that made the series readable: **a dropped tag
+takes its subtree with it**, so an unbuilt child is what an unknown tag looks
+like. Both forms were needed: `multibutton` takes a click standing alone and
+does *not* build a child, so either form alone would have mislabelled it.
+
+**A calibration that fails voids its series, and says so.** The `root-*` series
+hangs each candidate off `<skin>` rather than inside the `<panel>`, in case a
+`<rack>` only constructs at the root. Its calibration row — a known `<group>`
+holding the same button — did not deliver the click either, so no row in that
+series is interpretable. It is kept, and reported as void, because the
+calibration is itself the finding: nothing outside the `<panel>` built a
+clickable object here.
+
+**`forceshow` is the negative with the most work behind it.** A lone panel
+shows whatever it forces, nonsense included, so the first series could not
+discriminate at all. The second built the shape shipped skins actually use —
+two `@`-named panels in one `group=` — and flipped the app's own layout
+settings under it: `skin3FxLayout` and `skin6FxLayout` are the only
+`skin*Layout` strings in the binary, and both states were tried, each with the
+skin reloaded after the change, and once more through `effect_3slots_layout`,
+the verb that flips one of them. The visible panel never moved. The branch that
+reads the vocabulary was never reached; `8pads`/`16pads`/`timecode` have no
+setting of that shape to be keyed to, and `pad_has_16pads` suggests the pads
+values are controller-conditional, which this machine cannot present.
+
+**Two candidates were not reached at all.** `applyfx` and `setdeck` sit in the
+panel/menu-item construction window with no attribute or element to attach them
+to, and the probe's only observable is click routing, so no fixture here could
+discriminate them from being ignored. Sizing them needs the H4-style read of
+the panel builder — which `getParam` call each string is an argument to — not
+another skin variant.
+
+**Two live findings fell out of the setup rather than the probe.** `setting` in
+query position answers `yes`/`no` for a real setting name and
+`error:-2147024809` for an unknown one, which is an existence discriminator for
+setting names; in execute position `setting 'name' 1` sets, a bare
+`setting 'name'` toggles, and a *quoted* value is accepted-and-ignored. Both are
+recorded on the verb records, with `effect_3slots_layout` confirmed as a toggle
+of `skin3FxLayout`.
+
+**Method notes for the next run of this kind.** Loading a skin occasionally
+stalls the HTTP interface for several seconds — a timeout there is not a result,
+and the runner retries rather than recording one. The probe skins scale to the
+window, so the runner's `--calibrate` clicks the one variant whose answer is
+known before any series runs. Probe fixtures are excluded from the XML
+inventory (`EXCLUDE` in `tools/extract_xml_inventory.py`): they carry nonsense
+tags by design, and counting them corrupts the one thing that inventory
+measures.
