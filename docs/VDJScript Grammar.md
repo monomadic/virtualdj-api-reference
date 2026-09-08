@@ -375,6 +375,11 @@ Argument *matching* is a per-verb matter, not grammar — effect names are case-
 but not space-insensitive, some verbs require a signed number, some ignore computed
 values. Those live on the verb record: `just get-verb <name>`.
 
+A `+`-combined argument is one token and takes no whitespace, for the same reason
+(`Local test` 2026-09-08, `HTTP`): `effect_arm_stem 'kick+bass'` arms both stems,
+`effect_arm_stem 'kick + bass'` returns `true` and does nothing — the space ends the
+token before `+` is ever read.
+
 ## Variables hold numbers, not strings
 
 A numeric or boolean variable round-trips correctly, and quoting distinguishes the types —

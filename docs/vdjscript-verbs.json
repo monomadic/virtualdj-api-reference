@@ -12,13 +12,13 @@
     "unofficial": 42
    },
    "by_test_status": {
-    "Fail": 11,
+    "Fail": 10,
     "Partial": 40,
-    "Pass": 93,
-    "Untested": 894
+    "Pass": 100,
+    "Untested": 888
    },
    "documented": 771,
-   "tested_pass": 93,
+   "tested_pass": 100,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -1095,7 +1095,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): bare 'browser_sort' returns error:-2147024809 (E_INVALIDARG) while 'browser_sort title' succeeds — one of the few cases where the channel confirms a verb exists, since E_INVALIDARG means recognized-but-wrong-arguments."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): bare 'browser_sort' returns error:-2147024809 (E_INVALIDARG) while 'browser_sort title' succeeds — one of the few cases where the channel confirms a verb exists, since E_INVALIDARG means recognized-but-wrong-arguments.",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position only. In query position the verb is a membership oracle for the sort-field enumeration: a real field answers no, anything else yes. 36 names separate from five agreeing nonsense controls and from plausible near-misses (play_count, date, added, random, folder, user1, user2, linkedvideo, hascue): album artist author bitrate bpm bpmdiff color comment composer drive field1 field2 filename filepath filesize firstplay firstseen genre grouping key keydiff label lastplay length order playcount pos position rating remix remixer stars title track type year. Exactly one leading + or - is accepted (++, *, ~ are not) and matching is case-insensitive. The boolean's MEANING is not established — the reading consistent with junk answering yes is that an unparsed key falls back to the current sort and so trivially matches it, which predicts a real key would answer yes once the browser is sorted by it; that prediction is untested because it needs an execute that has no readback to restore."
    ],
    "section": "Browser",
    "description": "Sort browser",
@@ -2574,14 +2575,17 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel. Vocabulary is the five stem names the appendix lists in unquoted prose ('Accepted stem names are Vocal, HiHat, Bass, Instru, Kick'), not the quoted 'stems' the parameter tokenizer picked up. Query position: instru/kick/hihat/bass answered no where bare, 'vocal' and four nonsense controls answered yes — bare is the aggregate (any stem armed), which is why an unknown tail falls back to yes. Execute position toggles exactly the named stem (kick no->yes, vocal yes->no), arm restored afterwards. The documented '+' combinator holds — 'kick+bass' toggles both, case-insensitive — but takes NO surrounding space ('kick + bass' changes nothing), drops unknown members while still applying known ones ('kick+zzqqx' toggles kick), and in query position is a conjunction ('vocal+kick' no with only vocal armed, 'vocal+vocal' yes)."
+   ],
    "section": "Effects",
    "description": "Arm stems for `stems` slot effect actions",
    "example": "effect_arm_stem Vocal+Bass",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "effect_bank_load": {
    "name": "effect_bank_load",
@@ -3323,13 +3327,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel. With a deck-1 effect on: bare yes, 'deck' yes, 'master' no, both nonsense controls yes. With a MASTER effect on instead (deck master effect_active 1 on): bare no, 'deck' no, 'master' yes, controls no. So 'master' is confirmed and the bare form is the DECK scope — which refutes the appendix's 'Active when there are any effects activated', and means 'deck' can never separate from bare in any state."
+   ],
    "section": "Effects",
    "description": "Query whether effects are active",
-   "example": "effects_used \"deck\""
+   "example": "effects_used \"deck\"",
+   "confidence": "local_test"
   },
   "emergency_play": {
    "name": "emergency_play",
@@ -6521,11 +6528,12 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Fail",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-06, HTTP, build 18.0.9598. Not reachable over HTTP: error:-2147467259 (E_FAIL) in EVERY form — bare, 'min', 'sec', 'msec' and two nonsense controls — with no track, and again with a track loaded, slip_mode confirmed on, the deck playing and the playhead jumped so a slip divergence should exist. Since even the bare form errors, no token can separate and the three documented units are untested rather than refuted. Likely needs a live slip divergence this channel cannot create, or is a controller-display helper."
+    "Local test 2026-09-06, HTTP, build 18.0.9598. Not reachable over HTTP: error:-2147467259 (E_FAIL) in EVERY form — bare, 'min', 'sec', 'msec' and two nonsense controls — with no track, and again with a track loaded, slip_mode confirmed on, the deck playing and the playhead jumped so a slip divergence should exist. Since even the bare form errors, no token can separate and the three documented units are untested rather than refuted. Likely needs a live slip divergence this channel cannot create, or is a controller-display helper.",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel — SUPERSEDES the 2026-09-06 Fail above, which enabled `slip_mode` instead of `slip`. Those are independent states: `deck 1 slip_mode on` leaves `slip` at no and get_slip_time still E_FAIL, while `deck 1 slip on` makes it answer. With slip engaged and the shadow playhead past a minute (position set to 60465 ms, then goto_start): bare 65387 ms, 'min' 1, 'sec' 5, 'msec' 437, both nonsense controls returned the bare value. min*60000+sec*1000+msec reproduces bare to within the ~12 ms the shadow clock drifts between two queries; three runs one second apart all agreed. The shadow clock advances in real time even with the deck STOPPED, so this verb drifts and needs repeated reads."
    ],
    "section": "Scratch & Jogwheel",
    "description": "Time that will resume when slip exits",
@@ -7522,10 +7530,13 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, execute on the fixture track. The appendix's 'cue', 'cue_play' and 'cue_stop' are OTHER BUTTONS whose press makes hot_cue set a cue, not hot_cue's own tail: all three, and both nonsense controls, set cue 1 at the playhead (snapped to the beat, 10496 ms from a 10000 ms playhead) and left the deck paused. In query position every form including a slot number raises E_INVALIDARG."
+   ],
    "section": "Cue Points",
    "description": "Set or jump to cue",
-   "example": "hot_cue 1"
+   "example": "hot_cue 1",
+   "confidence": "local_test"
   },
   "hot_cue_stutter": {
    "name": "hot_cue_stutter",
@@ -8475,13 +8486,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position, library track on deck 2. 'loaded_song rating <n>' is an equality predicate like `browsed_song`: yes at the track's own rating (0, read independently through get_loaded_song 'rating'), no at 1..5, and no for two nonsense field names at any value."
+   ],
    "section": "Browser",
    "description": "Set loaded track property",
-   "example": "loaded_song 'rating' 5"
+   "example": "loaded_song 'rating' 5",
+   "confidence": "local_test"
   },
   "loaded_song_hashtag": {
    "name": "loaded_song_hashtag",
@@ -9522,15 +9536,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Plugin channel (2026-08-15): ARGUMENT TRAP, same shape as get_license — 'external' returns off, but an unrecognized argument returns ON with S_OK. Not a safe probe for a mode name."
+    "Plugin channel (2026-08-15): ARGUMENT TRAP, same shape as get_license — 'external' returns off, but an unrecognized argument returns ON with S_OK. Not a safe probe for a mode name.",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position. 'external' answers no where bare, 'internal' and two nonsense controls answer yes, so the tail is read; 'internal' names the state this machine is in and cannot be separated without switching the audio config to an external mixer."
    ],
    "section": "Deck Management",
    "description": "Query internal vs external mixer mode",
-   "example": "mixermode 'internal'"
+   "example": "mixermode 'internal'",
+   "confidence": "local_test"
   },
   "mono_mix": {
    "name": "mono_mix",
@@ -10501,7 +10517,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test (HTTP query position, build 18.0.9598, 2026-09-07): a pipeline verb, so a chained expression is the whole state — no fixture needed. Through `get_var '$v' & param_cast <type>` with v=12.7: integer 13 and int_trunc 12 (the documented rounding-vs-truncation split, confirmed in one read), frac 0.7, '000' 013, percentage 1270%, ms 13ms, beats 12.7bt, float 12.7, text 12.7; boolean yes at 12.7 and no at 0. On a string source, 'text' 5 truncated 'Chapter & Verse' to 'Chapt' and 'text' 3 to 'Cha', so the optional character limit holds. Bare and two nonsense types raise E_INVALIDARG, as does 'artist' — that token is the doc example's argument to get_browsed_song, not a cast type. 'relative' and 'absolute' returned the input unchanged: they act on a slider parameter, which a query chain has none of, so they stay undiscriminated rather than refuted."
+    "Local test (HTTP query position, build 18.0.9598, 2026-09-07): a pipeline verb, so a chained expression is the whole state — no fixture needed. Through `get_var '$v' & param_cast <type>` with v=12.7: integer 13 and int_trunc 12 (the documented rounding-vs-truncation split, confirmed in one read), frac 0.7, '000' 013, percentage 1270%, ms 13ms, beats 12.7bt, float 12.7, text 12.7; boolean yes at 12.7 and no at 0. On a string source, 'text' 5 truncated 'Chapter & Verse' to 'Chapt' and 'text' 3 to 'Cha', so the optional character limit holds. Bare and two nonsense types raise E_INVALIDARG, as does 'artist' — that token is the doc example's argument to get_browsed_song, not a cast type. 'relative' and 'absolute' returned the input unchanged: they act on a slider parameter, which a query chain has none of, so they stay undiscriminated rather than refuted.",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel. param_cast REJECTS an unrecognized type (E_INVALIDARG) instead of ignoring it, so its vocabulary is directly enumerable by acceptance. 'absolute' and 'relative' are accepted and answer in a class of their own — '' where every cast type returns S_FALSE — matching the appendix's description that they change how the value is applied rather than casting it. Matching is exact, not prefix: 'int' and 'percent' are accepted, 'inte'/'integ'/'intx'/'perc'/'beat'/'abso' are not; the digit-format family generalises past the documented '000' to '0', '00', '0000' and '00.0'."
    ],
    "section": "Parameter Comparison & Math",
    "description": "Cast to new type",
@@ -10918,16 +10935,18 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Binary verb table (VirtualDJ 2026): shares id 720 with pitch2_slider,pitch_slider; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance."
+    "Binary verb table (VirtualDJ 2026): shares id 720 with pitch2_slider,pitch_slider; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, execute + readback on the 120 BPM fixture track. The documented two-token form is real and its second token is REQUIRED: 'pitch 130 bpm' -> get_bpm 130 / pitch 0.63 and 'pitch 100 bpm' -> 100 / 0.25, where 'pitch 130 zzqqx', 'pitch 130 wubfar' and the bare 'pitch 130' all returned false and left the deck at 120 / 0.5. pitch_zero between forms; deck restored."
    ],
    "section": "Key & Pitch",
    "description": "Set pitch",
    "example": "pitch 112%",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "pitch2": {
    "name": "pitch2",
@@ -12409,7 +12428,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-07, HTTP, build 18.0.9598, query position: sampler_loop 'current' returned yes like bare, while 'play' alone and a nonsense tail returned error:-2147024809 — 'current' is a recognized selector; 'play' is the fourth token of the documented action form and untested there. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
+    "Local test 2026-09-07, HTTP, build 18.0.9598, query position: sampler_loop 'current' returned yes like bare, while 'play' alone and a nonsense tail returned error:-2147024809 — 'current' is a recognized selector; 'play' is the fourth token of the documented action form and untested there. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch).",
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position. The verb is strict — an unrecognized tail raises E_INVALIDARG where bare and 'current' answer yes — and the appendix's 'play' is REJECTED in that position, as are 'all' and a slot number. Query-position only: the execute path parses its own tail, so this does not refute 'play' as an action argument."
    ],
    "section": "Sampler",
    "description": "Change the loop length of a sample or set it explicitly",
@@ -13938,13 +13958,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position only. Accepts exactly the same 36-name sort-field enumeration as `browser_sort`, with the same polarity (real field no, nonsense yes) and the same +/- prefix rule — probed against the identical candidate list in the same run."
+   ],
    "section": "Browser",
    "description": "Sort sideview",
-   "example": "sideview_sort \"artist\""
+   "example": "sideview_sort \"artist\"",
+   "confidence": "local_test"
   },
   "sideview_title": {
    "name": "sideview_title",
@@ -14155,10 +14178,13 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test 2026-09-08, build 18.0.9598, HTTP channel. `slip_mode` and `slip` are INDEPENDENT states, not aliases: 'deck 1 slip_mode on' leaves 'deck 1 slip' reading no and get_slip_time still E_FAIL, while 'deck 1 slip on' leaves slip_mode at no and makes get_slip_time answer. Mistaking one for the other is what produced the earlier Fail verdict on get_slip_time."
+   ],
    "section": "Scratch & Jogwheel",
    "description": "Slip mode",
-   "example": "slip_mode"
+   "example": "slip_mode",
+   "confidence": "local_test"
   },
   "smart_cue": {
    "name": "smart_cue",

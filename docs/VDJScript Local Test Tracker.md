@@ -2426,3 +2426,184 @@ tripping over them:
   click on the dialog's own X, verified by the query returning to `no`. So a
   settings-page sweep is not a pure-HTTP probe: budget a GUI click for the way
   out before opening it.
+
+## Documented Parameters, 2026-09-08: Enumerable Vocabularies And Two Doc Misreadings
+
+HTTP, build 18.0.9598. Another pass over `just action-catalog --cross-check` →
+`documented_but_not_probe_confirmed`, this time picking entries by *how they
+fail* rather than by verb family. Two or more agreeing nonsense controls beside
+every candidate. Deck 2 held a library track throughout and was never executed
+against; deck 1 was empty before and after every probe. Worklist 54 verbs / 97
+tokens → 43 / 77.
+
+### The floor tells you which method will work
+
+A first sweep asked one question of all 54 worklist verbs — bare, `zzqqx`,
+`wubfar` in query position — and the *error codes* sorted them into groups that
+each want a different instrument:
+
+| Floor | Verbs | What can be learned in query position |
+| --- | --- | --- |
+| `E_NOTIMPL` bare **and** tailed | `automix_editor_movetrack`, `browser_move`, `cue_color`, `effect_disable_all`, `effect_list_edit`, `invert_deck`, `karaoke_load`, `padshift_pressure`, `playlist_load`, `sidelist_load`, `stem_pad` | nothing — these have no query implementation at all, so their tails are an execute-position question |
+| `E_INVALIDARG` bare **and** tailed | `hot_cue`, `effect_colorfx`, `effect_list`, `loop_color`, `padshift` | nothing in query position; every form is rejected, slot numbers included |
+| `E_INVALIDARG` bare, **answers** tailed | `browser_sort`, `sideview_sort`, `browsed_file_color`, `os2l_button`, `os2l_scene`, `sync_hint`, `show_splitpanel` | the tail is required, so the comparison is value-against-value |
+| answers bare, **`E_INVALIDARG`** tailed | `sampler_loop`, `param_cast` | **the verb rejects what it does not know, so its vocabulary is enumerable by acceptance** |
+| answers everything | the rest | only a state where the forms disagree |
+
+The fourth row is the useful one and it had not been used before. Where junk
+*errors*, separation from junk proves parsing and nothing else — the `all`
+section above is the warning — but for a token whose **meaning the appendix
+already states**, parsing is exactly the missing half. That turns "confirm a
+documented parameter" into a question the channel answers directly.
+
+### `param_cast` — the vocabulary is a closed, exactly-matched set
+
+`absolute` and `relative` are accepted where `zzqqx`, `wubfar`, `seconds` and
+`hex` raise `E_INVALIDARG`, and they answer in a class of their own: `''`,
+where every cast type returns `error:1`. That split is the appendix's own
+distinction — they change how a value is applied rather than casting it.
+
+Matching is exact, not prefix: `int` and `percent` are accepted, `inte`,
+`integ`, `intx`, `integerx`, `perc`, `beat`, `fra`, `tex`, `abso` and
+`relativ` are not. The digit format generalises past the documented `000` —
+`0`, `00`, `0000` and `00.0` are all accepted.
+
+### `browser_sort` / `sideview_sort` — a membership oracle for the sort fields
+
+In query position both answer `no` for a real sort field and `yes` for anything
+else, so the enumeration can be read straight off. **36 names**, identical for
+both verbs, stable across two runs:
+
+```
+album artist author bitrate bpm bpmdiff color comment composer drive field1
+field2 filename filepath filesize firstplay firstseen genre grouping key
+keydiff label lastplay length order playcount pos position rating remix
+remixer stars title track type year
+```
+
+Five nonsense controls answer `yes`, and so do the plausible near-misses:
+`play_count`, `date`, `added`, `random`, `folder`, `user1`, `user2`,
+`linkedvideo`, `hascue`, `hasstems`, `duration`, `albumartist`, `camelot`.
+`field3`..`field11` are rejected while `field1`/`field2` are accepted, which
+matches the two custom fields the app exposes. Exactly one leading `+` or `-`
+is accepted (`++title`, `*title`, `~title` are not), and matching is
+case-insensitive (`TITLE`, `ArTiSt`).
+
+What the boolean *means* is not established. The reading consistent with junk
+answering `yes` is that an unparsed key falls back to the current sort and so
+trivially matches it — which predicts that a real key answers `yes` once the
+browser is actually sorted by it. That prediction is untested: confirming it
+needs an execute, and no verb reads the current sort back, so there would be
+nothing to restore to.
+
+### `get_slip_time` — the earlier Fail was the wrong enabler
+
+The 2026-09-06 run recorded this verb as unreachable: `E_FAIL` in every form,
+"with slip_mode confirmed on". **`slip_mode` and `slip` are independent
+states.** `deck 1 slip_mode on` leaves `deck 1 slip` reading `no` and
+`get_slip_time` still erroring; `deck 1 slip on` leaves `slip_mode` reading
+`no` and makes the verb answer. Verified both ways in one run.
+
+With slip engaged and the shadow playhead parked past a minute — position set
+to 60,465 ms, then `goto_start` so the playhead and the shadow diverge:
+
+| form | run 1 | run 2 | run 3 |
+| --- | --- | --- | --- |
+| bare | 65387 | 66548 | 67708 |
+| `min` | 1 | 1 | 1 |
+| `sec` | 5 | 6 | 7 |
+| `msec` | 437 | 598 | 758 |
+| `zzqqx` | 65449 | 66610 | 67771 |
+| `wubfar` | 65462 | 66622 | 67783 |
+
+`min`·60000 + `sec`·1000 + `msec` reproduces the bare value to within the ~12 ms
+the clock drifts between two queries, which is the check that clinches it. Both
+controls return the bare value, so the units are read and an unknown tail is
+ignored. **The shadow clock advances in real time even with the deck stopped**,
+which puts this verb in the `get_cpu` class: three runs a second apart, not one.
+
+### `effect_arm_stem` — the tokenizer read the wrong sentence
+
+The appendix says: *"Select/unselect a stem to be used with "stems" as slot for
+effect_ actions. Accepted stem names are Vocal, HiHat, Bass, Instru, Kick. They
+can be combined using "+"."* The parameter tokenizer takes quoted spans, so it
+extracted `stems` — the **slot** name — and missed the unquoted sentence that
+lists the actual vocabulary.
+
+All five stem names confirmed. In query position `instru`, `kick`, `hihat` and
+`bass` answer `no` where bare, `vocal` and four nonsense controls answer `yes`;
+bare is the aggregate, which is why an unrecognized tail lands on `yes`.
+Executing a stem's own token toggles exactly that stem — `kick` no→yes,
+`vocal` yes→no, nothing else moving — and the arm was restored to vocal-only
+and verified. `vocals`, `instrumental`, `drums`, `melody`, `rhythm`, `stems`,
+`stem`, `aux`, `mic`, `mixfx` and `all` all behave as the controls do.
+
+The `+` combinator holds and comes with three rules the doc does not give:
+
+- `kick+bass` toggles both, case-insensitively (`Kick+Bass`).
+- **No surrounding space.** `kick + bass` returns `true` and changes nothing.
+- An unknown member is dropped while the known ones still apply
+  (`kick+zzqqx` toggles kick).
+- In **query** position `+` is a conjunction: with only vocal armed,
+  `vocal+kick` → `no` and `vocal+vocal` → `yes`.
+
+### `pitch <n> bpm` — a two-token execute form whose second token is required
+
+On the 120 BPM fixture track: `pitch 130 bpm` → `get_bpm` 130, pitch 0.63;
+`pitch 100 bpm` → 100, 0.25. `pitch 130 zzqqx`, `pitch 130 wubfar` **and the
+bare `pitch 130`** all returned `false` and left the deck at 120 / 0.5. So the
+tail is not an optional modifier — without it the whole form is rejected. This
+is the fourth confirmed two-token grammar, after `get_song_event`,
+`browsed_song` and `auto_bpm_transition_options`.
+
+### `hot_cue` — the appendix is naming other buttons
+
+*"if no cue point is set, or if 'cue', 'cue_stop' or 'cue_play' is pressed, set
+one at the current position"* describes **which other button was pressed**, not
+`hot_cue`'s own tail. Measured: all three, and both nonsense controls, set cue 1
+at the playhead and left the deck paused, identically. (Incidental: the cue
+landed at 10,496 ms from a 10,000 ms playhead — `hot_cue` snaps to the beat.)
+Moved to `documented_example_placeholders`.
+
+### A third bucket: parameters that name the default
+
+Three worklist entries are real vocabulary that **no state can separate**,
+because they select what the verb does anyway. They were being re-probed each
+pass, so `cross_check` now reports them as
+`documented_but_names_the_default` rather than as unconfirmed work:
+
+- `effects_used 'deck'` — with a deck effect on, bare/`deck`/junk all `yes` and
+  `master` `no`; with a **master** effect on instead (`deck master
+  effect_active 1 on`), bare/`deck`/junk all `no` and `master` `yes`. So bare
+  *is* the deck scope — which also refutes the appendix's "Active when there are
+  any effects activated" — and `master` is the token that carries information.
+- `mixermode 'internal'` — `external` answers `no` where bare, `internal` and
+  both controls answer `yes`. Separating `internal` means switching the audio
+  config to an external mixer, which is the user's setup, not a fixture.
+- `auto_bpm_transition 'target_original'` — established in the section above.
+
+### Also settled, and why the rest is stuck
+
+- **`loaded_song 'rating' <n>`** is an equality predicate like `browsed_song`:
+  `yes` at the track's own rating (0, read independently through
+  `get_loaded_song 'rating'`), `no` at 1..5, and `no` for two nonsense field
+  names at any value.
+- **`sampler_loop 'play'` is rejected in query position** — `E_INVALIDARG`,
+  where bare and the undocumented `current` answer `yes`. Not a refutation of
+  the verb's action tail: the execute path parses its own.
+- **`browsed_file_color` echoes any tail verbatim**, junk included, so no
+  query-position comparison can ever separate `red` or `reset`. The 2026-09-06
+  record already said this; it is repeated here so the next pass does not spend
+  another round on it.
+- `slicer`, `sampler_bank`, `sampler_output`, `sampler_rec`, `linein`,
+  `motorwheel`, `broadcast`, `timecode_reset_pitch`, `video_transition`,
+  `pitch_zero`, `leftcross`, `get_limiter`, `get_level` and `get_vu_meter` all
+  answered the bare value for every documented token and both controls — the
+  states that would separate them are a pad surface, an audio input, a
+  broadcast session, timecode hardware, or a meter that is not reading zero.
+- **`get_time_hour` is the one clearly buildable state left**: it wants a track
+  longer than an hour. Total 2h05m with the playhead at 1h10m makes `elapsed` 1,
+  `remain` 0 and `total` 2, and reading it once with `display_time` on `elapsed`
+  and once on `remain` (bare and junk follow the setting) separates all three;
+  `absolute` needs the playhead where pitched and unpitched remaining time fall
+  on opposite sides of an hour boundary, e.g. 3,700 s in at +12%.

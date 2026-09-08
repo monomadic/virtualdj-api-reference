@@ -1440,6 +1440,12 @@ Notes:
 - Use `param_cast 'beats'` when a math chain produces a numeric BPM value that should be consumed by `pitch` as a target BPM rather than as a pitch-slider value.
 - This is useful for scripted tempo relationships: half/double logic, 3:4 transitions, and setting the opposite deck to a multiplier of the current deck's BPM.
 - Example 3:4-up target: `param_multiply 1.333333 get_bpm & param_cast 'beats' & deck 2 pitch`.
+- `pitch <bpm> bpm` sets pitch so the deck lands on that BPM, and the `bpm`
+  token is **required, not optional**: on a 120 BPM track `pitch 130 bpm` gives
+  `get_bpm` 130 and `pitch 100 bpm` gives 100, where the bare `pitch 130` and
+  two nonsense second tokens all return `false` and leave the deck untouched
+  (`Local test` 2026-09-08, HTTP, build 18.0.9598). A bare number out of slider
+  range is not silently clamped — it is rejected.
 
 Sources:
 
@@ -2186,9 +2192,36 @@ Preferred usage:
 - the official appendix describes `effect_arm_stem` as selecting stems for the special `stems` slot used by `effect_*` actions
 - do not confuse this `stems` aggregate slot with named stem FX slots such as `vocals`; both are slot-like effect targets, but they are selected differently
 
+Accepted stem names (`Local test` 2026-09-08, HTTP, build 18.0.9598 — all five
+separated from four agreeing nonsense controls, and executing a name toggled
+exactly that stem):
+
+| Name | |
+| --- | --- |
+| `vocal` | `instru` |
+| `kick` | `hihat` |
+| `bass` | |
+
+Matching is case-insensitive. `vocals`, `instrumental`, `drums`, `melody`,
+`rhythm`, `stem`, `stems`, `all` are **not** stem names — they behave exactly as
+a nonsense tail does. The appendix's quoted `"stems"` is the *slot* the armed
+stems feed, not a stem name.
+
+The `+` combinator, measured:
+
+- `effect_arm_stem 'kick+bass'` toggles both.
+- **No space around `+`.** `kick + bass` returns `true` and changes nothing.
+- An unknown member is dropped and the known ones still apply: `kick+zzqqx`
+  toggles kick.
+- In **query** position `+` is a conjunction — with only vocal armed,
+  `` `effect_arm_stem 'vocal+kick'` `` is `no` and `` `effect_arm_stem 'vocal+vocal'` `` is `yes`.
+- Bare `` `effect_arm_stem` `` is the aggregate "any stem armed", which is what an
+  unrecognized tail falls back to.
+
 Sources:
 
 - `Official`: VDJScript verbs appendix
+- `Local test`: tracker, "Documented Parameters, 2026-09-08"
 
 ### `effect_bpm_deck`
 
@@ -4917,6 +4950,20 @@ The sections below remain useful as a wide local inventory. They are still being
 - `frac` - decimal part
 - `relative`, `absolute` - change parameter type
 
+`param_cast` is one of the few verbs that **rejects** an argument it does not
+know (`error:-2147024809`, `E_INVALIDARG`) instead of ignoring it, so its
+vocabulary can be read off directly (`Local test` 2026-09-08, HTTP, build
+18.0.9598):
+
+- Matching is exact, not prefix. `int` and `percent` are accepted alongside
+  `integer` and `percentage`; `inte`, `integ`, `intx`, `perc`, `beat`, `fra`,
+  `tex`, `abso` and `relativ` are all rejected.
+- The digit format generalises past the documented `000`: `0`, `00`, `0000` and
+  `00.0` are accepted.
+- `absolute` and `relative` answer in a class of their own — `''` where every
+  cast type returns `error:1` — which matches the appendix's description that
+  they change how the value is applied rather than casting it.
+
 Use `param_cast 'beats'` when a computed BPM should be passed to `pitch` as a target BPM:
 
 ```vdjscript
@@ -5146,10 +5193,10 @@ Window/workflow note:
 | `hold` / `scratch_hold`       | Stop for scratching    | `hold on`                |
 | `scratch`                     | Scratch forward/back   | `scratch +120ms`         |
 | `nudge`                       | Nudge position         | `nudge +120ms`           |
-| `slip_mode`                   | Slip mode              | `slip_mode`              |
-| `slip`                        | Global slip mode       | `slip`                   |
+| `slip_mode`                   | Slip mode (**not** the same state as `slip`) | `slip_mode`              |
+| `slip`                        | Global slip mode; this is the one `get_slip_time` needs | `slip`                   |
 | `get_slip_active`             | Slip currently active  | `get_slip_active`        |
-| `get_slip_time`               | Time that will resume when slip exits | `get_slip_time "sec"` |
+| `get_slip_time`               | Time that will resume when slip exits (`min`/`sec`/`msec`; bare is ms) | `get_slip_time "sec"` |
 | `get_rotation_slip`           | Slip point jog angle, otherwise normal rotation | `get_rotation_slip` |
 | `blink_play`                  | End-of-track/paused blink helper | `blink_play on`     |
 | `scratch_dna`                 | Execute DNA scratch    | `scratch_dna`            |
@@ -5168,6 +5215,19 @@ Window/workflow note:
 Scratchbank source note:
 
 - The official Scratchbank pad page uses `drop="scratchbank_assign <n>"`, `scratchbank_load_to_deck <n>` for pad action/color/label, `scratchbank_load` as Parameter 1, and `scratchbank_edit` in the menu.
+
+Slip note (`Local test` 2026-09-08, HTTP, build 18.0.9598):
+
+- **`slip` and `slip_mode` are independent states, not aliases.** `deck 1
+  slip_mode on` leaves `deck 1 slip` reading `no`; `deck 1 slip on` leaves
+  `slip_mode` reading `no`. `get_slip_time` follows `slip` — it raises `E_FAIL`
+  in every form while only `slip_mode` is on.
+- With slip engaged, `get_slip_time` bare is milliseconds and `min` / `sec` /
+  `msec` are its components (`min`·60000 + `sec`·1000 + `msec` reproduces bare).
+  An unrecognized tail returns the bare value.
+- The slip shadow clock **advances in real time even while the deck is
+  stopped**, so every reading drifts (~12 ms between two HTTP queries). Compare
+  forms across repeated runs, never within one.
 
 ## Volume & Mixing
 
@@ -5320,6 +5380,27 @@ Scratchbank source note:
 | `mark_linked_tracks` / `mark_related_tracks` | Link decks 1 and 2 as related tracks | `mark_linked_tracks` |
 | `has_linked_tracks`    | Check linked/related tracks | `has_linked_tracks browsed` |
 | `page`                 | Browser/page helper | `page`                     |
+
+Sort-field note (`Local test` 2026-09-08, HTTP, build 18.0.9598, query position
+only):
+
+- `browser_sort` and `sideview_sort` accept **the same 36 field names**, and in
+  query position they are a membership oracle for that list — a real field
+  answers `no`, anything else `yes`, so the enumeration reads straight off:
+  `album`, `artist`, `author`, `bitrate`, `bpm`, `bpmdiff`, `color`, `comment`,
+  `composer`, `drive`, `field1`, `field2`, `filename`, `filepath`, `filesize`,
+  `firstplay`, `firstseen`, `genre`, `grouping`, `key`, `keydiff`, `label`,
+  `lastplay`, `length`, `order`, `playcount`, `pos`, `position`, `rating`,
+  `remix`, `remixer`, `stars`, `title`, `track`, `type`, `year`.
+- Exactly one leading `+` or `-` sets the direction (`browser_sort "+bpm"`);
+  `++`, `*` and `~` are rejected. Matching is case-insensitive.
+- Plausible names that are **not** accepted: `play_count`, `date`, `added`,
+  `random`, `folder`, `user1`, `user2`, `linkedvideo`, `hascue`, `hasstems`,
+  `duration`, `albumartist`, `camelot`, and `field3` upwards.
+- What the query's boolean *means* is not established — see the tracker,
+  "Documented Parameters, 2026-09-08".
+- `browsed_file_color` echoes any argument back verbatim in query position,
+  nonsense included, so it cannot be used to resolve or validate a colour name.
 
 ## Loading
 

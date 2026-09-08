@@ -1550,6 +1550,43 @@ were live. `tests/verb-arg-forms.json` does not exist yet; `--check` skips clean
 does. Run it on an idle instance — the first real question it answers is whether any verb
 accepts a two-token tail at all, which nothing to date has established.
 
+**Pass 2026-09-08: pick entries by how they FAIL, not by verb family** (tracker:
+"Documented Parameters, 2026-09-08"). One sweep of bare/`zzqqx`/`wubfar` over all 54 worklist
+verbs sorts them by error code, and each group wants a different instrument: `E_NOTIMPL` on
+both bare and tailed means no query implementation at all (11 verbs — an execute-position
+question); `E_INVALIDARG` on both means query position rejects every form (5); error bare but
+answering tailed means the tail is required (7); and **answering bare but `E_INVALIDARG`
+tailed means the verb rejects what it does not know, so its vocabulary is enumerable by
+acceptance** — which is the row nothing had used. For a token whose *meaning* the appendix
+already states, parsing is the only missing half, so acceptance closes it.
+
+Closed by that pass: `param_cast` absolute/relative (exact match, not prefix — `int` and
+`percent` are accepted, `inte`/`perc` are not, and the digit format generalises past `000`);
+`browser_sort`/`sideview_sort`, whose query position is a membership oracle that reads off a
+**36-name sort-field enumeration** identical for both verbs, with one leading `+`/`-` and
+case-insensitive matching; `get_slip_time` min/sec/msec, where the earlier `Fail` was the
+wrong enabler — **`slip` and `slip_mode` are independent states** and only `slip` makes the
+verb answer; `effect_arm_stem`, where the parameter tokenizer had read the quoted *slot* name
+`stems` and missed the unquoted sentence listing the real vocabulary (vocal/instru/kick/
+hihat/bass, all five confirmed, `+` combining with no surrounding space and conjunctive in
+query position); `pitch <n> bpm`, a two-token execute form whose second token is required;
+`effects_used master`; `loaded_song rating`; and `hot_cue` cue/cue_play/cue_stop moved to
+placeholders, since the appendix sentence names *other buttons* being pressed.
+
+That pass also added a third non-worklist bucket. `documented_but_names_the_default` holds
+real vocabulary that **no state can separate**, because it selects what the verb does anyway
+— `effects_used 'deck'` (bare *is* the deck scope, measured against a master-only effect),
+`mixermode 'internal'`, `auto_bpm_transition 'target_original'`. They were being re-probed
+every pass. Worklist 54 verbs / 97 tokens → 43 / 77.
+
+Next buildable state, with the recipe worked out: **`get_time_hour` wants a track longer than
+an hour.** Total 2h05m with the playhead at 1h10m makes `elapsed` 1, `remain` 0, `total` 2,
+and reading it once with `display_time` on `elapsed` and once on `remain` (bare and junk
+follow the setting) separates all three; `absolute` needs the playhead where pitched and
+unpitched remaining time fall on opposite sides of an hour boundary, e.g. 3,700 s in at +12%.
+Everything else left on the worklist needs a pad surface, an audio input, a broadcast
+session, timecode hardware, or a meter that is not reading zero.
+
 The blocker for argument forms is not the channel, it is **prepared state**. Unknown arguments
 are silently ignored (`loaded bogusword` → `yes`), so a form can only be confirmed by comparing
 values across forms **in a state where the forms would disagree**. `loaded opposite` is

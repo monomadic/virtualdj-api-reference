@@ -139,8 +139,11 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     # Live 2026-09-07". Nonsense fields raise E_INVALIDARG; named fields answer.
     "get_loaded_song": {"album", "title", "artist", "playcount"},
     # `harmonic` answered 08A where bare, `musical` and both controls answered
-    # Am (keyDisplay already musical, so `musical` stays undiscriminated).
-    "get_key": {"harmonic"},
+    # Am (keyDisplay already musical, so `musical` was undiscriminated there);
+    # 2026-09-07, with keyDisplay flipped to Harmonic, bare and a nonsense tail
+    # both returned 02A where `musical` returned Ebm. Setting restored. One
+    # entry, not two: a duplicate dict key silently dropped `harmonic`.
+    "get_key": {"harmonic", "musical"},
     # `'absolute' 5%` yes at +4.17% pitch where bare 5% and nonsense-selector 5% no.
     "get_pitch_zero": {"absolute"},
     # 2026-09-07, second batch — tracker "Documented Parameters Taken Live
@@ -167,11 +170,16 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     # percentage 1270%, ms 13ms, beats 12.7bt, boolean yes (0 -> no), float and
     # text 12.7; `text 5` truncated 'Chapter & Verse' to 'Chapt' and `text 3`
     # to 'Cha'. Bare and both nonsense types raise E_INVALIDARG.
+    # 2026-09-08: `absolute` and `relative` are accepted where a nonsense type
+    # raises E_INVALIDARG, and they answer in a class of their own — '' where
+    # every cast type returns S_FALSE — which is what the doc describes (they
+    # change how the value is applied, they do not cast it). Acceptance is the
+    # evidence here because param_cast REJECTS what it does not know, so its
+    # vocabulary is directly enumerable: `int` and `percent` are accepted too,
+    # `inte`/`perc`/`intx` are not (exact match, not prefix), and the digit
+    # format generalises past the documented `000` to `0`, `00`, `0000`, `00.0`.
     "param_cast": {"integer", "int_trunc", "frac", "float", "percentage", "ms",
-                   "boolean", "beats", "text", "000"},
-    # 2026-09-07: with `keyDisplay` flipped to Harmonic, bare and a nonsense
-    # tail both returned 02A where `musical` returned Ebm. Setting restored.
-    "get_key": {"musical"},
+                   "boolean", "beats", "text", "000", "absolute", "relative"},
     # 2026-09-07: with the filter knob at 0.75, `name` returned MOBIUS TRI where
     # bare and both controls returned '> 50%'; at the centre `clean` returned
     # OFF where bare and both controls returned the name. Each token separates
@@ -191,6 +199,50 @@ LOCAL_CONFIRMED: dict[str, set[str]] = {
     # `sidelist` is NOT here: it failed exactly as the controls did, and panel
     # names are skin-dependent, so that is a fact about the loaded skin.
     "show_splitpanel": {"sideview"},
+    # 2026-09-08, query position, no fixture — tracker "Documented Parameters
+    # Taken Live 2026-09-08". `browser_sort`/`sideview_sort` answer `no` for a
+    # real sort field and `yes` for anything else, so in query position they are
+    # a membership oracle for the sort-field enumeration: 36 names separate from
+    # five agreeing nonsense controls AND from plausible near-misses
+    # (`play_count`, `date`, `added`, `random`, `folder`, `user1`,
+    # `linkedvideo`). One leading `+`/`-` is accepted, `++`/`*`/`~` is not, and
+    # matching is case-insensitive. Both verbs accept exactly the same set.
+    "browser_sort": {"+bpm", "-bpm", "artist", "lastplay"},
+    "sideview_sort": {"artist", "lastplay"},
+    # 2026-09-08, slip engaged on deck 1 with the shadow playhead past 1 minute:
+    # bare 65387 ms, `min` 1, `sec` 5, `msec` 437, where both nonsense controls
+    # returned the bare value. min*60000+sec*1000+msec reproduces bare to within
+    # the ~12 ms the shadow clock drifts between two queries, which is the check
+    # that clinches it — the value moves, so three agreeing runs were taken.
+    # `get_slip_time` raises E_FAIL when slip is not engaged.
+    "get_slip_time": {"min", "sec", "msec"},
+    # 2026-09-08: with a master effect on and no deck effect, `master` answered
+    # yes where bare, `deck` and both controls answered no. `deck` is in
+    # LOCAL_DEFAULT_ALIASES — bare IS the deck scope, so nothing can separate it.
+    "effects_used": {"master"},
+    # 2026-09-08, execute + readback on the fixture track (120 BPM): `pitch 130
+    # bpm` landed the deck on 130 BPM and `pitch 100 bpm` on 100, where
+    # `pitch 130 zzqqx`, `pitch 130 wubfar` AND the bare `pitch 130` all
+    # returned false and left the deck at 120/0.5. A two-token form whose second
+    # token is required, not optional.
+    "pitch": {"bpm"},
+    # 2026-09-08: `loaded_song 'rating' <n>` is an equality predicate like
+    # `browsed_song` — yes at the loaded track's rating (0, read independently
+    # through get_loaded_song), no at every other value and no for two nonsense
+    # fields at any value.
+    "loaded_song": {"rating"},
+    # 2026-09-08: the catalog's `stems` is prose (LOCAL_PLACEHOLDERS); the real
+    # vocabulary is in the sentence the tokenizer could not see, "Accepted stem
+    # names are Vocal, HiHat, Bass, Instru, Kick". All five confirmed: in query
+    # position instru/kick/hihat/bass answered no where bare, `vocal` and four
+    # nonsense controls answered yes, and executing a stem's own token toggled
+    # exactly that stem (kick no->yes, vocal yes->no) with the arm restored
+    # after. The documented `+` combinator holds — `kick+bass` toggles both,
+    # case-insensitively — but takes NO surrounding space (`kick + bass` is a
+    # no-op), an unknown member is dropped while known ones still apply
+    # (`kick+zzqqx` toggles kick), and in query position `+` is a conjunction
+    # (`vocal+kick` no with only vocal armed, `vocal+vocal` yes).
+    "effect_arm_stem": {"vocal", "instru", "kick", "hihat", "bass"},
 }
 
 # Catalog tokens a local test showed to be the doc's own example rather than
@@ -235,6 +287,38 @@ LOCAL_PLACEHOLDERS: dict[str, set[str]] = {
     # a sample that is actually loaded: `sampler_volume 'Dystopia Breaks'` -> 1.
     "sampler_volume": {"siren"},
     "sampler_pad_volume": {"siren"},
+    # 2026-09-08: "if no cue point is set, or if 'cue', 'cue_stop' or 'cue_play'
+    # is pressed" names OTHER BUTTONS whose press makes hot_cue set a cue — it
+    # is not hot_cue's own tail. Measured on the fixture track: all three set
+    # cue 1 at the playhead and left the deck paused, exactly as both nonsense
+    # controls did.
+    "hot_cue": {"cue", "cue_play", "cue_stop"},
+    # 2026-09-08: "to be used with \"stems\" as slot for effect_ actions" quotes
+    # the SLOT name, not a stem name. The real vocabulary is the five stem names
+    # in LOCAL_CONFIRMED; `stems` answers exactly as four nonsense controls do.
+    "effect_arm_stem": {"stems"},
+}
+
+# Tokens a local test showed to be indistinguishable from the bare form because
+# they NAME THE DEFAULT the verb already uses. Real vocabulary, documented, and
+# permanently unconfirmable by value comparison: no state can separate a tail
+# that selects what the verb does anyway. Recording them stops the worklist
+# sending the next agent after a separation that cannot exist.
+LOCAL_DEFAULT_ALIASES: dict[str, set[str]] = {
+    # 2026-09-08: bare `effects_used` IS the deck scope — it answered no with a
+    # master effect on and yes with a deck effect on, tracking `deck` in both.
+    # `master` is the token that separates, and it is confirmed.
+    "effects_used": {"deck"},
+    # 2026-09-08: this machine runs the internal mixer, so bare, `internal` and
+    # both nonsense controls answer yes; `external` answers no and is confirmed.
+    # Separating `internal` would mean switching the audio config to an external
+    # mixer, which is the user's setup, not a fixture.
+    "mixermode": {"internal"},
+    # 2026-09-07, tests/bpm-transition-forms.json: bare, both nonsense controls
+    # and `target_original` all land the pair on 120 — the default target — where
+    # `source_original` lands on 100 and `target_current` on 132. Retested with
+    # smart_play off, same default.
+    "auto_bpm_transition": {"target_original"},
 }
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls
@@ -289,7 +373,7 @@ def cross_check(entries: dict[str, dict]) -> dict:
     blob = binary_blob()
     extra = extra_confirmations()
     both, catalog_only, probe_only = {}, {}, {}
-    three_ways, placeholders, refuted = {}, {}, {}
+    three_ways, placeholders, refuted, defaults = {}, {}, {}, {}
     for verb, rec in entries.items():
         documented = set(rec["documented_parameters"])
         # The catalog quotes whole examples, so the verb's own name comes out of
@@ -299,6 +383,10 @@ def cross_check(entries: dict[str, dict]) -> dict:
         if gone:
             refuted[verb] = sorted(gone)
             documented -= gone
+        default = documented & LOCAL_DEFAULT_ALIASES.get(verb, set())
+        if default:
+            defaults[verb] = sorted(default)
+            documented -= default
         found = {t[0] for t in probed.get(verb, {}).get("recognized_tokens", []) if len(t) == 1}
         found |= extra.get(verb, set())
         # A token any other source vouches for is never a placeholder, whatever
@@ -343,6 +431,9 @@ def cross_check(entries: dict[str, dict]) -> dict:
         # Also not a worklist: tokens a local test measured behaving exactly like
         # its nonsense controls. Documented, tried, and not vocabulary.
         "documented_but_locally_refuted": refuted,
+        # Also not a worklist: real vocabulary that names the default the verb
+        # already uses, so no state can separate it from the bare form.
+        "documented_but_names_the_default": defaults,
     }
 
 
