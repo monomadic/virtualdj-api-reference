@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Recover the skin XML vocabulary the binary actually compares against.
+"""Legacy window-based skin vocabulary discovery.
+
+For structurally bounded discovery use extract_skin_classes.py and
+`just skin-classes`: LC_FUNCTION_STARTS replaces guessed reader windows.
+This artifact remains a historical candidate source, not a complete schema.
 
 `tools/extract_xml_inventory.py` answers what shipped skins *use*; the Skin SDK
 doc answers what Atomix *documented*. Neither answers what the reader will

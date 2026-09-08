@@ -338,8 +338,11 @@ The eight below are the ones shipped skins actually write.
 
 **Source: binary structure (Tier 2), build 18.0.9598 (arm64).** Recovered by
 following the element dispatcher at `0x10037df04` to each class's constructor
-and tracking the string literals it hands to the three XML getters — so what is
-established is that *the class reads this name*, and how it reads it. **None of
+and tracking string literals passed to anchored XML readers.
+**Scope correction:** these are reads associated with the class, including
+child nodes and direct helper callees; the extraction alone does not establish
+that the outer element accepts the attribute. The getter role describes the
+call site, not the attribute's semantics. **None of
 this is confirmed behavior**, and absence from these lists establishes nothing:
 traversal stops at direct callees. Query with `just skin-classes --attributes
 CSkinPanel` and read the artifact's own `limitations` before citing.

@@ -156,12 +156,14 @@ _reader_attrs: dict[str, set[str]] | None = None
 
 
 def reader_attributes() -> dict[str, set[str]]:
-    """element name -> attributes the class that builds it is seen reading.
+    """element name -> attribute leads associated with its construction class.
 
     From tests/skin-classes.json: the factory maps the element to a class, and
     the class carries the attribute names recovered as x1 literals at the XML
     getters. Tier 2 — the reader touching a name is not the name working — but
-    it is positive evidence where the placeholder test only ever gives negative.
+    it is positive evidence of a read somewhere in the bounded traversal.
+    Reads can target child nodes or helper inputs; this is not an outer-element
+    schema and the flag must not be interpreted as acceptance on this element.
     """
     global _reader_attrs
     if _reader_attrs is None:
@@ -184,8 +186,8 @@ def classify_attribute(attr: str, families: list[str], element: str | None = Non
 
     Order matters, and `undocumented_but_read` outranks `template_param` because
     the two overlap: `available` has an `[AVAILABLE]` placeholder AND appears in
-    CSkinPanel's candidates. Ranking the placeholder first would file a confirmed
-    reader attribute as "not a gap", which is the one direction of error that
+    CSkinPanel's candidates. Ranking the placeholder first would file a recovered
+    reader candidate as "not a gap", which is the one direction of error that
     deletes real work — the same mistake, in miniature, as calling a template
     parameter a dead attribute.
     """
@@ -363,7 +365,7 @@ def render(s: dict) -> str:
         tmpl = s["attributes_template_params"]
         bits = []
         if read:
-            bits.append(f"{len(read)} read but undocumented")
+            bits.append(f"{len(read)} reader leads without documentation")
         if unexplained:
             bits.append(f"{len(unexplained)} unexplained")
         if tmpl:
@@ -375,9 +377,8 @@ def render(s: dict) -> str:
         for a in attrs:
             L.append(f"  {MARK[a['kind']]} {a['name']:<24} {a['uses']:>5}")
         if read:
-            L.append("  ! = the class that builds this element is seen reading it, and no "
-                     "doc explains it")
-            L.append("      — confirmed vocabulary with a real documentation gap")
+            L.append("  ! = an associated reader references this name; no doc explains it")
+            L.append("      Tier 2 lead: the read may target a child node or helper input")
         if unexplained:
             L.append("  ? = no doc, and not among the reader's recovered candidates — a "
                      "weak lead either way")
