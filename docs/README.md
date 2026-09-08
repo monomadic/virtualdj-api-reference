@@ -55,6 +55,9 @@ Start here:
   `just action-catalog --cross-check`.
   See [../tests/README.md](../tests/README.md) for what each artifact proves and does not.
 
+- [Verb Tail Structural Discovery](Verb%20Tail%20Structural%20Discovery.md)
+  How the bounded binary techniques from skin discovery carry over to verb tails, and what they cannot reach. `LC_FUNCTION_STARTS` intervals replace RET-terminated scans and padded xref windows in both the contract and vocabulary extractors; helper fan-out separates a verb's own argument matcher from the script evaluator's dispatch; the verb store is joined live so settled tails leave the probe queue. Value arguments stay outside keyword recovery entirely. Queries: `just action-tail-leads`, `just verb-contract <name>`, `just verb-traces <name>`.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 
@@ -132,6 +135,7 @@ Current status:
 - `Undocumented VDJScript Candidates.md` hosts the authoritative verb table (existence, aliases, hidden flag, categories) and tracks the 37 hidden verbs separately from the normal VDJScript API reference.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
+- `Verb Tail Structural Discovery.md` is the method note behind the bounded contract and vocabulary extractors; the queue it produces is a query (`just action-tail-leads`), not a stored listing, and every name in it is a Tier-2 lead.
 - `Completeness Roadmap.md` is a frozen snapshot of evidence tiers and hardware gates; the active queue is `TODO.md`.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Skin Runtime Findings.md` tracks local skin runtime behavior that should be shared across projects rather than kept in one skin repo.

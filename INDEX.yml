@@ -53,6 +53,11 @@ vdjscript:
     - tests/attested-tails.json          # tails AND argument shapes (arity, token types, return evidence) from shipped scripts
     - tests/binary-vocabularies.json     # shared enumerations as binary structures (tables, switches)
     - tests/verb-execute-forms.json      # execute-position tails, two-baseline signatures
+  structural:                            # how the binary-derived tail evidence is bounded
+    - docs/Verb Tail Structural Discovery.md
+    - tests/action-contracts.json        # per-verb class, capability, helper literal leads
+    - tests/action-contracts-debug.json  # the call-graph addresses behind those leads
+    - tests/action-tail-leads.json       # ranked Tier-2 tail queue, verb-store joined at query time
   corpus:
     - tests/vdjscript-corpus.json        # vendor-written snippets, with provenance (83 from the binary)
     - tests/corpus-parse-results.json    # every snippet through /query, outcomes classified
@@ -65,6 +70,10 @@ vdjscript:
     - just attested-tails --verb NAME    # tails used in shipped scripts
     - just binary-vocab --get GROUP      # a shared enumeration and its hidden members
     - just binary-vocab --verb NAME      # which enumerations a verb draws from
+    - just action-tail-leads --queue     # ranked Tier-2 tail probe queue, settled tails removed
+    - just action-tail-leads --get NAME  # one verb's literal leads, helper fan-out labelled
+    - just verb-contract NAME            # class, capability, arg demands, helper candidates
+    - just verb-traces NAME              # the call-graph addresses behind those candidates
     - just script-corpus --verb NAME     # vendor examples mentioning a verb
     - just list-verbs TERM [--surface=X --section=X --status=X --format=json]
     - just put-verb NAME field=value ...
