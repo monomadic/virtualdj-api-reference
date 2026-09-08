@@ -2028,6 +2028,85 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
   with the `sampler_select` quirk found while restoring state — 1-based slot on execute, 0-1
   slider value on query.
 
+### S1. Render-Test The Element-Specific Skin Attributes
+
+Status: Ready
+
+Note: Added 2026-09-08. [docs/Skin SDK.md](docs/Skin%20SDK.md) §"Element-Specific Attributes
+Recovered From The Reader" landed with every row carrying its own Needs-test and **no Tier-1
+evidence behind any of them**. The table is Tier 2 throughout: `tests/skin-classes.json`
+establishes that a class references the name and which getter it reaches — presence, boolean,
+string, or value comparison — which fixes the *shape* of each test but says nothing about
+effect. Note also that the artifact's own `questions.Q2` records that class association includes
+child-node and helper reads, so "read by this element's class" is an association, not an
+outer-element schema; a canary is what settles which element actually accepts it.
+
+Method is the one that worked twice already: `tests/Skins/clickthrough-probe/` and
+`tests/Skins/reader-candidates-probe/` generate variants plus a nonsense control, load against a
+live VirtualDJ, read the result, and run forward and reversed with identical rows both times.
+Needs `just vdj-up`.
+
+Read first: the Skin SDK section above; `just skin-classes --get CSkinPanel` (and `CSkinSlider`,
+`CSkinTextGroup`, `CSkinVideo`) for each name's `attribute_reads` before designing its canary.
+
+- The boolean-read pair is the cheapest start — the getter says boolean, so a two-value canary
+  plus control is enough, and `clickthrough` proved the method on exactly that shape.
+- The value-comparison one is the interesting case: shipped skins write both bare keywords and
+  whole VDJScript actions in the same attribute, so the test is which values the reader compares
+  and which fall through.
+- The string-read rows each need a state where the value would visibly differ; the slider entry
+  writes a query expression, so build the query true and false.
+- **These no longer show up in `just element <name>`.** Documenting them moved every one out of
+  the `!` column, so the tool will not remind anyone this work is outstanding — this task is the
+  only record. Results go to the store (`just put-verb` does not apply; these are XML attributes)
+  and to [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md), then
+  the Skin SDK rows get their Needs-test replaced by the finding and a `Local test` label.
+
+### S2. Triage The Reader Candidates No Shipped File Writes
+
+Status: Ready
+
+Note: Added 2026-09-08. `just skin-classes --unwritten` is the lead queue: attribute names the
+bounded traversal recovered that **no shipped skin, pad, samplerbank or mapper writes**. This is
+the `clickthrough` and `r` category — both were in exactly this position and both were later
+confirmed by local test, so the list is not noise, and it is invisible to every corpus-based
+method the repo has.
+
+Two cheap desk filters before any live work, in this order:
+
+1. **Cross-check against the docs.** A significant part of the queue is already written up in
+   [docs/Skin SDK.md](docs/Skin%20SDK.md) — the shared-reader section names several. Filter those
+   out with the same test `tools/element_summary.py` uses (`doc_mentions_attribute`) rather than
+   by eye. Skipping this step is how a lead queue gets quoted as a discovery count; it happened
+   on 2026-09-08 and the figure was wrong.
+2. **Separate class-specific reads from inherited and child-node ones.** The artifact's
+   `questions.Q2` states the overlap and `--unwritten` does not yet split it, so a name may be
+   base-reader vocabulary appearing under every class. `attribute_reads` carries `function` and
+   `scope` per read, so the projection exists in the data; see S3 if it is worth doing properly
+   rather than per-query.
+
+Only what survives both filters is worth a canary, and then it is S1's method. An unmatched or
+unwritten name is not a rejected name — record negatives as negatives.
+
+### S3. Give Recovered Attributes A Precision Field
+
+Status: Conditional
+
+Note: Added 2026-09-08. Trigger: S2 reaching step 2 and finding the per-query split too coarse
+to work with. `tests/skin-classes.json` lists candidates per class, but the classes share a base
+reader and the traversal follows helpers and child nodes, so a per-class list is not reliably
+per-class — `just skin-classes --get CSkinPanel` returns names no `<panel>` in the shipped corpus
+writes, several of which belong to other elements. The artifact says so in `questions.Q2` and
+`tools/element_summary.py` was corrected on 2026-09-08 to call the flag a Tier-2 lead rather than
+confirmed vocabulary.
+
+The fix is a projection, not new analysis: `attribute_reads` already records `function` and
+`scope` for every read, so each candidate can be labelled class-specific, inherited from the base
+reader, or read on a child node. That would let `just element <name>` mark base-reader attributes
+distinctly instead of folding them into the element's own, and would make S2 step 2 a filter
+rather than a judgement call. Owner is whoever holds `tools/extract_skin_classes.py`; do not
+re-run the binary traversal for it.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
