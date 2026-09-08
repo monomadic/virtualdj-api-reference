@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 11,
     "Partial": 40,
-    "Pass": 91,
-    "Untested": 896
+    "Pass": 93,
+    "Untested": 894
    },
    "documented": 771,
-   "tested_pass": 91,
+   "tested_pass": 93,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -2452,13 +2452,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP query, build 18.0.9598, 2026-09-08, effect_armed fixture): the binary's 15-member audio_channels table probed against two nonsense controls. Only 'master', 'mic', 'sampler' and 'aux' are read; every other member (auxin, auxout, booth, deck, deckfxreturn, deckfxsend, headphones, mic2, preview, record, samplerin, timecode) returned the bare answer exactly as the nonsense controls did. The negative is meaningful in this state rather than merely undiscriminated: with only the DECK arm engaged, bare and an ignored tail both read 'yes' while any recognized channel reads 'no', which is what the four accepted names did. 'master' is new — the catalog documents only aux/mic/sampler."
+   ],
    "section": "Effects",
    "description": "Select target deck/path for armed FX",
-   "example": "effect_arm_deck master"
+   "example": "effect_arm_deck master",
+   "confidence": "local_test"
   },
   "effect_arm_select": {
    "name": "effect_arm_select",
@@ -4722,7 +4725,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-07, HTTP, build 18.0.9598, browser selection as found: 'title', 'playcount', 'artist' return the browsed track's fields; two nonsense fields return error:-2147024809 (E_INVALIDARG); bare returns empty. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch)."
+    "Local test 2026-09-07, HTTP, build 18.0.9598, browser selection as found: 'title', 'playcount', 'artist' return the browsed track's fields; two nonsense fields return error:-2147024809 (E_INVALIDARG); bare returns empty. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch).",
+    "Local test (HTTP query, build 18.0.9598, 2026-09-08): swept the same 41 song_fields members as get_loaded_song against two nonsense controls, on a different track. The two verbs agree exactly — the same 16 fields answer and the same 25 raise E_INVALIDARG — so the field vocabulary is shared between them. 'album' and 'title' returned different values here ('Brazil House' vs 'Alemao'), confirming they are distinct fields rather than aliases; 'author' again matched 'artist'."
    ],
    "section": "Get (Query Actions)",
    "description": "Browsed file property",
@@ -5790,7 +5794,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1 (unloaded after): 'album', 'title', 'artist' return the tag fields and 'playcount' returns empty on a never-played track, while two nonsense fields return error:-2147024809 (E_INVALIDARG) and the bare form returns empty — so every named field separates from nonsense. Tracker: Documented Parameters Taken Live 2026-09-07."
+    "Local test 2026-09-07, HTTP, build 18.0.9598, library track on deck 1 (unloaded after): 'album', 'title', 'artist' return the tag fields and 'playcount' returns empty on a never-played track, while two nonsense fields return error:-2147024809 (E_INVALIDARG) and the bare form returns empty — so every named field separates from nonsense. Tracker: Documented Parameters Taken Live 2026-09-07.",
+    "Local test (HTTP query, build 18.0.9598, 2026-09-08): the whole song-field vocabulary swept against the binary's 41-member song_fields table with three agreeing nonsense controls (all E_INVALIDARG). Exactly 16 members answer: album, artist, author, bpm, comment, composer, filename, filepath, genre, grouping, key, label, remix, remixer, title, year. An empty-but-real field returns '' where an unknown one raises E_INVALIDARG, so the two are distinguishable. 'author' returned the same value as 'artist' on two different tracks, so it is an alias. The other 25 table members — the RIFF chunk ids (iart, icmt, icop, ignr, inam, iprd, isbj, isft, strn) and the two-letter forms (al, ar, au, by, re, ti, ve) plus copyright/creator/encoder/encoder_version/product/software/subject/user1/user2 — all raise E_INVALIDARG, so they belong to a different consumer of that table."
    ],
    "section": "Get (Query Actions)",
    "description": "Loaded file property",
@@ -13641,14 +13646,17 @@
     "Map",
     "Button"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-08): in query position `settings '<page>'` answers whether the Settings dialog is currently showing that page — everything reads 'no' while the dialog is closed, so the vocabulary is only probeable with it open. With it open, the accepted pages are exactly the dialog's own nine tabs: audio, broadcast, controllers, extensions, interface, licenses, options, record, tutorials. Each selects itself (query yes) and drops the previous page to no; two nonsense controls and every unaccepted name leave the dialog where it was. Four of the nine (tutorials, interface, licenses, extensions) are absent from the binary's settings_pages table, and 14 of that table's members (all, automation, automix, browser, controls, internet, karaoke, modified, performance, sampler, skins, tags, timecode, video) are not accepted here — so that table is a different enumeration, not this verb's argument list. Two operational notes: opening the dialog STALLS the HTTP interface for several seconds (a timeout there is not a result), and it cannot be closed from script — bare `settings`, 'close' and 'off' all return false and leave it open; closing it took a click on the dialog's X, verified by the query returning to no."
+   ],
    "section": "Configuration",
    "description": "Open config window",
    "example": "settings",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "shift": {
    "name": "shift",
