@@ -517,7 +517,9 @@ from three signals recorded separately:
 | pad pages | `stems hotcues slicer sampler stems+fx "loop roll" scratch keycue cueloop beatjump loop "saved loops" "manual loop" "remix points" dmx scratchbank custom` | `pad_page` |
 | song fields | `title author filepath filename comment album genre year bpm key composer user1 user2 remix remixer grouping label` | `get_karaoke_background_song`, `get_next_karaoke_song` |
 
-Code regions without a table settle smaller sets: `get_bpm absolute|ghost|all`, `get_time`'s
+Code regions without a table settle smaller sets: `get_bpm absolute|ghost` (the group listed
+`all` until regions were bounded by `LC_FUNCTION_STARTS`; it is referenced past the end of the
+function that compares the other two, and survives only as get_bpm's own method string), `get_time`'s
 `elapsed remain total absolute cue loopin loopout`, `eq_mode frequency|stems|deck`,
 `view_options showmusic|showvideo|showkaraoke`, `search_folder dialog|clear|focus`, the stem
 modes `acapella|acappella|instrumental|isolate` (`stem_pad`), the audio channels

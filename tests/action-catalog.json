@@ -5,16 +5,21 @@
   "multi_argument": 18,
   "language": "English.xml",
   "cross_check_counts": {
-   "confirmed_by_both": 45,
-   "documented_but_not_probe_confirmed": 64,
-   "probe_confirmed_but_undocumented": 69,
-   "confirmed_by_all_three": 17,
-   "documented_example_placeholders": 37,
-   "documented_but_locally_refuted": 7
+   "confirmed_by_both": 55,
+   "documented_but_not_probe_confirmed": 42,
+   "probe_confirmed_but_undocumented": 71,
+   "confirmed_by_all_three": 18,
+   "documented_example_placeholders": 43,
+   "documented_but_locally_refuted": 7,
+   "documented_but_names_the_default": 4
   }
  },
  "cross_check": {
   "confirmed_by_both": {
+   "auto_bpm_transition": [
+    "source_original",
+    "target_current"
+   ],
    "auto_bpm_transition_options": [
     "autostart",
     "length",
@@ -23,7 +28,9 @@
     "stems"
    ],
    "auto_cue": [
-    "always"
+    "always",
+    "off",
+    "on"
    ],
    "browsed_song": [
     "rating"
@@ -32,13 +39,25 @@
     "bottom",
     "top"
    ],
+   "browser_sort": [
+    "+bpm",
+    "-bpm",
+    "artist",
+    "lastplay"
+   ],
    "browser_window": [
+    "automix",
+    "folders",
+    "sampler",
+    "sidelist",
+    "sideview",
     "songs"
    ],
    "color": [
     "red"
    ],
    "cross_assign": [
+    "left",
     "thru"
    ],
    "crossfader_curve": [
@@ -79,7 +98,8 @@
     "sideview"
    ],
    "filter_label": [
-    "clean"
+    "clean",
+    "name"
    ],
    "get_browsed_song": [
     "playcount",
@@ -92,7 +112,8 @@
     "absolute"
    ],
    "get_key": [
-    "harmonic"
+    "harmonic",
+    "musical"
    ],
    "get_loaded_song": [
     "album"
@@ -112,6 +133,11 @@
     "length",
     "name",
     "next"
+   ],
+   "get_slip_time": [
+    "min",
+    "msec",
+    "sec"
    ],
    "get_song_event": [
     "current",
@@ -157,6 +183,9 @@
    "leftvideo": [
     "auto"
    ],
+   "loaded_song": [
+    "rating"
+   ],
    "loop_adjust": [
     "in",
     "move",
@@ -170,9 +199,29 @@
    "mixermode": [
     "external"
    ],
+   "param_cast": [
+    "000",
+    "absolute",
+    "beats",
+    "boolean",
+    "float",
+    "frac",
+    "int_trunc",
+    "integer",
+    "ms",
+    "percentage",
+    "relative",
+    "text"
+   ],
+   "pitch": [
+    "bpm"
+   ],
    "play_mode": [
     "numark",
     "pioneer"
+   ],
+   "prelisten_output": [
+    "auto"
    ],
    "rightvideo": [
     "auto"
@@ -193,6 +242,16 @@
     "drymix",
     "quantized"
    ],
+   "search_options": [
+    "composer"
+   ],
+   "show_splitpanel": [
+    "sideview"
+   ],
+   "sideview_sort": [
+    "artist",
+    "lastplay"
+   ],
    "timecode_mode": [
     "relative",
     "smart"
@@ -210,15 +269,6 @@
    ]
   },
   "documented_but_not_probe_confirmed": {
-   "auto_bpm_transition": [
-    "source_original",
-    "target_current",
-    "target_original"
-   ],
-   "auto_cue": [
-    "off",
-    "on"
-   ],
    "automix_editor_movetrack": [
     "current",
     "next",
@@ -238,27 +288,8 @@
     "bottom",
     "top"
    ],
-   "browser_sort": [
-    "+bpm",
-    "-bpm",
-    "artist",
-    "lastplay"
-   ],
-   "browser_window": [
-    "automix",
-    "folders",
-    "sampler",
-    "sidelist",
-    "sideview"
-   ],
-   "cross_assign": [
-    "left"
-   ],
    "cue_color": [
     "yellow"
-   ],
-   "effect_arm_stem": [
-    "stems"
    ],
    "effect_colorfx": [
     "echo"
@@ -273,17 +304,8 @@
    "effect_list_edit": [
     "transition"
    ],
-   "effects_used": [
-    "deck"
-   ],
-   "filter_label": [
-    "name"
-   ],
    "get_automix_song": [
     "title"
-   ],
-   "get_key": [
-    "musical"
    ],
    "get_level": [
     "mic",
@@ -294,14 +316,6 @@
     "booth",
     "headphones",
     "master"
-   ],
-   "get_saved_loop": [
-    "pos"
-   ],
-   "get_slip_time": [
-    "min",
-    "msec",
-    "sec"
    ],
    "get_time_hour": [
     "absolute",
@@ -317,11 +331,6 @@
    "get_vu_meter": [
     "mic",
     "vocal"
-   ],
-   "hot_cue": [
-    "cue",
-    "cue_play",
-    "cue_stop"
    ],
    "invert_deck": [
     "left",
@@ -339,17 +348,11 @@
     "mic",
     "trs"
    ],
-   "loaded_song": [
-    "rating"
-   ],
    "loop_color": [
     "yellow"
    ],
    "mix_and_load_next": [
     "nosync"
-   ],
-   "mixermode": [
-    "internal"
    ],
    "motorwheel": [
     "move",
@@ -379,37 +382,11 @@
    "padshift_pressure": [
     "pad_pressure"
    ],
-   "param_cast": [
-    "000",
-    "absolute",
-    "artist",
-    "beats",
-    "boolean",
-    "float",
-    "frac",
-    "int_trunc",
-    "integer",
-    "ms",
-    "percentage",
-    "relative",
-    "text"
-   ],
-   "param_equal": [
-    "audio",
-    "string",
-    "type"
-   ],
-   "pitch": [
-    "bpm"
-   ],
    "pitch_zero": [
     "center"
    ],
    "playlist_load": [
     "append"
-   ],
-   "prelisten_output": [
-    "auto"
    ],
    "sampler_bank": [
     "birthday"
@@ -421,29 +398,15 @@
     "headphones",
     "popup"
    ],
-   "sampler_pad_volume": [
-    "siren"
-   ],
    "sampler_rec": [
     "master",
     "mic"
    ],
-   "sampler_volume": [
-    "siren"
-   ],
-   "search_options": [
-    "composer"
-   ],
    "show_splitpanel": [
-    "sidelist",
-    "sideview"
+    "sidelist"
    ],
    "sidelist_load": [
     "append"
-   ],
-   "sideview_sort": [
-    "artist",
-    "lastplay"
    ],
    "slicer": [
     "hold",
@@ -471,6 +434,9 @@
    "action_deck": [
     "left",
     "right"
+   ],
+   "auto_bpm_transition": [
+    "all"
    ],
    "auto_sync_settings": [
     "assist"
@@ -514,6 +480,13 @@
    ],
    "device_side": [
     "right"
+   ],
+   "effect_arm_stem": [
+    "bass",
+    "hihat",
+    "instru",
+    "kick",
+    "vocal"
    ],
    "effect_colorslider": [
     "all"
@@ -727,6 +700,8 @@
     "bottom"
    ],
    "browser_window": [
+    "folders",
+    "sideview",
     "songs"
    ],
    "color": [
@@ -783,6 +758,9 @@
    "rightvideo": [
     "auto"
    ],
+   "show_splitpanel": [
+    "sideview"
+   ],
    "view_options": [
     "showkaraoke"
    ]
@@ -796,6 +774,9 @@
    ],
    "effect_active": [
     "flanger"
+   ],
+   "effect_arm_stem": [
+    "stems"
    ],
    "effect_select": [
     "echo"
@@ -819,6 +800,11 @@
    ],
    "get_version": [
     "2026"
+   ],
+   "hot_cue": [
+    "cue",
+    "cue_play",
+    "cue_stop"
    ],
    "load": [
     "path_to_my_song"
@@ -846,6 +832,14 @@
    "os2l_scene": [
     "myscene"
    ],
+   "param_cast": [
+    "artist"
+   ],
+   "param_equal": [
+    "audio",
+    "string",
+    "type"
+   ],
    "rack": [
     "rack1",
     "unit1"
@@ -860,6 +854,12 @@
    ],
    "reinit_controller": [
     "mycontroller"
+   ],
+   "sampler_pad_volume": [
+    "siren"
+   ],
+   "sampler_volume": [
+    "siren"
    ],
    "saved_loop": [
     "myloop"
@@ -932,6 +932,20 @@
    ],
    "get_time_sign": [
     "display_time"
+   ]
+  },
+  "documented_but_names_the_default": {
+   "auto_bpm_transition": [
+    "target_original"
+   ],
+   "effects_used": [
+    "deck"
+   ],
+   "get_saved_loop": [
+    "pos"
+   ],
+   "mixermode": [
+    "internal"
    ]
   }
  },

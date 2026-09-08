@@ -15,11 +15,17 @@ Three signals, weakest to strongest, and each one is recorded separately:
 1. **run** — the keywords are adjacent in the string pool. Pools cluster by
    compilation unit, so neighbours are *related*, but adjacency is not a
    structure and a run can straddle two enumerations.
-2. **code region** — one stretch of `__text` references several members
-   (ADRP+ADD pairs). That is a comparison function or a switch walking the
-   enumeration; every other string it references is a candidate member. This
-   is the signal that finds hidden options: the function knows the words the
-   docs never mention.
+2. **code region** — one FUNCTION references several members (ADRP+ADD pairs).
+   That is a comparison function or a switch walking the enumeration; every
+   other string it references is a candidate member. This is the signal that
+   finds hidden options: the function knows the words the docs never mention.
+   Bounds come from `LC_FUNCTION_STARTS`, so a region is a comparison chain
+   inside one named function and a padded window can no longer spill into the
+   neighbouring function — which is how `get_bpm` came to carry `all`,
+   referenced 0x1c past the end of the function that compares `absolute` and
+   `ghost`. One level of direct `BL` callees is followed too, for a switch that
+   delegates its matching; on build 18.0.9598 no group gains a member that way,
+   and one that did would be labelled `callee_region` with the caller in `via`.
 3. **pointer table** — a `const char *[]` in `__DATA_CONST` whose entries
    point at the members, in order. The genuine serialised structure, when it
    exists. Its full entry list is the enumeration, nothing more or less.
@@ -41,6 +47,7 @@ unknown words, so confirming one needs a fixture where the forms would differ
 from __future__ import annotations
 
 import argparse
+import bisect
 import json
 import plistlib
 import re
@@ -114,12 +121,17 @@ MAX_AUTO_MEMBERS = 40
 # A named group that code regions push past this keeps its tables and drops
 # the regions: `artist`/`title` are compared by every tag parser in the app.
 MAX_GROUP_MEMBERS = 60
-# Code-region clustering: xrefs to members closer than this are one function.
-REGION_GAP = 0x600
-REGION_PAD = 0x100
+# How a comparison chain is shaped INSIDE a function: member references closer
+# than CHAIN_GAP are one chain, and each chain reaches CHAIN_REACH further on
+# either side. Both are clipped to the function, which is the part the
+# pre-bounds extractor could not do: it applied the same two numbers to raw
+# xref clusters, so a window could spill into the neighbouring function and one
+# switch could split across several regions.
+CHAIN_GAP = 0x600
+CHAIN_REACH = 0x100
 MAX_REGIONS = 6
 MAX_TABLES = 4
-# A switch over an enumeration references mostly that enumeration. A region
+# A switch over an enumeration references mostly that enumeration. A function
 # referencing far more strings than it hits is a skin builder or a dispatcher.
 MAX_REGION_REFS = 48
 # The verb table is 1,032 pointers; no argument enumeration is anywhere near.
@@ -158,6 +170,9 @@ class Image:
         self.index = {vm: i for i, vm in enumerate(self.order)}
         self._xrefs = None
         self._ptrs = None
+        self._bounds = None
+        self._fn_refs = None
+        self._kw_pcs = None
 
     def file_offset(self, vm: int) -> int:
         return vm - self.cstr[2] + self.cstr[4]
@@ -217,34 +232,132 @@ class Image:
                     out[t].append(pc)
         return out
 
-    def regions(self, members: list[int]) -> list[dict]:
-        """Clusters of code that reference >= 2 distinct members."""
-        pcs = sorted({pc: vm for vm in members for pc in self.xrefs.get(vm, [])}.items())
+    # Exact function intervals, shared with the skin and contract extractors.
+    # Imported lazily: that module stays stdlib-only at import time, and this
+    # one is the only side of the pair that needs numpy.
+    @property
+    def bounds(self) -> tuple[list[int], dict[int, int]]:
+        if self._bounds is None:
+            from extract_skin_classes import function_starts
+            starts = function_starts(self)
+            ends = dict(zip(starts, starts[1:] + [self.text[2] + self.text[3]]))
+            self._bounds = (starts, ends)
+        return self._bounds
+
+    def owner(self, pc: int) -> int | None:
+        """The function containing pc, or None when it falls outside them all."""
+        starts, ends = self.bounds
+        i = bisect.bisect_right(starts, pc) - 1
+        return starts[i] if i >= 0 and pc < ends[starts[i]] else None
+
+    @property
+    def keyword_pcs(self) -> tuple[list[int], list[set[str]]]:
+        """Sorted referencing pcs and the keyword strings each one loads."""
+        if self._kw_pcs is None:
+            at: dict[int, set[str]] = defaultdict(set)
+            for vm, pcs in self.xrefs.items():
+                if self.keyword(self.strings[vm]):
+                    for pc in pcs:
+                        at[pc].add(self.strings[vm])
+            order = sorted(at)
+            self._kw_pcs = (order, [at[pc] for pc in order])
+        return self._kw_pcs
+
+    @property
+    def fn_refs(self) -> dict[int, set[int]]:
+        """function -> every string vm referenced from inside it."""
+        if self._fn_refs is None:
+            out: dict[int, set[int]] = defaultdict(set)
+            for vm, pcs in self.xrefs.items():
+                for pc in pcs:
+                    fn = self.owner(pc)
+                    if fn is not None:
+                        out[fn].add(vm)
+            self._fn_refs = out
+        return self._fn_refs
+
+    def callees(self, fn: int) -> list[int]:
+        """Direct BL targets inside __text — one level, never indirect calls."""
+        starts, ends = self.bounds
+        lo, hi = self.text[2], self.text[2] + self.text[3]
+        off = self.base + self.text[4] + fn - lo
+        out = []
+        for pc in range(fn, ends.get(fn, fn), 4):
+            w = struct.unpack_from("<I", self.data, off + pc - fn)[0]
+            if (w & 0xFC000000) != 0x94000000:
+                continue
+            imm = w & 0x3FFFFFF
+            imm -= (1 << 26) if imm & (1 << 25) else 0
+            target = pc + imm * 4
+            if lo <= target < hi and target in ends:
+                out.append(target)
+        return sorted(set(out))
+
+    def chains(self, fn: int, members: set[int]) -> list[tuple[set[int], int, int]]:
+        """The comparison chains inside one function: member xrefs and spans.
+
+        The function is the boundary; a chain is one stretch of it that does
+        the matching. Both halves are needed. Bounding by `LC_FUNCTION_STARTS`
+        alone hands back every string the function also logs, formats and
+        passes on — the stems seed reaches an AAC encoder's `libfdk_aac` and
+        `vbr` that way — and the skin element factory compares its vocabulary
+        at sites kilobytes apart, so one span across the whole function fails
+        the dispatcher cap and the group loses `pannel` and `resizepanel`
+        entirely. So member references cluster by CHAIN_GAP inside the
+        function, each cluster reaches CHAIN_REACH further, and both are then
+        clipped to the function. The constants say how a chain is shaped
+        inside a known function; they no longer decide where the function
+        ends, which is what let a padded xref cluster spill into its
+        neighbour and split one switch into several regions.
+        """
+        _, ends = self.bounds
+        pcs = sorted((pc, vm) for vm in members for pc in self.xrefs.get(vm, [])
+                     if self.owner(pc) == fn)
         clusters, cur = [], []
         for pc, vm in pcs:
-            if cur and pc - cur[-1][0] > REGION_GAP:
+            if cur and pc - cur[-1][0] > CHAIN_GAP:
                 clusters.append(cur)
                 cur = []
             cur.append((pc, vm))
         if cur:
             clusters.append(cur)
-        by_pc = defaultdict(set)
-        for vm, refs in self.xrefs.items():
-            for pc in refs:
-                by_pc[pc].add(vm)
         out = []
         for c in clusters:
             found = {vm for _, vm in c}
             if len(found) < 2:
                 continue
-            lo, hi = c[0][0] - REGION_PAD, c[-1][0] + REGION_PAD
-            referenced = sorted({vm for pc in by_pc if lo <= pc <= hi for vm in by_pc[pc]})
-            words = [self.strings[vm] for vm in referenced if self.keyword(self.strings[vm])]
-            if len(set(words)) > MAX_REGION_REFS:
-                continue
-            out.append({"text_range": [hex(c[0][0]), hex(c[-1][0])],
-                        "members_hit": sorted({self.strings[vm] for vm in found}),
-                        "referenced": sorted(set(words))})
+            out.append((found, max(fn, c[0][0] - CHAIN_REACH),
+                        min(ends[fn] - 4, c[-1][0] + CHAIN_REACH)))
+        return out
+
+    def regions(self, members: list[int]) -> list[dict]:
+        """Comparison chains, each inside one exactly-bounded function."""
+        mset = set(members)
+        roots = {fn for vm in members for pc in self.xrefs.get(vm, [])
+                 if (fn := self.owner(pc)) is not None}
+        # One level down: a switch that delegates its matching still reports.
+        via = {}
+        for fn in sorted(roots):
+            for callee in self.callees(fn):
+                if callee not in roots and len(self.fn_refs.get(callee, set()) & mset) >= 2:
+                    via[callee] = fn
+        pcs_sorted, words_at = self.keyword_pcs
+        _, ends = self.bounds
+        out = []
+        for fn in sorted(roots | set(via)):
+            for found, lo, hi in self.chains(fn, mset):
+                # lo and hi are both inside fn, so the slice cannot leave it.
+                i, j = bisect.bisect_left(pcs_sorted, lo), bisect.bisect_right(pcs_sorted, hi)
+                words = {w for k in range(i, j) for w in words_at[k]}
+                if len(words) > MAX_REGION_REFS:
+                    continue
+                rec = {"text_range": [hex(fn), hex(ends[fn])],
+                       "chain_range": [hex(lo), hex(hi)],
+                       "members_hit": sorted({self.strings[vm] for vm in found}),
+                       "referenced": sorted(words)}
+                if fn in via:
+                    rec["via"] = hex(via[fn])
+                out.append(rec)
         # `automix` and `sidelist` are compared in twenty functions; keep the
         # regions that hit a set of members no other region strictly contains.
         out.sort(key=lambda r: (-len(r["members_hit"]), r["text_range"]))

@@ -22,12 +22,21 @@ DEBUG = Path('tests/skin-classes-debug.json')
 def function_starts(img):
     """LC_FUNCTION_STARTS gives real boundaries, including code after early RETs."""
     p = img.base + 32
+    text_base = None
+    for _ in range(struct.unpack_from('<I', img.data, img.base + 16)[0]):
+        cmd, size = struct.unpack_from('<II', img.data, p)
+        if cmd == 0x19 and img.data[p + 8:p + 24].rstrip(b'\0') == b'__TEXT':
+            text_base = struct.unpack_from('<Q', img.data, p + 24)[0]
+        p += size
+    if text_base is None:
+        raise ValueError('__TEXT segment missing')
+    p = img.base + 32
     for _ in range(struct.unpack_from('<I', img.data, img.base + 16)[0]):
         cmd, size = struct.unpack_from('<II', img.data, p)
         if cmd == 0x26:
             off, length = struct.unpack_from('<II', img.data, p + 8)
             raw = img.data[img.base + off:img.base + off + length]
-            address, value, shift, out = 0x100000000, 0, 0, []
+            address, value, shift, out = text_base, 0, 0, []
             for b in raw:
                 value |= (b & 127) << shift
                 if b & 128:

@@ -309,6 +309,12 @@ LOCAL_DEFAULT_ALIASES: dict[str, set[str]] = {
     # master effect on and yes with a deck effect on, tracking `deck` in both.
     # `master` is the token that separates, and it is confirmed.
     "effects_used": {"deck"},
+    # 2026-09-06, re-measured 2026-09-07: bare `get_saved_loop` returns the
+    # loop-in position and so do both nonsense controls, so `pos` names the
+    # floor and no fixture can separate it. It is real vocabulary, not a
+    # placeholder: `name`, `length` and the undocumented `len` each separate
+    # from that fallback, which is what makes the fallback visible.
+    "get_saved_loop": {"pos"},
     # 2026-09-08: this machine runs the internal mixer, so bare, `internal` and
     # both nonsense controls answer yes; `external` answers no and is confirmed.
     # Separating `internal` would mean switching the audio config to an external
@@ -456,9 +462,23 @@ def main() -> int:
         if len(live) != summary["actions"]:
             sys.exit(f"action catalog check FAILED: artifact has {summary['actions']} actions, "
                      f"the installed build has {len(live)} — re-extract")
+        # The action count alone cannot see the tables above moving. Recording
+        # a token in LOCAL_CONFIRMED or LOCAL_DEFAULT_ALIASES, or re-probing an
+        # argument form, changes which verbs the cross-check calls unconfirmed
+        # while every description stays identical — so the artifact silently
+        # keeps sending the next agent to re-probe settled ground. Recompute it.
+        fresh = cross_check(live)
+        stored = data.get("cross_check", {})
+        drift = [f"{k}: {len(stored.get(k, {}))} -> {len(v)} verbs"
+                 for k, v in sorted(fresh.items()) if stored.get(k) != v]
+        if drift:
+            sys.exit("action catalog check FAILED: the cross-check no longer matches the "
+                     "artifact (" + "; ".join(drift) + ") — re-extract with "
+                     "`python3 tools/extract_action_catalog.py > tests/action-catalog.json`")
         print(f"action catalog check passed: {summary['actions']} descriptions, "
               f"{summary['with_parameters']} documenting parameters, "
-              f"{summary['multi_argument']} promising more than one argument")
+              f"{summary['multi_argument']} promising more than one argument, "
+              f"cross-check reproduced")
         return 0
 
     entries = catalog(args.app, args.language)

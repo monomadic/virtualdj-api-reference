@@ -39,9 +39,14 @@ Three layers of contract fall out, all serialised data:
    overridden methods (addresses known exactly from the vtable):
    - `arg_demand_slots`: slots whose method materializes E_INVALIDARG
      (0x80070057, a MOVZ/MOVK pair; callees followed one BL level). A method
-     that can demand an argument takes one. Reproduces 108/110 of the
-     HTTP-proven needs-args verbs, and — invisible to the bare-query sweep —
-     flags query verbs that answer bare but validate an OPTIONAL argument.
+     that can demand an argument takes one. Agreement with the HTTP-proven
+     kinds is recomputed on every extraction and reported in the artifact's
+     `summary.sweep_agreement`, so no count is repeated here. It also flags —
+     invisibly to the bare-query sweep — query verbs that answer bare but
+     validate an OPTIONAL argument.
+   - Methods use LC_FUNCTION_STARTS intervals, including branches after early RETs.
+     Direct BL helpers are inspected without the former call-count/window caps;
+     method_traces retains visited functions, unvisited targets and helper literals.
    - `method_strings`: per-slot string references recovered by decoding
      ADRP/ADD pairs (format strings, enum keywords, UI labels).
    - `keyword_candidates`: literals from a method that ALSO calls a
@@ -74,14 +79,24 @@ Tier-1 sweeps confirm behavior and supply concrete types. Located by anchoring, 
     python3 tools/extract_action_contracts.py > tests/action-contracts.json
     python3 tools/extract_action_contracts.py --get hot_cue
     python3 tools/extract_action_contracts.py --check
+    python3 tools/extract_action_contracts.py --traces NAME   # its call-graph addresses
 """
 import json
+import hashlib
+import plistlib
+from functools import lru_cache
 import re
 import struct
 import sys
 
 BINARY = "/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ"
 ARTIFACT = "tests/action-contracts.json"
+# The call-graph addresses behind each trace. Worth keeping — `root` and an
+# unvisited target say which function to disassemble next — but unreadable in a
+# lookup, and `just get-verb` embeds this record whole, where they were 58% of
+# every contract line and 81% of a traced verb's. Same split as
+# tests/skin-classes-debug.json; keyed by class, so aliases share one entry.
+DEBUG = "tests/action-contracts-debug.json"
 VERB_TABLE = "tests/verb-table.json"
 SWEEP = "tests/verb-existence-sweep.json"
 ARM64 = 0x0100000C
@@ -213,6 +228,16 @@ def rtti_graph(data: bytes, prefixes=("ACTION",), _context=False):
             for nm, ti in ti_by_name.items()}
 
 
+def bounded_body(data, base, text, ends, fn):
+    """Decode the exact LC_FUNCTION_STARTS interval, never stop at an early RET."""
+    lo, hi = text[2], text[2] + text[3]
+    if fn not in ends or not lo <= fn < ends[fn] <= hi:
+        return []
+    off = base + text[4] + fn - lo
+    return [(fn + k, struct.unpack_from("<I", data, off + k)[0])
+            for k in range(0, ends[fn] - fn, 4)]
+
+
 def build() -> dict:
     data = open(BINARY, "rb").read()
     ctx = rtti_graph(data, _context=True)
@@ -270,17 +295,15 @@ def build() -> dict:
 
     STRCMP = {"_strcasecmp", "_strncasecmp", "_strcmp", "_strncmp", "_memcmp"}
 
-    def body(fn, max_insns=4000):
-        off = base + text[4] + (fn - text_lo)
-        out = []
-        for k in range(max_insns):
-            if off + k * 4 + 4 > base + text[4] + text[3]:
-                break
-            w = struct.unpack_from("<I", data, off + k * 4)[0]
-            out.append((fn + k * 4, w))
-            if w == 0xD65F03C0 and k > 2:  # RET
-                break
-        return out
+    # Reuse the skin extractor's load-command decoder, never a RET/window guess.
+    from extract_skin_classes import function_starts
+    from types import SimpleNamespace
+    starts = function_starts(SimpleNamespace(data=data, base=base))
+    ends = dict(zip(starts, starts[1:] + [text_hi]))
+
+    @lru_cache(maxsize=None)
+    def body(fn, max_insns=None):
+        return bounded_body(data, base, text, ends, fn)
 
     def bl_targets(insns):
         """(local __text targets, names of __stubs library calls)"""
@@ -323,7 +346,7 @@ def build() -> dict:
                         return None
         return None
 
-    def string_refs(insns, cap=16):
+    def string_refs(insns, cap=None):
         pages, out = {}, []
         for pc, w in insns:
             if (w & 0x9F000000) == 0x90000000:  # ADRP
@@ -342,7 +365,7 @@ def build() -> dict:
                     s = cstr(pages[rn] + imm12)
                     if s and 1 < len(s) < 48 and s.isprintable() and s not in out:
                         out.append(s)
-                        if len(out) >= cap:
+                        if cap is not None and len(out) >= cap:
                             break
         return out
 
@@ -415,7 +438,7 @@ def build() -> dict:
     def analyze_methods(cls):
         """arg-demand fingerprint, string refs, and keyword candidates."""
         vt = vt_addr[cls]
-        demands, strings, keywords = [], {}, []
+        demands, strings, keywords, traces, addresses = [], {}, [], {}, {}
         for slot in over[cls]:
             w = dword(vt + slot * 8)
             if w is None:
@@ -425,17 +448,51 @@ def build() -> dict:
                 continue
             b = body(fn)
             local, lib = bl_targets(b)
-            callees = list(dict.fromkeys(local))[:10]
+            callees = sorted(set(local))
             hit = has_invalidarg(b)
             compares = any(x in STRCMP for x in lib)
             ss = string_refs(b)
+            visited = [fn] + [t for t in callees if body(t)]
+            helper_candidates = []
             for t in callees:
                 cb = body(t, 800)
+                _targets, helper_lib = bl_targets(cb)
+                if any(x in STRCMP for x in helper_lib):
+                    # One entry per helper, not per word: the function, its end
+                    # and its comparison imports are the same for every name it
+                    # holds, and repeating them made a lookup unreadable.
+                    names = [w for w in string_refs(cb)
+                             if re.fullmatch(r"[a-z][a-z0-9_]{1,31}", w)]
+                    if names:
+                        helper_candidates.append(
+                            {"function": hex(t), "end": hex(ends[t]),
+                             "scope": "direct_callee",
+                             "comparison_calls": sorted(set(helper_lib) & STRCMP),
+                             "names": names})
                 if not hit and has_invalidarg(cb):
                     hit = True
                 if not compares:
                     _l, clib = bl_targets(cb)
                     compares = compares or any(x in STRCMP for x in clib)
+            reached = [hex(t) for t in visited if body(t)]
+            unvisited = sorted({hex(t) for v in visited
+                                for t in bl_targets(body(v))[0] if t not in visited})
+            unbounded = [hex(t) for t in [fn] + callees if not body(t)]
+            # Inline only what a lookup can act on: a slot with no helper
+            # candidate has nothing to say that `--traces` does not say better,
+            # and 958 classes' worth of roots and counts drowned the record.
+            if helper_candidates:
+                traces[str(slot)] = {"root": hex(fn),
+                                     "helper_keyword_candidates": helper_candidates}
+            addresses[str(slot)] = {
+                "root": hex(fn), "end": hex(ends[fn]) if fn in ends else None,
+                "visited_count": len(reached), "direct_callee_count": len(callees),
+                "unvisited_count": len(unvisited), "unbounded_count": len(unbounded),
+                "visited_functions": reached,
+                "direct_edges": [[hex(fn), hex(t)] for t in callees],
+                "unvisited_targets": unvisited,
+                "unbounded_targets": unbounded,
+            }
             if hit:
                 demands.append(slot)
             if ss:
@@ -444,12 +501,13 @@ def build() -> dict:
                 keywords += [s for s in ss
                              if 2 < len(s) < 24 and s.replace("_", "").isalnum()
                              and not s.startswith("ACTION")]
-        return demands, strings, sorted(set(keywords))
+        return demands, strings, sorted(set(keywords)), traces, addresses
 
-    out_verbs = {}
+    out_verbs, out_addresses = {}, {}
     for vid, cls in class_of_id.items():
         ov = over[cls]
-        demands, mstrings, keywords = analyze_methods(cls)
+        demands, mstrings, keywords, traces, addresses = analyze_methods(cls)
+        out_addresses[cls] = addresses
         rec = {
             "class": cls,
             "base": chain[cls][0] if chain.get(cls) else None,
@@ -463,6 +521,7 @@ def build() -> dict:
             "query_text": slot_of["query_text"] in ov,
             "extended_interface": nslots[cls] > len(root_slots),
             "arg_demand_slots": demands,
+            "method_traces": traces,
         }
         if mstrings:
             rec["method_strings"] = mstrings
@@ -502,7 +561,24 @@ def build() -> dict:
     from collections import Counter
     fams = Counter(r.get("family", "plain") for r in
                    (out_verbs[ids[v][0]] for v in class_of_id))
+    source = {"build": plistlib.load(open("/Applications/VirtualDJ.app/Contents/Info.plist", "rb"))["CFBundleVersion"],
+              "architecture": "arm64", "binary_sha256": hashlib.sha256(data).hexdigest(),
+              "evidence_tier": 2, "bounds": "LC_FUNCTION_STARTS", "callee_depth": 1}
+    # Addresses go to their own artifact, one command away (`--traces NAME`).
+    open(DEBUG, "w").write(json.dumps(
+        {"source": source,
+         "read": "python3 tools/extract_action_contracts.py --traces NAME",
+         "note": "Call-graph addresses per class and slot; the readable half is "
+                 "tests/action-contracts.json. Regenerated together — the check "
+                 "fails if their source hashes disagree.",
+         "classes": out_addresses}, indent=1, sort_keys=True) + "\n")
     return {
+        "source": source,
+        "limitations": ["All literals are Tier-2 leads; comparison co-occurrence is not argument dataflow proof.",
+                        "Direct BL traversal only; indirect calls, tail branches and deeper callees are not followed.",
+                        "ADRP/ADD recovery is heuristic, not control-flow or register-liveness analysis.",
+                        "Value arguments, computed strings, loaded tables and argument positions are not recovered.",
+                        "E_INVALIDARG instruction co-occurrence is a fingerprint, not proof of parameter validation."],
         "summary": {
             "classes": len(vt_addr),
             "distinct_ids": len(ids),
@@ -518,6 +594,11 @@ def build() -> dict:
             "optional_arg_queries": sorted(optional_args),
             "keyword_verbs": sum(1 for vid in class_of_id
                                  if out_verbs[ids[vid][0]].get("keyword_candidates")),
+            # The canary for the bounds: an entry address outside every
+            # LC_FUNCTION_STARTS interval is reported, never guessed past.
+            "unbounded_targets": sum(len(t["unbounded_targets"])
+                                     for slots in out_addresses.values()
+                                     for t in slots.values()),
             "sweep_agreement": {
                 k: {"agree": a, "total": t,
                     "rate": round(a / t, 4) if t else None}
@@ -538,10 +619,34 @@ def cmd_get(name: str) -> None:
     print(json.dumps({"name": name, **rec}, indent=1))
 
 
+def cmd_traces(name: str) -> None:
+    """The addresses behind one verb's traces, from the debug artifact."""
+    rec = json.load(open(ARTIFACT))["verbs"].get(name)
+    if rec is None:
+        print(json.dumps({"name": name, "has_contract": False}, indent=1))
+        return
+    debug = json.load(open(DEBUG))
+    print(json.dumps({"name": name, "class": rec["class"],
+                      "slots": debug["classes"].get(rec["class"], {})},
+                     indent=1))
+
+
 def cmd_check() -> None:
     data = json.load(open(ARTIFACT))
     s = data["summary"]
     errs = []
+    try:
+        debug = json.load(open(DEBUG))
+    except FileNotFoundError:
+        debug = None
+        errs.append(f"{DEBUG} missing — regenerate with `just extract-action-contracts`")
+    if debug is not None:
+        if debug["source"] != data["source"]:
+            errs.append("the debug artifact was extracted from a different binary "
+                        f"({debug['source'].get('build')}) — regenerate both")
+        missing = {r["class"] for r in data["verbs"].values()} - set(debug["classes"])
+        if missing:
+            errs.append(f"{len(missing)} classes have no address record: {sorted(missing)[:5]}")
     if s["ids_with_class"] != s["distinct_ids"]:
         errs.append(f"bijection broken: {s['ids_with_class']}/{s['distinct_ids']} ids matched")
     if s["orphan_ids"] or s["double_matched_ids"] or s["unmatched_classes"]:
@@ -564,12 +669,15 @@ def cmd_check() -> None:
     print(f"action contracts check passed: {s['classes']} classes / "
           f"{s['distinct_ids']} ids (bijection), slots {s['slot_labels']}, "
           f"families {s['families']}, {s['arg_demand_verbs']} arg-demanding, "
-          f"{s['keyword_verbs']} with keywords, sweep agreement {ag}")
+          f"{s['keyword_verbs']} with keywords, sweep agreement {ag}, "
+          f"{s['unbounded_targets']} unbounded entry addresses")
 
 
 def main() -> None:
     if len(sys.argv) > 2 and sys.argv[1] == "--get":
         return cmd_get(sys.argv[2])
+    if len(sys.argv) > 2 and sys.argv[1] == "--traces":
+        return cmd_traces(sys.argv[2])
     if len(sys.argv) > 1 and sys.argv[1] == "--check":
         return cmd_check()
     print(json.dumps(build(), indent=1, sort_keys=True))

@@ -56,3 +56,20 @@ Test assets are important evidence for the documentation project. They are kept 
 | --- | --- |
 | [Skins/MixFxQueryTest/](Skins/MixFxQueryTest/) | Skin-side Mix FX query checks used with the Mix FX pad fixture. |
 | [Skins/PlaceholderConditionTest/](Skins/PlaceholderConditionTest/) | Define-placeholder `visibility=""` / `condition=""` canary for skin XML. |
+
+## Bounded verb-tail leads
+
+`action-tail-leads.json` is a regenerable Tier-2 probe queue joining bounded
+method/helper traces, existing vocabulary groups, and historical method/module
+annotations. Helpers carry fan-out and verb-id-fraction measurements so the
+script evaluator's dispatch dump ranks below verb-specific finds, and the verb
+store is joined live at query time so tails it already records leave the queue.
+Query with `just action-tail-leads --get NAME` or `--queue`;
+summary totals are available from `just action-tail-leads` → `summary`.
+See [Verb Tail Structural Discovery](../docs/Verb%20Tail%20Structural%20Discovery.md)
+for the transfer assessment, regeneration order and live-probe limits.
+
+`action-contracts-debug.json` holds the call-graph addresses behind those
+traces — roots, direct edges, visited and unvisited targets, per class and slot.
+It is written by the same extraction and read with `just verb-traces NAME`; the
+contracts check fails if the pair disagree about the binary they came from.

@@ -160,6 +160,10 @@ extract-verb-table:
 verb-contract name:
     @python3 tools/extract_action_contracts.py --get "{{name}}"
 
+# The call-graph addresses behind one verb's traces (roots, callees, unvisited).
+verb-traces name:
+    @python3 tools/extract_action_contracts.py --traces "{{name}}"
+
 extract-action-contracts:
     @python3 tools/extract_action_contracts.py > tests/action-contracts.json
 
@@ -324,6 +328,8 @@ check:
     python3 tools/extract_binary_verbs.py --check
     python3 tools/extract_verb_table.py --check
     python3 tools/extract_action_contracts.py --check
+    python3 tools/test_action_tail_bounds.py
+    python3 tools/action_tail_leads.py --check
     python3 tools/sweep_return_types.py --check
     python3 tools/plugin_introspect.py --check
     python3 tools/plugin_skin.py --check
@@ -452,3 +458,10 @@ skin-modules *args:
 
 extract-skin-modules app:
     @python3 tools/extract_skin_modules.py --app "{{app}}" > tests/skin-modules-9246.json
+
+# Tier-2 bounded method/helper literal leads and ranked live probe queue.
+action-tail-leads *args:
+    @python3 tools/action_tail_leads.py {{args}}
+
+extract-action-tail-leads:
+    @python3 tools/action_tail_leads.py --generate > tests/action-tail-leads.json
