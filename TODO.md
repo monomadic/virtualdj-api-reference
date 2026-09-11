@@ -1689,6 +1689,30 @@ is joined directly as execute-with-independent-BPM-readback evidence, so a toggl
 capture's nondiscrimination cannot reopen its confirmed landing-BPM forms. Capture-time
 build provenance is part of 10d below, not a separate task.
 
+**Follow-up 2026-09-12, the `evidence_in_prose` bucket.** It held 37 verbs and two kinds of
+thing. Eighteen were behaviour-only prose (`deck_has_error stayed off`) that said nothing about
+arguments; the assessment now asks whether the evidence names a form or the argument before
+using the label, and those read `unprobed` with the note that behaviour evidence exists. Nine
+were the effect-introspection verbs whose NAME-form result had a real artifact all along —
+`tests/fx-introspection-dump.json` reads every installed effect by name — so the dump is joined
+directly through the sweep's own `NAME_FORM_VERBS` declaration, the same way the BPM-transition
+capture is, and those verbs close with the dump's provenance (product version only; it predates
+build stamping, and the claim says so). What is left in the bucket is genuinely prose-only:
+`get_date`'s strftime value form, `get_effect_slider_name`'s plugin-channel result, the two
+`get_video*_name` verbs whose argument is *ignored* (a negative finding), `is_releasefx`'s
+undiscriminated slot/name forms, the grammar wrappers `deck` / `all_decks` / `nothing`, and
+`browser_colorfilter_edit`'s E_NOTIMPL. Locate and structure each existing observation first,
+including the plugin capture for `get_effect_slider_name`. Run a new probe (for example,
+a `get_date` position probe) only if the recorded evidence is insufficient. Check the current
+count with `just coverage`; do not copy it here.
+
+Review correction: the FX join now checks each verb's own result field, including the
+conditional slider/button rows, before claiming a measured form. It excludes error and
+missing results, retains the legitimate blank skip-length label, and reports a concrete
+effect/index/value. Legacy count zero is ambiguous because the sweep converted errors to
+zero; positive count measurements support that form. The prose filter is only a routing
+heuristic: a miss means no explicit argument reference was detected, not "never probed".
+
 Checklist as landed, each line with the command that proved it:
 
 1. **One per-verb assessment, shared.** `tools/coverage_report.py` already builds a per-verb

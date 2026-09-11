@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from coverage_report import assess, load_context
+from coverage_report import assess, load_context, focused_fx_claims
 from fixtures import Channel, FixtureError
 import probe_execute_forms as execute
 
@@ -24,6 +24,41 @@ def context():
 
 
 class AssessmentTests(unittest.TestCase):
+    def test_fx_join_requires_the_verb_measurement(self):
+        for verb, fields in (
+                ("get_effect_slider_default", {"sliders": []}),
+                ("get_effect_button_name", {"buttons": []}),
+                ("get_effect_slider_count", {}),
+                ("get_effect_slider_count", {"slider_count": 0}),
+                ("get_effect_slider_default", {"sliders": [{"index": 1}]}),
+                ("get_effect_slider_default", {"sliders": [{"index": 1, "default": "error:1"}]}),
+                ("get_effect_slider_default", {"sliders": [{"index": 1, "default": ""}]}),
+                ("get_effect_button_name", {"buttons": [{"index": 1, "full": "error:1"}]})):
+            with self.subTest(verb=verb, fields=fields):
+                dump = {"effects": [{"effect": "Empty", "introspected_via": "title", **fields}]}
+                self.assertEqual(focused_fx_claims(verb, dump), [])
+
+    def test_fx_join_selects_valid_measurements_and_preserves_legitimate_blank(self):
+        dump = {"effects": [
+            {"effect": "Empty", "introspected_via": "title", "sliders": []},
+            {"effect": "Measured", "introspected_via": "title", "sliders": [
+                {"index": 1, "default": "error:1"},
+                {"index": 2, "default": "0", "skip_length_label": ""}]}]}
+        claim, = focused_fx_claims("get_effect_slider_default", dump)
+        self.assertEqual(claim["example"], {"effect": "Measured", "index": 2, "value": "0"})
+        self.assertEqual(claim["excluded_results"]["error"], 1)
+        self.assertIn("across 1 effects", claim["observation"])
+        blank, = focused_fx_claims("get_effect_slider_label_skip_length", dump)
+        self.assertEqual(blank["example"]["value"], "")
+
+    def test_prose_filter_miss_does_not_claim_no_prior_test(self):
+        rec = {"confidence": "local_test", "evidence": [
+            "HTTP: example opposite answered yes; nonsense answered no."]}
+        result = assess("example", rec, context())
+        claim = next(c for c in result["claims"] if c["dimension"] == "arguments")
+        self.assertIn("prose filter found no explicit", claim["observation"])
+        self.assertNotIn("never probed", claim["observation"])
+
     def test_live_build_provenance_does_not_accept_error_or_empty(self):
         for value in ("", "error:1", "not-a-build"):
             with patch.object(Channel, "query", return_value=value):
@@ -49,6 +84,33 @@ class AssessmentTests(unittest.TestCase):
         self.assertEqual(curve["dimensions"]["arguments"], "open")
         obligations = {c["form"] for c in curve["claims"] if c["status"] == "open"}
         self.assertTrue({"catalog: numeric value", "catalog: drawn curve"} <= obligations)
+
+    def test_fx_dump_join_closes_name_form_verbs_with_unstamped_provenance(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", ResourceWarning)
+            ctx = load_context()
+        r = assess("get_effect_slider_count", ctx.store["get_effect_slider_count"], ctx)
+        self.assertEqual(r["dimensions"]["arguments"], "settled")
+        fx = [c for c in r["claims"] if c.get("source") == "tests/fx-introspection-dump.json"]
+        self.assertEqual(len(fx), 1)
+        self.assertEqual(fx[0]["form"], "get_effect_slider_count 'NAME'")
+        self.assertIsNone(fx[0]["build"])
+        # A verb the sweep never called by name gains nothing from the join.
+        r2 = assess("get_effect_slider_name", ctx.store["get_effect_slider_name"], ctx)
+        self.assertFalse(any(c.get("source") == "tests/fx-introspection-dump.json"
+                             for c in r2["claims"]))
+
+    def test_behaviour_only_prose_is_not_argument_evidence(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", ResourceWarning)
+            ctx = load_context()
+        for verb in ("deck_has_error", "video_fx_clear"):  # "verb returned true" is not a form
+            behaviour = assess(verb, ctx.store[verb], ctx)
+            self.assertEqual(behaviour["dimensions"]["arguments"], "unprobed", verb)
+        wrapper = assess("all_decks", ctx.store["all_decks"], ctx)  # "all_decks get_version" is
+        self.assertEqual(wrapper["dimensions"]["arguments"], "evidence_in_prose")
+        about_args = assess("get_date", ctx.store["get_date"], ctx)
+        self.assertEqual(about_args["dimensions"]["arguments"], "evidence_in_prose")
 
     def test_binary_demand_without_known_form_stays_open(self):
         ctx = context()

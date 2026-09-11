@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 from datetime import date
@@ -159,6 +160,7 @@ class Context:
         self.execforms = artifact("verb-execute-forms.json", "verbs")
         self.positions = artifact("verb-arg-positions.json", "verbs")
         self.bpm_transition = artifact("bpm-transition-forms.json") or {}
+        self.fx_dump = artifact("fx-introspection-dump.json") or {}
         tails_art = artifact("attested-tails.json") or {}
         self.attested = tails_art.get("tails", {})
         self.shapes = tails_art.get("shapes", {})
@@ -210,6 +212,96 @@ def _claim(dimension: str, form: str, status: str, reason: str | None = None,
     return c
 
 
+def focused_fx_claims(name: str, dump: dict) -> list[dict]:
+    """The FX introspection sweep read every installed effect through the
+    NAME form of the get_effect_* helpers, with no effect_select for those
+    reads. Only the result field for the requested verb supplies a measurement;
+    empty control collections do not. Joined here so the 2026-07-22 conclusion stops
+    living only in store prose. The dump predates build stamping: it carries
+    the product version, not a build, and the claim says so."""
+    if not dump:
+        return []
+    try:
+        from sweep_fx_introspection import NAME_FORM_VERBS
+    except ImportError:
+        return []
+    spec = NAME_FORM_VERBS.get(name)
+    if not spec:
+        return []
+    shape, result_path, kind = spec
+    measurements = []
+    excluded = {"missing": 0, "error": 0, "invalid": 0}
+    for effect in dump.get("effects", []):
+        if effect.get("introspected_via") != "title" or not effect.get("effect"):
+            continue
+        collection, dot, field = result_path.partition(".")
+        rows = effect.get(collection, []) if dot else [effect]
+        for row in rows:
+            key = field if dot else collection
+            if key not in row:
+                excluded["missing"] += 1
+                continue
+            value = row[key]
+            if isinstance(value, str) and value.startswith("error:"):
+                excluded["error"] += 1
+                continue
+            if dot and (type(row.get("index")) is not int or row["index"] < 1):
+                excluded["invalid"] += 1
+                continue
+            if kind == "count":
+                # Legacy to_int() maps failures to zero: only positive stored
+                # counts independently establish a successful count response.
+                valid = type(value) is int and value > 0
+            elif kind == "bool":
+                valid = value in ("yes", "no", "true", "false", "on", "off")
+            elif kind == "number":
+                try:
+                    valid = value != "" and math.isfinite(float(value))
+                except (ValueError, TypeError):
+                    valid = False
+            else:
+                valid = isinstance(value, str) and (bool(value) or kind == "optional_text")
+            if not valid:
+                excluded["invalid"] += 1
+                continue
+            measurements.append({"effect": effect["effect"], "value": value,
+                                 **({"index": row["index"]} if dot else {})})
+    if not measurements:
+        return []
+    example = measurements[0]
+    effects = {m["effect"] for m in measurements}
+    claim = _claim("arguments", f"{name} {shape}", "settled", None,
+                   f"{len(measurements)} usable measurements across {len(effects)} effects "
+                   f"addressed by name; e.g. {example}; no effect_select for these reads",
+                   "HTTP FX introspection sweep")
+    claim["source"] = "tests/fx-introspection-dump.json"
+    claim["result_path"] = result_path
+    claim["example"] = example
+    claim["excluded_results"] = excluded
+    claim["build"] = None
+    claim["provenance"] = {"vdj_version": dump.get("vdj_version"), "build": None,
+                           "note": "capture predates build stamping"}
+    return [claim]
+
+
+def prose_about_arguments(name: str, evidence: list[str], known: set[str] = frozenset()) -> bool:
+    """Heuristic for explicit argument references, not proof of their absence.
+    A form qualifies — the verb followed by a quoted or numeric
+    token, a sign, a placeholder, or another verb (`all_decks get_version`) —
+    and so does the word itself. `deck_has_error stayed off` and
+    `video_fx_clear returned true` do not: prose verbs are not arguments."""
+    form = re.compile(rf"\b{re.escape(name)}\s+(['\"<$+\-]|\d|(\w+))")
+    words = re.compile(r"\bargument|\btails?\b|\bforms?\b", re.IGNORECASE)
+    for e in evidence:
+        e = e or ""
+        if words.search(e):
+            return True
+        for m in form.finditer(e):
+            if m.group(2) is None or m.group(2) in known:
+                return True
+    return False
+
+
 def assess(name: str, rec: dict, ctx: Context) -> dict:
     """The per-verb contract assessment: one dimension state each for return
     type, arguments, execute position and behaviour, plus a claim per FORM
@@ -227,15 +319,17 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     ex = ctx.execforms.get(name)
     pos = ctx.positions.get(name)
     focused_execute = focused_execute_claims(name, ctx.bpm_transition)
+    focused_args = focused_fx_claims(name, getattr(ctx, "fx_dump", {}))
     extra = set(ctx.extra_confirmed.get(name, ()))
-    claims: list[dict] = []
+    claims: list[dict] = list(focused_args)
 
     # --- recognized tails, by channel ---------------------------------------
     probed_recognized = {tuple(t) for t in (af or {}).get("recognized_tokens", [])}
     single_probed = {t[0] for t in probed_recognized if len(t) == 1}
     recognized = sorted(single_probed | extra)
     tail_probed = af is not None
-    probed_any = tail_probed or pos is not None or ex is not None or bool(extra)
+    probed_any = (tail_probed or pos is not None or ex is not None or bool(extra)
+                  or bool(focused_args))
 
     candidates = set((c or {}).get("keyword_candidates") or [])
     candidates |= set(ctx.catalog_actions.get(name, {}).get("documented_parameters", []))
@@ -362,21 +456,24 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                            "HTTP form probe + vendor catalog" if measured else "vendor catalog")
             claim["source"] = f"tests/action-catalog.json:actions.{name}.text"
             claims.append(claim)
+    two_position_focused = any(len(cl["form"].split()) >= 3 for cl in focused_args)
     if catalog.get("multi_argument") and not (pos and pos.get("stable") and
             all(p["verdict"] == "reads" for p in pos.get("positions", []))) and not (
-            af or {}).get("two_token_grammar"):
+            af or {}).get("two_token_grammar") and not two_position_focused:
         claims.append(_claim("arguments", "catalog: multiple arguments", "open", "not_measured",
                              "catalog names a multi-argument form not covered by the token results",
                              "vendor catalog"))
-    if (c or {}).get("arg_demand_slots") and not (recognized or defaults or pos or focused_execute):
+    if (c or {}).get("arg_demand_slots") and not (recognized or defaults or pos or focused_execute
+                                                  or focused_args):
         claims.append(_claim("arguments", "binary argument-demand slots", "open", "not_measured",
                              str(c["arg_demand_slots"]), "binary contract (Tier 2 lead)"))
 
     if unresolved or any(c["dimension"] == "arguments" and c["status"] == "open"
                          for c in claims):
         dims["arguments"] = "open"
-    elif recognized or defaults or (pos and pos.get("stable") and pos.get("positions")
-                                    and all(p["verdict"] == "reads" for p in pos["positions"])):
+    elif recognized or defaults or focused_args or (
+            pos and pos.get("stable") and pos.get("positions")
+            and all(p["verdict"] == "reads" for p in pos["positions"])):
         dims["arguments"] = "settled"
     elif tail_probed and not candidates and not attested_shapes:
         # Probed against nonsense with no candidate anywhere. Absence of a
@@ -388,13 +485,18 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                              "HTTP tail prober"))
     elif attested_shapes:
         dims["arguments"] = "shape_attested"
-    elif not probed_any and rec.get("confidence") == "local_test" and rec.get("evidence"):
+    elif (not probed_any and rec.get("confidence") == "local_test" and rec.get("evidence")
+          and prose_about_arguments(name, rec["evidence"], set(getattr(ctx, "canon", {})))):
+        # The prose names a form or speaks of the argument: a live result that
+        # never reached an artifact row. Locate it before re-running anything.
         dims["arguments"] = "evidence_in_prose"
         claims.append(_claim("arguments", "(see store evidence)", "open", "prose_only",
                              (rec["evidence"][0] or "")[:160]))
     elif not probed_any:
         dims["arguments"] = "unprobed"
-        claims.append(_claim("arguments", "(any)", "open", "not_measured", "never probed"))
+        obs = ("no structured argument evidence joined; the prose filter found no explicit "
+               "argument reference" if rec.get("evidence") else "no argument evidence joined")
+        claims.append(_claim("arguments", "(any)", "open", "not_measured", obs))
     else:
         dims["arguments"] = "open"
 
@@ -502,6 +604,8 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
             provenance = (ex or {}).get("provenance", {})
         elif channel == "HTTP return-type sweep":
             source = "tests/verb-return-types.json"
+        if claim.get("source") and "provenance" in claim:
+            continue  # focused joins carry their own provenance
         if source:
             claim["source"] = source
             claim["build"] = provenance.get("build")

@@ -38,6 +38,30 @@ parked on the sentinel. Emits JSON to stdout.
 """
 import json
 import sys
+
+# The introspection verbs this sweep calls with an effect NAME in the slot
+# position, and the shape used. Mirrors the q() calls in introspect() below;
+# coverage_report joins the dump through this so a per-effect row counts as a
+# measured argument form for exactly the verbs that produced it.
+# Each entry names its shape, result path, and validation kind.
+# Indexed paths occur only inside the slider/button loops. The effect field
+# is the canonical name derived from a successful title response.
+NAME_FORM_VERBS = {
+    'get_effect_title': ("'NAME'", 'effect', 'text'),
+    'get_effect_slider_count': ("'NAME'", 'slider_count', 'count'),
+    'get_effect_button_count': ("'NAME'", 'button_count', 'count'),
+    'effect_has_length': ("'NAME'", 'has_length', 'bool'),
+    'effect_has_beats': ("'NAME'", 'has_beats', 'bool'),
+    'effect_has_slider': ("'NAME' IDX", 'sliders.has', 'bool'),
+    'get_effect_slider_label': ("'NAME' IDX", 'sliders.short', 'text'),
+    'get_effect_slider_label_full': ("'NAME' IDX", 'sliders.full', 'text'),
+    'get_effect_slider_default': ("'NAME' IDX", 'sliders.default', 'number'),
+    'get_effect_slider_text': ("'NAME' IDX", 'sliders.text', 'text'),
+    'get_effect_slider_label_skip_length': ("'NAME' IDX", 'sliders.skip_length_label', 'optional_text'),
+    'effect_has_button': ("'NAME' IDX", 'buttons.has', 'bool'),
+    'get_effect_button_shortname': ("'NAME' IDX", 'buttons.short', 'text'),
+    'get_effect_button_name': ("'NAME' IDX", 'buttons.full', 'text'),
+}
 import time
 import urllib.parse
 import urllib.request
