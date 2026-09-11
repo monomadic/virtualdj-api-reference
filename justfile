@@ -507,3 +507,11 @@ check-runtime-grammar:
     @python3 tools/runtime_grammar_probes.py --check
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json
+
+# Decode every original device/mapper/audio XML member; output dir must be new.
+controllers-extract *args:
+    @uv run tools/read_controllers.py "$@"
+
+# Offline vocabulary and mapper cross-checks; --path /device/slider or --device DDJGRV6.
+controllers *args:
+    @python3 tools/controller_schema_inventory.py "$@"
