@@ -170,12 +170,30 @@ Use `just runtime-grammar` → `verdicts` for current artifact-derived totals, a
 all repeated values and controls. Verdicts are recomputed from stored observations by
 `--check`; drift, failed controls, and a failed contrast cannot produce `held-in-fixture`.
 
+**A held verdict is not by itself a discriminating result.** A frozen prediction of blank
+holds when the script returns blank — and so do the nonsense controls, which makes that
+reading a null rather than evidence about the token. The report therefore derives a
+`separation` field beside every verdict (`separates`, `matches-controls`), counts them in
+the summary, and names the `held_but_matches_controls` cases outright; it is computed from
+the stored observations and never written into a capture, so recorded evidence is unchanged.
+Read the verdict for whether the prediction was right and `separation` for whether the case
+could have distinguished anything. The two stateful suites answer this differently from the
+read-only one: their asymmetric baselines mean a script that moves *neither* baseline while
+the contrast oracle demonstrably moves both is a genuine no-op finding, not a null.
+
 The [confirmation capture](../tests/runtime-grammar-confirmation-9598.json) completed
 forward and reverse passes. Representative observations in `parser_constants`:
 
-- `constant\t37` returned `error:-2147467259`; a leading tab followed by `constant 37`
-  returned `37`. `constant 37\t& param_add 5` returned blank, while the space-separated
-  counterpart returned `42`.
+- Whitespace bytes are not interchangeable at the head: `constant\t37` returned
+  `error:-2147467259` while `constant\n37` returned `37`, and a leading tab before
+  `constant 37` returned `37`. That pair is the unconfounded whitespace comparison.
+- The post-number whitespace cases are **not** such a comparison, and an earlier revision of
+  this section read them as one. `constant 37\t& param_add 5` returned blank against `42`
+  for the space-separated form — but `constant 37& param_add 5`, carrying no tab at all,
+  also returned blank. The discriminator there is the space *preceding* `&`, not the byte
+  following the number, so every `number-end-*` case restates one result. The twelve
+  `suffix-boundary-*` cases add a unit-suffix confound on top and cannot isolate the
+  delimiter either.
 - `constant 37,5` returned `37.5`. `constant 37.5ms` returned `38ms`, while
   `constant 37.5ms & param_cast float` returned `37.5`. This separates observed rendering
   from an assertion that the parser discarded the fraction.
@@ -193,8 +211,18 @@ an unknown legacy effect verb, and an assumed empty sampler slot. The
 [focused follow-up](../tests/runtime-grammar-followup-9598.json) independently repeats
 corrected comparisons: it records CR/LF expansion by `get_text` versus literal preservation
 by `constant`, and observed sampler/effect prefix results. Its `int-width-*` cases retain
-the exact numeric boundary inputs and outputs. None of these observations promotes a
-verb-store status or edits the normative grammar reference.
+the exact numeric boundary inputs and outputs.
+
+**Promoted 2026-09-12.** The lexical candidates stayed unpromoted while they were single
+readings. The rules that survived two independent suites, two prepared baselines and two
+passes are now written into the normative reference: keyword quoting, unit-suffix case and
+adjacency, comma decimals, signed-versus-unsigned numbers, the malformed-number reset, and
+backtick inertness in execute position — see
+[Arguments and quoting](VDJScript%20Grammar.md#arguments-and-quoting),
+[Backticks](VDJScript%20Grammar.md#backticks-are-a-surface-feature-not-a-parser-feature)
+and [What an unrecognized tail does in execute position](VDJScript%20Grammar.md#what-an-unrecognized-tail-does-in-execute-position-2026-09-03).
+`zoom` and `beatlock` carry `local_test` records in the verb store. Everything still
+resting on a single capture, and every editor-side question, stays here as a candidate.
 
 The [stateful action capture](../tests/runtime-grammar-actions-9598.json) completed both
 passes on HTTP build 9598 with every frozen prediction `held-in-fixture`. Exact cases and

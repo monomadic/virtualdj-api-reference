@@ -39,7 +39,12 @@ and not writing script, you can stop after this section.
 - **Store numbers in variables, never strings.** A string-valued variable cannot be read
   back (`get_var` returns blank) *or* compared (`var_equal` returns `yes` against
   everything). Use numeric codes.
-- **Backticks only interpolate in XML attribute contexts**, not everywhere.
+- **Backticks only interpolate in XML attribute contexts**, not everywhere — confirmed
+  inert in execute position too, by state readback.
+- **A malformed number can wipe the value, not be ignored.** `zoom 0.25zzqqx` resets zoom
+  rather than doing nothing. And a **signed** number is relative where unsigned is
+  absolute — `zoom +0.25` adds, `zoom 0.25` sets.
+- **Quote names, not keywords.** `beatlock 'on'` is silently inert where `beatlock on` works.
 - **There are no comments.** `//`, `#`, `;`, `--`, `/* */` all silently discard the rest of
   the statement.
 - **Variable prefixes are part of the name.** `mode` and `$mode` are different variables.
@@ -371,9 +376,50 @@ hold for a **value** being stored, where quoting decides the type — see
 are real constants that evaluate to `yes`/`no`; `true` and `false` are **not** — they store
 nothing (`HTTP`).
 
+### Quoting a *keyword* argument can disable it
+
+The equivalence above covers a string being matched. It does **not** hold for the fixed
+keywords a switch-style verb accepts, where quoting silently turns a working argument into
+a no-op (`Local test` 2026-09-12, `HTTP` execute with independent state readback, build
+9598, from beatlock off and on baselines):
+
+```
+deck 1 beatlock on       -> on from both baselines
+deck 1 beatlock 'on'     -> unchanged            <- silently inert
+deck 1 beatlock "on"     -> unchanged            <- silently inert
+```
+
+So the habit of quoting every argument, which is right for names, is wrong for keywords.
+Quote values that may contain a space; leave bare the fixed words a verb enumerates.
+
+`beatlock` reaches the shared `IActionSwitch::onExecute`, so the vocabulary below is likely
+common to switch verbs, but it was measured on `beatlock` alone:
+
+| Argument | Effect |
+| --- | --- |
+| *(none)*, `toggle` | toggles |
+| `on`, `1` | sets on |
+| `off`, `0` | sets off |
+| `+1`, `+0`, `-1` | toggles — a **signed** integer does not set |
+| `'on'`, `"on"`, `1.0`, `100%`, `default`, `all`, `value`, `` `constant 1` `` | inert |
+
 Argument *matching* is a per-verb matter, not grammar — effect names are case-insensitive
 but not space-insensitive, some verbs require a signed number, some ignore computed
 values. Those live on the verb record: `just get-verb <name>`.
+
+### Unit suffixes are case-sensitive and must be adjacent
+
+`%`, `ms` and `bt` attach to the number with no space, in lower case (`HTTP`, build 9598):
+
+```
+constant 37ms   -> 37ms       constant 37MS    -> ''      <- wrong case, no value
+constant 37%    -> 37%        constant 37 ms   -> 37      <- suffix dropped
+constant 37bt   -> 37bt       constant 37msbt  -> ''      <- one suffix only
+```
+
+A comma is accepted as a decimal separator on both surfaces: `constant 37,5` returns
+`37.5` and `zoom 0,25` sets the same value as `zoom 0.25`. A number with no integer part
+is **not** parsed — `constant .5` returns blank — so write `0.5`.
 
 A `+`-combined argument is one token and takes no whitespace, for the same reason
 (`Local test` 2026-09-08, `HTTP`): `effect_arm_stem 'kick+bass'` arms both stems,
@@ -491,6 +537,22 @@ get_var '$src' & param_multiply 2 & set '$dst'
 
 Whether a *given verb* honours a computed argument is per-verb: `loop`, `beatjump`, and
 `phrase_sync` ignore them even where the identical literal works. Check the verb record.
+
+The same holds in **execute** position, which the query evidence above could not show —
+a flattened query result is consistent with "the surface stringified it", but a state
+readback is not. With `zoom` and `beatlock` driven from two prepared baselines and read
+back independently (`Local test` 2026-09-12, `HTTP`, build 9598), every backtick form left
+both baselines exactly where the nonsense controls did, while the literal moved them:
+
+```
+zoom `constant 0.25`            -> unchanged      zoom 0.25          -> 0.25
+zoom '`constant 0.25`'          -> unchanged
+deck 1 beatlock `constant 1`    -> unchanged      deck 1 beatlock on -> on
+deck 1 beatlock '`constant 1`'  -> unchanged
+```
+
+Quoting the backtick expression does not rescue it. A computed deck prefix is worse than
+inert — `` deck `constant 2` get_deck `` returns `error:-2147467259`.
 
 ## Variable scope prefixes
 
@@ -636,10 +698,57 @@ what it reads after the call from `off` and from `on`:
 | --- | --- | --- | --- |
 | **Junk suppresses the action** | flips (`yes`,`no`) | nothing (`no`,`yes`) | 9 of 10 toggles — `beatlock`, `auto_sync`, `auto_match_bpm`, `quantize_all`, `pad_bank2`, `pad_pressure_switch`, `repeat_song`, `djc_shift`, `rane_timecode_enable` |
 | **Junk is ignored, action proceeds** | flips (`yes`,`no`) | flips (`yes`,`no`) | `auto_bpm_transition` |
+| **Junk resets to a fixed value** | `0.2`,`0.2` | `0.2`,`0.2` | `zoom` (a continuous verb, so the columns read as the value left from each baseline) |
 
 So the practical warning for mappers stands but is verb-specific: a misspelled argument
-usually makes the action do **nothing**, and on some verbs it degrades to the bare action
-instead. Neither is reported as an error.
+usually makes the action do **nothing**, on some verbs it degrades to the bare action
+instead, and on at least one it **discards the current value**. None is reported as an error.
+
+### A malformed number is not ignored — it can reset the value (2026-09-12)
+
+The third row is the dangerous one, because "unknown tokens are ignored" is the intuition
+most scripts are written on. Measured on `zoom` from baselines `0.25` and `0.65`, two
+passes, restored and verified (`Local test` 2026-09-12, `HTTP` execute, build 9598):
+
+```
+zoom 0.25zzqqx    -> 0.2        zoom 25MS    -> 0.2       zoom .25     -> 0.2
+zoom 0.25<tab>    -> 0.2        zoom 1e-1    -> 0.2       zoom #zzqqx  -> 0.2
+zoom 'default'    -> 0.2        zoom 0x1     -> 0.2       zoom         -> 0.2
+zoom 0.25 zzqqx   -> 0.25       zoom zzqqx   -> unchanged
+```
+
+Both endpoints matter. A token that *starts* like a number and then fails to parse —
+wrong-case suffix, exponent, hex, no leading digit, junk welded to the digits — lands on the
+same `0.2` that bare `zoom` produces, wiping whatever the value was. A purely alphabetic
+unknown token (`zzqqx`) is ignored and leaves the value alone. Space-separating the junk
+(`zoom 0.25 zzqqx`) keeps the parsed number, so adjacency is what decides it.
+
+`zoom #zzqqx` lands on `0.2` for a different reason: `#` opens a
+[comment](#there-is-no-comment-syntax) and discards the rest, leaving bare `zoom`. The same
+mechanism reads harmlessly on a toggle — `deck 1 beatlock #zzqqx` simply toggles.
+
+### A signed number is relative; unsigned is absolute (2026-09-12)
+
+Same fixture and build. The sign is not decoration — it selects the operation:
+
+```
+zoom 0.25     -> 0.25, 0.25      absolute
+zoom +0.25    -> 0.5,  0.9       relative
+zoom -0.25    -> 0,    0.4       relative
+zoom 25%      -> 0.25, 0.25      percent maps onto the same absolute scale
+zoom +25%     -> 0.5,  0.9
+zoom 2.0      -> 1,    1         absolute, clamped
+zoom -2.0     -> 0,    0         relative, clamped
+```
+
+A verb may accept only one of the two forms, which is why
+[`beatjump` needs its sign](VirtualDJ%20Reference.md) (`beatjump +4` jumps, `beatjump 4`
+does nothing) and why a signed integer on a switch verb toggles instead of setting. Check
+the verb record before assuming a bare number works.
+
+Two forms that look valid are ignored by `zoom` outright: a bare integer (`zoom 1`,
+`zoom 0`) and a duration (`zoom 25ms`, `zoom 25bt`) — parsed, wrong type for this
+consumer, discarded without falling back to `0.2`.
 
 Two-baseline measurement is what separates these at all. From a single baseline, `beatlock on`
 and `beatlock <junk>` both end up on and look identical; only running from both baselines
@@ -651,7 +760,7 @@ Less than expected, which is itself worth recording. Across those 14 verbs — e
 its own recovered candidates plus the 25-token shared lexicon — exactly **one** token appeared
 that the query sweeps had not found: `auto_bpm_transition all`, which is the no-op signature
 on a verb whose junk tail flips, i.e. `all` is parsed and suppresses the toggle. That is
-consistent with [`all` being a target keyword](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query)
+consistent with [`all` being a target keyword](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query-2026-09-03)
 rather than vocabulary belonging to this verb.
 
 *Corrected 2026-09-03, same day:* this section first read that the verbs' own candidates
@@ -712,7 +821,10 @@ Do not guess in these gaps; test and record.
   statement's value a query reports. See
   [Boolean composition with `&&`](#boolean-composition-with-).
 - **Operator-lookalike names in verb argument position**, e.g. a verb whose parameter is
-  literally `on`, where a constant and a value collide. `set` is settled; other verbs are not.
+  literally `on`, where a constant and a value collide. `set` is settled, and `beatlock` is
+  now settled the other way — bare `on` sets, quoted `'on'` is inert
+  ([Quoting a keyword argument](#quoting-a-keyword-argument-can-disable-it)). Whether that
+  split is `IActionSwitch`-wide or per-verb is still open.
 
 
 Recording an answer: put the observation in

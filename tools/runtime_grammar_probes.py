@@ -78,6 +78,42 @@ def verdict(case, passes):
     return "held-in-fixture"
 
 
+def first_sample(sample):
+    """One reading per baseline, whatever the capture's value shape is.
+
+    Exact-script captures store `[read, read]`; the action and scope captures
+    store `[[vector, vector], ...]`, one list per prepared baseline.
+    """
+    if sample and isinstance(sample[0], list):
+        return [baseline[0] for baseline in sample]
+    return sample[0]
+
+
+def separation(case):
+    """Did the script's own output differ from the nonsense controls?
+
+    A frozen prediction can hold while producing exactly what a junk token
+    produces. That is a null reading, not a discriminating one, so it is
+    reported beside the verdict rather than folded into `held-in-fixture`.
+    Compare `constant 37 & param_add 5` (`42`, separates) with
+    `constant .5` (blank, same as `constant #zzqqx`).
+    """
+    if not case.get("passes"):
+        return "not-run"
+    values = {s: first_sample(v) for s, v in case["passes"][0].items()}
+    controls = [values[s] for s in case["controls"]]
+    if any(c != controls[0] for c in controls[1:]):
+        return "controls-disagree"
+    return "matches-controls" if values[case["script"]] == controls[0] else "separates"
+
+
+def separation_report(cases):
+    counts = Counter(separation(c) for c in cases)
+    blind = [c["id"] for c in cases
+             if c["verdict"] == "held-in-fixture" and separation(c) == "matches-controls"]
+    return {"counts": dict(counts), "held_but_matches_controls": len(blind), "cases": blind}
+
+
 def write_capture(path, capture):
     capture["summary"]["verdicts"] = dict(Counter(r["verdict"] for r in capture["cases"]))
     data = json.dumps(capture, indent=2, ensure_ascii=True) + "\n"
@@ -216,14 +252,17 @@ def main():
         selected = [c for c in capture["cases"] if c["id"] == args.get]
         if not selected:
             parser.error(f"unknown case: {args.get}")
-        print(json.dumps(selected[0], indent=2))
+        print(json.dumps({**selected[0], "separation": separation(selected[0])}, indent=2))
     elif args.group:
         print(json.dumps([{"id": c["id"], "hypothesis": c["hypothesis"],
                            "script": c["script"], "verdict": c["verdict"],
+                           "separation": separation(c),
                            "observed": c["passes"][0][c["script"]] if c["passes"] else []}
                           for c in capture["cases"] if c["group"] == args.group], indent=2))
     else:
-        print(json.dumps(capture["summary"], indent=2))
+        summary = dict(capture["summary"])
+        summary["separation"] = separation_report(capture["cases"])
+        print(json.dumps(summary, indent=2))
     return 0
 
 

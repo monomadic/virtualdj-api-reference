@@ -1,7 +1,8 @@
 """Regression checks for evidence classification, independent of a live app."""
 import copy
 import unittest
-from runtime_grammar_probes import validate_suite, verdict, ExactQueryChannel
+from runtime_grammar_probes import (validate_suite, verdict, separation,
+                                    separation_report, ExactQueryChannel)
 from unittest.mock import patch
 
 
@@ -53,6 +54,38 @@ class GrammarVerdicts(unittest.TestCase):
         self.case['fixture'] = 'one_deck_loaded'
         with self.assertRaisesRegex(ValueError, 'read-only'):
             validate_suite({'cases': [self.case]})
+
+    def test_separation_flags_a_null_reading(self):
+        """A held prediction whose output equals the junk controls is not evidence."""
+        case = {**self.case, 'passes': [self.samples]}
+        self.assertEqual(separation(case), 'separates')
+        blind = copy.deepcopy(case)
+        blind['passes'][0]['constant 37'] = ['', '']
+        for control in blind['controls']:
+            blind['passes'][0][control] = ['', '']
+        self.assertEqual(separation(blind), 'matches-controls')
+
+    def test_separation_reads_per_baseline_vectors(self):
+        """Action and scope captures nest a readback vector under each baseline."""
+        case = {**self.case, 'passes': [{
+            'constant 37': [[['0.25'], ['0.25']], [['0.25'], ['0.25']]],
+            'constant #zzqqx': [[['0.25'], ['0.25']], [['0.65'], ['0.65']]],
+            'constant #vfnrbq': [[['0.25'], ['0.25']], [['0.65'], ['0.65']]]}]}
+        self.assertEqual(separation(case), 'separates')
+        case['passes'][0]['constant 37'] = [[['0.25'], ['0.25']], [['0.65'], ['0.65']]]
+        self.assertEqual(separation(case), 'matches-controls')
+
+    def test_separation_report_counts_only_held_cases_as_blind(self):
+        held = {**self.case, 'verdict': 'held-in-fixture',
+                'passes': [{s: ['', ''] for s in
+                            ['constant 37', *self.case['controls']]}]}
+        missed = {**held, 'id': 'other', 'verdict': 'prediction-not-held'}
+        report = separation_report([held, missed])
+        self.assertEqual(report['held_but_matches_controls'], 1)
+        self.assertEqual(report['cases'], ['test'])
+
+    def test_separation_without_samples(self):
+        self.assertEqual(separation({**self.case, 'passes': []}), 'not-run')
 
 
 if __name__ == '__main__':
