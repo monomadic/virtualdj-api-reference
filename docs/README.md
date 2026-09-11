@@ -113,6 +113,9 @@ Start here:
 - [HTTP Control Interface](HTTP%20Control%20Interface.md)
   Local HTTP execute/query channel for VDJScript: endpoints, verified request/response behavior, gotchas, and the `just vdj-query` / `just vdj-execute` probe workflow. The preferred channel for local-test probes.
 
+- [MCP Server](MCP%20Server.md)
+  Serves the verb store, FX catalog, XML inventory, grammar, linters and the live HTTP probe channel to any MCP client over stdio, so an agent can author skins, pads and VDJScript without loading the large docs. Registration, tool list, and the `vdj_execute` opt-in and denylist.
+
 - [Remote Protocol](Remote%20Protocol.md)
   Wire protocol for the VirtualDJ Remote companion app: `_vdjremote8._tcp` discovery, inverted client/server roles, `8JDV` framing, and the VDJScript query-subscription push model. Distinct from the HTTP interface.
 

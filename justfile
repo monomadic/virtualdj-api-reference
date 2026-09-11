@@ -72,6 +72,17 @@ vdj-up:
       && echo "VirtualDJ HTTP interface reachable on http://localhost/" \
       || { echo "VirtualDJ HTTP interface NOT reachable (is VirtualDJ running with the network interface enabled?)"; exit 1; }
 
+# Serve the store, FX catalog, XML inventory, grammar, linters and the live HTTP
+# probe channel to any MCP client over stdio. Zero dependencies; stdout is
+# protocol only. `vdj_execute` stays disabled unless VDJ_MCP_EXECUTE=1.
+# Registration and tool list: docs/MCP Server.md
+mcp-serve:
+    @python3 tools/mcp_server.py
+
+# Smoke-test the MCP server without a client: lists tools and calls a few.
+mcp-check:
+    @python3 tools/mcp_server.py --self-check
+
 inventory:
     python3 tools/extract_xml_inventory.py
 
@@ -328,6 +339,7 @@ lint-mappers *paths:
 
 check:
     just check-runtime-grammar
+    python3 tools/mcp_server.py --self-check
     python3 tools/probe_long_time.py --check
     python3 tools/check_bundle_copies.py
     python3 tools/lint_pads.py

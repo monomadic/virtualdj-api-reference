@@ -98,6 +98,16 @@ live_probe:
     - just probe-execute-forms      # WRITES: allowlisted settings verbs, restored and verified
     - just corpus-parses            # send every vendor snippet through /query
 
+agent_integration:
+  primary:
+    - docs/MCP Server.md
+  note: >-
+    Serves the verb store, FX catalog, XML inventory, grammar, linters and the live
+    HTTP probe channel to any MCP client over stdio. Zero dependencies.
+  commands:
+    - just mcp-serve                # serve the query layer to an MCP client over stdio
+    - just mcp-check                # smoke-test every tool without a client
+
 remote_protocol:
   primary:
     - docs/Remote Protocol.md
