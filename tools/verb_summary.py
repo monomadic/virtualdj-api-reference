@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from verbdb import joined_view, load_store  # noqa: E402
+from coverage_report import REASONS, assess, load_context  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 T = ROOT / "tests"
@@ -65,7 +66,8 @@ def pick_examples(snippets: list[dict], verb: str, limit: int) -> list[dict]:
 
 
 def summary(name: str, limit: int = 6) -> dict:
-    store = load_store()
+    ctx = load_context()
+    store = ctx.store
     canon, rec, alias_of = resolve(name, store)
     if rec is None:
         sys.exit(f"no record for '{name}' — try: just list-verbs {name}")
@@ -105,6 +107,9 @@ def summary(name: str, limit: int = 6) -> dict:
                         "returns": r["returns"], "example": r["snippets"][0]["snippet"]}
                    for sh, r in shapes.items()},
         "wrapper": tails_art.get("wrappers", {}).get(canon),
+        # The same assessment `just coverage` aggregates — one definition of
+        # "settled", per-form claims, and the reason each open item is open.
+        "contract": assess(canon, rec, ctx),
         "tails": {
             "catalog_documented": catalog.get("documented_parameters", []),
             "attested": sorted(tails_art.get("tails", {}).get(canon, {})),
@@ -128,6 +133,60 @@ def summary(name: str, limit: int = 6) -> dict:
     }
 
 
+DIM_LABEL = {"return_type": "return type", "arguments": "arguments",
+             "execute": "execute", "behaviour": "behaviour"}
+
+
+def render_contract(a: dict) -> list[str]:
+    """What can be relied on, within what scope, and what is still open —
+    from the shared assessment, so it never says more than `just coverage`.
+    Settled forms are listed with their channel; open forms with their
+    reason, because the reason decides the next test."""
+    dims = a["dimensions"]
+    closed = [DIM_LABEL[d] for d in dims if dims[d] == "settled"]
+    open_ = [DIM_LABEL[d] for d in dims if dims[d] not in ("settled", "n/a")]
+    head = f"Contract: {a['contract']}"
+    if closed:
+        head += f" — closed: {', '.join(closed)}"
+    if open_:
+        head += f"; open: {', '.join(open_)}"
+    L = [head]
+    by_dim: dict[str, list[dict]] = {}
+    for c in a["claims"]:
+        by_dim.setdefault(c["dimension"], []).append(c)
+    for d in ("return_type", "arguments", "execute", "behaviour"):
+        state = dims[d]
+        if state == "n/a":
+            continue
+        cs = by_dim.get(d, [])
+        settled = [c for c in cs if c["status"] == "settled"]
+        opened = [c for c in cs if c["status"] == "open"]
+        L.append(f"  {DIM_LABEL[d]:<12}: {state}")
+        if settled:
+            chans = sorted({c.get("channel", "") for c in settled if c.get("channel")})
+            forms = ", ".join(c["form"] for c in settled[:8]) + (" …" if len(settled) > 8 else "")
+            L.append(f"      settled  : {forms}" + (f"  [{'; '.join(chans)}]" if chans else ""))
+            for c in settled[:2]:
+                if c.get("observation") and d in ("return_type", "behaviour", "execute"):
+                    L.append(f"                 {c['form']}: {c['observation'][:110]}")
+        for reason in ("undiscriminated", "conflicting", "unavailable", "prose_only", "not_measured"):
+            rs = [c for c in opened if c.get("reason") == reason]
+            if not rs:
+                continue
+            forms = ", ".join(c["form"] for c in rs[:8]) + (" …" if len(rs) > 8 else "")
+            L.append(f"      open     : {forms} — {REASONS[reason]}")
+            obs = next((c["observation"] for c in rs if c.get("observation")), "")
+            if obs:
+                L.append(f"                 {obs[:110]}")
+    if a["next"]:
+        L.append("  next        : " + a["next"][0])
+        for n in a["next"][1:]:
+            L.append("                " + n)
+    L.append("  scope       : build/channel per observation as stamped in its artifact; the "
+             "tail and return-type artifacts carry no build stamp of their own")
+    return L
+
+
 def render(s: dict) -> str:
     L = []
     head = s["name"] + (f"  (alias: {s['alias_of']})" if s["alias_of"] else "")
@@ -137,6 +196,8 @@ def render(s: dict) -> str:
     st = s["status"]
     L.append(f"status {st['test_status']}" + (" (blocked)" if st["blocked"] else "")
              + (f" — {st['evidence'][0]}" if st["evidence"] else ""))
+    L.append("")
+    L += render_contract(s["contract"])
     L.append("")
     d = s["description"]
     if d["catalog"]:
@@ -184,6 +245,19 @@ def render(s: dict) -> str:
         L.append("  probed             : not probed")
     else:
         L.append(f"  probed recognized  : {', '.join(t['probed_recognized']) or '— (none separated from nonsense)'}")
+    ex = t.get("execute_position")
+    if ex is not None:
+        # Execute-position evidence is thin and its observable is narrow: the
+        # verb's own state read back after each tail. Say what it did and did
+        # not distinguish, so a settled toggle is never read as settled args.
+        if "skipped" in ex:
+            L.append(f"  execute probed     : skipped — {ex['skipped']}")
+        else:
+            hits = [" ".join(r["tokens"]) for r in ex.get("recognized", [])]
+            L.append(f"  execute probed     : {ex.get('verdict', '?')}"
+                     + (f" — recognized {', '.join(hits)}" if hits else "")
+                     + (f"; {ex['ignored_count']} tails indistinguishable from nonsense "
+                        f"in the {ex.get('family', '?')} readback" if ex.get("ignored_count") else ""))
     for g, v in s["vocabulary_groups"].items():
         L.append(f"  vocabulary group   : {g} — known via {v['known_via']}; "
                  f"unprobed members: {', '.join(v['unprobed_members']) or '—'}")

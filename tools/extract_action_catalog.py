@@ -326,6 +326,20 @@ LOCAL_DEFAULT_ALIASES: dict[str, set[str]] = {
     # smart_play off, same default.
     "auto_bpm_transition": {"target_original"},
 }
+# Documented tokens a live test TRIED and could not separate from its nonsense
+# controls, because the state on hand made every form read the same. Still on
+# the worklist — undiscriminated is not refuted — but recorded here so the next
+# agent is sent to build the named state rather than to re-run the same probe.
+# Source: tracker, "Documented Parameters Taken Live 2026-09-07".
+LOCAL_UNDISCRIMINATED: dict[str, dict[str, str]] = {
+    "get_key": {"musical": "bare, musical and both controls all `Am`: keyDisplay was already musical"},
+    "get_saved_loop": {"pos": "what an unrecognized tail falls back to, so nothing separates it"},
+    "get_limiter": {t: "everything `0` with nothing playing" for t in ("master", "booth", "headphones")},
+    "get_time_sign": {t: "`1` at 43 ms and 14,812 ms for every tail; a negative sign needs a state not built"
+                      for t in ("elapsed", "remain", "total")},
+    "get_time_hour": {t: "`0` throughout on a 2:26 track; needs a track longer than an hour"
+                      for t in ("elapsed", "remain")},
+}
 LOCAL_REFUTED: dict[str, set[str]] = {
     # 2026-09-06: `display_time` returned exactly what both nonsense controls
     # returned on every variant. The catalog only names the SETTING in prose
@@ -379,12 +393,15 @@ def cross_check(entries: dict[str, dict]) -> dict:
     blob = binary_blob()
     extra = extra_confirmations()
     both, catalog_only, probe_only = {}, {}, {}
-    three_ways, placeholders, refuted, defaults = {}, {}, {}, {}
+    three_ways, placeholders, refuted, defaults, undiscriminated = {}, {}, {}, {}, {}
     for verb, rec in entries.items():
         documented = set(rec["documented_parameters"])
         # The catalog quotes whole examples, so the verb's own name comes out of
         # the tokenizer as if it were one of its parameters.
         documented.discard(verb)
+        tried = {t: n for t, n in LOCAL_UNDISCRIMINATED.get(verb, {}).items() if t in documented}
+        if tried:
+            undiscriminated[verb] = tried
         gone = documented & LOCAL_REFUTED.get(verb, set())
         if gone:
             refuted[verb] = sorted(gone)
@@ -440,6 +457,9 @@ def cross_check(entries: dict[str, dict]) -> dict:
         # Also not a worklist: real vocabulary that names the default the verb
         # already uses, so no state can separate it from the bare form.
         "documented_but_names_the_default": defaults,
+        # A worklist entry with its reason attached: tried live, every form read
+        # the same because of the state on hand. token -> what the state lacked.
+        "documented_but_undiscriminated_here": undiscriminated,
     }
 
 

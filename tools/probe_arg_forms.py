@@ -34,7 +34,7 @@ Read-only: /query alone, never /execute. Fixture setup is the only thing that
 writes, and it restores what it changed.
 
     python3 tools/probe_arg_forms.py --dry-run          # plan and request count
-    python3 tools/probe_arg_forms.py > tests/verb-arg-forms.json
+    python3 tools/probe_arg_forms.py --out tests/verb-arg-forms.json
     python3 tools/probe_arg_forms.py --verbs loaded,get_bpm --fixtures one_deck_loaded
 
 Forms are recorded as TOKEN LISTS, never a single argument string, because
@@ -323,6 +323,9 @@ def main() -> int:
                         "without touching VirtualDJ")
     p.add_argument("--get", metavar="NAME", help="report one verb from the artifact")
     p.add_argument("--quiet", action="store_true")
+    p.add_argument("--out", metavar="FILE",
+                   help="write the run's artifact here (atomically) instead of stdout; "
+                        "--dry-run, --check, --get and --merge never write it")
     p.add_argument("--repeat", type=int, default=1, metavar="N",
                    help="read each form N times and keep the value only if every read "
                         "agrees; guards against verbs whose value drifts on its own")
@@ -548,7 +551,7 @@ def main() -> int:
     recognized = sum(1 for v in verbs_out.values()
                      for f in v["forms"] if f["verdict"] == "recognized")
     multi = sorted(v for v, r in verbs_out.items() if r["two_token_grammar"])
-    json.dump({
+    result = {
         "summary": {
             "verbs": len(verbs_out),
             "forms": forms_total,
@@ -562,8 +565,18 @@ def main() -> int:
             "controls": list(CONTROLS),
         },
         "verbs": verbs_out,
-    }, sys.stdout, indent=1)
-    print(file=sys.stdout)
+    }
+    if args.out:
+        # Write beside the target and rename, so an aborted run or an empty
+        # result can never truncate the evidence already on disk.
+        target = Path(args.out)
+        tmp = target.with_suffix(target.suffix + ".tmp")
+        tmp.write_text(json.dumps(result, indent=1) + "\n")
+        tmp.replace(target)
+        print(f"wrote {target}", file=sys.stderr)
+    else:
+        json.dump(result, sys.stdout, indent=1)
+        print(file=sys.stdout)
     return 0
 
 

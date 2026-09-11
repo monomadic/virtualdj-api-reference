@@ -242,13 +242,16 @@ verb-arg-forms name:
     @python3 tools/probe_arg_forms.py --get "{{name}}"
 
 # Needs `just vdj-up`. Establishes each fixture in turn; some make sound.
+# The tool writes the artifact itself, atomically, and only for a real run —
+# `--dry-run` and `--check` leave it untouched; `--merge FILE` updates it itself.
+# (A shell redirect here once truncated the evidence on every dry run.)
 probe-arg-forms *args:
-    python3 tools/probe_arg_forms.py {{args}} > tests/verb-arg-forms.json
+    python3 tools/probe_arg_forms.py --out tests/verb-arg-forms.json {{args}}
 
 # EXECUTE-position tails. WRITES to the running instance: allowlisted settings
 # verbs only, each round-trip tested first, every value restored and verified.
 probe-execute-forms *args:
-    python3 tools/probe_execute_forms.py {{args}} > tests/verb-execute-forms.json
+    python3 tools/probe_execute_forms.py --out tests/verb-execute-forms.json {{args}}
 
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
@@ -329,6 +332,7 @@ check:
     python3 tools/extract_verb_table.py --check
     python3 tools/extract_action_contracts.py --check
     python3 tools/test_action_tail_bounds.py
+    python3 tools/test_contract_assessment.py
     python3 tools/action_tail_leads.py --check
     python3 tools/sweep_return_types.py --check
     python3 tools/plugin_introspect.py --check

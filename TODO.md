@@ -457,11 +457,15 @@ expanded with `pkgutil --expand-full`; the memory notes hold the same paths):
 
 ### H4. Runtime argument parsing from the named `IAction::create`
 
-Status: Conditional
+Status: Ready
 
-Note: Trigger: task 10b's harness has landed, because every rule this walk recovers is a
-10b test and nothing else. Folded into task 10 as its first sub-step; listed here so the
-lead is not lost.
+Note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
+(fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.
+Every rule this walk recovers is a 10b test and nothing else. Folded into task 10 as its
+first sub-step; listed here so the lead is not lost. Bound it to the questions that change
+how a probe is *constructed* — delimiters, quoting, fallback when a token is unrecognized —
+and stop there; it is not a mandate to reverse every action implementation. Order: 10c's
+tooling pass first (it is what H4's findings get recorded against), then this.
 `IAction::create(char const*, char const**, int)` is named on 18.0.9246 (x86_64 entry
 `0x100596f1c`; resolve it again with `nm` before use). Follow argument consumption, delimiter
 handling and fallback branches, and contrast with the separately documented editor parser.
@@ -980,6 +984,13 @@ categories are settled. Goal: for every verb, the complete calling contract — 
 type, accepted argument forms, and undocumented overloads** — established at Tier 1 where
 possible and recorded as structured per-verb data, not prose.
 
+**Completion criterion (2026-09-12):** every verb either has an evidence-backed contract for
+the stated build and surfaces, or a named open item carrying one of five reasons — not
+measured; measured but the observable did not discriminate; state, surface or hardware
+unavailable; conflicting observations; evidence only in prose. `just coverage --frontier` is
+the test, `just verb <name>` shows one verb's assessment, and both read the same `assess()`.
+"Every undocumented overload found" is not finite and is not the criterion.
+
 Contract fields to establish per verb:
 
 - **Return type in query position: HTTP leg DONE (2026-07-30)** —
@@ -1304,8 +1315,9 @@ Done when:
 
 Status: Ready
 
-Note: **Steps 1-2 built 2026-09-02; the sweep itself is unrun.** Python over the existing
-HTTP channel; no build toolchain, no SDK, no new evidence tier. Added 2026-08-11.
+Note: **Steps 1-2 built and the first full sweep run 2026-09-02** (results below). Python
+over the existing HTTP channel; no build toolchain, no SDK, no new evidence tier. Added
+2026-08-11.
 
 Step 1 shipped as [tools/fixtures.py](tools/fixtures.py) (`just fixtures`,
 `just fixture-verify <name>`, `just fixture-establish <name>`): six named states —
@@ -1626,6 +1638,106 @@ independent readback (rule 4), and never `system` / file / database verbs.
 
 Done when the 217 undocumented keyword sets are each classified recognized / ignored /
 state-dependent, with the fixture that decided it recorded alongside.
+
+### 10c. Make The Contract View Say What It Can Vouch For
+
+Status: Done
+
+Note: Added 2026-09-11 from a two-round review of task 10. The instruments exist; what is
+missing is a per-verb view that answers *what can I rely on, within what scope, and what is
+still open* — and closure rules in `just coverage` that do not claim more than their test
+established. Do this before collecting more evidence: it is offline, and it is the
+stopping-point and next-test that every later batch will be recorded against. Do **not**
+add a reporting command or a Markdown document; extend `just verb` and `just coverage`.
+
+Landed with the review (2026-09-11), so not on the list below:
+
+- `probe-arg-forms` / `probe-execute-forms` no longer shell-redirect into the artifact. The
+  tools take `--out FILE` and write atomically only on a real run; `--dry-run` used to
+  truncate `tests/verb-arg-forms.json` to zero bytes and `--merge` read it after the shell
+  had already emptied it.
+- `just verb` prints the execute-position row it was already loading (verdict, recognized
+  tails, how many tails the readback could not separate from nonsense, or why it was
+  skipped).
+- H4 flipped to `Ready`; 10b's opening line no longer says the sweep is unrun.
+
+**Landed 2026-09-12 (items 1-4 below):** `assess()` in `tools/coverage_report.py` is the one
+per-verb assessment and `just verb` renders it as a `Contract:` block; `CLOSED` is `settled`
+only, `no_known_candidates` replaces the old closing label, execute reads the row's verdict
+(`partial` / `undiscriminated` / `no_observable`), and a verb with no capability row is
+`unknown` and counted open. A state-limited live result that had lived only in the tracker
+(`get_time_hour elapsed/remain`, `0` on a 2:26 track) now reaches the assessment through the
+catalog tool's `LOCAL_UNDISCRIMINATED` table and the `documented_but_undiscriminated_here`
+cross-check bucket, so `just verb get_time_hour` says *undiscriminated* and names the
+long-track fixture rather than *never probed*. Coverage after the change reads lower on
+arguments and execute; that is the labels telling the truth, not lost evidence.
+
+Review follow-up (2026-09-12): regression tests now gate the shared assessment.
+Failed or unstable position captures stay open; an unmeasured shape is not closed by
+recognized keywords, and query confirmations cannot close execute evidence. Known-token
+coverage is labelled `vocabulary_covered`, not a full argument contract. Aborted execute
+runs preserve the previous output and save partial results separately with a failing exit.
+The view still cannot supply missing build stamps or infer complete value/overload coverage
+from legacy captures; those need explicit observations in later batches. Next is 10d,
+which doubles as the validation run.
+
+Checklist as landed, each line with the command that proved it:
+
+1. **One per-verb assessment, shared.** `tools/coverage_report.py` already builds a per-verb
+   dictionary (dimensions, recognized/unresolved tails, positions probed). Lift it into a
+   function `just verb` imports, so the two commands cannot drift. Proof: no second copy of
+   the closure logic in `tools/verb_summary.py`.
+2. **Loosen three closure rules** in `coverage_report.py`, in the same change:
+   - `argument_less` fires on `probed and not candidates`, but `probed` is also true for a
+     verb that only appears in the positions or execute artifact. Rename to
+     `no_known_candidates`, require an actual tail-prober row, and drop it from `CLOSED`.
+     Exhaustive absence is not claimed.
+   - `execute` is `settled` on row presence. Read the row: `has-execute-tokens` with the
+     tails it recognized is settled *for those tails*; `tail-ignored-in-execute` and
+     `skipped` are open with the reason carried. `auto_bpm_transition` is the type case —
+     its toggle readback cannot see a destination-BPM argument, and the row says so.
+   - A verb with no contract row gets `queries`/`executes` false and both dimensions `n/a`.
+     Make that `unknown` so missing capability data cannot shrink the denominator.
+   Proof: `just coverage` shows the new labels, `just check` passes, and no sentence in this
+   file or the coverage audit quotes the old label (`rg argument_less`).
+3. **A contract block at the top of `just verb`**, rendered from the shared assessment:
+   `Contract: settled | partial | open`, then per dimension one line each — what was
+   observed, on which channel and build, and the smallest test that would close what is
+   open. Every unresolved item carries one of five reasons: *not measured* (`unswept`,
+   `unprobed`), *measured but the observable did not discriminate* (`untyped`,
+   `tail-ignored-in-execute`), *state or surface unavailable* (`blocked`), *conflicting
+   observations* (the disputed list), *evidence only in prose* (`evidence_in_prose`). These
+   are the existing labels; the change is the unit, from per-dimension to per-form claim.
+   Proof: `just verb crossfader_curve` reads as partial — bare float over HTTP, six names
+   settled by HRESULT on the plugin, no execute evidence — and `just verb get_time_hour`
+   names the long-track fixture as its next test.
+4. **Write task 10's completion criterion as one sentence**, in task 10's note: *every
+   verb either has an evidence-backed contract for the stated build and surfaces or a named
+   open item with one of the five reasons above; `just coverage --frontier` is the test.*
+   "Every undocumented overload found" is not finite and is not the criterion.
+
+Done when the four proofs hold and `just check` passes — they did on 2026-09-12. Then 10d.
+
+### 10d. Long-Track Time Fixture: `get_time_hour` And Its Neighbours
+
+Status: Ready
+
+Note: Added 2026-09-11. The first live batch after 10c, chosen because the expected
+differences are already worked out and the state is cheap to manufacture. The recipe is in
+10b's note ("`get_time_hour` wants a track longer than an hour"): generated 2h05m track,
+playhead at 1h10m so `elapsed`/`remain`/`total` read 1/0/2, read once with `display_time`
+on `elapsed` and once on `remain`, then place the playhead where pitched and unpitched
+remaining time straddle an hour boundary (about 3,700 s in at +12%) to separate `absolute`.
+Do not restate the recipe here; extend `tools/fixtures.py` with the state and run
+`tools/probe_arg_forms.py --verbs … --fixtures <new state>` against every time reader that
+the state can discriminate in one session — the `get_time*` family and `display_time`
+readback, batched, not one question per round. Record per-verb conclusions with
+`just put-verb … confidence=local_test evidence="… build …, HTTP"`, the fixture and any
+non-discriminating readings in the tracker, and check the artifact in with its stamp. This
+run doubles as the validation of 10c's view: after it, `just verb get_time_hour` must show
+the dimension closed with the observation, not `Untested`.
+
+Prerequisite: `just vdj-up` (reachable on 2026-09-11) and ffmpeg for the generated track.
 
 ### 11. Build The Verb Index From The Artifacts, Not From Prose
 

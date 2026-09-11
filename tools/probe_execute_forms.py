@@ -208,6 +208,9 @@ def main() -> int:
                    help="lift the audible deny-list (moves faders, mics, playback) — only on "
                         "an instance nobody is listening to")
     p.add_argument("--quiet", action="store_true")
+    p.add_argument("--out", metavar="FILE",
+                   help="write the run's artifact here (atomically) instead of stdout; "
+                        "--dry-run and --check never write it")
     p.add_argument("--check", action="store_true")
     args = p.parse_args()
 
@@ -224,8 +227,8 @@ def main() -> int:
               f"{s['tail_ignored']} ignoring their tail, {len(s['skipped'])} skipped")
         return 0
 
-    contracts = json.load(open(CONTRACTS))
-    table = json.load(open(VERB_TABLE))
+    contracts = json.loads(Path(CONTRACTS).read_text())
+    table = json.loads(Path(VERB_TABLE).read_text())
     want = [v.strip() for v in args.verbs.split(",")] if args.verbs else None
     plan = targets(contracts, table, want, args.include_audible)
 
@@ -267,7 +270,7 @@ def main() -> int:
         out[name] = classify(rec, baselines)
 
     hits = {v: r["recognized"] for v, r in out.items() if r.get("recognized")}
-    json.dump({
+    result = {
         "summary": {
             "verbs": len(out),
             "with_execute_tokens": len(hits),
@@ -280,9 +283,20 @@ def main() -> int:
             "planned": len(plan),
         },
         "verbs": out,
-    }, sys.stdout, indent=1)
-    print(file=sys.stdout)
-    return 0
+    }
+    if args.out:
+        target = Path(args.out)
+        if aborted:
+            # Keep partial measurements without replacing the previous capture.
+            target = target.with_name(target.stem + ".aborted" + target.suffix)
+        tmp = target.with_suffix(target.suffix + ".tmp")
+        tmp.write_text(json.dumps(result, indent=1) + "\n")
+        tmp.replace(target)
+        print(f"wrote {target}", file=sys.stderr)
+    else:
+        json.dump(result, sys.stdout, indent=1)
+        print(file=sys.stdout)
+    return 1 if aborted else 0
 
 
 if __name__ == "__main__":
