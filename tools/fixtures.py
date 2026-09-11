@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import http.client
 import json
+from datetime import datetime, timezone
 import shutil
 import subprocess
 import sys
@@ -100,6 +101,14 @@ class Channel:
             return self.query("get_version") != ""
         except Exception:
             return False
+
+    def provenance(self) -> dict:
+        """Read identity from the running app before any fixture mutation."""
+        build = self.query("get_build")
+        if not build.isdecimal():
+            raise FixtureError(f"cannot stamp capture: get_build returned {build!r}")
+        return {"build": build, "build_query": "get_build", "channel": "HTTP",
+                "captured_at": datetime.now(timezone.utc).isoformat()}
 
 
 def is_error(value: str) -> bool:

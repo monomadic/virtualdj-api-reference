@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from datetime import date
 from pathlib import Path
@@ -75,7 +76,7 @@ def artifact(name: str, key: str | None = None):
     if not path.exists():
         return {} if key else None
     try:
-        data = json.load(open(path))
+        data = json.loads(path.read_text())
     except json.JSONDecodeError:
         return {} if key else None
     return data.get(key, {}) if key else data
@@ -157,6 +158,7 @@ class Context:
         self.disputed = set(af_summary.get("disputed_verbs", []))
         self.execforms = artifact("verb-execute-forms.json", "verbs")
         self.positions = artifact("verb-arg-positions.json", "verbs")
+        self.bpm_transition = artifact("bpm-transition-forms.json") or {}
         tails_art = artifact("attested-tails.json") or {}
         self.attested = tails_art.get("tails", {})
         self.shapes = tails_art.get("shapes", {})
@@ -177,6 +179,23 @@ class Context:
 
 def load_context() -> Context:
     return Context()
+
+
+def focused_execute_claims(name: str, capture: dict) -> list[dict]:
+    """Join the landing-BPM experiment, never the channel-ambiguous token table."""
+    if name != "auto_bpm_transition" or not capture.get("summary", {}).get("controls_agree"):
+        return []
+    claims = []
+    for form, result in capture["summary"].get("forms", {}).items():
+        if not result.get("verdict", "").startswith("recognized-"):
+            continue
+        claim = _claim("execute", form, "settled", observation=
+                       f"landing BPM {result['bpms']}; {capture.get('method', {}).get('observable', '')}",
+                       channel="HTTP execute + independent BPM readback")
+        claim["source"] = "tests/bpm-transition-forms.json"
+        claim["build"] = capture["summary"].get("build")
+        claims.append(claim)
+    return claims
 
 
 def _claim(dimension: str, form: str, status: str, reason: str | None = None,
@@ -207,6 +226,7 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     af = ctx.argforms.get(name)
     ex = ctx.execforms.get(name)
     pos = ctx.positions.get(name)
+    focused_execute = focused_execute_claims(name, ctx.bpm_transition)
     extra = set(ctx.extra_confirmed.get(name, ()))
     claims: list[dict] = []
 
@@ -260,7 +280,10 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     # 2. Arguments — applies to every verb.
     for tok in recognized:
         f = probed_forms.get((tok,))
-        if f and f.get("verdict") == "recognized":
+        focused = next((claim for claim in focused_execute if claim["form"] == tok), None)
+        if focused:
+            claims.append({**focused, "dimension": "arguments"})
+        elif f and f.get("verdict") == "recognized":
             obs = "separates from nonsense in " + ", ".join(f.get("separates_in", [])[:4])
             if len(f.get("separates_in", [])) > 4:
                 obs += f" (+{len(f['separates_in']) - 4} more)"
@@ -321,14 +344,40 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                                  "shape attested in a shipped script (Tier 2); values, not "
                                  "keywords, so the tail prober cannot see it", "vendor script"))
 
+    # Finite catalog obligations: preserve the actual source text rather than
+    # inventing an unbounded requirement to discover every possible overload.
+    catalog = ctx.catalog_actions.get(name, {})
+    measured_forms = probed_recognized | {
+        tuple(row["tokens"]) for row in (ex or {}).get("recognized", [])}
+    for label, pattern, value_pattern in (
+            ("numeric value", r"enter a value[^.]*\.", r"[+-]?\d+(?:\.\d+)?%?"),
+            ("drawn curve", r"draw your own curve.*?(?:\.(?:\s|$)|$)", r".*=\[.*\].*")):
+        match = re.search(pattern, catalog.get("text", ""), re.IGNORECASE)
+        if match:
+            measured = [form for form in measured_forms if len(form) == 1
+                        and re.fullmatch(value_pattern, form[0].strip("\"'"))]
+            claim = _claim("arguments", f"catalog: {label}", "settled" if measured else "open",
+                           None if measured else "not_measured",
+                           (f"observed forms: {measured}; " if measured else "") + match.group(0),
+                           "HTTP form probe + vendor catalog" if measured else "vendor catalog")
+            claim["source"] = f"tests/action-catalog.json:actions.{name}.text"
+            claims.append(claim)
+    if catalog.get("multi_argument") and not (pos and pos.get("stable") and
+            all(p["verdict"] == "reads" for p in pos.get("positions", []))) and not (
+            af or {}).get("two_token_grammar"):
+        claims.append(_claim("arguments", "catalog: multiple arguments", "open", "not_measured",
+                             "catalog names a multi-argument form not covered by the token results",
+                             "vendor catalog"))
+    if (c or {}).get("arg_demand_slots") and not (recognized or defaults or pos or focused_execute):
+        claims.append(_claim("arguments", "binary argument-demand slots", "open", "not_measured",
+                             str(c["arg_demand_slots"]), "binary contract (Tier 2 lead)"))
+
     if unresolved or any(c["dimension"] == "arguments" and c["status"] == "open"
                          for c in claims):
         dims["arguments"] = "open"
-    elif recognized:
-        dims["arguments"] = "vocabulary_covered"
-        claims.append(_claim("arguments", "(forms beyond known vocabulary)", "open", "not_measured",
-                             "known tokens are covered; value forms, defaults and overloads "
-                             "have not been exhaustively assessed"))
+    elif recognized or defaults or (pos and pos.get("stable") and pos.get("positions")
+                                    and all(p["verdict"] == "reads" for p in pos["positions"])):
+        dims["arguments"] = "settled"
     elif tail_probed and not candidates and not attested_shapes:
         # Probed against nonsense with no candidate anywhere. Absence of a
         # candidate is not proof of absence of arguments, so this is reported
@@ -397,6 +446,21 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
         else:
             dims["execute"] = "open"
 
+    if focused_execute:
+        # The generic toggle observable's failure is not a contradiction of a
+        # focused experiment that measures the parameter's actual effect.
+        measured = {claim["form"] for claim in focused_execute}
+        claims = [claim for claim in claims if not (
+            claim["dimension"] == "execute" and claim["form"] in measured)]
+        claims.extend(focused_execute)
+        remaining = candidates - measured - {" ".join(r["tokens"])
+                                            for r in (ex or {}).get("recognized", [])}
+        if not remaining:
+            claims = [claim for claim in claims if not (
+                claim["dimension"] == "execute" and claim["status"] == "open"
+                and claim["form"] == "bare")]
+        dims["execute"] = "partial" if remaining else "settled"
+
     # 4. Behaviour — the store's own claim; evidence required to count.
     status = rec.get("test_status", "Untested")
     if status == "Pass" and rec.get("evidence"):
@@ -426,6 +490,23 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     read_settled = [d for d in read_applicable if dims[d] in CLOSED]
     contract = ("settled" if applicable and len(settled) == len(applicable)
                 else "open" if not settled else "partial")
+    for claim in claims:
+        channel = claim.get("channel")
+        source, provenance = None, {}
+        if channel == "HTTP tail prober":
+            source = "tests/verb-arg-forms.json"
+            form = probed_forms.get(tuple(claim["form"].split()), {})
+            provenance = form.get("provenance", {})
+        elif channel == "HTTP execute prober":
+            source = "tests/verb-execute-forms.json"
+            provenance = (ex or {}).get("provenance", {})
+        elif channel == "HTTP return-type sweep":
+            source = "tests/verb-return-types.json"
+        if source:
+            claim["source"] = source
+            claim["build"] = provenance.get("build")
+            if provenance:
+                claim["provenance"] = provenance
     return {
         "queries": queries, "executes": executes,
         "observed_type": observed, "test_status": status,

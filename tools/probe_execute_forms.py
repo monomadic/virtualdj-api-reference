@@ -251,6 +251,7 @@ def main() -> int:
     channel = Channel()
     if not channel.reachable():
         raise FixtureError("HTTP channel unreachable — is VirtualDJ running?")
+    provenance = channel.provenance()
 
     out, aborted = {}, None
     for i, (name, spec) in enumerate(sorted(plan.items()), 1):
@@ -269,9 +270,12 @@ def main() -> int:
         baselines = TOGGLE_BASELINES if spec["family"] == "toggle" else SLIDER_BASELINES
         out[name] = classify(rec, baselines)
 
+    for record in out.values():
+        record["provenance"] = provenance
     hits = {v: r["recognized"] for v, r in out.items() if r.get("recognized")}
     result = {
         "summary": {
+            **provenance,
             "verbs": len(out),
             "with_execute_tokens": len(hits),
             "tail_ignored": sum(1 for r in out.values()

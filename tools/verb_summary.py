@@ -182,8 +182,9 @@ def render_contract(a: dict) -> list[str]:
         L.append("  next        : " + a["next"][0])
         for n in a["next"][1:]:
             L.append("                " + n)
-    L.append("  scope       : build/channel per observation as stamped in its artifact; the "
-             "tail and return-type artifacts carry no build stamp of their own")
+    builds = sorted({c["build"] for c in a["claims"] if c.get("build")})
+    L.append("  scope       : " + ("observed builds " + ", ".join(builds) + "; " if builds else "")
+             + "build/channel/source per claim in JSON; unstamped legacy observations retain unknown build")
     return L
 
 

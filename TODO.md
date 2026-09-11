@@ -1681,6 +1681,14 @@ The view still cannot supply missing build stamps or infer complete value/overlo
 from legacy captures; those need explicit observations in later batches. Next is 10d,
 which doubles as the validation run.
 
+Follow-up correction (2026-09-12): the blanket `vocabulary_covered` residual above was
+too strong and is superseded. Arguments close when all known obligations are resolved;
+remaining obligations must name a catalog value/multiple-argument form, attested shape,
+unresolved token or unaccounted binary argument-demand lead. The BPM-transition artifact
+is joined directly as execute-with-independent-BPM-readback evidence, so a toggle-only
+capture's nondiscrimination cannot reopen its confirmed landing-BPM forms. Capture-time
+build provenance is part of 10d below, not a separate task.
+
 Checklist as landed, each line with the command that proved it:
 
 1. **One per-verb assessment, shared.** `tools/coverage_report.py` already builds a per-verb
@@ -1738,6 +1746,12 @@ run doubles as the validation of 10c's view: after it, `just verb get_time_hour`
 the dimension closed with the observation, not `Untested`.
 
 Prerequisite: `just vdj-up` (reachable on 2026-09-11) and ffmpeg for the generated track.
+
+Capture checklist: both argument and execute probers read `get_build` from the running
+instance before fixture writes, and include that value, query, HTTP channel and UTC time
+in the new capture's summary and observations. Do not copy the installed binary's stamp or
+apply a new stamp to legacy rows during a merge. Check `just verb`'s per-claim provenance
+after recording 10d; older unstamped observations must remain explicitly unknown.
 
 ### 11. Build The Verb Index From The Artifacts, Not From Prose
 

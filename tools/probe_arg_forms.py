@@ -374,6 +374,11 @@ def main() -> int:
             sys.exit(f"merge refused: the incoming run is missing fixtures the artifact used "
                      f"({sorted(base_fixtures - add_fixtures)}); re-run with a superset")
         base["summary"]["fixtures"] = sorted(add_fixtures, key=lambda f: (f not in base_fixtures, f))
+        if add["summary"].get("build") != base["summary"].get("build"):
+            # A merged artifact can span builds, including unstamped legacy
+            # measurements. Never stamp old observations with the incoming build.
+            base["summary"].pop("build", None)
+            base["summary"]["build_scope"] = "mixed or legacy; inspect per-form provenance"
         repeat = add["summary"].get("repeat_reads", 1)
         disputed = set(base["summary"].get("disputed_verbs", []))
         undiscerning = _flag_undiscerning(add["verbs"])
@@ -527,6 +532,7 @@ def main() -> int:
     channel = Channel()
     if not channel.reachable():
         raise FixtureError("HTTP channel unreachable on localhost:80 — is VirtualDJ running?")
+    provenance = channel.provenance()
     track = ensure_audio(verbose=not args.quiet)
     fixtures = build_fixtures(track)
     readings = {v: {f: {} for f in forms} for v, forms in plan.items()}
@@ -548,11 +554,16 @@ def main() -> int:
             teardown(channel, fixture, before, verbose=False)
 
     verbs_out = {v: classify(readings[v], done) for v in plan}
+    for record in verbs_out.values():
+        record["provenance"] = provenance
+        for form in record["forms"]:
+            form["provenance"] = provenance
     recognized = sum(1 for v in verbs_out.values()
                      for f in v["forms"] if f["verdict"] == "recognized")
     multi = sorted(v for v, r in verbs_out.items() if r["two_token_grammar"])
     result = {
         "summary": {
+            **provenance,
             "verbs": len(verbs_out),
             "forms": forms_total,
             "recognized_forms": recognized,
