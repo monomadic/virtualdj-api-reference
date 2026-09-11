@@ -1,0 +1,308 @@
+__ZN18IParamValuesAction9getValuesEPfS0_ [0x100991584, 0x100991a12):
+0000000100991584	pushq	%rbp
+0000000100991585	movq	%rsp, %rbp
+0000000100991588	pushq	%r15
+000000010099158a	pushq	%r14
+000000010099158c	pushq	%r13
+000000010099158e	pushq	%r12
+0000000100991590	pushq	%rbx
+0000000100991591	subq	$0x28, %rsp
+0000000100991595	movq	0x20(%rdi), %r13
+0000000100991599	movq	0x28(%rdi), %rcx
+000000010099159d	movl	$0x80070057, %r15d              ## imm = 0x80070057
+00000001009915a3	subq	%r13, %rcx
+00000001009915a6	je	0x10099199e
+00000001009915ac	movq	%rdx, %rbx
+00000001009915af	movq	%rsi, %r12
+00000001009915b2	movq	%rdi, %r14
+00000001009915b5	sarq	$0x3, %rcx
+00000001009915b9	movabsq	$-0x3333333333333333, %rax      ## imm = 0xCCCCCCCCCCCCCCCD
+00000001009915c3	imulq	%rcx, %rax
+00000001009915c7	cmpq	$0x2, %rax
+00000001009915cb	jb	0x1009915d3
+00000001009915cd	addq	$0x28, %r13
+00000001009915d1	jmp	0x1009915e0
+00000001009915d3	movq	0x68(%r14), %r13
+00000001009915d7	testq	%r13, %r13
+00000001009915da	je	0x100991696
+00000001009915e0	movl	(%r13), %ecx
+00000001009915e4	cmpl	$0x696e73, %ecx                 ## imm = 0x696E73
+00000001009915ea	jle	0x100991680
+00000001009915f0	cmpl	$0x76616b, %ecx                 ## imm = 0x76616B
+00000001009915f6	jg	0x1009916a3
+00000001009915fc	cmpl	$0x696e74, %ecx                 ## imm = 0x696E74
+0000000100991602	je	0x1009916b7
+0000000100991608	cmpl	$0x747874, %ecx                 ## imm = 0x747874
+000000010099160e	jne	0x10099199e
+0000000100991614	movq	FGData.grain_scale_shift(%r14), %rdi
+000000010099161b	testq	%rdi, %rdi
+000000010099161e	je	0x100991642
+0000000100991620	cmpq	$0x1, %rax
+0000000100991624	ja	0x1009918f4
+000000010099162a	leaq	rf.n_tile_threads(%r14), %rdi
+0000000100991631	leaq	0x8(%r13), %rsi
+0000000100991635	callq	__Z12strIsEqualCIRK11smallstringRKNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE ## strIsEqualCI(smallstring const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+000000010099163a	testb	%al, %al
+000000010099163c	jne	0x1009918e4
+0000000100991642	leaq	0x8(%r13), %rsi
+0000000100991646	movzbl	0x8(%r13), %eax
+000000010099164b	testb	$0x1, %al
+000000010099164d	movq	%rsi, -0x50(%rbp)
+0000000100991651	jne	0x10099175b
+0000000100991657	testq	%rax, %rax
+000000010099165a	je	0x1009917a5
+0000000100991660	cmpb	$0x60, 0x9(%r13)
+0000000100991665	jne	0x1009917a5
+000000010099166b	movl	%eax, %ecx
+000000010099166d	shrl	%ecx
+000000010099166f	cmpb	$0x60, 0x8(%r13,%rcx)
+0000000100991675	je	0x100991778
+000000010099167b	jmp	0x1009917a5
+0000000100991680	testl	%ecx, %ecx
+0000000100991682	je	0x100991696
+0000000100991684	cmpl	$0x25, %ecx
+0000000100991687	je	0x1009916bf
+0000000100991689	cmpl	$0x6274, %ecx                   ## imm = 0x6274
+000000010099168f	je	0x1009916bf
+0000000100991691	jmp	0x10099199e
+0000000100991696	movl	0x58(%r14), %eax
+000000010099169a	andl	$0x1, %eax
+000000010099169d	cvtsi2ss	%eax, %xmm0
+00000001009916a1	jmp	0x1009916c5
+00000001009916a3	cmpl	$0x76616c, %ecx                 ## imm = 0x76616C
+00000001009916a9	je	0x1009916bf
+00000001009916ab	cmpl	$0x626f6f6c, %ecx               ## imm = 0x626F6F6C
+00000001009916b1	jne	0x10099199e
+00000001009916b7	cvtsi2ssl	0x4(%r13), %xmm0
+00000001009916bd	jmp	0x1009916c5
+00000001009916bf	movss	0x4(%r13), %xmm0
+00000001009916c5	movss	%xmm0, CONFIG_EMULATE_HARDWARE(%r12)
+00000001009916cb	movq	0x20(%r14), %rsi
+00000001009916cf	movl	CONFIG_EMULATE_HARDWARE(%rsi), %eax
+00000001009916d1	cmpl	$0x747873, %eax                 ## imm = 0x747873
+00000001009916d6	jg	0x1009916f0
+00000001009916d8	cmpl	$0x25, %eax
+00000001009916db	je	0x100991716
+00000001009916dd	cmpl	$0x6274, %eax                   ## imm = 0x6274
+00000001009916e2	je	0x100991716
+00000001009916e4	cmpl	$0x696e74, %eax                 ## imm = 0x696E74
+00000001009916e9	je	0x100991709
+00000001009916eb	jmp	0x10099199e
+00000001009916f0	cmpl	$0x747874, %eax                 ## imm = 0x747874
+00000001009916f5	je	0x100991720
+00000001009916f7	cmpl	$0x76616c, %eax                 ## imm = 0x76616C
+00000001009916fc	je	0x100991716
+00000001009916fe	cmpl	$0x626f6f6c, %eax               ## imm = 0x626F6F6C
+0000000100991703	jne	0x10099199e
+0000000100991709	xorps	%xmm0, %xmm0
+000000010099170c	cvtsi2ssl	0x4(%rsi), %xmm0
+0000000100991711	jmp	0x100991997
+0000000100991716	movss	0x4(%rsi), %xmm0
+000000010099171b	jmp	0x100991997
+0000000100991720	movq	rf.r(%r14), %rdi
+0000000100991727	testq	%rdi, %rdi
+000000010099172a	jne	0x10099198a
+0000000100991730	movzbl	0x8(%rsi), %eax
+0000000100991734	testb	$0x1, %al
+0000000100991736	jne	0x1009917af
+0000000100991738	testq	%rax, %rax
+000000010099173b	je	0x1009917fc
+0000000100991741	cmpb	$0x60, 0x9(%rsi)
+0000000100991745	jne	0x1009917fc
+000000010099174b	movl	%eax, %ecx
+000000010099174d	shrl	%ecx
+000000010099174f	cmpb	$0x60, 0x8(%rsi,%rcx)
+0000000100991754	je	0x1009917cc
+0000000100991756	jmp	0x1009917fc
+000000010099175b	movq	0x10(%r13), %rcx
+000000010099175f	testq	%rcx, %rcx
+0000000100991762	je	0x1009917a5
+0000000100991764	movq	0x18(%r13), %rdx
+0000000100991768	cmpb	$0x60, CONFIG_EMULATE_HARDWARE(%rdx)
+000000010099176b	jne	0x1009917a5
+000000010099176d	cmpb	$0x60, -0x1(%rdx,%rcx)
+0000000100991772	jne	0x1009917a5
+0000000100991774	movq	0x10(%r13), %rcx
+0000000100991778	addq	$-0x2, %rcx
+000000010099177c	leaq	-0x48(%rbp), %r13
+0000000100991780	leaq	-0x29(%rbp), %r8
+0000000100991784	movl	$CONFIG_VP9, %edx
+0000000100991789	movq	%r13, %rdi
+000000010099178c	callq	0x104fe855e                     ## symbol stub for: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_mmRKS4_
+0000000100991791	testb	$0x1, (%r13)
+0000000100991796	je	0x100991877
+000000010099179c	movq	-0x38(%rbp), %rdi
+00000001009917a0	jmp	0x10099187b
+00000001009917a5	testb	$0x1, %al
+00000001009917a7	je	0x100991806
+00000001009917a9	movq	0x18(%r13), %r13
+00000001009917ad	jmp	0x10099180a
+00000001009917af	movq	0x10(%rsi), %rcx
+00000001009917b3	testq	%rcx, %rcx
+00000001009917b6	je	0x1009917fc
+00000001009917b8	movq	0x18(%rsi), %rdx
+00000001009917bc	cmpb	$0x60, CONFIG_EMULATE_HARDWARE(%rdx)
+00000001009917bf	jne	0x1009917fc
+00000001009917c1	cmpb	$0x60, -0x1(%rdx,%rcx)
+00000001009917c6	jne	0x1009917fc
+00000001009917c8	movq	0x10(%rsi), %rcx
+00000001009917cc	addq	$0x8, %rsi
+00000001009917d0	addq	$-0x2, %rcx
+00000001009917d4	leaq	-0x48(%rbp), %r15
+00000001009917d8	leaq	-0x29(%rbp), %r8
+00000001009917dc	movl	$CONFIG_VP9, %edx
+00000001009917e1	movq	%r15, %rdi
+00000001009917e4	callq	0x104fe855e                     ## symbol stub for: __ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_mmRKS4_
+00000001009917e9	testb	$0x1, CONFIG_EMULATE_HARDWARE(%r15)
+00000001009917ed	je	0x100991937
+00000001009917f3	movq	-0x38(%rbp), %rdi
+00000001009917f7	jmp	0x10099193b
+00000001009917fc	testb	$0x1, %al
+00000001009917fe	je	0x10099183b
+0000000100991800	movq	0x18(%rsi), %rsi
+0000000100991804	jmp	0x10099183f
+0000000100991806	addq	$0x9, %r13
+000000010099180a	movq	%r13, %rdi
+000000010099180d	xorl	%esi, %esi
+000000010099180f	xorl	%edx, %edx
+0000000100991811	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+0000000100991816	movq	FGData.grain_scale_shift(%r14), %rdi
+000000010099181d	movq	%rax, FGData.grain_scale_shift(%r14)
+0000000100991824	testq	%rdi, %rdi
+0000000100991827	je	0x1009918b9
+000000010099182d	lock
+000000010099182e	decl	0x8(%rdi)
+0000000100991831	jg	0x1009918b2
+0000000100991833	movq	CONFIG_EMULATE_HARDWARE(%rdi), %rax
+0000000100991836	callq	*0x8(%rax)
+0000000100991839	jmp	0x1009918b2
+000000010099183b	addq	$0x9, %rsi
+000000010099183f	movq	%rsi, %rdi
+0000000100991842	xorl	%esi, %esi
+0000000100991844	xorl	%edx, %edx
+0000000100991846	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+000000010099184b	movq	rf.r(%r14), %rdi
+0000000100991852	movq	%rax, rf.r(%r14)
+0000000100991859	testq	%rdi, %rdi
+000000010099185c	je	0x100991979
+0000000100991862	lock
+0000000100991863	decl	0x8(%rdi)
+0000000100991866	jg	0x100991972
+000000010099186c	movq	CONFIG_EMULATE_HARDWARE(%rdi), %rax
+000000010099186f	callq	*0x8(%rax)
+0000000100991872	jmp	0x100991972
+0000000100991877	leaq	-0x47(%rbp), %rdi
+000000010099187b	xorl	%esi, %esi
+000000010099187d	xorl	%edx, %edx
+000000010099187f	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+0000000100991884	movq	FGData.grain_scale_shift(%r14), %rdi
+000000010099188b	movq	%rax, FGData.grain_scale_shift(%r14)
+0000000100991892	testq	%rdi, %rdi
+0000000100991895	je	0x1009918a3
+0000000100991897	lock
+0000000100991898	decl	0x8(%rdi)
+000000010099189b	jg	0x1009918a3
+000000010099189d	movq	CONFIG_EMULATE_HARDWARE(%rdi), %rax
+00000001009918a0	callq	*0x8(%rax)
+00000001009918a3	testb	$0x1, -0x48(%rbp)
+00000001009918a7	je	0x1009918b2
+00000001009918a9	movq	-0x38(%rbp), %rdi
+00000001009918ad	callq	0x104fe873e                     ## symbol stub for: __ZdlPv
+00000001009918b2	movq	FGData.grain_scale_shift(%r14), %rax
+00000001009918b9	testq	%rax, %rax
+00000001009918bc	je	0x100991906
+00000001009918be	leaq	0x70(%r14), %rsi
+00000001009918c2	leaq	-0x48(%rbp), %rdi
+00000001009918c6	callq	__ZN15CAutoThreadSyncC1EP11CThreadSync ## CAutoThreadSync::CAutoThreadSync(CThreadSync*)
+00000001009918cb	leaq	rf.n_tile_threads(%r14), %rdi
+00000001009918d2	movq	-0x50(%rbp), %rsi
+00000001009918d6	callq	__ZN11smallstringaSERKNSt3__112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE ## smallstring::operator=(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)
+00000001009918db	leaq	-0x48(%rbp), %rdi
+00000001009918df	callq	__ZN15CAutoThreadSyncD1Ev       ## CAutoThreadSync::~CAutoThreadSync()
+00000001009918e4	movq	FGData.grain_scale_shift(%r14), %rdi
+00000001009918eb	testq	%rdi, %rdi
+00000001009918ee	je	0x1009916cb
+00000001009918f4	movl	0x5c(%r14), %esi
+00000001009918f8	movq	0x50(%r14), %rdx
+00000001009918fc	callq	__ZN7IAction10queryValueEjP11IController ## IAction::queryValue(unsigned int, IController*)
+0000000100991901	jmp	0x1009916c5
+0000000100991906	leaq	0x4c588e6(%rip), %rdi           ## literal pool for: "nothing"
+000000010099190d	xorl	%esi, %esi
+000000010099190f	xorl	%edx, %edx
+0000000100991911	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+0000000100991916	movq	FGData.grain_scale_shift(%r14), %rdi
+000000010099191d	movq	%rax, FGData.grain_scale_shift(%r14)
+0000000100991924	testq	%rdi, %rdi
+0000000100991927	je	0x1009918be
+0000000100991929	lock
+000000010099192a	decl	0x8(%rdi)
+000000010099192d	jg	0x1009918be
+000000010099192f	movq	CONFIG_EMULATE_HARDWARE(%rdi), %rax
+0000000100991932	callq	*0x8(%rax)
+0000000100991935	jmp	0x1009918be
+0000000100991937	leaq	-0x47(%rbp), %rdi
+000000010099193b	xorl	%esi, %esi
+000000010099193d	xorl	%edx, %edx
+000000010099193f	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+0000000100991944	movq	rf.r(%r14), %rdi
+000000010099194b	movq	%rax, rf.r(%r14)
+0000000100991952	testq	%rdi, %rdi
+0000000100991955	je	0x100991963
+0000000100991957	lock
+0000000100991958	decl	0x8(%rdi)
+000000010099195b	jg	0x100991963
+000000010099195d	movq	CONFIG_EMULATE_HARDWARE(%rdi), %rax
+0000000100991960	callq	*0x8(%rax)
+0000000100991963	testb	$0x1, -0x48(%rbp)
+0000000100991967	je	0x100991972
+0000000100991969	movq	-0x38(%rbp), %rdi
+000000010099196d	callq	0x104fe873e                     ## symbol stub for: __ZdlPv
+0000000100991972	movq	rf.r(%r14), %rax
+0000000100991979	testq	%rax, %rax
+000000010099197c	je	0x1009919b0
+000000010099197e	movq	rf.r(%r14), %rdi
+0000000100991985	testq	%rdi, %rdi
+0000000100991988	je	0x10099199b
+000000010099198a	movl	0x5c(%r14), %esi
+000000010099198e	movq	0x50(%r14), %rdx
+0000000100991992	callq	__ZN7IAction10queryValueEjP11IController ## IAction::queryValue(unsigned int, IController*)
+0000000100991997	movss	%xmm0, CONFIG_EMULATE_HARDWARE(%rbx)
+000000010099199b	xorl	%r15d, %r15d
+000000010099199e	movl	%r15d, %eax
+00000001009919a1	addq	$0x28, %rsp
+00000001009919a5	popq	%rbx
+00000001009919a6	popq	%r12
+00000001009919a8	popq	%r13
+00000001009919aa	popq	%r14
+00000001009919ac	popq	%r15
+00000001009919ae	popq	%rbp
+00000001009919af	retq
+00000001009919b0	leaq	0x4c5883c(%rip), %rdi           ## literal pool for: "nothing"
+00000001009919b7	xorl	%esi, %esi
+00000001009919b9	xorl	%edx, %edx
+00000001009919bb	callq	__ZN7IAction6createEPKcPS1_i    ## IAction::create(char const*, char const**, int)
+00000001009919c0	movq	%rax, %rdi
+00000001009919c3	movq	rf.r(%r14), %rax
+00000001009919ca	movq	%rdi, rf.r(%r14)
+00000001009919d1	testq	%rax, %rax
+00000001009919d4	je	0x100991985
+00000001009919d6	lock
+00000001009919d7	decl	0x8(%rax)
+00000001009919da	jg	0x10099197e
+00000001009919dc	movq	CONFIG_EMULATE_HARDWARE(%rax), %rcx
+00000001009919df	movq	%rax, %rdi
+00000001009919e2	callq	*0x8(%rcx)
+00000001009919e5	jmp	0x10099197e
+00000001009919e7	jmp	0x1009919e9
+00000001009919e9	movq	%rax, %rbx
+00000001009919ec	testb	$0x1, -0x48(%rbp)
+00000001009919f0	je	0x100991a09
+00000001009919f2	movq	-0x38(%rbp), %rdi
+00000001009919f6	callq	0x104fe873e                     ## symbol stub for: __ZdlPv
+00000001009919fb	jmp	0x100991a09
+00000001009919fd	movq	%rax, %rbx
+0000000100991a00	leaq	-0x48(%rbp), %rdi
+0000000100991a04	callq	__ZN15CAutoThreadSyncD1Ev       ## CAutoThreadSync::~CAutoThreadSync()
+0000000100991a09	movq	%rbx, %rdi
+0000000100991a0c	callq	0x104fe8456                     ## symbol stub for: __Unwind_Resume
+0000000100991a11	nop

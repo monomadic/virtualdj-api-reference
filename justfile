@@ -327,6 +327,7 @@ lint-mappers *paths:
     python3 tools/lint_mappers.py "$@"
 
 check:
+    just check-runtime-grammar
     python3 tools/probe_long_time.py --check
     python3 tools/check_bundle_copies.py
     python3 tools/lint_pads.py
@@ -477,3 +478,16 @@ action-tail-leads *args:
 
 extract-action-tail-leads:
     @python3 tools/action_tail_leads.py --generate > tests/action-tail-leads.json
+
+# H4: frozen candidate tests, exact-script HTTP observations, bounded binary evidence.
+runtime-grammar *args:
+    @python3 tools/runtime_grammar_probes.py "$@"
+
+extract-runtime-parser app:
+    @python3 tools/extract_runtime_parser.py --app "{{app}}" --output tests/runtime-parser-9246
+
+check-runtime-grammar:
+    @python3 tools/test_runtime_grammar_probes.py
+    @python3 tools/runtime_grammar_probes.py --check
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json

@@ -1,0 +1,3665 @@
+{
+  "schema_version": 1,
+  "evidence_tier": "Tier 2 candidate tests; expectations are hypotheses, never facts",
+  "binary_build": "18.0.9246",
+  "arch": "x86_64",
+  "scope": "Follow-up predictions; initial failures preserved in initial capture. Exact HTTP output, not complete action semantics.",
+  "cases": [
+    {
+      "id": "leading-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading space is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": " constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-space"
+    },
+    {
+      "id": "head-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether space terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-space"
+    },
+    {
+      "id": "number-end-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before space and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-space"
+    },
+    {
+      "id": "leading-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading tab is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\tconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-tab"
+    },
+    {
+      "id": "head-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether tab terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\t37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-tab"
+    },
+    {
+      "id": "number-end-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before tab and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\t& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-tab"
+    },
+    {
+      "id": "leading-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading lf is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\nconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-lf"
+    },
+    {
+      "id": "head-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether lf terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\n37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-lf"
+    },
+    {
+      "id": "number-end-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before lf and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\n& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-lf"
+    },
+    {
+      "id": "leading-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading cr is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\rconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-cr"
+    },
+    {
+      "id": "head-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether cr terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\r37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-cr"
+    },
+    {
+      "id": "number-end-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before cr and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\r& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-cr"
+    },
+    {
+      "id": "leading-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether leading vt is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\u000bconstant 37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-vt"
+    },
+    {
+      "id": "head-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether vt terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\u000b37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-vt"
+    },
+    {
+      "id": "number-end-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before vt and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\u000b& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-vt"
+    },
+    {
+      "id": "leading-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether leading ff is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\fconstant 37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-ff"
+    },
+    {
+      "id": "head-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether ff terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\f37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-ff"
+    },
+    {
+      "id": "number-end-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before ff and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\f& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-ff"
+    },
+    {
+      "id": "leading-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether leading nbsp is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\u00a0constant 37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#leading-nbsp"
+    },
+    {
+      "id": "head-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test whether nbsp terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\u00a037",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#head-nbsp"
+    },
+    {
+      "id": "number-end-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before nbsp and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\u00a0& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#number-end-nbsp"
+    },
+    {
+      "id": "numeric-integer",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-integer"
+    },
+    {
+      "id": "numeric-leading-zero",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '0037' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 0037",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-leading-zero"
+    },
+    {
+      "id": "numeric-positive",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '+37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant +37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-positive"
+    },
+    {
+      "id": "numeric-negative",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '-37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant -37",
+      "expected": "-37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-negative"
+    },
+    {
+      "id": "numeric-decimal",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5",
+      "expected": "37.5",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-decimal"
+    },
+    {
+      "id": "numeric-decimal-comma",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37,5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37,5",
+      "expected": "37.5",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-decimal-comma"
+    },
+    {
+      "id": "numeric-leading-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant .5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.5",
+          "expected": "0.5"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-leading-dot"
+    },
+    {
+      "id": "numeric-signed-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '+.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant +.5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.5",
+          "expected": "0.5"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-signed-dot"
+    },
+    {
+      "id": "numeric-trailing-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-trailing-dot"
+    },
+    {
+      "id": "numeric-exponent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '3.7e1' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 3.7e1",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-exponent"
+    },
+    {
+      "id": "numeric-hex",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '0x25' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 0x25",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-hex"
+    },
+    {
+      "id": "numeric-fraction",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37/2' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37/2",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-fraction"
+    },
+    {
+      "id": "numeric-percent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37%' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37%",
+      "expected": "37%",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-percent"
+    },
+    {
+      "id": "numeric-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37ms",
+      "expected": "37ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-ms"
+    },
+    {
+      "id": "numeric-beats",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37bt' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37bt",
+      "expected": "37bt",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-beats"
+    },
+    {
+      "id": "numeric-seconds",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37s' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37s",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-seconds"
+    },
+    {
+      "id": "numeric-uppercase-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37MS' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37MS",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-uppercase-ms"
+    },
+    {
+      "id": "numeric-uppercase-beats",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37BT' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37BT",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-uppercase-beats"
+    },
+    {
+      "id": "numeric-separate-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37 ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37 ms",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-separate-ms"
+    },
+    {
+      "id": "numeric-percent-space",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37 %' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37 %",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-percent-space"
+    },
+    {
+      "id": "numeric-double-unit",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37msbt' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37msbt",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-double-unit"
+    },
+    {
+      "id": "numeric-suffix-junk",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37mszzqqx' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37mszzqqx",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-suffix-junk"
+    },
+    {
+      "id": "numeric-decimal-percent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.5%' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5%",
+      "expected": "37.5%",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-decimal-percent"
+    },
+    {
+      "id": "numeric-decimal-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test the typed numeric candidate '37.5ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5ms",
+      "expected": "38ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-decimal-ms"
+    },
+    {
+      "id": "numeric-negative-unit",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '-37ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant -37ms",
+      "expected": "-37ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#numeric-negative-unit"
+    },
+    {
+      "id": "quote-single",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A B'",
+      "expected": "A B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-single"
+    },
+    {
+      "id": "quote-double",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for '\"A B\"'.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text \"A B\"",
+      "expected": "A B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-double"
+    },
+    {
+      "id": "quote-unclosed-single",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test quote termination/preservation for \"'A B\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A B",
+      "expected": "-",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-unclosed-single"
+    },
+    {
+      "id": "quote-unclosed-double",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test quote termination/preservation for '\"A B'.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text \"A B",
+      "expected": "-",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-unclosed-double"
+    },
+    {
+      "id": "quote-opposite-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for '\\'A\"B\\''.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\"B'",
+      "expected": "A\"B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-opposite-quote"
+    },
+    {
+      "id": "quote-backslash-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A\\\\'B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\\'B'",
+      "expected": "A\\",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-backslash-quote"
+    },
+    {
+      "id": "quote-doubled-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A''B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A''B'",
+      "expected": "A",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-doubled-quote"
+    },
+    {
+      "id": "quote-empty",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"''\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text ''",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-empty"
+    },
+    {
+      "id": "quote-punctuation",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A&?:()B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A&?:()B'",
+      "expected": "A&?:()B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-punctuation"
+    },
+    {
+      "id": "quote-adjacent",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A'B\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A'B",
+      "expected": "A",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-adjacent"
+    },
+    {
+      "id": "quote-unicode",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A\u00e9B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\u00e9B'",
+      "expected": "A\u00e9B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#quote-unicode"
+    },
+    {
+      "id": "token-word",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-word"
+    },
+    {
+      "id": "token-hyphen",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha-beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha-beta",
+      "expected": "Alpha-beta",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-hyphen"
+    },
+    {
+      "id": "token-underscore",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha_beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha_beta",
+      "expected": "Alpha_beta",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-underscore"
+    },
+    {
+      "id": "token-dot",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha.beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha.beta",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-dot"
+    },
+    {
+      "id": "token-slash",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha/beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha/beta",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-slash"
+    },
+    {
+      "id": "token-unicode",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alph\u00e9'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alph\u00e9",
+      "expected": "Alph",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-unicode"
+    },
+    {
+      "id": "token-dollar",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '$h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant $h4_name",
+      "expected": "$h4_name",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-dollar"
+    },
+    {
+      "id": "token-percent",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '%h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant %h4_name",
+      "expected": "%h4_name",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-percent"
+    },
+    {
+      "id": "token-at",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '@h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant @h4_name",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-at"
+    },
+    {
+      "id": "token-dollar-empty",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '$'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant $",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-dollar-empty"
+    },
+    {
+      "id": "token-percent-empty",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '%'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant %",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-percent-empty"
+    },
+    {
+      "id": "token-on",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test generic token representation for 'on'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant on",
+      "expected": "yes",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-on"
+    },
+    {
+      "id": "token-off",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test generic token representation for 'off'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant off",
+      "expected": "no",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-off"
+    },
+    {
+      "id": "token-toggle",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test generic token representation for 'toggle'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant toggle",
+      "expected": "yes",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-toggle"
+    },
+    {
+      "id": "token-all",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'all'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant all",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-all"
+    },
+    {
+      "id": "token-default",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'default'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant default",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-default"
+    },
+    {
+      "id": "token-on-uppercase",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test generic token representation for 'ON'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant ON",
+      "expected": "yes",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-on-uppercase"
+    },
+    {
+      "id": "token-on-suffix",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'onward'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant onward",
+      "expected": "onward",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#token-on-suffix"
+    },
+    {
+      "id": "backtick-literal",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "constant `constant 37`",
+      "expected": "`constant 37`",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-literal"
+    },
+    {
+      "id": "backtick-text-eval",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "get_text '`constant 37`'",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'constant 37'",
+          "expected": "constant 37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-text-eval"
+    },
+    {
+      "id": "backtick-text-interpolation",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "get_text 'A`constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A37C'",
+          "expected": "A37C"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-text-interpolation"
+    },
+    {
+      "id": "backtick-numeric-consumer",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "param_add `constant 37` `constant 5`",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-numeric-consumer"
+    },
+    {
+      "id": "backtick-numeric-consumer-quoted",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "param_add '`constant 37`' '`constant 5`'",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-numeric-consumer-quoted"
+    },
+    {
+      "id": "backtick-unclosed",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "constant `constant 37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-unclosed"
+    },
+    {
+      "id": "backtick-deck-consumer",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "deck `constant 2` get_deck",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-deck-consumer"
+    },
+    {
+      "id": "deck-number-1",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 1 get_deck",
+      "expected": "1",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-number-1"
+    },
+    {
+      "id": "deck-number-2",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-number-2"
+    },
+    {
+      "id": "deck-number-3",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 3 get_deck",
+      "expected": "3",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-number-3"
+    },
+    {
+      "id": "deck-number-4",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 4 get_deck",
+      "expected": "4",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-number-4"
+    },
+    {
+      "id": "deck-number-99",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 99 get_deck",
+      "expected": "1",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-number-99"
+    },
+    {
+      "id": "deck-token-default",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck default constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-default"
+    },
+    {
+      "id": "deck-token-active",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck active constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-active"
+    },
+    {
+      "id": "deck-token-automix",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck automix constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-automix"
+    },
+    {
+      "id": "deck-token-karaoke",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck karaoke constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-karaoke"
+    },
+    {
+      "id": "deck-token-left",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck left constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-left"
+    },
+    {
+      "id": "deck-token-right",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck right constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-right"
+    },
+    {
+      "id": "deck-token-sandbox",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck sandbox constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-sandbox"
+    },
+    {
+      "id": "deck-token-none",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck none constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-none"
+    },
+    {
+      "id": "deck-token-all",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck all constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-all"
+    },
+    {
+      "id": "deck-token-leftvideo",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck leftvideo constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-leftvideo"
+    },
+    {
+      "id": "deck-token-rightvideo",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck rightvideo constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-rightvideo"
+    },
+    {
+      "id": "deck-token-playing",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck playing constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-playing"
+    },
+    {
+      "id": "deck-token-mixer1",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer1 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-mixer1"
+    },
+    {
+      "id": "deck-token-mixer2",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer2 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-mixer2"
+    },
+    {
+      "id": "deck-token-mixer3",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer3 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-mixer3"
+    },
+    {
+      "id": "deck-token-mixer4",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer4 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": "error:-2147467259"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#deck-token-mixer4"
+    },
+    {
+      "id": "prefix-deck-uppercase",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "DECK 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-deck-uppercase"
+    },
+    {
+      "id": "prefix-zone",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "zone 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "zone 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-zone"
+    },
+    {
+      "id": "prefix-deck-quoted",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck '2' get_deck",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-deck-quoted"
+    },
+    {
+      "id": "prefix-deck-number-prefix",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 2junk get_deck",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-deck-number-prefix"
+    },
+    {
+      "id": "prefix-deck-space-tab",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck \t2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-deck-space-tab"
+    },
+    {
+      "id": "prefix-deck-tab",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck\t2 get_deck",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-deck-tab"
+    },
+    {
+      "id": "prefix-legacy-get",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "get constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-legacy-get"
+    },
+    {
+      "id": "prefix-uppercase-verb",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "CONSTANT 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-uppercase-verb"
+    },
+    {
+      "id": "prefix-hyphen-verb",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "get-text 'AB'",
+      "expected": "AB",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'CD'",
+          "expected": "CD"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-hyphen-verb"
+    },
+    {
+      "id": "prefix-nested-deck",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 1 deck 2 get_deck",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#prefix-nested-deck"
+    },
+    {
+      "id": "fallback-text-argument",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant zzqqx",
+      "expected": "zzqqx",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-text-argument"
+    },
+    {
+      "id": "fallback-extra-argument",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 zzqqx",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-extra-argument"
+    },
+    {
+      "id": "fallback-punctuation-stops-chain",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 #zzqqx & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-punctuation-stops-chain"
+    },
+    {
+      "id": "fallback-word-keeps-chain",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 zzqqx & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-word-keeps-chain"
+    },
+    {
+      "id": "fallback-malformed-number",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37zzqqx & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-malformed-number"
+    },
+    {
+      "id": "fallback-unknown-head",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Follow-up prediction after interrupted initial capture: Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "zzqqx 37",
+      "expected": "error:-2147467259",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-unknown-head"
+    },
+    {
+      "id": "fallback-unterminated-quotes",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant '37 & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-unterminated-quotes"
+    },
+    {
+      "id": "fallback-semicolon",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 ; constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#fallback-semicolon"
+    },
+    {
+      "id": "operator-amp-space",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-amp-space"
+    },
+    {
+      "id": "operator-amp-adjacent-number",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-amp-adjacent-number"
+    },
+    {
+      "id": "operator-amp-quote",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether HTTP text query chaining returns the first text value; this does not establish whether the second node was parsed.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "get_text 'A'& get_text 'B'",
+      "expected": "A",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'B'",
+          "expected": "B"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-amp-quote"
+    },
+    {
+      "id": "operator-paren",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "(constant 37)",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-paren"
+    },
+    {
+      "id": "operator-ternary",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "on ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "off ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-ternary"
+    },
+    {
+      "id": "operator-not",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "not on ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "on ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-not"
+    },
+    {
+      "id": "operator-comparison",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the observed constant comparison query; comparison operator semantics are not determined by this constant consumer.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 > 5 ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "off ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-comparison"
+    },
+    {
+      "id": "operator-double-amp",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 && param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#operator-double-amp"
+    },
+    {
+      "id": "ms-fraction-cast",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether fractional ms survives parsing but is rounded only in HTTP unit rendering.",
+      "script": "constant 37.5ms & param_cast float",
+      "expected": "37.5",
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-ms-9",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37ms\t & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-ms-10",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37ms\n & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-ms-13",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37ms\r & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-ms-38",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37ms& & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-bt-9",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37bt\t & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-bt-10",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37bt\n & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-bt-13",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37bt\r & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-bt-38",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37bt& & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-%-9",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37%\t & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-%-10",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37%\n & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-%-13",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37%\r & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "suffix-boundary-%-38",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test suffix boundary before exact delimiter byte.",
+      "script": "constant 37%& & param_add 5",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-numeric-close-paren",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "(constant 37)",
+      "expected": "37",
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-percent-close-paren",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "(constant 37%)",
+      "expected": "37%",
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-quote-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "get_text 'A'\t'B'",
+      "expected": "A",
+      "contrasts": [
+        {
+          "script": "get_text 'B'",
+          "expected": "B"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-quote-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "get_text 'A\nB'",
+      "expected": "A\nB",
+      "contrasts": [
+        {
+          "script": "get_text 'AB'",
+          "expected": "AB"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-quote-backslash",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "get_text 'A\\nB'",
+      "expected": "A\\nB",
+      "contrasts": [
+        {
+          "script": "get_text 'AB'",
+          "expected": "AB"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-bool-touch-amp",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant on& constant 83",
+      "expected": "on",
+      "contrasts": [
+        {
+          "script": "constant on",
+          "expected": "yes"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-bool-space-amp",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant on & constant 83",
+      "expected": "yes",
+      "contrasts": [
+        {
+          "script": "constant off",
+          "expected": "no"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-decimal-second-comma",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant 37,5,2",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37.5",
+          "expected": "37.5"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-signed-ms-plus",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant +37ms",
+      "expected": "37ms",
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-dollar-hyphen",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant $h4-name",
+      "expected": "$h4-name",
+      "contrasts": [
+        {
+          "script": "constant $h4",
+          "expected": "$h4"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-quoted-at-name",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "constant '@h4-name'",
+      "expected": "@h4-name",
+      "contrasts": [
+        {
+          "script": "constant @h4-name",
+          "expected": ""
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-literal-dollar-name",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "get_text '$h4-name'",
+      "expected": "$h4-name",
+      "contrasts": [
+        {
+          "script": "get_text 'h4-name'",
+          "expected": "h4-name"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-legacy-effect-slot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "effect 'Echo' get_slider_count",
+      "expected": "",
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "followup-legacy-sampler-slot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test a remaining parser branch; exact output only.",
+      "script": "sampler 1 loaded",
+      "expected": "no",
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "modifier-blink",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 blink & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    },
+    {
+      "id": "modifier-blinkfast",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 blinkfast & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    },
+    {
+      "id": "modifier-while_pressed",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 while_pressed & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    },
+    {
+      "id": "modifier-temporary",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 temporary & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    },
+    {
+      "id": "modifier-momentarily",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 momentarily & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    },
+    {
+      "id": "modifier-value",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test modifier consumption through a constant query; effect on action execution is unresolved.",
+      "script": "constant 37 value & param_add 5",
+      "expected": "42",
+      "contrasts": [
+        {
+          "script": "constant 37 #zzqqx & param_add 5",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597c79"
+      ]
+    }
+  ],
+  "excluded_cases": [
+    {
+      "id": "deck-token-master",
+      "reason": "App exited during second pass while this case was pending; cause unproven. Do not replay automatically.",
+      "source": "tests/runtime-grammar-live-9598.json"
+    }
+  ]
+}

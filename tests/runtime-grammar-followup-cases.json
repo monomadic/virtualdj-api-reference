@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "evidence_tier": "Candidate predictions only",
+  "cases": [
+    {
+      "id": "backtick-literal",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "constant `constant 37`",
+      "expected": "`constant 37`",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-literal"
+    },
+    {
+      "id": "backtick-text-eval",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "get_text '`constant 37`'",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'constant 37'",
+          "expected": "constant 37"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-text-eval"
+    },
+    {
+      "id": "backtick-numeric-consumer",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "param_add `constant 37` `constant 5`",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "prior_case": "tests/runtime-grammar-cases.json#backtick-numeric-consumer"
+    },
+    {
+      "id": "ms-fraction-cast",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether fractional ms survives parsing but is rounded only in HTTP unit rendering.",
+      "script": "constant 37.5ms & param_cast float",
+      "expected": "37.5",
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float",
+          "expected": "37"
+        }
+      ],
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005993d9"
+      ]
+    },
+    {
+      "id": "int-width-2147483647",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant 2147483647",
+      "expected": "2147483647",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "int-width-2147483648",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant 2147483648",
+      "expected": "-2147483648",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "int-width-4294967295",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant 4294967295",
+      "expected": "-1",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "int-width-4294967296",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant 4294967296",
+      "expected": "0",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "int-width-4294967297",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant 4294967297",
+      "expected": "1",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "int-width--2147483649",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "constant -2147483649",
+      "expected": "2147483647",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992eb"
+      ]
+    },
+    {
+      "id": "get-text-backslash-newline",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "get_text 'A\\nB'",
+      "expected": "A\r\nB",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A\\nB'",
+          "expected": "A\\nB"
+        }
+      ],
+      "binary_sites": [
+        "actionGetText@0x100422f51"
+      ]
+    },
+    {
+      "id": "sampler-slot-loaded",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "sampler 1 loaded",
+      "expected": "yes",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "sampler 99 loaded",
+          "expected": "no"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x1005979e9"
+      ]
+    },
+    {
+      "id": "sampler-slot-empty",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "sampler 99 loaded",
+      "expected": "no",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "sampler_loaded 1",
+          "expected": "yes"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x1005979e9"
+      ]
+    },
+    {
+      "id": "legacy-get-effect-count",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "get effect_slider_count 'Echo'",
+      "expected": "6",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_effect_slider_count 'zzqqx'",
+          "expected": "0"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597b0b"
+      ]
+    },
+    {
+      "id": "legacy-effect-value",
+      "group": "followup",
+      "fixture": "parser_constants",
+      "hypothesis": "Test this explicit follow-up prediction; initial contrary observations are retained separately.",
+      "script": "effect 'Echo' slider 1",
+      "expected": "0.75",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "effect 'zzqqx' slider 1",
+          "expected": "0"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100597a76"
+      ]
+    }
+  ]
+}

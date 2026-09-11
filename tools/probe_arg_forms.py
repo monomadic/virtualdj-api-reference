@@ -40,6 +40,10 @@ writes, and it restores what it changed.
 Forms are recorded as TOKEN LISTS, never a single argument string, because
 whether a verb accepts more than one token is exactly what is unknown.
 
+For lexical hypotheses, --grammar-cases FILE uses an exact-script suite instead:
+delimiter bytes, quoting and prefixes are preserved. See runtime_grammar_probes.py.
+Each prediction needs an explicit contrasting result and a named read-only fixture.
+
 Separating from nonsense is NOT enough for a two-token form: `is_using loop
 zzqqx` separates from garbage purely because `loop` does, with the tail
 discarded. So each recognized pair is additionally compared against its own
@@ -300,6 +304,10 @@ def _label_pairs(out_forms: list[dict]) -> None:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--grammar-cases", type=Path,
+                   help="exact-script hypothesis suite; preserves delimiters and prefixes")
+    p.add_argument("--rounds", type=int, default=2,
+                   help="independent passes for --grammar-cases (minimum 2)")
     p.add_argument("--verbs", help="comma-separated subset")
     p.add_argument("--fixtures", default=",".join(DEFAULT_FIXTURES))
     p.add_argument("--no-pairs", action="store_true", help="skip ordered two-token forms")
@@ -330,6 +338,10 @@ def main() -> int:
                    help="read each form N times and keep the value only if every read "
                         "agrees; guards against verbs whose value drifts on its own")
     args = p.parse_args()
+
+    if args.grammar_cases:
+        from runtime_grammar_probes import run_suite
+        return run_suite(args)
 
     contracts = json.load(open(CONTRACTS))
     table = json.load(open(VERB_TABLE))

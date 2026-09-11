@@ -218,6 +218,18 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
     long_track = Path(tempfile.gettempdir()) / "vdj-long-time-7500.flac"
     return {f.name: f for f in [
         Fixture(
+            name="parser_constants",
+            describes="read-only constant oracles and distinct numeric deck identities; "
+                      "no media, transport or variable mutations",
+            setup=[], teardown=[], decks=(), needs_audio_file=False,
+            assertions=[
+                Assertion("constant 37", lambda v: v == "37", "integer oracle"),
+                Assertion("constant 83", lambda v: v == "83", "distinct integer oracle"),
+                Assertion("deck 1 get_deck", lambda v: v == "1", "deck 1 identity"),
+                Assertion("deck 2 get_deck", lambda v: v == "2", "deck 2 identity"),
+            ],
+        ),
+        Fixture(
             name="long_time",
             describes="generated 7500-second track on empty, stopped deck 1; phase position, "
                       "pitch and display mode verified by probe_long_time.py",

@@ -1,0 +1,6940 @@
+{
+  "summary": {
+    "suite_sha256": "27893270f4b41f166bfd18cdfb52ff3418b7504be492dac402d53c4d8bd3be32",
+    "suite": "tests/runtime-grammar-cases.json",
+    "repeat": 3,
+    "rounds_requested": 2,
+    "rounds_completed": 1,
+    "status": "aborted",
+    "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-11T19:59:03.965434+00:00",
+    "verdicts": {
+      "incomplete-run": 130
+    },
+    "error": "[Errno 54] Connection reset by peer",
+    "last_completed_case_in_reverse_pass": "deck-token-sandbox",
+    "interrupted_case": "deck-token-master",
+    "failure_attribution": "Connection reset then app process absent; no crash report located. Causation unproven."
+  },
+  "fixture_checks": [
+    {
+      "round": 1,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "no",
+        "deck 2 loaded": "no",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    },
+    {
+      "round": 2,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "no",
+        "deck 2 loaded": "no",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "leading-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading space is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": " constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          " constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether space terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-space",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before space and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading tab is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\tconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "\tconstant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether tab terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\t37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant\t37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-tab",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before tab and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\t& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\t& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading lf is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\nconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "\nconstant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether lf terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\n37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant\n37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-lf",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before lf and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\n& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\n& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading cr is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\rconstant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "\rconstant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether cr terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\r37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant #zzqqx",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant\r37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-cr",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before cr and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\r& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\r& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading vt is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\u000bconstant 37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "\u000bconstant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether vt terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\u000b37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant\u000b37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-vt",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before vt and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\u000b& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\u000b& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading ff is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\fconstant 37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "\fconstant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether ff terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\f37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant\f37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-ff",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before ff and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\f& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\f& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "leading-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether leading nbsp is skipped before a constant query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "\u00a0constant 37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "\u00a0constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "head-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether nbsp terminates the verb name.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant\u00a037",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant\u00a037": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "number-end-nbsp",
+      "group": "delimiters",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric boundary before nbsp and a later query.",
+      "binary_sites": [
+        "IAction::create@0x100597b31",
+        "IAction::stringGetParam@0x10059961c"
+      ],
+      "script": "constant 37\u00a0& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37\u00a0& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-integer",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-leading-zero",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '0037' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 0037",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 0037": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-positive",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '+37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant +37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant +37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-negative",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '-37' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant -37",
+      "expected": "-37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant -37": [
+            "-37",
+            "-37",
+            "-37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-decimal",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5",
+      "expected": "37.5",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37.5": [
+            "37.5",
+            "37.5",
+            "37.5"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-decimal-comma",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37,5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37,5",
+      "expected": "37.5",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37,5": [
+            "37.5",
+            "37.5",
+            "37.5"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-leading-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant .5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.5",
+          "expected": "0.5"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 0.5": [
+            "0.5",
+            "0.5",
+            "0.5"
+          ],
+          "constant .5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-signed-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '+.5' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant +.5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.5",
+          "expected": "0.5"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 0.5": [
+            "0.5",
+            "0.5",
+            "0.5"
+          ],
+          "constant +.5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-trailing-dot",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37.": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-exponent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '3.7e1' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 3.7e1",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 3.7e1": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-hex",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '0x25' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 0x25",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 0x25": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-fraction",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37/2' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37/2",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37/2": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-percent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37%' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37%",
+      "expected": "37%",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37%": [
+            "37%",
+            "37%",
+            "37%"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37ms",
+      "expected": "37ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-beats",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37bt' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37bt",
+      "expected": "37bt",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37bt": [
+            "37bt",
+            "37bt",
+            "37bt"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-seconds",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37s' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37s",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant 37s": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-uppercase-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37MS' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37MS",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant 37MS": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-uppercase-beats",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37BT' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37BT",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt",
+          "expected": "37bt"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37bt": [
+            "37bt",
+            "37bt",
+            "37bt"
+          ],
+          "constant 37BT": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-separate-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37 ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37 ms",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant 37 ms": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-percent-space",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37 %' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37 %",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37%",
+          "expected": "37%"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37%": [
+            "37%",
+            "37%",
+            "37%"
+          ],
+          "constant 37 %": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-double-unit",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37msbt' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37msbt",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant 37msbt": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-suffix-junk",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37mszzqqx' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37mszzqqx",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant 37mszzqqx": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-decimal-percent",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.5%' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5%",
+      "expected": "37.5%",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37.5%": [
+            "37.5%",
+            "37.5%",
+            "37.5%"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-decimal-ms",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '37.5ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant 37.5ms",
+      "expected": "37.5ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37.5ms": [
+            "38ms",
+            "38ms",
+            "38ms"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "numeric-negative-unit",
+      "group": "numbers",
+      "fixture": "parser_constants",
+      "hypothesis": "Test the typed numeric candidate '-37ms' through constant output.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x1005992b7",
+        "IAction::stringGetParam@0x1005993d9"
+      ],
+      "script": "constant -37ms",
+      "expected": "-37ms",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms",
+          "expected": "37ms"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms",
+            "37ms"
+          ],
+          "constant -37ms": [
+            "-37ms",
+            "-37ms",
+            "-37ms"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-single",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A B'",
+      "expected": "A B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A B'": [
+            "A B",
+            "A B",
+            "A B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-double",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for '\"A B\"'.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text \"A B\"",
+      "expected": "A B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text \"A B\"": [
+            "A B",
+            "A B",
+            "A B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-unclosed-single",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A B\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A B",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A B": [
+            "-",
+            "-",
+            "-"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-unclosed-double",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for '\"A B'.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text \"A B",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text \"A B": [
+            "-",
+            "-",
+            "-"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-opposite-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for '\\'A\"B\\''.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\"B'",
+      "expected": "A\"B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A\"B'": [
+            "A\"B",
+            "A\"B",
+            "A\"B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-backslash-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A\\\\'B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\\'B'",
+      "expected": "A\\",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A\\'B'": [
+            "A\\",
+            "A\\",
+            "A\\"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-doubled-quote",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A''B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A''B'",
+      "expected": "A",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A''B'": [
+            "A",
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-empty",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"''\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text ''",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text ''": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-punctuation",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A&?:()B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A&?:()B'",
+      "expected": "A&?:()B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A&?:()B'": [
+            "A&?:()B",
+            "A&?:()B",
+            "A&?:()B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-adjacent",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A'B\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A'B",
+      "expected": "A",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A'B": [
+            "A",
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "quote-unicode",
+      "group": "quotes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test quote termination/preservation for \"'A\u00e9B'\".",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "get_text 'A\u00e9B'",
+      "expected": "A\u00e9B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'C D'",
+          "expected": "C D"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'C D'": [
+            "C D",
+            "C D",
+            "C D"
+          ],
+          "get_text 'A\u00e9B'": [
+            "A\u00e9B",
+            "A\u00e9B",
+            "A\u00e9B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-word",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alpha": [
+            "Alpha",
+            "Alpha",
+            "Alpha"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-hyphen",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha-beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha-beta",
+      "expected": "Alpha-beta",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alpha-beta": [
+            "Alpha-beta",
+            "Alpha-beta",
+            "Alpha-beta"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-underscore",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha_beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha_beta",
+      "expected": "Alpha_beta",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alpha_beta": [
+            "Alpha_beta",
+            "Alpha_beta",
+            "Alpha_beta"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-dot",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha.beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha.beta",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alpha.beta": [
+            "Alpha",
+            "Alpha",
+            "Alpha"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-slash",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alpha/beta'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alpha/beta",
+      "expected": "Alpha",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alpha/beta": [
+            "Alpha",
+            "Alpha",
+            "Alpha"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-unicode",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'Alph\u00e9'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant Alph\u00e9",
+      "expected": "Alph",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant Alph\u00e9": [
+            "Alph",
+            "Alph",
+            "Alph"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-dollar",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '$h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant $h4_name",
+      "expected": "$h4_name",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant $h4_name": [
+            "$h4_name",
+            "$h4_name",
+            "$h4_name"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-percent",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '%h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant %h4_name",
+      "expected": "%h4_name",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant %h4_name": [
+            "%h4_name",
+            "%h4_name",
+            "%h4_name"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-at",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '@h4_name'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant @h4_name",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant @h4_name": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-dollar-empty",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '$'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant $",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant $": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-percent-empty",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for '%'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant %",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant %": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-on",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'on'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant on",
+      "expected": "on",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant on": [
+            "yes",
+            "yes",
+            "yes"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-off",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'off'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant off",
+      "expected": "off",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant off": [
+            "no",
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-toggle",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'toggle'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant toggle",
+      "expected": "toggle",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant toggle": [
+            "yes",
+            "yes",
+            "yes"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-all",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'all'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant all",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant all": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-default",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'default'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant default",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant default": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-on-uppercase",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'ON'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant ON",
+      "expected": "on",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant ON": [
+            "yes",
+            "yes",
+            "yes"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "token-on-suffix",
+      "group": "names",
+      "fixture": "parser_constants",
+      "hypothesis": "Test generic token representation for 'onward'; this does not prove variable scope or flag effects.",
+      "binary_sites": [
+        "IAction::create@0x100597b88",
+        "IAction::stringGetParam@0x100599714"
+      ],
+      "script": "constant onward",
+      "expected": "onward",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant onward": [
+            "onward",
+            "onward",
+            "onward"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-literal",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "constant `constant 37`",
+      "expected": "`constant 37`",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant `constant 37`": [
+            "`constant 37`",
+            "`constant 37`",
+            "`constant 37`"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-text-eval",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "get_text '`constant 37`'",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'constant 37'",
+          "expected": "constant 37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'constant 37'": [
+            "constant 37",
+            "constant 37",
+            "constant 37"
+          ],
+          "get_text '`constant 37`'": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-text-interpolation",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "get_text 'A`constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A37C'",
+          "expected": "A37C"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'A37C'": [
+            "A37C",
+            "A37C",
+            "A37C"
+          ],
+          "get_text 'A`constant 37`B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-numeric-consumer",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "param_add `constant 37` `constant 5`",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "param_add 37 6": [
+            "43",
+            "43",
+            "43"
+          ],
+          "param_add `constant 37` `constant 5`": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-numeric-consumer-quoted",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "param_add '`constant 37`' '`constant 5`'",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "param_add 37 6": [
+            "43",
+            "43",
+            "43"
+          ],
+          "param_add '`constant 37`' '`constant 5`'": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-unclosed",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "constant `constant 37",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant `constant 37": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "backtick-deck-consumer",
+      "group": "backticks",
+      "fixture": "parser_constants",
+      "hypothesis": "Test consumer-specific handling; no surface-wide backtick claim.",
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599487",
+        "IAction::getParamEval@0x100598552"
+      ],
+      "script": "deck `constant 2` get_deck",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck `constant 2` get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-number-1",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 1 get_deck",
+      "expected": "1",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-number-2",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-number-3",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 3 get_deck",
+      "expected": "3",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 3 get_deck": [
+            "3",
+            "3",
+            "3"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-number-4",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 4 get_deck",
+      "expected": "4",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 4 get_deck": [
+            "4",
+            "4",
+            "4"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-number-99",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test numeric deck scope using the identity query, not acceptance alone.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 99 get_deck",
+      "expected": "99",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 99 get_deck": [
+            "1",
+            "1",
+            "1"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-default",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck default constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck default constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-active",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck active constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck active constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-automix",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck automix constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck automix constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-karaoke",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck karaoke constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck karaoke constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-left",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck left constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck left constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-right",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck right constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck right constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-master",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck master constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck master constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-sandbox",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck sandbox constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck sandbox constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck sandbox constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-none",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck none constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck none constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck none constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-all",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck all constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck all constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck all constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-leftvideo",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck leftvideo constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck leftvideo constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck leftvideo constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-rightvideo",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck rightvideo constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck rightvideo constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck rightvideo constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-playing",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck playing constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck playing constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck playing constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-mixer1",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer1 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer1 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer1 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-mixer2",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer2 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer2 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer2 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-mixer3",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer3 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer3 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer3 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "deck-token-mixer4",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test whether this binary deck keyword reaches a constant query; dispatch identity/effects remain a separate question.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck mixer4 constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck zzqqx constant 37",
+          "expected": ""
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer4 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck zzqqx constant 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "deck mixer4 constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-deck-uppercase",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "DECK 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "DECK 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "DECK 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-zone",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "zone 2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "zone 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "zone 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "zone 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "zone 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "zone 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-deck-quoted",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck '2' get_deck",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck '2' get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck '2' get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-deck-number-prefix",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 2junk get_deck",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 2junk get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 2junk get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-deck-space-tab",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck \t2 get_deck",
+      "expected": "2",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 get_deck",
+          "expected": "1"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "deck \t2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 1 get_deck": [
+            "1",
+            "1",
+            "1"
+          ],
+          "deck \t2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-deck-tab",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck\t2 get_deck",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck\t2 get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck\t2 get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-legacy-get",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "get constant 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "get constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "get constant 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-uppercase-verb",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "CONSTANT 37",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "CONSTANT 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "CONSTANT 37": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-hyphen-verb",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "get-text 'AB'",
+      "expected": "AB",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'CD'",
+          "expected": "CD"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'CD'": [
+            "CD",
+            "CD",
+            "CD"
+          ],
+          "get-text 'AB'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'CD'": [
+            "CD",
+            "CD",
+            "CD"
+          ],
+          "get-text 'AB'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "prefix-nested-deck",
+      "group": "prefixes",
+      "fixture": "parser_constants",
+      "hypothesis": "Test wrapper/name normalization candidate in exact query context.",
+      "binary_sites": [
+        "IAction::create@0x1005977b4",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "script": "deck 1 deck 2 get_deck",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 2 get_deck",
+          "expected": "2"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 1 deck 2 get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "deck 2 get_deck": [
+            "2",
+            "2",
+            "2"
+          ],
+          "deck 1 deck 2 get_deck": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-text-argument",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant zzqqx",
+      "expected": "zzqqx",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant zzqqx": [
+            "zzqqx",
+            "zzqqx",
+            "zzqqx"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant zzqqx": [
+            "zzqqx",
+            "zzqqx",
+            "zzqqx"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-extra-argument",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 zzqqx",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37 zzqqx": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37 zzqqx": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-punctuation-stops-chain",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 #zzqqx & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37 #zzqqx & param_add 5": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37 #zzqqx & param_add 5": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-word-keeps-chain",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 zzqqx & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 zzqqx & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 zzqqx & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-malformed-number",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37zzqqx & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37zzqqx & param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37zzqqx & param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-unknown-head",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "zzqqx 37",
+      "expected": "error:771",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "zzqqx 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "zzqqx 37": [
+            "error:-2147467259",
+            "error:-2147467259",
+            "error:-2147467259"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-unterminated-quotes",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant '37 & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant '37 & param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant '37 & param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "fallback-semicolon",
+      "group": "fallback",
+      "fixture": "parser_constants",
+      "hypothesis": "Test exact fallback output and whether the later query is reached; no inference from HTTP 200.",
+      "binary_sites": [
+        "IAction::create@0x1005980cf",
+        "IAction::create@0x100597c06"
+      ],
+      "script": "constant 37 ; constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37 ; constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "constant 37 ; constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-amp-space",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-amp-adjacent-number",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37& param_add 5",
+      "expected": "",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42",
+            "42"
+          ],
+          "constant 37& param_add 5": [
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-amp-quote",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "get_text 'A'& get_text 'B'",
+      "expected": "B",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A'",
+          "expected": "A"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'A'": [
+            "A",
+            "A",
+            "A"
+          ],
+          "get_text 'A'& get_text 'B'": [
+            "A",
+            "A",
+            "A"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "get_text 'A'": [
+            "A",
+            "A",
+            "A"
+          ],
+          "get_text 'A'& get_text 'B'": [
+            "A",
+            "A",
+            "A"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-paren",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "(constant 37)",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "(constant 37)": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "(constant 37)": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-ternary",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "on ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "off ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "off ? constant 37 : constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "on ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "off ? constant 37 : constant 83": [
+            "83",
+            "83",
+            "83"
+          ],
+          "on ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-not",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "not on ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "on ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "on ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ],
+          "not on ? constant 37 : constant 83": [
+            "83",
+            "83",
+            "83"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "on ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ],
+          "not on ? constant 37 : constant 83": [
+            "83",
+            "83",
+            "83"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-comparison",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 > 5 ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 > 50 ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 > 50 ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 > 5 ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37 > 50 ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 > 5 ? constant 37 : constant 83": [
+            "37",
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "operator-double-amp",
+      "group": "operators",
+      "fixture": "parser_constants",
+      "hypothesis": "Test composition boundary as observed through distinguishable constant outputs.",
+      "binary_sites": [
+        "IAction::create@0x10059815a",
+        "IAction::create@0x100597fce"
+      ],
+      "script": "constant 37 && param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant #zzqqx",
+        "constant #vfnrbq"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "passes": [
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 && param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        },
+        {
+          "constant #zzqqx": [
+            "",
+            "",
+            ""
+          ],
+          "constant #vfnrbq": [
+            "",
+            "",
+            ""
+          ],
+          "constant 37": [
+            "37",
+            "37",
+            "37"
+          ],
+          "constant 37 && param_add 5": [
+            "42",
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    }
+  ]
+}

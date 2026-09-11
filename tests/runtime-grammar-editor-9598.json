@@ -1,0 +1,31 @@
+{
+  "summary": {
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "agent driving Button Editor UI",
+    "captured_at": "2026-09-11T20:12:40.085920+00:00",
+    "build_source": "HTTP get_build after UI observation",
+    "context": "Existing action-button editor; no test script executed; original action restored and editor closed",
+    "capture_medium": "CUA screenshots in task transcript; no library screenshots copied into repository"
+  },
+  "observations": [
+    {
+      "case": "fallback-malformed-number",
+      "script": "constant 37zzqqx & param_add 5",
+      "observed": "Editor displayed the complete text without a visible syntax-error message; description area displayed param_add help.",
+      "runtime_capture": "tests/runtime-grammar-confirmation-9598.json",
+      "runtime_output": "",
+      "verdict": "visual observation only; not editor acceptance or parsing proof"
+    }
+  ],
+  "restoration": {
+    "original_action_restored": true,
+    "verified_by": "Complete original script visible in Button Editor screenshot before Escape; main window visible after Escape"
+  },
+  "limitations": [
+    "No AX access to script field or token tree",
+    "Control-key and text injection events required separate screenshot verification",
+    "A clipboard paste attempt timed out; its script was not observed in the editor",
+    "No raw source-byte or token-span readback; no exact-tab comparison claimed"
+  ]
+}
