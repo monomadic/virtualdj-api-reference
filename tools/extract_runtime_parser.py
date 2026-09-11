@@ -49,6 +49,22 @@ TARGETS = {
     "DLGActionWizard::getCurrentWord": "DLGActionWizard::getCurrentWord",
     "DLGActionWizard::onChanged": "DLGActionWizard::onChanged",
     "DLGActionWizard::updateHint": "DLGActionWizard::updateHint",
+    "ACTION_zoom::onExecute": "ACTION_zoom::onExecute",
+    "IActionSwitch::onExecute": "IActionSwitch::onExecute",
+    "ACTION_beatlock::setValue": "ACTION_beatlock::setValue",
+    "getDeckSafe": "getDeckSafe",
+    "getDeck": "getDeck",
+    "ACTION_select::onExecute": "ACTION_select::onExecute",
+    "CDeck::select": "CDeck::select",
+    "ACTION_all_decks::onExecute": "ACTION_all_decks::onExecute",
+    "createAction_all_decks": "createAction_all_decks",
+    "ACTION_all_decks::init": "ACTION_all_decks::init",
+    "IAction::queryValue": "IAction::queryValue",
+    "IAction::queryBool": "IAction::queryBool",
+    "createAction_combine_query": "createAction_combine_query(IAction*)",
+    "isLeftCI": "isLeftCI(char const*, char const*)",
+    "strIsEqualCI": "strIsEqualCI(char const*, char const*)",
+    "matchStringWithFlag": "matchStringWithFlag",
 }
 STREE_PREFIX = "DLGActionWizard::STree::"
 NM_RE = re.compile(r"^([0-9a-fA-F]+)\s+([tTuUwW])\s+(\S+)$")
@@ -187,6 +203,9 @@ def main() -> int:
     if not binary.is_file():
         p.error(f"missing binary: {binary}")
     args.output.mkdir(parents=True, exist_ok=True)
+    old_manifest = args.output / "manifest.json"
+    previous_files = ({row["file"] for row in json.loads(old_manifest.read_text())["symbols"].values()}
+                      if old_manifest.exists() else set())
     starts = function_starts(binary)
     pretty, address_names = symbols(binary)
     mangled_addresses = {mangled: address for address, names in address_names.items() for mangled in names}
@@ -217,6 +236,8 @@ def main() -> int:
         # Reconstruct the mangled name from nm's address map; demangled names can have overloads.
         pretty_matches = [(pretty_name, addr) for pretty_name, addr in pretty.items()
                           if pretty_name == wanted or pretty_name.startswith(wanted + "(")]
+        if len(pretty_matches) > 1:
+            raise ValueError(f"ambiguous overload for {label}: specify one exact demangled signature")
         candidates = [(n, a, pretty_name) for pretty_name, a in pretty_matches
                       for n in address_names.get(a, [])]
         if not candidates:
@@ -268,6 +289,11 @@ def main() -> int:
                                   "evidence": "bounded disassembly immediate; structural bitset only"})
     manifest["derived_immediates"] = mask_refs
     (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    current_files = {row["file"] for row in manifest["symbols"].values()}
+    for name in previous_files - current_files:
+        # Remove only bodies owned by the prior manifest, never arbitrary evidence files.
+        if Path(name).name == name:
+            (args.output / name).unlink(missing_ok=True)
     print(f"captured {len(manifest['symbols'])} selected symbol bodies to {args.output}")
     return 0
 

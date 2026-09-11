@@ -1,0 +1,56 @@
+__ZN7IAction10queryValueEjP11IController [0x10059679e, 0x10059684c):
+000000010059679e	pushq	%rbp
+000000010059679f	movq	%rsp, %rbp
+00000001005967a2	pushq	%rbx
+00000001005967a3	subq	$0x38, %rsp
+00000001005967a7	testq	%rdi, %rdi
+00000001005967aa	je	0x1005967fb
+00000001005967ac	movq	%rdx, %rcx
+00000001005967af	movl	%esi, %edx
+00000001005967b1	xorps	%xmm0, %xmm0
+00000001005967b4	leaq	-0x40(%rbp), %rsi
+00000001005967b8	movaps	%xmm0, 0x10(%rsi)
+00000001005967bc	movaps	%xmm0, CONFIG_EMULATE_HARDWARE(%rsi)
+00000001005967bf	movb	$0x0, 0x20(%rsi)
+00000001005967c3	xorl	%r8d, %r8d
+00000001005967c6	callq	__ZN7IAction5queryER12SActionParamjP11IControllerj ## IAction::query(SActionParam&, unsigned int, IController*, unsigned int)
+00000001005967cb	xorps	%xmm0, %xmm0
+00000001005967ce	testl	%eax, %eax
+00000001005967d0	js	0x100596811
+00000001005967d2	movl	-0x40(%rbp), %eax
+00000001005967d5	cmpl	$0x696e73, %eax                 ## imm = 0x696E73
+00000001005967da	jle	0x100596800
+00000001005967dc	cmpl	$0x626f6f6c, %eax               ## imm = 0x626F6F6C
+00000001005967e1	je	0x1005967f1
+00000001005967e3	cmpl	$0x76616c, %eax                 ## imm = 0x76616C
+00000001005967e8	je	0x10059680c
+00000001005967ea	cmpl	$0x696e74, %eax                 ## imm = 0x696E74
+00000001005967ef	jne	0x100596811
+00000001005967f1	xorps	%xmm0, %xmm0
+00000001005967f4	cvtsi2ssl	-0x3c(%rbp), %xmm0
+00000001005967f9	jmp	0x100596811
+00000001005967fb	xorps	%xmm0, %xmm0
+00000001005967fe	jmp	0x10059682a
+0000000100596800	cmpl	$0x25, %eax
+0000000100596803	je	0x10059680c
+0000000100596805	cmpl	$0x6274, %eax                   ## imm = 0x6274
+000000010059680a	jne	0x100596811
+000000010059680c	movss	-0x3c(%rbp), %xmm0
+0000000100596811	testb	$0x1, -0x38(%rbp)
+0000000100596815	je	0x10059682a
+0000000100596817	movq	-0x28(%rbp), %rdi
+000000010059681b	movss	%xmm0, -0xc(%rbp)
+0000000100596820	callq	0x104fe873e                     ## symbol stub for: __ZdlPv
+0000000100596825	movss	-0xc(%rbp), %xmm0
+000000010059682a	addq	$0x38, %rsp
+000000010059682e	popq	%rbx
+000000010059682f	popq	%rbp
+0000000100596830	retq
+0000000100596831	movq	%rax, %rbx
+0000000100596834	testb	$0x1, -0x38(%rbp)
+0000000100596838	je	0x100596843
+000000010059683a	movq	-0x28(%rbp), %rdi
+000000010059683e	callq	0x104fe873e                     ## symbol stub for: __ZdlPv
+0000000100596843	movq	%rbx, %rdi
+0000000100596846	callq	0x104fe8456                     ## symbol stub for: __Unwind_Resume
+000000010059684b	nop
