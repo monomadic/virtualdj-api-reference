@@ -1,0 +1,8288 @@
+{
+  "summary": {
+    "suite": "tests/runtime-grammar-action-cases.json",
+    "suite_sha256": "eb33d204f6a918df73cb9d53a62482f5800fa823092ddc832375016b66dc80f0",
+    "status": "aborted",
+    "rounds_requested": 2,
+    "rounds_completed": 0,
+    "repeat": 2,
+    "mode": "reversible-actions",
+    "claim_scope": "state readback in named fixtures on recorded build only",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-11T20:28:46.882904+00:00",
+    "verdicts": {
+      "incomplete-run": 45
+    },
+    "error": "timed out",
+    "restoration_verified": true
+  },
+  "fixtures": {
+    "parser_zoom_levels": {
+      "queries": [
+        "zoom"
+      ],
+      "baselines": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ]
+    },
+    "parser_beatlock_levels": {
+      "queries": [
+        "deck 1 beatlock"
+      ],
+      "baselines": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ]
+    },
+    "parser_all_decks_asymmetric": {
+      "queries": [
+        "deck 1 beatlock",
+        "deck 2 beatlock",
+        "deck 3 beatlock",
+        "deck 4 beatlock"
+      ],
+      "baselines": [
+        [
+          "no",
+          "yes",
+          "no",
+          "yes"
+        ],
+        [
+          "yes",
+          "no",
+          "yes",
+          "no"
+        ]
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "zoom-float",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does an unsigned decimal set an absolute zoom?",
+      "script": "zoom 0.25",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom 0.25": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-plus-float",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does an explicit plus flag add to the current zoom?",
+      "script": "zoom +0.25",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.9"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom +0.25": [
+            [
+              [
+                "0.5"
+              ],
+              [
+                "0.5"
+              ]
+            ],
+            [
+              [
+                "0.9"
+              ],
+              [
+                "0.9"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-minus-float",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does an explicit minus flag subtract from current zoom?",
+      "script": "zoom -0.25",
+      "expected": [
+        [
+          "0"
+        ],
+        [
+          "0.4"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom -0.25": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0.4"
+              ],
+              [
+                "0.4"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-percent",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does percent convert to normalized absolute zoom?",
+      "script": "zoom 25%",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom 25%": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-plus-percent",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does signed percent retain relative behavior?",
+      "script": "zoom +25%",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.9"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom +25%": [
+            [
+              [
+                "0.5"
+              ],
+              [
+                "0.5"
+              ]
+            ],
+            [
+              [
+                "0.9"
+              ],
+              [
+                "0.9"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-integer",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does this consumer reject integer-typed input?",
+      "script": "zoom 1",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom 1": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-integer-zero",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does integer zero differ from floating zero?",
+      "script": "zoom 0",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom 0": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-float-zero",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does floating zero set zoom to zero?",
+      "script": "zoom 0.0",
+      "expected": [
+        [
+          "0"
+        ],
+        [
+          "0"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.25": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-upper-clamp",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does an absolute decimal above one clamp?",
+      "script": "zoom 2.0",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom 2.0": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-lower-clamp",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does a negative relative decimal clamp below zero?",
+      "script": "zoom -2.0",
+      "expected": [
+        [
+          "0"
+        ],
+        [
+          "0"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.25": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ]
+          ],
+          "zoom -2.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-comma",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does decimal comma survive into this stateful consumer?",
+      "script": "zoom 0,25",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-milliseconds",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does zoom reject a duration parameter?",
+      "script": "zoom 25ms",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-beats",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does zoom reject a beat-length parameter?",
+      "script": "zoom 25bt",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-bare-default",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does a typed default flag differ from quoted text?",
+      "script": "zoom default",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-all-flag",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does zoom reject the all flag?",
+      "script": "zoom all",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-value-flag",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does zoom reject the value flag without a supplied parameter?",
+      "script": "zoom value",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-backtick",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does zoom leave a backtick operand unevaluated?",
+      "script": "zoom `constant 0.25`",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-quoted-backtick",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does quoting a backtick operand still leave zoom unchanged?",
+      "script": "zoom '`constant 0.25`'",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "zoom-trailing-text",
+      "group": "parser_zoom_levels",
+      "fixture": "parser_zoom_levels",
+      "hypothesis": "Does a later ordinary text argument leave the first decimal effective?",
+      "script": "zoom 0.25 zzqqx",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-bare",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the absent argument toggle each baseline?",
+      "script": "deck 1 beatlock",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-on",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the on token set both baselines on?",
+      "script": "deck 1 beatlock on",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-off",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the off token set both baselines off?",
+      "script": "deck 1 beatlock off",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-toggle",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does toggle invert both baselines?",
+      "script": "deck 1 beatlock toggle",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-integer",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does an unsigned integer one set on?",
+      "script": "deck 1 beatlock 1",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-zero",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does an unsigned integer zero set off?",
+      "script": "deck 1 beatlock 0",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-minus-one",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does signed integer input toggle rather than assign?",
+      "script": "deck 1 beatlock -1",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-plus-zero",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does relative zero toggle rather than set off?",
+      "script": "deck 1 beatlock +0",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-plus-one",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does relative one toggle rather than set on?",
+      "script": "deck 1 beatlock +1",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-float",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch consumer reject a float one?",
+      "script": "deck 1 beatlock 1.0",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-float-zero",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch consumer reject floating zero?",
+      "script": "deck 1 beatlock 0.0",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-percent",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch consumer reject a percent parameter?",
+      "script": "deck 1 beatlock 100%",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-quoted-on",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does quoted on remain text rather than a boolean token?",
+      "script": "deck 1 beatlock 'on'",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-double-quoted-on",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does double-quoted on remain text?",
+      "script": "deck 1 beatlock \"on\"",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-default",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch reject a default flag?",
+      "script": "deck 1 beatlock default",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-all",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch reject an all flag?",
+      "script": "deck 1 beatlock all",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-value",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch reject a value flag without supplied value?",
+      "script": "deck 1 beatlock value",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-backtick",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does the switch reject unevaluated backtick text?",
+      "script": "deck 1 beatlock `constant 1`",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-quoted-backtick",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does quoted backtick text remain unevaluated here?",
+      "script": "deck 1 beatlock '`constant 1`'",
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "switch-punctuation-stop",
+      "group": "parser_beatlock_levels",
+      "fixture": "parser_beatlock_levels",
+      "hypothesis": "Does punctuation leave the switch with no parameter, unlike ordinary junk text?",
+      "script": "deck 1 beatlock #zzqqx",
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck 1 beatlock zzqqx",
+        "deck 1 beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 beatlock off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IActionSwitch::onExecute@0x100147f18"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-bare",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does absent-argument all-deck dispatch synchronize to the inverse of deck 1, instead of toggling each deck independently?",
+      "script": "deck all beatlock",
+      "expected": [
+        [
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ],
+        [
+          "no",
+          "no",
+          "no",
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock off",
+          "expected": [
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-on",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does explicit on reach every configured deck?",
+      "script": "deck all beatlock on",
+      "expected": [
+        [
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ],
+        [
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock off",
+          "expected": [
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-off",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does explicit off reach every configured deck?",
+      "script": "deck all beatlock off",
+      "expected": [
+        [
+          "no",
+          "no",
+          "no",
+          "no"
+        ],
+        [
+          "no",
+          "no",
+          "no",
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock on",
+          "expected": [
+            [
+              "yes",
+              "yes",
+              "yes",
+              "yes"
+            ],
+            [
+              "yes",
+              "yes",
+              "yes",
+              "yes"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-toggle",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does an explicit toggle differ from an absent argument under all-deck dispatch?",
+      "script": "deck all beatlock toggle",
+      "expected": [
+        [
+          "yes",
+          "no",
+          "yes",
+          "no"
+        ],
+        [
+          "no",
+          "yes",
+          "no",
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock off",
+          "expected": [
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-integer",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does integer one survive all-deck dispatch?",
+      "script": "deck all beatlock 1",
+      "expected": [
+        [
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ],
+        [
+          "yes",
+          "yes",
+          "yes",
+          "yes"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock off",
+          "expected": [
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    },
+    {
+      "id": "all-decks-quoted-on",
+      "group": "parser_all_decks_asymmetric",
+      "fixture": "parser_all_decks_asymmetric",
+      "hypothesis": "Does quoted on leave every deck unchanged?",
+      "script": "deck all beatlock 'on'",
+      "expected": [
+        [
+          "no",
+          "yes",
+          "no",
+          "yes"
+        ],
+        [
+          "yes",
+          "no",
+          "yes",
+          "no"
+        ]
+      ],
+      "controls": [
+        "deck all beatlock zzqqx",
+        "deck all beatlock vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "deck all beatlock off",
+          "expected": [
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ],
+            [
+              "no",
+              "no",
+              "no",
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "ACTION_all_decks::onExecute@0x1000fe392"
+      ],
+      "passes": [],
+      "verdict": "incomplete-run"
+    }
+  ],
+  "journal": [
+    {
+      "script": "deck 2 beatlock on",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 beatlock on",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 beatlock off",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 beatlock off",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 beatlock on",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 beatlock on",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 beatlock off",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 beatlock off",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 beatlock on",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 beatlock off",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom +0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom +0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom -0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom -0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25%",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25%",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom +25%",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom +25%",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 2.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 2.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom -2.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom -2.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0,25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-uncertain",
+      "error": "timed out"
+    }
+  ],
+  "restorations": [
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ],
+  "baseline_checks": [
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom +0.25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom +0.25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom -0.25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom -0.25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25%",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25%",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom +25%",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom +25%",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 1",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 1",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 2.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 2.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom -2.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom -2.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0,25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    }
+  ],
+  "initial_state": {
+    "resources": {
+      "zoom": "0.31",
+      "deck 1 beatlock": "no",
+      "deck 2 beatlock": "no",
+      "deck 3 beatlock": "no",
+      "deck 4 beatlock": "no"
+    },
+    "guards": {
+      "get_decks": "4",
+      "get_deck": "1",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 1 select": "yes",
+      "deck 1 pfl": "yes",
+      "deck 1 masterdeck": "yes",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 2 select": "no",
+      "deck 2 pfl": "no",
+      "deck 2 masterdeck": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no"
+    }
+  },
+  "post_abort_recovery": {
+    "script": "zoom 0.310000000",
+    "readbacks": {
+      "zoom": "0.31",
+      "deck 1 beatlock": "no",
+      "deck 2 beatlock": "no",
+      "deck 3 beatlock": "no",
+      "deck 4 beatlock": "no",
+      "get_decks": "4",
+      "get_deck": "1",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 1 select": "yes",
+      "deck 1 pfl": "yes",
+      "deck 1 masterdeck": "yes",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 2 select": "no",
+      "deck 2 pfl": "no",
+      "deck 2 masterdeck": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no"
+    },
+    "verified_against_initial": true,
+    "reason": "fresh query found zoom 0.25 after uncertain restore; absolute recovery then independent checks"
+  }
+}

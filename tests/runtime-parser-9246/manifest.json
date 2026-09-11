@@ -324,15 +324,6 @@
       },
       {
         "callers": [
-          "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)"
-        ],
-        "symbols": [
-          "__ZN5CDeck13getActiveDeckEv"
-        ],
-        "target": "0x10047dd08"
-      },
-      {
-        "callers": [
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)"
         ],
@@ -367,6 +358,21 @@
           "__ZN5CDeck9getGainDbEv"
         ],
         "target": "0x1004870ac"
+      },
+      {
+        "callers": [
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()",
+          "CDeck::getActiveDeck()"
+        ],
+        "symbols": [
+          "__ZN5CDeck16getAudibleVolumeEv"
+        ],
+        "target": "0x100487384"
       },
       {
         "callers": [
@@ -548,15 +554,6 @@
       },
       {
         "callers": [
-          "DLGActionWizard::updateList()"
-        ],
-        "symbols": [
-          "__Z8isLeftCINSt3__117basic_string_viewIcNS_11char_traitsIcEEEEPKc"
-        ],
-        "target": "0x1005b3dbf"
-      },
-      {
-        "callers": [
           "DLGActionWizard::updateList()",
           "IAction::getBoolParam(int, bool&, bool, SActionCacheItem*)",
           "IAction::getFloatParamEval(unsigned long, float&, SActionCacheItem*, unsigned int*)",
@@ -566,16 +563,6 @@
           "__Z8isLeftCIRKNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEPKc"
         ],
         "target": "0x1005b3e4d"
-      },
-      {
-        "callers": [
-          "DLGActionWizard::updateHint()",
-          "DLGActionWizard::updateHint()"
-        ],
-        "symbols": [
-          "__Z12strIsEqualCINSt3__117basic_string_viewIcNS_11char_traitsIcEEEES3_"
-        ],
-        "target": "0x1005b4113"
       },
       {
         "callers": [
@@ -1352,7 +1339,8 @@
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
-          "isLeftCI(char const*, char const*)"
+          "isLeftCI(char const*, char const*)",
+          "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)"
         ],
         "symbols": [],
         "target": "0x104fe92ae"
@@ -1400,7 +1388,9 @@
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
           "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
           "isLeftCI(char const*, char const*)",
-          "matchStringWithFlag(char const*&, char const*, int, unsigned int&)"
+          "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)",
+          "matchStringWithFlag(char const*&, char const*, int, unsigned int&)",
+          "strIsEqualCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, std::__1::basic_string_view<char, std::__1::char_traits<char>>)"
         ],
         "symbols": [],
         "target": "0x104fe92b4"
@@ -1430,7 +1420,7 @@
         "target": "0x104fe9344"
       }
     ],
-    "selected_symbol_count": 48
+    "selected_symbol_count": 51
   },
   "derived_immediates": [
     {
@@ -2513,6 +2503,128 @@
       "mangled": "__ZN11ACTION_zoom9onExecuteEv",
       "start": "0x1005c9310"
     },
+    "CDeck::getActiveDeck": {
+      "asm_sha256": "2e75e5282c3c6f588f2fa69d8d0094e9fc5ebcd5ede08de484b119973dae2e98",
+      "demangled": "CDeck::getActiveDeck()",
+      "direct_calls": [
+        {
+          "site": "0x10047ddf0",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047ddfe",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047de0b",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047de9b",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047dec1",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047deee",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        },
+        {
+          "site": "0x10047df2f",
+          "symbols": [
+            "__ZN5CDeck16getAudibleVolumeEv"
+          ],
+          "target": "0x100487384"
+        }
+      ],
+      "end_exclusive": "0x10047df68",
+      "file": "46-CDeck-getActiveDeck.asm",
+      "indirect_calls": [],
+      "literal_references": [
+        {
+          "reference": "imm = 0xFFFFFFFF",
+          "site": "0x10047dd3b"
+        },
+        {
+          "reference": "CDeck::decks",
+          "site": "0x10047dd40"
+        },
+        {
+          "reference": "CDeck::decks",
+          "site": "0x10047dd79"
+        },
+        {
+          "reference": "imm = 0xFFFFFFFF",
+          "site": "0x10047ddae"
+        },
+        {
+          "reference": "CDeck::decks",
+          "site": "0x10047ddb6"
+        },
+        {
+          "reference": "imm = 0xFFFFFFFF",
+          "site": "0x10047ddc0"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047ddf0"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047ddfe"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047de0b"
+        },
+        {
+          "reference": "CDeck::decks",
+          "site": "0x10047de4a"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047de9b"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047dec1"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047deee"
+        },
+        {
+          "reference": "CDeck::decks",
+          "site": "0x10047df19"
+        },
+        {
+          "reference": "CDeck::getAudibleVolume()",
+          "site": "0x10047df2f"
+        }
+      ],
+      "mangled": "__ZN5CDeck13getActiveDeckEv",
+      "start": "0x10047dd08"
+    },
     "CDeck::select": {
       "asm_sha256": "1cfb0a5b62f9c612ef8c0acbf903301cd83f5811e31a63c73a5b04269a8e5e4f",
       "demangled": "CDeck::select(bool)",
@@ -2615,7 +2727,7 @@
         }
       ],
       "end_exclusive": "0x1006c67ea",
-      "file": "44-DLGActionWizard-STree-clear.asm",
+      "file": "47-DLGActionWizard-STree-clear.asm",
       "indirect_calls": [],
       "literal_references": [
         {
@@ -2681,7 +2793,7 @@
         }
       ],
       "end_exclusive": "0x1006c6aba",
-      "file": "45-DLGActionWizard-STree-setColor-unsigned-int.asm",
+      "file": "48-DLGActionWizard-STree-setColor-unsigned-int.asm",
       "indirect_calls": [],
       "literal_references": [
         {
@@ -2777,7 +2889,7 @@
         }
       ],
       "end_exclusive": "0x1006c6a46",
-      "file": "46-DLGActionWizard-STree-toString.asm",
+      "file": "49-DLGActionWizard-STree-toString.asm",
       "indirect_calls": [],
       "literal_references": [
         {
@@ -2890,7 +3002,7 @@
         }
       ],
       "end_exclusive": "0x1006c779c",
-      "file": "47-DLGActionWizard-STree-STree.asm",
+      "file": "50-DLGActionWizard-STree-STree.asm",
       "indirect_calls": [],
       "literal_references": [
         {
@@ -12206,6 +12318,37 @@
       "mangled": "__Z8isLeftCIPKcS0_",
       "start": "0x1005b3e0d"
     },
+    "isLeftCI(string_view, char const*)": {
+      "asm_sha256": "891cc1a61d56075886d0435df7d2db1ba9c8b45f075ad5e74512f95860d56424",
+      "demangled": "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)",
+      "direct_calls": [
+        {
+          "site": "0x1005b3dda",
+          "symbols": [],
+          "target": "0x104fe92ae"
+        },
+        {
+          "site": "0x1005b3df1",
+          "symbols": [],
+          "target": "0x104fe92b4"
+        }
+      ],
+      "end_exclusive": "0x1005b3e0d",
+      "file": "44-isLeftCI-string-view-char-const.asm",
+      "indirect_calls": [],
+      "literal_references": [
+        {
+          "reference": "symbol stub for: _strlen",
+          "site": "0x1005b3dda"
+        },
+        {
+          "reference": "symbol stub for: _strncasecmp",
+          "site": "0x1005b3df1"
+        }
+      ],
+      "mangled": "__Z8isLeftCINSt3__117basic_string_viewIcNS_11char_traitsIcEEEEPKc",
+      "start": "0x1005b3dbf"
+    },
     "matchStringWithFlag": {
       "asm_sha256": "4f802f916f39d511a7f84064a305b1028f318d62c3123dbbeba0f28068772d84",
       "demangled": "matchStringWithFlag(char const*&, char const*, int, unsigned int&)",
@@ -12275,6 +12418,28 @@
       ],
       "mangled": "__Z12strIsEqualCIPKcS0_",
       "start": "0x1005b4299"
+    },
+    "strIsEqualCI(string_view, string_view)": {
+      "asm_sha256": "5b5d92b4900d02478e8c2ec34a83be38cdbea4abec1dc2c66135c107bfd5db9b",
+      "demangled": "strIsEqualCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, std::__1::basic_string_view<char, std::__1::char_traits<char>>)",
+      "direct_calls": [
+        {
+          "site": "0x1005b412c",
+          "symbols": [],
+          "target": "0x104fe92b4"
+        }
+      ],
+      "end_exclusive": "0x1005b413b",
+      "file": "45-strIsEqualCI-string-view-string-view.asm",
+      "indirect_calls": [],
+      "literal_references": [
+        {
+          "reference": "symbol stub for: _strncasecmp",
+          "site": "0x1005b412c"
+        }
+      ],
+      "mangled": "__Z12strIsEqualCINSt3__117basic_string_viewIcNS_11char_traitsIcEEEES3_",
+      "start": "0x1005b4113"
     }
   },
   "unresolved": {

@@ -65,6 +65,9 @@ TARGETS = {
     "isLeftCI": "isLeftCI(char const*, char const*)",
     "strIsEqualCI": "strIsEqualCI(char const*, char const*)",
     "matchStringWithFlag": "matchStringWithFlag",
+    "isLeftCI(string_view, char const*)": "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)",
+    "strIsEqualCI(string_view, string_view)": "strIsEqualCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, std::__1::basic_string_view<char, std::__1::char_traits<char>>)",
+    "CDeck::getActiveDeck": "CDeck::getActiveDeck",
 }
 STREE_PREFIX = "DLGActionWizard::STree::"
 NM_RE = re.compile(r"^([0-9a-fA-F]+)\s+([tTuUwW])\s+(\S+)$")

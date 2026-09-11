@@ -8,10 +8,29 @@ from __future__ import annotations
 from collections import Counter
 import argparse
 import hashlib
+import http.client
+import urllib.parse
 import json
 from pathlib import Path
 
 from fixtures import Channel, FixtureError, build_fixtures, establish
+
+
+
+class ExactQueryChannel(Channel):
+    """Retain HTTP body whitespace; the shared convenience channel strips it."""
+    def query(self, script):
+        for attempt in range(2):
+            try:
+                if self._conn is None:
+                    self._conn = http.client.HTTPConnection(self.host, self.port, timeout=self.timeout)
+                self._conn.request("GET", "/query?" + urllib.parse.urlencode({"script": script}))
+                return self._conn.getresponse().read().decode(errors="replace")
+            except Exception:
+                self.close()
+                if attempt:
+                    raise
+        raise RuntimeError("unreachable")
 
 
 def validate_suite(suite):
@@ -81,11 +100,12 @@ def run_suite(args):
         return 0
     if args.rounds < 2 or args.repeat < 2:
         raise ValueError("grammar probes require --rounds >= 2 and --repeat >= 2")
-    channel = Channel()
+    channel = ExactQueryChannel()
     capture = {"summary": {"suite_sha256": hashlib.sha256(
         args.grammar_cases.read_bytes()).hexdigest(), "suite": str(args.grammar_cases),
         "repeat": args.repeat, "rounds_requested": args.rounds,
         "rounds_completed": 0, "status": "running",
+        "response_normalization": "none; decoded HTTP body whitespace retained",
         "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof"},
         "fixture_checks": [], "cases": [{**c, "passes": [], "verdict": "not-run"}
                                         for c in suite["cases"]]}
@@ -181,7 +201,17 @@ def main():
     parser.add_argument("--group")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    capture = check_capture(args.artifact) if args.check else json.loads(args.artifact.read_text())
+    capture = json.loads(args.artifact.read_text())
+    if args.check:
+        mode = capture["summary"].get("mode")
+        if mode == "reversible-actions":
+            from runtime_grammar_actions import check_capture as check_actions
+            capture = check_actions(args.artifact)
+        elif mode == "selected-scope-queries":
+            from runtime_grammar_scopes import check_capture as check_scopes
+            capture = check_scopes(args.artifact)
+        else:
+            capture = check_capture(args.artifact)
     if args.get:
         selected = [c for c in capture["cases"] if c["id"] == args.get]
         if not selected:

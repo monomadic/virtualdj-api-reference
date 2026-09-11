@@ -9,6 +9,7 @@ claims about parser behavior or exhaustive call-graph coverage.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
@@ -24,6 +25,11 @@ import extract_runtime_parser as runtime_parser
 
 ARGUMENT_CALLERS = (
     "IAction::create",
+    "IAction::deckMatch",
+    "IAction::getDeckFromString",
+    "actionGetText",
+    "getDeck",
+    "ACTION_all_decks",
     "IAction::stringGetParam",
     "IAction::getParamEval",
     "IAction::getFloatParamEval",
@@ -64,7 +70,7 @@ def classify(names: list[str]) -> tuple[str, str]:
     joined = " ".join(names)
     if not names:
         return "unresolved_target", "no nm symbol at target address"
-    if ("std::__1::" in joined or "fmt::" in joined or "___clang_" in joined
+    if (joined.startswith("std::__1::") or joined.startswith("fmt::") or "___clang_" in joined
             or joined.startswith("_") or "operator new" in joined
             or "operator delete" in joined):
         return "known_library", "stdlib/runtime-looking symbol; review label only"
@@ -119,13 +125,16 @@ def pretty_mangled(binary: Path) -> dict[str, tuple[str, int]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="verify stored frontier manifest hash")
     parser.add_argument("--report", action="store_true", help="read the stored frontier summary")
     parser.add_argument("--manifest", type=Path, default=Path("tests/runtime-parser-9246/manifest.json"))
     parser.add_argument("--binary", type=Path)
     parser.add_argument("--output", type=Path, default=Path("tests/runtime-parser-frontier.json"))
     args = parser.parse_args()
-    if args.report:
+    if args.report or args.check:
         stored = json.loads(args.output.read_text())
+        if args.check and stored["source"].get("manifest_sha256") != hashlib.sha256(args.manifest.read_bytes()).hexdigest():
+            raise ValueError("frontier is stale: regenerate against the current parser manifest")
         print(json.dumps({"source": stored["source"], "counts": stored["counts"],
             "review_queues": stored["review_queues"]}, indent=2))
         return 0
@@ -185,6 +194,7 @@ def main() -> int:
     report = {
         "source": {
             "manifest": str(args.manifest),
+            "manifest_sha256": hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
             "binary": str(args.binary) if args.binary else None,
             "evidence_tier": "Tier-2 bounded binary structure; no behavioral claim",
         },

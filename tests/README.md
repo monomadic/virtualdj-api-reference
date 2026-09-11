@@ -1,6 +1,6 @@
 # Documentation Tests
 
-H4: [runtime argument grammar tests](../docs/Runtime%20Argument%20Grammar%20Tests.md) links the bounded historical-binary capture, frozen exact-script predictions, completed HTTP captures, and the interrupted run. Inspect results with `just runtime-grammar`; validate with `just check-runtime-grammar`.
+H4: [runtime argument grammar tests](../docs/Runtime%20Argument%20Grammar%20Tests.md) links bounded historical-binary captures, frozen exact-script/stateful predictions, HTTP captures, restoration journals and interrupted runs. Inspect results with `just runtime-grammar --artifact <capture>` and static gaps with `just runtime-parser-frontier`; validate with `just check-runtime-grammar`. Named action/scope fixtures and their baselines are listed by `just probe-arg-forms --grammar-actions tests/runtime-grammar-action-cases.json --check` and `--grammar-scopes tests/runtime-grammar-scope-cases.json --check`.
 
 This folder contains small reproducible assets used to verify claims in the reference documentation.
 

@@ -304,6 +304,10 @@ def _label_pairs(out_forms: list[dict]) -> None:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--grammar-scopes", type=Path,
+                   help="selected-deck fixture with query-only scope hypotheses")
+    p.add_argument("--grammar-actions", type=Path,
+                   help="allowlisted zoom/beatlock stateful grammar suite")
     p.add_argument("--grammar-cases", type=Path,
                    help="exact-script hypothesis suite; preserves delimiters and prefixes")
     p.add_argument("--rounds", type=int, default=2,
@@ -338,6 +342,18 @@ def main() -> int:
                    help="read each form N times and keep the value only if every read "
                         "agrees; guards against verbs whose value drifts on its own")
     args = p.parse_args()
+
+    if sum(bool(x) for x in (args.grammar_actions,args.grammar_cases,args.grammar_scopes)) > 1:
+        p.error("choose one grammar mode")
+    if args.grammar_scopes:
+        from runtime_grammar_scopes import run_suite
+        return run_suite(args)
+
+    if args.grammar_actions:
+        if args.grammar_cases:
+            p.error("choose one grammar mode")
+        from runtime_grammar_actions import run_suite
+        return run_suite(args)
 
     if args.grammar_cases:
         from runtime_grammar_probes import run_suite

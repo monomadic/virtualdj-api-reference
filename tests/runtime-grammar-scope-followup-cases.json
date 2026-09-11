@@ -1,0 +1,121 @@
+{
+  "cases": [
+    {
+      "id": "scope-followup-master",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "With deck 1 independently observed as master, does master stay on 1 when selection changes?",
+      "required_context": {
+        "deck 1 masterdeck": "yes"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "scope-followup-active-observation",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does the earlier active-deck observation repeat under the observed master-1 context?",
+      "required_context": {
+        "deck 1 masterdeck": "yes"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-active"
+    },
+    {
+      "id": "scope-followup-backtick-observation",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ],
+      "hypothesis": "Does the earlier computed-prefix error repeat across both selected contexts?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-backtick"
+    }
+  ]
+}

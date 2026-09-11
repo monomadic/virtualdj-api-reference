@@ -1,0 +1,215 @@
+{
+  "description": "Frozen predictions requiring untrimmed HTTP response bodies.",
+  "cases": [
+    {
+      "id": "raw-quote-single-leading",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant ' A'",
+      "expected": " A",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-single-trailing",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant 'A '",
+      "expected": "A ",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-single-spaces",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant '  '",
+      "expected": "  ",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-double-both",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant \" A \"",
+      "expected": " A ",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-tab-only",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant '\t'",
+      "expected": "\t",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-newline-only",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant '\n'",
+      "expected": "\n",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-cr-only",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant '\r'",
+      "expected": "\r",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-get-text-spaces",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "get_text ' A '",
+      "expected": " A ",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-get-text-escaped-newline",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "get_text '\\n'",
+      "expected": "\r\n",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "raw-quote-constant-literal-slash-n",
+      "fixture": "parser_constants",
+      "group": "untrimmed-quotes",
+      "hypothesis": "Does this exact quoted input preserve the predicted boundary bytes in the raw HTTP body?",
+      "script": "constant '\\n'",
+      "expected": "\\n",
+      "controls": [
+        "constant 83 zzqqx",
+        "constant 83 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'A'",
+          "expected": "A"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250"
+      ]
+    }
+  ]
+}

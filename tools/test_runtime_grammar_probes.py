@@ -1,7 +1,8 @@
 """Regression checks for evidence classification, independent of a live app."""
 import copy
 import unittest
-from runtime_grammar_probes import validate_suite, verdict
+from runtime_grammar_probes import validate_suite, verdict, ExactQueryChannel
+from unittest.mock import patch
 
 
 class GrammarVerdicts(unittest.TestCase):
@@ -12,6 +13,13 @@ class GrammarVerdicts(unittest.TestCase):
                          contrasts=[dict(script='constant 83', expected='83')])
         self.samples = {'constant 37': ['37', '37'], 'constant 83': ['83', '83'],
                         'constant #zzqqx': ['', ''], 'constant #vfnrbq': ['', '']}
+
+    def test_raw_body_whitespace_is_not_stripped(self):
+        with patch("runtime_grammar_probes.http.client.HTTPConnection") as conn:
+            conn.return_value.getresponse.return_value.read.return_value = b" \t\r\n "
+            channel = ExactQueryChannel()
+            self.assertEqual(channel.query("constant \' \'"), " \t\r\n ")
+            channel.close()
 
     def test_held(self):
         self.assertEqual(verdict(self.case, [self.samples, self.samples]), 'held-in-fixture')

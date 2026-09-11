@@ -1,0 +1,1849 @@
+{
+  "summary": {
+    "mode": "selected-scope-queries",
+    "suite": "tests/runtime-grammar-scope-followup-cases.json",
+    "suite_sha256": "542c3c2ba0ac2fead1b418b388bc06c7559d7b811422b274404611d996d1ceb7",
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "repeat": 2,
+    "status": "complete",
+    "claim_scope": "exact readbacks in selected-deck fixture; no universal selector claim",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-11T20:47:27.087301+00:00",
+    "verdicts": {
+      "held-in-fixture": 3
+    },
+    "restoration_status": "verified",
+    "manual_restore_required": false
+  },
+  "fixture": "parser_selected_scope",
+  "baselines": [
+    [
+      "1"
+    ],
+    [
+      "2"
+    ]
+  ],
+  "cases": [
+    {
+      "id": "scope-followup-master",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "With deck 1 independently observed as master, does master stay on 1 when selection changes?",
+      "required_context": {
+        "deck 1 masterdeck": "yes"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck master get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck master get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "scope-followup-active-observation",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does the earlier active-deck observation repeat under the observed master-1 context?",
+      "required_context": {
+        "deck 1 masterdeck": "yes"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-active",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck active get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck active get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "scope-followup-backtick-observation",
+      "fixture": "parser_selected_scope",
+      "group": "scope-followup",
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ],
+      "hypothesis": "Does the earlier computed-prefix error repeat across both selected contexts?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-backtick",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck `constant 2` get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck `constant 2` get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ],
+  "journal": [
+    {
+      "script": "deck 2 select",
+      "purpose": "baseline-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 select",
+      "purpose": "baseline-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 select",
+      "purpose": "baseline-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    }
+  ],
+  "baseline_checks": [
+    {
+      "script": "get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "1"
+      ],
+      "observed": [
+        "1"
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "2"
+      ],
+      "observed": [
+        "2"
+      ]
+    }
+  ],
+  "restorations": [
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ],
+  "initial_state": {
+    "resources": {
+      "zoom": "0.31",
+      "deck 1 beatlock": "no",
+      "deck 2 beatlock": "no",
+      "deck 3 beatlock": "no",
+      "deck 4 beatlock": "no"
+    },
+    "guards": {
+      "get_decks": "4",
+      "get_deck": "1",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 1 select": "yes",
+      "deck 1 pfl": "yes",
+      "deck 1 masterdeck": "yes",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 2 select": "no",
+      "deck 2 pfl": "no",
+      "deck 2 masterdeck": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no"
+    }
+  },
+  "original_selection": "1",
+  "context_checks": [
+    {
+      "baseline": [
+        "1"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    },
+    {
+      "baseline": [
+        "2"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    },
+    {
+      "baseline": [
+        "1"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    },
+    {
+      "baseline": [
+        "2"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    },
+    {
+      "baseline": [
+        "1"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    },
+    {
+      "baseline": [
+        "2"
+      ],
+      "script": "deck 1 masterdeck",
+      "expected": "yes",
+      "observed": "yes"
+    }
+  ],
+  "query_measurements": [
+    {
+      "script": "get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "1"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck `constant 2` get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    }
+  ],
+  "restoration_events": [
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ]
+}

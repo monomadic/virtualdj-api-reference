@@ -1,0 +1,18 @@
+__Z12strIsEqualCINSt3__117basic_string_viewIcNS_11char_traitsIcEEEES3_ [0x1005b4113, 0x1005b413b):
+00000001005b4113	movq	%rsi, %r8
+00000001005b4116	movb	$0x1, %al
+00000001005b4118	orq	%rcx, %rsi
+00000001005b411b	je	0x1005b4137
+00000001005b411d	cmpq	%rcx, %r8
+00000001005b4120	jne	0x1005b4138
+00000001005b4122	pushq	%rbp
+00000001005b4123	movq	%rsp, %rbp
+00000001005b4126	movq	%rdx, %rsi
+00000001005b4129	movq	%r8, %rdx
+00000001005b412c	callq	0x104fe92b4                     ## symbol stub for: _strncasecmp
+00000001005b4131	testl	%eax, %eax
+00000001005b4133	sete	%al
+00000001005b4136	popq	%rbp
+00000001005b4137	retq
+00000001005b4138	xorl	%eax, %eax
+00000001005b413a	retq

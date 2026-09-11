@@ -1,7 +1,7 @@
 {
   "call_graph_boundary": "Direct calls are captured only from selected bounded bodies. Indirect calls and direct targets outside this selection are listed as unresolved coverage edges; no exhaustive transitive graph is claimed.",
   "counts": {
-    "direct_targets": 118,
+    "direct_targets": 116,
     "indirect_sites": 34,
     "potential_argument_consumers": 0
   },
@@ -160,8 +160,8 @@
           "target": "0x1000b1b08"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<10ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [10ul])"
       ],
@@ -244,8 +244,8 @@
           "target": "0x1000f5098"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<7ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [7ul])"
       ],
@@ -266,8 +266,8 @@
           "target": "0x1000f516a"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<5ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [5ul])"
       ],
@@ -310,8 +310,8 @@
           "target": "0x100196ff4"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<8ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [8ul])"
       ],
@@ -355,8 +355,8 @@
           "target": "0x1001c2964"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "smallstring::operator=(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
@@ -547,8 +547,8 @@
           "target": "0x1003829ac"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<11ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [11ul])"
       ],
@@ -806,8 +806,8 @@
           "target": "0x100422ce0"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "writeTime(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, double, unsigned int, CDeck*)"
       ],
@@ -822,8 +822,8 @@
           "target": "0x100425874"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "appendChar(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, char)"
       ],
@@ -844,22 +844,6 @@
         "getMixerOrderDeck(unsigned int)"
       ],
       "target": "0x10047d99f"
-    },
-    {
-      "call_sites": [
-        {
-          "caller_label": "actionGetText",
-          "caller_symbol": "actionGetText(SDBInfo*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>*, int, CDeck*, CSong*, bool, IAction*, std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*)",
-          "site": "0x10042566c",
-          "target": "0x10047dd08"
-        }
-      ],
-      "classification": "other_direct_target",
-      "classification_basis": "unexpanded direct target; inspect bounded body before claims",
-      "symbols": [
-        "CDeck::getActiveDeck()"
-      ],
-      "target": "0x10047dd08"
     },
     {
       "call_sites": [
@@ -934,14 +918,66 @@
     {
       "call_sites": [
         {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047ddf0",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047ddfe",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047de0b",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047de9b",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047dec1",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047deee",
+          "target": "0x100487384"
+        },
+        {
+          "caller_label": "CDeck::getActiveDeck",
+          "caller_symbol": "CDeck::getActiveDeck()",
+          "site": "0x10047df2f",
+          "target": "0x100487384"
+        }
+      ],
+      "classification": "other_direct_target",
+      "classification_basis": "unexpanded direct target; inspect bounded body before claims",
+      "symbols": [
+        "CDeck::getAudibleVolume()"
+      ],
+      "target": "0x100487384"
+    },
+    {
+      "call_sites": [
+        {
           "caller_label": "ACTION_get_text::onQuery",
           "caller_symbol": "ACTION_get_text::onQuery(SActionParam&)",
           "site": "0x100425beb",
           "target": "0x10048749a"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "CDeck::getControllerText(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>&, int)"
       ],
@@ -994,8 +1030,8 @@
           "target": "0x10049e566"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "DLGEdit::setValue(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>)"
       ],
@@ -1048,8 +1084,8 @@
           "target": "0x10053796a"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "CSkinEngine::createAction(std::__1::vector<SActionCacheItem*, std::__1::allocator<SActionCacheItem*>>*, char const*, int)"
       ],
@@ -1186,8 +1222,8 @@
           "target": "0x100599d60"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<6ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [6ul])"
       ],
@@ -1264,8 +1300,8 @@
           "target": "0x1005b3927"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "other_direct_target",
+      "classification_basis": "unexpanded direct target; inspect bounded body before claims",
       "symbols": [
         "strTrim(std::__1::basic_string_view<char, std::__1::char_traits<char>>)"
       ],
@@ -1286,8 +1322,8 @@
           "target": "0x1005b3a4b"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "strTrim_inplace(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>&)"
       ],
@@ -1302,28 +1338,12 @@
           "target": "0x1005b3d18"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "isLeftCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
       "target": "0x1005b3d18"
-    },
-    {
-      "call_sites": [
-        {
-          "caller_label": "DLGActionWizard::updateList",
-          "caller_symbol": "DLGActionWizard::updateList()",
-          "site": "0x1006c5f04",
-          "target": "0x1005b3dbf"
-        }
-      ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
-      "symbols": [
-        "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)"
-      ],
-      "target": "0x1005b3dbf"
     },
     {
       "call_sites": [
@@ -1352,34 +1372,12 @@
           "target": "0x1005b3e4d"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "isLeftCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)"
       ],
       "target": "0x1005b3e4d"
-    },
-    {
-      "call_sites": [
-        {
-          "caller_label": "DLGActionWizard::updateHint",
-          "caller_symbol": "DLGActionWizard::updateHint()",
-          "site": "0x1006c6277",
-          "target": "0x1005b4113"
-        },
-        {
-          "caller_label": "DLGActionWizard::updateHint",
-          "caller_symbol": "DLGActionWizard::updateHint()",
-          "site": "0x1006c62b1",
-          "target": "0x1005b4113"
-        }
-      ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
-      "symbols": [
-        "strIsEqualCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, std::__1::basic_string_view<char, std::__1::char_traits<char>>)"
-      ],
-      "target": "0x1005b4113"
     },
     {
       "call_sites": [
@@ -1390,8 +1388,8 @@
           "target": "0x1005b413b"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "isRightCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)"
       ],
@@ -1454,8 +1452,8 @@
           "target": "0x1005b41c2"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)"
       ],
@@ -1476,8 +1474,8 @@
           "target": "0x1005b42c0"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "strIsEqualCI(smallstring const&, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
@@ -1652,8 +1650,8 @@
           "target": "0x1005b9757"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "strFindCI(char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
@@ -2102,8 +2100,8 @@
           "target": "0x100663ab4"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "bool strIsEqualCIL<4ul>(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const (&) [4ul])"
       ],
@@ -2118,8 +2116,8 @@
           "target": "0x1006c3d5c"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "DLGActionWizard::setHelp(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
@@ -2146,8 +2144,8 @@
           "target": "0x1006c45a6"
         }
       ],
-      "classification": "known_library",
-      "classification_basis": "stdlib/runtime-looking symbol; review label only",
+      "classification": "known_allocation_or_cleanup",
+      "classification_basis": "allocation/cleanup-looking symbol; review label only",
       "symbols": [
         "canComplete(char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&)"
       ],
@@ -3976,6 +3974,12 @@
           "caller_symbol": "isLeftCI(char const*, char const*)",
           "site": "0x1005b3e2d",
           "target": "0x104fe92ae"
+        },
+        {
+          "caller_label": "isLeftCI(string_view, char const*)",
+          "caller_symbol": "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)",
+          "site": "0x1005b3dda",
+          "target": "0x104fe92ae"
         }
       ],
       "classification": "unresolved_target",
@@ -4232,9 +4236,21 @@
           "target": "0x104fe92b4"
         },
         {
+          "caller_label": "isLeftCI(string_view, char const*)",
+          "caller_symbol": "isLeftCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, char const*)",
+          "site": "0x1005b3df1",
+          "target": "0x104fe92b4"
+        },
+        {
           "caller_label": "matchStringWithFlag",
           "caller_symbol": "matchStringWithFlag(char const*&, char const*, int, unsigned int&)",
           "site": "0x100425911",
+          "target": "0x104fe92b4"
+        },
+        {
+          "caller_label": "strIsEqualCI(string_view, string_view)",
+          "caller_symbol": "strIsEqualCI(std::__1::basic_string_view<char, std::__1::char_traits<char>>, std::__1::basic_string_view<char, std::__1::char_traits<char>>)",
+          "site": "0x1005b412c",
           "target": "0x104fe92b4"
         }
       ],
@@ -4455,6 +4471,14 @@
     {
       "classification": "indirect_call_site",
       "classification_basis": "target depends on runtime object/vtable/register state",
+      "function": "ACTION_all_decks::init",
+      "operand": "*0x8(%rax)",
+      "review_priority": "strong",
+      "site": "0x1000fe6ea"
+    },
+    {
+      "classification": "indirect_call_site",
+      "classification_basis": "target depends on runtime object/vtable/register state",
       "function": "IAction::create",
       "operand": "*(%r13,%rax,8)",
       "review_priority": "strong",
@@ -4671,10 +4695,18 @@
     {
       "classification": "indirect_call_site",
       "classification_basis": "target depends on runtime object/vtable/register state",
-      "function": "ACTION_all_decks::init",
+      "function": "actionGetText",
       "operand": "*0x8(%rax)",
-      "review_priority": "context",
-      "site": "0x1000fe6ea"
+      "review_priority": "strong",
+      "site": "0x1004234e5"
+    },
+    {
+      "classification": "indirect_call_site",
+      "classification_basis": "target depends on runtime object/vtable/register state",
+      "function": "actionGetText",
+      "operand": "*0x8(%rax)",
+      "review_priority": "strong",
+      "site": "0x100425840"
     },
     {
       "classification": "indirect_call_site",
@@ -4707,26 +4739,18 @@
       "operand": "*0x68(%rcx)",
       "review_priority": "context",
       "site": "0x100147f69"
-    },
-    {
-      "classification": "indirect_call_site",
-      "classification_basis": "target depends on runtime object/vtable/register state",
-      "function": "actionGetText",
-      "operand": "*0x8(%rax)",
-      "review_priority": "context",
-      "site": "0x1004234e5"
-    },
-    {
-      "classification": "indirect_call_site",
-      "classification_basis": "target depends on runtime object/vtable/register state",
-      "function": "actionGetText",
-      "operand": "*0x8(%rax)",
-      "review_priority": "context",
-      "site": "0x100425840"
     }
   ],
   "review_queues": {
     "indirect_argument_path_sites": [
+      {
+        "classification": "indirect_call_site",
+        "classification_basis": "target depends on runtime object/vtable/register state",
+        "function": "ACTION_all_decks::init",
+        "operand": "*0x8(%rax)",
+        "review_priority": "strong",
+        "site": "0x1000fe6ea"
+      },
       {
         "classification": "indirect_call_site",
         "classification_basis": "target depends on runtime object/vtable/register state",
@@ -4942,6 +4966,22 @@
         "operand": "*0x8(%rcx)",
         "review_priority": "strong",
         "site": "0x1009919e2"
+      },
+      {
+        "classification": "indirect_call_site",
+        "classification_basis": "target depends on runtime object/vtable/register state",
+        "function": "actionGetText",
+        "operand": "*0x8(%rax)",
+        "review_priority": "strong",
+        "site": "0x1004234e5"
+      },
+      {
+        "classification": "indirect_call_site",
+        "classification_basis": "target depends on runtime object/vtable/register state",
+        "function": "actionGetText",
+        "operand": "*0x8(%rax)",
+        "review_priority": "strong",
+        "site": "0x100425840"
       }
     ],
     "potential_argument_consumers": [],
@@ -4951,6 +4991,7 @@
   "source": {
     "binary": "/private/tmp/vdj-h4-9246/vdj.pkg/Payload/VirtualDJ.app/Contents/MacOS/VirtualDJ",
     "evidence_tier": "Tier-2 bounded binary structure; no behavioral claim",
-    "manifest": "tests/runtime-parser-9246/manifest.json"
+    "manifest": "tests/runtime-parser-9246/manifest.json",
+    "manifest_sha256": "0d93770dd3779e43702beccfdef1c3237a8c45963b2f1226d5adb70c6bb1f49e"
   }
 }

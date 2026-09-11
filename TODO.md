@@ -459,7 +459,7 @@ expanded with `pkgutil --expand-full`; the memory notes hold the same paths):
 
 Status: Ready
 
-Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, scope/flag effects need discriminating fixtures, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. No candidate rule was promoted into the grammar reference.
+Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. The continuation adds guarded zoom/beatlock/all-deck execution fixtures, selected-deck query comparisons, untrimmed output tests, restoration journals and a regenerable static frontier. Inspect each capture through `just runtime-grammar --artifact <path>`; the report distinguishes complete and interrupted runs. No candidate rule was promoted into the grammar reference.
 
 Note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
 (fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.

@@ -1,0 +1,570 @@
+{
+  "description": "Revised predictions after the initial fallback capture; original failures are retained separately.",
+  "cases": [
+    {
+      "id": "zoom-default-check-bare",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-bare"
+    },
+    {
+      "id": "zoom-default-check-quoted-default",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 'default'",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-quoted-default"
+    },
+    {
+      "id": "zoom-default-check-numeric-junk",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-junk"
+    },
+    {
+      "id": "zoom-default-check-numeric-tab",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25\t",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-tab"
+    },
+    {
+      "id": "zoom-default-check-numeric-newline",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25\n",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-newline"
+    },
+    {
+      "id": "zoom-default-check-uppercase-ms",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25MS",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-uppercase-ms"
+    },
+    {
+      "id": "zoom-default-check-uppercase-bt",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25BT",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-uppercase-bt"
+    },
+    {
+      "id": "zoom-default-check-exponent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 1e-1",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-exponent"
+    },
+    {
+      "id": "zoom-default-check-hex",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0x1",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-hex"
+    },
+    {
+      "id": "zoom-default-check-punctuation",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom #zzqqx",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-punctuation"
+    },
+    {
+      "id": "zoom-default-check-separated-percent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25 %",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-separated-percent"
+    },
+    {
+      "id": "zoom-default-check-no-leading-digit",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom .25",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-no-leading-digit"
+    }
+  ]
+}

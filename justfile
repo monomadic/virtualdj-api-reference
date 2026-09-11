@@ -486,7 +486,23 @@ runtime-grammar *args:
 extract-runtime-parser app:
     @python3 tools/extract_runtime_parser.py --app "{{app}}" --output tests/runtime-parser-9246
 
+runtime-parser-frontier *args:
+    @python3 tools/runtime_parser_frontier.py --report "$@"
+
 check-runtime-grammar:
+    @python3 tools/runtime_parser_frontier.py --check > /dev/null
+    @python3 tools/test_runtime_grammar_actions.py
+    @python3 tools/test_runtime_grammar_scopes.py
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-initial-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-initial-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-second-attempt-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-fallback-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-initial-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scope-followup-9598.json
+    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-whitespace-9598.json
     @python3 tools/test_runtime_grammar_probes.py
     @python3 tools/runtime_grammar_probes.py --check
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json

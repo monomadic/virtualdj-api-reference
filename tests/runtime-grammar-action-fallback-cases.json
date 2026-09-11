@@ -1,0 +1,437 @@
+{
+  "description": "Frozen fallback predictions; no prior live result read by generator.",
+  "cases": [
+    {
+      "id": "zoom-fallback-bare",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does missing zoom input take its default branch?",
+      "script": "zoom",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-quoted-default",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does quoted default reach the textual zoom default branch?",
+      "script": "zoom 'default'",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-numeric-junk",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does malformed numeric input leave zoom without a parameter and take its default branch?",
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-numeric-tab",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does a tab after numeric input prevent that parameter reaching zoom?",
+      "script": "zoom 0.25\t",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-numeric-newline",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does a newline after numeric input prevent that parameter reaching zoom?",
+      "script": "zoom 0.25\n",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-uppercase-ms",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does uppercase MS fail numeric tokenization and reach default behavior?",
+      "script": "zoom 25MS",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-uppercase-bt",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does uppercase BT fail numeric tokenization and reach default behavior?",
+      "script": "zoom 25BT",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-exponent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does exponent syntax leave no zoom parameter?",
+      "script": "zoom 1e-1",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-hex",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does hexadecimal syntax leave no zoom parameter?",
+      "script": "zoom 0x1",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-punctuation",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does punctuation before an argument leave zoom on the default branch, unlike ordinary text?",
+      "script": "zoom #zzqqx",
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.5"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-separated-percent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does separated percent leave an integer first parameter that zoom rejects?",
+      "script": "zoom 25 %",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    },
+    {
+      "id": "zoom-fallback-no-leading-digit",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does a decimal without leading integer become text and leave zoom unchanged?",
+      "script": "zoom .25",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ]
+    }
+  ]
+}

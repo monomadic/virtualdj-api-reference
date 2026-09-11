@@ -1,0 +1,9194 @@
+{
+  "summary": {
+    "suite": "tests/runtime-grammar-action-default-cases.json",
+    "suite_sha256": "1e9bb4110982202ca2df1924921b004b8b591828ce8a6c540c8b2cdb5fc07551",
+    "status": "complete",
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "repeat": 2,
+    "mode": "reversible-actions",
+    "claim_scope": "state readback in named fixtures on recorded build only",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-11T20:49:47.476025+00:00",
+    "verdicts": {
+      "held-in-fixture": 12
+    },
+    "restoration_status": "verified",
+    "manual_restore_required": false
+  },
+  "fixtures": {
+    "parser_zoom_levels": {
+      "queries": [
+        "zoom"
+      ],
+      "baselines": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ]
+    },
+    "parser_beatlock_levels": {
+      "queries": [
+        "deck 1 beatlock"
+      ],
+      "baselines": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ]
+    },
+    "parser_all_decks_asymmetric": {
+      "queries": [
+        "deck 1 beatlock",
+        "deck 2 beatlock",
+        "deck 3 beatlock",
+        "deck 4 beatlock"
+      ],
+      "baselines": [
+        [
+          "no",
+          "yes",
+          "no",
+          "yes"
+        ],
+        [
+          "yes",
+          "no",
+          "yes",
+          "no"
+        ]
+      ]
+    }
+  },
+  "cases": [
+    {
+      "id": "zoom-default-check-bare",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-bare",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-quoted-default",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 'default'",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-quoted-default",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 'default'": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 'default'": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-numeric-junk",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-junk",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25zzqqx": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25zzqqx": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-numeric-tab",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25\t",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-tab",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25\t": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25\t": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-numeric-newline",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0.25\n",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-numeric-newline",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25\n": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0.25\n": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-uppercase-ms",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25MS",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-uppercase-ms",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25MS": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25MS": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-uppercase-bt",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25BT",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-uppercase-bt",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25BT": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25BT": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-exponent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 1e-1",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-exponent",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 1e-1": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 1e-1": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-hex",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 0x1",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-hex",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0x1": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 0x1": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-punctuation",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom #zzqqx",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-punctuation",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom #zzqqx": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom #zzqqx": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-separated-percent",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom 25 %",
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.65"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-separated-percent",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25 %": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom 25 %": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "zoom-default-check-no-leading-digit",
+      "fixture": "parser_zoom_levels",
+      "group": "argument-fallback",
+      "hypothesis": "Does the revised expected signature repeat, with bare zoom as an explicit comparison?",
+      "script": "zoom .25",
+      "expected": [
+        [
+          "0.2"
+        ],
+        [
+          "0.2"
+        ]
+      ],
+      "controls": [
+        "zoom zzqqx",
+        "zoom vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "zoom 0.0",
+          "expected": [
+            [
+              "0"
+            ],
+            [
+              "0"
+            ]
+          ]
+        },
+        {
+          "script": "zoom",
+          "expected": [
+            [
+              "0.2"
+            ],
+            [
+              "0.2"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x100599250",
+        "ACTION_zoom::onExecute@0x1005c9310"
+      ],
+      "prior_case": "zoom-fallback-no-leading-digit",
+      "passes": [
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom .25": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        },
+        {
+          "zoom zzqqx": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom vvnnz": [
+            [
+              [
+                "0.25"
+              ],
+              [
+                "0.25"
+              ]
+            ],
+            [
+              [
+                "0.65"
+              ],
+              [
+                "0.65"
+              ]
+            ]
+          ],
+          "zoom 0.0": [
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ],
+            [
+              [
+                "0"
+              ],
+              [
+                "0"
+              ]
+            ]
+          ],
+          "zoom": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ],
+          "zoom .25": [
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ],
+            [
+              [
+                "0.2"
+              ],
+              [
+                "0.2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ],
+  "journal": [
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "roundtrip",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 'default'",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 'default'",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\t",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\t",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\n",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\n",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25MS",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25MS",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25BT",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25BT",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1e-1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1e-1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0x1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0x1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom #zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom #zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25 %",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25 %",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom .25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom .25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom vvnnz",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.0",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom .25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom .25",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25 %",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25 %",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "false"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom #zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom #zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0x1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0x1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1e-1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 1e-1",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25BT",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25BT",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25MS",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 25MS",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\n",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\n",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\t",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25\t",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.250000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 'default'",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.650000000",
+      "purpose": "baseline",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 'default'",
+      "purpose": "probe",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "zoom 0.310000000",
+      "purpose": "restore",
+      "status": "response-received",
+      "response": "true"
+    }
+  ],
+  "restorations": [
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ],
+  "restoration_events": [
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "1",
+        "yes",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ],
+  "baseline_checks": [
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 'default'",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 'default'",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25\t",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25\t",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25\n",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25\n",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25MS",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25MS",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25BT",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25BT",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 1e-1",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 1e-1",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0x1",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0x1",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom #zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom #zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25 %",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25 %",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom .25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom .25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom vvnnz",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.0",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom .25",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom .25",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25 %",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25 %",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom #zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom #zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0x1",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0x1",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 1e-1",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 1e-1",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25BT",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25BT",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 25MS",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 25MS",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25\n",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25\n",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25\t",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25\t",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 0.25zzqqx",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    },
+    {
+      "script": "zoom 'default'",
+      "expected": [
+        "0.25"
+      ],
+      "observed": [
+        "0.25"
+      ]
+    },
+    {
+      "script": "zoom 'default'",
+      "expected": [
+        "0.65"
+      ],
+      "observed": [
+        "0.65"
+      ]
+    }
+  ],
+  "initial_state": {
+    "resources": {
+      "zoom": "0.31",
+      "deck 1 beatlock": "no",
+      "deck 2 beatlock": "no",
+      "deck 3 beatlock": "no",
+      "deck 4 beatlock": "no"
+    },
+    "guards": {
+      "get_decks": "4",
+      "get_deck": "1",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 1 select": "yes",
+      "deck 1 pfl": "yes",
+      "deck 1 masterdeck": "yes",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 2 select": "no",
+      "deck 2 pfl": "no",
+      "deck 2 masterdeck": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no"
+    }
+  }
+}

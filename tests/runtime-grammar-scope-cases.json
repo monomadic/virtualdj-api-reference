@@ -1,0 +1,460 @@
+{
+  "description": "Predictions for selection fixture; not selector facts.",
+  "cases": [
+    {
+      "id": "scope-bare",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does the default query follow the selected deck?",
+      "script": "get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-default",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does explicit default follow selection?",
+      "script": "deck default get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-out-of-range",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does an out-of-range numeric deck fall back to selection rather than always deck 1?",
+      "script": "deck 99 get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeckSafe@0x10047e085"
+      ]
+    },
+    {
+      "id": "scope-zero",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does numeric zero select the default context?",
+      "script": "deck 0 get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-one",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does explicit deck 1 remain independent of selected deck?",
+      "script": "deck 1 get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-two",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does explicit deck 2 remain independent of selected deck?",
+      "script": "deck 2 get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-left",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does left stay on deck 1 in this skin despite changing selection?",
+      "script": "deck left get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-right",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does right stay on deck 2 in this skin despite changing selection?",
+      "script": "deck right get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-active",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does active follow selection with all decks unloaded and stopped?",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "scope-zone",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does zone 2 dispatch independently of the selected deck?",
+      "script": "zone 2 get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "scope-quoted",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does quoting a deck number fail in both selected contexts?",
+      "script": "deck '2' get_deck",
+      "expected": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "scope-backtick",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does a computed deck prefix resolve to its returned number in both contexts?",
+      "script": "deck `constant 2` get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getDeckFromString@0x100599a88"
+      ]
+    },
+    {
+      "id": "scope-numeric-junk",
+      "group": "selected-scope",
+      "fixture": "parser_selected_scope",
+      "hypothesis": "Does junk adjacent to the deck number fail rather than use its numeric prefix?",
+      "script": "deck 2zzqqx get_deck",
+      "expected": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ],
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "numberMatch@0x100599a22"
+      ]
+    }
+  ]
+}
