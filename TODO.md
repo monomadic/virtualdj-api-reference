@@ -1752,9 +1752,19 @@ Done when the four proofs hold and `just check` passes — they did on 2026-09-1
 
 ### 10d. Long-Track Time Fixture: `get_time_hour` And Its Neighbours
 
-Status: Ready
+Status: Done
 
-Note: Added 2026-09-11. The first live batch after 10c, chosen because the expected
+Note: Completed 2026-09-12 on live build 9598 over HTTP. `tests/long-time-forms.json`
+records independently established runs, reversed form order, phase readbacks and verified
+restoration. `just long-time-forms get_time_hour` reports the result; `just verb get_time_hour`
+now closes return type, arguments and behavior using this stamped capture. `elapsed` is
+accounted for as the documented elapsed fallback, not a token separated from nonsense.
+`get_time_sign` remains undiscriminated in positive-time states. The final fixture uses the
+exact midpoint 3750s and fractional position 4207.125s; scaling get_position before HTTP
+serialization provides the needed precision. A focused runner preserves phase controls and
+restoration rather than merging into the generic prober's incompatible fixture set.
+
+Original plan, added 2026-09-11. The first live batch after 10c, chosen because the expected
 differences are already worked out and the state is cheap to manufacture. The recipe is in
 10b's note ("`get_time_hour` wants a track longer than an hour"): generated 2h05m track,
 playhead at 1h10m so `elapsed`/`remain`/`total` read 1/0/2, read once with `display_time`

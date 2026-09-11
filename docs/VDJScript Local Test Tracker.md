@@ -2607,3 +2607,33 @@ pass, so `cross_check` now reports them as
   and once on `remain` (bare and junk follow the setting) separates all three;
   `absolute` needs the playhead where pitched and unpitched remaining time fall
   on opposite sides of an hour boundary, e.g. 3,700 s in at +12%.
+
+## Long-Track Time Readers, 2026-09-12
+
+Local test, HTTP, running instance `get_build` returned `9598`. Artifact:
+`tests/long-time-forms.json`; regenerate with `just probe-long-time`, inspect with
+`just long-time-forms`. Per-verb conclusions are in the store.
+
+The generated FLAC is 7500 seconds, verified by ffprobe. At 4200 seconds with zero
+pitch, `get_time_hour elapsed/remain/total` returned 1/0/2. Bare followed the selected
+display mode. At 3750 seconds and +12 percent pitch, `absolute` returned 1 while
+pitched elapsed and remain returned 0. Its value at zero pitch under both display
+modes confirms that it retains the selected mode. `elapsed` matched both junk tokens
+in every phase and the independent elapsed-time arithmetic: it names the fallback,
+not a separately discriminated token. The fractional 4207.125-second phase separated
+remain from elapsed for the lower-unit readers. `get_time_sign` remained 1 throughout;
+negative-sign behavior is not established. Raw readings include reversed form order
+and two independently established runs with restoration verified.
+
+Two setup failures preceded the retained capture. Unscaled `get_position` serialized
+too coarsely to assert 3700 seconds; `get_position & param_multiply 7500000` returns
+the position in milliseconds before HTTP rounding. The final midpoint was 3750 seconds.
+Repeated `deck 1 display_time 'remain'` writes also exposed a restoration trap: from
+remain, another such write changed the readback to elapsed; a third restored remain.
+Each write returned true and the independent elapsed/remain/total queries showed the
+change. The earlier timing hypothesis was wrong. The final runner checks the current
+mode before writing and verifies the mode, empty deck, stopped transport and original
+pitch after unloading. The original remain mode and zero pitch were restored.
+
+No personal media was loaded: the runner refuses an occupied deck. Generated audio
+is temporary; the checked-in artifact contains only synthetic-media measurements.

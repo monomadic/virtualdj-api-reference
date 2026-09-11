@@ -127,6 +127,13 @@ verb-stats:
 coverage *args:
     @python3 tools/coverage_report.py "$@"
 
+# Requires empty stopped deck 1. Generates temporary audio and verifies restoration.
+probe-long-time:
+    python3 tools/probe_long_time.py --run
+
+long-time-forms name="":
+    @python3 tools/probe_long_time.py --get "{{name}}"
+
 # --- native effects catalog (swept via the HTTP interface) -------------------
 
 get-fx effect:
@@ -320,6 +327,7 @@ lint-mappers *paths:
     python3 tools/lint_mappers.py "$@"
 
 check:
+    python3 tools/probe_long_time.py --check
     python3 tools/check_bundle_copies.py
     python3 tools/lint_pads.py
     python3 tools/lint_skins.py

@@ -73,3 +73,17 @@ for the transfer assessment, regeneration order and live-probe limits.
 traces — roots, direct edges, visited and unvisited targets, per class and slot.
 It is written by the same extraction and read with `just verb-traces NAME`; the
 contracts check fails if the pair disagree about the binary they came from.
+
+## Long-track time-reader capture
+
+`tests/long-time-forms.json` is the task 10d HTTP capture. `just long-time-forms`
+reports verdicts; `just long-time-forms get_time_hour` selects a verb. The source
+`tools/probe_long_time.py` generates temporary FLAC audio with ffmpeg, verifies
+duration with ffprobe, and requires empty stopped deck 1. `just probe-long-time`
+changes position, pitch and display mode, then verifies restoration after each
+independent run. It writes only after all runs restore successfully.
+
+`just check` recomputes verdicts from raw readings and verifies the hour arithmetic
+against position, pitch and generated duration. The view joins this artifact without
+relabeling legacy measurements. A documented elapsed fallback is distinguished from
+a token that separates from controls; unchanged sign readings remain unresolved.

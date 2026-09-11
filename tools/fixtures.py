@@ -37,6 +37,7 @@ from datetime import datetime, timezone
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.parse
 from dataclasses import dataclass, field
@@ -214,7 +215,22 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
     """Fixture definitions. `track` is None only for offline validation."""
     t = track if track is not None else Path("<fixture track>")
     load1, load2 = load_script(1, t), load_script(2, t)
+    long_track = Path(tempfile.gettempdir()) / "vdj-long-time-7500.flac"
     return {f.name: f for f in [
+        Fixture(
+            name="long_time",
+            describes="generated 7500-second track on empty, stopped deck 1; phase position, "
+                      "pitch and display mode verified by probe_long_time.py",
+            setup=[load_script(1, long_track), "deck 1 pause"],
+            preconditions=[Assertion("deck 1 loaded", no, "deck 1 is empty"),
+                           Assertion("deck 1 play", no, "deck 1 is stopped"),
+                           Assertion("deck 1 loop", no, "deck 1 has no active loop")],
+            assertions=[Assertion("deck 1 loaded", yes, "fixture loaded"),
+                        Assertion('deck 1 get_loaded_song "fullpath"',
+                                  lambda v: v == str(long_track), "generated long track selected"),
+                        Assertion("deck 1 play", no, "fixture stopped")],
+            teardown=["deck 1 unload"], decks=(1,), deadline=30, needs_audio_file=False,
+        ),
         Fixture(
             name="one_deck_loaded",
             describes="deck 1 holds the fixture track, deck 2 empty",

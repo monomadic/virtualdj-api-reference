@@ -1,6 +1,6 @@
 {
  "inputs": {
-  "action-catalog": "b548313bb7aab5c13f0b4104507f0e6af5a13aadb857d0660f59c35d171b889b",
+  "action-catalog": "07ee78575e88ddbba358cc2e537ab65862209a67c275dd1ecfa77d7eae9f5e7e",
   "action-contracts": "33d16136ef5ca8e4cd9edae8d338aca0ce05561cc26c61097c663cdfdf0dc1fa",
   "action-modules-9246": "a97ac4f3a727c07b1fbf027f8989491b4cf3f9817e861faf50348296a9b355ee",
   "action-vtables-9246": "4e6944b10aa39414ec60eac9bc34e7a1244fbefb6023ab2389016f8c493b7472",
@@ -2096,98 +2096,6 @@
     "booth",
     "headphones",
     "master"
-   ]
-  },
-  {
-   "aliases": [
-    "get_time_hour"
-   ],
-   "associated_vocabularies": {
-    "time_modes": {
-     "association": {
-      "get_time_hour": {
-       "catalog": [
-        "absolute",
-        "elapsed",
-        "remain",
-        "total"
-       ]
-      }
-     },
-     "evidence_tier": 2,
-     "member_signals": {
-      "absolute": [
-       "region"
-      ],
-      "cue": [
-       "region"
-      ],
-      "elapsed": [
-       "region",
-       "run"
-      ],
-      "loopin": [
-       "region",
-       "run"
-      ],
-      "loopout": [
-       "region",
-       "run"
-      ],
-      "remain": [
-       "region",
-       "run"
-      ],
-      "total": [
-       "region"
-      ]
-     },
-     "members": [
-      "absolute",
-      "cue",
-      "elapsed",
-      "loopin",
-      "loopout",
-      "remain",
-      "total"
-     ]
-    }
-   },
-   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
-   "dispatcher_candidates": [],
-   "evidence_tier": 2,
-   "helper_leads": [],
-   "helper_only_candidates": [],
-   "historical": {
-    "build": "18.0.9246",
-    "join": "class spelling and slot index; not current method identity",
-    "module": "action_get",
-    "slot_names": [
-     "ACTION_get_time_hour::~ACTION_get_time_hour()",
-     "ACTION_get_time_hour::~ACTION_get_time_hour()",
-     "IAction::onExecute()",
-     "ACTION_get_time_hour::onQuery(SActionParam&)",
-     "IAction::onQueryBool(SActionParam&)",
-     "ACTION_get_time_hour::onQueryText(SActionParam&)",
-     "IAction::onTooltip(SActionParam&)",
-     "IAction::onUp()",
-     "IAction::onSaveState()",
-     "IAction::onLoadState()",
-     "IAction::pushSaveState(int, void*)",
-     "IAction::popSaveState(int, bool&)"
-    ]
-   },
-   "own_keyword_candidates": [],
-   "priority": 0,
-   "shared_helpers": [],
-   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
-   "verb": "get_time_hour",
-   "worklist_recovered": [],
-   "worklist_tails": [
-    "absolute",
-    "elapsed",
-    "remain",
-    "total"
    ]
   },
   {
@@ -12492,6 +12400,93 @@
   },
   {
    "aliases": [
+    "get_time_hour"
+   ],
+   "associated_vocabularies": {
+    "time_modes": {
+     "association": {
+      "get_time_hour": {
+       "catalog": [
+        "absolute",
+        "elapsed",
+        "remain",
+        "total"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "absolute": [
+       "region"
+      ],
+      "cue": [
+       "region"
+      ],
+      "elapsed": [
+       "region",
+       "run"
+      ],
+      "loopin": [
+       "region",
+       "run"
+      ],
+      "loopout": [
+       "region",
+       "run"
+      ],
+      "remain": [
+       "region",
+       "run"
+      ],
+      "total": [
+       "region"
+      ]
+     },
+     "members": [
+      "absolute",
+      "cue",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_get",
+    "slot_names": [
+     "ACTION_get_time_hour::~ACTION_get_time_hour()",
+     "ACTION_get_time_hour::~ACTION_get_time_hour()",
+     "IAction::onExecute()",
+     "ACTION_get_time_hour::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "ACTION_get_time_hour::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "get_time_hour",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "get_time_min"
    ],
    "associated_vocabularies": {
@@ -20292,6 +20287,6 @@
   "helper_leads": 1045,
   "helper_records": 35,
   "queue_verbs": 308,
-  "worklist_verbs": 42
+  "worklist_verbs": 41
  }
 }

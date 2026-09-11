@@ -360,6 +360,11 @@ def extra_confirmations() -> dict[str, set[str]]:
     unconfirmed and sends the next agent to re-probe settled ground.
     """
     out: dict[str, set[str]] = {k: set(v) for k, v in LOCAL_CONFIRMED.items()}
+    long_time = Path("tests/long-time-forms.json")
+    if long_time.exists():
+        for verb, forms in json.loads(long_time.read_text()).get("verbs", {}).items():
+            out.setdefault(verb, set()).update(
+                form for form, result in forms.items() if result["verdict"] == "recognized")
     transition = Path("tests/bpm-transition-forms.json")
     if transition.exists():
         forms = json.load(open(transition))["summary"]["forms"]
@@ -407,6 +412,10 @@ def cross_check(entries: dict[str, dict]) -> dict:
             refuted[verb] = sorted(gone)
             documented -= gone
         default = documented & LOCAL_DEFAULT_ALIASES.get(verb, set())
+        long_time = Path("tests/long-time-forms.json")
+        if verb == "get_time_hour" and long_time.exists():
+            forms = json.loads(long_time.read_text()).get("verbs", {}).get(verb, {})
+            default |= {f for f, r in forms.items() if r["verdict"] == "names-elapsed-fallback"} & documented
         if default:
             defaults[verb] = sorted(default)
             documented -= default

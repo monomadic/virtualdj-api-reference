@@ -153,6 +153,16 @@ class Context:
         self.canon = {n: r for n, r in self.store.items() if r.get("tier") != "alias"}
         self.contracts = artifact("action-contracts.json", "verbs")
         self.rtypes = artifact("verb-return-types.json", "verbs")
+        self.raw_rtypes = dict(self.rtypes)
+        self.long_time = artifact("long-time-forms.json") or {}
+        if self.long_time:
+            from sweep_return_types import classify as value_type, merge as merge_types
+            for name in self.long_time["verbs"]:
+                samples = {f"run-{run['run']}/{phase['id']}": phase["readings"][name][""][0]
+                           for run in self.long_time["runs"] for phase in run["phases"]}
+                self.rtypes[name] = {"observed_type": merge_types(value_type(v) for v in samples.values()),
+                                     "samples": samples, "provenance": self.long_time["summary"],
+                                     "source": "tests/long-time-forms.json"}
         self.argforms = artifact("verb-arg-forms.json", "verbs")
         af_summary = (artifact("verb-arg-forms.json") or {}).get("summary", {})
         self.arg_fixtures = af_summary.get("fixtures", [])
@@ -586,6 +596,20 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
             claims.append(_claim(dimension, "(remaining contract)", "open", "not_measured",
                                  "existing observations do not resolve this dimension"))
 
+    time_capture = getattr(ctx, "long_time", {})
+    for form, evidence in time_capture.get("verbs", {}).get(name, {}).items():
+        if evidence["verdict"] not in ("recognized", "names-elapsed-fallback"):
+            continue
+        claims = [cl for cl in claims if not (cl["dimension"] == "arguments" and cl["form"] == form)]
+        claim = _claim("arguments", form, "settled", observation=(
+            "documented elapsed fallback; matches independent position/pitch oracle and both controls"
+            if evidence["verdict"] == "names-elapsed-fallback" else
+            "separates from agreeing nonsense controls in both independent long-track runs"),
+            channel="HTTP long-track fixture")
+        claim.update(source="tests/long-time-forms.json", build=time_capture["summary"]["build"],
+                     provenance=time_capture["summary"], evidence=evidence)
+        claims.append(claim)
+
     applicable = [d for d in DIMENSIONS if dims[d] != "n/a"]
     settled = [d for d in applicable if dims[d] in CLOSED]
     read_applicable = [d for d in READ_SIDE if dims[d] != "n/a"]
@@ -603,7 +627,10 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
             source = "tests/verb-execute-forms.json"
             provenance = (ex or {}).get("provenance", {})
         elif channel == "HTTP return-type sweep":
-            source = "tests/verb-return-types.json"
+            source = rt.get("source", "tests/verb-return-types.json")
+            provenance = rt.get("provenance", {})
+            if source == "tests/long-time-forms.json":
+                claim["channel"] = "HTTP long-track fixture"
         if claim.get("source") and "provenance" in claim:
             continue  # focused joins carry their own provenance
         if source:
@@ -679,7 +706,7 @@ def collect() -> dict:
         "population": population(ctx.canon, ctx.store, verbs),
         "dimensions": {d: tally(verbs, d) for d in DIMENSIONS},
         "ladder": ladder(verbs),
-        "staleness": staleness(ctx.argforms, ctx.execforms, ctx.rtypes),
+        "staleness": staleness(ctx.argforms, ctx.execforms, ctx.raw_rtypes),
         "frontier": frontier(ctx.canon, verbs, ctx.store),
         "verbs": verbs,
     }

@@ -24,6 +24,26 @@ def context():
 
 
 class AssessmentTests(unittest.TestCase):
+    def test_long_time_capture_closes_hour_with_live_provenance(self):
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", ResourceWarning)
+            ctx = load_context()
+        result = assess("get_time_hour", ctx.store["get_time_hour"], ctx)
+        self.assertEqual(result["dimensions"]["arguments"], "settled")
+        for claim in result["claims"]:
+            if claim["dimension"] in ("arguments", "return_type"):
+                self.assertEqual(claim["source"], "tests/long-time-forms.json")
+                self.assertEqual(claim["build"], ctx.long_time["summary"]["build"])
+        self.assertEqual(ctx.long_time["verbs"]["get_time_sign"]["remain"]["verdict"],
+                         "undiscriminated")
+
+    def test_display_mode_restore_does_not_toggle_current_mode(self):
+        from probe_long_time import set_mode
+        with patch("probe_long_time.mode", return_value="remain"), patch("probe_long_time.wait"):
+            ch = unittest.mock.Mock()
+            set_mode(ch, "remain")
+            ch.execute.assert_not_called()
+
     def test_fx_join_requires_the_verb_measurement(self):
         for verb, fields in (
                 ("get_effect_slider_default", {"sliders": []}),
