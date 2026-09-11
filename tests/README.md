@@ -1,5 +1,7 @@
 # Documentation Tests
 
+H4: [runtime argument grammar tests](../docs/Runtime%20Argument%20Grammar%20Tests.md) links the bounded historical-binary capture, frozen exact-script predictions, completed HTTP captures, and the interrupted run. Inspect results with `just runtime-grammar`; validate with `just check-runtime-grammar`.
+
 This folder contains small reproducible assets used to verify claims in the reference documentation.
 
 Test assets are important evidence for the documentation project. They are kept outside the normal example folders so a test page, skin, mapper, or other repro fixture is not mistaken for a polished reference implementation.

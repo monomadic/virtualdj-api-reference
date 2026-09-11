@@ -10,6 +10,8 @@ Observed on 2026-05-29:
 - VirtualDJ bundle build: `18.0.9336`
 - Main executable SHA-256: `233f36a8d454d0fe90e7bb1c57b9550a4ea8aa3ee0a9f219624c24aa8aaa59f1`
 
+H4 runtime-parser captures and executable candidate tests: [Runtime Argument Grammar Tests](Runtime%20Argument%20Grammar%20Tests.md). These include live HTTP observations and an explicit unresolved frontier.
+
 ## Purpose
 
 The Button Editor is not only an action catalog. Its script field also performs syntax highlighting and hover-based token separation. That behavior is a separate evidence stream from the bundled language descriptions: it can help document VDJScript grammar, branch boundaries, operator precedence, and query/action token classification.
