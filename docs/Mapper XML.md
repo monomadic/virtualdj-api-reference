@@ -15,12 +15,12 @@ Source labels match the rest of this repo:
 
 VirtualDJ splits controller support into two XML layers:
 
-1. **Device definition** (`<device>` root) — declares the hardware: which MIDI notes/CCs or HID byte offsets exist, what they are named, LEDs, encoders, value ranges. No VDJScript is evaluated here.
+1. **Device definition** (`<device>` root) — declares the hardware: which MIDI notes/CCs or HID byte offsets exist, what they are named, LEDs, encoders, value ranges. The hardware-address declarations do not evaluate VDJScript. Recovered built-in definitions also contain setting callbacks; see the compiled-definition report below.
 2. **Mapper** (`<mapper>` root) — binds each named control from the definition to a VDJScript action: `<map value="PLAY" action="play_pause"/>`.
 
-Most shipped controllers have a *compiled* built-in definition: the app bundle contains `Resources/controllers.dat` (binary, not XML) and no `Resources/Mappers/` or `Resources/Devices/` folders (`Local test`, bundle 18.0.9482). You only write a device definition XML for hardware VirtualDJ does not already know; you write or edit a mapper whenever you want custom behavior on any controller.
+Most shipped controllers have a built-in definition in `Resources/controllers.dat`. The earlier bundle observation (18.0.9482) correctly identified a binary file and no `Resources/Mappers/` or `Resources/Devices/` folders, but did not establish an opaque compiled schema: the reader now recovers original XML from that encrypted container. Write a custom device definition to supply hardware controls and a mapper to bind named controls to behavior.
 
-Mapper actions are VDJScript. Device definitions are not — do not expect variables, conditionals, backticks, or actions to be evaluated inside definition elements such as `<button>`, `<led>`, `cc=""`, `value=""`, or `zero=""` (`Official forum`, staff reply in "Sending MIDI CC Commands"). Put dynamic behavior in the mapper:
+Mapper actions are VDJScript. Hardware-address declarations in device definitions are not — do not expect variables, conditionals, backticks, or actions to be evaluated inside definition elements such as `<button>`, `<led>`, `cc=""`, `value=""`, or `zero=""` (`Official forum`, staff reply in "Sending MIDI CC Commands"). Put dynamic behavior in the mapper:
 
 ```xml
 <!-- Device definition: static hardware output declarations -->
@@ -126,7 +126,7 @@ Deck scoping happens *inside the VDJScript action*, not via a `deck=""` attribut
 
 ## Device Definition Files
 
-Summary of the official schema (`Official`: `ControllerDefinitionMIDIv8.html`, `ControllerDefinitionHIDv8.html`). No local device-definition XML has been tested yet; treat details below as official-doc-derived, not locally verified.
+Summary of the official schema (`Official`: `ControllerDefinitionMIDIv8.html`, `ControllerDefinitionHIDv8.html`). **Local test, 2026-09-12, build 18.0.9598:** a custom MIDI definition in the existing `SIMPLE_MIDI_0_0` context loaded, resolved a named note button and CC slider, and fired the paired mapper under virtual MIDI input. Wrong-channel and neighboring-address controls left the observed values unchanged. This validates that fixture only; the remaining schema below is official-doc-derived. [Exact fixture, bytes, readback and limits](../tests/controllers/README.md).
 
 ### Root `<device>` (MIDI)
 
@@ -158,9 +158,9 @@ Relative encoders are handled by the definition layer (`<encoder zero="">`, `<jo
 
 ### Built-in definitions
 
-Built-in definitions are compiled into `controllers.dat` (app bundle and `~/Library/Application Support/VirtualDJ/Devices/`); they are not inspectable XML (`Local test`). Custom definition XML files go in the `Devices/` folder of the VirtualDJ home directory.
+Correction (2026-09-12): the earlier statement that built-ins were "not inspectable XML" confused their encrypted container with their contents. `controllers.dat` contains original device, mapper and audio XML inside Blowfish-encrypted ZIP blocks with RSA-recovered key envelopes. `just controllers-extract --output-dir /tmp/vdj-controllers` emits every member byte-for-byte, with CRC/XML validation. `just controllers` queries the generated vocabulary; see [Compiled Controller Definitions](Compiled%20Controller%20Definitions.md) for the format, build hashes and schema gaps. This is **Tier 2 extraction**, not blanket hardware validation. Custom definition XML files go in the `Devices/` folder of the VirtualDJ home directory.
 
-Exporting the **factory mapping** (Factory default → Save, above) does **not** expose the device definition — it writes only the `<mapper>` bindings, with no `<button>`/`<slider>`/`<led>` elements or MIDI addresses (`Local test`, DDJ-GRV6, 2026-07-27). So on a recognized controller the definition layer stays opaque: the mapper gives you the control *names*, but the note/CC map behind them remains compiled. Testing the custom `<device>` definition schema still requires hardware VirtualDJ does *not* recognize (so it must use your XML), or a virtual MIDI port whose messages you inject.
+Exporting the **factory mapping** (Factory default → Save, above) does **not** expose the device definition — it writes only the `<mapper>` bindings, with no `<button>`/`<slider>`/`<led>` elements or MIDI addresses (`Local test`, DDJ-GRV6, 2026-07-27). The export alone still provides no MIDI address map; the archive reader now supplies the separate original definition. A virtual MIDI port with injected messages was sufficient to load-test a custom definition on build 18.0.9598, without unrecognized physical hardware.
 
 ---
 
@@ -199,4 +199,4 @@ The v8-era official docs reference `Documents/VirtualDJ/Mappers/`; on this Mac i
 - `<map name="">` attribute purpose (always empty in observed factory files).
 - Full keyboard key-name enumeration.
 - Whether `priority` interacts with multiple mappers for one device.
-- No custom device-definition XML has been authored and load-tested locally yet; the definition schema above is official-doc-derived.
+- Custom MIDI button/slider definition loading is now locally tested (2026-09-12); HID, hardware outputs, display transport and device-setting callbacks still need focused behavior tests.

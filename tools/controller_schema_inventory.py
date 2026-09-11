@@ -102,7 +102,8 @@ def main():
     parser.add_argument('zip', type=Path, nargs='?', help='Decoded ZIP to regenerate the complete inventory')
     parser.add_argument('--read', type=Path, default=Path(__file__).resolve().parents[1] / 'tests/controller-schema-inventory.json', help='Saved inventory for offline queries')
     parser.add_argument('--path', help='XML path: exact match preferred, otherwise substring')
-    parser.add_argument('--device', help='Mapper device identifier (case-insensitive exact match)')
+    parser.add_argument('--device', help='Built-in device identifier (case-insensitive; exact preferred, otherwise substring)')
+    parser.add_argument('--manifest', type=Path, default=Path(__file__).resolve().parents[1] / 'tests/controllers-manifest.json', help='Decoded archive manifest for built-in device lookup')
     parser.add_argument('--mappers', type=Path, default=Path(__file__).resolve().parents[1] / 'examples/Mappers')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
@@ -114,6 +115,19 @@ def main():
             result_data['paths'] = exact or [row for row in data['paths'] if args.path in row['path']]
         if args.device:
             result_data['local_mapper_comparisons'] = [row for row in data['local_mapper_comparisons'] if row['device'].casefold() == args.device.casefold()]
+            manifest = json.loads(args.manifest.read_text(encoding='utf-8'))
+            candidates = []
+            for block in manifest['blocks']:
+                for member in block['members']:
+                    key = {'device': 'name', 'mapper': 'device'}.get(member['root'])
+                    if key:
+                        identifier = member['attributes'].get(key, '')
+                        if args.device.casefold() in identifier.casefold():
+                            candidates.append({**member, 'block_offset': block['offset'], 'block_revision': block['revision'], 'matched_identifier': identifier})
+            exact = [row for row in candidates if row['matched_identifier'].casefold() == args.device.casefold()]
+            result_data['bundled_members'] = exact or candidates
+            result_data['manifest_source'] = {key: manifest[key] for key in ('source', 'bundle_version', 'source_sha256', 'app_binary_sha256')}
+            result_data['manifest_matches_inventory_zip'] = any(block['zip_sha256'] == data['source_zip_sha256'] for block in manifest['blocks'])
     elif args.zip:
         result_data = data
     else:

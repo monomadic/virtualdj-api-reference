@@ -2641,3 +2641,25 @@ pitch after unloading. The original remain mode and zero pitch were restored.
 
 No personal media was loaded: the runner refuses an occupied deck. Generated audio
 is temporary; the checked-in artifact contains only synthetic-media measurements.
+
+
+## Custom SIMPLE_MIDI Device Definition — 2026-09-12
+
+**Local test, bundle 18.0.9598, paired virtual CoreMIDI ports, stopped/empty decks.**
+The [custom definition and mappers](../tests/controllers/README.md) use the existing
+`SIMPLE_MIDI_0_0` context and match only `Codex Definition Probe`. The custom description
+appeared in Controllers after restart; HTTP read the ONINIT sentinel as `9598`.
+The listener subsequently became unavailable, so the completed behavior test used the
+app's live variable window, filtered to isolated test globals.
+
+The named button counter stayed `38` for neighboring-note and wrong-channel controls,
+then became `39` after `90 24 7f` / `80 24 00`. The CC slider read `0.252` for `b0 10 20`
+and `0.756` for `b0 10 60`; neighboring CC and wrong-channel controls left it unchanged.
+[Raw structured observations, fixture hashes and exact controls](../tests/controllers/live-validation.json).
+This proves the fixture's definition loading, note/CC dispatch, channel filtering and
+paired mapper firing, not the behavior of every decoded built-in definition.
+
+The test globals were read back as zero, original mapper and skin restored, virtual
+endpoints disposed, and installed test files removed. Network Control remained unavailable
+at the last check and the user was asked to restore it. A hung process after initial Quit
+required SIGTERM before relaunch; this is a run limitation, not a claim about all restarts.

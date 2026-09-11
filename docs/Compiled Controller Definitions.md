@@ -107,5 +107,9 @@ from existence/behavior evidence. The exact differences are query output, not pr
 
 ## Live custom-definition validation
 
-The reproducible fixture and observed run are recorded in
-[tests/controllers/README.md](../tests/controllers/README.md).
+**Passed on build 18.0.9598 (2026-09-12):** the custom `SIMPLE_MIDI_0_0` definition
+loaded and its named note button and CC slider fired the paired mapper. Wrong-address
+and wrong-channel controls left the independent live variable readback unchanged.
+[Fixture, exact bytes, observed values and cleanup](../tests/controllers/README.md).
+This validates the reader's recovered XML shape against an authored loadable definition;
+it does not establish runtime behavior for every extracted vendor definition.

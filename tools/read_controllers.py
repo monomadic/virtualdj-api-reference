@@ -84,7 +84,8 @@ def decode(data):
                 name = info.filename
                 path = PurePosixPath(name)
                 if (path.is_absolute() or '..' in path.parts or '\\' in name
-                        or not path.parts or ':' in name or info.is_dir()):
+                        or not path.parts or ':' in name or info.is_dir()
+                        or path.as_posix() != name):
                     raise ValueError(f'unsafe/non-file member name: {name!r}')
                 if name.casefold() in seen:
                     raise ValueError(f'duplicate member name: {name!r}')

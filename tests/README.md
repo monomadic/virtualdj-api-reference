@@ -89,3 +89,17 @@ independent run. It writes only after all runs restore successfully.
 against position, pitch and generated duration. The view joins this artifact without
 relabeling legacy measurements. A documented elapsed fallback is distinguished from
 a token that separates from controls; unchanged sign readings remain unresolved.
+
+
+## Controller archive reader and SIMPLE_MIDI fixture
+
+`just controllers-extract` recovers the original XML from `controllers.dat`;
+`just controllers --device APC64` and `just controllers --path /device/settings` query
+the generated manifests without reading the entire corpus. See
+[Compiled Controller Definitions](../docs/Compiled%20Controller%20Definitions.md) for
+container layout and [the live fixture](controllers/README.md) for the custom-definition
+load test, byte sequences, GUI readback, and cleanup.
+
+Reader regression checks: `uv run --with pycryptodome==3.23.0 python tests/test_read_controllers.py`.
+They cover the real RSA envelope, exact XML preservation, chained blocks, CRC corruption,
+truncation, path safety, duplicate names and malformed XML.

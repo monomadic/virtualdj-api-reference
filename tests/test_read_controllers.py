@@ -53,9 +53,19 @@ class ReaderTests(unittest.TestCase):
                 r.decode(invalid)
 
     @patch.object(r, 'recover_key', return_value=KEY)
+    def test_crc_detects_changed_plaintext(self, _):
+        data = block([('a.xml', b'<device name="ORIGINAL"/>')])
+        cipher = Blowfish.new(KEY, Blowfish.MODE_ECB)
+        plain = cipher.decrypt(data[140:]).replace(b'ORIGINAL', b'MODIFIED')
+        damaged = data[:140] + cipher.encrypt(plain)
+        with self.assertRaises(zipfile.BadZipFile):
+            r.decode(damaged)
+
+    @patch.object(r, 'recover_key', return_value=KEY)
     def test_rejects_unsafe_duplicate_and_invalid_xml(self, _):
         for entries in ([('../outside.xml', b'<device/>')],
                         [('/outside.xml', b'<device/>')],
+                        [('./a.xml', b'<device/>')],
                         [('a.xml', b'<device/>'), ('A.xml', b'<mapper/>')],
                         [('a.xml', b'<not-xml')], [('a.xml', b'<unexpected/>')]):
             with self.assertRaises((ValueError, r.ET.ParseError)):

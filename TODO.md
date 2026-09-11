@@ -721,33 +721,25 @@ Done when:
 
 ### 5. Author And Load-Test A Minimal Custom Device Definition
 
-Status: Blocked
+Status: Done
 
-Note: MAPPER FIRING DONE (2026-07-27, DDJ-GRV6 hardware) — device-definition schema still
-open. HTTP-verified on real hardware that the mapper `<map value action>` schema binds and
-fires (ONINIT on load, PLAY_PAUSE on press), plus three gotchas: control names must match
-the device definition exactly (wrong name fails silently), loading a mapping resets `$`
-globals, and editing an active mapper file needs a full restart (re-select does not reload).
-See the tracker's "Mapper Firing" section and `docs/Mapper XML.md`. Factory-mapping export
-(Factory default -> Save) was tried as a shortcut to the device definition: it yields the
-factory `<mapper>` (control names + canonical actions, 293 bindings, lints clean) but NOT
-the `<device>` definition, so it does not unblock this. STILL OPEN: the custom `<device>`
-definition schema is untested because the DDJ-GRV6 is factory-recognized — needs
-unrecognized hardware or a virtual MIDI port + injection to exercise a custom device
-definition.
+Note: Custom device-definition loading and mapper firing completed 2026-09-12 on build
+18.0.9598 using paired virtual CoreMIDI ports in the existing `SIMPLE_MIDI_0_0` context.
+The app displayed the authored device description; named note/CC controls fired, with
+wrong-address/channel controls and independent live variable-window readback.
+[Fixture, exact bytes, results and cleanup](tests/controllers/README.md).
 
-The mapper reference's device-definition schema is official-doc-derived but never load-tested locally. A `SIMPLE_MIDI` device context already exists in the local install's Mappers folder. Mappers are one of the repo's named coverage cliffs, so this is the highest-value task outside the FX cluster.
+The archive reader also recovers every original XML member from bundled `controllers.dat`,
+including definitions, factory mappings and audio presets. The earlier assumption that
+the compiled definition layer was opaque is corrected in
+[Mapper XML](docs/Mapper%20XML.md) and
+[Compiled Controller Definitions](docs/Compiled%20Controller%20Definitions.md).
+`just controllers` queries the generated inventory; `just controllers-extract` emits XML.
+Extraction is Tier 2; the live fixture validates only its tested MIDI behavior.
 
-Start here:
-
-- [docs/Mapper XML.md](docs/Mapper%20XML.md)
-- [examples/Mappers/README.md](examples/Mappers/README.md)
-
-Done when:
-
-- A minimal `<device type="MIDI">` XML placed in the VirtualDJ `Devices/` folder is detected by the app, and a paired mapper's `<map>` bindings fire.
-- Results (including failures) are recorded in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md) and promoted into `Mapper XML.md` source labels (`Local test`).
-- RESOLVED 2026-07-27 for two of the three mapper-lint warnings (and note these were never factory-sourced: all three came from *personal* local mappings, mis-graded as factory by the now-corrected `author`-attribute rule (the tag does not track authorship) in [examples/Mappers/README.md](examples/Mappers/README.md)): `browser_filter` and `browser_search` are **not verbs on this build** — no `ACTION_` symbol and no bare string anywhere in the executable, no Button Editor autocomplete, `E_FAIL` over HTTP. The lint warnings are correct and the mapper lines using them do nothing; `clear_search` is the real verb. `none` remains unresolved (no `ACTION_` symbol and no autocomplete, but "none" is an English word so its presence in the string table proves nothing); its only observed use is as a do-nothing LED placeholder. See the disproof method in [docs/Undocumented VDJScript Candidates.md](docs/Undocumented%20VDJScript%20Candidates.md).
+The earlier physical DDJ-GRV6 mapper-firing result remains in the tracker. The historical
+`browser_filter`/`browser_search`/`none` naming questions are covered by the verb table and
+existing disproof records; they are not prerequisites for this now-completed definition test.
 
 ### 6. Continue Hidden Button Editor Candidate Probes
 

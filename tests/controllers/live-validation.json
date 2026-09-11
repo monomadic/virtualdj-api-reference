@@ -1,0 +1,118 @@
+{
+  "date": "2026-09-12",
+  "bundle_version": "18.0.9598",
+  "evidence_tier": 1,
+  "context": {
+    "hardware": "No physical MIDI controller connected; paired virtual CoreMIDI endpoints named Codex Definition Probe",
+    "definition_name": "SIMPLE_MIDI_0_0",
+    "definition_file": "SIMPLE_MIDI-definition.xml",
+    "mapper_file": "SIMPLE_MIDI-mapper-var-list.xml",
+    "readback": "VirtualDJ var_list window, Variables tab, filter codex_device, Auto Update enabled",
+    "decks": "Decks stopped and empty before restart; test actions touch only isolated numeric globals",
+    "skin": "DeathDisco Grave Raver v1/:skin; temporarily Default Pro for attempted HTTP recovery, restored before positive UI trials"
+  },
+  "fixture_sha256": {
+    "SIMPLE_MIDI-definition.xml": "179720a5cb8e251ff0f26687098f943e793c6f91e114ed10fe039fe4b8740cdd",
+    "SIMPLE_MIDI-mapper.xml": "4861095e2e6d4262fc88bf3ca055dd19bd3092e33d951920f082e6b4c34a9446",
+    "SIMPLE_MIDI-mapper-var-list.xml": "36b42d4c0a3cd63f56c56f49403b03f670859cb3fe68707044d25343c31821a6",
+    "midi_probe.swift": "8157ab6987ec5153a3022afb4be8b7df95991acd2d9f7ae97f6adcd96407c366"
+  },
+  "observations": [
+    {
+      "phase": "definition_load",
+      "channel": "GUI",
+      "result": "Controllers tile and New Device Detected dialog display Codex SIMPLE_MIDI definition probe after app restart"
+    },
+    {
+      "phase": "mapper_load",
+      "channel": "HTTP",
+      "script": "get_var '$codex_device_loaded'",
+      "result": "9598",
+      "raw_log": "live-http.json"
+    },
+    {
+      "phase": "input_name",
+      "channel": "GUI Controllers Activity",
+      "bytes": [
+        "90 24 7f",
+        "80 24 00"
+      ],
+      "result": "CODEX_PROBE_BUTTONoff shown in Activity"
+    },
+    {
+      "phase": "baseline",
+      "channel": "GUI var_list",
+      "button": "38",
+      "slider": "0.252",
+      "loaded": "9598",
+      "note": "Button was previously set to 37 by the initial fixture and then incremented by the var-list variant; do not infer an independently observed 37 baseline. Slider had received b0 10 20."
+    },
+    {
+      "phase": "negative_controls",
+      "channel": "GUI var_list",
+      "bytes": [
+        "90 25 7f",
+        "91 24 7f",
+        "80 25 00",
+        "81 24 00",
+        "b0 11 60",
+        "b1 10 60"
+      ],
+      "button": "38",
+      "slider": "0.252",
+      "loaded": "9598"
+    },
+    {
+      "phase": "positive_slider",
+      "channel": "GUI var_list",
+      "bytes": [
+        "b0 10 60"
+      ],
+      "button": "38",
+      "slider": "0.756",
+      "loaded": "9598"
+    },
+    {
+      "phase": "positive_button",
+      "channel": "GUI var_list reopened and refiltered",
+      "bytes": [
+        "90 24 7f",
+        "80 24 00"
+      ],
+      "button": "39",
+      "slider": "0.756",
+      "loaded": "9598"
+    },
+    {
+      "phase": "archive_revision_crosscheck",
+      "channel": "GUI Settings Controllers Missing controller",
+      "result": "database v2241 displayed on bundle 18.0.9598; matches controllers.dat block revision 2241"
+    }
+  ],
+  "limitations": [
+    "Only the fixture button, CC slider, channel filter, drivername detection, mapper binding and lifecycle sentinel are tested.",
+    "No physical controller, output LED, HID transport, settings callback or display protocol behavior is implied.",
+    "Variable-window slider readings are rounded display values; they agree with value/127 to displayed precision.",
+    "HTTP became unavailable after restart; failed recovery attempts with master effect_active and master effect_show_gui are not behavioral findings.",
+    "Initial Quit left an idle background process; SIGTERM was required before relaunch."
+  ],
+  "cleanup": {
+    "test_variables": {
+      "loaded": "0",
+      "button": "0",
+      "slider": "0"
+    },
+    "readback": "GUI var_list filtered codex_device",
+    "original_mapping": "custom mapping selected; empty bindings visible",
+    "installed_test_files": "removed after inspecting their fixture identity",
+    "virtual_endpoints": "disposed; process exited",
+    "original_skin": "restored",
+    "http_listener": "unavailable at last check; user asked to restore",
+    "recovery_attempts": "Unused temporary MIDI/keyboard recovery mapper files were removed; original keyboard selection DeathDisco Layout v2026.2 retained.",
+    "script": "set '$codex_device_loaded' 0 & set '$codex_device_button' 0 & set '$codex_device_slider' 0 & var_list",
+    "trigger_bytes": [
+      "90 24 7f",
+      "80 24 00"
+    ]
+  }
+}
