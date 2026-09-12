@@ -473,7 +473,21 @@ on this item: `active` was never pulled away from the master by a playing deck, 
 requires four stopped decks. Button press/release lifetime consumers remain unreachable over
 HTTP and need a pad or mapper surface.
 
-Hazard 2026-09-12: the repo owner reports VirtualDJ crashing in this line of tests. These exits
+Progress 2026-09-13: the static frontier is closed (`just frontier-closure`, gated in
+`just check`). All 30 queued indirect sites resolve to virtual dispatch (26, of which 18 are
+refcount releases), `_actionFactory` calls (3) or a disassembly artifact (1) — **no argument
+consumers**. `_actionFactory` is indexed by verb id, proven by two fixed-entry calls that
+store the same number at object+0xc. The structural finding: `IAction::create` finishes the
+argument loop into `vector<SActionParam>` *before* calling the factory, so arguments are lexed
+centrally and only then dispatched per verb. The static route to argument grammar therefore
+ends here; what remains is per-verb behavior inside the constructed action. Variable scope is
+also settled, including `@` persistence across a real restart.
+
+Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
+a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`
+is inert; `/execute minimize` is what does it, and every skin has a minimize button. See
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). The original
+note read: These exits
 leave **no crash report**, so a clean artifact directory is not evidence a run was safe; the one
 recorded instance had `deck master constant 37` pending right after `deck sandbox constant 37`.
 The shared factor with the asymmetric-master run is unusual deck-wrapper tokens (`sandbox`,

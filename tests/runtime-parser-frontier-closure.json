@@ -1,0 +1,256 @@
+{
+  "summary": {
+    "source_manifest_sha256": "0d93770dd3779e43702beccfdef1c3237a8c45963b2f1226d5adb70c6bb1f49e",
+    "evidence_tier": "Tier-2 bounded binary structure; no behavioral claim",
+    "sites": 30,
+    "closures": {
+      "virtual-dispatch": 26,
+      "action-factory": 3,
+      "disassembly-artifact": 1
+    },
+    "argument_consumers": 0,
+    "claim": "every queued indirect site is factory allocation, virtual dispatch or a disassembly artifact; none consumes script arguments. Arguments are lexed centrally into vector<SActionParam> before the per-verb factory is called."
+  },
+  "sites": [
+    {
+      "site": "0x1000fe6ea",
+      "function": "ACTION_all_decks::init",
+      "operand": "*0x8(%rax)",
+      "file": "37-ACTION-all-decks-init.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100598109",
+      "function": "IAction::create",
+      "operand": "*(%r13,%rax,8)",
+      "file": "00-IAction-create.asm",
+      "closure": "action-factory",
+      "detail": "indexed by the parsed verb id"
+    },
+    {
+      "site": "0x100598264",
+      "function": "IAction::create",
+      "operand": "*0x28(%r13)",
+      "file": "00-IAction-create.asm",
+      "closure": "action-factory",
+      "detail": "fixed entry 5, and the callee's id is stored as 5 immediately after \u2014 consistent"
+    },
+    {
+      "site": "0x1005983b4",
+      "function": "IAction::create",
+      "operand": "*0x1e8(%rax)",
+      "file": "00-IAction-create.asm",
+      "closure": "action-factory",
+      "detail": "fixed entry 61, and the callee's id is stored as 61 immediately after \u2014 consistent"
+    },
+    {
+      "site": "0x100596150",
+      "function": "IAction::execute",
+      "operand": "*0x18(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x100596186",
+      "function": "IAction::execute",
+      "operand": "*0x10(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x1005961ad",
+      "function": "IAction::execute",
+      "operand": "*0x40(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x1005961c4",
+      "function": "IAction::execute",
+      "operand": "*0x48(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x1005961d8",
+      "function": "IAction::execute",
+      "operand": "*CONFIG_EMULATE_HARDWARE(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x10059629f",
+      "function": "IAction::execute",
+      "operand": "*0x8(%rax)",
+      "file": "23-IAction-execute.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1005988e3",
+      "function": "IAction::getBoolParam",
+      "operand": "*0x8(%rax)",
+      "file": "08-IAction-getBoolParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100596e43",
+      "function": "IAction::getFloatParamEval",
+      "operand": "*0x8(%rax)",
+      "file": "05-IAction-getFloatParamEval.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100598687",
+      "function": "IAction::getParamEval",
+      "operand": "*0x8(%rax)",
+      "file": "04-IAction-getParamEval.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x10059657c",
+      "function": "IAction::query",
+      "operand": "*CONFIG_EMULATE_HARDWARE(%rcx,%rax)",
+      "file": "21-IAction-query.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x100596592",
+      "function": "IAction::query",
+      "operand": "*0x18(%rax)",
+      "file": "21-IAction-query.asm",
+      "closure": "virtual-dispatch",
+      "detail": "vtable loaded from object offset 0"
+    },
+    {
+      "site": "0x10059978b",
+      "function": "IAction::stringGetParam",
+      "operand": "*0x48(%rbp)",
+      "file": "01-IAction-stringGetParam.asm",
+      "closure": "disassembly-artifact",
+      "detail": "surrounding bytes do not decode as code"
+    },
+    {
+      "site": "0x100992fa8",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rax)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100992fd6",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rax)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1009931a9",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rax)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1009931e2",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rax)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100993213",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rax)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x10099328a",
+      "function": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "operand": "*0x8(%rcx)",
+      "file": "18-IParamValuesAction-getValues-SActionParam-SActionParam.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100991836",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rax)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x10099186f",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rax)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1009918a0",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rax)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100991932",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rax)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100991960",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rax)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1009919e2",
+      "function": "IParamValuesAction::getValues(float*, float*)",
+      "operand": "*0x8(%rcx)",
+      "file": "19-IParamValuesAction-getValues-float-float.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x1004234e5",
+      "function": "actionGetText",
+      "operand": "*0x8(%rax)",
+      "file": "20-actionGetText.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    },
+    {
+      "site": "0x100425840",
+      "function": "actionGetText",
+      "operand": "*0x8(%rax)",
+      "file": "20-actionGetText.asm",
+      "closure": "virtual-dispatch",
+      "detail": "preceded by an atomic refcount decrement: a release"
+    }
+  ]
+}

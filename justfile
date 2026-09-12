@@ -502,6 +502,10 @@ extract-runtime-parser app:
 runtime-parser-frontier *args:
     @python3 tools/runtime_parser_frontier.py --report "$@"
 
+# Say what each queued indirect site actually is: factory, vtable, or artifact.
+frontier-closure *args:
+    @python3 tools/resolve_frontier_sites.py "$@"
+
 # Which deck-wrapper token was in flight at an exit. Read-only payloads, journal
 # flushed before each send, process identity checked after every probe.
 probe-deck-targets *args:
@@ -523,6 +527,7 @@ runtime-grammar-master *args:
 
 check-runtime-grammar:
     @python3 tools/runtime_parser_frontier.py --check > /dev/null
+    @python3 tools/resolve_frontier_sites.py --check > /dev/null
     @python3 tools/test_runtime_grammar_actions.py
     @python3 tools/test_runtime_grammar_scopes.py
     @python3 tools/test_runtime_grammar_master.py

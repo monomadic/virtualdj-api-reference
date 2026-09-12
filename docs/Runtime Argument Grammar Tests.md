@@ -293,6 +293,38 @@ relaunched and the remaining confirmation suite completed. **The cause of the ex
 established.** Initial cases retain `incomplete-run`; the pending case is excluded from
 automatic confirmation and listed in `excluded_cases`.
 
+## Closing the static frontier (2026-09-12)
+
+`runtime_parser_frontier.py` queues an indirect call site whenever the target depends on
+runtime state. That is correct triage, but a queue is not a conclusion, and 30 open sites left
+it possible that argument grammar lived somewhere the lexical suites never reached. Reading
+the captured assembly around each site closes all 30, and the answer is that **none of them
+consumes script arguments**:
+
+| Closure | Sites | What the setup instructions show |
+| --- | ---: | --- |
+| `virtual-dispatch` | 26 | `movq (%obj), %rax` then `callq *0xNN(%rax)` — a vtable loaded from object offset 0. In 18 of them the preceding instruction is `lock decl 0x8(%obj)`, an atomic refcount decrement, so the call is a release or destructor. |
+| `action-factory` | 3 | `leaq _actionFactory(%rip)` then a call through that table. |
+| `disassembly-artifact` | 1 | Surrounding bytes decode as `bad opcode` / `lcalll` / `sti`: the decoder walked into data, so the site is not code. |
+
+**`_actionFactory` is a function-pointer table indexed by verb id**, and the capture proves
+the indexing rather than assuming it. Two of the three sites call a fixed entry and then store
+that same number as the object's id at `+0xc`: entry 5 is followed by `movq $0x5, 0xc(%rax)`,
+entry 61 (`*0x1e8`) by `movl $0x3d, 0xc(%rax)`. Offset ÷ 8 == verb id.
+
+The structural conclusion is the useful part. In `IAction::create`, the argument loop —
+`IAction::stringGetParam` feeding `vector<SActionParam>::push_back` — runs to completion
+*before* the factory call, and the constructed object is then handed the finished vector. So
+**arguments are lexed centrally and only then dispatched per verb.** The lexical rules the H4
+suites recovered are the whole of the central grammar; anything further is per-verb behavior
+inside the constructed action, which no amount of reading `IAction::create` will reveal. That
+is the boundary this task was told to find, and it is where the static route ends.
+
+One warning for anyone reading the raw capture: it symbolizes **offset 0** as
+`CONFIG_EMULATE_HARDWARE`. So `*CONFIG_EMULATE_HARDWARE(%rax)` is vtable slot 0 and
+`movq CONFIG_EMULATE_HARDWARE(%r14), %rax` is an ordinary vtable load — a symbolization
+artifact, not a configuration branch. Two frontier rows look alarming until you know that.
+
 ## Hazard: this suite family has made VirtualDJ exit (2026-09-12)
 
 **Treat deck-target probing as capable of taking the app down, and do not run it against an
@@ -495,9 +527,10 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
   modifier on the scope rather than a scope — `@name` is persistent *and* deck-local, `@$name`
   persistent *and* global — stored in `settings.xml` under `<VDJScriptGlobalVariables>` with
   the `@` stripped. Still open on this item: remote-mode creation and the `isRemote` branch.
-- Close argument-consuming targets at the recorded static frontier and run the matching
-  candidate corpus through the live Button Editor. Do not treat C++ library calls or
-  factory allocation as evidence of additional argument grammar.
+- The static frontier is **closed** (`just frontier-closure`,
+  [artifact](../tests/runtime-parser-frontier-closure.json)): all 30 queued indirect sites are
+  accounted for and **none consumes script arguments** — see below. Running the matching
+  candidate corpus through the live Button Editor is still outstanding.
 
 For future agents, inspect `just runtime-grammar --group …` and `just runtime-parser-frontier` first. Reuse the exact-script
 suite and raw captures instead of re-reading assembly or adding token variants to a prober
