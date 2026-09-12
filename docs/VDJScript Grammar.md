@@ -634,9 +634,37 @@ Two values, one physical deck. So `%` is what you want for state that should fol
 deck" through a deck swap, and a script mixing `%X` with `X` on the same base name is touching
 two variables.
 
-Still untested: `@` was shown to be a *separate name*, not to survive a restart. The probe
-name did not appear in `settings.xml` while it was set, which is consistent with that file
-being written on quit but is evidence for neither side. Persistence needs a restart.
+#### `@` persists, and it is a modifier rather than a scope
+
+The restart test the earlier run could not do has since been done, and the teardown that
+looked like a flaw is what made it readable. Every probe name was set to `0` rather than
+deleted, then VirtualDJ was fully quit and relaunched (new pid). On the fresh session:
+
+| Read after restart | Value |
+| --- | --- |
+| `@zzprobescope` | `0` — **survived** |
+| `zzprobescope`, `$zzprobescope`, `#zzprobescope`, `%zzprobescope` | blank — did not |
+
+Blank versus `0` is the whole test: `0` is the value that was written before the quit, and
+blank is a name that does not exist in this session.
+
+**`@` is orthogonal to the scope prefix, not a fourth scope.** It combines:
+
+```
+deck 1 set '@zzprobescope' 7  &  deck 2 set '@zzprobescope' 8
+  -> 7 and 8          @name  = persistent AND still deck-local
+deck 1 set '@$zzprobeglob' 9
+  -> 9 from deck 2    @$name = persistent AND global
+```
+
+They are stored in `settings.xml` under `<VDJScriptGlobalVariables>`, a comma-separated list
+of `name=index=float` triples with the **`@` stripped** and the rest of the name kept as the
+key — so `@$foo` is stored as `$foo`, and a deck-local `@foo` writes one row per deck. That
+is why the file showed two `zzprobescope` rows for one probe name. The file is written on
+quit, which is why reading it mid-session showed nothing.
+
+One consequence worth stating plainly: **`@` names outlive the session and land in the user's
+settings file.** A probe that writes one is leaving a trace behind; name it distinctively.
 
 One caution when re-running the probe: teardown sets the names to `0`, which is not the same
 as deleting them. A first run sees blank for an unset name; later runs see `0`. Only the

@@ -13367,7 +13367,8 @@
    "blocked": false,
    "evidence": [
     "VirtualDJ 2026 (HTTP interface, 2026-07-22): 'set $v on' stores yes and 'set $v off' stores no, but 'true'/'false' are NOT constants and store nothing. Quoting decides type: 5 and '5' are different values. Storing a string makes the variable unreadable and uncomparable — use numeric codes.",
-    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: variable scope prefixes are separate names and really isolate. A bare name is per-deck ('deck 1 set X 11' and 'deck 2 set X 22' read back 11 and 22); a $ name is shared across decks (set on deck 1, reads 33 from deck 2); bare/$/@ forms of one base name held 1/2/3 simultaneously. An unset name reads blank. Earlier: 'set $v on' stores yes and 'set $v off' stores no; string-valued variables are unsafe (see get_var, var_equal)."
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: variable scope prefixes are separate names and really isolate. A bare name is per-deck ('deck 1 set X 11' and 'deck 2 set X 22' read back 11 and 22); a $ name is shared across decks (set on deck 1, reads 33 from deck 2); bare/$/@ forms of one base name held 1/2/3 simultaneously. An unset name reads blank. Earlier: 'set $v on' stores yes and 'set $v off' stores no; string-valued variables are unsafe (see get_var, var_equal).",
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: '@' is a PERSISTENCE MODIFIER on the scope prefix, not a scope. Confirmed across a real restart: names left at 0 before a full quit came back as 0 for '@X' and blank for X, $X, #X, %X. '@X' is persistent AND deck-local (7 on deck 1, 8 on deck 2 at once); '@$X' is persistent AND global. Stored in settings.xml <VDJScriptGlobalVariables> as name=index=float with the '@' stripped, one row per deck for a deck-local name, written on quit."
    ],
    "section": "Variables",
    "description": "Set variable value",
