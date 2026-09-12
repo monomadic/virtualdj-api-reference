@@ -293,6 +293,37 @@ relaunched and the remaining confirmation suite completed. **The cause of the ex
 established.** Initial cases retain `incomplete-run`; the pending case is excluded from
 automatic confirmation and listed in `excluded_cases`.
 
+## Hazard: this suite family has made VirtualDJ exit (2026-09-12)
+
+**Treat deck-target probing as capable of taking the app down, and do not run it against an
+instance the user is playing on.** The repo has two independent signals:
+
+- A recorded exit during the live lexical sweep: connection reset mid-pass, no VirtualDJ
+  process afterwards, and **no crash report anywhere** — so an absent `.ips` in
+  `~/Library/Logs/DiagnosticReports` does not clear a run. The scripts at that point were
+  `deck sandbox constant 37` (ran) and `deck master constant 37` (pending).
+- The repo owner reports the app crashing in this line of tests generally, which is a
+  stronger signal than the artifacts, precisely because the exits leave nothing behind.
+
+The common factor in both is an **unusual token in the deck-wrapper slot** — `sandbox`, and
+the `playing` / `mixer1`-`mixer4` targets the asymmetric-master run added. That slot is one of
+the few the parser does not silently accept (`deck zzqqx` returns `error:-2147467259`), which
+means it resolves the token to an object; a token that names a real but absent object is the
+obvious candidate. **This is a hypothesis with two data points, not an established cause.**
+The asymmetric-master run used exactly those targets and completed cleanly with the process
+still healthy hours later, so whatever it is, it is intermittent.
+
+What this does *not* license: assigning causation from a pending-query label, or treating a
+completed run as evidence the tokens are safe. What it does require of any future run here:
+
+- Ask before probing deck targets on an instance in use; a crash costs the user a live set.
+- Expect no crash report. Check for the process itself, and remember that after an exit the
+  port-80 socket can stay `LISTEN` while refusing connections — only a full quit and relaunch
+  clears it.
+- The journal is the recovery record. Mutations are written to the capture before they are
+  sent, so a vanished process leaves a readable account of what had been changed and not yet
+  restored; read it before assuming state was put back.
+
 ## Asymmetric master, 2026-09-12
 
 The selected-scope suites pinned only the selection. Master was deck 1 in that fixture, so

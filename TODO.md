@@ -473,6 +473,14 @@ on this item: `active` was never pulled away from the master by a playing deck, 
 requires four stopped decks. Button press/release lifetime consumers remain unreachable over
 HTTP and need a pad or mapper surface.
 
+Hazard 2026-09-12: the repo owner reports VirtualDJ crashing in this line of tests. These exits
+leave **no crash report**, so a clean artifact directory is not evidence a run was safe; the one
+recorded instance had `deck master constant 37` pending right after `deck sandbox constant 37`.
+The shared factor with the asymmetric-master run is unusual deck-wrapper tokens (`sandbox`,
+`playing`, `mixer1`-`mixer4`). Do not probe deck targets on an instance in use, and do not treat
+one clean completion as clearance — see the hazard section in
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md).
+
 Note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
 (fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.
 Every rule this walk recovers is a 10b test and nothing else. Folded into task 10 as its
