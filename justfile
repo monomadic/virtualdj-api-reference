@@ -507,6 +507,11 @@ runtime-parser-frontier *args:
 probe-deck-targets *args:
     @python3 tools/probe_deck_targets.py "$@"
 
+# Are bare names per-deck, $ shared and @ a separate name? Writes probe variables
+# under a zzprobescope name and sets them back to 0, verifying the teardown.
+probe-variable-scope *args:
+    @python3 tools/probe_variable_scope.py "$@"
+
 # Whether the request pattern alone precedes an exit: fresh vs reused connection.
 probe-http-stability *args:
     @python3 tools/probe_http_stability.py "$@"

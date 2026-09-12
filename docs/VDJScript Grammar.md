@@ -578,6 +578,35 @@ set '@$layout_4deck' 1 & load_skin
 For skin-wide or controller-wide state use `$` or `@$`; a bare `set 'mode' 1` reads
 differently when the same script later runs in another deck context.
 
+### The isolation is real, and tested (2026-09-12)
+
+This table was inherited prose until now. Three of its claims were put to the running app
+(`Local test`, HTTP, build 9598, probe names set back to 0 and the teardown verified —
+[capture](../tests/variable-scope-probe-9598.json)). An unset name reads blank, so none of
+these readbacks is measuring a leftover:
+
+```
+deck 1 set 'zzprobescope' 11 & deck 2 set 'zzprobescope' 22
+  deck 1 get_var 'zzprobescope'   -> 11      bare really is per-deck
+  deck 2 get_var 'zzprobescope'   -> 22
+deck 1 set '$zzprobescope' 33
+  deck 2 get_var '$zzprobescope'  -> 33      $ really is shared
+bare / $ / @ set to 1 / 2 / 3 on one deck
+  read back                       -> 1, 2, 3 three names, not one
+```
+
+So writing `set 'mode' 1` in a script that runs on two decks gives you two variables, and
+the `$` you forgot on a `toggle` is a different variable from the one you set.
+
+**An unscoped read of a bare name resolves against the *selected* deck**: with deck 2
+selected, `get_var 'zzprobescope'` returned deck 2's `22`. That is the same rule as the
+[deck targets](#which-deck-a-target-resolves-to-2026-09-12) — unwrapped means selected.
+
+Two rows of the table above are **not** covered by this test. `#name` and `%name` were not
+probed at all. And `@` was shown to be a *separate name*, not to survive a restart: the probe
+name did not appear in `settings.xml` while it was set, which is consistent with the file
+being written on quit but is not evidence either way. Persistence needs a restart to test.
+
 ## Deck and scope wrappers
 
 A deck wrapper prefixes a statement and applies to the rest of it, including a conditional

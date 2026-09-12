@@ -1,0 +1,46 @@
+{
+  "summary": {
+    "mode": "variable-scope",
+    "pid": "86368",
+    "build": "9598",
+    "channel": "HTTP",
+    "predictions": {
+      "bare-is-deck-local": "a bare name set on deck 1 and deck 2 holds two independent values",
+      "dollar-is-global": "a $ name set on deck 1 reads back the same from deck 2",
+      "prefixes-are-separate-names": "bare, $ and @ forms of one name hold three different values at once"
+    },
+    "status": "complete",
+    "claim_scope": "readbacks for one probe name per prefix; persistence is inferred from settings.xml, not a restart",
+    "teardown_clean": true
+  },
+  "observations": {
+    "pre_existing": {
+      "local": "",
+      "global": "",
+      "persistent": ""
+    },
+    "bare": {
+      "deck1": "11",
+      "deck2": "22",
+      "unscoped": "22"
+    },
+    "dollar": {
+      "deck1": "33",
+      "deck2": "33"
+    },
+    "namespaces": {
+      "local": "1",
+      "global": "2",
+      "persistent": "3"
+    },
+    "persistent_in_settings": false
+  },
+  "teardown": {
+    "deck 1|zzprobescope": "0",
+    "deck 1|$zzprobescope": "0",
+    "deck 1|@zzprobescope": "0",
+    "deck 2|zzprobescope": "0",
+    "deck 2|$zzprobescope": "0",
+    "deck 2|@zzprobescope": "0"
+  }
+}

@@ -90,6 +90,29 @@ def classify(script: str, answer: str, kinds: dict[str, str] | None = None) -> s
     return "other-error"
 
 
+# Families of `E_INVALIDARG` in query position that VDJScript Grammar already
+# explains as execute-position forms: a slot or count argument to an action
+# (`hot_cue 5`, `sampler_stop 14`, `delete_cue 4`), a relative step
+# (`sideview +1`, `pitch_range -1`), a percentage the verb multiplies rather
+# than sets (`loop 50%`), a quoted list argument (`wheel_mode "search,jog"`),
+# and a ternary whose branches are such actions. Order matters: the first
+# match wins, so the specific families come before the ternary catch-all.
+STRUCTURAL_FAMILIES = (
+    ("relative-step", re.compile(r"[+-]\d")),
+    ("percent-multiplier", re.compile(r"^(deck \S+ )?[a-z_]+ \d+%$")),
+    ("slot-arg", re.compile(r"^(deck \S+ )?[a-z_]+ ('all'|all|\d+)( .*)?$")),
+    ("quoted-list", re.compile(r"^(deck \S+ )?[a-z_]+ [\"'][^\"']*,[^\"']*[\"']")),
+    ("ternary-with-action", re.compile(r"\?")),
+)
+
+
+def structural_family(script: str) -> str | None:
+    for name, pattern in STRUCTURAL_FAMILIES:
+        if pattern.search(script):
+            return name
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int)
@@ -101,12 +124,27 @@ def main() -> int:
         if not ARTIFACT.exists():
             print("corpus parse check skipped: tests/corpus-parse-results.json not collected")
             return 0
-        summary = json.load(open(ARTIFACT))["summary"]
-        if summary["outcomes"].get("structural", 0) > summary["allowed_structural"]:
-            sys.exit(f"corpus parse check FAILED: {summary['outcomes']['structural']} structural "
-                     f"rejections, above the recorded {summary['allowed_structural']}")
+        stored = json.load(open(ARTIFACT))
+        summary = stored["summary"]
+        # `allowed_structural` is written from the run itself, so comparing
+        # against it can never fail. The gate is instead that every structural
+        # rejection belongs to a family the grammar doc already explains as
+        # execute-position semantics; a snippet outside every family is the
+        # contradiction candidate this check exists to surface.
+        families = Counter()
+        unexplained = []
+        for rec in stored.get("structural", []):
+            family = structural_family(rec["script"])
+            if family:
+                families[family] += 1
+            else:
+                unexplained.append(rec["script"])
+        if unexplained:
+            sys.exit(f"corpus parse check FAILED: {len(unexplained)} structural rejections "
+                     f"outside every known execute-position family — first: "
+                     f"{unexplained[:5]}")
         print(f"corpus parse check passed: {summary['snippets']} snippets, "
-              f"{summary['outcomes']}")
+              f"{summary['outcomes']}; structural all explained: {dict(families)}")
         return 0
 
     snippets = json.load(open(CORPUS))["snippets"]

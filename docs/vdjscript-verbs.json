@@ -6870,7 +6870,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns blank for string-valued variables (matches the earlier pad-label observation), correct for numeric/boolean. Combined with var_equal's string behavior, a string variable is effectively write-only."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns blank for string-valued variables (matches the earlier pad-label observation), correct for numeric/boolean. Combined with var_equal's string behavior, a string variable is effectively write-only.",
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: resolves the prefix as part of the name, and an UNSCOPED bare read resolves against the SELECTED deck (with deck 2 selected, a bare read returned deck 2's value). Returns blank for an unset name and blank for string-valued variables (the documented string trap)."
    ],
    "section": "Variables",
    "description": "Get variable value",
@@ -13364,7 +13365,8 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): 'set $v on' stores yes and 'set $v off' stores no, but 'true'/'false' are NOT constants and store nothing. Quoting decides type: 5 and '5' are different values. Storing a string makes the variable unreadable and uncomparable — use numeric codes."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): 'set $v on' stores yes and 'set $v off' stores no, but 'true'/'false' are NOT constants and store nothing. Quoting decides type: 5 and '5' are different values. Storing a string makes the variable unreadable and uncomparable — use numeric codes.",
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: variable scope prefixes are separate names and really isolate. A bare name is per-deck ('deck 1 set X 11' and 'deck 2 set X 22' read back 11 and 22); a $ name is shared across decks (set on deck 1, reads 33 from deck 2); bare/$/@ forms of one base name held 1/2/3 simultaneously. An unset name reads blank. Earlier: 'set $v on' stores yes and 'set $v off' stores no; string-valued variables are unsafe (see get_var, var_equal)."
    ],
    "section": "Variables",
    "description": "Set variable value",

@@ -482,9 +482,13 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
 - Extend the tested action consumers to button-lifetime modifiers with a channel that can
   supply both press and release. The HTTP execute channel does not expose that lifecycle;
   numeric, boolean and flag observations in zoom/beatlock cannot stand in for it.
-- Observe local/global/persistent variable isolation, remote-mode creation, and surface
-  consumers through appropriate fixtures. The present read-only suite tests lexical forms,
-  not those state changes or the `isRemote` branch.
+- Variable **isolation** is now observed (`just probe-variable-scope`,
+  [capture](../tests/variable-scope-probe-9598.json)): bare names are per-deck, `$` is shared
+  across decks, and bare/`$`/`@` are three separate names held at once — promoted into
+  [VDJScript Grammar](VDJScript%20Grammar.md#the-isolation-is-real-and-tested-2026-09-12).
+  Still open on this item: `#name` and `%name` were not probed, `@` persistence needs a
+  restart rather than a readback, and remote-mode creation and the `isRemote` branch remain
+  untouched.
 - Close argument-consuming targets at the recorded static frontier and run the matching
   candidate corpus through the live Button Editor. Do not treat C++ library calls or
   factory allocation as evidence of additional argument grammar.
