@@ -1023,7 +1023,21 @@ Observations retained from the 2026-09-12 pass, with the lookup correction:
   reversed twin, so a reader must match `sid1` *or* `sid2`; treating the pair as directional
   will silently miss half the links. The read query below joins both endpoints.
 
-Read related tracks:
+List **every stored relationship**, retaining endpoints absent from `track_data`:
+
+```sh
+just list-linked-tracks
+just list-linked-tracks --json
+just list-linked-tracks --db /path/to/extra.db
+```
+
+The command is read-only and prints both tracks and their paths. Missing metadata
+is marked with the unresolved SID. If VirtualDJ holds an exclusive lock, it can
+read a stable file snapshot only when no nonempty WAL or rollback journal is
+present; it announces that fallback, which excludes unsaved application changes.
+This lists stored edges, not the application's in-memory SID-cache results.
+
+The older SQL query below lists only relationships with both metadata rows:
 
 ```zsh
 #!/usr/bin/env zsh

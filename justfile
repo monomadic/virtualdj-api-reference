@@ -577,3 +577,7 @@ probe-linked-sid-binary *args:
 
 check-linked-sid:
     @python3 tools/test_linked_sid.py
+
+# Every stored linked-track relationship; missing metadata stays visible by SID.
+list-linked-tracks *args:
+    @python3 tools/list_linked_tracks.py "$@"
