@@ -313,6 +313,37 @@ obvious candidate. **This is a hypothesis with two data points, not an establish
 The asymmetric-master run used exactly those targets and completed cleanly with the process
 still healthy hours later, so whatever it is, it is intermittent.
 
+### What the bisection ruled out (2026-09-12)
+
+Two hypotheses were tested against the live instance and **both failed**, so the cause is
+still open. Neither result clears the app; they narrow where to look next.
+
+- **Not a single token.** `just probe-deck-targets` sent every attested and observed
+  deck-wrapper token with two read-only payloads — 46 probes, one per fresh connection,
+  journal flushed before each send, process identity checked after each. All 46 answered and
+  the process survived, **including `deck sandbox constant 37`, the exact script in flight at
+  the recorded exit**. Word tokens all resolve; the bracket forms Atomix uses in shipped
+  scripts (`deck [LEFTDECK]`, `[RIGHTDECK]`, `[SWAPDECK]`, `[MINIDECK_LEFT]`,
+  `[MINIDECK_RIGHT]`) return `error:-2147467259` over HTTP, consistent with their being
+  skin-context names rather than parser targets.
+- **Not sustained request volume.** `just probe-http-stability` ran 300 benign `get_build`
+  queries over one reused connection and 300 more over a fresh connection each, then 120 more
+  in follow-ups — roughly 800 requests without an exit.
+
+That second run did surface something worth knowing, though it is not the crash: the fresh
+arm **timed out at request 21**, the process stayed alive, and the reuse arm immediately
+after completed all 300. Two later fresh arms of 60 at the same pacing did not reproduce it.
+So the interface stalls intermittently for a few seconds and recovers. That is the most
+likely reading of this suite family's recorded *timeouts* — and it is the reason a timeout
+must never be recorded as a grammar result — but a stall is not an exit.
+
+The untested difference between these probes and the sessions where the app died: **deck
+state**. Every probe above ran against four unloaded, stopped decks, because that is what the
+fixtures require. The targets most under suspicion (`mixerN`, `playing`, `sandbox`, the video
+targets) name objects that may only exist once something is loaded. Probing them against a
+loaded instance is the next experiment, and it is the one that cannot be run on a deck
+someone is playing.
+
 What this does *not* license: assigning causation from a pending-query label, or treating a
 completed run as evidence the tokens are safe. What it does require of any future run here:
 

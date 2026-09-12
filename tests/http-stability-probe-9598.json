@@ -1,0 +1,40 @@
+{
+  "summary": {
+    "mode": "http-stability-arms",
+    "pid": "86368",
+    "script": "get_build",
+    "count_per_arm": 300,
+    "pace": 0.025,
+    "status": "complete",
+    "claim_scope": "whether the request pattern alone precedes an exit; read-only, single benign query"
+  },
+  "arms": [
+    {
+      "mode": "fresh",
+      "requested": 300,
+      "pace": 0.025,
+      "completed": 21,
+      "status": "transport-error",
+      "first_error_at": 21,
+      "error": "TimeoutError('timed out')",
+      "pids_after": [
+        "86368"
+      ]
+    },
+    {
+      "mode": "reuse",
+      "requested": 300,
+      "pace": 0.025,
+      "completed": 300,
+      "status": "survived",
+      "first_error_at": null,
+      "error": null,
+      "pids_at_checkpoint": [
+        "86368"
+      ],
+      "pids_after": [
+        "86368"
+      ]
+    }
+  ]
+}

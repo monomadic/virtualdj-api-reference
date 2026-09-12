@@ -501,6 +501,15 @@ extract-runtime-parser app:
 runtime-parser-frontier *args:
     @python3 tools/runtime_parser_frontier.py --report "$@"
 
+# Which deck-wrapper token was in flight at an exit. Read-only payloads, journal
+# flushed before each send, process identity checked after every probe.
+probe-deck-targets *args:
+    @python3 tools/probe_deck_targets.py "$@"
+
+# Whether the request pattern alone precedes an exit: fresh vs reused connection.
+probe-http-stability *args:
+    @python3 tools/probe_http_stability.py "$@"
+
 # H4: deck-scope keywords with selection and master pinned to DIFFERENT decks.
 # Needs four unloaded, stopped decks; it refuses to mutate anything otherwise.
 runtime-grammar-master *args:
