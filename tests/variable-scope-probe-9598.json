@@ -7,7 +7,9 @@
     "predictions": {
       "bare-is-deck-local": "a bare name set on deck 1 and deck 2 holds two independent values",
       "dollar-is-global": "a $ name set on deck 1 reads back the same from deck 2",
-      "prefixes-are-separate-names": "bare, $ and @ forms of one name hold three different values at once"
+      "prefixes-are-separate-names": "bare, $ and @ forms of one name hold three different values at once",
+      "hash-is-the-bare-name": "the table groups `name` and `#name`, so #X should read back what X was set to",
+      "percent-follows-the-logical-reference": "%X under `deck left` is a different slot from %X under `deck 1`, even though left IS deck 1 \u2014 that is what \"local to a logical deck reference\" has to mean"
     },
     "status": "complete",
     "claim_scope": "readbacks for one probe name per prefix; persistence is inferred from settings.xml, not a restart",
@@ -15,9 +17,9 @@
   },
   "observations": {
     "pre_existing": {
-      "local": "",
-      "global": "",
-      "persistent": ""
+      "local": "0",
+      "global": "0",
+      "persistent": "0"
     },
     "bare": {
       "deck1": "11",
@@ -33,14 +35,34 @@
       "global": "2",
       "persistent": "3"
     },
-    "persistent_in_settings": false
+    "persistent_in_settings": false,
+    "hash": {
+      "bare_after_set": "44",
+      "hash_read": "",
+      "bare_after_hash_set": "44",
+      "hash_after_hash_set": "55"
+    },
+    "percent": {
+      "via_left": "66",
+      "via_deck1": "77",
+      "left_is_deck": "1"
+    }
   },
   "teardown": {
     "deck 1|zzprobescope": "0",
     "deck 1|$zzprobescope": "0",
     "deck 1|@zzprobescope": "0",
+    "deck 1|#zzprobescope": "0",
+    "deck 1|%zzprobescope": "0",
     "deck 2|zzprobescope": "0",
     "deck 2|$zzprobescope": "0",
-    "deck 2|@zzprobescope": "0"
+    "deck 2|@zzprobescope": "0",
+    "deck 2|#zzprobescope": "0",
+    "deck 2|%zzprobescope": "0",
+    "deck left|zzprobescope": "0",
+    "deck left|$zzprobescope": "0",
+    "deck left|@zzprobescope": "0",
+    "deck left|#zzprobescope": "0",
+    "deck left|%zzprobescope": "0"
   }
 }

@@ -486,9 +486,11 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
   [capture](../tests/variable-scope-probe-9598.json)): bare names are per-deck, `$` is shared
   across decks, and bare/`$`/`@` are three separate names held at once — promoted into
   [VDJScript Grammar](VDJScript%20Grammar.md#the-isolation-is-real-and-tested-2026-09-12).
-  Still open on this item: `#name` and `%name` were not probed, `@` persistence needs a
-  restart rather than a readback, and remote-mode creation and the `isRemote` branch remain
-  untouched.
+  `#name` and `%name` are now covered too: `#X` is a *separate variable* from `X` (which
+  corrects the grammar table, where they shared a row), and `%X` keys on the logical deck
+  reference rather than the deck behind it — `deck left` and `deck 1` are the same deck here
+  and still held two values. Still open on this item: `@` persistence needs a restart rather
+  than a readback, and remote-mode creation and the `isRemote` branch remain untouched.
 - Close argument-consuming targets at the recorded static frontier and run the matching
   candidate corpus through the live Button Editor. Do not treat C++ library calls or
   factory allocation as evidence of additional argument grammar.

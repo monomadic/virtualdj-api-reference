@@ -6871,7 +6871,8 @@
    "blocked": false,
    "evidence": [
     "VirtualDJ 2026 (HTTP interface, 2026-07-22): returns blank for string-valued variables (matches the earlier pad-label observation), correct for numeric/boolean. Combined with var_equal's string behavior, a string variable is effectively write-only.",
-    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: resolves the prefix as part of the name, and an UNSCOPED bare read resolves against the SELECTED deck (with deck 2 selected, a bare read returned deck 2's value). Returns blank for an unset name and blank for string-valued variables (the documented string trap)."
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: resolves the prefix as part of the name, and an UNSCOPED bare read resolves against the SELECTED deck (with deck 2 selected, a bare read returned deck 2's value). Returns blank for an unset name and blank for string-valued variables (the documented string trap).",
+    "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: every prefix is part of the name. '#X' is a SEPARATE variable from 'X' (set X=44, '#X' read blank; then set '#X'=55 and X stayed 44) — correcting the grammar table, which grouped them. '%X' keys on the logical deck reference, not the deck behind it: 'deck left' resolves to deck 1 here, yet '%X' held 66 via left and 77 via 'deck 1' at once."
    ],
    "section": "Variables",
    "description": "Get variable value",

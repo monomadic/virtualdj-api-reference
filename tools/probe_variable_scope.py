@@ -30,6 +30,11 @@ PREDICTIONS = {
         'a $ name set on deck 1 reads back the same from deck 2',
     'prefixes-are-separate-names':
         'bare, $ and @ forms of one name hold three different values at once',
+    'hash-is-the-bare-name':
+        'the table groups `name` and `#name`, so #X should read back what X was set to',
+    'percent-follows-the-logical-reference':
+        '%X under `deck left` is a different slot from %X under `deck 1`, even though '
+        'left IS deck 1 — that is what "local to a logical deck reference" has to mean',
 }
 
 
@@ -89,12 +94,29 @@ def main():
     o['persistent_in_settings'] = (
         NAME in SETTINGS.read_text(errors='replace') if SETTINGS.exists() else None)
 
-    for scope in ('deck 1 ', 'deck 2 '):
-        for name in PREFIXES.values():
+    # Q5 - is `#name` the same variable as the bare name, as the table's grouping implies?
+    setvar('deck 1 ', NAME, 44)
+    o['hash'] = {'bare_after_set': getvar('deck 1 ', NAME),
+                 'hash_read': getvar('deck 1 ', '#' + NAME)}
+    setvar('deck 1 ', '#' + NAME, 55)
+    o['hash']['bare_after_hash_set'] = getvar('deck 1 ', NAME)
+    o['hash']['hash_after_hash_set'] = getvar('deck 1 ', '#' + NAME)
+
+    # Q6 - does `%name` key on the logical reference rather than the deck it points at?
+    # `left` IS deck 1 here, so two different values surviving means the reference is the key.
+    setvar('deck left ', '%' + NAME, 66)
+    setvar('deck 1 ', '%' + NAME, 77)
+    o['percent'] = {'via_left': getvar('deck left ', '%' + NAME),
+                    'via_deck1': getvar('deck 1 ', '%' + NAME),
+                    'left_is_deck': ask('query', 'deck left get_deck')}
+
+    extra = ['#' + NAME, '%' + NAME]
+    for scope in ('deck 1 ', 'deck 2 ', 'deck left '):
+        for name in list(PREFIXES.values()) + extra:
             setvar(scope, name, 0)
     capture['teardown'] = {f'{scope.strip() or "unscoped"}|{name}': getvar(scope, name)
-                           for scope in ('deck 1 ', 'deck 2 ')
-                           for name in PREFIXES.values()}
+                           for scope in ('deck 1 ', 'deck 2 ', 'deck left ')
+                           for name in list(PREFIXES.values()) + extra}
     capture['summary']['teardown_clean'] = all(
         v in ('0', '') for v in capture['teardown'].values())
     capture['summary']['status'] = 'complete'

@@ -564,7 +564,8 @@ variables, so a global must be set, toggled, and queried with `$` every time.
 
 | Prefix | Scope |
 | --- | --- |
-| `name`, `#name` | local to the current deck |
+| `name` | local to the current deck |
+| `#name` | a **different variable** from `name` — see the correction below |
 | `%name` | local to a logical deck reference such as `deck left` |
 | `$name` | global for the session |
 | `@name`, `@%name`, `@$name` | persistent across restarts |
@@ -602,10 +603,44 @@ the `$` you forgot on a `toggle` is a different variable from the one you set.
 selected, `get_var 'zzprobescope'` returned deck 2's `22`. That is the same rule as the
 [deck targets](#which-deck-a-target-resolves-to-2026-09-12) — unwrapped means selected.
 
-Two rows of the table above are **not** covered by this test. `#name` and `%name` were not
-probed at all. And `@` was shown to be a *separate name*, not to survive a restart: the probe
-name did not appear in `settings.xml` while it was set, which is consistent with the file
-being written on quit but is not evidence either way. Persistence needs a restart to test.
+#### Correction: `#name` is not the bare name
+
+The table used to group `name` and `#name` on one row, as though `#` were optional
+decoration. It is not — `#X` is a **separate variable** from `X`, exactly the way `$X` is:
+
+```
+deck 1 set 'zzprobescope' 44
+  deck 1 get_var 'zzprobescope'   -> 44
+  deck 1 get_var '#zzprobescope'  -> (blank: never set)
+deck 1 set '#zzprobescope' 55
+  deck 1 get_var 'zzprobescope'   -> 44   unchanged by the # write
+  deck 1 get_var '#zzprobescope'  -> 55
+```
+
+Blank there is the useful part: an unset name reads blank, so `#X` was not an empty alias of
+`X`, it was a name that did not exist yet. Whether `#X` is *also* deck-local was not tested —
+only that it is its own variable.
+
+**`%name` keys on the logical reference, not the deck behind it.** `deck left` resolves to
+deck 1 on this setup (`deck left get_deck` -> `1`), and yet:
+
+```
+deck left set '%zzprobescope' 66  &  deck 1 set '%zzprobescope' 77
+  deck left get_var '%zzprobescope'  -> 66
+  deck 1    get_var '%zzprobescope'  -> 77
+```
+
+Two values, one physical deck. So `%` is what you want for state that should follow "the left
+deck" through a deck swap, and a script mixing `%X` with `X` on the same base name is touching
+two variables.
+
+Still untested: `@` was shown to be a *separate name*, not to survive a restart. The probe
+name did not appear in `settings.xml` while it was set, which is consistent with that file
+being written on quit but is evidence for neither side. Persistence needs a restart.
+
+One caution when re-running the probe: teardown sets the names to `0`, which is not the same
+as deleting them. A first run sees blank for an unset name; later runs see `0`. Only the
+blank reading distinguishes "never existed" from "set to zero".
 
 ## Deck and scope wrappers
 
