@@ -347,24 +347,34 @@ That reading fits the artifacts better than a crash ever did. It explains why th
 leave no crash report, and it explains the earlier "no VirtualDJ process afterwards" note as
 the *aftermath of a force quit*, not a spontaneous exit.
 
-It also names a mechanism the read-only sweeps could not reach. `minimize` is in the vendor
-corpus, and the corpus sweep sends every snippet through `/query` on the standing assumption
-that querying cannot change anything. **`/query` does not gate a bare no-argument action
-verb.** Bare `browser_window` is classified `surface-gated`, but bare `minimize` and bare
-`maximize` both recorded `parsed` in the 2026-09-04 run — they answered. A verb with no
-argument has nothing to match against, so "answered" is consistent with "performed", and a
-minimized VirtualDJ is exactly a running process with no window to tab back to.
+**`minimize` reproduces the symptom exactly, and the query surface is not how it gets sent.**
+Both halves were tested on build 9598 with the decks idle, watching the window through
+`AXMinimized` rather than inferring from the HTTP answer:
 
-This is a strong lead, **not a proven cause**: confirming it means sending `minimize` and
-watching the window, which cannot be done on an instance someone is playing. What did not
-survive contact with evidence is the assumption that the query surface is inert — `beatlock
-on` through `/query` returns whether the state matches (`no`, state unchanged, and
-`beatlock off` returns `yes`), so the surface answers *match questions* for verbs that take
-an argument, and that protection does not extend to verbs that take none.
+| Sent | Response | Window |
+| --- | --- | --- |
+| `/query?script=minimize` | `no` | unchanged, `AXMinimized` false |
+| `/query?script=maximize` | `yes` | unchanged, 1 window |
+| `/execute?script=minimize` | `false` | **`AXMinimized` true**, process and HTTP both alive |
 
-`check_corpus_parses.py` now refuses to send application- and window-state verbs at all
-(`UNSAFE`, recorded as `skipped-unsafe` rather than silently dropped). Regenerating the
-corpus results will reclassify the `minimize`/`maximize` rows.
+So `/query` is **inert even for a bare no-argument action verb** — it answers that verb's
+state, the same way `deck 3 beatlock on` returns `no` and `beatlock off` returns `yes` while
+the state stays `no`. `parsed` in the corpus results meant "answered `no`", not "performed".
+The corpus sweep is query-only and is therefore **not** the trigger; a denylist was added
+here on that suspicion and then removed, because it would only have cost coverage.
+
+What the execute row does establish is the mechanism. A minimized VirtualDJ is a live process
+with a live HTTP interface and no window, and **macOS cmd-tab deliberately will not restore an
+app whose only window is minimized** — which is the reported symptom precisely, down to
+needing a force quit. `open -a VirtualDJ` restores it without one.
+
+What can send it: **every skin ships an `action="minimize"` button in its title bar** — the
+built-in Desktop skins, Lite, and the installed third-party skins all carry one. Nothing in
+the user's mappers or `settings.xml` binds the verb, so a keystroke is not the route. A blind
+coordinate click during skin-probe or GUI-driving work is, and this repo already records that
+route costing misclicks. Treat an unexplained "VirtualDJ is gone" as **minimized until
+checked**: read `AXMinimized`, not the process list, and never conclude "crash" from the
+absence of a crash report.
 
 The untested difference between these probes and the sessions where the app died: **deck
 state**. Every probe above ran against four unloaded, stopped decks, because that is what the
