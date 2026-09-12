@@ -511,6 +511,7 @@ check-runtime-grammar:
     @python3 tools/test_runtime_grammar_actions.py
     @python3 tools/test_runtime_grammar_scopes.py
     @python3 tools/test_runtime_grammar_master.py
+    @python3 tools/runtime_grammar_master.py --check > /dev/null
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-initial-9598.json
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-9598.json
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-initial-9598.json

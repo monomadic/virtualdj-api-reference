@@ -293,6 +293,56 @@ relaunched and the remaining confirmation suite completed. **The cause of the ex
 established.** Initial cases retain `incomplete-run`; the pending case is excluded from
 automatic confirmation and listed in `excluded_cases`.
 
+## Asymmetric master, 2026-09-12
+
+The selected-scope suites pinned only the selection. Master was deck 1 in that fixture, so
+`deck master` and `deck active` both answering `1` was consistent with three different
+hypotheses at once. `parser_master_scope` pins selection and master apart —
+`(selection, master)` of `(1, 2)` then `(2, 3)` — which gives each hypothesis its own
+signature: follows-master `['2','3']`, follows-selection `['1','2']`, constant-1 `['1','1']`,
+constant-2 `['2','2']`.
+
+```sh
+just runtime-grammar-master --run --out tests/runtime-grammar-master-9598.json \
+  --repeat 2 --rounds 2
+just runtime-grammar-master --check
+```
+
+Thirteen predictions were frozen before the run. Ten held, three did not, and the capture's
+`signatures` field names what each target actually tracks:
+
+| Case | Predicted | Observed | Signature |
+| --- | --- | --- | --- |
+| `deck master get_deck` | `2`, `3` | `2`, `3` | tracks-master-deck |
+| `deck active get_deck` | `2`, `3` | `2`, `3` | tracks-master-deck |
+| `deck playing get_deck` | `1`, `2` | `1`, `2` | tracks-selected-deck |
+| `deck default get_deck` | `1`, `2` | `1`, `2` | tracks-selected-deck |
+| `get_deck` | `1`, `2` | `1`, `2` | tracks-selected-deck |
+| `deck left` / `deck leftvideo` | `1`, `1` | `1`, `1` | fixed-deck-1 |
+| `deck right` / `deck rightvideo` | `2`, `2` | `2`, `2` | fixed-deck-2 |
+| `deck mixer1 get_deck` | `1`, `1` | `3`, `3` | fixed-deck-3 |
+| `deck mixer2 get_deck` | `2`, `2` | `1`, `1` | fixed-deck-1 |
+| `deck mixer3 get_deck` | `3`, `3` | `2`, `2` | fixed-deck-2 |
+| `deck mixer4 get_deck` | `4`, `4` | `4`, `4` | fixed-deck-4 |
+
+The three failures are all one finding: `mixerN` does not mean deck N. The mapping was
+constant across both selections and both master decks, and an independent read after the
+run reproduced it, but its cause is untested — do not record it as a language rule.
+
+Read `separation` here narrowly. The junk controls return `error:-2147467259`, so *any*
+real answer differs from a control; `separates` means the target was recognized, not that it
+discriminated state. The `signatures` field is the reading the asymmetric baselines were
+built to produce, and it is what the cross-baseline comparison supports.
+
+This also explains the earlier `scope-active` and `scope-followup-master` rows rather than
+contradicting them: under `tracks-master-deck`, a fixture whose master is deck 1 must report
+`1` in both baselines, which is exactly what those runs recorded.
+
+The run extends the mutation allowlist by `deck N masterdeck on` and `masterdeck_auto on|off`.
+Both were round-tripped by hand against the live instance before the suite was allowed to use
+them. The first attempt aborted at the precondition, with an empty journal and no mutation,
+because two decks were loaded and playing; that refusal is the fixture working, not a result.
+
 ## Contrast with the Button Editor
 
 The same-build capture includes `DLGActionWizard::updateList`, `getCurrentWord`, `onChanged`,
@@ -320,13 +370,13 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
 
 - The isolated master query has now completed in a guarded fixture, but the earlier app
   exit remains unexplained. Do not assign causation from the pending-query label.
-- Exercise scope keywords in prepared, asymmetric master/active/video/mixer states; constant
-  reachability alone cannot identify the selected deck or prove fan-out. The fixture for this
-  now exists (`just runtime-grammar-master`, predictions frozen in
-  `tests/runtime-grammar-master-cases.json`) and its offline regressions pass, but **no live
-  capture has been taken**: the run requires four unloaded, stopped decks and the harness
-  refuses to mutate anything otherwise. Do not cite the fixture as a result until a capture
-  exists.
+- The master/selection half of the asymmetric-scope item is **done** — see
+  [asymmetric master](#asymmetric-master-2026-09-12) below and the promoted rule in
+  [VDJScript Grammar](VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12).
+  What that fixture could *not* reach still stands: every deck was unloaded and stopped, so
+  `active` was never pulled away from the master by a playing deck, and the `mixerN`
+  permutation has no established cause. A fixture with asymmetric playback answers the first;
+  the second needs a configuration channel this suite does not touch.
 - Extend the tested action consumers to button-lifetime modifiers with a channel that can
   supply both press and release. The HTTP execute channel does not expose that lifecycle;
   numeric, boolean and flag observations in zoom/beatlock cannot stand in for it.

@@ -6,7 +6,7 @@ import unittest
 
 from fixtures import FixtureError
 from runtime_grammar_master import (BASELINES, MasterScopeSession, check_capture,
-                                    separation, validate)
+                                    separation, signatures, validate)
 from test_runtime_grammar_scopes import SelectionFake
 
 
@@ -94,11 +94,23 @@ class Tests(unittest.TestCase):
         case['passes'][0]['deck master get_deck'] = [[['2']], [['3']]]
         self.assertEqual(separation({'cases': [case]}), {'x': 'separates'})
 
+    def test_signature_names_the_state_a_selector_tracks(self):
+        def case(observed):
+            return {'id': 'x', 'script': 'deck s get_deck', 'verdict': 'held-in-fixture',
+                    'controls': ['deck zzqqx get_deck', 'deck vvnnz get_deck'],
+                    'passes': [{'deck s get_deck': [[[v]] for v in observed]}]}
+        # BASELINES is (selection, master) = (1, 2) then (2, 3).
+        self.assertEqual(signatures({'cases': [case(['2', '3'])]}), {'x': 'tracks-master-deck'})
+        self.assertEqual(signatures({'cases': [case(['1', '2'])]}), {'x': 'tracks-selected-deck'})
+        self.assertEqual(signatures({'cases': [case(['4', '4'])]}), {'x': 'fixed-deck-4'})
+        self.assertEqual(signatures({'cases': [case(['1', '4'])]}), {'x': 'unclassified'})
+        self.assertEqual(signatures({'cases': [case(['x', 'x'])]}), {'x': 'unclassified'})
+
     def test_check_rejects_a_symmetric_baseline(self):
         capture = {'summary': {'suite': 'tests/runtime-grammar-master-cases.json',
                                'status': 'complete', 'rounds_requested': 2, 'rounds_completed': 2,
                                'repeat': 2, 'build': '9598', 'channel': 'HTTP', 'verdicts': {},
-                               'separation': {}},
+                               'separation': {}, 'signatures': {}},
                    'baselines': [['1', '1'], ['2', '2']], 'cases': [], 'journal': [],
                    'baseline_checks': [], 'restorations': []}
         suite = Path('tests/runtime-grammar-master-cases.json')

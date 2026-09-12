@@ -79,6 +79,32 @@ def separation(capture):
     return rows
 
 
+def signatures(capture):
+    """Name the state each selector's two-baseline signature actually tracks.
+
+    `separation` only says the keyword was recognized, because the junk controls
+    error out and any real answer differs from an error. This is the reading that
+    the asymmetric baselines were built to produce.
+    """
+    selection = [b[0] for b in BASELINES]
+    master = [b[1] for b in BASELINES]
+    rows = {}
+    for c in capture['cases']:
+        if not c['passes'] or c['verdict'] == 'incomplete-run':
+            rows[c['id']] = 'not-run'
+            continue
+        observed = [reads[0][0] for reads in c['passes'][0][c['script']]]
+        if observed == master:
+            rows[c['id']] = 'tracks-master-deck'
+        elif observed == selection:
+            rows[c['id']] = 'tracks-selected-deck'
+        elif len(set(observed)) == 1 and observed[0] in DECKS:
+            rows[c['id']] = 'fixed-deck-' + observed[0]
+        else:
+            rows[c['id']] = 'unclassified'
+    return rows
+
+
 class MasterScopeSession(SelectedSession):
     """Selection plus a pinned master deck, both restored and verified."""
 
@@ -208,6 +234,7 @@ def run_suite(args):
         capture['summary'].pop('pending_query', None)
         capture['summary']['status'] = 'complete'
         capture['summary']['separation'] = separation(capture)
+        capture['summary']['signatures'] = signatures(capture)
     except BaseException as e:
         capture['summary']['status'] = 'aborted'
         capture['summary']['error'] = repr(e)
@@ -234,6 +261,7 @@ def check_capture(path):
     if complete:
         require(s['rounds_completed'] == s['rounds_requested'], 'incomplete rounds')
         require(s.get('separation') == separation(capture), 'separation drift')
+        require(s.get('signatures') == signatures(capture), 'signature drift')
     require(capture['baselines'] == BASELINES, 'baseline drift')
     # The point of this fixture: selection never equals master, and master moves
     # between baselines, so "follows master" and "constant deck N" cannot agree.

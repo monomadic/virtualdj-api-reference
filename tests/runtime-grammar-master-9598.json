@@ -1,0 +1,4954 @@
+{
+  "summary": {
+    "mode": "asymmetric-master-scope-queries",
+    "suite": "tests/runtime-grammar-master-cases.json",
+    "suite_sha256": "c50547b65813728e37fb2790ffd7e4910d8a80f41a28d5d59c9499bd4d6a841f",
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "repeat": 2,
+    "status": "complete",
+    "claim_scope": "exact readbacks with selection and master pinned apart; no universal selector claim",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-12T07:40:20.955624+00:00",
+    "verdicts": {
+      "held-in-fixture": 10,
+      "prediction-not-held": 3
+    },
+    "restoration_status": "verified",
+    "manual_restore_required": false,
+    "separation": {
+      "master-scope-master": "separates",
+      "master-scope-active": "separates",
+      "master-scope-playing": "separates",
+      "master-scope-default": "separates",
+      "master-scope-bare": "separates",
+      "master-scope-left": "separates",
+      "master-scope-right": "separates",
+      "master-scope-leftvideo": "separates",
+      "master-scope-rightvideo": "separates",
+      "master-scope-mixer1": "separates",
+      "master-scope-mixer2": "separates",
+      "master-scope-mixer3": "separates",
+      "master-scope-mixer4": "separates"
+    },
+    "signatures": {
+      "master-scope-master": "tracks-master-deck",
+      "master-scope-active": "tracks-master-deck",
+      "master-scope-playing": "tracks-selected-deck",
+      "master-scope-default": "tracks-selected-deck",
+      "master-scope-bare": "tracks-selected-deck",
+      "master-scope-left": "fixed-deck-1",
+      "master-scope-right": "fixed-deck-2",
+      "master-scope-leftvideo": "fixed-deck-1",
+      "master-scope-rightvideo": "fixed-deck-2",
+      "master-scope-mixer1": "fixed-deck-3",
+      "master-scope-mixer2": "fixed-deck-1",
+      "master-scope-mixer3": "fixed-deck-2",
+      "master-scope-mixer4": "fixed-deck-4"
+    }
+  },
+  "fixture": "parser_master_scope",
+  "baselines": [
+    [
+      "1",
+      "2"
+    ],
+    [
+      "2",
+      "3"
+    ]
+  ],
+  "cases": [
+    {
+      "id": "master-scope-master",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "With the master deck pinned away from the selection, does `master` follow the master deck rather than the selection or a constant deck 1?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-followup-master",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck master get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck master get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-active",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "The earlier run saw `active` return 1 while master was also 1; with the two pulled apart, does `active` track the master deck rather than a constant?",
+      "required_context": {
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "deck 3 play": "no",
+        "deck 4 play": "no"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-active",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck active get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck active get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-playing",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck playing get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "With no deck playing, does `playing` fall back to the selected deck?",
+      "required_context": {
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "deck 3 play": "no",
+        "deck 4 play": "no"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck playing get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck playing get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-default",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck default get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does explicit default still follow the selection when the master deck is elsewhere?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-default",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck default get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck default get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-bare",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does the unscoped query still follow the selection when the master deck is elsewhere?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-bare",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-left",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck left get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `left` stay on deck 1 regardless of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-left",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck left get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck left get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-right",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck right get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `right` stay on deck 2 regardless of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-right",
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck right get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck right get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-leftvideo",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `leftvideo` resolve to the left deck rather than the selection or master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck leftvideo get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck leftvideo get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-rightvideo",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `rightvideo` resolve to the right deck rather than the selection or master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck rightvideo get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck rightvideo get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "master-scope-mixer1",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `mixer1` name mixer channel 1 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer1 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer1 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "prediction-not-held"
+    },
+    {
+      "id": "master-scope-mixer2",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `mixer2` name mixer channel 2 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer2 get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer2 get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "prediction-not-held"
+    },
+    {
+      "id": "master-scope-mixer3",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "Does `mixer3` name mixer channel 3 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck mixer3 get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck mixer3 get_deck": [
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ],
+            [
+              [
+                "2"
+              ],
+              [
+                "2"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "prediction-not-held"
+    },
+    {
+      "id": "master-scope-mixer4",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "hypothesis": "Does `mixer4` name mixer channel 4 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "passes": [
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck mixer4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck vvnnz get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzqqx get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ],
+  "journal": [
+    {
+      "script": "deck 1 select",
+      "purpose": "baseline-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "baseline-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-master-auto",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-master-auto",
+      "status": "response-received",
+      "response": "true"
+    }
+  ],
+  "baseline_checks": [
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "1",
+        "2"
+      ],
+      "observed": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "expected": [
+        "2",
+        "3"
+      ],
+      "observed": [
+        "2",
+        "3"
+      ]
+    }
+  ],
+  "restorations": [
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ],
+  "initial_state": {
+    "resources": {
+      "zoom": "0.31",
+      "deck 1 beatlock": "no",
+      "deck 2 beatlock": "no",
+      "deck 3 beatlock": "no",
+      "deck 4 beatlock": "no"
+    },
+    "guards": {
+      "get_decks": "4",
+      "get_deck": "2",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 1 select": "no",
+      "deck 1 pfl": "no",
+      "deck 1 masterdeck": "no",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 2 select": "yes",
+      "deck 2 pfl": "yes",
+      "deck 2 masterdeck": "yes",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no"
+    }
+  },
+  "original_selection": "2",
+  "original_master": {
+    "deck": "2",
+    "auto": "yes"
+  },
+  "context_checks": [
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 1 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 2 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 3 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 4 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 1 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 2 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 3 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 4 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 1 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 2 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 3 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "script": "deck 4 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 1 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 2 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 3 play",
+      "expected": "no",
+      "observed": "no"
+    },
+    {
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "script": "deck 4 play",
+      "expected": "no",
+      "observed": "no"
+    }
+  ],
+  "query_measurements": [
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "1",
+        "2"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer4 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer3 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck 4 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer2 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck mixer1 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck rightvideo get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck leftvideo get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "deck right get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck left get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ]
+    },
+    {
+      "script": "get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck default get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck playing get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ]
+    },
+    {
+      "script": "deck active get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck master get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck 3 get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ]
+    },
+    {
+      "script": "deck vvnnz get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    },
+    {
+      "script": "deck zzqqx get_deck",
+      "baseline": [
+        "2",
+        "3"
+      ],
+      "reads": [
+        [
+          "error:-2147467259"
+        ],
+        [
+          "error:-2147467259"
+        ]
+      ]
+    }
+  ],
+  "restoration_events": [
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    },
+    {
+      "status": "started"
+    },
+    {
+      "status": "success",
+      "resources": [
+        "0.31",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "guards": [
+        "4",
+        "2",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "yes",
+        "yes",
+        "yes",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no",
+        "no"
+      ],
+      "verified": true
+    }
+  ]
+}

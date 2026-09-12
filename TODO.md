@@ -461,6 +461,18 @@ Status: Ready
 
 Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. The continuation adds guarded zoom/beatlock/all-deck execution fixtures, selected-deck query comparisons, untrimmed output tests, restoration journals and a regenerable static frontier. Inspect each capture through `just runtime-grammar --artifact <path>`; the report distinguishes complete and interrupted runs, and derives a `separation` field so a prediction that held against a blank result is not mistaken for a discriminating one. The rules that survived two suites and two baselines were promoted into [VDJScript Grammar](docs/VDJScript%20Grammar.md) on 2026-09-12 (keyword quoting, unit-suffix case/adjacency, comma decimals, signed-vs-unsigned numbers, the malformed-number reset, backtick inertness on execute), with `local_test` store records for `zoom` and `beatlock`. Single-capture and editor-side candidates stay unpromoted.
 
+Progress 2026-09-12 (later): the asymmetric-scope item is half closed. `parser_master_scope`
+(`just runtime-grammar-master`) pins selection and master to different decks, which the earlier
+suites never did, and the capture settles that **`deck master` and `deck active` both track the
+master deck while an unwrapped verb and `deck default` track the selection** — promoted into
+[VDJScript Grammar](docs/VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12) with
+`local_test` store records for `get_deck`, `masterdeck` and `masterdeck_auto`. It also found
+`playing` and `mixer1`-`mixer4` to be recognized targets the wiki does not list, with `mixerN`
+resolving to a deck that is not N (cause untested, recorded as an observation only). Still open
+on this item: `active` was never pulled away from the master by a playing deck, since the fixture
+requires four stopped decks. Button press/release lifetime consumers remain unreachable over
+HTTP and need a pad or mapper surface.
+
 Note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
 (fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.
 Every rule this walk recovers is a 10b test and nothing else. Folded into task 10 as its

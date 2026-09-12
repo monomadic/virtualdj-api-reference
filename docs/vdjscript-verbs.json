@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 10,
     "Partial": 40,
-    "Pass": 104,
-    "Untested": 884
+    "Pass": 107,
+    "Untested": 881
    },
    "documented": 771,
-   "tested_pass": 104,
+   "tested_pass": 107,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -4951,14 +4951,17 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: returns the deck number of its scope prefix. With selection and master pinned to different decks, bare get_deck and 'deck default get_deck' track the SELECTED deck, while 'deck master get_deck' and 'deck active get_deck' track the MASTER deck. Junk prefixes return error:-2147467259 rather than falling back."
+   ],
    "section": "Get (Query Actions)",
    "description": "Deck number",
    "example": "get_deck",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_deck_analysis": {
    "name": "get_deck_analysis",
@@ -9138,14 +9141,17 @@
     "Button",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: 'deck N masterdeck on' moves master exclusively to deck N (other decks read 'no') while the selected deck is unchanged; readback 'deck N masterdeck' is yes/no and the original master is restorable by the same absolute form. Requires masterdeck_auto off to hold."
+   ],
    "section": "Deck Selection",
    "description": "Select/unselect master",
    "example": "masterdeck",
-   "kind": "Action"
+   "kind": "Action",
+   "confidence": "local_test"
   },
   "masterdeck_auto": {
    "name": "masterdeck_auto",
@@ -9153,13 +9159,16 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: 'masterdeck_auto on|off' round-trips, readback yes/no. With it on, a manual 'deck N masterdeck on' pin is not relied upon; the fixture parks it off and restores it."
+   ],
    "section": "Deck Selection",
    "description": "Auto masterdeck",
-   "example": "masterdeck_auto"
+   "example": "masterdeck_auto",
+   "confidence": "local_test"
   },
   "match_bpm": {
    "name": "match_bpm",

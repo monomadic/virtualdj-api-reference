@@ -47,6 +47,9 @@ and not writing script, you can stop after this section.
 - **Quote names, not keywords.** `beatlock 'on'` is silently inert where `beatlock on` works.
 - **There are no comments.** `//`, `#`, `;`, `--`, `/* */` all silently discard the rest of
   the statement.
+- **`deck active` is the master deck, not the selected deck.** So is `deck master`; the
+  selected deck is what an unwrapped verb and `deck default` use. And `deck mixerN` is not
+  deck N — see [which deck a target resolves to](#which-deck-a-target-resolves-to-2026-09-12).
 - **Variable prefixes are part of the name.** `mode` and `$mode` are different variables.
   `$` = global, `@` = persists across restarts, bare = deck-local.
 - In XML, `&` must be written `&amp;`.
@@ -612,8 +615,8 @@ Two constructs the wiki documents that are not otherwise recorded here:
 Argument units are `ms`, `bt` (beats) and `%`, alongside plain integers and decimals:
 `nudge +100ms`, `wait 8bt`, `crossfader 50%`.
 
-`deck leftvideo`, `deck rightvideo` and `deck default` are **not yet locally tested** — they
-are recorded here on the wiki's authority alone.
+`deck leftvideo`, `deck rightvideo` and `deck default` are now locally tested — see
+[which deck a target resolves to](#which-deck-a-target-resolves-to-2026-09-12) below.
 
 ### `deck all` broadcasts on execute and collapses to one deck on query (2026-09-03)
 
@@ -641,6 +644,45 @@ deck all get_title   -> the deck 1 title
 An unknown target does error here (`deck qqqq loaded` -> `error:-2147467259`), so the target
 slot is one of the few places the parser is not silent. Do not read a `deck all` query as
 "all decks agree" — it is deck 1's value, and there is no established aggregate-query form.
+
+### Which deck a target resolves to (2026-09-12)
+
+Earlier tests could not tell these apart, because the selected deck and the master deck were
+both deck 1: every target answered `1`, which fits "follows master", "follows selection" and
+"always deck 1" equally well. Pinning the two to **different** decks separates them. With
+`(selection, master)` set to `(1, 2)` and then `(2, 3)` (`Local test`, HTTP, build 9598,
+four unloaded and stopped decks, state restored and verified —
+[capture](../tests/runtime-grammar-master-9598.json)):
+
+| Target | Answers with | Signature `(1,2)` → `(2,3)` |
+| --- | --- | --- |
+| *(no wrapper)* | the **selected** deck | `1` → `2` |
+| `deck default` | the **selected** deck | `1` → `2` |
+| `deck master` | the **master** deck | `2` → `3` |
+| `deck active` | the **master** deck | `2` → `3` |
+| `deck playing` | the selected deck, with nothing playing | `1` → `2` |
+| `deck left`, `deck leftvideo` | deck 1 | `1` → `1` |
+| `deck right`, `deck rightvideo` | deck 2 | `2` → `2` |
+
+**`active` is not the selected deck.** This is the trap the symmetric fixture hid: a script
+using `deck active` to mean "the deck the user is looking at" gets the master deck instead.
+The earlier run's `1` was the master deck answering, not a constant and not the selection.
+
+`deck playing` and `deck mixer1`…`deck mixer4` are **recognized targets the wiki's list of
+nine does not mention** — they return a deck number where a junk target
+(`deck zzqqx get_deck`) returns `error:-2147467259`.
+
+`deck mixerN` resolves to a fixed deck that is *not* the identity mapping: on this instance
+`mixer1` → 3, `mixer2` → 1, `mixer3` → 2, `mixer4` → 4, unchanged across both selections and
+both master decks, and reproduced by an independent read afterwards. Whether that permutation
+is a configurable channel assignment or a fixed internal order is **untested** — do not assume
+`mixerN` means deck N.
+
+Two limits on the table. Every deck was unloaded and stopped, so `playing` was only observed
+in its fallback, and whether `active` follows a playing deck away from the master is
+**untested**. And these are query resolutions; execute-side fan-out is the separate
+[`deck all`](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query-2026-09-03)
+result.
 
 ## What the HTTP query surface will not evaluate (2026-09-03)
 
