@@ -907,6 +907,24 @@ Known unknown:
 - It appears to be a signed 64-bit identifier, not a plain path string.
 - Because the hash/ID algorithm is unknown, creating linked-track rows from scratch is unsafe unless VirtualDJ has already created `track_data` rows for both files.
 
+What has been ruled out (2026-09-12), so it is not retried: `sid` is **not** any of
+FNV-1a/FNV-1/djb2/sdbm/MurmurHash64A/CRC64-ECMA over any of the full path, lowercased path,
+basename, stem, `artist|title`, `artist - title`, concatenated artist+title, title, path plus
+filesize, or NFC/NFD-normalized path, in either UTF-8 or UTF-16LE. That is 6 hashes × 13
+inputs × 2 encodings against every `track_data` row on this install, with no hit. The next
+route is the binary rather than more guessing: bundle 18.0.9246 is unstripped, so the
+function writing `track_data` can be reached from the `related_tracks` / `track_data` literals
+and read directly.
+
+Two further observations from the same pass:
+
+- **`sid` does not appear in `database.xml`.** `<Song>` keys on `FilePath` and `FileSize`, and
+  `track_data` re-stores file, filesize, artist, title and remix rather than referencing the
+  XML — `extra.db` is self-sufficient and joins to the library by path, not by id.
+- **Edges are stored once, not mirrored.** On this install no `related_tracks` row had a
+  reversed twin, so a reader must match `sid1` *or* `sid2`; treating the pair as directional
+  will silently miss half the links. The read query above already joins both columns.
+
 Read related tracks:
 
 ```zsh
