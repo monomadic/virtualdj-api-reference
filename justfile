@@ -339,6 +339,7 @@ lint-mappers *paths:
     python3 tools/lint_mappers.py "$@"
 
 check:
+    just check-linked-sid
     just check-runtime-grammar
     python3 tools/mcp_server.py --self-check
     python3 tools/probe_long_time.py --check
@@ -561,3 +562,18 @@ controllers-extract *args:
 # Offline vocabulary and mapper cross-checks; --path /device/slider or --device DDJGRV6.
 controllers *args:
     @python3 tools/controller_schema_inventory.py "$@"
+
+# Linked-track SID calculation from prepared metadata, or an offline snapshot audit.
+linked-sid *args:
+    @python3 tools/linked_sid.py "$@"
+
+# Historical symbol-bounded SID extraction; requires capstone, writes JSON to stdout.
+extract-linked-sid *args:
+    @python3 tools/extract_linked_sid.py "$@"
+
+# Execute historical reducer/hash instructions on synthetic inputs; requires unicorn.
+probe-linked-sid-binary *args:
+    @python3 tools/probe_linked_sid_binary.py "$@"
+
+check-linked-sid:
+    @python3 tools/test_linked_sid.py

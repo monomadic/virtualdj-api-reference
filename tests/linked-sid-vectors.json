@@ -1,0 +1,109 @@
+{
+  "evidence_tier": 2,
+  "source": {
+    "build": "18.0.9246",
+    "arch": "arm64",
+    "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+    "extracted": "2026-09-13"
+  },
+  "method": "Unicorn executes original reducer, utfcanonical and FNV-loop instructions; hooked libc/std::string calls.",
+  "limitations": "Not the running application. Cleanup, remix inclusion branches, sentinel rejection, and SQLite writes are not emulated.",
+  "cases": [
+    {
+      "artist": "Example Artist",
+      "title": "Example Track",
+      "remix": "Club Mix",
+      "reduced_utf8_hex": "4558414d504c454152544953544558414d504c45545241434b434c55424d4958",
+      "sid_hex": "57fa3f17fa7c45db",
+      "sid_signed": 6339448797696640475
+    },
+    {
+      "artist": "Example Artist",
+      "title": "Example Track",
+      "remix": "Dub Mix",
+      "reduced_utf8_hex": "4558414d504c454152544953544558414d504c45545241434b4455424d4958",
+      "sid_hex": "253349ad0b6d9c7a",
+      "sid_signed": 2680567210785479802
+    },
+    {
+      "artist": "A1 & B2",
+      "title": "Tune 123 (Live)",
+      "remix": "Club Mix",
+      "reduced_utf8_hex": "414254554e45434c55424d4958",
+      "sid_hex": "45f174581fd5d064",
+      "sid_signed": 5039937379844345956
+    },
+    {
+      "artist": "A[guest]",
+      "title": "Tune/other",
+      "remix": "Dub",
+      "reduced_utf8_hex": "4154554e45445542",
+      "sid_hex": "4d40dba8b554525d",
+      "sid_signed": 5566690657073123933
+    },
+    {
+      "artist": "Straße",
+      "title": "Été Ελληνικά Русский עברית",
+      "remix": "",
+      "reduced_utf8_hex": "53545241535345455445454c4c484e494b41505553534b49494142525954",
+      "sid_hex": "854e2ad525b1a52c",
+      "sid_signed": -8841081923532905172
+    },
+    {
+      "artist": "A",
+      "title": "中文 ไทย",
+      "remix": "",
+      "reduced_utf8_hex": "41e4b8ade69687e0b984e0b897e0b8a2",
+      "sid_hex": "c407317f18e79956",
+      "sid_signed": -4321430895490262698
+    },
+    {
+      "artist": "A",
+      "title": "Café 😀",
+      "remix": "",
+      "reduced_utf8_hex": "4143414645",
+      "sid_hex": "1231baba01e4147d",
+      "sid_signed": 1311034274599933053
+    },
+    {
+      "artist": "www.example",
+      "title": "WWW.example",
+      "remix": "",
+      "reduced_utf8_hex": "5757574558414d504c45",
+      "sid_hex": "67fe1f09e8364f40",
+      "sid_signed": 7493460957402124096
+    },
+    {
+      "artist": "A",
+      "title": "Tune",
+      "remix": "promo.com Mix",
+      "reduced_utf8_hex": "4154554e45",
+      "sid_hex": "b4e6b1b9cd9c5cdc",
+      "sid_signed": -5411442490662429476
+    },
+    {
+      "artist": "A",
+      "title": "Tune",
+      "remix": "promo.COM Mix",
+      "reduced_utf8_hex": "4154554e4550524f4d4f434f4d4d4958",
+      "sid_hex": "a5dd5b08c7d3c5fa",
+      "sid_signed": -6494934994327976454
+    },
+    {
+      "artist": "AB",
+      "title": "C",
+      "remix": "",
+      "reduced_utf8_hex": "414243",
+      "sid_hex": "d86fea186b53126b",
+      "sid_signed": -2850802648501513621
+    },
+    {
+      "artist": "A",
+      "title": "BC",
+      "remix": "",
+      "reduced_utf8_hex": "414243",
+      "sid_hex": "d86fea186b53126b",
+      "sid_signed": -2850802648501513621
+    }
+  ]
+}

@@ -206,6 +206,11 @@ skin_sdk:
     - just lint-skins
 
 application_internals:
+  linked_tracks:
+    command: just linked-sid --evidence
+    calculator: just linked-sid --prepared --artist ARTIST --title TITLE --remix REMIX
+    evidence: tests/linked-sid-9246.json
+    note: Metadata FNV-1 SID; prepared-input calculator does not port tag cleanup.
   primary:
     - docs/Application Internals.md
   related:

@@ -901,29 +901,127 @@ VirtualDJ's linked/remix relationships are stored in `extra.db`:
 - `track_data.artist`, `title`, `remix`: display metadata.
 - `related_tracks.sid1`, `related_tracks.sid2`: relationship edges between `track_data.sid` values.
 
-Known unknown:
+#### SID construction recovered
 
-- The algorithm that creates `sid` is not known yet.
-- It appears to be a signed 64-bit identifier, not a plain path string.
-- Because the hash/ID algorithm is unknown, creating linked-track rows from scratch is unsafe unless VirtualDJ has already created `track_data` rows for both files.
+**Binary analysis (Tier 2), 2026-09-13, build 18.0.9246 arm64:** linked tracks use
+`SDBInfo::getSIDCleaned(false)`. This makes a copy of **artist, title and remix**,
+runs `CTagEngine::cleanup(copy, false)`, then calls `SDBInfo::getSID()`.
+The final ID is **FNV-1 64-bit over concatenated, reduced metadata**, with no
+separator between fields. Path, file size and audio bytes are not inputs to this
+call chain. It identifies a metadata equivalence class, not a unique physical file.
 
-What has been ruled out (2026-09-12), so it is not retried: `sid` is **not** any of
-FNV-1a/FNV-1/djb2/sdbm/MurmurHash64A/CRC64-ECMA over any of the full path, lowercased path,
-basename, stem, `artist|title`, `artist - title`, concatenated artist+title, title, path plus
-filesize, or NFC/NFD-normalized path, in either UTF-8 or UTF-16LE. That is 6 hashes × 13
-inputs × 2 encodings against every `track_data` row on this install, with no hit. The next
-route is the binary rather than more guessing: bundle 18.0.9246 is unstripped, so the
-function writing `track_data` can be reached from the `related_tracks` / `track_data` literals
-and read directly.
+The regenerable evidence is [linked-sid-9246.json](../tests/linked-sid-9246.json):
+full executable SHA-256, symbol names, exact `LC_FUNCTION_STARTS` bounds, bounded
+instructions, SQL literals and vendor Unicode mapping bytes. Query the compact
+contract with `just linked-sid --evidence`. Extract again with
+`just extract-linked-sid --app /path/to/VirtualDJ.app` using the recorded unstripped
+build (Python with Capstone installed). Fixed literal addresses are SHA-guarded;
+the extractor refuses another binary rather than silently reading unrelated data.
 
-Two further observations from the same pass:
+The recovered stages are:
+
+1. **Clean a metadata copy.** `getCleanedCopy` copies `SDBInfo` offsets `0x18`
+   (artist), `0x20` (title), and `0x50` (remix). Their meanings are independently
+   identifiable from the field order in `addTrackData`'s SQL bindings. Cleanup
+   trims fields and handles bracketed remix/featuring material; it is a separate,
+   substantial routine, not equivalent to uppercasing the database fields.
+2. **Reduce each field separately.** `strAddReduced` uppercases ASCII `a`–`z` and
+   retains `A`–`Z`. Digits, spaces and ordinary punctuation contribute nothing.
+   The characters `(`, `[`, `/`, `{`, and `"` stop processing the remainder of
+   that field, as does lowercase `www.`. NUL terminates the C string. Uppercase
+   `WWW.` does not trigger that particular stop rule.
+3. **Apply the vendor Unicode rules.** `utfcanonical` uses the extracted Latin,
+   Greek, Cyrillic and Hebrew tables, retaining only table outputs `a`–`z` and
+   uppercasing them; `ß` becomes `SS`. U+4E00–U+9FFF and U+0E00–U+0E7F retain their
+   original UTF-8 bytes. Other unmapped Unicode contributes nothing. A generic
+   Unicode normalization/transliteration library is not an exact substitute.
+4. **Concatenate** reduced artist + reduced title + reduced remix. Omit the
+   entire remix if its pre-reduction text contains lowercase `.com`, `.net`,
+   `.org`, or `www.` (case-sensitive searches in the inspected binary).
+5. **Reject placeholder identities:** empty reduced input, `TRACK`,
+   `UNKNOWNARTISTTRACK`, and `VIDEOPLAYBACK` return zero. `addRelated` refuses
+   zero SID endpoints.
+6. **Hash the resulting UTF-8 bytes**, with multiplication before XOR:
+
+   ```python
+   h = 0xcbf29ce484222325
+   for byte in reduced_bytes:
+       h = ((h * 0x100000001b3) ^ byte) & 0xffffffffffffffff
+   sid = h if h < (1 << 63) else h - (1 << 64)
+   ```
+
+   That is **FNV-1**, not FNV-1a. Native code carries an unsigned 64-bit value;
+   `sqlite3_bind_int64` stores the same bits as a signed SQLite INTEGER.
+   A negative SID is normal. Do not take its absolute value or store an
+   out-of-range unsigned decimal integer.
+
+For an already-cleaned synthetic example:
+
+```sh
+just linked-sid --prepared --artist 'Example Artist' --title 'Example Track' --remix 'Club Mix'
+```
+
+The reduced input is `EXAMPLEARTISTEXAMPLETRACKCLUBMIX`, producing hexadecimal
+`57fa3f17fa7c45db` / signed decimal `6339448797696640475`.
+The calculator's `--prepared` flag acknowledges that **it implements the
+post-cleanup stage, not the full `CTagEngine::cleanup` routine**. Do not promise
+arbitrary raw-tag import compatibility from this helper alone.
+
+**Corroboration, not a live integration claim:** the stable offline `extra.db`
+snapshot audited on 2026-09-13 matched every stored SID using the calculator
+against its stored artist/title/remix fields. See
+[linked-sid-observation.json](../tests/linked-sid-observation.json) →
+`rows`, `matches`, `mismatches`, and snapshot SHA-256; row-creation builds are
+unknown. No private metadata or database copy is committed. Reproduce against
+an offline snapshot with `just linked-sid --audit /path/to/extra-snapshot.db`.
+The snapshot must include committed WAL contents; the helper refuses a
+nonempty companion WAL and checks for changes during its read.
+
+[Synthetic vectors](../tests/linked-sid-vectors.json) also agree with the
+**original ARM64 reducer, Unicode helper and hash-loop instructions executed in
+Unicorn**, with narrow libc/string hooks. Regenerate with
+`just probe-linked-sid-binary --app /path/to/VirtualDJ.app` (Python with Unicorn
+installed); `just check-linked-sid` checks the calculator against these vectors.
+Emulation is Tier 2: it does not run VirtualDJ, execute cleanup, test SQLite
+writes, or prove that a currently running build accepts an externally added link.
+
+**Correction to the 2026-09-12 exclusion:** the earlier unsuccessful sweep of
+FNV-1a/FNV-1/djb2/sdbm/MurmurHash64A/CRC64-ECMA over raw path/metadata variants
+ruled out only those specific input encodings. It did **not** rule out FNV-1
+itself. It missed VirtualDJ's metadata reduction and concatenation pipeline.
+The hash algorithm is now recovered; complete raw-tag cleanup compatibility and
+a current-build external-write/readback canary remain open.
+
+#### Lookup and relationship consequences
+
+`addRelated` computes each cleaned SID, binds them to
+`INSERT INTO related_tracks (sid1, sid2) VALUES (?, ?)`, and passes those same
+IDs to `addTrackData`. The latter uses `INSERT OR IGNORE` with `UNIQUE(sid)`:
+it saves file, size and display metadata as a representative record for that SID.
+With no separators and discarded digits/punctuation, distinct inputs can
+intentionally collapse: prepared `(artist="AB", title="C")` and
+`(artist="A", title="BC")` produce the same ID. File renaming does not enter
+this hash, while a metadata change can change it.
+
+**Binary analysis (Tier 2):** `getDBIFromSID` first calls
+`CDatabaseEngine::findInfoFromSID(sid, false)`, whose cache-building path uses
+`getSIDCleaned`. Only on a miss does it query `track_data` for fallback file,
+size and metadata. Therefore an SQL join to `track_data` can miss relationships
+that VirtualDJ resolves through the library cache. The observation artifact's
+`edges_missing_track_data` reports missing SQL endpoints, **not proven broken
+links**. Settling that distinction requires displaying a controlled linked-track
+pair in the running app and independently reading the stored edge.
+
+Observations retained from the 2026-09-12 pass, with the lookup correction:
 
 - **`sid` does not appear in `database.xml`.** `<Song>` keys on `FilePath` and `FileSize`, and
   `track_data` re-stores file, filesize, artist, title and remix rather than referencing the
-  XML — `extra.db` is self-sufficient and joins to the library by path, not by id.
+  XML. **Qualification from the 2026-09-13 binary trace:** the runtime first
+  resolves the computed SID through the library cache; path/size are fallback
+  data. The previous claim that it joins only by path was too strong.
 - **Edges are stored once, not mirrored.** On this install no `related_tracks` row had a
   reversed twin, so a reader must match `sid1` *or* `sid2`; treating the pair as directional
-  will silently miss half the links. The read query above already joins both columns.
+  will silently miss half the links. The read query below joins both endpoints.
 
 Read related tracks:
 
@@ -1336,7 +1434,8 @@ Known unknown:
 
 ## Known Unknowns
 
-- `extra.db track_data.sid`: signed 64-bit identifier/hash for linked tracks. Algorithm unknown.
+- `extra.db track_data.sid`: FNV-1 metadata construction recovered (see Linked Tracks);
+  complete raw-tag cleanup compatibility and current-build external-link write/readback remain unverified.
 - `extra.db lyrics.lid`: 18-byte blob identifier. Algorithm unknown.
 - Full `Song/@Flag`, `Tags/@Flag`, and `Scan/@Flag` bit maps.
 - `Cache/cache2.db`, `Cache/cache3.db`, `Cache/cache4.db`, and `Cache/fft`.
