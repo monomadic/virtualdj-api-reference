@@ -339,6 +339,7 @@ lint-mappers *paths:
     python3 tools/lint_mappers.py "$@"
 
 check:
+    just check-lyrics-cache
     just check-linked-sid
     just check-runtime-grammar
     python3 tools/mcp_server.py --self-check
@@ -581,3 +582,18 @@ check-linked-sid:
 # Every stored linked-track relationship; missing metadata stays visible by SID.
 list-linked-tracks *args:
     @python3 tools/list_linked_tracks.py "$@"
+
+# Lyric key conversions, payload parsing and offline cache inspection.
+lyrics-cache *args:
+    @python3 tools/lyrics_cache.py "$@"
+
+# Historical lyric-cache binary capture; capstone required, JSON on stdout.
+extract-lyrics-cache *args:
+    @python3 tools/extract_lyrics_cache.py "$@"
+
+# Synthetic original-instruction tests; Unicorn required, JSON on stdout.
+probe-lyrics-binary *args:
+    @python3 tools/probe_lyrics_binary.py "$@"
+
+check-lyrics-cache:
+    @python3 tools/test_lyrics_cache.py

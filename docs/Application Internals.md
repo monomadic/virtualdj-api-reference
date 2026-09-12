@@ -1105,29 +1105,185 @@ If that script prints `0`, one or both files probably do not have `track_data` r
 
 ### Lyrics Cache
 
-`lyrics` contains:
+**Binary analysis (Tier 2), build 18.0.9246 arm64, extracted 2026-09-13:**
+`lyrics.lid` is the track's **audio signature**, not the metadata-derived
+linked-track SID. `getLyrics`, `saveLyrics`, and `deleteLyrics` bind the same
+18 bytes at `SDBInfo + 0x130` directly as a SQLite BLOB. Their shared eligibility
+check reads the final little-endian word at `+0x140` and requires it to exceed 1.
 
-- `lid`: 18-byte BLOB in local samples.
-- `xml`: text payload.
-
-Despite the column name, observed lyric text can look like line-oriented timestamp ranges:
-
-```text
-[0.69-0.83] I'm
-[0.89-0.90] a
+```sql
+CREATE TABLE lyrics (lid BLOB NOT NULL PRIMARY KEY, xml TEXT NOT NULL);
 ```
 
-or a sentinel:
+There is no path, artist/title, timestamp, or expiry column in this schema.
+The payload is uncompressed text, despite the column being named `xml`.
+See [lyrics-cache-9246.json](../tests/lyrics-cache-9246.json) for the executable
+SHA-256, symbol-addressed functions with exact `LC_FUNCTION_STARTS` bounds,
+explicitly bounded XML reader/writer excerpts, SQL and format literals, and
+numeric constants. `just lyrics-cache --evidence` is the compact entry point.
 
-```text
-#NOLYRICS
+#### LID layout and construction
+
+| Bytes | Recovered meaning |
+| --- | --- |
+| `0..15` | Packed four-bit occurrence ratios for each bit position in raw Chromaprint words. |
+| `16..17` | Number of raw fingerprint words, unsigned little-endian. Values 0 and 1 are reserved states. |
+
+`CAudioSignature::getSignature` and the streaming `start/process/end` path use
+Chromaprint algorithm ID **1** with stereo audio, then feed raw 32-bit fingerprint
+words to the function named `hash128`. This is **not MD5**, and it is not the
+standard compressed Chromaprint string. Given the selected raw words `w` and
+`N = len(w)`, its calculation is:
+
+```python
+q = [16 * sum((word >> bit) & 1 for word in w) // (N + 1)
+     for bit in range(32)]
+lid = bytes((q[i] << 4) | q[i + 1] for i in range(0, 32, 2))
+lid += N.to_bytes(2, "little")
 ```
 
-Known unknown:
+Bit 0 contributes the first byte's **high** nibble; bit 1 contributes its low
+nibble, continuing through bit 31. The `N + 1` denominator keeps each value
+within a nibble. This is a lossy summary: reordering the same fingerprint words
+cannot change it. It must not be described as a cryptographically unique file ID.
 
-- The exact `lid` derivation is unknown.
-- The full lyric payload grammar is not documented here yet.
-- How lyric cache rows relate to audio signatures and server-side cache behavior needs more verification.
+**Audio preprocessing matters.** The batch path accepts packed stereo signed
+16-bit PCM frames and a sample rate. It checks duration, searches leading and
+trailing boundaries using a rolling channel-sum threshold, and fingerprints the
+selected interval. The streaming path also performs boundary handling and
+adjusts the returned fingerprint length using Chromaprint sample rate, delay,
+and item duration. The routines are captured, but the helper does **not** port
+that PCM preprocessing or promise that a default `fpcalc` invocation will match.
+Use the same raw fingerprint window as VirtualDJ when assembling a matching key.
+
+#### Text representation and joining to the library
+
+`CAudioSignature::saveToString` writes the signature as URL-safe Base64. An
+ordinary signature becomes a text `AudioSig` value; the XML reader explicitly
+loads it from **`Song/Scan/@AudioSig`**, and writes the decoded bytes into the
+same `SDBInfo + 0x130` region used for the SQLite key.
+
+- Count **0** serializes to the empty string.
+- Count **1** serializes to `-`.
+- Other counts serialize the 18 bytes after masking the final byte with `0x1f`.
+  `loadFromString` accepts an ordinary decoded value only when it is exactly
+  18 bytes and its final byte is below `0x20`.
+- The read-only helper rejects malformed text explicitly; it does not emulate
+  every permissive edge of the native Base64 decoder.
+
+For a valid persisted `AudioSig`, Base64url decoding therefore gives the BLOB
+needed for `SELECT xml FROM lyrics WHERE lid=?`. Do not bind the Base64 string,
+hex string, or linked-track SID where SQLite expects those raw bytes.
+
+The inspected local `database.xml` snapshot contained **no `AudioSig` attributes**;
+see [lyrics-cache-observation.json](../tests/lyrics-cache-observation.json) →
+`library_comparison`. Consequently this pass cannot map the cache rows back to
+that XML's tracks. That absence does not contradict the recovered reader/writer:
+the in-memory analysis state and other library snapshots are separate evidence.
+
+#### Stored payload grammar and historical reader behavior
+
+Synthetic example (not copied from a cached song):
+
+```text
+#CUSTOM
+#LANG=eng
+[0.10-0.30] alpha
+[0.40-0.80] beta\n
+```
+
+Each physical timed line has the form **`[start-end] text`**, with times in
+seconds. The historical reader looks for the literal `] ` separator. A trailing
+literal backslash plus `n` in the text becomes a newline in the displayed segment;
+it marks a lyric line ending without breaking the storage record into two lines.
+The editor writes times with two fractional digits and prefixes edited text with
+`#CUSTOM`.
+
+| Record | Meaning and scope |
+| --- | --- |
+| `#LANG=…` | Language metadata; recognized case-insensitively by `setLyrics`. |
+| `#CUSTOM` | Emitted by the lyric editor. The segment reader itself ignores this header. |
+| `#NOLYRICS` | Observed negative-result cache payload; it yields no segments through the reader. |
+| A language-only payload | Contains metadata without timed lyric segments; observed separately from `#NOLYRICS`. |
+| `[start-end] <marker>` | A whole text enclosed by `<` and `>` is skipped by the historical segment reader. |
+
+`setLyrics` is more permissive than a strict line parser: it searches for the
+first hyphen and then `] `, with searches able to extend past the current line.
+It parses numbers using `strToDbl`, converts them to float32, clamps each accepted
+segment's start to the previous accepted segment's end, and changes an end that
+is **less than** its start to `start + 0.01`. Equal endpoints remain equal.
+Empty text and angle markers do not advance the previous accepted end.
+
+[Synthetic instruction-execution vectors](../tests/lyrics-binary-vectors.json)
+confirm these details on the inspected build. For example, a segment at `1–1.5`
+after a segment ending at `3` becomes approximately `3–3.01`. Also,
+`[-1.00--1.00] pending` becomes **`0–1`**, because the first minus sign is consumed
+as the separator. Negative stored timestamps do occur in the inspected snapshot.
+The helper deliberately preserves them and reports raw storage structure;
+**its parser is not a clone of the runtime parser or its timing repairs**.
+
+The historical `has_lyrics` implementation checks for a nonempty parsed segment
+vector, not merely a `lyrics` row or a song flag. `get_lyrics_language` returns
+stored language metadata when segments exist, with `eng` as its fallback; no
+segments follow a failure branch. These are binary leads, not new live-tested
+verb conclusions, and do not promote verb-store status.
+
+#### Cache writes, flags and server path
+
+- `saveLyrics` uses `REPLACE INTO lyrics (lid, xml) VALUES (?, ?)` in the
+  track's drive-selected `extra.db`. A matching key replaces its payload.
+- `getLyrics` tries the track's drive database, then the main database when
+  different, returning the first nonempty payload. `deleteLyrics` attempts both
+  locations. It passes database-kind **0** where get/save pass **1**; that
+  discrepancy is preserved in the evidence and needs a focused deletion test,
+  not an assumption that all three route identically.
+- Saving chooses song-flag bits under mask `0x30000000`: ordinary saves use
+  `0x10000000`, while the editor's `custom=true` call uses `0x30000000`, then marks
+  changed state dirty. These bits alone do not prove rendered lyrics exist.
+- The client contains `https://live.virtualdj.com/live/lyrics.php`. Its cache
+  lookup sends `lid=<Base64url AudioSig>` plus version metadata and reads a JSON
+  `lyrics` field. The broader worker also has streaming-ID (`ns=`) and upload
+  paths. This pass made **no server requests**, and establishes neither server
+  availability, permissions, retention policy nor cache-matching behavior.
+
+Because the key is audio-derived, path or tag edits are not direct inputs. Audio
+edits, a different decoded fingerprint window, or preprocessing differences can
+change it. A migration still needs the relevant cache database; audio files do
+not contain the `lyrics` table's payload merely because they have a signature.
+
+#### Read-only tools and validation
+
+```sh
+just lyrics-cache --evidence
+just lyrics-cache --summary --db /path/to/offline-extra.db
+just lyrics-cache --list --db /path/to/offline-extra.db
+just lyrics-cache --summary --db /path/to/offline-extra.db --library /path/to/database.xml
+just lyrics-cache --audiosig 'AAAAAAAAAAAAAAAAAAAAAAIA'
+just lyrics-cache --fingerprint /path/to/raw-chromaprint-words.json
+just lyrics-cache --payload /path/to/synthetic-lyrics.txt
+just lyrics-cache --export-lid HEX_LID --db /path/to/offline-extra.db
+```
+
+The example AudioSig is synthetic (an all-zero histogram with count 2).
+`--summary` emits aggregates only; `--list` shows keys and metadata without
+lyric text; `--export-lid` prints the selected row's exact text.
+Use a consistent offline database snapshot with no nonempty WAL or rollback
+journal. No command writes the source database or contacts a server.
+
+Regenerate structural evidence with `just extract-lyrics-cache --app APP`
+(Python with Capstone), and synthetic instruction vectors with
+`just probe-lyrics-binary --app APP` (Python with Unicorn). Both require the
+SHA-guarded unstripped build. `just check-lyrics-cache` checks key construction
+against those vectors, encoding limits, and storage-parser preservation.
+
+The offline observation artifact records key-length/eligibility checks, payload
+categories, header and segment totals, unparsed-line totals, and source hashes.
+Every inspected row fit the recovered key shape and every nonempty physical line
+was accounted for by the storage parser. **This is Tier-2 corroboration**, not
+proof of current-build lyric rendering, audio-to-key reproduction or external
+cache insertion. No private lyrics, signatures, track names or database copies
+are committed. A disposable audio fixture, independent live readback, and a
+controlled lyric rendering test are the remaining integration checks.
 
 ## cache.db
 
@@ -1450,7 +1606,8 @@ Known unknown:
 
 - `extra.db track_data.sid`: FNV-1 metadata construction recovered (see Linked Tracks);
   complete raw-tag cleanup compatibility and current-build external-link write/readback remain unverified.
-- `extra.db lyrics.lid`: 18-byte blob identifier. Algorithm unknown.
+- `extra.db lyrics.lid`: packed Chromaprint statistics and count recovered (see Lyrics Cache);
+  end-to-end audio preprocessing equivalence and current-build lyric insertion/rendering remain unverified.
 - Full `Song/@Flag`, `Tags/@Flag`, and `Scan/@Flag` bit maps.
 - `Cache/cache2.db`, `Cache/cache3.db`, `Cache/cache4.db`, and `Cache/fft`.
 - Complete `.vdjsample` structure.

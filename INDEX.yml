@@ -206,6 +206,11 @@ skin_sdk:
     - just lint-skins
 
 application_internals:
+  lyrics:
+    command: just lyrics-cache --evidence
+    inspect: just lyrics-cache --summary --db OFFLINE_EXTRA_DB
+    evidence: tests/lyrics-cache-9246.json
+    note: AudioSig and 18-byte LID, Chromaprint reduction, timestamped payload grammar; Tier 2.
   linked_tracks:
     list: just list-linked-tracks [--json] [--db PATH]
     command: just linked-sid --evidence
