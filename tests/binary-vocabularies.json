@@ -1,18 +1,18 @@
 {
  "summary": {
   "build": "18.0.9598",
-  "groups": 21,
+  "groups": 32,
   "named": 18,
-  "members": 260,
-  "novel_members": 183,
+  "members": 364,
+  "novel_members": 213,
   "attested_tail_locations": {
-   "in_method": 76,
-   "shared": 71,
-   "absent": 76
+   "in_method": 190,
+   "shared": 291,
+   "absent": 61
   },
   "signals": {
-   "code_regions": 31,
-   "pointer_tables": 9
+   "code_regions": 45,
+   "pointer_tables": 11
   }
  },
  "groups": {
@@ -278,7 +278,6 @@
     "melovocal",
     "mic",
     "mixfx",
-    "rhythm",
     "stems",
     "title",
     "vocals"
@@ -437,6 +436,25 @@
    "verbs": {
     "effect_stems": {
      "attested": [
+      "rhythm",
+      "vocal"
+     ]
+    },
+    "only_stem": {
+     "attested": [
+      "bass",
+      "instru",
+      "rhythm",
+      "vocal"
+     ]
+    },
+    "stem": {
+     "attested": [
+      "bass",
+      "hihat",
+      "instru",
+      "kick",
+      "rhythm",
       "vocal"
      ]
     },
@@ -446,11 +464,16 @@
       "hihat",
       "instru",
       "kick",
+      "rhythm",
       "vocal"
      ]
     },
     "stem_pad": {
      "attested": [
+      "bass",
+      "instru",
+      "instrumental",
+      "rhythm",
       "vocal"
      ],
      "keyword_candidates": [
@@ -462,6 +485,7 @@
     },
     "stems_split": {
      "attested": [
+      "rhythm",
       "vocal"
      ]
     }
@@ -561,6 +585,11 @@
    },
    "verbs": {
     "stem_pad": {
+     "attested": [
+      "acapella",
+      "instrumental",
+      "isolate"
+     ],
      "keyword_candidates": [
       "acapella",
       "acappella",
@@ -619,21 +648,8 @@
    ],
    "novel": [
     "beige",
-    "darkblue",
-    "darkcyan",
-    "darkgray",
-    "darkgreen",
-    "darkmagenta",
-    "darkorange",
-    "darkred",
-    "darkyellow",
-    "gray",
-    "lightgray",
-    "marine",
     "none",
-    "pink",
-    "transparent",
-    "violet"
+    "transparent"
    ],
    "pool_neighbours_only": [],
    "member_signals": {
@@ -869,15 +885,43 @@
       "black",
       "blue",
       "cyan",
+      "darkblue",
+      "darkcyan",
+      "darkgray",
+      "darkgreen",
+      "darkmagenta",
+      "darkorange",
+      "darkred",
+      "darkyellow",
+      "gray",
+      "green",
+      "lightgray",
+      "magenta",
+      "marine",
+      "orange",
+      "pink",
+      "red",
+      "violet",
+      "white",
+      "yellow"
+     ],
+     "catalog": [
+      "red"
+     ]
+    },
+    "constant": {
+     "attested": [
+      "black",
+      "blue",
+      "cyan",
+      "darkgreen",
+      "darkred",
       "green",
       "magenta",
       "orange",
       "red",
       "white",
       "yellow"
-     ],
-     "catalog": [
-      "red"
      ]
     },
     "cue_color": {
@@ -953,18 +997,10 @@
     "vocals"
    ],
    "novel": [
-    "active",
     "aux",
-    "colorfx",
     "colorfx_sampler",
-    "instrumental",
     "melovocal",
-    "mic",
     "mixfx",
-    "releasefx",
-    "rhythm",
-    "sampler",
-    "stems",
     "vocals"
    ],
    "pool_neighbours_only": [
@@ -1103,11 +1139,56 @@
     ]
    },
    "verbs": {
+    "effect_active": {
+     "attested": [
+      "colorfx",
+      "mic",
+      "releasefx",
+      "sampler",
+      "stems"
+     ]
+    },
+    "effect_select": {
+     "attested": [
+      "colorfx",
+      "sampler",
+      "transition"
+     ],
+     "catalog": [
+      "audioonlyvisualisation"
+     ]
+    },
     "effect_show_gui": {
      "attested": [
       "audioonlyvisualisation",
+      "sampler",
       "transition",
       "video"
+     ]
+    },
+    "effect_slider": {
+     "attested": [
+      "active",
+      "sampler",
+      "stems",
+      "transition",
+      "video"
+     ]
+    },
+    "only_stem": {
+     "attested": [
+      "bass",
+      "instru",
+      "rhythm"
+     ]
+    },
+    "stem": {
+     "attested": [
+      "bass",
+      "hihat",
+      "instru",
+      "kick",
+      "rhythm"
      ]
     },
     "stem_color": {
@@ -1115,7 +1196,22 @@
       "bass",
       "hihat",
       "instru",
-      "kick"
+      "kick",
+      "rhythm"
+     ]
+    },
+    "stem_pad": {
+     "attested": [
+      "bass",
+      "instru",
+      "instrumental",
+      "rhythm"
+     ],
+     "keyword_candidates": [
+      "instrumental"
+     ],
+     "method_strings": [
+      "instrumental"
      ]
     }
    }
@@ -1389,8 +1485,11 @@
    "verbs": {
     "browser_window": {
      "attested": [
+      "automix",
       "files",
       "folders",
+      "playlist",
+      "sidelist",
       "sideview",
       "songs"
      ],
@@ -1448,6 +1547,9 @@
      ]
     },
     "get_gemini_display": {
+     "attested": [
+      "browser"
+     ],
      "keyword_candidates": [
       "browser",
       "files",
@@ -1529,7 +1631,6 @@
     "sampler",
     "skins",
     "tags",
-    "timecode",
     "video"
    ],
    "pool_neighbours_only": [],
@@ -1693,7 +1794,8 @@
    "verbs": {
     "settings": {
      "attested": [
-      "audio"
+      "audio",
+      "timecode"
      ]
     }
    }
@@ -1913,6 +2015,9 @@
    },
    "verbs": {
     "browser_window": {
+     "attested": [
+      "sidelist"
+     ],
      "keyword_candidates": [
       "sampler",
       "sidelist"
@@ -2150,7 +2255,8 @@
    "verbs": {
     "get_bpm": {
      "attested": [
-      "absolute"
+      "absolute",
+      "ghost"
      ],
      "keyword_candidates": [
       "absolute",
@@ -2260,7 +2366,8 @@
     "display_time": {
      "attested": [
       "elapsed",
-      "remain"
+      "remain",
+      "total"
      ],
      "catalog": [
       "elapsed",
@@ -2294,6 +2401,10 @@
      ]
     },
     "get_time_hour": {
+     "attested": [
+      "elapsed",
+      "remain"
+     ],
      "catalog": [
       "absolute",
       "elapsed",
@@ -2302,6 +2413,14 @@
      ]
     },
     "get_time_min": {
+     "attested": [
+      "absolute",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ],
      "catalog": [
       "absolute",
       "elapsed",
@@ -2309,7 +2428,30 @@
       "total"
      ]
     },
+    "get_time_ms": {
+     "attested": [
+      "absolute",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ]
+    },
+    "get_time_sec": {
+     "attested": [
+      "absolute",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ]
+    },
     "get_time_sign": {
+     "attested": [
+      "elapsed"
+     ],
      "catalog": [
       "elapsed",
       "remain",
@@ -2435,7 +2577,6 @@
    "novel": [
     "auxin",
     "auxout",
-    "deck",
     "deckfxreturn",
     "deckfxsend",
     "mic2",
@@ -2612,7 +2753,9 @@
    "verbs": {
     "effect_arm_deck": {
      "attested": [
-      "master"
+      "master",
+      "mic",
+      "sampler"
      ],
      "catalog": [
       "mic",
@@ -2648,6 +2791,10 @@
      ]
     },
     "get_limiter": {
+     "attested": [
+      "deck",
+      "master"
+     ],
      "catalog": [
       "booth",
       "headphones",
@@ -2721,11 +2868,8 @@
    ],
    "novel": [
     "al",
-    "album",
     "ar",
     "au",
-    "author",
-    "bpm",
     "by",
     "comment",
     "composer",
@@ -2745,7 +2889,6 @@
     "iprd",
     "isbj",
     "isft",
-    "key",
     "label",
     "product",
     "re",
@@ -2982,6 +3125,14 @@
    },
    "verbs": {
     "browser_sort": {
+     "attested": [
+      "album",
+      "artist",
+      "author",
+      "bpm",
+      "key",
+      "title"
+     ],
      "catalog": [
       "artist"
      ]
@@ -2993,10 +3144,30 @@
       "title"
      ]
     },
+    "get_loaded_song": {
+     "attested": [
+      "album",
+      "bpm"
+     ],
+     "catalog": [
+      "album"
+     ]
+    },
     "get_next_karaoke_song": {
      "attested": [
       "artist",
       "title"
+     ]
+    },
+    "sideview_sort": {
+     "attested": [
+      "artist",
+      "bpm",
+      "key",
+      "title"
+     ],
+     "catalog": [
+      "artist"
      ]
     }
    }
@@ -3031,20 +3202,13 @@
     "stems+fx"
    ],
    "novel": [
-    "beatjump",
-    "cueloop",
-    "custom",
     "dmx",
-    "hotcues",
-    "keycue",
-    "loop",
     "loop roll",
     "manual loop",
     "remix points",
     "saved loops",
     "scratch",
     "scratchbank",
-    "slicer",
     "stems+fx"
    ],
    "pool_neighbours_only": [],
@@ -3143,6 +3307,17 @@
    },
    "verbs": {
     "pad_page": {
+     "attested": [
+      "beatjump",
+      "cueloop",
+      "custom",
+      "hotcues",
+      "keycue",
+      "loop",
+      "sampler",
+      "slicer",
+      "stems"
+     ],
      "keyword_candidates": [
       "sampler",
       "stems"
@@ -3352,6 +3527,342 @@
     }
    }
   },
+  "auto:harmonic": {
+   "seed": [
+    "original",
+    "roland",
+    "harmonic",
+    "musical",
+    "rane"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "harmonic",
+    "musical",
+    "original",
+    "pioneer",
+    "rane",
+    "roland"
+   ],
+   "novel": [],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "harmonic": [
+     "region",
+     "run"
+    ],
+    "musical": [
+     "region",
+     "run"
+    ],
+    "original": [
+     "region",
+     "run"
+    ],
+    "pioneer": [
+     "region"
+    ],
+    "rane": [
+     "region",
+     "run"
+    ],
+    "roland": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x100244234",
+       "0x100244424"
+      ],
+      "chain_range": [
+       "0x100244234",
+       "0x100244420"
+      ],
+      "members_hit": [
+       "harmonic",
+       "musical",
+       "original",
+       "rane",
+       "roland"
+      ],
+      "referenced": [
+       "harmonic",
+       "musical",
+       "original",
+       "pioneer",
+       "rane",
+       "roland"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62950848,
+      "strings": [
+       "original",
+       "roland",
+       "harmonic",
+       "musical",
+       "rane"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "browser_sort": {
+     "attested": [
+      "harmonic"
+     ]
+    },
+    "get_key": {
+     "attested": [
+      "pioneer",
+      "roland"
+     ],
+     "keyword_candidates": [
+      "harmonic",
+      "musical",
+      "original",
+      "pioneer",
+      "rane",
+      "roland"
+     ],
+     "method_strings": [
+      "harmonic",
+      "musical",
+      "original",
+      "pioneer",
+      "rane",
+      "roland"
+     ],
+     "catalog": [
+      "harmonic",
+      "musical"
+     ]
+    }
+   }
+  },
+  "auto:thru": {
+   "seed": [
+    "only",
+    "thru",
+    "through"
+   ],
+   "seed_unconfirmed": [
+    "only"
+   ],
+   "regions_dropped": false,
+   "members": [
+    "left",
+    "right",
+    "through",
+    "thru"
+   ],
+   "novel": [
+    "through"
+   ],
+   "pool_neighbours_only": [
+    "only"
+   ],
+   "member_signals": {
+    "left": [
+     "region"
+    ],
+    "right": [
+     "region"
+    ],
+    "through": [
+     "region",
+     "run"
+    ],
+    "thru": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x10038788c",
+       "0x10038794c"
+      ],
+      "chain_range": [
+       "0x10038788c",
+       "0x100387948"
+      ],
+      "members_hit": [
+       "through",
+       "thru"
+      ],
+      "referenced": [
+       "left",
+       "right",
+       "through",
+       "thru"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 63019264,
+      "strings": [
+       "only",
+       "thru",
+       "through"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "action_deck": {
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "clone_deck": {
+     "attested": [
+      "left",
+      "right"
+     ],
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "clone_from_deck": {
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "cross_assign": {
+     "attested": [
+      "left",
+      "right",
+      "thru"
+     ],
+     "catalog": [
+      "left",
+      "thru"
+     ]
+    },
+    "device_side": {
+     "attested": [
+      "left",
+      "right"
+     ],
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ],
+     "catalog": [
+      "left"
+     ]
+    },
+    "effect_clone": {
+     "attested": [
+      "left",
+      "right"
+     ],
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "get_vu_meter": {
+     "attested": [
+      "left",
+      "right"
+     ]
+    },
+    "invert_deck": {
+     "attested": [
+      "left",
+      "right"
+     ],
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ],
+     "catalog": [
+      "left",
+      "right"
+     ]
+    },
+    "rzx_touch": {
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "rzx_touch_x": {
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "rzx_touch_y": {
+     "keyword_candidates": [
+      "left",
+      "right"
+     ],
+     "method_strings": [
+      "left",
+      "right"
+     ]
+    },
+    "video_transition": {
+     "attested": [
+      "left",
+      "right"
+     ],
+     "catalog": [
+      "left"
+     ]
+    }
+   }
+  },
   "auto:flanger": {
    "seed": [
     "flanger",
@@ -3367,8 +3878,6 @@
     "wahwah"
    ],
    "novel": [
-    "filter",
-    "reverb",
     "wahwah"
    ],
    "pool_neighbours_only": [],
@@ -3428,10 +3937,973 @@
    "verbs": {
     "effect_active": {
      "attested": [
-      "flanger"
+      "flanger",
+      "reverb"
      ],
      "catalog": [
       "flanger"
+     ]
+    },
+    "effect_arm_select": {
+     "attested": [
+      "filter",
+      "flanger",
+      "reverb"
+     ]
+    },
+    "effect_select": {
+     "attested": [
+      "filter",
+      "flanger",
+      "reverb"
+     ]
+    },
+    "effect_select_multi": {
+     "attested": [
+      "flanger",
+      "reverb"
+     ]
+    },
+    "filter_activate": {
+     "attested": [
+      "filter",
+      "flanger",
+      "reverb"
+     ],
+     "keyword_candidates": [
+      "filter"
+     ],
+     "method_strings": [
+      "filter"
+     ]
+    },
+    "filter_selectcolorfx": {
+     "attested": [
+      "filter",
+      "flanger",
+      "reverb"
+     ]
+    }
+   }
+  },
+  "auto:beat": {
+   "seed": [
+    "number",
+    "position",
+    "distance",
+    "beat"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "beat",
+    "beats",
+    "distance",
+    "name",
+    "num",
+    "number",
+    "pos",
+    "position"
+   ],
+   "novel": [],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "beat": [
+     "region",
+     "run"
+    ],
+    "beats": [
+     "region"
+    ],
+    "distance": [
+     "region",
+     "run"
+    ],
+    "name": [
+     "region"
+    ],
+    "num": [
+     "region",
+     "run"
+    ],
+    "number": [
+     "region",
+     "run"
+    ],
+    "pos": [
+     "region",
+     "run"
+    ],
+    "position": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x10010a544",
+       "0x10010a6c8"
+      ],
+      "chain_range": [
+       "0x10010a544",
+       "0x10010a6c4"
+      ],
+      "members_hit": [
+       "beat",
+       "distance",
+       "number",
+       "position"
+      ],
+      "referenced": [
+       "beat",
+       "beats",
+       "distance",
+       "name",
+       "num",
+       "number",
+       "pos",
+       "position"
+      ]
+     },
+     {
+      "text_range": [
+       "0x10010a6c8",
+       "0x10010a804"
+      ],
+      "chain_range": [
+       "0x10010a6c8",
+       "0x10010a800"
+      ],
+      "members_hit": [
+       "beat",
+       "distance",
+       "number",
+       "position"
+      ],
+      "referenced": [
+       "beat",
+       "beats",
+       "distance",
+       "name",
+       "num",
+       "number",
+       "pos",
+       "position"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62923143,
+      "strings": [
+       "number",
+       "num",
+       "position",
+       "pos",
+       "distance",
+       "beat"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "cue_display": {
+     "attested": [
+      "name"
+     ],
+     "keyword_candidates": [
+      "beat",
+      "beats",
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ],
+     "method_strings": [
+      "beat",
+      "beats",
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ]
+    },
+    "effect_select": {
+     "attested": [
+      "beat"
+     ]
+    },
+    "saved_loop_display": {
+     "keyword_candidates": [
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ],
+     "method_strings": [
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ]
+    }
+   }
+  },
+  "auto:camera": {
+   "seed": [
+    "menuresult",
+    "camera",
+    "letterboxing",
+    "bars",
+    "crop"
+   ],
+   "seed_unconfirmed": [
+    "menuresult"
+   ],
+   "regions_dropped": false,
+   "members": [
+    "background",
+    "bars",
+    "camera",
+    "clipmask",
+    "crop",
+    "index",
+    "letterboxing",
+    "linkdrop",
+    "mask",
+    "slideshow",
+    "source",
+    "zoom"
+   ],
+   "novel": [
+    "background",
+    "bars",
+    "clipmask",
+    "crop",
+    "index",
+    "letterboxing",
+    "linkdrop",
+    "mask",
+    "source",
+    "zoom"
+   ],
+   "pool_neighbours_only": [
+    "menuresult"
+   ],
+   "member_signals": {
+    "background": [
+     "region"
+    ],
+    "bars": [
+     "region",
+     "run"
+    ],
+    "camera": [
+     "region",
+     "run"
+    ],
+    "clipmask": [
+     "region"
+    ],
+    "crop": [
+     "region",
+     "run"
+    ],
+    "index": [
+     "region"
+    ],
+    "letterboxing": [
+     "region",
+     "run"
+    ],
+    "linkdrop": [
+     "region"
+    ],
+    "mask": [
+     "region"
+    ],
+    "slideshow": [
+     "region"
+    ],
+    "source": [
+     "region"
+    ],
+    "zoom": [
+     "region"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x100816b7c",
+       "0x100816ee8"
+      ],
+      "chain_range": [
+       "0x100816c90",
+       "0x100816ee4"
+      ],
+      "members_hit": [
+       "bars",
+       "camera",
+       "crop",
+       "letterboxing"
+      ],
+      "referenced": [
+       "background",
+       "bars",
+       "camera",
+       "clipmask",
+       "crop",
+       "index",
+       "letterboxing",
+       "linkdrop",
+       "mask",
+       "slideshow",
+       "source",
+       "up",
+       "zoom"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 63196030,
+      "strings": [
+       "menuresult",
+       "camera",
+       "letterboxing",
+       "bars",
+       "crop"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "effect_show_gui": {
+     "attested": [
+      "camera"
+     ]
+    },
+    "video_fx": {
+     "attested": [
+      "camera",
+      "slideshow"
+     ]
+    }
+   }
+  },
+  "auto:cover": {
+   "seed": [
+    "permalink_url",
+    "user",
+    "username",
+    "cover",
+    "teaser",
+    "demo"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "cover",
+    "demo",
+    "official",
+    "permalink_url",
+    "playback_count",
+    "preview",
+    "purchase_url",
+    "streamable",
+    "teaser",
+    "user",
+    "username"
+   ],
+   "novel": [
+    "demo",
+    "official",
+    "permalink_url",
+    "playback_count",
+    "preview",
+    "purchase_url",
+    "streamable",
+    "teaser",
+    "user",
+    "username"
+   ],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "cover": [
+     "region",
+     "run"
+    ],
+    "demo": [
+     "region",
+     "run"
+    ],
+    "official": [
+     "region",
+     "run"
+    ],
+    "permalink_url": [
+     "region",
+     "run"
+    ],
+    "playback_count": [
+     "region",
+     "run"
+    ],
+    "preview": [
+     "region",
+     "run"
+    ],
+    "purchase_url": [
+     "region",
+     "run"
+    ],
+    "streamable": [
+     "region"
+    ],
+    "teaser": [
+     "region",
+     "run"
+    ],
+    "user": [
+     "region",
+     "run"
+    ],
+    "username": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x1000e4628",
+       "0x1000e5088"
+      ],
+      "chain_range": [
+       "0x1000e4814",
+       "0x1000e4b74"
+      ],
+      "members_hit": [
+       "cover",
+       "demo",
+       "permalink_url",
+       "teaser",
+       "user",
+       "username"
+      ],
+      "referenced": [
+       "cover",
+       "demo",
+       "official",
+       "permalink_url",
+       "playback_count",
+       "preview",
+       "purchase_url",
+       "streamable",
+       "teaser",
+       "user",
+       "username"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62916521,
+      "strings": [
+       "permalink_url",
+       "user",
+       "username",
+       "preview",
+       "cover",
+       "teaser",
+       "demo",
+       "official",
+       "purchase_url",
+       "playback_count"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "effect_show_gui": {
+     "attested": [
+      "cover"
+     ]
+    }
+   }
+  },
+  "auto:coverflow": {
+   "seed": [
+    "separators",
+    "separator",
+    "coverflow",
+    "searchbar",
+    "extendtoolbar"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "color",
+    "colors",
+    "cover",
+    "coverflow",
+    "extendtoolbar",
+    "searchbar",
+    "separator",
+    "separators",
+    "sidelist"
+   ],
+   "novel": [
+    "color",
+    "colors",
+    "extendtoolbar",
+    "searchbar",
+    "separator",
+    "separators",
+    "sidelist"
+   ],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "color": [
+     "region"
+    ],
+    "colors": [
+     "region"
+    ],
+    "cover": [
+     "region"
+    ],
+    "coverflow": [
+     "region",
+     "run"
+    ],
+    "extendtoolbar": [
+     "region",
+     "run"
+    ],
+    "searchbar": [
+     "region",
+     "run"
+    ],
+    "separator": [
+     "region",
+     "run"
+    ],
+    "separators": [
+     "region",
+     "run"
+    ],
+    "sidelist": [
+     "region"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x1001a73d4",
+       "0x1001a7784"
+      ],
+      "chain_range": [
+       "0x1001a741c",
+       "0x1001a7780"
+      ],
+      "members_hit": [
+       "coverflow",
+       "extendtoolbar",
+       "searchbar",
+       "separator",
+       "separators"
+      ],
+      "referenced": [
+       "color",
+       "colors",
+       "cover",
+       "coverflow",
+       "extendtoolbar",
+       "searchbar",
+       "separator",
+       "separators",
+       "sidelist"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62937417,
+      "strings": [
+       "separators",
+       "separator",
+       "coverflow",
+       "searchbar",
+       "extendtoolbar"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "effect_show_gui": {
+     "attested": [
+      "cover",
+      "coverflow"
+     ]
+    },
+    "video_fx": {
+     "attested": [
+      "cover",
+      "coverflow"
+     ]
+    }
+   }
+  },
+  "auto:file": {
+   "seed": [
+    "slot",
+    "cell",
+    "index",
+    "file"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "artist",
+    "bpm",
+    "cell",
+    "color",
+    "dir",
+    "file",
+    "index",
+    "slot",
+    "title",
+    "type",
+    "volume"
+   ],
+   "novel": [
+    "cell",
+    "dir",
+    "index",
+    "slot",
+    "type",
+    "volume"
+   ],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "artist": [
+     "region"
+    ],
+    "bpm": [
+     "region"
+    ],
+    "cell": [
+     "region",
+     "run"
+    ],
+    "color": [
+     "region"
+    ],
+    "dir": [
+     "region"
+    ],
+    "file": [
+     "region",
+     "run"
+    ],
+    "index": [
+     "region",
+     "run"
+    ],
+    "slot": [
+     "region",
+     "run"
+    ],
+    "title": [
+     "region"
+    ],
+    "type": [
+     "region"
+    ],
+    "volume": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x10009686c",
+       "0x1000971e4"
+      ],
+      "chain_range": [
+       "0x10009686c",
+       "0x100097030"
+      ],
+      "members_hit": [
+       "cell",
+       "file",
+       "index",
+       "slot"
+      ],
+      "referenced": [
+       "artist",
+       "bpm",
+       "cell",
+       "color",
+       "dir",
+       "file",
+       "index",
+       "slot",
+       "title",
+       "type",
+       "volume"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62884619,
+      "strings": [
+       "slot",
+       "cell",
+       "index",
+       "volume",
+       "file"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "browser_sort": {
+     "attested": [
+      "artist",
+      "bpm",
+      "title"
+     ],
+     "catalog": [
+      "artist"
+     ]
+    },
+    "get_browsed_song": {
+     "attested": [
+      "color",
+      "file"
+     ],
+     "catalog": [
+      "title"
+     ]
+    },
+    "sideview_sort": {
+     "attested": [
+      "artist",
+      "bpm",
+      "title"
+     ],
+     "catalog": [
+      "artist"
+     ]
+    }
+   }
+  },
+  "auto:keycolor": {
+   "seed": [
+    "plus",
+    "minus",
+    "title_remix",
+    "keycolor",
+    "artist_before_feat",
+    "feat_after_artist"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "artist_before_feat",
+    "effect_button",
+    "feat_after_artist",
+    "folder",
+    "harmonic",
+    "keycolor",
+    "minus",
+    "playlist",
+    "plus",
+    "quick_filter",
+    "rating",
+    "remix_after_title",
+    "search",
+    "search_folder",
+    "title_before_remix",
+    "title_remix"
+   ],
+   "novel": [
+    "artist_before_feat",
+    "effect_button",
+    "feat_after_artist",
+    "folder",
+    "harmonic",
+    "minus",
+    "playlist",
+    "plus",
+    "quick_filter",
+    "rating",
+    "remix_after_title",
+    "search",
+    "search_folder",
+    "title_before_remix",
+    "title_remix"
+   ],
+   "pool_neighbours_only": [
+    "ghost"
+   ],
+   "member_signals": {
+    "artist_before_feat": [
+     "region",
+     "run"
+    ],
+    "effect_button": [
+     "region"
+    ],
+    "feat_after_artist": [
+     "region",
+     "run"
+    ],
+    "folder": [
+     "region"
+    ],
+    "harmonic": [
+     "region"
+    ],
+    "keycolor": [
+     "region",
+     "run"
+    ],
+    "minus": [
+     "region",
+     "run"
+    ],
+    "playlist": [
+     "region"
+    ],
+    "plus": [
+     "region",
+     "run"
+    ],
+    "quick_filter": [
+     "region"
+    ],
+    "rating": [
+     "region"
+    ],
+    "remix_after_title": [
+     "region",
+     "run"
+    ],
+    "search": [
+     "region"
+    ],
+    "search_folder": [
+     "region"
+    ],
+    "title_before_remix": [
+     "region",
+     "run"
+    ],
+    "title_remix": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x1004d5a0c",
+       "0x1004d5cc0"
+      ],
+      "chain_range": [
+       "0x1004d5a0c",
+       "0x1004d5cbc"
+      ],
+      "members_hit": [
+       "artist_before_feat",
+       "feat_after_artist",
+       "keycolor",
+       "title_remix"
+      ],
+      "referenced": [
+       "artist_before_feat",
+       "feat_after_artist",
+       "harmonic",
+       "keycolor",
+       "rating",
+       "remix_after_title",
+       "title_before_remix",
+       "title_remix"
+      ]
+     },
+     {
+      "text_range": [
+       "0x1004cf99c",
+       "0x1004d08b8"
+      ],
+      "chain_range": [
+       "0x1004d06c8",
+       "0x1004d08b4"
+      ],
+      "members_hit": [
+       "minus",
+       "plus"
+      ],
+      "referenced": [
+       "effect_button",
+       "folder",
+       "minus",
+       "playlist",
+       "plus",
+       "quick_filter",
+       "search",
+       "search_folder"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 63091907,
+      "strings": [
+       "plus",
+       "minus",
+       "title_remix",
+       "keycolor",
+       "artist_before_feat",
+       "feat_after_artist",
+       "title_before_remix",
+       "remix_after_title",
+       "ghost"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "get_loaded_song": {
+     "attested": [
+      "keycolor"
      ]
     }
    }
@@ -3598,69 +5070,473 @@
     }
    }
   },
-  "auto:coverflow": {
+  "auto:auto": {
    "seed": [
-    "separators",
-    "separator",
-    "coverflow",
-    "searchbar",
-    "extendtoolbar"
+    "cached",
+    "edited",
+    "auto"
    ],
    "seed_unconfirmed": [],
    "regions_dropped": false,
    "members": [
-    "color",
-    "colors",
-    "cover",
-    "coverflow",
-    "extendtoolbar",
-    "searchbar",
-    "separator",
-    "separators",
-    "sidelist"
+    "audio",
+    "auto",
+    "cached",
+    "edited",
+    "fast",
+    "karaoke",
+    "need",
+    "stream",
+    "use_mfra_for",
+    "video"
    ],
    "novel": [
-    "color",
-    "colors",
-    "cover",
-    "extendtoolbar",
-    "searchbar",
-    "separator",
-    "separators",
-    "sidelist"
+    "audio",
+    "cached",
+    "edited",
+    "fast",
+    "karaoke",
+    "need",
+    "stream",
+    "use_mfra_for",
+    "video"
+   ],
+   "pool_neighbours_only": [
+    "lq"
+   ],
+   "member_signals": {
+    "audio": [
+     "region"
+    ],
+    "auto": [
+     "table",
+     "region",
+     "run"
+    ],
+    "cached": [
+     "region",
+     "run"
+    ],
+    "edited": [
+     "region",
+     "run"
+    ],
+    "fast": [
+     "region"
+    ],
+    "karaoke": [
+     "region"
+    ],
+    "need": [
+     "region"
+    ],
+    "stream": [
+     "region"
+    ],
+    "use_mfra_for": [
+     "table"
+    ],
+    "video": [
+     "region"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [
+     {
+      "address": "0x103fbc0a0",
+      "stride": 8,
+      "members_hit": 2,
+      "entries": [
+       "use_mfra_for",
+       "auto",
+       "auto"
+      ]
+     }
+    ],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x100055cc8",
+       "0x100057164"
+      ],
+      "chain_range": [
+       "0x1000565e8",
+       "0x100056df8"
+      ],
+      "members_hit": [
+       "auto",
+       "cached",
+       "edited"
+      ],
+      "referenced": [
+       "audio",
+       "auto",
+       "cached",
+       "edited",
+       "fast",
+       "karaoke",
+       "need",
+       "stream"
+      ]
+     },
+     {
+      "text_range": [
+       "0x100057cc8",
+       "0x10005834c"
+      ],
+      "chain_range": [
+       "0x100057cf0",
+       "0x1000581f4"
+      ],
+      "members_hit": [
+       "auto",
+       "cached",
+       "edited"
+      ],
+      "referenced": [
+       "audio",
+       "auto",
+       "cached",
+       "edited",
+       "karaoke",
+       "lq",
+       "video"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 62880578,
+      "strings": [
+       "cached",
+       "lq",
+       "edited",
+       "auto"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "masterdeck": {
+     "attested": [
+      "auto"
+     ]
+    }
+   }
+  },
+  "auto:blinkfast": {
+   "seed": [
+    "loop_",
+    "blinkfast",
+    "while_pressed",
+    "momentarily",
+    "smart_pressed",
+    "mixer1"
+   ],
+   "seed_unconfirmed": [
+    "mixer1"
+   ],
+   "regions_dropped": false,
+   "members": [
+    "blink",
+    "blinkfast",
+    "effect_",
+    "get",
+    "get_",
+    "loop_",
+    "momentarily",
+    "smart_pressed",
+    "temporary",
+    "while_pressed"
+   ],
+   "novel": [
+    "effect_",
+    "get",
+    "get_",
+    "loop_",
+    "momentarily",
+    "smart_pressed",
+    "temporary",
+    "while_pressed"
+   ],
+   "pool_neighbours_only": [
+    "mixer1",
+    "mixer2",
+    "mixer3",
+    "mixer4"
+   ],
+   "member_signals": {
+    "blink": [
+     "region"
+    ],
+    "blinkfast": [
+     "region",
+     "run"
+    ],
+    "effect_": [
+     "region"
+    ],
+    "get": [
+     "region"
+    ],
+    "get_": [
+     "region"
+    ],
+    "loop_": [
+     "region",
+     "run"
+    ],
+    "momentarily": [
+     "region",
+     "run"
+    ],
+    "smart_pressed": [
+     "region",
+     "run"
+    ],
+    "temporary": [
+     "region"
+    ],
+    "while_pressed": [
+     "region",
+     "run"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x100564b30",
+       "0x1005662f0"
+      ],
+      "chain_range": [
+       "0x100565740",
+       "0x100565b20"
+      ],
+      "members_hit": [
+       "blinkfast",
+       "loop_",
+       "momentarily",
+       "smart_pressed",
+       "while_pressed"
+      ],
+      "referenced": [
+       "blink",
+       "blinkfast",
+       "effect_",
+       "get",
+       "get_",
+       "loop_",
+       "momentarily",
+       "smart_pressed",
+       "temporary",
+       "while_pressed"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 63115398,
+      "strings": [
+       "loop_",
+       "blinkfast",
+       "while_pressed",
+       "momentarily",
+       "smart_pressed",
+       "mixer1",
+       "mixer2",
+       "mixer3",
+       "mixer4"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "on": {
+     "attested": [
+      "blink",
+      "blinkfast"
+     ]
+    }
+   }
+  },
+  "auto:aiff": {
+   "seed": [
+    "aiff",
+    "flac",
+    "alac"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "aif",
+    "aiff",
+    "alac",
+    "flac",
+    "m4a",
+    "mp3",
+    "mp4",
+    "wav"
+   ],
+   "novel": [
+    "alac",
+    "flac",
+    "m4a",
+    "mp4"
    ],
    "pool_neighbours_only": [],
    "member_signals": {
-    "color": [
+    "aif": [
+     "region",
+     "run"
+    ],
+    "aiff": [
+     "region",
+     "run"
+    ],
+    "alac": [
+     "region",
+     "run"
+    ],
+    "flac": [
+     "table",
+     "region",
+     "run"
+    ],
+    "m4a": [
      "region"
     ],
-    "colors": [
+    "mp3": [
      "region"
     ],
-    "cover": [
+    "mp4": [
      "region"
     ],
-    "coverflow": [
+    "wav": [
+     "region"
+    ]
+   },
+   "signals": {
+    "pointer_tables": [
+     {
+      "address": "0x103fb1118",
+      "stride": 24,
+      "members_hit": 2,
+      "entries": [
+       "flac",
+       "flac"
+      ]
+     }
+    ],
+    "code_regions": [
+     {
+      "text_range": [
+       "0x100863ebc",
+       "0x100865f64"
+      ],
+      "chain_range": [
+       "0x1008642c4",
+       "0x1008649ec"
+      ],
+      "members_hit": [
+       "aiff",
+       "alac",
+       "flac"
+      ],
+      "referenced": [
+       "aif",
+       "aiff",
+       "alac",
+       "flac",
+       "m4a",
+       "mp3",
+       "mp4",
+       "wav"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "offset": 63204754,
+      "strings": [
+       "aif",
+       "aiff",
+       "flac",
+       "alac"
+      ]
+     }
+    ]
+   },
+   "verbs": {
+    "param_equal": {
+     "attested": [
+      "aif",
+      "aiff",
+      "mp3",
+      "wav"
+     ]
+    }
+   }
+  },
+  "auto:current": {
+   "seed": [
+    "action",
+    "marker",
+    "next",
+    "previous",
+    "current"
+   ],
+   "seed_unconfirmed": [],
+   "regions_dropped": false,
+   "members": [
+    "action",
+    "current",
+    "load",
+    "loop",
+    "marker",
+    "next",
+    "previous",
+    "remix"
+   ],
+   "novel": [
+    "action",
+    "load",
+    "loop",
+    "marker",
+    "remix"
+   ],
+   "pool_neighbours_only": [],
+   "member_signals": {
+    "action": [
      "region",
      "run"
     ],
-    "extendtoolbar": [
+    "current": [
      "region",
      "run"
     ],
-    "searchbar": [
+    "load": [
      "region",
      "run"
     ],
-    "separator": [
+    "loop": [
      "region",
      "run"
     ],
-    "separators": [
+    "marker": [
      "region",
      "run"
     ],
-    "sidelist": [
+    "next": [
+     "region",
+     "run"
+    ],
+    "previous": [
+     "region",
+     "run"
+    ],
+    "remix": [
      "region"
     ]
    },
@@ -3669,57 +5545,109 @@
     "code_regions": [
      {
       "text_range": [
-       "0x1001a73d4",
-       "0x1001a7784"
+       "0x100104f38",
+       "0x100105660"
       ],
       "chain_range": [
-       "0x1001a741c",
-       "0x1001a7780"
+       "0x100104f54",
+       "0x10010565c"
       ],
       "members_hit": [
-       "coverflow",
-       "extendtoolbar",
-       "searchbar",
-       "separator",
-       "separators"
+       "action",
+       "current",
+       "marker",
+       "next",
+       "previous"
       ],
       "referenced": [
-       "color",
-       "colors",
-       "cover",
-       "coverflow",
-       "extendtoolbar",
-       "searchbar",
-       "separator",
-       "separators",
-       "sidelist"
+       "action",
+       "current",
+       "load",
+       "loop",
+       "marker",
+       "next",
+       "previous",
+       "remix"
       ]
      }
     ],
     "runs": [
      {
-      "offset": 62937417,
+      "offset": 62922947,
       "strings": [
-       "separators",
-       "separator",
-       "coverflow",
-       "searchbar",
-       "extendtoolbar"
+       "action",
+       "loop",
+       "load",
+       "marker",
+       "next",
+       "previous",
+       "current"
       ]
      }
     ]
    },
    "verbs": {
-    "setting_setdefault": {
+    "automix_editor_movetrack": {
      "attested": [
-      "coverflow"
+      "current"
+     ],
+     "keyword_candidates": [
+      "current",
+      "next",
+      "previous"
+     ],
+     "method_strings": [
+      "current",
+      "next",
+      "previous"
+     ],
+     "catalog": [
+      "current",
+      "next",
+      "previous"
+     ]
+    },
+    "get_song_event": {
+     "keyword_candidates": [
+      "current",
+      "next"
+     ],
+     "method_strings": [
+      "current",
+      "next"
+     ],
+     "catalog": [
+      "current",
+      "next"
+     ]
+    },
+    "sampler_loop": {
+     "attested": [
+      "current"
+     ],
+     "catalog": [
+      "current"
      ]
     }
    }
   }
  },
  "attested_tail_locations": {
+  "auto_bpm_transition": {
+   "source_original": {
+    "where": "in_method"
+   }
+  },
   "auto_bpm_transition_options": {
+   "length": {
+    "where": "in_method"
+   },
+   "loop": {
+    "where": "in_method"
+   },
+   "master_tempo": {
+    "where": "in_method"
+   },
    "stems": {
     "where": "in_method"
    }
@@ -3736,6 +5664,11 @@
   },
   "automix_skip": {
    "pos": {
+    "where": "in_method"
+   }
+  },
+  "beatjump_select": {
+   "pioneer": {
     "where": "in_method"
    }
   },
@@ -3765,9 +5698,111 @@
    },
    "parent": {
     "where": "in_method"
+   },
+   "top": {
+    "where": "in_method"
+   }
+  },
+  "browser_sort": {
+   "album": {
+    "where": "shared",
+    "offsets": [
+     62919855
+    ],
+    "run": [
+     "artist_name",
+     "album"
+    ]
+   },
+   "artist": {
+    "where": "shared",
+    "offsets": [
+     62883673
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
+   },
+   "author": {
+    "where": "shared",
+    "offsets": [
+     62879358
+    ],
+    "run": [
+     "author"
+    ]
+   },
+   "bpm": {
+    "where": "shared",
+    "offsets": [
+     62883692
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
+   },
+   "harmonic": {
+    "where": "shared",
+    "offsets": [
+     62950864
+    ],
+    "run": [
+     "original",
+     "roland",
+     "harmonic",
+     "musical",
+     "rane"
+    ]
+   },
+   "key": {
+    "where": "shared",
+    "offsets": [
+     62884785
+    ],
+    "run": [
+     "track",
+     "key"
+    ]
+   },
+   "title": {
+    "where": "shared",
+    "offsets": [
+     62883680
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
+   },
+   "track": {
+    "where": "shared",
+    "offsets": [
+     62884779
+    ],
+    "run": [
+     "track",
+     "key"
+    ]
    }
   },
   "browser_window": {
+   "automix": {
+    "where": "in_method"
+   },
    "files": {
     "where": "shared",
     "offsets": [
@@ -3786,6 +5821,15 @@
     "run": [
      "folders"
     ]
+   },
+   "playlist": {
+    "where": "in_method"
+   },
+   "playlst": {
+    "where": "absent"
+   },
+   "sidelist": {
+    "where": "in_method"
    },
    "sideview": {
     "where": "shared",
@@ -3806,6 +5850,14 @@
     "run": [
      "songs"
     ]
+   }
+  },
+  "clone_deck": {
+   "left": {
+    "where": "in_method"
+   },
+   "right": {
+    "where": "in_method"
    }
   },
   "color": {
@@ -3852,6 +5904,668 @@
     "where": "shared",
     "offsets": [
      63117649
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkblue": {
+    "where": "shared",
+    "offsets": [
+     63117692
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkcyan": {
+    "where": "shared",
+    "offsets": [
+     63117712
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkgray": {
+    "where": "shared",
+    "offsets": [
+     63117744
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkgreen": {
+    "where": "shared",
+    "offsets": [
+     63117682
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkmagenta": {
+    "where": "shared",
+    "offsets": [
+     63117721
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkorange": {
+    "where": "shared",
+    "offsets": [
+     63117733
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkred": {
+    "where": "shared",
+    "offsets": [
+     63117674
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkyellow": {
+    "where": "shared",
+    "offsets": [
+     63117701
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "gray": {
+    "where": "shared",
+    "offsets": [
+     63117662
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "green": {
+    "where": "shared",
+    "offsets": [
+     63092246
+    ],
+    "run": [
+     "red",
+     "green",
+     "blue"
+    ]
+   },
+   "lightgray": {
+    "where": "shared",
+    "offsets": [
+     63117753
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "magenta": {
+    "where": "shared",
+    "offsets": [
+     63117654
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "marine": {
+    "where": "shared",
+    "offsets": [
+     63117774
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "nothing": {
+    "where": "shared",
+    "offsets": [
+     62933706
+    ],
+    "run": [
+     "nothing"
+    ]
+   },
+   "orange": {
+    "where": "shared",
+    "offsets": [
+     63117667
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "pink": {
+    "where": "shared",
+    "offsets": [
+     63117763
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "red": {
+    "where": "shared",
+    "offsets": [
+     63092242
+    ],
+    "run": [
+     "red",
+     "green",
+     "blue"
+    ]
+   },
+   "violet": {
+    "where": "shared",
+    "offsets": [
+     63117781
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "white": {
+    "where": "shared",
+    "offsets": [
+     63117630
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "yellow": {
+    "where": "shared",
+    "offsets": [
+     63117642
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   }
+  },
+  "color_mix": {
+   "white": {
+    "where": "shared",
+    "offsets": [
+     63117630
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   }
+  },
+  "constant": {
+   "black": {
+    "where": "shared",
+    "offsets": [
+     63117636
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "blue": {
+    "where": "shared",
+    "offsets": [
+     63092252
+    ],
+    "run": [
+     "red",
+     "green",
+     "blue"
+    ]
+   },
+   "cyan": {
+    "where": "shared",
+    "offsets": [
+     63117649
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkgreen": {
+    "where": "shared",
+    "offsets": [
+     63117682
+    ],
+    "run": [
+     "white",
+     "black",
+     "yellow",
+     "cyan",
+     "magenta",
+     "gray",
+     "orange",
+     "darkred",
+     "darkgreen",
+     "darkblue",
+     "darkyellow",
+     "darkcyan",
+     "darkmagenta",
+     "darkorange",
+     "darkgray",
+     "lightgray",
+     "pink",
+     "beige",
+     "marine",
+     "violet"
+    ]
+   },
+   "darkred": {
+    "where": "shared",
+    "offsets": [
+     63117674
     ],
     "run": [
      "white",
@@ -3954,6 +6668,34 @@
      "blue"
     ]
    },
+   "rekordbox": {
+    "where": "shared",
+    "offsets": [
+     62966842
+    ],
+    "run": [
+     "localmusic",
+     "mylists",
+     "mymusic",
+     "myvideos",
+     "drives",
+     "desktop",
+     "itunes",
+     "crates",
+     "traktor",
+     "rekordbox",
+     "ideas",
+     "filters",
+     "askthedj",
+     "history",
+     "geniusdj",
+     "charts",
+     "onlinemusic",
+     "clouddrive",
+     "digitrax",
+     "aiprompt"
+    ]
+   },
    "white": {
     "where": "shared",
     "offsets": [
@@ -4011,38 +6753,44 @@
     ]
    }
   },
-  "color_mix": {
-   "white": {
+  "cross_assign": {
+   "left": {
     "where": "shared",
     "offsets": [
-     63117630
+     62931234
     ],
     "run": [
-     "white",
-     "black",
-     "yellow",
-     "cyan",
-     "magenta",
-     "gray",
-     "orange",
-     "darkred",
-     "darkgreen",
-     "darkblue",
-     "darkyellow",
-     "darkcyan",
-     "darkmagenta",
-     "darkorange",
-     "darkgray",
-     "lightgray",
-     "pink",
-     "beige",
-     "marine",
-     "violet"
+     "left",
+     "right"
+    ]
+   },
+   "right": {
+    "where": "shared",
+    "offsets": [
+     62931239
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   },
+   "thru": {
+    "where": "shared",
+    "offsets": [
+     63019269
+    ],
+    "run": [
+     "only",
+     "thru",
+     "through"
     ]
    }
   },
   "crossfader_curve": {
    "cut": {
+    "where": "in_method"
+   },
+   "disabled": {
     "where": "in_method"
    },
    "full": {
@@ -4089,6 +6837,14 @@
     "where": "in_method"
    }
   },
+  "device_side": {
+   "left": {
+    "where": "in_method"
+   },
+   "right": {
+    "where": "in_method"
+   }
+  },
   "display_time": {
    "elapsed": {
     "where": "shared",
@@ -4115,6 +6871,38 @@
      "loopout",
      "to_lyrics"
     ]
+   },
+   "total": {
+    "where": "shared",
+    "offsets": [
+     63014513
+    ],
+    "run": [
+     "implies_nonnull_row",
+     "expr_compare",
+     "expr_implies_expr",
+     "affinity",
+     "load_extension",
+     "sqlite_compileoption_used",
+     "sqlite_compileoption_get",
+     "unlikely",
+     "likelihood",
+     "likely",
+     "ltrim",
+     "rtrim",
+     "trim",
+     "typeof",
+     "subtype",
+     "octet_length",
+     "instr",
+     "printf",
+     "unicode",
+     "char",
+     "abs",
+     "upper",
+     "lower",
+     "hex"
+    ]
    }
   },
   "dump": {
@@ -4131,10 +6919,112 @@
    }
   },
   "effect_active": {
+   "colorfx": {
+    "where": "shared",
+    "offsets": [
+     63196121
+    ],
+    "run": [
+     "menushown",
+     "audioonlyvisualisation",
+     "colorfx",
+     "releasefx",
+     "colorfx_sampler",
+     "vocals",
+     "melovocal",
+     "mixfx",
+     "smallrange",
+     "no_sources"
+    ]
+   },
+   "distortion": {
+    "where": "shared",
+    "offsets": [
+     63175515
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
    "flanger": {
     "where": "shared",
     "offsets": [
      63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "mergefx": {
+    "where": "absent"
+   },
+   "mic": {
+    "where": "shared",
+    "offsets": [
+     62924958
+    ],
+    "run": [
+     "mic",
+     "mic2",
+     "auxin",
+     "auxout",
+     "record",
+     "samplerin"
+    ]
+   },
+   "phaser": {
+    "where": "absent"
+   },
+   "releasefx": {
+    "where": "shared",
+    "offsets": [
+     63196129
+    ],
+    "run": [
+     "menushown",
+     "audioonlyvisualisation",
+     "colorfx",
+     "releasefx",
+     "colorfx_sampler",
+     "vocals",
+     "melovocal",
+     "mixfx",
+     "smallrange",
+     "no_sources"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
     ],
     "run": [
      "flanger",
@@ -4155,6 +7045,39 @@
      "stems",
      "sampler"
     ]
+   },
+   "scratch": {
+    "where": "shared",
+    "offsets": [
+     62928730
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "stems": {
+    "where": "shared",
+    "offsets": [
+     62880777
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   }
+  },
+  "effect_arm_beats": {
+   "short": {
+    "where": "in_method"
    }
   },
   "effect_arm_deck": {
@@ -4170,6 +7093,34 @@
      "deckfxreturn"
     ]
    },
+   "mic": {
+    "where": "shared",
+    "offsets": [
+     62924958
+    ],
+    "run": [
+     "mic",
+     "mic2",
+     "auxin",
+     "auxout",
+     "record",
+     "samplerin"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
    "single": {
     "where": "shared",
     "offsets": [
@@ -4178,6 +7129,217 @@
     "run": [
      "single",
      "leftright"
+    ]
+   }
+  },
+  "effect_arm_select": {
+   "cut": {
+    "where": "shared",
+    "offsets": [
+     62928747
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "enigma": {
+    "where": "absent"
+   },
+   "filter": {
+    "where": "shared",
+    "offsets": [
+     62928711
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "flanger": {
+    "where": "shared",
+    "offsets": [
+     63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "mobius": {
+    "where": "absent"
+   },
+   "phaser": {
+    "where": "absent"
+   },
+   "pitch": {
+    "where": "shared",
+    "offsets": [
+     62962203
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "spiral": {
+    "where": "absent"
+   }
+  },
+  "effect_beats": {
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "short": {
+    "where": "in_method"
+   },
+   "stems": {
+    "where": "shared",
+    "offsets": [
+     62880777
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   }
+  },
+  "effect_button": {
+   "mergefx": {
+    "where": "absent"
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "scratch": {
+    "where": "shared",
+    "offsets": [
+     62928730
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   }
+  },
+  "effect_clone": {
+   "left": {
+    "where": "in_method"
+   },
+   "right": {
+    "where": "in_method"
+   }
+  },
+  "effect_colorslider": {
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
     ]
    }
   },
@@ -4238,7 +7400,338 @@
     "where": "in_method"
    }
   },
+  "effect_fxsendreturndeck": {
+   "auto": {
+    "where": "in_method"
+   },
+   "auto_off": {
+    "where": "in_method"
+   }
+  },
   "effect_has_slider": {
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "transition": {
+    "where": "shared",
+    "offsets": [
+     63161143
+    ],
+    "run": [
+     "transition"
+    ]
+   },
+   "video": {
+    "where": "shared",
+    "offsets": [
+     62880551
+    ],
+    "run": [
+     "stream",
+     "karaoke",
+     "video",
+     "audio"
+    ]
+   }
+  },
+  "effect_select": {
+   "beat": {
+    "where": "shared",
+    "offsets": [
+     62923176
+    ],
+    "run": [
+     "number",
+     "num",
+     "position",
+     "pos",
+     "distance",
+     "beat"
+    ]
+   },
+   "colorfx": {
+    "where": "shared",
+    "offsets": [
+     63196121
+    ],
+    "run": [
+     "menushown",
+     "audioonlyvisualisation",
+     "colorfx",
+     "releasefx",
+     "colorfx_sampler",
+     "vocals",
+     "melovocal",
+     "mixfx",
+     "smallrange",
+     "no_sources"
+    ]
+   },
+   "cut": {
+    "where": "shared",
+    "offsets": [
+     62928747
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "distortion": {
+    "where": "shared",
+    "offsets": [
+     63175515
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "enigma": {
+    "where": "absent"
+   },
+   "filter": {
+    "where": "shared",
+    "offsets": [
+     62928711
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "flanger": {
+    "where": "shared",
+    "offsets": [
+     63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "flippin": {
+    "where": "absent"
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "low": {
+    "where": "shared",
+    "offsets": [
+     62916894
+    ],
+    "run": [
+     "low",
+     "hls_sq",
+     "hls_hq",
+     "http_hq",
+     "http",
+     "beacons",
+     "play",
+     "pause",
+     "stop",
+     "checkpoint",
+     "metadata_artist",
+     "artwork_url",
+     "release_year",
+     "audio_analysis",
+     "key_signature",
+     "explicit_lyrics"
+    ]
+   },
+   "menushown": {
+    "where": "in_method"
+   },
+   "mobius": {
+    "where": "absent"
+   },
+   "mt": {
+    "where": "absent"
+   },
+   "phaser": {
+    "where": "absent"
+   },
+   "pitch": {
+    "where": "shared",
+    "offsets": [
+     62962203
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "slip": {
+    "where": "shared",
+    "offsets": [
+     62965220
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "spiral": {
+    "where": "absent"
+   },
+   "transition": {
+    "where": "shared",
+    "offsets": [
+     63161143
+    ],
+    "run": [
+     "transition"
+    ]
+   }
+  },
+  "effect_select_multi": {
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "flanger": {
+    "where": "shared",
+    "offsets": [
+     63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "phaser": {
+    "where": "absent"
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
    "sampler": {
     "where": "shared",
     "offsets": [
@@ -4254,11 +7747,31 @@
     ]
    }
   },
-  "effect_select_multi": {
-   "sampler": {
+  "effect_select_popup": {
+   "mixfx": {
     "where": "shared",
     "offsets": [
-     62880783
+     63196172
+    ],
+    "run": [
+     "menushown",
+     "audioonlyvisualisation",
+     "colorfx",
+     "releasefx",
+     "colorfx_sampler",
+     "vocals",
+     "melovocal",
+     "mixfx",
+     "smallrange",
+     "no_sources"
+    ]
+   }
+  },
+  "effect_select_toggle": {
+   "stems": {
+    "where": "shared",
+    "offsets": [
+     62880777
     ],
     "run": [
      "custom",
@@ -4287,6 +7800,82 @@
      "mixfx",
      "smallrange",
      "no_sources"
+    ]
+   },
+   "camera": {
+    "where": "shared",
+    "offsets": [
+     63196041
+    ],
+    "run": [
+     "menuresult",
+     "camera",
+     "letterboxing",
+     "bars",
+     "crop"
+    ]
+   },
+   "cover": {
+    "where": "shared",
+    "offsets": [
+     62916557
+    ],
+    "run": [
+     "permalink_url",
+     "user",
+     "username",
+     "preview",
+     "cover",
+     "teaser",
+     "demo",
+     "official",
+     "purchase_url",
+     "playback_count"
+    ]
+   },
+   "coverflow": {
+    "where": "shared",
+    "offsets": [
+     62937438
+    ],
+    "run": [
+     "separators",
+     "separator",
+     "coverflow",
+     "searchbar",
+     "extendtoolbar"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "text": {
+    "where": "shared",
+    "offsets": [
+     62926431
+    ],
+    "run": [
+     "event",
+     "script",
+     "slideshow",
+     "sample",
+     "text",
+     "starttime",
+     "startafter",
+     "endtime",
+     "endafter",
+     "param"
     ]
    },
    "transition": {
@@ -4330,6 +7919,30 @@
      "active"
     ]
    },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "mergefx": {
+    "where": "absent"
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
    "sampler": {
     "where": "shared",
     "offsets": [
@@ -4342,6 +7955,41 @@
      "btn",
      "stems",
      "sampler"
+    ]
+   },
+   "stems": {
+    "where": "shared",
+    "offsets": [
+     62880777
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "transition": {
+    "where": "shared",
+    "offsets": [
+     63161143
+    ],
+    "run": [
+     "transition"
+    ]
+   },
+   "video": {
+    "where": "shared",
+    "offsets": [
+     62880551
+    ],
+    "run": [
+     "stream",
+     "karaoke",
+     "video",
+     "audio"
     ]
    }
   },
@@ -4362,6 +8010,24 @@
    }
   },
   "effect_stems": {
+   "melody": {
+    "where": "absent"
+   },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
    "vocal": {
     "where": "shared",
     "offsets": [
@@ -4376,6 +8042,26 @@
      "instru",
      "kick"
     ]
+   }
+  },
+  "effects_used": {
+   "deck": {
+    "where": "in_method"
+   }
+  },
+  "eq_high": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
+  "eq_low": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
+  "eq_mid": {
+   "dual": {
+    "where": "in_method"
    }
   },
   "eq_mode": {
@@ -4394,9 +8080,241 @@
     "where": "in_method"
    }
   },
+  "filter": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
+  "filter_activate": {
+   "cut": {
+    "where": "shared",
+    "offsets": [
+     62928747
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "distortion": {
+    "where": "shared",
+    "offsets": [
+     63175515
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "filter": {
+    "where": "in_method"
+   },
+   "flanger": {
+    "where": "shared",
+    "offsets": [
+     63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "mobius": {
+    "where": "absent"
+   },
+   "noise": {
+    "where": "shared",
+    "offsets": [
+     63031301
+    ],
+    "run": [
+     "noise"
+    ]
+   },
+   "pitch": {
+    "where": "shared",
+    "offsets": [
+     62962203
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   }
+  },
   "filter_label": {
    "clean": {
     "where": "in_method"
+   },
+   "name": {
+    "where": "in_method"
+   }
+  },
+  "filter_selectcolorfx": {
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "filter": {
+    "where": "shared",
+    "offsets": [
+     62928711
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "flanger": {
+    "where": "shared",
+    "offsets": [
+     63172368
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "noise": {
+    "where": "shared",
+    "offsets": [
+     63031301
+    ],
+    "run": [
+     "noise"
+    ]
+   },
+   "pitch": {
+    "where": "shared",
+    "offsets": [
+     62962203
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
    }
   },
   "font_size": {
@@ -4404,12 +8322,40 @@
     "where": "in_method"
    }
   },
+  "gain": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
   "get_bpm": {
    "absolute": {
+    "where": "in_method"
+   },
+   "ghost": {
     "where": "in_method"
    }
   },
   "get_browsed_song": {
+   "bitrate": {
+    "where": "shared",
+    "offsets": [
+     62973648
+    ],
+    "run": [
+     "controller",
+     "mapper",
+     "midiclockoutput",
+     "miditoeffect",
+     "server",
+     "protocol",
+     "format",
+     "bitrate",
+     "port",
+     "mount",
+     "password",
+     "session"
+    ]
+   },
    "color": {
     "where": "shared",
     "offsets": [
@@ -4422,10 +8368,59 @@
      "localize",
      "basic_string"
     ]
+   },
+   "file": {
+    "where": "shared",
+    "offsets": [
+     62884642
+    ],
+    "run": [
+     "slot",
+     "cell",
+     "index",
+     "volume",
+     "file"
+    ]
+   },
+   "key": {
+    "where": "shared",
+    "offsets": [
+     62884785
+    ],
+    "run": [
+     "track",
+     "key"
+    ]
+   }
+  },
+  "get_constant": {
+   "red": {
+    "where": "shared",
+    "offsets": [
+     63092242
+    ],
+    "run": [
+     "red",
+     "green",
+     "blue"
+    ]
+   }
+  },
+  "get_controller_image": {
+   "circle": {
+    "where": "in_method"
+   },
+   "square": {
+    "where": "in_method"
    }
   },
   "get_crossfader_result": {
    "full": {
+    "where": "in_method"
+   }
+  },
+  "get_deck_color": {
+   "absolute": {
     "where": "in_method"
    }
   },
@@ -4470,6 +8465,34 @@
     "run": [
      "transition"
     ]
+   },
+   "video": {
+    "where": "shared",
+    "offsets": [
+     62880551
+    ],
+    "run": [
+     "stream",
+     "karaoke",
+     "video",
+     "audio"
+    ]
+   }
+  },
+  "get_gemini_display": {
+   "browser": {
+    "where": "in_method"
+   },
+   "cover": {
+    "where": "in_method"
+   },
+   "waveform": {
+    "where": "in_method"
+   }
+  },
+  "get_gemini_waveform": {
+   "nogrid": {
+    "where": "in_method"
    }
   },
   "get_karaoke_background_song": {
@@ -4516,7 +8539,96 @@
     ]
    }
   },
+  "get_key": {
+   "pioneer": {
+    "where": "in_method"
+   },
+   "roland": {
+    "where": "in_method"
+   }
+  },
+  "get_level": {
+   "headphones": {
+    "where": "shared",
+    "offsets": [
+     62924864
+    ],
+    "run": [
+     "master",
+     "headphones",
+     "booth",
+     "deckfxreturn"
+    ]
+   }
+  },
+  "get_limiter": {
+   "deck": {
+    "where": "shared",
+    "offsets": [
+     62877164
+    ],
+    "run": [
+     "deck"
+    ]
+   },
+   "master": {
+    "where": "shared",
+    "offsets": [
+     62924857
+    ],
+    "run": [
+     "master",
+     "headphones",
+     "booth",
+     "deckfxreturn"
+    ]
+   }
+  },
   "get_loaded_song": {
+   "album": {
+    "where": "shared",
+    "offsets": [
+     62919855
+    ],
+    "run": [
+     "artist_name",
+     "album"
+    ]
+   },
+   "bitrate": {
+    "where": "shared",
+    "offsets": [
+     62973648
+    ],
+    "run": [
+     "controller",
+     "mapper",
+     "midiclockoutput",
+     "miditoeffect",
+     "server",
+     "protocol",
+     "format",
+     "bitrate",
+     "port",
+     "mount",
+     "password",
+     "session"
+    ]
+   },
+   "bpm": {
+    "where": "shared",
+    "offsets": [
+     62883692
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
+   },
    "color": {
     "where": "shared",
     "offsets": [
@@ -4528,6 +8640,45 @@
      "shortcut",
      "localize",
      "basic_string"
+    ]
+   },
+   "extension": {
+    "where": "shared",
+    "offsets": [
+     62879781
+    ],
+    "run": [
+     "extension"
+    ]
+   },
+   "file": {
+    "where": "shared",
+    "offsets": [
+     62884642
+    ],
+    "run": [
+     "slot",
+     "cell",
+     "index",
+     "volume",
+     "file"
+    ]
+   },
+   "keycolor": {
+    "where": "shared",
+    "offsets": [
+     63091930
+    ],
+    "run": [
+     "plus",
+     "minus",
+     "title_remix",
+     "keycolor",
+     "artist_before_feat",
+     "feat_after_artist",
+     "title_before_remix",
+     "remix_after_title",
+     "ghost"
     ]
    }
   },
@@ -4561,6 +8712,28 @@
      "beige",
      "marine",
      "violet"
+    ]
+   }
+  },
+  "get_loop_in_time": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
+    ]
+   }
+  },
+  "get_loop_out_time": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
     ]
    }
   },
@@ -4610,6 +8783,56 @@
     ]
    }
   },
+  "get_ns7_platter": {
+   "speed": {
+    "where": "in_method"
+   }
+  },
+  "get_numark_waveform": {
+   "ns7": {
+    "where": "absent"
+   }
+  },
+  "get_pioneer_display": {
+   "beatanchors": {
+    "where": "in_method"
+   },
+   "beatgrid": {
+    "where": "in_method"
+   },
+   "browsedsong": {
+    "where": "in_method"
+   },
+   "browser": {
+    "where": "in_method"
+   },
+   "cover": {
+    "where": "in_method"
+   },
+   "cuepoints": {
+    "where": "in_method"
+   },
+   "scratchwave": {
+    "where": "in_method"
+   },
+   "selectdeckmode": {
+    "where": "in_method"
+   },
+   "transitions": {
+    "where": "in_method"
+   },
+   "waveform": {
+    "where": "in_method"
+   },
+   "waveform_nexus": {
+    "where": "in_method"
+   }
+  },
+  "get_pitch_zero": {
+   "absolute": {
+    "where": "in_method"
+   }
+  },
   "get_sample_name": {
    "active": {
     "where": "shared",
@@ -4628,6 +8851,26 @@
      "beats",
      "active"
     ]
+   }
+  },
+  "get_slip_time": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
+    ]
+   },
+   "min": {
+    "where": "in_method"
+   },
+   "msec": {
+    "where": "in_method"
+   },
+   "sec": {
+    "where": "in_method"
    }
   },
   "get_time": {
@@ -4690,13 +8933,429 @@
     ]
    }
   },
+  "get_time_hour": {
+   "elapsed": {
+    "where": "shared",
+    "offsets": [
+     63092097
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "remain": {
+    "where": "shared",
+    "offsets": [
+     63092105
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   }
+  },
+  "get_time_min": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
+    ]
+   },
+   "elapsed": {
+    "where": "shared",
+    "offsets": [
+     63092097
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopin": {
+    "where": "shared",
+    "offsets": [
+     63092112
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopout": {
+    "where": "shared",
+    "offsets": [
+     63092119
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "remain": {
+    "where": "shared",
+    "offsets": [
+     63092105
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "total": {
+    "where": "shared",
+    "offsets": [
+     63014513
+    ],
+    "run": [
+     "implies_nonnull_row",
+     "expr_compare",
+     "expr_implies_expr",
+     "affinity",
+     "load_extension",
+     "sqlite_compileoption_used",
+     "sqlite_compileoption_get",
+     "unlikely",
+     "likelihood",
+     "likely",
+     "ltrim",
+     "rtrim",
+     "trim",
+     "typeof",
+     "subtype",
+     "octet_length",
+     "instr",
+     "printf",
+     "unicode",
+     "char",
+     "abs",
+     "upper",
+     "lower",
+     "hex"
+    ]
+   }
+  },
+  "get_time_ms": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
+    ]
+   },
+   "elapsed": {
+    "where": "shared",
+    "offsets": [
+     63092097
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopin": {
+    "where": "shared",
+    "offsets": [
+     63092112
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopout": {
+    "where": "shared",
+    "offsets": [
+     63092119
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "remain": {
+    "where": "shared",
+    "offsets": [
+     63092105
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "total": {
+    "where": "shared",
+    "offsets": [
+     63014513
+    ],
+    "run": [
+     "implies_nonnull_row",
+     "expr_compare",
+     "expr_implies_expr",
+     "affinity",
+     "load_extension",
+     "sqlite_compileoption_used",
+     "sqlite_compileoption_get",
+     "unlikely",
+     "likelihood",
+     "likely",
+     "ltrim",
+     "rtrim",
+     "trim",
+     "typeof",
+     "subtype",
+     "octet_length",
+     "instr",
+     "printf",
+     "unicode",
+     "char",
+     "abs",
+     "upper",
+     "lower",
+     "hex"
+    ]
+   }
+  },
+  "get_time_sec": {
+   "absolute": {
+    "where": "shared",
+    "offsets": [
+     63019321
+    ],
+    "run": [
+     "absolute"
+    ]
+   },
+   "elapsed": {
+    "where": "shared",
+    "offsets": [
+     63092097
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopin": {
+    "where": "shared",
+    "offsets": [
+     63092112
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "loopout": {
+    "where": "shared",
+    "offsets": [
+     63092119
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "remain": {
+    "where": "shared",
+    "offsets": [
+     63092105
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   },
+   "total": {
+    "where": "shared",
+    "offsets": [
+     63014513
+    ],
+    "run": [
+     "implies_nonnull_row",
+     "expr_compare",
+     "expr_implies_expr",
+     "affinity",
+     "load_extension",
+     "sqlite_compileoption_used",
+     "sqlite_compileoption_get",
+     "unlikely",
+     "likelihood",
+     "likely",
+     "ltrim",
+     "rtrim",
+     "trim",
+     "typeof",
+     "subtype",
+     "octet_length",
+     "instr",
+     "printf",
+     "unicode",
+     "char",
+     "abs",
+     "upper",
+     "lower",
+     "hex"
+    ]
+   }
+  },
+  "get_time_sign": {
+   "elapsed": {
+    "where": "shared",
+    "offsets": [
+     63092097
+    ],
+    "run": [
+     "elapsed",
+     "remain",
+     "loopin",
+     "loopout",
+     "to_lyrics"
+    ]
+   }
+  },
   "get_title_before_remix": {
    "clean": {
     "where": "in_method"
    }
   },
+  "get_vu_meter": {
+   "left": {
+    "where": "shared",
+    "offsets": [
+     62931234
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   },
+   "right": {
+    "where": "shared",
+    "offsets": [
+     62931239
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   }
+  },
+  "get_vu_meter_left": {
+   "master": {
+    "where": "shared",
+    "offsets": [
+     62924857
+    ],
+    "run": [
+     "master",
+     "headphones",
+     "booth",
+     "deckfxreturn"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   }
+  },
+  "get_vu_meter_right": {
+   "master": {
+    "where": "shared",
+    "offsets": [
+     62924857
+    ],
+    "run": [
+     "master",
+     "headphones",
+     "booth",
+     "deckfxreturn"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   }
+  },
+  "goto": {
+   "loopsize": {
+    "where": "in_method"
+   }
+  },
   "has_linked_tracks": {
    "browsed": {
+    "where": "in_method"
+   }
+  },
+  "has_stems": {
+   "ready": {
     "where": "in_method"
    }
   },
@@ -4739,6 +9398,14 @@
     ]
    }
   },
+  "invert_deck": {
+   "left": {
+    "where": "in_method"
+   },
+   "right": {
+    "where": "in_method"
+   }
+  },
   "is_audible": {
    "or": {
     "where": "absent"
@@ -4763,6 +9430,9 @@
    "loop": {
     "where": "in_method"
    },
+   "loopsize": {
+    "where": "in_method"
+   },
    "pads": {
     "where": "in_method"
    },
@@ -4778,8 +9448,33 @@
     "where": "in_method"
    }
   },
+  "leftcross": {
+   "none": {
+    "where": "in_method"
+   },
+   "only": {
+    "where": "in_method"
+   }
+  },
+  "leftdeck": {
+   "left": {
+    "where": "shared",
+    "offsets": [
+     62931234
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   }
+  },
   "leftvideo": {
    "auto": {
+    "where": "in_method"
+   }
+  },
+  "level": {
+   "dual": {
     "where": "in_method"
    }
   },
@@ -4804,6 +9499,11 @@
     "where": "in_method"
    }
   },
+  "load_previous": {
+   "keepplay": {
+    "where": "in_method"
+   }
+  },
   "loaded": {
    "opposite": {
     "where": "in_method"
@@ -4820,9 +9520,28 @@
     "where": "in_method"
    }
   },
+  "loop_in": {
+   "active": {
+    "where": "in_method"
+   }
+  },
   "loop_roll": {
    "video": {
     "where": "in_method"
+   }
+  },
+  "masterdeck": {
+   "auto": {
+    "where": "shared",
+    "offsets": [
+     62880595
+    ],
+    "run": [
+     "cached",
+     "lq",
+     "edited",
+     "auto"
+    ]
    }
   },
   "mid_label": {
@@ -4833,6 +9552,185 @@
   "mix_and_load_next": {
    "nosync": {
     "where": "in_method"
+   }
+  },
+  "motorwheel": {
+   "invspeed": {
+    "where": "in_method"
+   },
+   "move": {
+    "where": "in_method"
+   }
+  },
+  "motorwheel3": {
+   "posdelta": {
+    "where": "in_method"
+   },
+   "timedelta": {
+    "where": "in_method"
+   }
+  },
+  "mute": {
+   "inuse": {
+    "where": "shared",
+    "offsets": [
+     62928597
+    ],
+    "run": [
+     "line",
+     "inuse"
+    ]
+   },
+   "line": {
+    "where": "shared",
+    "offsets": [
+     62928592
+    ],
+    "run": [
+     "line",
+     "inuse"
+    ]
+   },
+   "sampler": {
+    "where": "shared",
+    "offsets": [
+     62880783
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   }
+  },
+  "ns7_platter": {
+   "startspeed": {
+    "where": "in_method"
+   },
+   "stopspeed": {
+    "where": "in_method"
+   },
+   "timestamp": {
+    "where": "in_method"
+   }
+  },
+  "on": {
+   "blink": {
+    "where": "shared",
+    "offsets": [
+     62952448
+    ],
+    "run": [
+     "action_deck",
+     "add_favoritefolder",
+     "add_filterfolder",
+     "add_list",
+     "add_to_list",
+     "add_virtualfolder",
+     "adjust_cbg",
+     "all_decks",
+     "apply_audio_config",
+     "assign_controller",
+     "assign_related_controller",
+     "auto_bpm_transition",
+     "auto_bpm_transition_options",
+     "auto_crossfade",
+     "auto_crossfader",
+     "auto_cue",
+     "auto_match_bpm",
+     "auto_match_key",
+     "auto_pitch_lock",
+     "auto_sync",
+     "auto_sync_options",
+     "auto_sync_settings",
+     "automix_add_next",
+     "automix_dualdeck"
+    ]
+   },
+   "blinkfast": {
+    "where": "shared",
+    "offsets": [
+     63115404
+    ],
+    "run": [
+     "loop_",
+     "blinkfast",
+     "while_pressed",
+     "momentarily",
+     "smart_pressed",
+     "mixer1",
+     "mixer2",
+     "mixer3",
+     "mixer4"
+    ]
+   }
+  },
+  "only_stem": {
+   "bass": {
+    "where": "shared",
+    "offsets": [
+     63055988
+    ],
+    "run": [
+     "overon",
+     "overoff",
+     "slow",
+     "bass",
+     "top",
+     "bottom",
+     "outside"
+    ]
+   },
+   "instru": {
+    "where": "shared",
+    "offsets": [
+     63094947
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
+   },
+   "melody": {
+    "where": "absent"
+   },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
+   "vocal": {
+    "where": "shared",
+    "offsets": [
+     63094935
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
    }
   },
   "os2l_scene": {
@@ -4849,6 +9747,38 @@
    }
   },
   "pad_page": {
+   "beatjump": {
+    "where": "shared",
+    "offsets": [
+     62952387
+    ],
+    "run": [
+     "action_deck",
+     "add_favoritefolder",
+     "add_filterfolder",
+     "add_list",
+     "add_to_list",
+     "add_virtualfolder",
+     "adjust_cbg",
+     "all_decks",
+     "apply_audio_config",
+     "assign_controller",
+     "assign_related_controller",
+     "auto_bpm_transition",
+     "auto_bpm_transition_options",
+     "auto_crossfade",
+     "auto_crossfader",
+     "auto_cue",
+     "auto_match_bpm",
+     "auto_match_key",
+     "auto_pitch_lock",
+     "auto_sync",
+     "auto_sync_options",
+     "auto_sync_settings",
+     "automix_add_next",
+     "automix_dualdeck"
+    ]
+   },
    "btn1": {
     "where": "absent"
    },
@@ -4872,6 +9802,401 @@
    },
    "btn8": {
     "where": "absent"
+   },
+   "cue": {
+    "where": "shared",
+    "offsets": [
+     62933067
+    ],
+    "run": [
+     "cue",
+     "deckcolor",
+     "dx",
+     "dy",
+     "chan1",
+     "chan2",
+     "both",
+     "chan1_active1",
+     "chan1_active2",
+     "chan2_active1",
+     "chan2_active2",
+     "both_active1",
+     "both_active2",
+     "grid1",
+     "size",
+     "active1",
+     "down",
+     "active2",
+     "grid2",
+     "cue1",
+     "cue2",
+     "deck1",
+     "deck2",
+     "center"
+    ]
+   },
+   "cueloop": {
+    "where": "shared",
+    "offsets": [
+     63061607
+    ],
+    "run": [
+     "keycue",
+     "cueloop"
+    ]
+   },
+   "custom": {
+    "where": "shared",
+    "offsets": [
+     62880756
+    ],
+    "run": [
+     "custom",
+     "pads",
+     "none",
+     "btn",
+     "stems",
+     "sampler"
+    ]
+   },
+   "hotcues": {
+    "where": "shared",
+    "offsets": [
+     63061573
+    ],
+    "run": [
+     "hotcues"
+    ]
+   },
+   "keycue": {
+    "where": "shared",
+    "offsets": [
+     63061600
+    ],
+    "run": [
+     "keycue",
+     "cueloop"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "manual": {
+    "where": "shared",
+    "offsets": [
+     62976672
+    ],
+    "run": [
+     "manual",
+     "laptop"
+    ]
+   },
+   "nov": {
+    "where": "absent"
+   },
+   "pad": {
+    "where": "shared",
+    "offsets": [
+     62961423
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "remix": {
+    "where": "shared",
+    "offsets": [
+     62883686
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
+   },
+   "sampler": {
+    "where": "in_method"
+   },
+   "saved": {
+    "where": "absent"
+   },
+   "slicer": {
+    "where": "shared",
+    "offsets": [
+     62965213
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "stems": {
+    "where": "in_method"
+   }
+  },
+  "padfx": {
+   "backspin": {
+    "where": "shared",
+    "offsets": [
+     62952357
+    ],
+    "run": [
+     "action_deck",
+     "add_favoritefolder",
+     "add_filterfolder",
+     "add_list",
+     "add_to_list",
+     "add_virtualfolder",
+     "adjust_cbg",
+     "all_decks",
+     "apply_audio_config",
+     "assign_controller",
+     "assign_related_controller",
+     "auto_bpm_transition",
+     "auto_bpm_transition_options",
+     "auto_crossfade",
+     "auto_crossfader",
+     "auto_cue",
+     "auto_match_bpm",
+     "auto_match_key",
+     "auto_pitch_lock",
+     "auto_sync",
+     "auto_sync_options",
+     "auto_sync_settings",
+     "automix_add_next",
+     "automix_dualdeck"
+    ]
+   },
+   "beat": {
+    "where": "shared",
+    "offsets": [
+     62923176
+    ],
+    "run": [
+     "number",
+     "num",
+     "position",
+     "pos",
+     "distance",
+     "beat"
+    ]
+   },
+   "brakestart": {
+    "where": "absent"
+   },
+   "cut": {
+    "where": "shared",
+    "offsets": [
+     62928747
+    ],
+    "run": [
+     "filter",
+     "full",
+     "smooth",
+     "scratch",
+     "disabled",
+     "cut"
+    ]
+   },
+   "echo": {
+    "where": "shared",
+    "offsets": [
+     63175510
+    ],
+    "run": [
+     "echo",
+     "distortion"
+    ]
+   },
+   "loop": {
+    "where": "shared",
+    "offsets": [
+     62922954
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   },
+   "reverb": {
+    "where": "shared",
+    "offsets": [
+     63172376
+    ],
+    "run": [
+     "flanger",
+     "reverb",
+     "wahwah"
+    ]
+   },
+   "vinylbrake": {
+    "where": "absent"
+   }
+  },
+  "page": {
+   "browser": {
+    "where": "in_method"
+   },
+   "effects": {
+    "where": "in_method"
+   },
+   "record": {
+    "where": "in_method"
+   },
+   "sampler": {
+    "where": "in_method"
+   }
+  },
+  "param_cast": {
+   "float": {
+    "where": "in_method"
+   },
+   "frac": {
+    "where": "in_method"
+   },
+   "int": {
+    "where": "in_method"
+   },
+   "int_trunc": {
+    "where": "in_method"
+   },
+   "integer": {
+    "where": "in_method"
+   },
+   "percent": {
+    "where": "in_method"
+   },
+   "percentage": {
+    "where": "in_method"
+   },
+   "text": {
+    "where": "in_method"
+   }
+  },
+  "param_equal": {
+   "aac": {
+    "where": "shared",
+    "offsets": [
+     63445130
+    ],
+    "run": [
+     "aac"
+    ]
+   },
+   "aif": {
+    "where": "shared",
+    "offsets": [
+     63204754
+    ],
+    "run": [
+     "aif",
+     "aiff",
+     "flac",
+     "alac"
+    ]
+   },
+   "aiff": {
+    "where": "shared",
+    "offsets": [
+     63204758
+    ],
+    "run": [
+     "aif",
+     "aiff",
+     "flac",
+     "alac"
+    ]
+   },
+   "mp3": {
+    "where": "shared",
+    "offsets": [
+     62885766
+    ],
+    "run": [
+     "mp3"
+    ]
+   },
+   "wav": {
+    "where": "shared",
+    "offsets": [
+     62972262
+    ],
+    "run": [
+     "wav"
+    ]
+   }
+  },
+  "phase_movement": {
+   "dvs": {
+    "where": "in_method"
+   },
+   "hid": {
+    "where": "in_method"
    }
   },
   "phrase_sync": {
@@ -4879,8 +10204,32 @@
     "where": "in_method"
    }
   },
+  "pitch": {
+   "all": {
+    "where": "in_method"
+   },
+   "dual": {
+    "where": "in_method"
+   },
+   "touchrelative": {
+    "where": "in_method"
+   }
+  },
+  "pitch_slider": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
+  "pitch_zero": {
+   "center": {
+    "where": "in_method"
+   }
+  },
   "play_mode": {
    "numark": {
+    "where": "in_method"
+   },
+   "pioneer": {
     "where": "in_method"
    }
   },
@@ -4889,13 +10238,108 @@
     "where": "in_method"
    }
   },
+  "record": {
+   "nopopup": {
+    "where": "absent"
+   }
+  },
+  "rightcross": {
+   "none": {
+    "where": "in_method"
+   },
+   "only": {
+    "where": "in_method"
+   }
+  },
   "rightvideo": {
    "auto": {
     "where": "in_method"
    }
   },
+  "rzx_touch": {
+   "centre": {
+    "where": "in_method"
+   }
+  },
+  "rzx_touch_x": {
+   "centre": {
+    "where": "in_method"
+   }
+  },
+  "rzx_touch_y": {
+   "centre": {
+    "where": "in_method"
+   }
+  },
+  "sampler_bank": {
+   "recordings": {
+    "where": "absent"
+   }
+  },
+  "sampler_loop": {
+   "current": {
+    "where": "shared",
+    "offsets": [
+     62922985
+    ],
+    "run": [
+     "action",
+     "loop",
+     "load",
+     "marker",
+     "next",
+     "previous",
+     "current"
+    ]
+   }
+  },
+  "sampler_mode": {
+   "hold": {
+    "where": "shared",
+    "offsets": [
+     62959604
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "stutter": {
+    "where": "absent"
+   },
+   "unmute": {
+    "where": "absent"
+   }
+  },
   "sampler_options": {
    "sideview": {
+    "where": "in_method"
+   }
+  },
+  "sampler_output": {
+   "headphones": {
     "where": "in_method"
    }
   },
@@ -4928,6 +10372,11 @@
    }
   },
   "sampler_stop": {
+   "all": {
+    "where": "in_method"
+   }
+  },
+  "sampler_volume": {
    "all": {
     "where": "in_method"
    }
@@ -4986,19 +10435,104 @@
     "where": "in_method"
    }
   },
-  "set": {
-   "fxparam": {
-    "where": "absent"
-   },
-   "fxslot": {
-    "where": "absent"
-   },
-   "fxtouch": {
-    "where": "absent"
-   }
-  },
   "setting": {
+   "autocue": {
+    "where": "absent"
+   },
+   "crossfaderdisable": {
+    "where": "absent"
+   },
    "eqmode": {
+    "where": "absent"
+   },
+   "equalizermode": {
+    "where": "absent"
+   },
+   "fadercurve": {
+    "where": "absent"
+   },
+   "fxprocessing": {
+    "where": "absent"
+   },
+   "globalquantize": {
+    "where": "absent"
+   },
+   "hidesonginfo": {
+    "where": "absent"
+   },
+   "keydisplay": {
+    "where": "absent"
+   },
+   "latency": {
+    "where": "shared",
+    "offsets": [
+     63188495
+    ],
+    "run": [
+     "latency"
+    ]
+   },
+   "loadsecurity": {
+    "where": "absent"
+   },
+   "pitchrange": {
+    "where": "shared",
+    "offsets": [
+     63045145
+    ],
+    "run": [
+     "namecue",
+     "tocue",
+     "fromcue",
+     "nextcuename",
+     "prevcuename",
+     "nextcue",
+     "prevcue",
+     "start",
+     "tostart",
+     "toend",
+     "fromstart",
+     "fromend",
+     "bpmexx",
+     "bpmex",
+     "pitchrange"
+    ]
+   },
+   "rampscratchtime": {
+    "where": "absent"
+   },
+   "rpm": {
+    "where": "shared",
+    "offsets": [
+     63139751
+    ],
+    "run": [
+     "lite",
+     "on_instant",
+     "on_normal",
+     "off_instant",
+     "off_normal",
+     "rpm",
+     "speedup",
+     "speeddown",
+     "waveform",
+     "waveform_nexus",
+     "selectdeckmode",
+     "rx3",
+     "rev7",
+     "cuepoints",
+     "beatanchors",
+     "transitions",
+     "browsedsong"
+    ]
+   },
+   "samplerheadphones": {
+    "where": "absent"
+   },
+   "skinwaveformtype": {
+    "where": "absent"
+   },
+   "zerodb": {
     "where": "absent"
    }
   },
@@ -5017,6 +10551,44 @@
     ]
    }
   },
+  "setting_setsession": {
+   "skin6fxlayout": {
+    "where": "absent"
+   },
+   "zerodb": {
+    "where": "absent"
+   }
+  },
+  "setting_setsession_deck": {
+   "levelfaderhamster": {
+    "where": "absent"
+   },
+   "rpm": {
+    "where": "shared",
+    "offsets": [
+     63139751
+    ],
+    "run": [
+     "lite",
+     "on_instant",
+     "on_normal",
+     "off_instant",
+     "off_normal",
+     "rpm",
+     "speedup",
+     "speeddown",
+     "waveform",
+     "waveform_nexus",
+     "selectdeckmode",
+     "rx3",
+     "rev7",
+     "cuepoints",
+     "beatanchors",
+     "transitions",
+     "browsedsong"
+    ]
+   }
+  },
   "settings": {
    "audio": {
     "where": "shared",
@@ -5028,6 +10600,15 @@
      "karaoke",
      "video",
      "audio"
+    ]
+   },
+   "timecode": {
+    "where": "shared",
+    "offsets": [
+     62925005
+    ],
+    "run": [
+     "timecode"
     ]
    }
   },
@@ -5078,6 +10659,9 @@
      "tempo",
      "info"
     ]
+   },
+   "rtfoldersview": {
+    "where": "absent"
    },
    "sideview": {
     "where": "shared",
@@ -5137,172 +10721,164 @@
     ]
    }
   },
-  "skin_panel": {
-   "audiomixer": {
-    "where": "absent"
+  "sideview_sort": {
+   "artist": {
+    "where": "shared",
+    "offsets": [
+     62883673
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
    },
-   "barcounter": {
-    "where": "absent"
+   "bpm": {
+    "where": "shared",
+    "offsets": [
+     62883692
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
    },
-   "beatgrid_left": {
-    "where": "absent"
+   "key": {
+    "where": "shared",
+    "offsets": [
+     62884785
+    ],
+    "run": [
+     "track",
+     "key"
+    ]
    },
-   "beatgrid_right": {
-    "where": "absent"
-   },
-   "defaultwave": {
-    "where": "absent"
-   },
-   "fxrack_1_1": {
-    "where": "absent"
-   },
-   "fxrack_1_3": {
-    "where": "absent"
-   },
-   "fxrack_2_1": {
-    "where": "absent"
-   },
-   "fxrack_2_3": {
-    "where": "absent"
-   },
-   "fxrack_3_1": {
-    "where": "absent"
-   },
-   "fxrack_3_3": {
-    "where": "absent"
-   },
-   "fxrack_4_1": {
-    "where": "absent"
-   },
-   "fxrack_4_3": {
-    "where": "absent"
-   },
-   "horizontal_scratch_active": {
-    "where": "absent"
-   },
-   "leftdeckfx": {
-    "where": "absent"
-   },
-   "leftdeckhcs": {
-    "where": "absent"
-   },
-   "leftdeckmixer": {
-    "where": "absent"
-   },
-   "leftdeckpads": {
-    "where": "absent"
-   },
-   "leftdeckpois": {
-    "where": "absent"
-   },
-   "leftdecksloops": {
-    "where": "absent"
-   },
-   "leftjogpitch": {
-    "where": "absent"
-   },
-   "leftkey": {
-    "where": "absent"
-   },
-   "looproll_left": {
-    "where": "absent"
-   },
-   "looproll_right": {
-    "where": "absent"
-   },
-   "mastermixer": {
-    "where": "absent"
-   },
-   "rightdeckfx": {
-    "where": "absent"
-   },
-   "rightdeckhcs": {
-    "where": "absent"
-   },
-   "rightdeckmixer": {
-    "where": "absent"
-   },
-   "rightdeckpads": {
-    "where": "absent"
-   },
-   "rightdeckpois": {
-    "where": "absent"
-   },
-   "rightdecksloops": {
-    "where": "absent"
-   },
-   "rightjogpitch": {
-    "where": "absent"
-   },
-   "rightkey": {
-    "where": "absent"
-   },
-   "rmaudio": {
-    "where": "absent"
-   },
-   "rmbrowser": {
-    "where": "absent"
-   },
-   "rmleft": {
-    "where": "absent"
-   },
-   "rmmaster": {
-    "where": "absent"
-   },
-   "rmmixer": {
-    "where": "absent"
-   },
-   "rmmixerleft_eq": {
-    "where": "absent"
-   },
-   "rmmixerleft_filter": {
-    "where": "absent"
-   },
-   "rmmixerright_eq": {
-    "where": "absent"
-   },
-   "rmmixerright_filter": {
-    "where": "absent"
-   },
-   "rmright": {
-    "where": "absent"
-   },
-   "rmscratch": {
-    "where": "absent"
-   },
-   "rmvideo": {
-    "where": "absent"
-   },
-   "sampler_left": {
-    "where": "absent"
-   },
-   "sampler_right": {
-    "where": "absent"
-   },
-   "scratch_left": {
-    "where": "absent"
-   },
-   "scratch_right": {
-    "where": "absent"
-   },
-   "scratchmixer": {
-    "where": "absent"
-   },
-   "videomixer": {
-    "where": "absent"
-   }
-  },
-  "skin_panelgroup": {
-   "decktimer_deck3mini": {
-    "where": "absent"
-   },
-   "decktimer_deck4mini": {
-    "where": "absent"
+   "title": {
+    "where": "shared",
+    "offsets": [
+     62883680
+    ],
+    "run": [
+     "artist",
+     "title",
+     "remix",
+     "bpm",
+     "hkey",
+     "cu"
+    ]
    }
   },
   "slicer": {
+   "length": {
+    "where": "in_method"
+   },
+   "step": {
+    "where": "in_method"
+   },
    "video": {
     "where": "in_method"
+   }
+  },
+  "stem": {
+   "bass": {
+    "where": "shared",
+    "offsets": [
+     63055988
+    ],
+    "run": [
+     "overon",
+     "overoff",
+     "slow",
+     "bass",
+     "top",
+     "bottom",
+     "outside"
+    ]
+   },
+   "fullvocal": {
+    "where": "absent"
+   },
+   "hihat": {
+    "where": "shared",
+    "offsets": [
+     63094941
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
+   },
+   "instru": {
+    "where": "shared",
+    "offsets": [
+     63094947
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
+   },
+   "kick": {
+    "where": "shared",
+    "offsets": [
+     63094954
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
+   },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
+   "vocal": {
+    "where": "shared",
+    "offsets": [
+     63094935
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
    }
   },
   "stem_color": {
@@ -5366,6 +10942,21 @@
      "kick"
     ]
    },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
    "vocal": {
     "where": "shared",
     "offsets": [
@@ -5383,6 +10974,63 @@
    }
   },
   "stem_pad": {
+   "acapella": {
+    "where": "in_method"
+   },
+   "bass": {
+    "where": "shared",
+    "offsets": [
+     63055988
+    ],
+    "run": [
+     "overon",
+     "overoff",
+     "slow",
+     "bass",
+     "top",
+     "bottom",
+     "outside"
+    ]
+   },
+   "instru": {
+    "where": "shared",
+    "offsets": [
+     63094947
+    ],
+    "run": [
+     "unfinishedtask",
+     "createstemsfile",
+     "tasks",
+     "vocal",
+     "hihat",
+     "instru",
+     "kick"
+    ]
+   },
+   "instrumental": {
+    "where": "in_method"
+   },
+   "isolate": {
+    "where": "in_method"
+   },
+   "melody": {
+    "where": "absent"
+   },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
    "vocal": {
     "where": "shared",
     "offsets": [
@@ -5400,6 +11048,24 @@
    }
   },
   "stems_split": {
+   "melody": {
+    "where": "absent"
+   },
+   "rhythm": {
+    "where": "shared",
+    "offsets": [
+     62933034
+    ],
+    "run": [
+     "upsidedown",
+     "opposite",
+     "mirror",
+     "fade",
+     "rhythm",
+     "mainwidth",
+     "phrasewidth"
+    ]
+   },
    "vocal": {
     "where": "shared",
     "offsets": [
@@ -5434,9 +11100,30 @@
     ]
    }
   },
-  "toggle": {
-   "fxtemp": {
-    "where": "absent"
+  "timecode_mode": {
+   "absolute": {
+    "where": "in_method"
+   },
+   "relative": {
+    "where": "in_method"
+   },
+   "smart": {
+    "where": "in_method"
+   }
+  },
+  "timecode_pitch": {
+   "autopitchrange": {
+    "where": "in_method"
+   }
+  },
+  "touchwheel": {
+   "search": {
+    "where": "in_method"
+   }
+  },
+  "touchwheel_touch": {
+   "search": {
+    "where": "in_method"
    }
   },
   "undo_load": {
@@ -5444,26 +11131,86 @@
     "where": "in_method"
    }
   },
-  "var": {
-   "fxparam": {
-    "where": "absent"
+  "video_fx": {
+   "camera": {
+    "where": "shared",
+    "offsets": [
+     63196041
+    ],
+    "run": [
+     "menuresult",
+     "camera",
+     "letterboxing",
+     "bars",
+     "crop"
+    ]
    },
-   "fxslot": {
-    "where": "absent"
+   "cover": {
+    "where": "shared",
+    "offsets": [
+     62916557
+    ],
+    "run": [
+     "permalink_url",
+     "user",
+     "username",
+     "preview",
+     "cover",
+     "teaser",
+     "demo",
+     "official",
+     "purchase_url",
+     "playback_count"
+    ]
    },
-   "fxtemp": {
-    "where": "absent"
-   }
-  },
-  "var_equal": {
-   "xp2_slotselect1": {
-    "where": "absent"
+   "coverflow": {
+    "where": "shared",
+    "offsets": [
+     62937438
+    ],
+    "run": [
+     "separators",
+     "separator",
+     "coverflow",
+     "searchbar",
+     "extendtoolbar"
+    ]
    },
-   "xp2_slotselect2": {
-    "where": "absent"
+   "slideshow": {
+    "where": "shared",
+    "offsets": [
+     62926414
+    ],
+    "run": [
+     "event",
+     "script",
+     "slideshow",
+     "sample",
+     "text",
+     "starttime",
+     "startafter",
+     "endtime",
+     "endafter",
+     "param"
+    ]
    },
-   "xp2_slotselect3": {
-    "where": "absent"
+   "text": {
+    "where": "shared",
+    "offsets": [
+     62926431
+    ],
+    "run": [
+     "event",
+     "script",
+     "slideshow",
+     "sample",
+     "text",
+     "starttime",
+     "startafter",
+     "endtime",
+     "endafter",
+     "param"
+    ]
    }
   },
   "video_level": {
@@ -5500,6 +11247,33 @@
     ]
    }
   },
+  "video_transition": {
+   "left": {
+    "where": "shared",
+    "offsets": [
+     62931234
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   },
+   "right": {
+    "where": "shared",
+    "offsets": [
+     62931239
+    ],
+    "run": [
+     "left",
+     "right"
+    ]
+   }
+  },
+  "video_transition_select": {
+   "random": {
+    "where": "in_method"
+   }
+  },
   "view_options": {
    "showkaraoke": {
     "where": "in_method"
@@ -5509,6 +11283,168 @@
    },
    "showvideo": {
     "where": "in_method"
+   }
+  },
+  "volume": {
+   "dual": {
+    "where": "in_method"
+   }
+  },
+  "wheel_mode": {
+   "browser": {
+    "where": "shared",
+    "offsets": [
+     62926006
+    ],
+    "run": [
+     "source",
+     "browser",
+     "karaokebackground",
+     "rotate",
+     "clipmask",
+     "shape",
+     "square",
+     "circle",
+     "default",
+     "linkdrop"
+    ]
+   },
+   "jog": {
+    "where": "shared",
+    "offsets": [
+     62945499
+    ],
+    "run": [
+     "button",
+     "toggle",
+     "slider",
+     "jog",
+     "encoder",
+     "jog_diff",
+     "jogspeed",
+     "motorwheel2",
+     "group",
+     "splitpage_offset",
+     "splitpage_size",
+     "constant",
+     "ledtest",
+     "values",
+     "fullrgb",
+     "digit",
+     "bar",
+     "bitfill",
+     "bitmove",
+     "rgbbar",
+     "dac3",
+     "pagesize",
+     "queue",
+     "forcesend"
+    ]
+   },
+   "loop_in": {
+    "where": "shared",
+    "offsets": [
+     62960478
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "loop_move": {
+    "where": "shared",
+    "offsets": [
+     62960526
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "loop_out": {
+    "where": "shared",
+    "offsets": [
+     62960549
+    ],
+    "run": [
+     "get_effect_string",
+     "get_effect_string_name",
+     "get_effect_title",
+     "get_effects_used",
+     "get_featuring_after_artist",
+     "get_filename",
+     "get_filepath",
+     "get_filesize",
+     "get_firstbeat",
+     "get_firstbeat_local",
+     "get_gemini_display",
+     "get_gemini_waveform",
+     "get_genre",
+     "get_harmonic",
+     "get_hasheadphone",
+     "get_hasheadphones",
+     "get_hasinput",
+     "get_haslinein",
+     "get_hasmaster",
+     "get_hasmic",
+     "get_hastimecode",
+     "get_hwnd",
+     "get_karaoke_background_song",
+     "get_key"
+    ]
+   },
+   "search": {
+    "where": "shared",
+    "offsets": [
+     62939166
+    ],
+    "run": [
+     "search"
+    ]
    }
   },
   "zoom": {

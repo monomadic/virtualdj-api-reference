@@ -224,8 +224,9 @@ action-catalog *args:
     @python3 tools/extract_action_catalog.py {{args}}
 
 # Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML
-# + the shipped factory controller mapping + wiki transcriptions + statements
-# compiled into the app binary.
+# + every factory controller mapping decoded from controllers.dat (needs
+# `just controllers-vendor`) + wiki transcriptions + statements compiled into
+# the app binary.
 script-corpus *args:
     @python3 tools/extract_script_corpus.py {{args}}
 
@@ -535,6 +536,13 @@ check-runtime-grammar:
     @python3 tools/runtime_grammar_probes.py --check
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json
     @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json
+
+# The decoded archive the corpus mines, under gitignored vendor/ (vendor copyright,
+# like the SDK headers). Idempotent; delete the directory to re-extract after a
+# VirtualDJ update, then `just script-corpus > tests/vdjscript-corpus.json`.
+controllers-vendor:
+    @test -d vendor/controllers || uv run tools/read_controllers.py --output-dir vendor/controllers > /dev/null
+    @python3 tools/extract_script_corpus.py --vendor-check
 
 # Decode every original device/mapper/audio XML member; output dir must be new.
 controllers-extract *args:

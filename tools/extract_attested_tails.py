@@ -13,7 +13,9 @@ that is why 81 documented parameters still read as "indistinguishable".
     corpus  attested tails         that a token is USED — vendor scripts
 
 Statements are split on `& ? : ( )`, the leading word must be a known verb, and
-the token after it is the candidate tail.
+the token after it is the candidate tail — unless the verb's first argument is
+a name the author chose (`set 'fxslot' 1`, `skin_panel 'rmmixer'`), which is
+kept as a shape and dropped as vocabulary (FREE_NAME_VERBS).
 
 SHAPES (added 2026-09-03). Tails are vocabulary; a verb whose arguments are
 values has none — "fadeout 10000ms 3000ms `loop`" yielded nothing, and 114
@@ -90,6 +92,37 @@ MODIFIERS = {"while_pressed", "while_press", "instant"}
 # 100ms, 8bt, 50%, +1, -0.5, 0.25 — values, not vocabulary.
 LITERAL = re.compile(r"^[+-]?[\d.]+(ms|bt|%|s)?$", re.I)
 VARIABLE = re.compile(r"^[$#%@`]")
+# `set 'fxslot' 1`, `skin_panel 'rmmixer'`, `repeat_start 'blink'`: the first
+# argument is a name the AUTHOR chose — a variable, panel or timer — not a
+# word the verb knows. Their attested SHAPE (`STR NUM`) is the evidence; the
+# names themselves are not vocabulary and would drown the tail queue (the
+# factory mappings alone contribute hundreds of variable names).
+FREE_NAME_VERBS = re.compile(r"^(var|get_var|set|toggle|cycle|controllervar|skin_panel|"
+                             r"skin_pannel|skin_panelgroup|repeat_start|repeat_stop|"
+                             r"repeat_start_instant|var_[a-z_]+)$")
+# Snippets kept per tail token and per shape: one per source first, then the
+# shortest. `count` carries the total so nothing is lost but the bulk.
+EXAMPLE_LIMIT = 6
+
+
+def sample(entries: list[dict]) -> list[dict]:
+    order = sorted(entries, key=lambda e: len(e["snippet"]))
+    out, seen = [], set()
+    for e in order:
+        for src in e["sources"]:
+            if src not in seen:
+                seen.add(src)
+                out.append(e)
+                break
+    for e in order:
+        if len(out) >= EXAMPLE_LIMIT:
+            break
+        if e not in out:
+            out.append(e)
+    return out[:EXAMPLE_LIMIT]
+
+
+TAIL_COUNTS: dict[str, dict[str, int]] = {}
 
 
 def tails(corpus: list[dict], known: set[str]) -> dict[str, dict[str, list[dict]]]:
@@ -108,12 +141,16 @@ def tails(corpus: list[dict], known: set[str]) -> dict[str, dict[str, list[dict]
                 continue
             if token in BOOLEANS or (token in known and EXPRESSION_HEADS.match(verb)):
                 continue  # `hold on` is a value; `param_bigger pitch …` an expression
+            if FREE_NAME_VERBS.match(verb):
+                continue
             found[verb][token].append({
                 "snippet": record["script"][:200],
                 "sources": record["sources"],
                 "origin": record["origins"][0],
             })
-    return {v: dict(t) for v, t in found.items()}
+    TAIL_COUNTS.clear()
+    TAIL_COUNTS.update({v: {tok: len(e) for tok, e in t.items()} for v, t in found.items()})
+    return {v: {tok: sample(e) for tok, e in t.items()} for v, t in found.items()}
 
 
 # Observed bare-form type (tests/verb-return-types.json) -> shape class.
@@ -202,6 +239,10 @@ def shapes(corpus: list[dict], known: set[str], wrappers: dict,
             if terminal:
                 for ctx in contexts:
                     rec["contexts"][ctx] = rec["contexts"].get(ctx, 0) + 1
+    for by_shape in found.values():
+        for rec in by_shape.values():
+            rec["count"] = len(rec["snippets"])
+            rec["snippets"] = sample(rec["snippets"])
     return {v: dict(sh) for v, sh in found.items()}
 
 
@@ -284,10 +325,14 @@ def main() -> int:
             "shaped_verbs": len(shaped),
             "shape_only_verbs": sorted(v for v in shaped if v not in found),
             "filtered": {"modifiers": sorted(MODIFIERS),
-                         "rule": "literals, variables and verb names dropped"},
+                         "free_name_verbs": FREE_NAME_VERBS.pattern,
+                         "rule": "literals, variables, verb names and author-chosen names dropped; "
+                                 f"at most {EXAMPLE_LIMIT} snippets kept per token and shape, "
+                                 "totals in tail_counts and shapes[].count"},
         },
         "novel": novel,
         "tails": found,
+        "tail_counts": TAIL_COUNTS,
         "shapes": shaped,
         "wrappers": wrappers,
     }, sys.stdout, indent=1)

@@ -7,6 +7,9 @@ approximation of the device schema. The reader emits every member byte-for-byte.
 ## Read and query
 
 ```sh
+just controllers-vendor        # decode once into gitignored vendor/controllers/, verified against the manifest
+just script-corpus --verb effect_arm_select   # the factory mappings are a corpus source (`factory`)
+just attested-tails --verb effect_arm_select  # tails and shapes Atomix wrote into them
 just controllers-extract --output-dir /tmp/vdj-controllers --json tests/controllers-manifest.json
 python3 tools/controller_schema_inventory.py /tmp/vdj-controllers/block-000.zip --output tests/controller-schema-inventory.json
 just controllers
@@ -14,6 +17,13 @@ just controllers --device DDJGRV6
 just controllers --path /device/settings
 just controllers --path /device/slider
 ```
+
+`just controllers-vendor` is the extraction the corpus tools read: `vendor/` is gitignored
+because the decoded files are Atomix's copyright (the same reason the plugin SDK headers are
+not committed), and `tools/extract_script_corpus.py` refuses a tree whose files do not match
+the committed manifest's hashes, so an extraction from another build cannot attest anything
+under this build's stamp. Delete the directory and rerun after a VirtualDJ update, then
+re-extract the corpus and attested-tails artifacts.
 
 Extraction uses `uv` and the reader's pinned `pycryptodome` dependency. Offline inventory
 queries need only Python's standard library. The output directory must not already exist;

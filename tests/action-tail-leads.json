@@ -1,10 +1,10 @@
 {
  "inputs": {
-  "action-catalog": "07ee78575e88ddbba358cc2e537ab65862209a67c275dd1ecfa77d7eae9f5e7e",
+  "action-catalog": "15c381a4416f6165ca92f8450802e7218afa781bd892533cc52e529c910ec757",
   "action-contracts": "33d16136ef5ca8e4cd9edae8d338aca0ce05561cc26c61097c663cdfdf0dc1fa",
   "action-modules-9246": "a97ac4f3a727c07b1fbf027f8989491b4cf3f9817e861faf50348296a9b355ee",
   "action-vtables-9246": "4e6944b10aa39414ec60eac9bc34e7a1244fbefb6023ab2389016f8c493b7472",
-  "binary-vocabularies": "b3db4b67c65a4bd097f610298ea037a8081be41bdd455f8bc53625d19eb71618"
+  "binary-vocabularies": "b64a658eb67348a017cc0da56183ead7b5af25077f6a3770adbff460fb3a69b5"
  },
  "limitations": [
   "All literals are Tier-2 leads; comparison co-occurrence is not argument dataflow proof.",
@@ -212,7 +212,76 @@
    "aliases": [
     "automix_editor_movetrack"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:current": {
+     "association": {
+      "automix_editor_movetrack": {
+       "attested": [
+        "current"
+       ],
+       "catalog": [
+        "current",
+        "next",
+        "previous"
+       ],
+       "keyword_candidates": [
+        "current",
+        "next",
+        "previous"
+       ],
+       "method_strings": [
+        "current",
+        "next",
+        "previous"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "action": [
+       "region",
+       "run"
+      ],
+      "current": [
+       "region",
+       "run"
+      ],
+      "load": [
+       "region",
+       "run"
+      ],
+      "loop": [
+       "region",
+       "run"
+      ],
+      "marker": [
+       "region",
+       "run"
+      ],
+      "next": [
+       "region",
+       "run"
+      ],
+      "previous": [
+       "region",
+       "run"
+      ],
+      "remix": [
+       "region"
+      ]
+     },
+     "members": [
+      "action",
+      "current",
+      "load",
+      "loop",
+      "marker",
+      "next",
+      "previous",
+      "remix"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -489,7 +558,53 @@
    "aliases": [
     "invert_deck"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "invert_deck": {
+       "attested": [
+        "left",
+        "right"
+       ],
+       "catalog": [
+        "left",
+        "right"
+       ],
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -854,7 +969,64 @@
    "aliases": [
     "sampler_loop"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:current": {
+     "association": {
+      "sampler_loop": {
+       "attested": [
+        "current"
+       ],
+       "catalog": [
+        "current"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "action": [
+       "region",
+       "run"
+      ],
+      "current": [
+       "region",
+       "run"
+      ],
+      "load": [
+       "region",
+       "run"
+      ],
+      "loop": [
+       "region",
+       "run"
+      ],
+      "marker": [
+       "region",
+       "run"
+      ],
+      "next": [
+       "region",
+       "run"
+      ],
+      "previous": [
+       "region",
+       "run"
+      ],
+      "remix": [
+       "region"
+      ]
+     },
+     "members": [
+      "action",
+      "current",
+      "load",
+      "loop",
+      "marker",
+      "next",
+      "previous",
+      "remix"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -1046,9 +1218,124 @@
     "stem_pad"
    ],
    "associated_vocabularies": {
+    "effect_gui": {
+     "association": {
+      "stem_pad": {
+       "attested": [
+        "bass",
+        "instru",
+        "instrumental",
+        "rhythm"
+       ],
+       "keyword_candidates": [
+        "instrumental"
+       ],
+       "method_strings": [
+        "instrumental"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
+     ]
+    },
     "stem_modes": {
      "association": {
       "stem_pad": {
+       "attested": [
+        "acapella",
+        "instrumental",
+        "isolate"
+       ],
        "catalog": [
         "isolate"
        ],
@@ -1096,6 +1383,10 @@
      "association": {
       "stem_pad": {
        "attested": [
+        "bass",
+        "instru",
+        "instrumental",
+        "rhythm",
         "vocal"
        ],
        "keyword_candidates": [
@@ -1984,6 +2275,10 @@
     "audio_channels": {
      "association": {
       "get_limiter": {
+       "attested": [
+        "deck",
+        "master"
+       ],
        "catalog": [
         "booth",
         "headphones",
@@ -2106,6 +2401,9 @@
     "time_modes": {
      "association": {
       "get_time_sign": {
+       "attested": [
+        "elapsed"
+       ],
        "catalog": [
         "elapsed",
         "remain",
@@ -2192,7 +2490,41 @@
    "aliases": [
     "get_vu_meter"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "get_vu_meter": {
+       "attested": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -2820,7 +3152,44 @@
    "aliases": [
     "video_transition"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "video_transition": {
+       "attested": [
+        "left",
+        "right"
+       ],
+       "catalog": [
+        "left"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -2963,6 +3332,9 @@
     "browser_roots": {
      "association": {
       "browser_window": {
+       "attested": [
+        "sidelist"
+       ],
        "catalog": [
         "sampler",
         "sidelist"
@@ -3087,8 +3459,11 @@
      "association": {
       "browser_window": {
        "attested": [
+        "automix",
         "files",
         "folders",
+        "playlist",
+        "sidelist",
         "sideview",
         "songs"
        ],
@@ -4547,7 +4922,45 @@
    "aliases": [
     "action_deck"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "action_deck": {
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -5275,9 +5688,128 @@
     "browser_sort"
    ],
    "associated_vocabularies": {
+    "auto:file": {
+     "association": {
+      "browser_sort": {
+       "attested": [
+        "artist",
+        "bpm",
+        "title"
+       ],
+       "catalog": [
+        "artist"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "artist": [
+       "region"
+      ],
+      "bpm": [
+       "region"
+      ],
+      "cell": [
+       "region",
+       "run"
+      ],
+      "color": [
+       "region"
+      ],
+      "dir": [
+       "region"
+      ],
+      "file": [
+       "region",
+       "run"
+      ],
+      "index": [
+       "region",
+       "run"
+      ],
+      "slot": [
+       "region",
+       "run"
+      ],
+      "title": [
+       "region"
+      ],
+      "type": [
+       "region"
+      ],
+      "volume": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "artist",
+      "bpm",
+      "cell",
+      "color",
+      "dir",
+      "file",
+      "index",
+      "slot",
+      "title",
+      "type",
+      "volume"
+     ]
+    },
+    "auto:harmonic": {
+     "association": {
+      "browser_sort": {
+       "attested": [
+        "harmonic"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "harmonic": [
+       "region",
+       "run"
+      ],
+      "musical": [
+       "region",
+       "run"
+      ],
+      "original": [
+       "region",
+       "run"
+      ],
+      "pioneer": [
+       "region"
+      ],
+      "rane": [
+       "region",
+       "run"
+      ],
+      "roland": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "harmonic",
+      "musical",
+      "original",
+      "pioneer",
+      "rane",
+      "roland"
+     ]
+    },
     "song_fields": {
      "association": {
       "browser_sort": {
+       "attested": [
+        "album",
+        "artist",
+        "author",
+        "bpm",
+        "key",
+        "title"
+       ],
        "catalog": [
         "artist"
        ]
@@ -5494,7 +6026,49 @@
    "aliases": [
     "clone_deck"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "clone_deck": {
+       "attested": [
+        "left",
+        "right"
+       ],
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -5536,7 +6110,45 @@
    "aliases": [
     "clone_from_deck"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "clone_from_deck": {
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -5586,10 +6198,23 @@
         "black",
         "blue",
         "cyan",
+        "darkblue",
+        "darkcyan",
+        "darkgray",
+        "darkgreen",
+        "darkmagenta",
+        "darkorange",
+        "darkred",
+        "darkyellow",
+        "gray",
         "green",
+        "lightgray",
         "magenta",
+        "marine",
         "orange",
+        "pink",
         "red",
+        "violet",
         "white",
         "yellow"
        ],
@@ -6021,6 +6646,196 @@
   },
   {
    "aliases": [
+    "constant",
+    "get_constant"
+   ],
+   "associated_vocabularies": {
+    "colors": {
+     "association": {
+      "constant": {
+       "attested": [
+        "black",
+        "blue",
+        "cyan",
+        "darkgreen",
+        "darkred",
+        "green",
+        "magenta",
+        "orange",
+        "red",
+        "white",
+        "yellow"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "beige": [
+       "table",
+       "run"
+      ],
+      "black": [
+       "table",
+       "run"
+      ],
+      "blue": [
+       "table",
+       "region"
+      ],
+      "cyan": [
+       "table",
+       "run"
+      ],
+      "darkblue": [
+       "table",
+       "run"
+      ],
+      "darkcyan": [
+       "table",
+       "run"
+      ],
+      "darkgray": [
+       "table",
+       "run"
+      ],
+      "darkgreen": [
+       "table",
+       "run"
+      ],
+      "darkmagenta": [
+       "table",
+       "run"
+      ],
+      "darkorange": [
+       "table",
+       "run"
+      ],
+      "darkred": [
+       "table",
+       "run"
+      ],
+      "darkyellow": [
+       "table",
+       "run"
+      ],
+      "gray": [
+       "table",
+       "run"
+      ],
+      "green": [
+       "table",
+       "region"
+      ],
+      "lightgray": [
+       "table",
+       "run"
+      ],
+      "magenta": [
+       "table",
+       "run"
+      ],
+      "marine": [
+       "table",
+       "run"
+      ],
+      "none": [
+       "table"
+      ],
+      "orange": [
+       "table",
+       "run"
+      ],
+      "pink": [
+       "table",
+       "run"
+      ],
+      "red": [
+       "table",
+       "region"
+      ],
+      "reset": [
+       "table"
+      ],
+      "transparent": [
+       "table"
+      ],
+      "violet": [
+       "table",
+       "run"
+      ],
+      "white": [
+       "table",
+       "run"
+      ],
+      "yellow": [
+       "table",
+       "run"
+      ]
+     },
+     "members": [
+      "beige",
+      "black",
+      "blue",
+      "cyan",
+      "darkblue",
+      "darkcyan",
+      "darkgray",
+      "darkgreen",
+      "darkmagenta",
+      "darkorange",
+      "darkred",
+      "darkyellow",
+      "gray",
+      "green",
+      "lightgray",
+      "magenta",
+      "marine",
+      "none",
+      "orange",
+      "pink",
+      "red",
+      "reset",
+      "transparent",
+      "violet",
+      "white",
+      "yellow"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_param",
+    "slot_names": [
+     "ACTION_constant::~ACTION_constant()",
+     "ACTION_constant::~ACTION_constant()",
+     "IAction::onExecute()",
+     "ACTION_constant::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "constant",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "controller_mapping"
    ],
    "associated_vocabularies": {},
@@ -6057,6 +6872,82 @@
    "shared_helpers": [],
    "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
    "verb": "controller_mapping",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "cross_assign"
+   ],
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "cross_assign": {
+       "attested": [
+        "left",
+        "right",
+        "thru"
+       ],
+       "catalog": [
+        "left",
+        "thru"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_deck_select",
+    "slot_names": [
+     "ACTION_cross_assign::~ACTION_cross_assign()",
+     "ACTION_cross_assign::~ACTION_cross_assign()",
+     "ACTION_cross_assign::onExecute()",
+     "ACTION_cross_assign::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "cross_assign",
    "worklist_recovered": [],
    "worklist_tails": []
   },
@@ -6324,7 +7215,80 @@
    "aliases": [
     "cue_display"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:beat": {
+     "association": {
+      "cue_display": {
+       "attested": [
+        "name"
+       ],
+       "keyword_candidates": [
+        "beat",
+        "beats",
+        "distance",
+        "name",
+        "num",
+        "number",
+        "pos",
+        "position"
+       ],
+       "method_strings": [
+        "beat",
+        "beats",
+        "distance",
+        "name",
+        "num",
+        "number",
+        "pos",
+        "position"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "beat": [
+       "region",
+       "run"
+      ],
+      "beats": [
+       "region"
+      ],
+      "distance": [
+       "region",
+       "run"
+      ],
+      "name": [
+       "region"
+      ],
+      "num": [
+       "region",
+       "run"
+      ],
+      "number": [
+       "region",
+       "run"
+      ],
+      "pos": [
+       "region",
+       "run"
+      ],
+      "position": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "beat",
+      "beats",
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -6882,7 +7846,52 @@
    "aliases": [
     "device_side"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "device_side": {
+       "attested": [
+        "left",
+        "right"
+       ],
+       "catalog": [
+        "left"
+       ],
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -6928,7 +7937,8 @@
       "display_time": {
        "attested": [
         "elapsed",
-        "remain"
+        "remain",
+        "total"
        ],
        "catalog": [
         "elapsed",
@@ -7391,7 +8401,8 @@
      "association": {
       "effect_active": {
        "attested": [
-        "flanger"
+        "flanger",
+        "reverb"
        ],
        "catalog": [
         "flanger"
@@ -7421,6 +8432,111 @@
       "flanger",
       "reverb",
       "wahwah"
+     ]
+    },
+    "effect_gui": {
+     "association": {
+      "effect_active": {
+       "attested": [
+        "colorfx",
+        "mic",
+        "releasefx",
+        "sampler",
+        "stems"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
      ]
     }
    },
@@ -7582,7 +8698,9 @@
      "association": {
       "effect_arm_deck": {
        "attested": [
-        "master"
+        "master",
+        "mic",
+        "sampler"
        ],
        "catalog": [
         "mic",
@@ -7690,6 +8808,79 @@
    "shared_helpers": [],
    "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
    "verb": "effect_arm_deck",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "effect_arm_select"
+   ],
+   "associated_vocabularies": {
+    "auto:flanger": {
+     "association": {
+      "effect_arm_select": {
+       "attested": [
+        "filter",
+        "flanger",
+        "reverb"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "filter": [
+       "region"
+      ],
+      "flanger": [
+       "region",
+       "run"
+      ],
+      "reverb": [
+       "region",
+       "run"
+      ],
+      "wahwah": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "filter",
+      "flanger",
+      "reverb",
+      "wahwah"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_plugins",
+    "slot_names": [
+     "ACTION_effect_arm_select::~ACTION_effect_arm_select()",
+     "ACTION_effect_arm_select::~ACTION_effect_arm_select()",
+     "ACTION_effect_arm_select::onExecute()",
+     "ACTION_effect_arm_select::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "ACTION_effect_arm_select::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "effect_arm_select",
    "worklist_recovered": [],
    "worklist_tails": []
   },
@@ -7892,7 +9083,49 @@
    "aliases": [
     "effect_clone"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "effect_clone": {
+       "attested": [
+        "left",
+        "right"
+       ],
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -8304,7 +9537,201 @@
    "aliases": [
     "effect_select"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:beat": {
+     "association": {
+      "effect_select": {
+       "attested": [
+        "beat"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "beat": [
+       "region",
+       "run"
+      ],
+      "beats": [
+       "region"
+      ],
+      "distance": [
+       "region",
+       "run"
+      ],
+      "name": [
+       "region"
+      ],
+      "num": [
+       "region",
+       "run"
+      ],
+      "number": [
+       "region",
+       "run"
+      ],
+      "pos": [
+       "region",
+       "run"
+      ],
+      "position": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "beat",
+      "beats",
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ]
+    },
+    "auto:flanger": {
+     "association": {
+      "effect_select": {
+       "attested": [
+        "filter",
+        "flanger",
+        "reverb"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "filter": [
+       "region"
+      ],
+      "flanger": [
+       "region",
+       "run"
+      ],
+      "reverb": [
+       "region",
+       "run"
+      ],
+      "wahwah": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "filter",
+      "flanger",
+      "reverb",
+      "wahwah"
+     ]
+    },
+    "effect_gui": {
+     "association": {
+      "effect_select": {
+       "attested": [
+        "colorfx",
+        "sampler",
+        "transition"
+       ],
+       "catalog": [
+        "audioonlyvisualisation"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -8345,7 +9772,42 @@
    "aliases": [
     "effect_select_multi"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:flanger": {
+     "association": {
+      "effect_select_multi": {
+       "attested": [
+        "flanger",
+        "reverb"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "filter": [
+       "region"
+      ],
+      "flanger": [
+       "region",
+       "run"
+      ],
+      "reverb": [
+       "region",
+       "run"
+      ],
+      "wahwah": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "filter",
+      "flanger",
+      "reverb",
+      "wahwah"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -8469,11 +9931,202 @@
     "effect_show_gui"
    ],
    "associated_vocabularies": {
+    "auto:camera": {
+     "association": {
+      "effect_show_gui": {
+       "attested": [
+        "camera"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "background": [
+       "region"
+      ],
+      "bars": [
+       "region",
+       "run"
+      ],
+      "camera": [
+       "region",
+       "run"
+      ],
+      "clipmask": [
+       "region"
+      ],
+      "crop": [
+       "region",
+       "run"
+      ],
+      "index": [
+       "region"
+      ],
+      "letterboxing": [
+       "region",
+       "run"
+      ],
+      "linkdrop": [
+       "region"
+      ],
+      "mask": [
+       "region"
+      ],
+      "slideshow": [
+       "region"
+      ],
+      "source": [
+       "region"
+      ],
+      "zoom": [
+       "region"
+      ]
+     },
+     "members": [
+      "background",
+      "bars",
+      "camera",
+      "clipmask",
+      "crop",
+      "index",
+      "letterboxing",
+      "linkdrop",
+      "mask",
+      "slideshow",
+      "source",
+      "zoom"
+     ]
+    },
+    "auto:cover": {
+     "association": {
+      "effect_show_gui": {
+       "attested": [
+        "cover"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "cover": [
+       "region",
+       "run"
+      ],
+      "demo": [
+       "region",
+       "run"
+      ],
+      "official": [
+       "region",
+       "run"
+      ],
+      "permalink_url": [
+       "region",
+       "run"
+      ],
+      "playback_count": [
+       "region",
+       "run"
+      ],
+      "preview": [
+       "region",
+       "run"
+      ],
+      "purchase_url": [
+       "region",
+       "run"
+      ],
+      "streamable": [
+       "region"
+      ],
+      "teaser": [
+       "region",
+       "run"
+      ],
+      "user": [
+       "region",
+       "run"
+      ],
+      "username": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "cover",
+      "demo",
+      "official",
+      "permalink_url",
+      "playback_count",
+      "preview",
+      "purchase_url",
+      "streamable",
+      "teaser",
+      "user",
+      "username"
+     ]
+    },
+    "auto:coverflow": {
+     "association": {
+      "effect_show_gui": {
+       "attested": [
+        "cover",
+        "coverflow"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "color": [
+       "region"
+      ],
+      "colors": [
+       "region"
+      ],
+      "cover": [
+       "region"
+      ],
+      "coverflow": [
+       "region",
+       "run"
+      ],
+      "extendtoolbar": [
+       "region",
+       "run"
+      ],
+      "searchbar": [
+       "region",
+       "run"
+      ],
+      "separator": [
+       "region",
+       "run"
+      ],
+      "separators": [
+       "region",
+       "run"
+      ],
+      "sidelist": [
+       "region"
+      ]
+     },
+     "members": [
+      "color",
+      "colors",
+      "cover",
+      "coverflow",
+      "extendtoolbar",
+      "searchbar",
+      "separator",
+      "separators",
+      "sidelist"
+     ]
+    },
     "effect_gui": {
      "association": {
       "effect_show_gui": {
        "attested": [
         "audioonlyvisualisation",
+        "sampler",
         "transition",
         "video"
        ]
@@ -8612,7 +10265,113 @@
     "effect_slider",
     "effect_slider_slider"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "effect_gui": {
+     "association": {
+      "effect_slider": {
+       "attested": [
+        "active",
+        "sampler",
+        "stems",
+        "transition",
+        "video"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -8723,6 +10482,7 @@
      "association": {
       "effect_stems": {
        "attested": [
+        "rhythm",
         "vocal"
        ]
       }
@@ -9734,7 +11494,49 @@
    "aliases": [
     "filter_activate"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:flanger": {
+     "association": {
+      "filter_activate": {
+       "attested": [
+        "filter",
+        "flanger",
+        "reverb"
+       ],
+       "keyword_candidates": [
+        "filter"
+       ],
+       "method_strings": [
+        "filter"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "filter": [
+       "region"
+      ],
+      "flanger": [
+       "region",
+       "run"
+      ],
+      "reverb": [
+       "region",
+       "run"
+      ],
+      "wahwah": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "filter",
+      "flanger",
+      "reverb",
+      "wahwah"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -9819,7 +11621,43 @@
    "aliases": [
     "filter_selectcolorfx"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:flanger": {
+     "association": {
+      "filter_selectcolorfx": {
+       "attested": [
+        "filter",
+        "flanger",
+        "reverb"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "filter": [
+       "region"
+      ],
+      "flanger": [
+       "region",
+       "run"
+      ],
+      "reverb": [
+       "region",
+       "run"
+      ],
+      "wahwah": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "filter",
+      "flanger",
+      "reverb",
+      "wahwah"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -10134,7 +11972,8 @@
      "association": {
       "get_bpm": {
        "attested": [
-        "absolute"
+        "absolute",
+        "ghost"
        ],
        "keyword_candidates": [
         "absolute",
@@ -10423,6 +12262,111 @@
    "shared_helpers": [],
    "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
    "verb": "get_browsed_color",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "get_browsed_song"
+   ],
+   "associated_vocabularies": {
+    "auto:file": {
+     "association": {
+      "get_browsed_song": {
+       "attested": [
+        "color",
+        "file"
+       ],
+       "catalog": [
+        "title"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "artist": [
+       "region"
+      ],
+      "bpm": [
+       "region"
+      ],
+      "cell": [
+       "region",
+       "run"
+      ],
+      "color": [
+       "region"
+      ],
+      "dir": [
+       "region"
+      ],
+      "file": [
+       "region",
+       "run"
+      ],
+      "index": [
+       "region",
+       "run"
+      ],
+      "slot": [
+       "region",
+       "run"
+      ],
+      "title": [
+       "region"
+      ],
+      "type": [
+       "region"
+      ],
+      "volume": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "artist",
+      "bpm",
+      "cell",
+      "color",
+      "dir",
+      "file",
+      "index",
+      "slot",
+      "title",
+      "type",
+      "volume"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_get",
+    "slot_names": [
+     "ACTION_get_browsed_song::~ACTION_get_browsed_song()",
+     "ACTION_get_browsed_song::~ACTION_get_browsed_song()",
+     "IAction::onExecute()",
+     "ACTION_get_browsed_song::onQuery(SActionParam&)",
+     "ACTION_get_browsed_song::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "get_browsed_song",
    "worklist_recovered": [],
    "worklist_tails": []
   },
@@ -10752,6 +12696,9 @@
     "sideview": {
      "association": {
       "get_gemini_display": {
+       "attested": [
+        "browser"
+       ],
        "keyword_candidates": [
         "browser",
         "files",
@@ -11216,7 +13163,72 @@
    "aliases": [
     "get_key"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:harmonic": {
+     "association": {
+      "get_key": {
+       "attested": [
+        "pioneer",
+        "roland"
+       ],
+       "catalog": [
+        "harmonic",
+        "musical"
+       ],
+       "keyword_candidates": [
+        "harmonic",
+        "musical",
+        "original",
+        "pioneer",
+        "rane",
+        "roland"
+       ],
+       "method_strings": [
+        "harmonic",
+        "musical",
+        "original",
+        "pioneer",
+        "rane",
+        "roland"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "harmonic": [
+       "region",
+       "run"
+      ],
+      "musical": [
+       "region",
+       "run"
+      ],
+      "original": [
+       "region",
+       "run"
+      ],
+      "pioneer": [
+       "region"
+      ],
+      "rane": [
+       "region",
+       "run"
+      ],
+      "roland": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "harmonic",
+      "musical",
+      "original",
+      "pioneer",
+      "rane",
+      "roland"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -11300,7 +13312,280 @@
    "aliases": [
     "get_loaded_song"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:keycolor": {
+     "association": {
+      "get_loaded_song": {
+       "attested": [
+        "keycolor"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "artist_before_feat": [
+       "region",
+       "run"
+      ],
+      "effect_button": [
+       "region"
+      ],
+      "feat_after_artist": [
+       "region",
+       "run"
+      ],
+      "folder": [
+       "region"
+      ],
+      "harmonic": [
+       "region"
+      ],
+      "keycolor": [
+       "region",
+       "run"
+      ],
+      "minus": [
+       "region",
+       "run"
+      ],
+      "playlist": [
+       "region"
+      ],
+      "plus": [
+       "region",
+       "run"
+      ],
+      "quick_filter": [
+       "region"
+      ],
+      "rating": [
+       "region"
+      ],
+      "remix_after_title": [
+       "region",
+       "run"
+      ],
+      "search": [
+       "region"
+      ],
+      "search_folder": [
+       "region"
+      ],
+      "title_before_remix": [
+       "region",
+       "run"
+      ],
+      "title_remix": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "artist_before_feat",
+      "effect_button",
+      "feat_after_artist",
+      "folder",
+      "harmonic",
+      "keycolor",
+      "minus",
+      "playlist",
+      "plus",
+      "quick_filter",
+      "rating",
+      "remix_after_title",
+      "search",
+      "search_folder",
+      "title_before_remix",
+      "title_remix"
+     ]
+    },
+    "song_fields": {
+     "association": {
+      "get_loaded_song": {
+       "attested": [
+        "album",
+        "bpm"
+       ],
+       "catalog": [
+        "album"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "al": [
+       "table"
+      ],
+      "album": [
+       "table"
+      ],
+      "ar": [
+       "table"
+      ],
+      "artist": [
+       "table",
+       "run"
+      ],
+      "au": [
+       "table"
+      ],
+      "author": [
+       "table"
+      ],
+      "bpm": [
+       "table",
+       "run"
+      ],
+      "by": [
+       "table"
+      ],
+      "comment": [
+       "table"
+      ],
+      "composer": [
+       "table"
+      ],
+      "copyright": [
+       "table"
+      ],
+      "creator": [
+       "table"
+      ],
+      "encoder": [
+       "table"
+      ],
+      "encoder_version": [
+       "table"
+      ],
+      "filename": [
+       "table"
+      ],
+      "filepath": [
+       "table"
+      ],
+      "genre": [
+       "table"
+      ],
+      "grouping": [
+       "table"
+      ],
+      "iart": [
+       "table"
+      ],
+      "icmt": [
+       "table"
+      ],
+      "icop": [
+       "table"
+      ],
+      "ignr": [
+       "table"
+      ],
+      "inam": [
+       "table"
+      ],
+      "iprd": [
+       "table"
+      ],
+      "isbj": [
+       "table"
+      ],
+      "isft": [
+       "table"
+      ],
+      "key": [
+       "table"
+      ],
+      "label": [
+       "table"
+      ],
+      "product": [
+       "table"
+      ],
+      "re": [
+       "table"
+      ],
+      "remix": [
+       "table",
+       "run"
+      ],
+      "remixer": [
+       "table"
+      ],
+      "software": [
+       "table"
+      ],
+      "strn": [
+       "table"
+      ],
+      "subject": [
+       "table"
+      ],
+      "ti": [
+       "table"
+      ],
+      "title": [
+       "table",
+       "run"
+      ],
+      "user1": [
+       "table"
+      ],
+      "user2": [
+       "table"
+      ],
+      "ve": [
+       "table"
+      ],
+      "year": [
+       "table"
+      ]
+     },
+     "members": [
+      "al",
+      "album",
+      "ar",
+      "artist",
+      "au",
+      "author",
+      "bpm",
+      "by",
+      "comment",
+      "composer",
+      "copyright",
+      "creator",
+      "encoder",
+      "encoder_version",
+      "filename",
+      "filepath",
+      "genre",
+      "grouping",
+      "iart",
+      "icmt",
+      "icop",
+      "ignr",
+      "inam",
+      "iprd",
+      "isbj",
+      "isft",
+      "key",
+      "label",
+      "product",
+      "re",
+      "remix",
+      "remixer",
+      "software",
+      "strn",
+      "subject",
+      "ti",
+      "title",
+      "user1",
+      "user2",
+      "ve",
+      "year"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -12262,7 +14547,70 @@
    "aliases": [
     "get_song_event"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:current": {
+     "association": {
+      "get_song_event": {
+       "catalog": [
+        "current",
+        "next"
+       ],
+       "keyword_candidates": [
+        "current",
+        "next"
+       ],
+       "method_strings": [
+        "current",
+        "next"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "action": [
+       "region",
+       "run"
+      ],
+      "current": [
+       "region",
+       "run"
+      ],
+      "load": [
+       "region",
+       "run"
+      ],
+      "loop": [
+       "region",
+       "run"
+      ],
+      "marker": [
+       "region",
+       "run"
+      ],
+      "next": [
+       "region",
+       "run"
+      ],
+      "previous": [
+       "region",
+       "run"
+      ],
+      "remix": [
+       "region"
+      ]
+     },
+     "members": [
+      "action",
+      "current",
+      "load",
+      "loop",
+      "marker",
+      "next",
+      "previous",
+      "remix"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -12406,6 +14754,10 @@
     "time_modes": {
      "association": {
       "get_time_hour": {
+       "attested": [
+        "elapsed",
+        "remain"
+       ],
        "catalog": [
         "absolute",
         "elapsed",
@@ -12493,6 +14845,14 @@
     "time_modes": {
      "association": {
       "get_time_min": {
+       "attested": [
+        "absolute",
+        "elapsed",
+        "loopin",
+        "loopout",
+        "remain",
+        "total"
+       ],
        "catalog": [
         "absolute",
         "elapsed",
@@ -12569,6 +14929,184 @@
    "shared_helpers": [],
    "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
    "verb": "get_time_min",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "get_time_ms"
+   ],
+   "associated_vocabularies": {
+    "time_modes": {
+     "association": {
+      "get_time_ms": {
+       "attested": [
+        "absolute",
+        "elapsed",
+        "loopin",
+        "loopout",
+        "remain",
+        "total"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "absolute": [
+       "region"
+      ],
+      "cue": [
+       "region"
+      ],
+      "elapsed": [
+       "region",
+       "run"
+      ],
+      "loopin": [
+       "region",
+       "run"
+      ],
+      "loopout": [
+       "region",
+       "run"
+      ],
+      "remain": [
+       "region",
+       "run"
+      ],
+      "total": [
+       "region"
+      ]
+     },
+     "members": [
+      "absolute",
+      "cue",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_get",
+    "slot_names": [
+     "ACTION_get_time_ms::~ACTION_get_time_ms()",
+     "ACTION_get_time_ms::~ACTION_get_time_ms()",
+     "IAction::onExecute()",
+     "ACTION_get_time_ms::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "ACTION_get_time_ms::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "get_time_ms",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "get_time_sec"
+   ],
+   "associated_vocabularies": {
+    "time_modes": {
+     "association": {
+      "get_time_sec": {
+       "attested": [
+        "absolute",
+        "elapsed",
+        "loopin",
+        "loopout",
+        "remain",
+        "total"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "absolute": [
+       "region"
+      ],
+      "cue": [
+       "region"
+      ],
+      "elapsed": [
+       "region",
+       "run"
+      ],
+      "loopin": [
+       "region",
+       "run"
+      ],
+      "loopout": [
+       "region",
+       "run"
+      ],
+      "remain": [
+       "region",
+       "run"
+      ],
+      "total": [
+       "region"
+      ]
+     },
+     "members": [
+      "absolute",
+      "cue",
+      "elapsed",
+      "loopin",
+      "loopout",
+      "remain",
+      "total"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_get",
+    "slot_names": [
+     "ACTION_get_time_sec::~ACTION_get_time_sec()",
+     "ACTION_get_time_sec::~ACTION_get_time_sec()",
+     "IAction::onExecute()",
+     "ACTION_get_time_sec::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "ACTION_get_time_sec::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "get_time_sec",
    "worklist_recovered": [],
    "worklist_tails": []
   },
@@ -14115,6 +16653,102 @@
   },
   {
    "aliases": [
+    "masterdeck"
+   ],
+   "associated_vocabularies": {
+    "auto:auto": {
+     "association": {
+      "masterdeck": {
+       "attested": [
+        "auto"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "audio": [
+       "region"
+      ],
+      "auto": [
+       "table",
+       "region",
+       "run"
+      ],
+      "cached": [
+       "region",
+       "run"
+      ],
+      "edited": [
+       "region",
+       "run"
+      ],
+      "fast": [
+       "region"
+      ],
+      "karaoke": [
+       "region"
+      ],
+      "need": [
+       "region"
+      ],
+      "stream": [
+       "region"
+      ],
+      "use_mfra_for": [
+       "table"
+      ],
+      "video": [
+       "region"
+      ]
+     },
+     "members": [
+      "audio",
+      "auto",
+      "cached",
+      "edited",
+      "fast",
+      "karaoke",
+      "need",
+      "stream",
+      "use_mfra_for",
+      "video"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_deck_select",
+    "slot_names": [
+     "ACTION_masterdeck::~ACTION_masterdeck()",
+     "ACTION_masterdeck::~ACTION_masterdeck()",
+     "ACTION_masterdeck::onExecute()",
+     "ACTION_masterdeck::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "masterdeck",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "match_key"
    ],
    "associated_vocabularies": {},
@@ -14617,6 +17251,239 @@
   },
   {
    "aliases": [
+    "only_stem"
+   ],
+   "associated_vocabularies": {
+    "effect_gui": {
+     "association": {
+      "only_stem": {
+       "attested": [
+        "bass",
+        "instru",
+        "rhythm"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
+     ]
+    },
+    "stems": {
+     "association": {
+      "only_stem": {
+       "attested": [
+        "bass",
+        "instru",
+        "rhythm",
+        "vocal"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "table",
+       "region"
+      ],
+      "drums": [
+       "region"
+      ],
+      "hihat": [
+       "table",
+       "region",
+       "run"
+      ],
+      "instru": [
+       "table",
+       "region",
+       "run"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "instruments": [
+       "region"
+      ],
+      "kick": [
+       "table",
+       "region",
+       "run"
+      ],
+      "melovocal": [
+       "region"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "title": [
+       "region"
+      ],
+      "vocal": [
+       "table",
+       "region",
+       "run"
+      ],
+      "vocals": [
+       "region"
+      ]
+     },
+     "members": [
+      "aux",
+      "bass",
+      "drums",
+      "hihat",
+      "instru",
+      "instrumental",
+      "instruments",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "rhythm",
+      "stems",
+      "title",
+      "vocal",
+      "vocals"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_equalizer",
+    "slot_names": [
+     "ACTION_only_stem::~ACTION_only_stem()",
+     "ACTION_only_stem::~ACTION_only_stem()",
+     "IActionSwitch::onExecute()",
+     "IActionSwitch::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IActionSwitch::onSaveState()",
+     "IActionSwitch::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)",
+     "ACTION_only_stem::getValue()",
+     "ACTION_only_stem::setValue(bool)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "only_stem",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "pad_color"
    ],
    "associated_vocabularies": {},
@@ -14869,6 +17736,17 @@
     "pad_pages": {
      "association": {
       "pad_page": {
+       "attested": [
+        "beatjump",
+        "cueloop",
+        "custom",
+        "hotcues",
+        "keycue",
+        "loop",
+        "sampler",
+        "slicer",
+        "stems"
+       ],
        "keyword_candidates": [
         "sampler",
         "stems"
@@ -15465,7 +18343,62 @@
    "aliases": [
     "param_equal"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:aiff": {
+     "association": {
+      "param_equal": {
+       "attested": [
+        "aif",
+        "aiff",
+        "mp3",
+        "wav"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "aif": [
+       "region",
+       "run"
+      ],
+      "aiff": [
+       "region",
+       "run"
+      ],
+      "alac": [
+       "region",
+       "run"
+      ],
+      "flac": [
+       "table",
+       "region",
+       "run"
+      ],
+      "m4a": [
+       "region"
+      ],
+      "mp3": [
+       "region"
+      ],
+      "mp4": [
+       "region"
+      ],
+      "wav": [
+       "region"
+      ]
+     },
+     "members": [
+      "aif",
+      "aiff",
+      "alac",
+      "flac",
+      "m4a",
+      "mp3",
+      "mp4",
+      "wav"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [
     "blink",
@@ -16761,7 +19694,45 @@
    "aliases": [
     "rzx_touch"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "rzx_touch": {
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -16802,7 +19773,45 @@
    "aliases": [
     "rzx_touch_x"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "rzx_touch_x": {
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -16843,7 +19852,45 @@
    "aliases": [
     "rzx_touch_y"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:thru": {
+     "association": {
+      "rzx_touch_y": {
+       "keyword_candidates": [
+        "left",
+        "right"
+       ],
+       "method_strings": [
+        "left",
+        "right"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "left": [
+       "region"
+      ],
+      "right": [
+       "region"
+      ],
+      "through": [
+       "region",
+       "run"
+      ],
+      "thru": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "left",
+      "right",
+      "through",
+      "thru"
+     ]
+    }
+   },
    "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -17342,7 +20389,73 @@
    "aliases": [
     "saved_loop_display"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "auto:beat": {
+     "association": {
+      "saved_loop_display": {
+       "keyword_candidates": [
+        "distance",
+        "name",
+        "num",
+        "number",
+        "pos",
+        "position"
+       ],
+       "method_strings": [
+        "distance",
+        "name",
+        "num",
+        "number",
+        "pos",
+        "position"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "beat": [
+       "region",
+       "run"
+      ],
+      "beats": [
+       "region"
+      ],
+      "distance": [
+       "region",
+       "run"
+      ],
+      "name": [
+       "region"
+      ],
+      "num": [
+       "region",
+       "run"
+      ],
+      "number": [
+       "region",
+       "run"
+      ],
+      "pos": [
+       "region",
+       "run"
+      ],
+      "position": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "beat",
+      "beats",
+      "distance",
+      "name",
+      "num",
+      "number",
+      "pos",
+      "position"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -18265,100 +21378,6 @@
   },
   {
    "aliases": [
-    "setting_setdefault"
-   ],
-   "associated_vocabularies": {
-    "auto:coverflow": {
-     "association": {
-      "setting_setdefault": {
-       "attested": [
-        "coverflow"
-       ]
-      }
-     },
-     "evidence_tier": 2,
-     "member_signals": {
-      "color": [
-       "region"
-      ],
-      "colors": [
-       "region"
-      ],
-      "cover": [
-       "region"
-      ],
-      "coverflow": [
-       "region",
-       "run"
-      ],
-      "extendtoolbar": [
-       "region",
-       "run"
-      ],
-      "searchbar": [
-       "region",
-       "run"
-      ],
-      "separator": [
-       "region",
-       "run"
-      ],
-      "separators": [
-       "region",
-       "run"
-      ],
-      "sidelist": [
-       "region"
-      ]
-     },
-     "members": [
-      "color",
-      "colors",
-      "cover",
-      "coverflow",
-      "extendtoolbar",
-      "searchbar",
-      "separator",
-      "separators",
-      "sidelist"
-     ]
-    }
-   },
-   "channel": "HTTP execute only with allowlist, independent readback and verified restoration",
-   "dispatcher_candidates": [],
-   "evidence_tier": 2,
-   "helper_leads": [],
-   "helper_only_candidates": [],
-   "historical": {
-    "build": "18.0.9246",
-    "join": "class spelling and slot index; not current method identity",
-    "module": "action_config",
-    "slot_names": [
-     "ACTION_setting_setdefault::~ACTION_setting_setdefault()",
-     "ACTION_setting_setdefault::~ACTION_setting_setdefault()",
-     "IActionSetting::onExecute()",
-     "IAction::onQuery(SActionParam&)",
-     "IAction::onQueryBool(SActionParam&)",
-     "IAction::onQueryText(SActionParam&)",
-     "IAction::onTooltip(SActionParam&)",
-     "IAction::onUp()",
-     "IAction::onSaveState()",
-     "IAction::onLoadState()",
-     "IAction::pushSaveState(int, void*)",
-     "IAction::popSaveState(int, bool&)",
-     "ACTION_setting_setdefault::doExecute()"
-    ]
-   },
-   "own_keyword_candidates": [],
-   "priority": 1,
-   "shared_helpers": [],
-   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
-   "verb": "setting_setdefault",
-   "worklist_recovered": [],
-   "worklist_tails": []
-  },
-  {
-   "aliases": [
     "config",
     "settings"
    ],
@@ -18367,7 +21386,8 @@
      "association": {
       "settings": {
        "attested": [
-        "audio"
+        "audio",
+        "timecode"
        ]
       }
      },
@@ -18844,9 +21864,501 @@
   },
   {
    "aliases": [
+    "sideview_sort"
+   ],
+   "associated_vocabularies": {
+    "auto:file": {
+     "association": {
+      "sideview_sort": {
+       "attested": [
+        "artist",
+        "bpm",
+        "title"
+       ],
+       "catalog": [
+        "artist"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "artist": [
+       "region"
+      ],
+      "bpm": [
+       "region"
+      ],
+      "cell": [
+       "region",
+       "run"
+      ],
+      "color": [
+       "region"
+      ],
+      "dir": [
+       "region"
+      ],
+      "file": [
+       "region",
+       "run"
+      ],
+      "index": [
+       "region",
+       "run"
+      ],
+      "slot": [
+       "region",
+       "run"
+      ],
+      "title": [
+       "region"
+      ],
+      "type": [
+       "region"
+      ],
+      "volume": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "artist",
+      "bpm",
+      "cell",
+      "color",
+      "dir",
+      "file",
+      "index",
+      "slot",
+      "title",
+      "type",
+      "volume"
+     ]
+    },
+    "song_fields": {
+     "association": {
+      "sideview_sort": {
+       "attested": [
+        "artist",
+        "bpm",
+        "key",
+        "title"
+       ],
+       "catalog": [
+        "artist"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "al": [
+       "table"
+      ],
+      "album": [
+       "table"
+      ],
+      "ar": [
+       "table"
+      ],
+      "artist": [
+       "table",
+       "run"
+      ],
+      "au": [
+       "table"
+      ],
+      "author": [
+       "table"
+      ],
+      "bpm": [
+       "table",
+       "run"
+      ],
+      "by": [
+       "table"
+      ],
+      "comment": [
+       "table"
+      ],
+      "composer": [
+       "table"
+      ],
+      "copyright": [
+       "table"
+      ],
+      "creator": [
+       "table"
+      ],
+      "encoder": [
+       "table"
+      ],
+      "encoder_version": [
+       "table"
+      ],
+      "filename": [
+       "table"
+      ],
+      "filepath": [
+       "table"
+      ],
+      "genre": [
+       "table"
+      ],
+      "grouping": [
+       "table"
+      ],
+      "iart": [
+       "table"
+      ],
+      "icmt": [
+       "table"
+      ],
+      "icop": [
+       "table"
+      ],
+      "ignr": [
+       "table"
+      ],
+      "inam": [
+       "table"
+      ],
+      "iprd": [
+       "table"
+      ],
+      "isbj": [
+       "table"
+      ],
+      "isft": [
+       "table"
+      ],
+      "key": [
+       "table"
+      ],
+      "label": [
+       "table"
+      ],
+      "product": [
+       "table"
+      ],
+      "re": [
+       "table"
+      ],
+      "remix": [
+       "table",
+       "run"
+      ],
+      "remixer": [
+       "table"
+      ],
+      "software": [
+       "table"
+      ],
+      "strn": [
+       "table"
+      ],
+      "subject": [
+       "table"
+      ],
+      "ti": [
+       "table"
+      ],
+      "title": [
+       "table",
+       "run"
+      ],
+      "user1": [
+       "table"
+      ],
+      "user2": [
+       "table"
+      ],
+      "ve": [
+       "table"
+      ],
+      "year": [
+       "table"
+      ]
+     },
+     "members": [
+      "al",
+      "album",
+      "ar",
+      "artist",
+      "au",
+      "author",
+      "bpm",
+      "by",
+      "comment",
+      "composer",
+      "copyright",
+      "creator",
+      "encoder",
+      "encoder_version",
+      "filename",
+      "filepath",
+      "genre",
+      "grouping",
+      "iart",
+      "icmt",
+      "icop",
+      "ignr",
+      "inam",
+      "iprd",
+      "isbj",
+      "isft",
+      "key",
+      "label",
+      "product",
+      "re",
+      "remix",
+      "remixer",
+      "software",
+      "strn",
+      "subject",
+      "ti",
+      "title",
+      "user1",
+      "user2",
+      "ve",
+      "year"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_browser",
+    "slot_names": [
+     "ACTION_sideview_sort::~ACTION_sideview_sort()",
+     "ACTION_sideview_sort::~ACTION_sideview_sort()",
+     "ACTION_sideview_sort::onExecute()",
+     "ACTION_sideview_sort::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "ACTION_sideview_sort::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "sideview_sort",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "stem"
    ],
-   "associated_vocabularies": {},
+   "associated_vocabularies": {
+    "effect_gui": {
+     "association": {
+      "stem": {
+       "attested": [
+        "bass",
+        "hihat",
+        "instru",
+        "kick",
+        "rhythm"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "active": [
+       "region"
+      ],
+      "audioonlyvisualisation": [
+       "region",
+       "run"
+      ],
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "region"
+      ],
+      "colorfx": [
+       "region",
+       "run"
+      ],
+      "colorfx_sampler": [
+       "region",
+       "run"
+      ],
+      "hihat": [
+       "region"
+      ],
+      "instru": [
+       "region"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "kick": [
+       "region"
+      ],
+      "melovocal": [
+       "region",
+       "run"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region",
+       "run"
+      ],
+      "releasefx": [
+       "region",
+       "run"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "sampler": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "transition": [
+       "region"
+      ],
+      "video": [
+       "region"
+      ],
+      "vocals": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "active",
+      "audioonlyvisualisation",
+      "aux",
+      "bass",
+      "colorfx",
+      "colorfx_sampler",
+      "hihat",
+      "instru",
+      "instrumental",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "releasefx",
+      "rhythm",
+      "sampler",
+      "stems",
+      "transition",
+      "video",
+      "vocals"
+     ]
+    },
+    "stems": {
+     "association": {
+      "stem": {
+       "attested": [
+        "bass",
+        "hihat",
+        "instru",
+        "kick",
+        "rhythm",
+        "vocal"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "aux": [
+       "region"
+      ],
+      "bass": [
+       "table",
+       "region"
+      ],
+      "drums": [
+       "region"
+      ],
+      "hihat": [
+       "table",
+       "region",
+       "run"
+      ],
+      "instru": [
+       "table",
+       "region",
+       "run"
+      ],
+      "instrumental": [
+       "region"
+      ],
+      "instruments": [
+       "region"
+      ],
+      "kick": [
+       "table",
+       "region",
+       "run"
+      ],
+      "melovocal": [
+       "region"
+      ],
+      "mic": [
+       "region"
+      ],
+      "mixfx": [
+       "region"
+      ],
+      "rhythm": [
+       "region"
+      ],
+      "stems": [
+       "region"
+      ],
+      "title": [
+       "region"
+      ],
+      "vocal": [
+       "table",
+       "region",
+       "run"
+      ],
+      "vocals": [
+       "region"
+      ]
+     },
+     "members": [
+      "aux",
+      "bass",
+      "drums",
+      "hihat",
+      "instru",
+      "instrumental",
+      "instruments",
+      "kick",
+      "melovocal",
+      "mic",
+      "mixfx",
+      "rhythm",
+      "stems",
+      "title",
+      "vocal",
+      "vocals"
+     ]
+    }
+   },
    "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
    "dispatcher_candidates": [],
    "evidence_tier": 2,
@@ -18906,7 +22418,8 @@
         "bass",
         "hihat",
         "instru",
-        "kick"
+        "kick",
+        "rhythm"
        ]
       }
      },
@@ -19011,6 +22524,7 @@
         "hihat",
         "instru",
         "kick",
+        "rhythm",
         "vocal"
        ]
       }
@@ -19188,6 +22702,7 @@
      "association": {
       "stems_split": {
        "attested": [
+        "rhythm",
         "vocal"
        ]
       }
@@ -19589,6 +23104,106 @@
   },
   {
    "aliases": [
+    "on",
+    "true",
+    "yes"
+   ],
+   "associated_vocabularies": {
+    "auto:blinkfast": {
+     "association": {
+      "on": {
+       "attested": [
+        "blink",
+        "blinkfast"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "blink": [
+       "region"
+      ],
+      "blinkfast": [
+       "region",
+       "run"
+      ],
+      "effect_": [
+       "region"
+      ],
+      "get": [
+       "region"
+      ],
+      "get_": [
+       "region"
+      ],
+      "loop_": [
+       "region",
+       "run"
+      ],
+      "momentarily": [
+       "region",
+       "run"
+      ],
+      "smart_pressed": [
+       "region",
+       "run"
+      ],
+      "temporary": [
+       "region"
+      ],
+      "while_pressed": [
+       "region",
+       "run"
+      ]
+     },
+     "members": [
+      "blink",
+      "blinkfast",
+      "effect_",
+      "get",
+      "get_",
+      "loop_",
+      "momentarily",
+      "smart_pressed",
+      "temporary",
+      "while_pressed"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_param",
+    "slot_names": [
+     "ACTION_true::~ACTION_true()",
+     "ACTION_true::~ACTION_true()",
+     "IAction::onExecute()",
+     "ACTION_true::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "IAction::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "true",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
     "undo_load"
    ],
    "associated_vocabularies": {},
@@ -19675,6 +23290,168 @@
    "shared_helpers": [],
    "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
    "verb": "video_crossfader",
+   "worklist_recovered": [],
+   "worklist_tails": []
+  },
+  {
+   "aliases": [
+    "video_fx"
+   ],
+   "associated_vocabularies": {
+    "auto:camera": {
+     "association": {
+      "video_fx": {
+       "attested": [
+        "camera",
+        "slideshow"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "background": [
+       "region"
+      ],
+      "bars": [
+       "region",
+       "run"
+      ],
+      "camera": [
+       "region",
+       "run"
+      ],
+      "clipmask": [
+       "region"
+      ],
+      "crop": [
+       "region",
+       "run"
+      ],
+      "index": [
+       "region"
+      ],
+      "letterboxing": [
+       "region",
+       "run"
+      ],
+      "linkdrop": [
+       "region"
+      ],
+      "mask": [
+       "region"
+      ],
+      "slideshow": [
+       "region"
+      ],
+      "source": [
+       "region"
+      ],
+      "zoom": [
+       "region"
+      ]
+     },
+     "members": [
+      "background",
+      "bars",
+      "camera",
+      "clipmask",
+      "crop",
+      "index",
+      "letterboxing",
+      "linkdrop",
+      "mask",
+      "slideshow",
+      "source",
+      "zoom"
+     ]
+    },
+    "auto:coverflow": {
+     "association": {
+      "video_fx": {
+       "attested": [
+        "cover",
+        "coverflow"
+       ]
+      }
+     },
+     "evidence_tier": 2,
+     "member_signals": {
+      "color": [
+       "region"
+      ],
+      "colors": [
+       "region"
+      ],
+      "cover": [
+       "region"
+      ],
+      "coverflow": [
+       "region",
+       "run"
+      ],
+      "extendtoolbar": [
+       "region",
+       "run"
+      ],
+      "searchbar": [
+       "region",
+       "run"
+      ],
+      "separator": [
+       "region",
+       "run"
+      ],
+      "separators": [
+       "region",
+       "run"
+      ],
+      "sidelist": [
+       "region"
+      ]
+     },
+     "members": [
+      "color",
+      "colors",
+      "cover",
+      "coverflow",
+      "extendtoolbar",
+      "searchbar",
+      "separator",
+      "separators",
+      "sidelist"
+     ]
+    }
+   },
+   "channel": "delayed plugin GetInfo/GetStringInfo, then HTTP fixture",
+   "dispatcher_candidates": [],
+   "evidence_tier": 2,
+   "helper_leads": [],
+   "helper_only_candidates": [],
+   "historical": {
+    "build": "18.0.9246",
+    "join": "class spelling and slot index; not current method identity",
+    "module": "action_plugins",
+    "slot_names": [
+     "ACTION_video_fx::~ACTION_video_fx()",
+     "ACTION_video_fx::~ACTION_video_fx()",
+     "ACTION_effect_active::onExecute()",
+     "ACTION_effect_active::onQuery(SActionParam&)",
+     "IAction::onQueryBool(SActionParam&)",
+     "IAction::onQueryText(SActionParam&)",
+     "IAction::onTooltip(SActionParam&)",
+     "IAction::onUp()",
+     "IAction::onSaveState()",
+     "ACTION_effect_active::onLoadState()",
+     "IAction::pushSaveState(int, void*)",
+     "IAction::popSaveState(int, bool&)",
+     "ACTION_video_fx::getPluginSlot(IAction*, bool, bool, bool)"
+    ]
+   },
+   "own_keyword_candidates": [],
+   "priority": 1,
+   "shared_helpers": [],
+   "test": "Hold attested argument shape fixed; vary one position against bare and two nonsense controls. Record HRESULT separately from value; repeat time-varying reads in independent runs.",
+   "verb": "video_fx",
    "worklist_recovered": [],
    "worklist_tails": []
   },
@@ -20286,7 +24063,7 @@
   "helper_functions": 11,
   "helper_leads": 1045,
   "helper_records": 35,
-  "queue_verbs": 308,
+  "queue_verbs": 318,
   "worklist_verbs": 41
  }
 }

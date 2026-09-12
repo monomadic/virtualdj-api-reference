@@ -51,8 +51,8 @@ def resolve(name: str, store: dict) -> tuple[str, dict | None, str | None]:
 def pick_examples(snippets: list[dict], verb: str, limit: int) -> list[dict]:
     """Short, diverse, vendor-shipped first: one per source, then by length."""
     mine = [s for s in snippets if verb in s["verbs"]]
-    mine.sort(key=lambda s: (0 if "builtin" in s["sources"] else 1 if "catalog" in s["sources"]
-                             else 2, len(s["script"])))
+    mine.sort(key=lambda s: (0 if {"builtin", "factory"} & set(s["sources"])
+                             else 1 if "catalog" in s["sources"] else 2, len(s["script"])))
     out, seen = [], set()
     for s in mine:
         head = s["script"].split("&")[0].strip()[:24]
@@ -103,7 +103,7 @@ def summary(name: str, limit: int = 6) -> dict:
                         "catalog": catalog.get("text")},
         "examples": [{"script": s["script"], "sources": s["sources"], "origin": s["origins"][0]}
                      for s in pick_examples(corpus, canon, limit)],
-        "shapes": {sh: {"n": len(r["snippets"]), "contexts": r["contexts"],
+        "shapes": {sh: {"n": r.get("count", len(r["snippets"])), "contexts": r["contexts"],
                         "returns": r["returns"], "example": r["snippets"][0]["snippet"]}
                    for sh, r in shapes.items()},
         "wrapper": tails_art.get("wrappers", {}).get(canon),

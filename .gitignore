@@ -12,3 +12,9 @@ build/
 # (VirtualDJ8_SDK_20211003.zip), or the community example set at
 # https://github.com/szemek/virtualdj-plugins-examples
 vendor/
+
+# Decoded controllers.dat (device definitions, factory mappings, audio presets)
+# — Atomix's own XML, vendor copyright, so never committed. `just controllers-vendor`
+# regenerates it; tests/controllers-manifest.json holds the hashes it is checked
+# against, and the corpus tools refuse a tree that disagrees with the manifest.
+vendor/controllers/

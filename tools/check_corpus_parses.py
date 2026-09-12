@@ -13,9 +13,15 @@ never as "the vendor shipped invalid script".
 
 Reading the results needs care, and the traps are already documented:
 
-- **Query only.** The corpus contains `load`, `unload`, `browsed_song color` and
-  broadcast verbs; executing it would rewrite the library. Nothing here is ever
-  sent to /execute.
+- **Query only, but that is not the same as harmless.** The corpus contains
+  `load`, `unload`, `browsed_song color` and broadcast verbs; executing it would
+  rewrite the library. Nothing here is ever sent to /execute. That was once
+  assumed to make the sweep safe, and it does not: `/query` answers a bare
+  no-argument action verb rather than gating it, and `minimize` recorded
+  `parsed` in the 2026-09-04 run. A minimized window with the process still
+  alive is the reported hang — you cannot cmd-tab back to it and have to force
+  quit. `UNSAFE` below therefore skips snippets that change application or
+  window state, and skipping is recorded, not silent.
 - **`E_FAIL` is silence, not denial** (Evidence Standards rule 4). A real verb
   returns it — `remote_action` does. So E_FAIL is classified `no-value`, never
   as a parse failure.
@@ -53,6 +59,22 @@ CONTENT = re.compile(r"['\"][^'\"]*[ ./\\][^'\"]*['\"]|\.(mp3|wav|m4a|mp4|vdjsam
 PLACEHOLDER = re.compile(r"\b[XY]\b")
 # param_* verbs read the value passed down the chain; over HTTP there is none.
 PIPELINE = re.compile(r"(^|&)\s*param_[a-z_]+", re.I)  # `sampler_bank X & sampler_play_stop Y` from the wiki
+
+
+# Verbs that change application or window state. `/query` does not gate a bare
+# action verb, so sending one of these performs it: `minimize` leaves VirtualDJ
+# running with no window, unreachable by cmd-tab and recoverable only by force
+# quit. A snippet naming one is skipped and recorded as `skipped-unsafe`.
+UNSAFE = ("minimize", "maximize", "restart", "quit", "exit", "shutdown",
+          "pad_edit", "sampler_edit", "settings_window")
+
+
+def unsafe_verb(script: str) -> str | None:
+    """Name the application-state verb in this snippet, if it holds one."""
+    for verb in UNSAFE:
+        if re.search(r"\b" + re.escape(verb) + r"\b", script):
+            return verb
+    return None
 
 
 def classify(script: str, answer: str, kinds: dict[str, str] | None = None) -> str:
@@ -113,6 +135,12 @@ def main() -> int:
 
     results = []
     for i, record in enumerate(snippets, 1):
+        unsafe = unsafe_verb(record["script"])
+        if unsafe:
+            results.append({"script": record["script"], "answer": "", "skipped_verb": unsafe,
+                            "outcome": "skipped-unsafe", "sources": record["sources"],
+                            "origin": record["origins"][0]})
+            continue
         answer = channel.query(record["script"])
         results.append({"script": record["script"], "answer": answer,
                         "outcome": classify(record["script"], answer, kinds),

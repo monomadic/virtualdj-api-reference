@@ -337,12 +337,42 @@ So the interface stalls intermittently for a few seconds and recovers. That is t
 likely reading of this suite family's recorded *timeouts* — and it is the reason a timeout
 must never be recorded as a grammar result — but a stall is not an exit.
 
+### The symptom is a hung window, not a crash (2026-09-12)
+
+The owner's account changes what to look for: **VirtualDJ never crashed.** Cmd-tab stopped
+being able to reach it — no window, nothing to focus, every other app fine — and it had to be
+force quit. So the process survives; it is the window that goes.
+
+That reading fits the artifacts better than a crash ever did. It explains why these events
+leave no crash report, and it explains the earlier "no VirtualDJ process afterwards" note as
+the *aftermath of a force quit*, not a spontaneous exit.
+
+It also names a mechanism the read-only sweeps could not reach. `minimize` is in the vendor
+corpus, and the corpus sweep sends every snippet through `/query` on the standing assumption
+that querying cannot change anything. **`/query` does not gate a bare no-argument action
+verb.** Bare `browser_window` is classified `surface-gated`, but bare `minimize` and bare
+`maximize` both recorded `parsed` in the 2026-09-04 run — they answered. A verb with no
+argument has nothing to match against, so "answered" is consistent with "performed", and a
+minimized VirtualDJ is exactly a running process with no window to tab back to.
+
+This is a strong lead, **not a proven cause**: confirming it means sending `minimize` and
+watching the window, which cannot be done on an instance someone is playing. What did not
+survive contact with evidence is the assumption that the query surface is inert — `beatlock
+on` through `/query` returns whether the state matches (`no`, state unchanged, and
+`beatlock off` returns `yes`), so the surface answers *match questions* for verbs that take
+an argument, and that protection does not extend to verbs that take none.
+
+`check_corpus_parses.py` now refuses to send application- and window-state verbs at all
+(`UNSAFE`, recorded as `skipped-unsafe` rather than silently dropped). Regenerating the
+corpus results will reclassify the `minimize`/`maximize` rows.
+
 The untested difference between these probes and the sessions where the app died: **deck
 state**. Every probe above ran against four unloaded, stopped decks, because that is what the
 fixtures require. The targets most under suspicion (`mixerN`, `playing`, `sandbox`, the video
 targets) name objects that may only exist once something is loaded. Probing them against a
-loaded instance is the next experiment, and it is the one that cannot be run on a deck
-someone is playing.
+loaded instance has since been done — all 46 probes answered with decks 1 and 2 loaded and
+playing ([capture](../tests/deck-target-exit-probe-loaded-9598.json)), so deck state does not
+rescue the token hypothesis either.
 
 What this does *not* license: assigning causation from a pending-query label, or treating a
 completed run as evidence the tokens are safe. What it does require of any future run here:
