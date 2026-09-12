@@ -7,10 +7,12 @@ not the running application's SID cache. JSON preserves duplicate/reversed rows.
 import argparse
 import json
 import sqlite3
+import xml.etree.ElementTree as ET
 import sys
 import tempfile
 from pathlib import Path
 
+DEFAULT_LIBRARY = Path.home() / 'Library/Application Support/VirtualDJ/database.xml'
 DEFAULT_DB = Path.home() / 'Library/Application Support/VirtualDJ/extra.db'
 SQL = '''
 SELECT r.id AS relationship_id,
@@ -69,8 +71,37 @@ def list_links(path):
     return rows, 'Database locked: showing a stable on-disk snapshot; unsaved application changes are not included.'
 
 
-def label(track):
+def library_index(database):
+    """Map every library track's computed SID to its path.
+
+    `extra.db` only keeps a `track_data` row for tracks VirtualDJ happened to
+    record, so most endpoints of a real `related_tracks` set have no metadata at
+    all. The SID is computable now, so the library itself can name them: hash
+    each `<Song>`'s Author/Title/Remix and look the endpoint up.
+
+    These are RAW tags, not the post-cleanup values `SDBInfo::getSID` receives,
+    so a match is evidence and a miss is not — cleanup may have altered the
+    fields. First writer wins, since one SID is a metadata equivalence class and
+    can legitimately name several files.
+    """
+    from linked_sid import calculate
+    index = {}
+    for song in ET.parse(database).getroot().iter('Song'):
+        tags = song.find('Tags')
+        if tags is None:
+            continue
+        computed = calculate(tags.get('Author') or '', tags.get('Title') or '',
+                             tags.get('Remix') or '')
+        if computed['linkable']:
+            index.setdefault(computed['sid_signed'], song.get('FilePath'))
+    return index
+
+
+def label(track, index=None):
     if not track['resolved']:
+        named = (index or {}).get(track['sid'])
+        if named:
+            return f"[SID {track['sid']} -> {Path(named).name} (from library tags)]"
         return f"[unresolved SID {track['sid']}: no track_data row]"
     text = ' — '.join(s for s in (track['artist'], track['title']) if s)
     if track['remix']:
@@ -82,7 +113,19 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--db', type=Path, default=DEFAULT_DB, help='Path to extra.db')
     parser.add_argument('--json', action='store_true', help='Output complete relationship records as JSON')
+    parser.add_argument('--resolve-from-library', nargs='?', type=Path, const=DEFAULT_LIBRARY,
+                        metavar='DATABASE_XML',
+                        help='Name endpoints that have no track_data row by hashing the '
+                             'library\'s own raw Author/Title/Remix tags (default: '
+                             '~/Library/Application Support/VirtualDJ/database.xml)')
     args = parser.parse_args()
+    index = {}
+    if args.resolve_from_library:
+        try:
+            index = library_index(args.resolve_from_library.expanduser())
+        except (OSError, ET.ParseError) as exc:
+            print(f'Cannot read the library: {exc}', file=sys.stderr)
+            return 1
     try:
         rows, note = list_links(args.db.expanduser().resolve())
     except (OSError, ValueError, sqlite3.Error) as exc:
@@ -94,14 +137,19 @@ def main():
         print(json.dumps(rows, indent=2, ensure_ascii=False))
     else:
         for row in rows:
-            print(f"#{row['relationship_id']}  {label(row['track1'])}  ↔  {label(row['track2'])}")
+            print(f"#{row['relationship_id']}  {label(row['track1'], index)}"
+                  f"  ↔  {label(row['track2'], index)}")
             for n in (1, 2):
                 track = row[f'track{n}']
                 if track['file']:
                     print(f"  {n}: {track['file']}")
             print()
-        missing = sum(not row[f'track{n}']['resolved'] for row in rows for n in (1, 2))
-        print(f'{len(rows)} relationship rows; {missing} endpoints without track_data metadata.')
+        missing = [row[f'track{n}']['sid'] for row in rows for n in (1, 2)
+                   if not row[f'track{n}']['resolved']]
+        named = sum(1 for sid in missing if sid in index)
+        tail = f'; {named} of those named from library tags' if index else ''
+        print(f'{len(rows)} relationship rows; {len(missing)} endpoints '
+              f'without track_data metadata{tail}.')
     return 0
 
 

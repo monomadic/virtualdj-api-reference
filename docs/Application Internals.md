@@ -992,6 +992,42 @@ itself. It missed VirtualDJ's metadata reduction and concatenation pipeline.
 The hash algorithm is now recovered; complete raw-tag cleanup compatibility and
 a current-build external-write/readback canary remain open.
 
+#### Naming endpoints the database never recorded
+
+`track_data` only holds rows VirtualDJ happened to record, so most endpoints of a
+real `related_tracks` set have no metadata at all. A computable SID fixes that
+from the other direction — hash the library's own `<Song>` tags and look the
+endpoint up:
+
+```sh
+just list-linked-tracks --resolve-from-library
+```
+
+Those are **raw** `Author`/`Title`/`Remix` tags, not the post-cleanup values
+`SDBInfo::getSID` receives, so a match is evidence and a miss is not: cleanup may
+have altered the fields, the track may live in another volume's database, or the
+row may predate a retag. Default output is unchanged; the flag only adds names.
+One SID is a metadata equivalence class, so it can legitimately name several
+files — the index keeps the first.
+
+#### What cleanup does, from one install's data (2026-09-13)
+
+Comparing raw library tags against the stored post-cleanup metadata for the same
+file bounds the open cleanup question with real data rather than more reading.
+On this install every comparable pair but one reproduced its stored SID directly
+from raw tags, so **`CTagEngine::cleanup` is identity for the large majority of
+ordinary tracks**. The single exception names an actual rule:
+
+| Field | Raw tag | Stored after cleanup |
+| --- | --- | --- |
+| `Remix` | `Original Mix` | *(empty)* |
+
+So cleanup discards `Original Mix` as a non-distinguishing remix. That is one
+rule from one example, not the cleanup specification — the useful part is the
+method: any disagreement between a raw-tag SID and a stored SID for the same file
+isolates a cleanup behavior, and `--resolve-from-library` surfaces those
+disagreements as misses.
+
 #### Lookup and relationship consequences
 
 `addRelated` computes each cleaned SID, binds them to
