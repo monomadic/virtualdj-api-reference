@@ -88,9 +88,16 @@ readbacks before any mutation:
 - `parser_beatlock_levels` compares deck 1 beatlock off and on.
 - `parser_all_decks_asymmetric` starts decks 1–4 off/on/off/on, then on/off/on/off.
 - `parser_selected_scope` selects deck 1, then deck 2, for query-only selector comparisons.
+- `parser_master_scope` pins the selection and the master deck to *different* decks —
+  `(selection, master)` of `(1, 2)` then `(2, 3)` — so a selector's two-baseline signature
+  identifies which state it reads.
 
 The allowlist permits zoom/beatlock forms, or literal `deck N select` setup/restoration in
-the scope mode. The runners verify absolute-setter round trips before candidates, read
+the scope mode; `parser_master_scope` adds literal `deck N masterdeck on` and
+`masterdeck_auto on|off`, each journaled and put back before the shared guard comparison
+runs. It refuses to start unless exactly one deck holds master, and aborts rather than
+proceed if a pin does not hold, since a master that silently stayed put would make every
+selector look like a constant. The runners verify absolute-setter round trips before candidates, read
 state independently of execute responses, and restore the original state after every
 action sample. Read-only scope queries share a selected-deck baseline; that baseline is
 checked before each query and the original state is restored after each batch. Guard
@@ -314,7 +321,12 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
 - The isolated master query has now completed in a guarded fixture, but the earlier app
   exit remains unexplained. Do not assign causation from the pending-query label.
 - Exercise scope keywords in prepared, asymmetric master/active/video/mixer states; constant
-  reachability alone cannot identify the selected deck or prove fan-out.
+  reachability alone cannot identify the selected deck or prove fan-out. The fixture for this
+  now exists (`just runtime-grammar-master`, predictions frozen in
+  `tests/runtime-grammar-master-cases.json`) and its offline regressions pass, but **no live
+  capture has been taken**: the run requires four unloaded, stopped decks and the harness
+  refuses to mutate anything otherwise. Do not cite the fixture as a result until a capture
+  exists.
 - Extend the tested action consumers to button-lifetime modifiers with a channel that can
   supply both press and release. The HTTP execute channel does not expose that lifecycle;
   numeric, boolean and flag observations in zoom/beatlock cannot stand in for it.

@@ -1,0 +1,501 @@
+{
+  "cases": [
+    {
+      "id": "master-scope-master",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "With the master deck pinned away from the selection, does `master` follow the master deck rather than the selection or a constant deck 1?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-followup-master"
+    },
+    {
+      "id": "master-scope-active",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "The earlier run saw `active` return 1 while master was also 1; with the two pulled apart, does `active` track the master deck rather than a constant?",
+      "required_context": {
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "deck 3 play": "no",
+        "deck 4 play": "no"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-active"
+    },
+    {
+      "id": "master-scope-playing",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck playing get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "With no deck playing, does `playing` fall back to the selected deck?",
+      "required_context": {
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "deck 3 play": "no",
+        "deck 4 play": "no"
+      },
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-default",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck default get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does explicit default still follow the selection when the master deck is elsewhere?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-default"
+    },
+    {
+      "id": "master-scope-bare",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does the unscoped query still follow the selection when the master deck is elsewhere?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-bare"
+    },
+    {
+      "id": "master-scope-left",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck left get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `left` stay on deck 1 regardless of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-left"
+    },
+    {
+      "id": "master-scope-right",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck right get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `right` stay on deck 2 regardless of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ],
+      "prior_case": "scope-right"
+    },
+    {
+      "id": "master-scope-leftvideo",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck leftvideo get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `leftvideo` resolve to the left deck rather than the selection or master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-rightvideo",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck rightvideo get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `rightvideo` resolve to the right deck rather than the selection or master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-mixer1",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer1 get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "hypothesis": "Does `mixer1` name mixer channel 1 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-mixer2",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer2 get_deck",
+      "expected": [
+        [
+          "2"
+        ],
+        [
+          "2"
+        ]
+      ],
+      "hypothesis": "Does `mixer2` name mixer channel 2 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-mixer3",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer3 get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "hypothesis": "Does `mixer3` name mixer channel 3 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    },
+    {
+      "id": "master-scope-mixer4",
+      "fixture": "parser_master_scope",
+      "group": "master-scope",
+      "script": "deck mixer4 get_deck",
+      "expected": [
+        [
+          "4"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "hypothesis": "Does `mixer4` name mixer channel 4 independently of selection and master?",
+      "required_context": {},
+      "controls": [
+        "deck zzqqx get_deck",
+        "deck vvnnz get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "getDeck@0x10047d9ff",
+        "IAction::deckMatch@0x100599000"
+      ]
+    }
+  ]
+}
