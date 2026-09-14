@@ -103,10 +103,18 @@ def main():
     parser.add_argument('--read', type=Path, default=Path(__file__).resolve().parents[1] / 'tests/controller-schema-inventory.json', help='Saved inventory for offline queries')
     parser.add_argument('--path', help='XML path: exact match preferred, otherwise substring')
     parser.add_argument('--device', help='Built-in device identifier (case-insensitive; exact preferred, otherwise substring)')
-    parser.add_argument('--manifest', type=Path, default=Path(__file__).resolve().parents[1] / 'tests/controllers-manifest.json', help='Decoded archive manifest for built-in device lookup')
+    parser.add_argument('--manifest', type=Path, default=None, help='Decoded archive manifest for built-in device lookup (default: the installed build\'s under tests/controllers-manifests/, else the newest)')
     parser.add_argument('--mappers', type=Path, default=Path(__file__).resolve().parents[1] / 'examples/Mappers')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
+    if args.manifest is None:
+        import sys
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from controller_archives import find_manifest, list_manifests, DEFAULT_APP
+        rows = list_manifests()
+        args.manifest = find_manifest(app=DEFAULT_APP) or (rows[-1]['path'] if rows else None)
+        if args.manifest is None:
+            parser.error('no manifest under tests/controllers-manifests/ — run `just controllers-vendor`')
     data = inventory(args.zip, args.mappers) if args.zip else json.loads(args.read.read_text(encoding='utf-8'))
     if args.path or args.device:
         result_data = {'source_zip_sha256': data['source_zip_sha256'], 'evidence_tier': data['evidence_tier']}

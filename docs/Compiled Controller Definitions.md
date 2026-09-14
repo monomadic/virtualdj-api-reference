@@ -7,10 +7,12 @@ approximation of the device schema. The reader emits every member byte-for-byte.
 ## Read and query
 
 ```sh
-just controllers-vendor        # decode once into gitignored vendor/controllers/, verified against the manifest
+just controllers-vendor        # decode the installed build into gitignored vendor/controllers/<key>/, verified against its manifest
+just controllers-archives      # every archive with a committed manifest, and which are decoded here
+just controllers-diff 18.0.9583 18.0.9598   # added / removed / changed members between two builds, from manifests alone
 just script-corpus --verb effect_arm_select   # the factory mappings are a corpus source (`factory`)
 just attested-tails --verb effect_arm_select  # tails and shapes Atomix wrote into them
-just controllers-extract --output-dir /tmp/vdj-controllers --json tests/controllers-manifest.json
+just controllers-extract --output-dir /tmp/vdj-controllers --json /tmp/manifest.json   # ad-hoc decode, any layout
 python3 tools/controller_schema_inventory.py /tmp/vdj-controllers/block-000.zip --output tests/controller-schema-inventory.json
 just controllers
 just controllers --device DDJGRV6
@@ -21,9 +23,24 @@ just controllers --path /device/slider
 `just controllers-vendor` is the extraction the corpus tools read: `vendor/` is gitignored
 because the decoded files are Atomix's copyright (the same reason the plugin SDK headers are
 not committed), and `tools/extract_script_corpus.py` refuses a tree whose files do not match
-the committed manifest's hashes, so an extraction from another build cannot attest anything
-under this build's stamp. Delete the directory and rerun after a VirtualDJ update, then
-re-extract the corpus and attested-tails artifacts.
+its manifest's hashes, so an extraction from another build cannot attest anything under this
+build's stamp.
+
+**One archive, one key, one record.** An archive is named by the app build it shipped in
+*and* its own final block revision — `18.0.9598-r2241` — because `controllers.dat` carries a
+revision chain of its own (`blocks[].predecessor` → `revision`) and can move independently of
+the bundle. The decoded tree lives at `vendor/controllers/<key>/` and its manifest at
+[`tests/controllers-manifests/<key>.json`](../tests/controllers-manifests/); the helper that
+derives the key and lists what is known is `tools/controller_archives.py`. Decoding on a new
+build therefore *adds* a manifest instead of replacing the last one, and an existing key is
+verified, never overwritten. Because a manifest carries a SHA-256, byte count and root
+attributes per member, `just controllers-diff A B` compares two builds' archives on a machine
+that has never held either tree; what changed *inside* a member needs both trees decoded, and
+`--show-paths` names the pair. The corpus artifact stamps the archive it mined as
+`summary.factory_archive`, and `--check` re-verifies that archive rather than whichever is
+installed: on a machine holding a different build it reports the mismatch and skips, the same
+way the skin-reader check does, instead of failing. To re-anchor the corpus to the installed
+build, run `just controllers-vendor` and then `just script-corpus > tests/vdjscript-corpus.json`.
 
 Extraction uses `uv` and the reader's pinned `pycryptodome` dependency. Offline inventory
 queries need only Python's standard library. The output directory must not already exist;
@@ -32,7 +49,7 @@ Each archive block gets its own directory and ZIP: no members are silently overw
 The reader rejects unsafe paths, duplicate names (case-insensitively), unexpected XML
 roots, bad CRCs, invalid key envelopes, truncation, and broken block chains.
 
-[Manifest](../tests/controllers-manifest.json) fields `roots`, `blocks[].member_count`,
+Manifest fields (`tests/controllers-manifests/<key>.json`) `roots`, `blocks[].member_count`,
 `source_sha256`, and `bundle_version` answer counts and identify the exact input.
 [Inventory](../tests/controller-schema-inventory.json) fields `paths`, `device_types`, and
 `local_mapper_comparisons` expose the recovered vocabulary and reference comparisons.

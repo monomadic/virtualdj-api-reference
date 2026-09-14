@@ -622,11 +622,23 @@ check-runtime-grammar:
     @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json
 
 # The decoded archive the corpus mines, under gitignored vendor/ (vendor copyright,
-# like the SDK headers). Idempotent; delete the directory to re-extract after a
-# VirtualDJ update, then `just script-corpus > tests/vdjscript-corpus.json`.
+# like the SDK headers). One tree per archive, keyed by app build AND the
+# archive's own revision — vendor/controllers/18.0.9598-r2241/ — with the
+# committed manifest at tests/controllers-manifests/<key>.json. Idempotent: an
+# existing key is verified, never overwritten, so decoding on a new build ADDS
+# a record; then `just script-corpus > tests/vdjscript-corpus.json` to re-anchor.
 controllers-vendor:
-    @test -d vendor/controllers || uv run tools/read_controllers.py --output-dir vendor/controllers > /dev/null
+    @uv run tools/read_controllers.py --vendor
     @{{python}} tools/extract_script_corpus.py --vendor-check
+
+# Every controller archive with a committed manifest, and which are decoded here.
+controllers-archives *args:
+    @{{python}} tools/controller_archives.py {{args}}
+
+# What changed in controllers.dat between two builds, from the manifests alone:
+# `just controllers-diff 18.0.9583 18.0.9598`, `--root mapper`, `--format=json`.
+controllers-diff older newer *args:
+    @{{python}} tools/controllers_diff.py "{{older}}" "{{newer}}" {{args}}
 
 # Decode every original device/mapper/audio XML member; output dir must be new.
 controllers-extract *args:

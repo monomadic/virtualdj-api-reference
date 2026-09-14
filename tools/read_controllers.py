@@ -7,6 +7,14 @@
 
 Tier 2 extraction, not hardware behavior proof. No installed files are modified.
 Run with `uv run tools/read_controllers.py --help` (PEP 723 dependency).
+
+`--vendor` is the layout the corpus tools read: the tree goes to
+`vendor/controllers/<bundle>-r<revision>/` and the manifest to
+`tests/controllers-manifests/<bundle>-r<revision>.json`, keyed by the app build
+AND the archive's own final block revision (see tools/controller_archives.py).
+A key that already exists is verified against its manifest, never overwritten,
+so every build ever decoded keeps its own record and the manifests can be
+diffed across builds (`just controllers-diff`).
 """
 from __future__ import annotations
 import argparse
@@ -19,6 +27,9 @@ import plistlib
 import struct
 import xml.etree.ElementTree as ET
 import zipfile
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from controller_archives import archive_key, manifest_path, vendor_dir  # noqa: E402
 
 # Public verification modulus, recovered from _controllersPublicKey in 18.0.9246.
 # Its bytes are checked against the selected app, so key rotation fails explicitly.
@@ -104,13 +115,42 @@ def decode(data):
     return blocks
 
 
+def verify_existing(key, output_dir, manifest_file, blocks):
+    """A key already decoded here: check every member's bytes against the committed
+    manifest and this decode, and say so. Never rewrites either."""
+    if not manifest_file.exists():
+        raise SystemExit(f'{output_dir} exists but {manifest_file} does not — '
+                         f'delete the directory and rerun to re-decode {key}')
+    manifest = json.loads(manifest_file.read_text())
+    bad = []
+    for index, (metadata, plain, members) in enumerate(blocks):
+        wanted = {m['name']: m['sha256'] for m in manifest['blocks'][index]['members']}
+        for name, content, root in members:
+            path = output_dir / f'block-{index:03d}' / name
+            digest = sha(content)
+            if wanted.get(name) != digest:
+                bad.append(f'manifest disagrees with the installed archive: {name}')
+            elif not path.exists() or sha(path.read_bytes()) != digest:
+                bad.append(f'decoded tree disagrees with the manifest: {path}')
+    if bad:
+        raise SystemExit(f'{key}: {len(bad)} problems, first: {bad[0]} — delete '
+                         f'{output_dir} and rerun')
+    total = sum(len(m) for _, _, m in blocks)
+    print(f'{key}: already decoded, {total} members verified against {manifest_file}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     parser.add_argument('--input', type=Path, help='defaults to selected app Resources/controllers.dat')
     parser.add_argument('--output-dir', type=Path, help='new directory; raw XML and ZIP for every block')
     parser.add_argument('--json', type=Path, help='write reproducible manifest here')
+    parser.add_argument('--vendor', action='store_true',
+                        help='per-archive layout: vendor/controllers/<key>/ and '
+                             'tests/controllers-manifests/<key>.json; idempotent')
     args = parser.parse_args()
+    if args.vendor and (args.output_dir or args.json):
+        parser.error('--vendor chooses the output directory and manifest itself')
     source = args.input or args.app / 'Contents/Resources/controllers.dat'
     binary = (args.app / 'Contents/MacOS/VirtualDJ').read_bytes()
     if PUBLIC_MODULUS not in binary:
@@ -124,6 +164,14 @@ def main():
               'source_bytes': len(data), 'app_binary_sha256': sha(binary),
               'public_modulus_sha256': sha(PUBLIC_MODULUS), 'blocks': [], 'roots': {}}
     roots = Counter()
+    if args.vendor:
+        key = archive_key({'bundle_version': info['CFBundleVersion'],
+                           'blocks': [{'revision': blocks[-1][0]['revision']}]})
+        args.output_dir, args.json = vendor_dir(key), manifest_path(key)
+        if args.output_dir.exists():
+            verify_existing(key, args.output_dir, args.json, blocks)
+            return
+        args.json.parent.mkdir(parents=True, exist_ok=True)
     if args.output_dir:
         args.output_dir.mkdir(parents=True, exist_ok=False)
     for index, (metadata, plain, members) in enumerate(blocks):

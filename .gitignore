@@ -15,9 +15,11 @@ build/
 vendor/
 
 # Decoded controllers.dat (device definitions, factory mappings, audio presets)
-# — Atomix's own XML, vendor copyright, so never committed. `just controllers-vendor`
-# regenerates it; tests/controllers-manifest.json holds the hashes it is checked
-# against, and the corpus tools refuse a tree that disagrees with the manifest.
+# — Atomix's own XML, vendor copyright, so never committed. One subdirectory per
+# archive (`18.0.9598-r2241/`, app build + archive revision); `just controllers-vendor`
+# adds the installed build's. tests/controllers-manifests/<key>.json holds the
+# hashes each is checked against, and the corpus tools refuse a tree that
+# disagrees with its manifest. `just controllers-diff` compares two manifests.
 vendor/controllers/
 
 # Python venv created by `just bootstrap`.
