@@ -3159,3 +3159,25 @@ playhead, then re-run. The move is one execute, the verification is a
 before/after read of `get_automix_song 'title' 1..3`, and the restore is the
 inverse move. The script is `-1` for `+1`; whether the inverse is exact is itself
 part of what the test would establish.
+
+## Sysicon atlas rendering follow-up — 2026-09-15
+
+**Build:** 18.0.9598 arm64, macOS. **Channel:** direct app rendering through
+computer-use screenshots; HTTP used only to load/read back/restore the skin.
+**Fixture:** [SysiconAtlasProbe](../tests/Skins/SysiconAtlasProbe/README.md),
+revision 2, no custom atlas override, buttons execute `nothing`, selected
+state independently forced with `query="on"` versus `query="off"`.
+
+`folder`, `playlist`, `plus`, `minus`, `browser_shortcut`, `search_folder`,
+and `load_next` rendered glyphs matching the predicted installed-atlas cells
+in normal, selected, actual hover, and selected-hover captures. `search` and
+`headphones` were positive controls; `zz_sysicon_control`, `font_size 0`, and
+`stems_vocal` remained blank. The last negative is restricted to this explicit
+sysicon path and build. It does not settle other stems forms or paths.
+
+The initial coordinate-mask comparison failed (solid reference squares) and
+is preserved. Direct bitmap references in revision 2 supplied the successful
+comparison. The original skin was restored and verified by query plus visible
+UI. Exact XML, source atlas hash, screenshot hashes, per-key results, and
+limitations are in the fixture's [results](../tests/Skins/SysiconAtlasProbe/results.json).
+These are icon-rendering results, not verb behavior promotions.

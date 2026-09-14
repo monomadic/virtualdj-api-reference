@@ -6,8 +6,12 @@
   object array.
 - It contains additional mappings for `folder`, `playlist`, `plus`, `minus`,
   `browser_shortcut`, `load_next`, and `search_folder`.
-- These are structural findings, **not live rendering confirmation**. No skin
-  was installed and no action was executed in the application.
+- The initial binary pass did not test rendering. **Follow-up local test,
+  2026-09-15, build 18.0.9598 arm64:** `folder`, `playlist`, `plus`, `minus`,
+  `browser_shortcut`, `search_folder`, and `load_next` rendered matching atlas
+  glyphs in normal, selected, hover and selected-hover states. See the
+  [named fixture and screenshots](../tests/Skins/SysiconAtlasProbe/README.md).
+  Other spellings and general matcher rules below remain Tier 2.
 
 ## Reproduce and query
 
@@ -120,10 +124,14 @@ There is no arbitrary numeric atlas-index fallback in the captured resolver:
 an unmatched string eventually returns after the default state-graphic setup.
 This does not rule out coordinate-based icon elements or a separate consumer.
 
-The next discriminating test is a named skin fixture comparing the additional
+The planned discriminating test was a named skin fixture comparing the additional
 keys with crops from the same build's atlas, alongside a known key and a junk
 key, at normal/hover/selected states. Record the installed build and screenshots
-and restore the original skin afterward. Until then, keep these results Tier 2.
+and restore the original skin afterward. That test is now recorded in
+[SysiconAtlasProbe](../tests/Skins/SysiconAtlasProbe/README.md): the named keys
+rendered, the original skin was restored, and `font_size 0`, a junk key and
+`stems_vocal` were blank. This promotion applies only to the exact tested keys
+and states, not to all binary-derived matcher rules or all stems spellings.
 
 For future agents, query the manifest before loading assembly. The original
 adjacent-string list mixes attributes, suffixes, prefixes, action construction,

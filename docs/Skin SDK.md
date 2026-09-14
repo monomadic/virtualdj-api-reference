@@ -2881,7 +2881,7 @@ Some default icons are reached by using the action itself, either as the button 
 | `sampler_mode 'stutter'` | Sampler trigger mode stutter |
 | `sampler_mode 'unmute'` | Sampler trigger mode unmute |
 
-Many rows in the default-icons table are browser file/folder state icons or overlays and are marked `N/A`. **Correction (2026-09-15):** this section previously treated that label as evidence that no skin `sysicon` name could reach those entries. Binary analysis of **18.0.9598 arm64** found explicit comparisons for `folder`, `playlist`, `plus`, `minus`, and `browser_shortcut` whose assigned icon-array offsets correspond to some of those entries. These are Tier-2 structural leads, not live rendering confirmation. See [Sysicon Binary Resolver](Sysicon%20Binary%20Resolver.md) for the consuming code, additional spellings, reproducible lookup, and remaining test.
+Many rows in the default-icons table are browser file/folder state icons or overlays and are marked `N/A`. **Correction (2026-09-15):** this section previously treated that label as evidence that no skin `sysicon` name could reach those entries. Binary analysis of **18.0.9598 arm64** found explicit comparisons for `folder`, `playlist`, `plus`, `minus`, and `browser_shortcut`. A same-build [live fixture](../tests/Skins/SysiconAtlasProbe/README.md) then confirmed their glyphs match the corresponding atlas cells in normal, selected, hover, and selected-hover states; `search_folder` and `load_next` were also confirmed. The junk-key control and `font_size 0` were blank. See [Sysicon Binary Resolver](Sysicon%20Binary%20Resolver.md) for the consuming code and additional spellings that remain Tier-2 leads.
 
 ---
 
