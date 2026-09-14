@@ -626,10 +626,17 @@ def cmd_search(args):
     if fmt == "json":
         print(json.dumps(shown, indent=1, ensure_ascii=False))
     else:
+        # name, section, [tier/status/kind], description, aliases. The section
+        # column shows `-` for an uncategorized record so the gap is visible in
+        # any listing, not only in `uncategorized`.
+        width = max((len(r.get("section") or "-") for r in shown), default=1)
         for rec in shown:
             al = f"  aliases={','.join(rec['aliases'])}" if rec.get("aliases") else ""
-            print(f"{rec['name']:<28} [{rec.get('tier','?')}/"
-                  f"{rec.get('test_status','?')}] {rec.get('description','')}{al}")
+            tag = f"{rec.get('tier','?')}/{rec.get('test_status','?')}"
+            if rec.get("kind"):
+                tag += f"/{rec['kind']}"
+            print(f"{rec['name']:<28} {rec.get('section') or '-':<{width}}  [{tag}] "
+                  f"{rec.get('description','')}{al}")
     where = " ".join(terms) + " " + " ".join(f"--{k}={v}" for k, v in opts.items())
     note = f"showing {len(shown)} of {len(hits)}" if len(shown) != len(hits) \
         else f"{len(hits)} match(es)"
