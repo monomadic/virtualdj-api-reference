@@ -440,9 +440,39 @@ The file stores both durable settings and UI state. Examples observed locally:
 - audio setups under `<audioConfig>`
 - current skin under `<skins><skin>`
 - skin panel and split states under `<skinPanels>` and `<skinSplitState>`
-- controller to mapper choices under `<controllers>`
+- controller to mapper choices under `<controllers><controllersCustomization>` — see below
 - browser columns and shortcuts under `<browser>`
 - last database backup timestamp under `<options><databaseBackupLast>`
+
+### `controllersCustomization`: which mapper a controller uses
+
+The Controllers pane's **Mapping** dropdown is not GUI-only state. It writes one
+row per device into `<controllers><controllersCustomization>`:
+
+```xml
+<controllersCustomization>
+  <controller name="DDJGRV6" mapper="AlphaTheta DDJ-GRV6 - DeathDisco DDJ-GRV6 v1" />
+  <controller name="SIMPLE_MIDI_0_0" mapper="SIMPLE_MIDI_0_0 - custom mapping" deck="left" />
+</controllersCustomization>
+```
+
+`name` is the device id from the device definition, `mapper` is the mapper file's
+basename **without** `.xml`, and the optional `deck` / `midiclockoutput`
+attributes carry the rest of that pane's per-device settings. So a controller's
+mapping can be set from disk instead of through the pane — which matters because
+**VirtualDJ's own window exposes no accessibility elements at all** (`System
+Events` reports zero UI elements for it), so every GUI route degrades to blind
+coordinate clicking. Prefer the file.
+
+Two cautions learned the hard way:
+
+- **The file is rewritten on quit**, so an edit made while VirtualDJ is running
+  is discarded. Quit, edit, relaunch.
+- **Entries are appended, not replaced.** A device that reconnects under a new
+  auto-created mapping accumulates duplicate `<controller>` rows with the same
+  `name` — three for one device id here, each naming a different mapper. When
+  duplicates exist the pane does not reliably honour a mapping chosen in the
+  dropdown, so deduplicate to a single row rather than selecting again.
 
 Inspect setting names without dumping personal values:
 
