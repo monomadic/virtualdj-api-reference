@@ -80,6 +80,12 @@ def summary(name: str, limit: int = 6) -> dict:
     executed = load("verb-execute-forms.json", "verbs").get(canon)
     ret = ctx.rtypes.get(canon, {})
     vocab = load("binary-vocabularies.json", "groups")
+    # The Button Editor's own category (verb-table, from the binary's id ->
+    # category table). The store `section` is this repo's taxonomy; the vendor
+    # grouping is kept here so the two stay one query apart.
+    vt = load("verb-table.json")
+    vendor_category = (vt.get("verbs", {}).get(canon) or {}).get("category")
+    vendor_build = vt.get("summary", {}).get("build")
     groups = {g: r["verbs"][canon] for g, r in vocab.items() if canon in r.get("verbs", {})}
     novel_in_groups = {g: vocab[g]["novel"] for g in groups}
 
@@ -96,6 +102,8 @@ def summary(name: str, limit: int = 6) -> dict:
         "aliases": rec.get("aliases", []),
         "kind": kind,
         "section": rec.get("section"),
+        "vendor_category": vendor_category,
+        "vendor_category_build": vendor_build,
         "surfaces": rec.get("surfaces", []),
         "status": {"test_status": rec.get("test_status"), "evidence": rec.get("evidence", []),
                    "blocked": rec.get("blocked", False)},
@@ -194,6 +202,9 @@ def render(s: dict) -> str:
     L += [head, "=" * len(head)]
     L.append(f"{s['kind'] or '?'} · {s['section'] or '?'} · surfaces {', '.join(s['surfaces']) or '?'}"
              + (f" · aliases {', '.join(s['aliases'])}" if s["aliases"] else ""))
+    if s.get("vendor_category"):
+        L.append(f"button editor category {s['vendor_category']}"
+                 f" (verb-table, build {s.get('vendor_category_build') or '?'})")
     st = s["status"]
     L.append(f"status {st['test_status']}" + (" (blocked)" if st["blocked"] else "")
              + (f" — {st['evidence'][0]}" if st["evidence"] else ""))

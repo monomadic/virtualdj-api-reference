@@ -16,7 +16,7 @@
   "ONINIT": {
    "tier": "unofficial",
    "not_in_verb_table": true,
-   "section": "Mappers",
+   "section": "Controllers",
    "kind": "special-control",
    "official": false
   },
@@ -75,7 +75,7 @@
   },
   "adjust_cbg": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Adjust beat grid",
    "example": "adjust_cbg +2",
    "kind": "Action",
@@ -83,7 +83,7 @@
   },
   "all_decks": {
    "tier": "unofficial",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "kind": "Dual",
    "official": false
   },
@@ -149,7 +149,7 @@
   },
   "auto_match_bpm": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-match BPM on load",
    "example": "auto_match_bpm",
    "kind": "Dual",
@@ -157,7 +157,7 @@
   },
   "auto_match_key": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-match key on load",
    "example": "auto_match_key",
    "kind": "Dual",
@@ -165,7 +165,7 @@
   },
   "auto_pitch_lock": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Engage pitch lock when BPMs are matched",
    "example": "auto_pitch_lock",
    "kind": "Dual",
@@ -178,7 +178,7 @@
   },
   "auto_sync_options": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Menu for auto-sync behavior",
    "example": "auto_sync_options",
    "kind": "Action",
@@ -186,7 +186,7 @@
   },
   "auto_sync_settings": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Apply automatic sync settings preset",
    "example": "auto_sync_settings",
    "kind": "Dual",
@@ -258,7 +258,7 @@
   },
   "beat_juggle": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Alternate beat jumps forward and backward",
    "example": "beat_juggle 0.5",
    "kind": "Action",
@@ -266,7 +266,7 @@
   },
   "beat_tap": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Tap to set BPM",
    "example": "beat_tap",
    "kind": "Action",
@@ -274,7 +274,7 @@
   },
   "beatjump": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Jump beats; the argument must be signed — bare `beatjump 4` was a no-op on `v2026-m b9482` (`Local test`)",
    "example": "beatjump +1",
    "kind": "Dual",
@@ -282,7 +282,7 @@
   },
   "beatjump_pad": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Execute jump",
    "example": "beatjump_pad",
    "kind": "Dual",
@@ -290,7 +290,7 @@
   },
   "beatjump_page": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Change jump offset",
    "example": "beatjump_page",
    "kind": "Dual",
@@ -298,7 +298,7 @@
   },
   "beatjump_select": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Set jump size",
    "example": "beatjump_select 4",
    "kind": "Dual",
@@ -321,7 +321,7 @@
   },
   "blink": {
    "tier": "curated",
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "Toggle LED on/off",
    "example": "blink 1000ms",
    "kind": "Query",
@@ -644,7 +644,7 @@
   },
   "can_sandbox": {
    "tier": "catalog",
-   "section": "Sandbox",
+   "section": "Volume & Mixing",
    "description": "Check if can sandbox",
    "example": "can_sandbox",
    "kind": "Query",
@@ -665,7 +665,7 @@
   },
   "clone_deck": {
    "tier": "curated",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Clone deck",
    "example": "clone_deck",
    "kind": "Action",
@@ -677,7 +677,7 @@
   },
   "clone_from_deck": {
    "tier": "curated",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Clone from other deck",
    "example": "clone_from_deck",
    "kind": "Action",
@@ -697,7 +697,7 @@
   },
   "color": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Skin Control",
    "description": "Return color value",
    "example": "color \"red\"",
    "kind": "Query",
@@ -705,7 +705,7 @@
   },
   "color_mix": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Skin Control",
    "description": "Mix two colors based on action",
    "example": "color_mix white red \\",
    "kind": "Query",
@@ -735,7 +735,7 @@
   },
   "combine_query": {
    "tier": "unofficial",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "kind": "Dual",
    "official": false
   },
@@ -754,7 +754,7 @@
   },
   "constant": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Return specified value",
    "example": "get constant 75%",
    "kind": "Query",
@@ -803,7 +803,7 @@
   },
   "countdown": {
    "tier": "catalog",
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Count down to date/time",
    "example": "countdown '2025/01/01 00:00'",
    "kind": "Query",
@@ -811,7 +811,7 @@
   },
   "crash": {
    "tier": "unofficial",
-   "section": "System Info",
+   "section": "Developer & Debug",
    "kind": "Action",
    "official": false
   },
@@ -833,7 +833,7 @@
   },
   "cross_assign": {
    "tier": "catalog",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign deck to crossfader side or through state",
    "example": "deck 3 cross_assign 'left'",
    "kind": "Dual",
@@ -1042,7 +1042,7 @@
   },
   "custom_button": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Custom button action",
    "example": "custom_button",
    "kind": "Dual",
@@ -1050,7 +1050,7 @@
   },
   "custom_button_edit": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Open editor",
    "example": "custom_button_edit",
    "kind": "Action",
@@ -1058,7 +1058,7 @@
   },
   "custom_button_name": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Get/set button name",
    "example": "custom_button_name",
    "kind": "Dual",
@@ -1074,7 +1074,7 @@
   },
   "debug": {
    "tier": "catalog",
-   "section": "System Info",
+   "section": "Developer & Debug",
    "description": "Display the incoming parameter value",
    "example": "debug",
    "kind": "Dual",
@@ -1127,7 +1127,7 @@
   },
   "dim": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Equivalent to `constant 0.1`",
    "example": "dim",
    "kind": "Query",
@@ -1202,7 +1202,7 @@
   },
   "doubleclick": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Execute if double-clicked",
    "example": "doubleclick ? automix : mix_now",
    "kind": "Query",
@@ -1215,7 +1215,7 @@
   },
   "down": {
    "tier": "curated",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Execute action on key press/release",
    "example": "down ? action1 : action2",
    "kind": "Query",
@@ -1228,7 +1228,7 @@
   },
   "dualdeckmode": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Toggle dual deck mode",
    "example": "dualdeckmode",
    "kind": "Dual",
@@ -1236,7 +1236,7 @@
   },
   "dualdeckmode_decks": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Dual-deck pair helper for decks 1/3 or 2/4",
    "example": "dualdeckmode_decks",
    "kind": "Dual",
@@ -1244,7 +1244,7 @@
   },
   "dump": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Reverse temporarily",
    "example": "dump",
    "kind": "Dual",
@@ -1252,7 +1252,7 @@
   },
   "edit_bpm": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Open BPM editor",
    "example": "edit_bpm",
    "kind": "Action",
@@ -1268,7 +1268,7 @@
   },
   "edit_lyrics": {
    "tier": "curated",
-   "section": "POI & BPM",
+   "section": "Song Info",
    "description": "Open Lyrics Editor",
    "example": "edit_lyrics",
    "kind": "Action",
@@ -1282,7 +1282,7 @@
   },
   "edit_poi": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Open POI editor",
    "example": "edit_poi",
    "kind": "Action",
@@ -1870,7 +1870,7 @@
   },
   "emergency_play": {
    "tier": "catalog",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Play something",
    "example": "emergency_play",
    "kind": "Action",
@@ -1878,7 +1878,7 @@
   },
   "eq_crossfader_high": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade treble between decks",
    "example": "eq_crossfader_high 50%",
    "kind": "Dual",
@@ -1886,7 +1886,7 @@
   },
   "eq_crossfader_low": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade bass between decks",
    "example": "eq_crossfader_low 50%",
    "kind": "Dual",
@@ -1899,7 +1899,7 @@
   },
   "eq_crossfader_mid": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade mids between decks",
    "example": "eq_crossfader_mid 50%",
    "kind": "Dual",
@@ -1910,7 +1910,7 @@
   },
   "eq_high": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "High EQ/HiHat/Vocal",
    "example": "eq_high",
    "kind": "Dual",
@@ -1921,7 +1921,7 @@
   },
   "eq_high_freq": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
@@ -1932,13 +1932,13 @@
   },
   "eq_kill_high": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
   "eq_kill_low": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
@@ -1949,7 +1949,7 @@
   },
   "eq_kill_mid": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "aliases": [
     "eq_kill_med"
@@ -1958,7 +1958,7 @@
   },
   "eq_low": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Low EQ/Kick",
    "example": "eq_low",
    "kind": "Dual",
@@ -1969,7 +1969,7 @@
   },
   "eq_low_freq": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
@@ -1985,7 +1985,7 @@
   },
   "eq_mid": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Mid EQ/Melody/Vocals",
    "example": "eq_mid",
    "kind": "Dual",
@@ -1997,7 +1997,7 @@
   },
   "eq_mid_freq": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
@@ -2008,7 +2008,7 @@
   },
   "eq_mode": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Select EQ behavior",
    "example": "eq_mode +1",
    "kind": "Dual",
@@ -2016,7 +2016,7 @@
   },
   "eq_reset": {
    "tier": "official-name-only",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "official": true
   },
@@ -2038,7 +2038,7 @@
   },
   "fadeout": {
    "tier": "catalog",
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "Fade out when condition ends",
    "example": "fadeout 10000ms 3000ms \\",
    "kind": "Query",
@@ -2123,7 +2123,7 @@
   },
   "false": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Returns false",
    "example": "false",
    "kind": "Query",
@@ -2154,7 +2154,7 @@
   },
   "filter": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Apply color FX",
    "example": "filter",
    "kind": "Dual",
@@ -2173,7 +2173,7 @@
   },
   "filter_activate": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Enable/disable deck filter/ColorFX",
    "example": "filter_activate",
    "kind": "Dual",
@@ -2181,7 +2181,7 @@
   },
   "filter_label": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Query",
    "surfaces": [
     "SkinQuery",
@@ -2193,7 +2193,7 @@
   },
   "filter_resonance": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual",
    "surfaces": [
     "Map",
@@ -2206,7 +2206,7 @@
   },
   "filter_selectcolorfx": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Select color effect",
    "example": "filter_selectcolorfx 'Reverb'",
    "kind": "Dual",
@@ -2225,37 +2225,37 @@
   },
   "flip_arm": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "official": false
   },
   "flip_get_status": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Query",
    "official": false
   },
   "flip_load": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "official": false
   },
   "flip_loop": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "official": false
   },
   "flip_play": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "official": false
   },
   "flip_record": {
    "tier": "unofficial",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "official": false
   },
@@ -2318,13 +2318,13 @@
   },
   "get_activedeck": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
   "get_album": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Album tag",
    "example": "get_album",
    "kind": "Query",
@@ -2332,13 +2332,13 @@
   },
   "get_arm": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Effects",
    "kind": "Query",
    "official": true
   },
   "get_artist": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Artist tag",
    "example": "get_artist",
    "kind": "Query",
@@ -2346,31 +2346,31 @@
   },
   "get_artist_before_feat": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_artist_title": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_artist_title_separator": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_askthedj": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
   "get_askthedj_unread": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -2400,7 +2400,7 @@
   },
   "get_bar": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
@@ -2414,7 +2414,7 @@
   },
   "get_beat": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Beat intensity at current position",
    "example": "get_beat",
    "kind": "Query",
@@ -2422,43 +2422,43 @@
   },
   "get_beat2": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beat_bar": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beat_counter": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beat_num": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beatdiff": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beatgrid": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_beatpos": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Beat position",
    "example": "get_beatpos",
    "kind": "Query",
@@ -2466,7 +2466,7 @@
   },
   "get_bpm": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Song BPM",
    "example": "get_bpm",
    "kind": "Query",
@@ -2482,133 +2482,133 @@
   },
   "get_browsed_album": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_artist": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_artist_title": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_bpm": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_color": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_comment": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_composer": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_filepath": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_icon": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_path": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_scrollpos": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_scrollsize": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_selection_index": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_folder_tab": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_genre": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_header": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_key": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_scrollpos": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_scrollsize": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_selection_index": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_song": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "description": "Browsed file property",
    "example": "get_browsed_song 'title'",
    "kind": "Query",
@@ -2622,19 +2622,19 @@
   },
   "get_browsed_title": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_browsed_title_artist": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "get_build": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -2648,13 +2648,13 @@
   },
   "get_comment": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_composer": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
@@ -2711,7 +2711,7 @@
   },
   "get_custom_text": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Custom Buttons",
    "kind": "Query",
    "official": true
   },
@@ -2725,7 +2725,7 @@
   },
   "get_deck": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "description": "Deck number",
    "example": "get_deck",
    "kind": "Query",
@@ -2739,13 +2739,13 @@
   },
   "get_deck_analysis": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_deck_color": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Get deck color",
    "example": "get_deck_color 50%",
    "kind": "Query",
@@ -2758,19 +2758,19 @@
   },
   "get_deck_letter": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
   "get_decks": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
   "get_defaultdeck": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
@@ -2945,37 +2945,37 @@
   },
   "get_featuring_after_artist": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_filename": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_filepath": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_filesize": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_firstbeat": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
   "get_firstbeat_local": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
@@ -2997,7 +2997,7 @@
   },
   "get_genre": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Genre tag",
    "example": "get_genre",
    "kind": "Query",
@@ -3005,7 +3005,7 @@
   },
   "get_harmonic": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Harmonic key display",
    "example": "get_harmonic",
    "kind": "Query",
@@ -3018,7 +3018,7 @@
   },
   "get_hasheadphones": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "aliases": [
     "get_hasheadphone"
@@ -3027,25 +3027,25 @@
   },
   "get_hasinput": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "official": true
   },
   "get_haslinein": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "official": true
   },
   "get_hasmaster": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "official": true
   },
   "get_hasmic": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "official": true
   },
@@ -3059,7 +3059,7 @@
   },
   "get_hwnd": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -3071,7 +3071,7 @@
   },
   "get_key": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Song key",
    "example": "get_key \"musical\"",
    "kind": "Query",
@@ -3079,7 +3079,7 @@
   },
   "get_key_color": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Color for current key",
    "example": "get_key_color",
    "kind": "Query",
@@ -3087,19 +3087,19 @@
   },
   "get_key_modifier": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Controllers",
    "kind": "Dual",
    "official": true
   },
   "get_key_modifier_text": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Controllers",
    "kind": "Dual",
    "official": true
   },
   "get_leftdeck": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
@@ -3167,7 +3167,7 @@
   },
   "get_license": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -3181,7 +3181,7 @@
   },
   "get_loaded_song": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded file property",
    "example": "get_loaded_song 'album'",
    "kind": "Query",
@@ -3189,7 +3189,7 @@
   },
   "get_loaded_song_color": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
@@ -3219,7 +3219,7 @@
   },
   "get_lyrics_language": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded deck lyric language",
    "example": "get_lyrics_language",
    "kind": "Query",
@@ -3231,7 +3231,7 @@
   },
   "get_membership": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -3296,13 +3296,13 @@
   },
   "get_peak_audio": {
    "tier": "official-name-only",
-   "section": "System Info",
+   "section": "Volume & Mixing",
    "kind": "Query",
    "official": true
   },
   "get_phrase_num": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query",
    "official": true
   },
@@ -3370,13 +3370,13 @@
   },
   "get_plugindeck": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
   "get_position": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "description": "Song position",
    "example": "get_position",
    "kind": "Query",
@@ -3384,37 +3384,37 @@
   },
   "get_record_message": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
   "get_record_min": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
   "get_record_ms": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
   "get_record_msf": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
   "get_record_sec": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
   "get_record_size": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query",
    "official": true
   },
@@ -3428,7 +3428,7 @@
   },
   "get_remix_after_title": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Remix text split from title",
    "example": "get_remix_after_title",
    "kind": "Query",
@@ -3436,13 +3436,13 @@
   },
   "get_rightdeck": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query",
    "official": true
   },
   "get_rotation": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Scratch & Jogwheel",
    "description": "Disc angle",
    "example": "get_rotation",
    "kind": "Query",
@@ -3582,25 +3582,25 @@
   },
   "get_song_event": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_songlength": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_spectrum_band": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Volume & Mixing",
    "kind": "Query",
    "official": true
   },
   "get_status": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "description": "Background task text",
    "example": "get_status",
    "kind": "Query",
@@ -3612,7 +3612,7 @@
   },
   "get_text": {
    "tier": "catalog",
-   "section": "Text Queries",
+   "section": "Parameters & Math",
    "description": "Get formatted text",
    "example": "get_text 'You are listening to \\",
    "kind": "Query",
@@ -3620,7 +3620,7 @@
   },
   "get_time": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "description": "Elapsed time",
    "example": "get_time \"remain\" \"short\"",
    "kind": "Query",
@@ -3634,37 +3634,37 @@
   },
   "get_time_hour": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_time_min": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_time_ms": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_time_msf": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_time_sec": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_time_sign": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
@@ -3678,7 +3678,7 @@
   },
   "get_title": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Title tag",
    "example": "get_title",
    "kind": "Query",
@@ -3686,13 +3686,13 @@
   },
   "get_title_artist": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_title_before_remix": {
    "tier": "catalog",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Title with remix/bracket handling",
    "example": "get_title_before_remix",
    "kind": "Query",
@@ -3700,37 +3700,37 @@
   },
   "get_title_remix": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "get_totaltime_min": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_totaltime_ms": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_totaltime_msf": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_totaltime_sec": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query",
    "official": true
   },
   "get_username": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -3751,13 +3751,13 @@
   },
   "get_vdj_folder": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
   "get_version": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query",
    "official": true
   },
@@ -3787,7 +3787,7 @@
   },
   "get_volume": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Volume & Mixing",
    "kind": "Query",
    "official": true
   },
@@ -3841,19 +3841,19 @@
   },
   "get_year": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query",
    "official": true
   },
   "getfood": {
    "tier": "official-name-only",
-   "section": "System Info",
+   "section": "Developer & Debug",
    "kind": "Action",
    "official": true
   },
   "goto": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Change position",
    "example": "goto +10ms",
    "kind": "Action",
@@ -3866,7 +3866,7 @@
   },
   "goto_beat_in_bar": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Canonical spelling of `goto_bar` from build `18.0.9583` (same verb id 106; `goto_bar` is now the alias). Put the song on its nth beat after the downbeat without losing sync.",
    "example": "goto_beat_in_bar 4",
    "kind": "Dual",
@@ -3885,7 +3885,7 @@
   },
   "goto_first_beat": {
    "tier": "curated",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Jump to first beat",
    "example": "goto_first_beat",
    "kind": "Action",
@@ -3910,7 +3910,7 @@
   },
   "goto_mixpoint": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Jump to automix/mix point",
    "example": "goto_mixpoint \"StartCut\"",
    "kind": "Action",
@@ -3918,7 +3918,7 @@
   },
   "goto_start": {
    "tier": "curated",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Go to start",
    "example": "goto_start",
    "kind": "Action",
@@ -3940,7 +3940,7 @@
   },
   "handshake": {
    "tier": "catalog",
-   "section": "System Info",
+   "section": "Developer & Debug",
    "description": "Developer plugin environment handshake",
    "example": "handshake 'nonce'",
    "kind": "Query",
@@ -3948,7 +3948,7 @@
   },
   "has_aux": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query",
    "official": true
   },
@@ -3976,7 +3976,7 @@
   },
   "has_custom_button": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Check if has action",
    "example": "has_custom_button",
    "kind": "Query",
@@ -4004,7 +4004,7 @@
   },
   "has_lyrics": {
    "tier": "curated",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded deck has lyrics",
    "example": "has_lyrics",
    "kind": "Query",
@@ -4034,7 +4034,7 @@
   },
   "has_stems": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Check if has stems",
    "example": "has_stems \"ready\"",
    "kind": "Query",
@@ -4093,7 +4093,7 @@
   },
   "high_label": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "High EQ band label",
    "example": " ",
    "kind": "Query",
@@ -4112,7 +4112,7 @@
   },
   "holding": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Execute if held long",
    "example": "holding ? automix : mix_now",
    "kind": "Query",
@@ -4173,7 +4173,7 @@
   },
   "invert_deck": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Swap left/right deck",
    "example": "invert_deck",
    "kind": "Action",
@@ -4318,7 +4318,7 @@
   },
   "isrepeat": {
    "tier": "catalog",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Check if key is auto-repeating",
    "example": "isrepeat ? nothing : goto_cue",
    "kind": "Query",
@@ -4496,7 +4496,7 @@
   },
   "leftcross": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign to left crossfader",
    "example": "leftcross",
    "kind": "Dual",
@@ -4508,7 +4508,7 @@
   },
   "leftdeck": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select left deck",
    "example": "leftdeck +1",
    "kind": "Dual",
@@ -4954,7 +4954,7 @@
   },
   "low_label": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Low EQ band label",
    "example": " ",
    "kind": "Query",
@@ -4962,7 +4962,7 @@
   },
   "macro_play": {
    "tier": "catalog",
-   "section": "Macros",
+   "section": "Controllers",
    "description": "Play macro",
    "example": "macro_play",
    "kind": "Dual",
@@ -4970,7 +4970,7 @@
   },
   "macro_record": {
    "tier": "catalog",
-   "section": "Macros",
+   "section": "Controllers",
    "description": "Record macro",
    "example": "macro_record",
    "kind": "Dual",
@@ -5002,7 +5002,7 @@
   },
   "master_beat_num": {
    "tier": "unofficial",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Dual",
    "official": false
   },
@@ -5024,13 +5024,13 @@
   },
   "masterbpm": {
    "tier": "unofficial",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Dual",
    "official": false
   },
   "masterdeck": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select/unselect master",
    "example": "masterdeck",
    "kind": "Dual",
@@ -5043,7 +5043,7 @@
   },
   "masterdeck_auto": {
    "tier": "catalog",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Auto masterdeck",
    "example": "masterdeck_auto",
    "kind": "Dual",
@@ -5184,7 +5184,7 @@
   },
   "mid_label": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Mid EQ band label",
    "example": " ",
    "kind": "Query",
@@ -5272,7 +5272,7 @@
   },
   "mixermode": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Configuration",
    "description": "Query internal vs external mixer mode",
    "example": "mixermode 'internal'",
    "kind": "Query",
@@ -5324,7 +5324,7 @@
   },
   "move_deck": {
    "tier": "curated",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Move song to other deck",
    "example": "move_deck",
    "kind": "Action",
@@ -5336,7 +5336,7 @@
   },
   "multibutton": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Click multibutton",
    "example": "multibutton \"my_button\"",
    "kind": "Dual",
@@ -5344,7 +5344,7 @@
   },
   "multibutton_select": {
    "tier": "catalog",
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Open selection menu",
    "example": "multibutton_select \"my_button\"",
    "kind": "Action",
@@ -5360,7 +5360,7 @@
   },
   "mute_stem": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Mute stem",
    "example": "mute_stem vocal",
    "kind": "Dual",
@@ -5386,7 +5386,7 @@
   },
   "nothing": {
    "tier": "curated",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Do nothing; no-op, not an early return",
    "example": "nothing",
    "kind": "Query",
@@ -5438,7 +5438,7 @@
   },
   "only_stem": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Isolate stem",
    "example": "only_stem vocal",
    "kind": "Dual",
@@ -5454,7 +5454,7 @@
   },
   "open_stem_creator": {
    "tier": "catalog",
-   "section": "Window Control",
+   "section": "Stems",
    "description": "Open the Stem Creator workflow",
    "example": "open_stem_creator",
    "kind": "Action",
@@ -5760,7 +5760,7 @@
   },
   "param_1_x": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Invert value (1/x)",
    "example": "param_1_x & effect slider",
    "kind": "Dual",
@@ -5768,7 +5768,7 @@
   },
   "param_add": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Add values",
    "example": "param_add \\",
    "kind": "Dual",
@@ -5776,7 +5776,7 @@
   },
   "param_bigger": {
    "tier": "curated",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value is bigger",
    "example": "param_bigger 0 ? action1 : action2",
    "kind": "Query",
@@ -5793,7 +5793,7 @@
   },
   "param_cast": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Cast to new type",
    "example": "param_cast \"percentage\"",
    "kind": "Dual",
@@ -5801,7 +5801,7 @@
   },
   "param_contains": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value contains string",
    "example": "param_contains",
    "kind": "Query",
@@ -5809,7 +5809,7 @@
   },
   "param_delta": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Transform absolute to relative",
    "example": "param_delta",
    "kind": "Action",
@@ -5817,7 +5817,7 @@
   },
   "param_equal": {
    "tier": "curated",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value equals something",
    "example": "param_equal \\",
    "kind": "Query",
@@ -5836,7 +5836,7 @@
   },
   "param_invert": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Invert value (1-x)",
    "example": "param_invert & pitch_slider",
    "kind": "Dual",
@@ -5844,7 +5844,7 @@
   },
   "param_lowercase": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Convert to lowercase",
    "example": "param_lowercase",
    "kind": "Query",
@@ -5852,7 +5852,7 @@
   },
   "param_make_discrete": {
    "tier": "catalog",
-   "section": "Timing & Animation",
+   "section": "Parameters & Math",
    "description": "Make smooth encoder discrete",
    "example": "param_make_discrete 0.1",
    "kind": "Action",
@@ -5860,7 +5860,7 @@
   },
   "param_mod": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Wrap value",
    "example": "param_mod",
    "kind": "Dual",
@@ -5868,7 +5868,7 @@
   },
   "param_multiply": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Multiply value",
    "example": "param_multiply 300% & effect slider",
    "kind": "Dual",
@@ -5876,7 +5876,7 @@
   },
   "param_pingpong": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Linear to forth-and-back scale",
    "example": "param_pingpong",
    "kind": "Dual",
@@ -5884,7 +5884,7 @@
   },
   "param_pow": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Power calculation",
    "example": "param_pow 0.5",
    "kind": "Dual",
@@ -5892,7 +5892,7 @@
   },
   "param_smaller": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value is smaller",
    "example": "param_smaller 0 ? action1 : action2",
    "kind": "Query",
@@ -5900,7 +5900,7 @@
   },
   "param_ucfirst": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "First letter uppercase",
    "example": "param_ucfirst",
    "kind": "Query",
@@ -5908,7 +5908,7 @@
   },
   "param_uppercase": {
    "tier": "catalog",
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Convert to uppercase",
    "example": "param_uppercase",
    "kind": "Query",
@@ -5916,7 +5916,7 @@
   },
   "pause": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pause deck",
    "example": "pause",
    "kind": "Dual",
@@ -5930,7 +5930,7 @@
   },
   "pause_stop": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pause or stop",
    "example": "pause_stop",
    "kind": "Action",
@@ -5942,7 +5942,7 @@
   },
   "pfl": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Send to headphones",
    "example": "pfl",
    "kind": "Dual",
@@ -5993,7 +5993,7 @@
   },
   "pioneer_cue": {
    "tier": "catalog",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pioneer-style cue button/LED helper state",
    "example": "pioneer_cue",
    "kind": "Dual",
@@ -6025,7 +6025,7 @@
   },
   "pioneer_play": {
    "tier": "catalog",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pioneer-style play LED/helper state",
    "example": "pioneer_play",
    "kind": "Dual",
@@ -6137,7 +6137,7 @@
   },
   "play": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Start deck",
    "example": "play",
    "kind": "Dual",
@@ -6156,7 +6156,7 @@
   },
   "play_button": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Depends on play_mode",
    "example": "play_button",
    "kind": "Dual",
@@ -6195,7 +6195,7 @@
   },
   "play_pause": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Toggle play/pause",
    "example": "play_pause",
    "kind": "Dual",
@@ -6209,7 +6209,7 @@
   },
   "play_stutter": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Start or restart",
    "example": "play_stutter",
    "kind": "Dual",
@@ -6358,6 +6358,7 @@
   },
   "prelisten": {
    "tier": "official-name-only",
+   "section": "Browser",
    "kind": "Dual",
    "aliases": [
     "preview"
@@ -6366,27 +6367,31 @@
   },
   "prelisten_info": {
    "tier": "official-name-only",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query",
    "official": true
   },
   "prelisten_options": {
    "tier": "official-name-only",
+   "section": "Browser",
    "kind": "Action",
    "official": true
   },
   "prelisten_output": {
    "tier": "official-name-only",
+   "section": "Browser",
    "kind": "Dual",
    "official": true
   },
   "prelisten_pos": {
    "tier": "official-name-only",
+   "section": "Browser",
    "kind": "Dual",
    "official": true
   },
   "prelisten_stop": {
    "tier": "official-name-only",
+   "section": "Browser",
    "kind": "Dual",
    "official": true
   },
@@ -6397,7 +6402,7 @@
   },
   "pulse": {
    "tier": "catalog",
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "True for duration when action turns true",
    "example": "is_using 'equalizer' & pulse 2000ms",
    "kind": "Query",
@@ -6507,7 +6512,7 @@
   },
   "reanalyze": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Reanalyze file",
    "example": "reanalyze multi",
    "kind": "Action",
@@ -6605,13 +6610,13 @@
   },
   "remote_action": {
    "tier": "catalog",
-   "section": "Skin Control",
+   "section": "Developer & Debug",
    "kind": "Dual",
    "official": false
   },
   "repeat": {
    "tier": "catalog",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Repeat action while pressed",
    "example": "repeat 1000ms & browser_scroll +1",
    "kind": "Dual",
@@ -6627,7 +6632,7 @@
   },
   "repeat_start": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Start repeating action",
    "example": "repeat_start 'name' 1000ms 5 & action",
    "kind": "Dual",
@@ -6640,7 +6645,7 @@
   },
   "repeat_start_fade": {
    "tier": "catalog",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Fade from one value to another over a time, optionally in N steps (new in build `18.0.9583`)",
    "example": "repeat_start_fade 'myfade' 0.0 1.0 10s",
    "kind": "Dual",
@@ -6648,7 +6653,7 @@
   },
   "repeat_start_instant": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Start repeating immediately",
    "example": "repeat_start_instant 'name' 1000ms",
    "kind": "Dual",
@@ -6661,7 +6666,7 @@
   },
   "repeat_stop": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Stop repeat",
    "example": "repeat_stop 'name'",
    "kind": "Action",
@@ -6682,7 +6687,7 @@
   },
   "reverse": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Play backward",
    "example": "reverse",
    "kind": "Dual",
@@ -6690,7 +6695,7 @@
   },
   "rightcross": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign to right crossfader",
    "example": "rightcross",
    "kind": "Dual",
@@ -6702,7 +6707,7 @@
   },
   "rightdeck": {
    "tier": "curated",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select right deck",
    "example": "rightdeck +1",
    "kind": "Dual",
@@ -7128,7 +7133,7 @@
   },
   "sandbox": {
    "tier": "catalog",
-   "section": "Sandbox",
+   "section": "Volume & Mixing",
    "description": "Toggle sandbox mode",
    "example": "sandbox",
    "kind": "Dual",
@@ -7361,7 +7366,7 @@
   },
   "seek": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Move while pressed",
    "example": "seek +2",
    "kind": "Dual",
@@ -7369,7 +7374,7 @@
   },
   "select": {
    "tier": "catalog",
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select working deck",
    "example": "select",
    "kind": "Dual",
@@ -7405,7 +7410,7 @@
   },
   "set_bpm": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Set BPM",
    "example": "set_bpm 129.3",
    "kind": "Action",
@@ -7442,7 +7447,7 @@
   },
   "set_firstbeat": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Set first beat",
    "example": "set_firstbeat",
    "kind": "Action",
@@ -7479,7 +7484,7 @@
   },
   "set_loadpoint": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Set where the track starts when loaded",
    "example": "set_loadpoint",
    "kind": "Dual",
@@ -7487,7 +7492,7 @@
   },
   "set_mixpoint": {
    "tier": "catalog",
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Move automix/mix point to current position",
    "example": "set_mixpoint \"StartTempo\"",
    "kind": "Action",
@@ -7885,7 +7890,7 @@
   },
   "smart_cue": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-sync on cue",
    "example": "smart_cue",
    "kind": "Dual",
@@ -7905,7 +7910,7 @@
   },
   "smart_loop": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-adjust loops",
    "example": "smart_loop",
    "kind": "Dual",
@@ -7913,7 +7918,7 @@
   },
   "smart_play": {
    "tier": "curated",
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-sync on play",
    "example": "smart_play",
    "kind": "Dual",
@@ -7936,7 +7941,7 @@
   },
   "song_pos": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Position in song (slider)",
    "example": "song_pos",
    "kind": "Dual",
@@ -7944,7 +7949,7 @@
   },
   "songpos_remain": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Remaining time",
    "example": "songpos_remain 500ms ? blink",
    "kind": "Query",
@@ -7952,7 +7957,7 @@
   },
   "songpos_warning": {
    "tier": "catalog",
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Last 30s warning",
    "example": "songpos_warning",
    "kind": "Query",
@@ -7989,7 +7994,7 @@
   },
   "stem": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Control stem amount",
    "example": "stem \"vocal\" 50%",
    "kind": "Dual",
@@ -7997,7 +8002,7 @@
   },
   "stem_color": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Get default stem color",
    "example": "stem_color 'Vocal'",
    "kind": "Query",
@@ -8010,7 +8015,7 @@
   },
   "stem_pad": {
    "tier": "catalog",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Mute/isolate stem pad",
    "example": "stem_pad 'acapella' on",
    "kind": "Dual",
@@ -8018,13 +8023,13 @@
   },
   "stem_volume": {
    "tier": "unofficial",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "kind": "Dual",
    "official": false
   },
   "stems_bleed": {
    "tier": "curated",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Stem bleed control/query",
    "example": "stems_bleed",
    "kind": "Dual",
@@ -8039,7 +8044,7 @@
   },
   "stems_split": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Stems",
    "description": "Split stems to decks",
    "example": "stems_split vocal target",
    "kind": "Dual",
@@ -8047,7 +8052,7 @@
   },
   "stems_split_unlink": {
    "tier": "catalog",
-   "section": "Deck Management",
+   "section": "Stems",
    "description": "Unlink split stems",
    "example": "stems_split_unlink",
    "kind": "Dual",
@@ -8055,7 +8060,7 @@
   },
   "stop": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Stop to cue/beginning",
    "example": "stop",
    "kind": "Action",
@@ -8073,7 +8078,7 @@
   },
   "stop_button": {
    "tier": "curated",
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Depends on play_mode",
    "example": "stop_button",
    "kind": "Dual",
@@ -8088,7 +8093,7 @@
   },
   "stopwatch": {
    "tier": "catalog",
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Stopwatch",
    "example": "stopwatch",
    "kind": "Query",
@@ -8096,7 +8101,7 @@
   },
   "stopwatch_reset": {
    "tier": "catalog",
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Reset stopwatch",
    "example": "stopwatch_reset",
    "kind": "Action",
@@ -8104,7 +8109,7 @@
   },
   "swap_decks": {
    "tier": "curated",
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Swap deck 1 and 2",
    "example": "swap_decks",
    "kind": "Action",
@@ -8124,7 +8129,7 @@
   },
   "switch_skin_variation": {
    "tier": "catalog",
-   "section": "Configuration",
+   "section": "Skin Control",
    "description": "Switch current skin variation",
    "example": "switch_skin_variation",
    "kind": "Dual",
@@ -8291,7 +8296,7 @@
   },
   "true": {
    "tier": "catalog",
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Returns true",
    "example": "true",
    "kind": "Query",
@@ -8319,7 +8324,7 @@
   },
   "up": {
    "tier": "curated",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Execute action on key press/release",
    "example": "up ? action1 : action2",
    "kind": "Query",
@@ -8371,7 +8376,7 @@
   },
   "var_list": {
    "tier": "curated",
-   "section": "Variables",
+   "section": "Developer & Debug",
    "description": "Show variables window",
    "example": "var_list",
    "kind": "Action",
@@ -8599,7 +8604,7 @@
   },
   "wait": {
    "tier": "curated",
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Wait between actions",
    "example": "wait 1bt & pause",
    "kind": "Action",
@@ -8621,7 +8626,7 @@
   "while_pressed": {
    "tier": "unofficial",
    "not_in_verb_table": true,
-   "section": "Grammar",
+   "section": "Modifiers & Timing",
    "kind": "modifier",
    "official": false
   },

@@ -38,7 +38,7 @@
     "VirtualDJ 2026 (HTTP + AlphaTheta DDJ-GRV6, 2026-07-27): mapper special control whose action fires when the mapper loads (controller connect / app start). A minimal mapper with '<map value=\"ONINIT\" action=\"set $v 1\">' set the global, read back 1 over HTTP. Use it to seed controller state on connect. (An earlier note that mapping-load resets $ globals was retracted: it was confounded by two app restarts, which clear session globals regardless.)"
    ],
    "kind": "special-control",
-   "section": "Mappers",
+   "section": "Controllers",
    "confidence": "local_test"
   },
   "action_deck": {
@@ -155,7 +155,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_adjust_cbg implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Adjust beat grid",
    "example": "adjust_cbg +2",
    "kind": "Action"
@@ -176,7 +176,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_all_decks implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
    "confidence": "local_test",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "kind": "Dual"
   },
   "apply_audio_config": {
@@ -330,7 +330,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_auto_match_bpm implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-match BPM on load",
    "example": "auto_match_bpm",
    "kind": "Dual"
@@ -347,7 +347,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_auto_match_key implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-match key on load",
    "example": "auto_match_key",
    "kind": "Dual"
@@ -364,7 +364,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_auto_pitch_lock implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Engage pitch lock when BPMs are matched",
    "example": "auto_pitch_lock",
    "kind": "Dual"
@@ -393,7 +393,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_auto_sync_options implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Menu for auto-sync behavior",
    "example": "auto_sync_options",
    "kind": "Action"
@@ -410,7 +410,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_auto_sync_settings implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Apply automatic sync settings preset",
    "example": "auto_sync_settings",
    "kind": "Dual"
@@ -563,7 +563,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beat_juggle implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Alternate beat jumps forward and backward",
    "example": "beat_juggle 0.5",
    "kind": "Action"
@@ -580,7 +580,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beat_tap implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Tap to set BPM",
    "example": "beat_tap",
    "kind": "Action"
@@ -597,7 +597,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beatjump implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Jump beats; the argument must be signed — bare `beatjump 4` was a no-op on `v2026-m b9482` (`Local test`)",
    "example": "beatjump +1",
    "kind": "Dual"
@@ -614,7 +614,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beatjump_pad implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Execute jump",
    "example": "beatjump_pad",
    "kind": "Dual"
@@ -631,7 +631,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beatjump_page implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Change jump offset",
    "example": "beatjump_page",
    "kind": "Dual"
@@ -648,7 +648,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_beatjump_select implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Position & Seeking",
    "description": "Set jump size",
    "example": "beatjump_select 4",
    "kind": "Dual"
@@ -695,7 +695,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_blink implements onQuery only -> Query; HTTP sweep classed it 'query'. Replaces the curated value 'Dual' (2026-09-15 normalisation).",
     "2026-09-09, build 18.0.9583, HTTP query-only, waveform sampling at 20 Hz: an oscillator whose two arguments are both read. Position 1 (DUR) sets the period — 1000ms/500ms/2000ms measured 1.001/0.50/2.001 s — and position 2 (PCT) the duty cycle (25% -> ~0.28, 50% -> ~0.50, 75% untested). PCT is optional and defaults to ~50%. DUR takes beat units and those lock to the master tempo: blink 1bt and blink 500ms measured 0.467 s and 0.495 s in the same run at 129.44 BPM (1bt = 0.4635 s), so ms is absolute wall-clock and bt is not. Invisible to probe_arg_positions.py by construction — one query returns one sample of a square wave — so it is correctly disqualified there as drifting. Tracker: 'blink: An Oscillator, Tempo-Locked On Beat Units'."
    ],
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "Toggle LED on/off",
    "example": "blink 1000ms",
    "kind": "Query",
@@ -1344,7 +1344,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_can_sandbox implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Sandbox",
+   "section": "Volume & Mixing",
    "description": "Check if can sandbox",
    "example": "can_sandbox",
    "kind": "Query"
@@ -1383,7 +1383,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Clone deck",
    "example": "clone_deck",
    "kind": "Action"
@@ -1401,7 +1401,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Clone from other deck",
    "example": "clone_from_deck",
    "kind": "Action"
@@ -1436,7 +1436,7 @@
     "Local test 2026-09-06, HTTP, build 18.0.9598, read-only (query position only, no state touched). The binary's colour table IS this verb's vocabulary, and query position resolves a name without changing anything: color '<name>' ECHOES the canonical name for a recognized colour and returns 'transparent' for anything else. 24 of the table's 26 members echo themselves — beige, black, blue, cyan, darkblue, darkcyan, darkgray, darkgreen, darkmagenta, darkorange, darkred, darkyellow, gray, green, lightgray, magenta, marine, orange, pink, red, transparent, violet, white, yellow. Three nonsense controls (qzqzqz, wvwvwv, zzz123) and the two-word 'bright red' all returned transparent. Case-insensitive: 'RED' returned 'red'. UNDISCRIMINATED, not disproved: 'none' and 'reset' also return 'transparent' — which is itself a real member — so this observable cannot separate them from the floor.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_color implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Skin Control",
    "description": "Return color value",
    "example": "color \"red\"",
    "confidence": "local_test",
@@ -1454,7 +1454,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_color_mix implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Skin Control",
    "description": "Mix two colors based on action",
    "example": "color_mix white red \\",
    "kind": "Query"
@@ -1514,7 +1514,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_combine_query implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
    "note": "Hidden Button Editor verb (flags==256), category flow. Existence proven by verb-table membership; the HTTP sweep could not resolve it (unresolved). Behavior untested.",
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "confidence": "local_test",
    "kind": "Dual"
   },
@@ -1564,7 +1564,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_constant implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Return specified value",
    "example": "get constant 75%",
    "kind": "Query"
@@ -1672,7 +1672,7 @@
     "VirtualDJ 2026 (HTTP, 2026-07-30): bare returns a plausible millisecond countdown (13314212, decreasing ~1000/s). An unparseable text argument returns a large stable negative (-1785418588) that decodes as neither a sane int nor float — a garbage/uninitialised path rather than a pointer leak.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_countdown implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Count down to date/time",
    "example": "countdown '2025/01/01 00:00'",
    "kind": "Query"
@@ -1693,7 +1693,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_crash implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category system. Existence and kind proven; behavior untested.",
-   "section": "System Info",
+   "section": "Developer & Debug",
    "kind": "Action"
   },
   "create_list_from_playlist": {
@@ -1740,7 +1740,7 @@
     "Local test (HTTP query, build 18.0.9598, 2026-09-07): 'left' is recognized — it answers 'no' where the bare form and two nonsense tails raise E_INVALIDARG. The earlier run confirmed 'thru' the same way.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_cross_assign implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign deck to crossfader side or through state",
    "example": "deck 3 cross_assign 'left'",
    "confidence": "local_test",
@@ -2175,7 +2175,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_custom_button implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Custom button action",
    "example": "custom_button",
    "kind": "Dual"
@@ -2192,7 +2192,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_custom_button_edit implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Open editor",
    "example": "custom_button_edit",
    "kind": "Action"
@@ -2209,7 +2209,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_custom_button_name implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Get/set button name",
    "example": "custom_button_name",
    "kind": "Dual"
@@ -2243,7 +2243,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_debug implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'."
    ],
-   "section": "System Info",
+   "section": "Developer & Debug",
    "description": "Display the incoming parameter value",
    "example": "debug",
    "kind": "Dual"
@@ -2364,7 +2364,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_dim implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Equivalent to `constant 0.1`",
    "example": "dim",
    "kind": "Query"
@@ -2530,7 +2530,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_doubleclick implements onQuery only -> Query; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Execute if double-clicked",
    "example": "doubleclick ? automix : mix_now",
    "kind": "Query"
@@ -2551,7 +2551,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_down implements onQuery only -> Query; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Execute action on key press/release",
    "example": "down ? action1 : action2",
    "kind": "Query"
@@ -2568,7 +2568,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_dualdeckmode implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Toggle dual deck mode",
    "example": "dualdeckmode",
    "kind": "Dual"
@@ -2586,7 +2586,7 @@
     "Local test (v2026-m b9336, hardware: Optional controller): In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_dualdeckmode_decks implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Dual-deck pair helper for decks 1/3 or 2/4",
    "example": "dualdeckmode_decks",
    "note": "In the pad-page run, `dualdeckmode` toggled on/blue but current and deck-scoped `dualdeckmode_decks` readbacks stayed false/red; repeating on deck 2 gave the same result. Test a visible dual-deck pair/controller context before promotion.",
@@ -2605,7 +2605,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_dump implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Reverse temporarily",
    "example": "dump",
    "kind": "Dual"
@@ -2622,7 +2622,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_edit_bpm implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Open BPM editor",
    "example": "edit_bpm",
    "kind": "Action"
@@ -2659,7 +2659,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "POI & BPM",
+   "section": "Song Info",
    "description": "Open Lyrics Editor",
    "example": "edit_lyrics",
    "kind": "Action"
@@ -2676,7 +2676,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_edit_poi implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Open POI editor",
    "example": "edit_poi",
    "kind": "Action"
@@ -3832,7 +3832,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_emergency_play implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Play something",
    "example": "emergency_play",
    "kind": "Action"
@@ -3849,7 +3849,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_crossfader_high implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade treble between decks",
    "example": "eq_crossfader_high 50%",
    "kind": "Dual"
@@ -3866,7 +3866,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_crossfader_low implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade bass between decks",
    "example": "eq_crossfader_low 50%",
    "kind": "Dual"
@@ -3897,7 +3897,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_crossfader_mid implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Crossfade mids between decks",
    "example": "eq_crossfader_mid 50%",
    "kind": "Dual"
@@ -3917,7 +3917,7 @@
     "Binary verb table (VirtualDJ 2026): shares id 479 with eq_high_slider; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_high implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "High EQ/HiHat/Vocal",
    "example": "eq_high",
    "kind": "Dual"
@@ -3935,7 +3935,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_high_freq is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_high_freq implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_high_slider": {
@@ -3965,7 +3965,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_kill_high is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_kill_high implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_kill_low": {
@@ -3981,7 +3981,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_kill_low is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_kill_low implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_kill_med": {
@@ -4014,7 +4014,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_kill_mid is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_kill_mid implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_low": {
@@ -4032,7 +4032,7 @@
     "Binary verb table (VirtualDJ 2026): shares id 481 with eq_low_slider; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_low implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Low EQ/Kick",
    "example": "eq_low",
    "kind": "Dual"
@@ -4050,7 +4050,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_low_freq is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_low_freq implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_low_slider": {
@@ -4097,7 +4097,7 @@
     "Binary verb table (VirtualDJ 2026): shares id 480 with eq_med,eq_mid_slider; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_mid implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Mid EQ/Melody/Vocals",
    "example": "eq_mid",
    "kind": "Dual"
@@ -4115,7 +4115,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_mid_freq is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_mid_freq implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eq_mid_slider": {
@@ -4144,7 +4144,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_mode implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Select EQ behavior",
    "example": "eq_mode +1",
    "kind": "Dual"
@@ -4162,7 +4162,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_eq_reset is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_eq_reset implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "kind": "Dual"
   },
   "eventscheduler": {
@@ -4211,7 +4211,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_fadeout implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "Fade out when condition ends",
    "example": "fadeout 10000ms 3000ms \\",
    "kind": "Query"
@@ -4396,7 +4396,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_false implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Returns false",
    "example": "false",
    "kind": "Query"
@@ -4457,7 +4457,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Apply color FX",
    "example": "filter",
    "kind": "Dual"
@@ -4474,7 +4474,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_filter_activate implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Enable/disable deck filter/ColorFX",
    "example": "filter_activate",
    "kind": "Dual"
@@ -4498,7 +4498,7 @@
     "Local test (HTTP query, build 18.0.9598, 2026-09-07): both documented tails confirmed, each in the knob position where it can separate. With the deck filter at 0.75, 'name' returned the ColorFX name (MOBIUS TRI) where bare and two nonsense tails returned the value '> 50%'; with the filter centred, 'clean' returned 'OFF' where bare and both controls returned the name. So bare shows the name at rest and the value while the knob is moved, and the two tails pin it to one or the other. Filter restored to 0.5."
    ],
    "kind": "Query",
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "confidence": "local_test"
   },
   "filter_resonance": {
@@ -4520,7 +4520,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_filter_resonance is compiled in action_equalizer.cpp, whose 21 already-sectioned verbs are 95% 'Equalizer & Stems'. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works."
    ],
    "kind": "Dual",
-   "section": "Equalizer & Stems"
+   "section": "Equalizer & Filter"
   },
   "filter_selectcolorfx": {
    "name": "filter_selectcolorfx",
@@ -4539,7 +4539,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_filter_selectcolorfx implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Select color effect",
    "example": "filter_selectcolorfx 'Reverb'",
    "kind": "Dual"
@@ -4572,7 +4572,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_arm implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -4592,7 +4592,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_get_status implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Query",
    "confidence": "local_test"
   },
@@ -4612,7 +4612,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_load implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -4632,7 +4632,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_loop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -4652,7 +4652,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -4672,7 +4672,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_flip_record implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category macro. Existence and kind proven; behavior untested.",
-   "section": "Macros",
+   "section": "Flip",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -4807,7 +4807,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_activedeck is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_activedeck implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_album": {
@@ -4822,7 +4822,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_album implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Album tag",
    "example": "get_album",
    "kind": "Query"
@@ -4840,7 +4840,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_arm is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_arm implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Effects",
    "kind": "Query"
   },
   "get_artist": {
@@ -4855,7 +4855,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_artist implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Artist tag",
    "example": "get_artist",
    "kind": "Query"
@@ -4873,7 +4873,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_artist_before_feat is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_artist_before_feat implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_artist_title": {
@@ -4889,7 +4889,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_artist_title is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_artist_title implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_artist_title_separator": {
@@ -4905,7 +4905,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_artist_title_separator is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_artist_title_separator implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_askthedj": {
@@ -4921,7 +4921,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_askthedj is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_askthedj implements onQuery only -> Query; no HTTP sweep row."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_askthedj_unread": {
@@ -4937,7 +4937,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_askthedj_unread is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_askthedj_unread implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_automix": {
@@ -5006,7 +5006,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_bar is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_bar implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_battery": {
@@ -5038,7 +5038,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beat implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Beat intensity at current position",
    "example": "get_beat",
    "kind": "Query"
@@ -5056,7 +5056,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beat2 is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beat2 implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beat_bar": {
@@ -5072,7 +5072,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beat_bar is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beat_bar implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beat_counter": {
@@ -5088,7 +5088,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beat_counter is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beat_counter implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beat_num": {
@@ -5104,7 +5104,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beat_num is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beat_num implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beatdiff": {
@@ -5120,7 +5120,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beatdiff is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beatdiff implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beatgrid": {
@@ -5136,7 +5136,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_beatgrid is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beatgrid implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_beatpos": {
@@ -5151,7 +5151,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_beatpos implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Beat position",
    "example": "get_beatpos",
    "kind": "Query"
@@ -5168,7 +5168,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_bpm implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "description": "Song BPM",
    "example": "get_bpm",
    "kind": "Query"
@@ -5203,7 +5203,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_album is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_album implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_artist": {
@@ -5219,7 +5219,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_artist is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_artist implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_artist_title": {
@@ -5235,7 +5235,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_artist_title is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_artist_title implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_bpm": {
@@ -5251,7 +5251,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_bpm is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_bpm implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_color": {
@@ -5270,7 +5270,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_color implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_comment": {
@@ -5286,7 +5286,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_comment is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_comment implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_composer": {
@@ -5302,7 +5302,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_composer is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_composer implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_filepath": {
@@ -5318,7 +5318,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_filepath is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_filepath implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder": {
@@ -5335,7 +5335,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_icon": {
@@ -5351,7 +5351,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_icon is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_icon implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_path": {
@@ -5367,7 +5367,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_path is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_path implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_scrollpos": {
@@ -5383,7 +5383,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_scrollpos is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_scrollpos implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_scrollsize": {
@@ -5399,7 +5399,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_scrollsize is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_scrollsize implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_selection_index": {
@@ -5415,7 +5415,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_selection_index is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_selection_index implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_folder_tab": {
@@ -5431,7 +5431,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_folder_tab is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_folder_tab implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_genre": {
@@ -5447,7 +5447,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_genre is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_genre implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_header": {
@@ -5463,7 +5463,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_header is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_header implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_key": {
@@ -5480,7 +5480,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_key is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_key implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_scrollpos": {
@@ -5496,7 +5496,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_scrollpos is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_scrollpos implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_scrollsize": {
@@ -5512,7 +5512,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_scrollsize is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_scrollsize implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_selection_index": {
@@ -5528,7 +5528,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_selection_index is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_selection_index implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_song": {
@@ -5549,7 +5549,7 @@
     "Local test 2026-09-07, HTTP, build 18.0.9598, browser selection as found: 'title', 'playcount', 'artist' return the browsed track's fields; two nonsense fields return error:-2147024809 (E_INVALIDARG); bare returns empty. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch).",
     "Local test (HTTP query, build 18.0.9598, 2026-09-08): swept the same 41 song_fields members as get_loaded_song against two nonsense controls, on a different track. The two verbs agree exactly — the same 16 fields answer and the same 25 raise E_INVALIDARG — so the field vocabulary is shared between them. 'album' and 'title' returned different values here ('Brazil House' vs 'Alemao'), confirming they are distinct fields rather than aliases; 'author' again matched 'artist'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "description": "Browsed file property",
    "example": "get_browsed_song 'title'",
    "kind": "Query",
@@ -5568,7 +5568,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_title is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_title implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_browsed_title_artist": {
@@ -5584,7 +5584,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_browsed_title_artist is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_browsed_title_artist implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "get_build": {
@@ -5600,7 +5600,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_build is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_build implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_clock": {
@@ -5633,7 +5633,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_comment is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_comment implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_composer": {
@@ -5649,7 +5649,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_composer is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_composer implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_constant": {
@@ -5780,7 +5780,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_custom_text is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_custom_text implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Custom Buttons",
    "kind": "Query"
   },
   "get_date": {
@@ -5819,7 +5819,7 @@
    "evidence": [
     "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: returns the deck number of its scope prefix. With selection and master pinned to different decks, bare get_deck and 'deck default get_deck' track the SELECTED deck, while 'deck master get_deck' and 'deck active get_deck' track the MASTER deck. Junk prefixes return error:-2147467259 rather than falling back."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "description": "Deck number",
    "example": "get_deck",
    "kind": "Query",
@@ -5839,7 +5839,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_deck_analysis is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_deck_analysis implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_deck_color": {
@@ -5856,7 +5856,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Get deck color",
    "example": "get_deck_color 50%",
    "kind": "Query"
@@ -5874,7 +5874,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_deck_letter is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_deck_letter implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_decks": {
@@ -5890,7 +5890,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_decks is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_decks implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_defaultdeck": {
@@ -5906,7 +5906,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_defaultdeck is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_defaultdeck implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_denon_cuepoints": {
@@ -6309,7 +6309,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_featuring_after_artist is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_featuring_after_artist implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_filename": {
@@ -6325,7 +6325,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_filename is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_filename implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_filepath": {
@@ -6341,7 +6341,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_filepath is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_filepath implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_filesize": {
@@ -6357,7 +6357,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_filesize is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_filesize implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_firstbeat": {
@@ -6373,7 +6373,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_firstbeat is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_firstbeat implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_firstbeat_local": {
@@ -6389,7 +6389,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_firstbeat_local is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_firstbeat_local implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_gemini_display": {
@@ -6438,7 +6438,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_genre implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Genre tag",
    "example": "get_genre",
    "kind": "Query"
@@ -6455,7 +6455,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_harmonic implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Harmonic key display",
    "example": "get_harmonic",
    "kind": "Query"
@@ -6490,7 +6490,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_hasheadphones is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_hasheadphones implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "get_hasinput": {
@@ -6506,7 +6506,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_hasinput is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_hasinput implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "get_haslinein": {
@@ -6522,7 +6522,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_haslinein is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_haslinein implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "get_hasmaster": {
@@ -6538,7 +6538,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_hasmaster is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_hasmaster implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "get_hasmic": {
@@ -6554,7 +6554,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_hasmic is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_hasmic implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "get_hastimecode": {
@@ -6587,7 +6587,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_hwnd is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_hwnd implements onQuery only -> Query; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_karaoke_background_song": {
@@ -6621,7 +6621,7 @@
     "Local test (HTTP query, build 18.0.9598, 2026-09-07): the documented 'musical' tail is confirmed by flipping the app's own keyDisplay setting. With keyDisplay=Harmonic, bare and a nonsense tail both returned 02A while 'musical' returned Ebm; with keyDisplay=Musical (the earlier run) bare returned Ebm and 'harmonic' returned 02A. So each tail forces its own notation regardless of the setting, and the setting only decides what the bare form shows. Setting restored to Musical.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_key implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Song key",
    "example": "get_key \"musical\"",
    "confidence": "local_test",
@@ -6639,7 +6639,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_key_color implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Key & Pitch",
    "description": "Color for current key",
    "example": "get_key_color",
    "kind": "Query"
@@ -6657,7 +6657,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_key_modifier is compiled in action_key.cpp, a module graded mixed, its 3 already-sectioned get_* verbs all sit in 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_key_modifier implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Controllers",
    "kind": "Dual"
   },
   "get_key_modifier_text": {
@@ -6673,7 +6673,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_key_modifier_text is compiled in action_key.cpp, a module graded mixed, its 3 already-sectioned get_* verbs all sit in 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_key_modifier_text implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Controllers",
    "kind": "Dual"
   },
   "get_leftdeck": {
@@ -6689,7 +6689,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_leftdeck is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_leftdeck implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_lemode": {
@@ -6841,7 +6841,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_license is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_license implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_limiter": {
@@ -6875,7 +6875,7 @@
     "Local test (HTTP query, build 18.0.9598, 2026-09-08): the whole song-field vocabulary swept against the binary's 41-member song_fields table with three agreeing nonsense controls (all E_INVALIDARG). Exactly 16 members answer: album, artist, author, bpm, comment, composer, filename, filepath, genre, grouping, key, label, remix, remixer, title, year. An empty-but-real field returns '' where an unknown one raises E_INVALIDARG, so the two are distinguishable. 'author' returned the same value as 'artist' on two different tracks, so it is an alias. The other 25 table members — the RIFF chunk ids (iart, icmt, icop, ignr, inam, iprd, isbj, isft, strn) and the two-letter forms (al, ar, au, by, re, ti, ve) plus copyright/creator/encoder/encoder_version/product/software/subject/user1/user2 — all raise E_INVALIDARG, so they belong to a different consumer of that table.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_loaded_song implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded file property",
    "example": "get_loaded_song 'album'",
    "confidence": "local_test",
@@ -6895,7 +6895,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_loaded_song_color is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_loaded_song_color implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_loop": {
@@ -6966,7 +6966,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded deck lyric language",
    "example": "get_lyrics_language",
    "kind": "Query"
@@ -6984,7 +6984,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_membership is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_membership implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_mixfx_active": {
@@ -7143,7 +7143,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_peak_audio is compiled in action_system.cpp, a module graded mixed, its 4 already-sectioned get_* verbs all sit in 'System Info'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_peak_audio implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "System Info",
+   "section": "Volume & Mixing",
    "kind": "Query"
   },
   "get_phrase_num": {
@@ -7159,7 +7159,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_phrase_num is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_phrase_num implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Query"
   },
   "get_pioneer_display": {
@@ -7289,7 +7289,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_plugindeck is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_plugindeck implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_position": {
@@ -7305,7 +7305,7 @@
     "Plugin channel, prepared state (2026-08-15): 'loopin' and 'loopout' are confirmed keywords, returning loop boundary positions (0) distinct from the bare playback position (0.1).",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_position implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "description": "Song position",
    "example": "get_position",
    "kind": "Query"
@@ -7323,7 +7323,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_message is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_message implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_min": {
@@ -7339,7 +7339,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_min is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_min implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_ms": {
@@ -7355,7 +7355,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_ms is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_ms implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_msf": {
@@ -7371,7 +7371,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_msf is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_msf implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_sec": {
@@ -7387,7 +7387,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_sec is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_sec implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_size": {
@@ -7403,7 +7403,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_record_size is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_record_size implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Recording & Broadcasting",
    "kind": "Query"
   },
   "get_record_time": {
@@ -7435,7 +7435,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_remix_after_title implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Remix text split from title",
    "example": "get_remix_after_title",
    "kind": "Query"
@@ -7453,7 +7453,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_rightdeck is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_rightdeck implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Decks",
    "kind": "Query"
   },
   "get_rotation": {
@@ -7468,7 +7468,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_rotation implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Scratch & Jogwheel",
    "description": "Disc angle",
    "example": "get_rotation",
    "kind": "Query"
@@ -7778,7 +7778,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_song_event implements onQuery only -> Query; no HTTP sweep row."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_songlength": {
@@ -7794,7 +7794,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_songlength is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_songlength implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_spectrum_band": {
@@ -7810,7 +7810,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_spectrum_band is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_spectrum_band implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Volume & Mixing",
    "kind": "Query"
   },
   "get_status": {
@@ -7826,7 +7826,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "description": "Background task text",
    "example": "get_status",
    "kind": "Query"
@@ -7843,7 +7843,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_text implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Text Queries",
+   "section": "Parameters & Math",
    "description": "Get formatted text",
    "example": "get_text 'You are listening to \\",
    "kind": "Query"
@@ -7869,7 +7869,7 @@
     "Local test 2026-09-07, HTTP, build 18.0.9598, track with no lyrics on deck 1: get_time 'to_lyrics' returned 0 where a nonsense tail fell back to elapsed (44), so the tail is recognized even with nothing to report. Tracker: Documented Parameters Taken Live 2026-09-07 (second batch).",
     "Local test 2026-09-12, HTTP, live get_build=9598, tests/long-time-forms.json (tools/probe_long_time.py). Confirmed 'remain', 'total', 'absolute' against agreeing nonsense controls in both independently established runs, with form order reversed. Fractional position 4207.125s separates lower-unit remain readings; elapsed remains equal to the nonsense fallback in this capture. No previous confirmations are retracted. Empty stopped deck, original pitch and display_time restored and verified after each run."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "description": "Elapsed time",
    "example": "get_time \"remain\" \"short\"",
    "kind": "Query",
@@ -7890,7 +7890,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_hour implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_time_min": {
@@ -7909,7 +7909,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_min implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_time_ms": {
@@ -7928,7 +7928,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_ms implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_time_msf": {
@@ -7946,7 +7946,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_msf implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_time_sec": {
@@ -7965,7 +7965,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_sec implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_time_sign": {
@@ -7983,7 +7983,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_sign implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_timecode_quality": {
@@ -8015,7 +8015,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_title implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Title tag",
    "example": "get_title",
    "kind": "Query"
@@ -8033,7 +8033,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_title_artist is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_title_artist implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_title_before_remix": {
@@ -8048,7 +8048,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_title_before_remix implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Title with remix/bracket handling",
    "example": "get_title_before_remix",
    "kind": "Query"
@@ -8066,7 +8066,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_title_remix is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_title_remix implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "get_totaltime_min": {
@@ -8084,7 +8084,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_totaltime_min implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_totaltime_ms": {
@@ -8102,7 +8102,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_totaltime_ms implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
    "confidence": "local_test",
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_totaltime_msf": {
@@ -8118,7 +8118,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_totaltime_msf is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_totaltime_msf implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_totaltime_sec": {
@@ -8134,7 +8134,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_totaltime_sec is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_totaltime_sec implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Position & Seeking",
    "kind": "Query"
   },
   "get_username": {
@@ -8150,7 +8150,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_username is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_username implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_var": {
@@ -8192,7 +8192,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_vdj_folder is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_vdj_folder implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_version": {
@@ -8208,7 +8208,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_version is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_version implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "System Info",
    "kind": "Query"
   },
   "get_video_fx_slider_label": {
@@ -8281,7 +8281,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_volume is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_volume implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Volume & Mixing",
    "kind": "Query"
   },
   "get_vu_meter": {
@@ -8399,7 +8399,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_get_year is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_year implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "kind": "Query"
   },
   "getfood": {
@@ -8415,7 +8415,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_getfood is compiled in action_system.cpp, a module graded mixed, its 16 already-sectioned verbs (Hidden Button Editor excluded) are 93% 'System Info'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_getfood implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "System Info",
+   "section": "Developer & Debug",
    "kind": "Action"
   },
   "goto": {
@@ -8431,7 +8431,7 @@
     "Local test 2026-09-06, HTTP, build 18.0.9598: a bare signed number is BEATS relative to the playhead ('goto +70' from goto_start reached 35000 ms on a 120 BPM track). Percentage and relative-ms forms are documented but untested here.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_goto implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Change position",
    "example": "goto +10ms",
    "confidence": "local_test",
@@ -8449,7 +8449,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_goto_bar implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Jump to beat after downbeat",
    "example": "goto_bar 4",
    "kind": "Dual"
@@ -8466,7 +8466,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_goto_beat_in_bar implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Canonical spelling of `goto_bar` from build `18.0.9583` (same verb id 106; `goto_bar` is now the alias). Put the song on its nth beat after the downbeat without losing sync.",
    "example": "goto_beat_in_bar 4",
    "kind": "Dual"
@@ -8503,7 +8503,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Jump to first beat",
    "example": "goto_first_beat",
    "kind": "Action"
@@ -8539,7 +8539,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_goto_mixpoint implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Jump to automix/mix point",
    "example": "goto_mixpoint \"StartCut\"",
    "kind": "Action"
@@ -8559,7 +8559,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Go to start",
    "example": "goto_start",
    "kind": "Action"
@@ -8593,7 +8593,7 @@
    "evidence": [
     "VirtualDJ 2026 (HTTP, 2026-07-30): bare form returns E_INVALIDARG (argument required); 'handshake \"nonce\"' returns exactly 128 bytes of NON-UTF8 binary — a 1024-bit RSA block. Byte-identical for a repeated nonce (deterministic, so no random padding) and completely different for another nonce. Matches the bundled catalog description: a plugin passes any string, decrypts the result with VirtualDJ's handshake public key, and checks it matches. NOTE: reachable over the HTTP control channel, so that channel is a signing oracle for the handshake key — a shim host can proxy a plugin's challenge to a real VirtualDJ. See docs/Plugin SDK.md."
    ],
-   "section": "System Info",
+   "section": "Developer & Debug",
    "description": "Developer plugin environment handshake",
    "example": "handshake 'nonce'",
    "kind": "Query"
@@ -8611,7 +8611,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_has_aux is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_has_aux implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Audio Inputs",
    "kind": "Query"
   },
   "has_battery": {
@@ -8676,7 +8676,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_has_custom_button implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Check if has action",
    "example": "has_custom_button",
    "kind": "Query"
@@ -8745,7 +8745,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Get (Query Actions)",
+   "section": "Song Info",
    "description": "Loaded deck has lyrics",
    "example": "has_lyrics",
    "kind": "Query"
@@ -8796,7 +8796,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_has_stems implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Check if has stems",
    "example": "has_stems \"ready\"",
    "kind": "Query"
@@ -8926,7 +8926,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_high_label implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "High EQ band label",
    "example": " ",
    "kind": "Query"
@@ -8966,7 +8966,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_holding implements onQuery only -> Query; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Execute if held long",
    "example": "holding ? automix : mix_now",
    "kind": "Query"
@@ -9086,7 +9086,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Swap left/right deck",
    "example": "invert_deck",
    "kind": "Action"
@@ -9382,7 +9382,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_isrepeat implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Check if key is auto-repeating",
    "example": "isrepeat ? nothing : goto_cue",
    "kind": "Query"
@@ -9773,7 +9773,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_leftcross implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign to left crossfader",
    "example": "leftcross",
    "kind": "Dual"
@@ -9793,7 +9793,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select left deck",
    "example": "leftdeck +1",
    "kind": "Dual"
@@ -10648,7 +10648,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_low_label implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Low EQ band label",
    "example": " ",
    "kind": "Query"
@@ -10665,7 +10665,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_macro_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Macros",
+   "section": "Controllers",
    "description": "Play macro",
    "example": "macro_play",
    "kind": "Dual"
@@ -10682,7 +10682,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_macro_record implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Macros",
+   "section": "Controllers",
    "description": "Record macro",
    "example": "macro_record",
    "kind": "Dual"
@@ -10752,7 +10752,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_master_beat_num implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Dual"
   },
   "master_tempo": {
@@ -10805,7 +10805,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_masterbpm implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category get. Existence and kind proven; behavior untested.",
-   "section": "Get (Query Actions)",
+   "section": "Beatgrid & BPM",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -10826,7 +10826,7 @@
     "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: 'deck N masterdeck on' moves master exclusively to deck N (other decks read 'no') while the selected deck is unchanged; readback 'deck N masterdeck' is yes/no and the original master is restorable by the same absolute form. Requires masterdeck_auto off to hold.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_masterdeck implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select/unselect master",
    "example": "masterdeck",
    "kind": "Dual",
@@ -10845,7 +10845,7 @@
     "build 18.0.9598, HTTP channel, capture tests/runtime-grammar-master-9598.json: 'masterdeck_auto on|off' round-trips, readback yes/no. With it on, a manual 'deck N masterdeck on' pin is not relied upon; the fixture parks it off and restores it.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_masterdeck_auto implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Auto masterdeck",
    "example": "masterdeck_auto",
    "confidence": "local_test",
@@ -11137,7 +11137,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_mid_label implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Equalizer & Filter",
    "description": "Mid EQ band label",
    "example": " ",
    "kind": "Query"
@@ -11326,7 +11326,7 @@
     "Local test 2026-09-08, build 18.0.9598, HTTP channel, query position. 'external' answers no where bare, 'internal' and two nonsense controls answer yes, so the tail is read; 'internal' names the state this machine is in and cannot be separated without switching the audio config to an external mixer.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_mixermode implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Configuration",
    "description": "Query internal vs external mixer mode",
    "example": "mixermode 'internal'",
    "confidence": "local_test",
@@ -11453,7 +11453,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Move song to other deck",
    "example": "move_deck",
    "kind": "Action"
@@ -11470,7 +11470,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_multibutton implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Click multibutton",
    "example": "multibutton \"my_button\"",
    "kind": "Dual"
@@ -11487,7 +11487,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_multibutton_select implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Custom Buttons & Multi-buttons",
+   "section": "Custom Buttons",
    "description": "Open selection menu",
    "example": "multibutton_select \"my_button\"",
    "kind": "Action"
@@ -11521,7 +11521,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_mute_stem implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Mute stem",
    "example": "mute_stem vocal",
    "kind": "Dual"
@@ -11588,7 +11588,7 @@
     "VirtualDJ 2026 (HTTP interface, 2026-07-22): indistinguishable from an unknown verb over HTTP — query returns error:-2147467259 and execute returns false, exactly as a bogus name does, bare or with arguments. Also has no query value, so 'cond ? verb : nothing' errors rather than acting as a null branch.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_nothing implements onQuery only -> Query; no HTTP sweep row. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Do nothing; no-op, not an early return",
    "example": "nothing",
    "kind": "Query",
@@ -11702,7 +11702,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_only_stem implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Isolate stem",
    "example": "only_stem vocal",
    "kind": "Dual"
@@ -11737,7 +11737,7 @@
     "Local test (v2026-m b9336): Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_open_stem_creator implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Window Control",
+   "section": "Stems",
    "description": "Open the Stem Creator workflow",
    "example": "open_stem_creator",
    "note": "Pressing it opened the Stem Creator dialog with per-stem input pickers, Output, Headroom, and Create controls. A selected browser track did not auto-fill; 0 browser results opened the same blank dialog. Full export/create and license gating not tested.",
@@ -12401,7 +12401,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_1_x implements onExecute and onQuery -> Dual; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Invert value (1/x)",
    "example": "param_1_x & effect slider",
    "kind": "Dual"
@@ -12418,7 +12418,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_add implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Add values",
    "example": "param_add \\",
    "kind": "Dual"
@@ -12442,7 +12442,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_bigger implements onQuery only -> Query; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Dual' (2026-09-15 normalisation)."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value is bigger",
    "example": "param_bigger 0 ? action1 : action2",
    "kind": "Query"
@@ -12461,7 +12461,7 @@
     "Local test 2026-09-08, build 18.0.9598, HTTP channel. param_cast REJECTS an unrecognized type (E_INVALIDARG) instead of ignoring it, so its vocabulary is directly enumerable by acceptance. 'absolute' and 'relative' are accepted and answer in a class of their own — '' where every cast type returns S_FALSE — matching the appendix's description that they change how the value is applied rather than casting it. Matching is exact, not prefix: 'int' and 'percent' are accepted, 'inte'/'integ'/'intx'/'perc'/'beat'/'abso' are not; the digit-format family generalises past the documented '000' to '0', '00', '0000' and '00.0'.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_cast implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Cast to new type",
    "example": "param_cast \"percentage\"",
    "confidence": "local_test",
@@ -12479,7 +12479,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_contains implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value contains string",
    "example": "param_contains",
    "kind": "Query"
@@ -12496,7 +12496,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_delta implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Transform absolute to relative",
    "example": "param_delta",
    "kind": "Action"
@@ -12519,7 +12519,7 @@
     "Local test (HTTP query, build 18.0.9598, 2026-09-07): a plain string comparison — `param_equal 'zzqqx' 'zzqqx'` is yes and `param_equal 'audio' 'zzqqx'` is no, so the catalog's audio/string/type are the example's operands, not vocabulary. The documented backtick shape holds: `param_equal \\`get_browsed_song 'type'\\` 'audio'` returns yes and the same against 'video' returns no, with get_browsed_song 'type' reading audio.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_equal implements onQuery only -> Query; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Dual' (2026-09-15 normalisation)."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value equals something",
    "example": "param_equal \\",
    "kind": "Query",
@@ -12549,7 +12549,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_invert implements onExecute and onQuery -> Dual; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Invert value (1-x)",
    "example": "param_invert & pitch_slider",
    "kind": "Dual"
@@ -12566,7 +12566,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_lowercase implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Convert to lowercase",
    "example": "param_lowercase",
    "kind": "Query"
@@ -12583,7 +12583,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_make_discrete implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Timing & Animation",
+   "section": "Parameters & Math",
    "description": "Make smooth encoder discrete",
    "example": "param_make_discrete 0.1",
    "kind": "Action"
@@ -12600,7 +12600,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_mod implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Wrap value",
    "example": "param_mod",
    "kind": "Dual"
@@ -12617,7 +12617,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_multiply implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Multiply value",
    "example": "param_multiply 300% & effect slider",
    "kind": "Dual"
@@ -12634,7 +12634,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_pingpong implements onExecute and onQuery -> Dual; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Linear to forth-and-back scale",
    "example": "param_pingpong",
    "kind": "Dual"
@@ -12651,7 +12651,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_pow implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Power calculation",
    "example": "param_pow 0.5",
    "kind": "Dual"
@@ -12668,7 +12668,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_smaller implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Check if value is smaller",
    "example": "param_smaller 0 ? action1 : action2",
    "kind": "Query"
@@ -12685,7 +12685,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_ucfirst implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "First letter uppercase",
    "example": "param_ucfirst",
    "kind": "Query"
@@ -12702,7 +12702,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_uppercase implements onQuery only -> Query; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Parameter Comparison & Math",
+   "section": "Parameters & Math",
    "description": "Convert to uppercase",
    "example": "param_uppercase",
    "kind": "Query"
@@ -12724,7 +12724,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_pause implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pause deck",
    "example": "pause",
    "kind": "Dual"
@@ -12742,7 +12742,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pause or stop",
    "example": "pause_stop",
    "kind": "Action"
@@ -12762,7 +12762,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Send to headphones",
    "example": "pfl",
    "kind": "Dual"
@@ -12852,7 +12852,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_pioneer_cue implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pioneer-style cue button/LED helper state",
    "example": "pioneer_cue",
    "kind": "Dual"
@@ -12920,7 +12920,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_pioneer_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Pioneer-style play LED/helper state",
    "example": "pioneer_play",
    "kind": "Dual"
@@ -13156,7 +13156,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Start deck",
    "example": "play",
    "kind": "Dual"
@@ -13190,7 +13190,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_play_button implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Depends on play_mode",
    "example": "play_button",
    "kind": "Dual"
@@ -13263,7 +13263,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_play_pause implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Toggle play/pause",
    "example": "play_pause",
    "kind": "Dual"
@@ -13284,7 +13284,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_play_stutter implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Start or restart",
    "example": "play_stutter",
    "kind": "Dual"
@@ -13580,7 +13580,8 @@
     "Binary verb table (VirtualDJ 2026): shares id 835 with preview; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "kind": "Dual"
+   "kind": "Dual",
+   "section": "Browser"
   },
   "prelisten_info": {
    "name": "prelisten_info",
@@ -13595,7 +13596,7 @@
     "Source module (bundle 18.0.9246 STABS): ACTION_prelisten_info is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten_info implements onQuery only -> Query; no HTTP sweep row."
    ],
-   "section": "Get (Query Actions)",
+   "section": "Browser",
    "kind": "Query"
   },
   "prelisten_options": {
@@ -13610,7 +13611,8 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten_options implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "kind": "Action"
+   "kind": "Action",
+   "section": "Browser"
   },
   "prelisten_output": {
    "name": "prelisten_output",
@@ -13626,7 +13628,8 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten_output implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
    "confidence": "local_test",
-   "kind": "Dual"
+   "kind": "Dual",
+   "section": "Browser"
   },
   "prelisten_pos": {
    "name": "prelisten_pos",
@@ -13640,7 +13643,8 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten_pos implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "kind": "Dual"
+   "kind": "Dual",
+   "section": "Browser"
   },
   "prelisten_stop": {
    "name": "prelisten_stop",
@@ -13654,7 +13658,8 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_prelisten_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "kind": "Dual"
+   "kind": "Dual",
+   "section": "Browser"
   },
   "preview": {
    "name": "preview",
@@ -13682,7 +13687,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_pulse implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Timing & Animation",
+   "section": "Modifiers & Timing",
    "description": "True for duration when action turns true",
    "example": "is_using 'equalizer' & pulse 2000ms",
    "kind": "Query"
@@ -13941,7 +13946,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_reanalyze implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Reanalyze file",
    "example": "reanalyze multi",
    "kind": "Action"
@@ -14139,7 +14144,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_remote_action implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
    "note": "Real verb (ACTION_remote_action in the binary symbol table; autocompletes in the Button Editor) but NOT reachable over the HTTP channel: bare, numeric-arg, and quoted-arg forms all return E_FAIL, same as a bogus name — presumably context-gated to a Remote skin. Forum evidence scopes it to reaching desktop-side custom buttons/variables FROM a Remote skin; it is not a device-connection helper.",
-   "section": "Skin Control",
+   "section": "Developer & Debug",
    "kind": "Dual"
   },
   "repeat": {
@@ -14154,7 +14159,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_repeat implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Repeat action while pressed",
    "example": "repeat 1000ms & browser_scroll +1",
    "kind": "Dual"
@@ -14192,7 +14197,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_repeat_start implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Start repeating action",
    "example": "repeat_start 'name' 1000ms 5 & action",
    "kind": "Dual"
@@ -14209,7 +14214,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_repeat_start_fade implements onExecute and onQuery -> Dual; no HTTP sweep row."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Fade from one value to another over a time, optionally in N steps (new in build `18.0.9583`)",
    "example": "repeat_start_fade 'myfade' 0.0 1.0 10s",
    "kind": "Dual"
@@ -14230,7 +14235,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_repeat_start_instant implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Start repeating immediately",
    "example": "repeat_start_instant 'name' 1000ms",
    "kind": "Dual"
@@ -14249,7 +14254,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Stop repeat",
    "example": "repeat_stop 'name'",
    "kind": "Action"
@@ -14284,7 +14289,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_reverse implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Play backward",
    "example": "reverse",
    "kind": "Dual"
@@ -14304,7 +14309,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_rightcross implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Assign to right crossfader",
    "example": "rightcross",
    "kind": "Dual"
@@ -14324,7 +14329,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select right deck",
    "example": "rightdeck +1",
    "kind": "Dual"
@@ -15168,7 +15173,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sandbox implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Sandbox",
+   "section": "Volume & Mixing",
    "description": "Toggle sandbox mode",
    "example": "sandbox",
    "kind": "Dual"
@@ -15658,7 +15663,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_seek implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Move while pressed",
    "example": "seek +2",
    "kind": "Dual"
@@ -15675,7 +15680,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_select implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Selection",
+   "section": "Decks",
    "description": "Select working deck",
    "example": "select",
    "kind": "Dual"
@@ -15755,7 +15760,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set_bpm implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Set BPM",
    "example": "set_bpm 129.3",
    "kind": "Action"
@@ -15829,7 +15834,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set_firstbeat implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Beatgrid & BPM",
    "description": "Set first beat",
    "example": "set_firstbeat",
    "kind": "Action"
@@ -15901,7 +15906,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set_loadpoint implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Set where the track starts when loaded",
    "example": "set_loadpoint",
    "kind": "Dual"
@@ -15918,7 +15923,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set_mixpoint implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "POI & BPM",
+   "section": "Cue Points",
    "description": "Move automix/mix point to current position",
    "example": "set_mixpoint \"StartTempo\"",
    "kind": "Action"
@@ -16744,7 +16749,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_smart_cue implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-sync on cue",
    "example": "smart_cue",
    "kind": "Dual"
@@ -16781,7 +16786,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_smart_loop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-adjust loops",
    "example": "smart_loop",
    "kind": "Dual"
@@ -16804,7 +16809,7 @@
     "Local test (HTTP, build 18.0.9598, 2026-09-07): executing it bare toggles the app setting the query reports — smart_play yes -> no, and `setting 'smartPlay'` follows it to no, so the verb and the setting name are two views of one state. The aliases auto_sync and the neighbouring match_bpm both read yes in the same state. Restored to yes after the run.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_smart_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Configuration",
+   "section": "Sync",
    "description": "Auto-sync on play",
    "example": "smart_play",
    "kind": "Dual",
@@ -16839,7 +16844,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_song_pos implements onExecute and onQuery -> Dual; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Position in song (slider)",
    "example": "song_pos",
    "kind": "Dual"
@@ -16856,7 +16861,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_songpos_remain implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Remaining time",
    "example": "songpos_remain 500ms ? blink",
    "kind": "Query"
@@ -16873,7 +16878,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_songpos_warning implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Audio Playback",
+   "section": "Position & Seeking",
    "description": "Last 30s warning",
    "example": "songpos_warning",
    "kind": "Query"
@@ -16953,7 +16958,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stem implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Control stem amount",
    "example": "stem \"vocal\" 50%",
    "kind": "Dual"
@@ -16972,7 +16977,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Get default stem color",
    "example": "stem_color 'Vocal'",
    "kind": "Query"
@@ -16989,7 +16994,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stem_pad implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Mute/isolate stem pad",
    "example": "stem_pad 'acapella' on",
    "kind": "Dual"
@@ -17010,7 +17015,7 @@
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stem_volume implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'query' (2026-09-15 normalisation)."
    ],
    "note": "Hidden Button Editor verb (flags==256): real and dispatchable but withheld from the editor's browsable list. Category equalizer. Existence and kind proven; behavior untested.",
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "kind": "Dual",
    "confidence": "local_test"
   },
@@ -17030,7 +17035,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Equalizer & Stems",
+   "section": "Stems",
    "description": "Stem bleed control/query",
    "example": "stems_bleed",
    "kind": "Dual"
@@ -17047,7 +17052,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stems_split implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Stems",
    "description": "Split stems to decks",
    "example": "stems_split vocal target",
    "kind": "Dual"
@@ -17064,7 +17069,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stems_split_unlink implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
    ],
-   "section": "Deck Management",
+   "section": "Stems",
    "description": "Unlink split stems",
    "example": "stems_split_unlink",
    "kind": "Dual"
@@ -17083,7 +17088,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Stop to cue/beginning",
    "example": "stop",
    "kind": "Action"
@@ -17117,7 +17122,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stop_button implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Play Controls",
+   "section": "Transport",
    "description": "Depends on play_mode",
    "example": "stop_button",
    "kind": "Dual"
@@ -17134,7 +17139,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stopwatch implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Stopwatch",
    "example": "stopwatch",
    "kind": "Query"
@@ -17151,7 +17156,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_stopwatch_reset implements onExecute only -> Action; HTTP sweep classed it 'action-only'."
    ],
-   "section": "Text Queries",
+   "section": "System Info",
    "description": "Reset stopwatch",
    "example": "stopwatch_reset",
    "kind": "Action"
@@ -17169,7 +17174,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Deck Management",
+   "section": "Decks",
    "description": "Swap deck 1 and 2",
    "example": "swap_decks",
    "kind": "Action"
@@ -17203,7 +17208,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_switch_skin_variation implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
    ],
-   "section": "Configuration",
+   "section": "Skin Control",
    "description": "Switch current skin variation",
    "example": "switch_skin_variation",
    "kind": "Dual"
@@ -17548,7 +17553,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_true implements onQuery only -> Query; HTTP sweep classed it 'query'."
    ],
-   "section": "Parameters & Constants",
+   "section": "Parameters & Math",
    "description": "Returns true",
    "example": "true",
    "kind": "Query"
@@ -17603,7 +17608,7 @@
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_up implements onQuery only -> Query; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
    ],
-   "section": "Flow Control",
+   "section": "Modifiers & Timing",
    "description": "Execute action on key press/release",
    "example": "up ? action1 : action2",
    "kind": "Query"
@@ -17699,7 +17704,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Variables",
+   "section": "Developer & Debug",
    "description": "Show variables window",
    "example": "var_list",
    "kind": "Action"
@@ -18190,7 +18195,7 @@
    "needs_test": false,
    "blocked": false,
    "evidence": [],
-   "section": "Repeat & Delay",
+   "section": "Modifiers & Timing",
    "description": "Wait between actions",
    "example": "wait 1bt & pause",
    "kind": "Action"
@@ -18227,7 +18232,7 @@
    ],
    "confidence": "local_test",
    "kind": "modifier",
-   "section": "Grammar"
+   "section": "Modifiers & Timing"
   },
   "yes": {
    "name": "yes",
