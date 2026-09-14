@@ -5,8 +5,8 @@
   "counts": {
    "total": 1038,
    "by_tier": {
-    "alias": 69,
-    "catalog": 646,
+    "alias": 70,
+    "catalog": 645,
     "curated": 142,
     "official-name-only": 139,
     "unofficial": 42
@@ -11331,7 +11331,7 @@
   },
   "pitch2": {
    "name": "pitch2",
-   "tier": "catalog",
+   "tier": "alias",
    "official": true,
    "aliases": [
     "pitch2_slider"
@@ -11340,10 +11340,13 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Binary verb table (build 18.0.9598, arm64, extracted 2026-09-05, tests/verb-table.json): shares id 722 with pitch; flags=1 marks the alias spelling, pitch flags=0 is canonical, alongside pitch_slider and pitch2_slider in the same id group. HTTP query 2026-09-14 on build 18.0.9598: pitch, pitch2, pitch_slider and pitch2_slider all returned 0.5 on decks 1 and 2 (consistent, not discriminating). Record was catalog tier with pitch2_slider pointing at it while pitch already listed both as aliases; converted 2026-09-14."
+   ],
    "section": "Key & Pitch",
    "description": "Official aliases of `pitch` / `pitch_slider`",
-   "example": "pitch2 112%"
+   "example": "pitch2 112%",
+   "canonical": "pitch"
   },
   "pitch2_slider": {
    "name": "pitch2_slider",
@@ -11354,8 +11357,10 @@
    "test_status": "Untested",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
-   "canonical": "pitch2"
+   "evidence": [
+    "Binary verb table (build 18.0.9598, tests/verb-table.json): id 722 group is pitch (flags=0) with pitch2, pitch_slider, pitch2_slider (flags=1); re-pointed from pitch2 to the canonical pitch 2026-09-14."
+   ],
+   "canonical": "pitch"
   },
   "pitch_bend": {
    "name": "pitch_bend",
