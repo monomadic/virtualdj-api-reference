@@ -132,6 +132,11 @@ next-incomplete-verb:
 verb-stats:
     @python3 tools/verbdb.py stats
 
+# Non-alias records with no `section`, with their b9246 source module where one
+# exists. A query on the store; fill one with `just put-verb <name> section=...`.
+uncategorized-verbs *args:
+    @python3 tools/verbdb.py uncategorized {{args}}
+
 # Contract coverage across every verb, per dimension, recounted from the
 # artifacts. `--settled` names the finished verbs, `--frontier` names what each
 # dimension is waiting on. Read-only; touches no live instance.

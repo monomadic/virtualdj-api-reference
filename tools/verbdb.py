@@ -535,6 +535,34 @@ def cmd_stats(args):
     print(json.dumps(out, indent=1, ensure_ascii=False))
 
 
+def cmd_uncategorized(args):
+    """Records with no `section`, with the b9246 module where one exists.
+
+    Aliases are skipped: `get` follows them to the canonical, whose section is
+    the one that counts. This is a query on the store; nothing is written."""
+    as_json = "--format=json" in args
+    store = load_store()
+    modules = module_map()
+    rows = []
+    for name, rec in sorted(store.items()):
+        if rec.get("section") or rec.get("tier") == "alias":
+            continue
+        rows.append({"name": name, "tier": rec.get("tier"),
+                     "kind": rec.get("kind"), "module": modules.get(name)})
+    if as_json:
+        print(json.dumps(rows, indent=1, ensure_ascii=False))
+        return
+    if not rows:
+        print("every non-alias record has a section")
+        return
+    width = max(len(r["name"]) for r in rows)
+    for r in rows:
+        print(f"{r['name']:{width}}  {r['tier'] or '-':20}  {r['kind'] or '-':8}  "
+              f"{r['module'] or '(no ACTION_ class on b9246)'}")
+    print(f"\n# {len(rows)} uncategorized non-alias record(s); "
+          "set one with `just put-verb <name> section='<Section>'`", file=sys.stderr)
+
+
 FILTERS = {"surface", "section", "tier", "status", "kind", "module"}
 
 
@@ -726,6 +754,7 @@ COMMANDS = {
     "put": cmd_put,
     "next-incomplete": cmd_next_incomplete,
     "stats": cmd_stats,
+    "uncategorized": cmd_uncategorized,
     "search": cmd_search,
     "check": cmd_check,
 }
@@ -740,6 +769,8 @@ USAGE = """usage: verbdb.py <command> ... | verbdb.py <verb-name>
                   --needs-test --format=json --limit=N]
   next-incomplete        next active (non-hardware-blocked) work item
   stats                  counts by tier / test status
+  uncategorized [--format=json]
+                         non-alias records with no section, with their b9246 module
   check                  validate the store
   bootstrap [--merge|--force]
 
