@@ -173,7 +173,8 @@
       ],
       "baseline": "normal-selected.png",
       "hover": "edge-hover-zz_sysicon_control.png",
-      "selected_hover": "edge-hover-selected-zz_sysicon_control.png"
+      "selected_hover": "edge-hover-selected-zz_sysicon_control.png",
+      "recognition_verdict": "unresolved; blank rendering is not a recognition test"
     },
     {
       "key": "font_size 0",
@@ -188,7 +189,8 @@
       ],
       "baseline": "normal-selected.png",
       "hover": "edge-hover-font_size_0.png",
-      "selected_hover": "edge-hover-selected-font_size_0.png"
+      "selected_hover": "edge-hover-selected-font_size_0.png",
+      "recognition_verdict": "unresolved; blank rendering is not a recognition test"
     },
     {
       "key": "stems_vocal",
@@ -203,7 +205,8 @@
       ],
       "baseline": "normal-selected.png",
       "hover": "edge-hover-stems_vocal.png",
-      "selected_hover": "edge-hover-selected-stems_vocal.png"
+      "selected_hover": "edge-hover-selected-stems_vocal.png",
+      "recognition_verdict": "unresolved; blank rendering is not a recognition test"
     }
   ],
   "capture_hashes": {
@@ -263,6 +266,19 @@
     "Visual glyph correspondence, not pixel equality",
     "Gold alpha reference is not an exact selected-state oracle",
     "stems_vocal negative is limited to this fixture/path/build",
-    "Other binary-derived spellings and wildcard rules not live-tested"
-  ]
+    "Other binary-derived spellings and wildcard rules not live-tested",
+    "Blank output does not distinguish an unrecognized key from a transparent, replaced, inherited, or otherwise undrawn runtime atlas cell. Effective runtime atlas provenance was not independently established."
+  ],
+  "atlas_provenance_followup": {
+    "local_date": "2026-09-15",
+    "installed_fixture_files": [
+      "skin.xml",
+      "skin.png"
+    ],
+    "installed_files_match_capture": true,
+    "explicit_customicons_declarations": 0,
+    "bundled_reference_cell_144_has_visible_alpha": true,
+    "effective_runtime_atlas_verified": false,
+    "conclusion": "Blank rendering observed; recognition and cause unresolved. No unsupported-key verdict."
+  }
 }

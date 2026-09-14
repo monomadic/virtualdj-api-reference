@@ -6,6 +6,15 @@ The explicit `<icon sysicon="…"/>` path renders `folder`, `playlist`, `plus`,
 their predicted atlas cells in this named fixture. All retain their glyphs in
 normal, selected, hover, and selected-hover states.
 
+**Interpretation correction, 2026-09-15:** blank output is an observation, not
+proof that a key is unrecognized or unsupported. The effective runtime atlas
+was not independently identified. A replaced/transparent cell or another
+drawing-path issue remains a possible explanation. The fixture has no explicit
+`customicons` declaration, its installed XML/PNG match the captured files, and
+the bundled reference cell is nontransparent; those checks do not establish
+which runtime cell was actually selected. Earlier wording calling this a
+"negative" must be read only as a blank-rendering observation.
+
 ![Captured state comparison](comparison.png)
 
 ## Method and scope
@@ -53,12 +62,12 @@ normal, selected, hover, and selected-hover states.
 | `headphones` | Positive control renders headphones | E6 / index 69 |
 | `zz_sysicon_control` | Blank in all tested states | Negative control |
 | `font_size 0` | Blank in all tested states | Non-key literal control |
-| `stems_vocal` | Blank in all tested states despite a nonempty reference cell | Path/build-specific negative |
+| `stems_vocal` | Blank in all tested states despite a nonempty reference cell; cause unresolved | Blank-rendering observation |
 
 The local image's index 144 is its tenth physical row, labelled J1 by this
 fixture's sequential lettering. The wiki calls its stems row K. This is a row
 labelling discrepancy; do not silently treat the two letters as the same grid.
-The negative result proves only that this exact `stems_vocal` form rendered
+The capture establishes only that this exact `stems_vocal` form rendered
 blank here. Other stems names, paths, builds and custom atlas configurations
 were not tested.
 
@@ -80,6 +89,8 @@ fixture. Install `skin.xml` and `skin.png` together under a skin folder named
 then restore that exact identity and verify it by query and UI afterward.
 
 For future agents, use `results.json` and the contact sheet first. The next
-useful test is the additional suffix/prefix spellings from the binary report,
-or tracing why the wiki's stems names are not accepted on this path. Do not
+useful test is an explicitly supplied diagnostic atlas with visible markers
+in every cell, verifying replacement with known keys before interpreting any
+blank candidate. Trace the selected runtime cell if needed to separate lookup
+from drawing. Additional suffix/prefix spellings remain untested. Do not
 rerun the confirmed rows merely to rediscover their names.

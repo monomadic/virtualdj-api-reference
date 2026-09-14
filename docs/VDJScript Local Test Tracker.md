@@ -3181,3 +3181,10 @@ comparison. The original skin was restored and verified by query plus visible
 UI. Exact XML, source atlas hash, screenshot hashes, per-key results, and
 limitations are in the fixture's [results](../tests/Skins/SysiconAtlasProbe/results.json).
 These are icon-rendering results, not verb behavior promotions.
+
+**Interpretation correction, 2026-09-15:** "negative" above means observed
+blank rendering only. It does not prove that `stems_vocal` or another blank
+form was rejected. The effective runtime atlas was not independently verified;
+a transparent/replaced cell or another drawing-path issue remains possible.
+The fixture has no explicit `customicons` declaration and the bundled reference
+cell is nontransparent, but neither establishes the runtime cell actually used.

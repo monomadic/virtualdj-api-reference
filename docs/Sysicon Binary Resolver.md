@@ -133,6 +133,13 @@ rendered, the original skin was restored, and `font_size 0`, a junk key and
 `stems_vocal` were blank. This promotion applies only to the exact tested keys
 and states, not to all binary-derived matcher rules or all stems spellings.
 
+**Interpretation correction (2026-09-15):** the blank observations do not prove
+key rejection. The fixture lacked an explicit `customicons` declaration, but
+the effective runtime atlas and selected cell were not independently verified.
+A transparent/replaced cell or another drawing issue remains unresolved. A
+diagnostic atlas whose replacement is verified with known keys is needed before
+using blank output to reason about recognition.
+
 For future agents, query the manifest before loading assembly. The original
 adjacent-string list mixes attributes, suffixes, prefixes, action construction,
 and actual comparisons; repeating that discovery is unnecessary context cost.
