@@ -20,8 +20,11 @@ and Audio Playback; `action_param` three ways; `action_get` is a grab-bag of
 reports, per module, whether its sectioned members agree well enough to name a
 section for the rest: `clean` (backfillable), `mixed` (they disagree — the store's
 taxonomy is finer than the module), `too-few` (unanimous, but on too little to
-extrapolate) and `no-evidence` (nothing sectioned at all). Only `clean` should be
-backfilled.
+extrapolate) and `no-evidence` (nothing sectioned at all). `clean` modules were
+backfilled first (2026-09-06); the `mixed` ones followed on 2026-09-14 with the
+module's majority section (Hidden Button Editor excluded; a `get_*` verb takes the
+section its module's own `get_*` siblings unanimously carry), each record's
+evidence line saying so. `too-few` and `no-evidence` stay unsectioned.
 
 Regeneration needs the unstripped build, which is not the installed app:
 

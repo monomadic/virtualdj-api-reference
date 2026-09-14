@@ -320,9 +320,9 @@ def joined_view(name: str, rec: dict) -> dict:
         out["observed_return"] = {"type": r["observed_type"],
                                   "sample": next(iter(r["samples"].values()), None)}
     # Where Atomix compiled the verb, from the unstripped build's STABS entries.
-    # The section backfill copied a module's section across only where the
-    # module graded `clean`, so most verbs still have a module and no section —
-    # which is exactly when knowing the module helps.
+    # The section backfill copied `clean` modules' sections first, then the
+    # majority section of `mixed` ones; the grade says how much the section
+    # owes to the module rather than to the manual's own taxonomy.
     modules = artifact("tests/action-modules-9246.json")
     if modules:
         for module, verbs in modules.get("modules", {}).items():
