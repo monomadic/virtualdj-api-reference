@@ -702,7 +702,8 @@ Two constructs the wiki documents that are not otherwise recorded here:
   the rest of the line:
   `( wait 1000ms & play_pause ) & action_deck 1 ? deck 2 play_pause : deck 1 play_pause`
 - **`while_pressed`** at the end of a statement limits it to the duration of the button press:
-  `volume 100% while_pressed`.
+  `volume 100% while_pressed`. Its exact semantics are
+  [tested below](#button-lifetime-what-press-and-release-actually-run-2026-09-14).
 
 Argument units are `ms`, `bt` (beats) and `%`, alongside plain integers and decimals:
 `nudge +100ms`, `wait 8bt`, `crossfader 50%`.
@@ -775,6 +776,52 @@ in its fallback, and whether `active` follows a playing deck away from the maste
 **untested**. And these are query resolutions; execute-side fan-out is the separate
 [`deck all`](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query-2026-09-03)
 result.
+
+## Button lifetime: what press and release actually run (2026-09-14)
+
+The HTTP channel has no press or release, so this was the one part of the language it could
+not reach. Answered instead with a real MIDI button: a virtual CoreMIDI endpoint matched by a
+custom device definition, mapped to
+
+```
+set '$codex_fires' +1 & set '$codex_while' 1 while_pressed
+```
+
+and read over HTTP *between* note-on and note-off (`Local test`, build 9598 —
+[fixture](../tests/controllers/SIMPLE_MIDI-mapper-press-release.xml)).
+
+| Event sent | `$codex_fires` | `$codex_while` |
+| --- | --- | --- |
+| baseline | *(unset)* | *(unset)* |
+| note-on — **press** | 1 | 1 |
+| still held, 1.4 s later | 1 | 1 |
+| note-off — **release** | 1 | *(unset)* |
+| second press / release | 2 → 2 | 1 → *(unset)* |
+| third press, then a **second note-on with no note-off** | 3 → **3** | 1 → 1 |
+| note-on with **velocity 0** | 3 | *(unset)* |
+
+Four rules come out of that, and three of them are things a mapper author can get wrong:
+
+- **A button action runs on press only.** Release does not re-run it; the counter advances
+  once per press and never on note-off. So an action mapped to a button fires once per push.
+- **`while_pressed` saves and restores the prior value.** It is not a "set then clear". With
+  the variable preset to `7`, the hold read `1` and the release restored **`7`**, not `0` and
+  not blank. The blank in the table is the same rule: the prior value there was *unset*, and
+  unset is what came back.
+- **`while_pressed` binds its own statement, not the chain.** In
+  `set A +1 & set B 1 while_pressed`, `B` reverted on release while `A` kept its new value.
+  That settles the open question the earlier HTTP run could only half-answer: mid-chain it
+  does not block later statements, and trailing it does not capture earlier ones.
+- **A repeated note-on while the button is already held does nothing**, and **note-on with
+  velocity 0 is treated as the release**, per the usual MIDI convention. Both matter when a
+  controller sends running-status note-ons instead of note-offs.
+
+The channel detail worth keeping: the virtual endpoint must outlive the tool call that creates
+it (`launchctl submit`, not a background process), and the mapping must be bound in
+`settings.xml` under
+[`controllersCustomization`](Application%20Internals.md#controllerscustomization-which-mapper-a-controller-uses)
+rather than through the Controllers pane, because VirtualDJ's window exposes no accessibility
+elements to automate.
 
 ## What the HTTP query surface will not evaluate (2026-09-03)
 
@@ -942,10 +989,9 @@ answers are visibly different — that is why the examples above use `get_versio
 
 Do not guess in these gaps; test and record.
 
-- **`while_pressed` release behaviour.** It is accepted both trailing and mid-chain, and
-  mid-chain it does not block the rest (`set '$a' 1 while_pressed & set '$b' 1` set both,
-  `HTTP`). What happens on *release* cannot be tested over HTTP — there is no press — so
-  the modifier's actual semantics still need a pad or mapper run.
+- ~~**`while_pressed` release behaviour**~~ — **answered 2026-09-14** on a real MIDI
+  button. It **saves and restores the prior value**, and it binds **its own statement only**.
+  See [Button lifetime](#button-lifetime-what-press-and-release-actually-run-2026-09-14).
 - **Backtick boundaries in nested quoting**: `` param_equal "`get_text 'x'`" "x" ? on : off ``
   — and more usefully, which surfaces interpolate backticks at all, since HTTP does not.
 - **The exact chain ceiling** and what drives it (parse buffer? execution budget?).

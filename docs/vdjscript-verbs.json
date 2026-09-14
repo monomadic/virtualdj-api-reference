@@ -13,12 +13,12 @@
    },
    "by_test_status": {
     "Fail": 10,
-    "Partial": 40,
-    "Pass": 107,
+    "Partial": 39,
+    "Pass": 108,
     "Untested": 881
    },
    "documented": 771,
-   "tested_pass": 107,
+   "tested_pass": 108,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -15516,11 +15516,12 @@
    "official": false,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Partial",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "VirtualDJ 2026 (HTTP interface, 2026-07-22): a trailing modifier, not a verb — accepted both trailing ('set $a 1 while_pressed') and mid-chain, and mid-chain it does not block the rest of the chain (both statements ran). Release behavior is untestable over HTTP (no press/release), so its actual semantics still need a pad or mapper run."
+    "VirtualDJ 2026 (HTTP interface, 2026-07-22): a trailing modifier, not a verb — accepted both trailing ('set $a 1 while_pressed') and mid-chain, and mid-chain it does not block the rest of the chain (both statements ran). Release behavior is untestable over HTTP (no press/release), so its actual semantics still need a pad or mapper run.",
+    "build 18.0.9598, MIDI mapper surface (virtual CoreMIDI button, read over HTTP between note-on and note-off): SAVES AND RESTORES the prior value rather than clearing — with the variable preset to 7, the hold read 1 and release restored 7. Binds ITS OWN STATEMENT ONLY: in \"set A +1 & set B 1 while_pressed\", B reverted on release while A kept its new value. Fixture tests/controllers/SIMPLE_MIDI-mapper-press-release.xml."
    ],
    "confidence": "local_test",
    "kind": "modifier",

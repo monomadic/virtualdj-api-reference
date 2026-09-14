@@ -470,8 +470,11 @@ master deck while an unwrapped verb and `deck default` track the selection** —
 `playing` and `mixer1`-`mixer4` to be recognized targets the wiki does not list, with `mixerN`
 resolving to a deck that is not N (cause untested, recorded as an observation only). Still open
 on this item: `active` was never pulled away from the master by a playing deck, since the fixture
-requires four stopped decks. Button press/release lifetime consumers remain unreachable over
-HTTP and need a pad or mapper surface.
+requires four stopped decks. Button press/release lifetime is now **done** via the mapper surface: a virtual CoreMIDI
+button read over HTTP between note-on and note-off settles that a button action runs on press
+only, that `while_pressed` saves and RESTORES the prior value rather than clearing, and that it
+binds its own statement rather than the chain. See
+[VDJScript Grammar](docs/VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
 
 Progress 2026-09-13: the static frontier is closed (`just frontier-closure`, gated in
 `just check`). All 30 queued indirect sites resolve to virtual dispatch (26, of which 18 are
