@@ -7,3 +7,4 @@ These skins are minimal fixtures for reproducing documentation claims. They are 
 | [MixFxQueryTest/](MixFxQueryTest/) | Skin-side Mix FX query fixture used with [Reference - Mix FX Query Test.xml](../Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml). |
 | [PlaceholderConditionTest/](PlaceholderConditionTest/) | Skin placeholder `visibility=""` / `condition=""` canary, including width-placeholder candidate expressions. |
 | [SysiconAtlasProbe/](SysiconAtlasProbe/) | Build-9598 explicit sysicon keys compared with vendor atlas crops, positive/negative controls, and captured normal/selected/hover states. |
+| [SysiconMarkerProbe/](SysiconMarkerProbe/) | Build-9598 opaque numbered atlas controls for separate-PNG and main-PNG replacement, with normal/selected captures and unresolved stems rendering. |

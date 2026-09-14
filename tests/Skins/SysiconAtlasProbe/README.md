@@ -15,6 +15,12 @@ the bundled reference cell is nontransparent; those checks do not establish
 which runtime cell was actually selected. Earlier wording calling this a
 "negative" must be read only as a blank-rendering observation.
 
+**Follow-up:** [SysiconMarkerProbe](../SysiconMarkerProbe/README.md) verified
+both explicit override routes using opaque numbered markers. Known keys changed
+to the expected markers, but the tested stems keys stayed blank. This removes
+transparency in the supplied PNG as the explanation for that new experiment;
+runtime selection and installation of every high-index cell remain unverified.
+
 ![Captured state comparison](comparison.png)
 
 ## Method and scope

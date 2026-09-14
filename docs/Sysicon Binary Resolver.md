@@ -140,6 +140,16 @@ A transparent/replaced cell or another drawing issue remains unresolved. A
 diagnostic atlas whose replacement is verified with known keys is needed before
 using blank output to reason about recognition.
 
+**Controlled atlas follow-up (2026-09-15, 18.0.9598 arm64):**
+[SysiconMarkerProbe](../tests/Skins/SysiconMarkerProbe/README.md) supplied fully
+opaque numbered grids through both `customicons file="markers.png"` and
+`customicons x="0" y="800"` in the main skin image. Known keys displayed the
+expected numbers and changed route letters, independently verifying override
+use for those controls. The five tested `stems_*` keys stayed blank in normal
+and selected states. Transparent supplied cells no longer explain that result;
+the loader's handling of higher indices and the stems keys' runtime pointers
+were not independently observed. No universal key-rejection claim is made.
+
 For future agents, query the manifest before loading assembly. The original
 adjacent-string list mixes attributes, suffixes, prefixes, action construction,
 and actual comparisons; repeating that discovery is unnecessary context cost.

@@ -3188,3 +3188,18 @@ form was rejected. The effective runtime atlas was not independently verified;
 a transparent/replaced cell or another drawing-path issue remains possible.
 The fixture has no explicit `customicons` declaration and the bundled reference
 cell is nontransparent, but neither establishes the runtime cell actually used.
+
+### Opaque atlas control follow-up — 2026-09-15
+
+**Local test, 18.0.9598 arm64:**
+[SysiconMarkerProbe](../tests/Skins/SysiconMarkerProbe/README.md) supplied opaque
+numbered cells through separate-PNG and main-PNG `customicons` declarations.
+Known keys displayed their predicted numbers, with F versus M route letters,
+in normal and selected states. This establishes that both overrides took effect
+at the control indices. The tested stems keys (`stems_vocal`, `stems_instru`,
+`stems_bass`, `stems_kick`, `stems_hihat`) and the blank controls remained blank.
+All supplied pixels had alpha 255. This excludes transparency in these PNGs,
+but does not prove the installed range of every high-index cell or identify the
+runtime pointer selected by a blank key. The original skin was restored and
+verified by independent query plus visible UI. Exact fixtures, load actions,
+captures and scope limits are linked from the fixture report.
