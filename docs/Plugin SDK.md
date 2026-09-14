@@ -119,7 +119,7 @@ Consequences worth keeping straight:
 
 Publishing the SDK for plugin authors implies permission to *use* it; it grants nothing about
 redistribution. **This repo therefore does not vendor the headers** — `vendor/` is gitignored,
-with fetch instructions in the ignore entry. Put a local copy in `vendor/vdj-sdk/` to build
+with fetch instructions in the ignore entry. `just download-sdk` fetches a local copy into `vendor/vdj-sdk/` (with a `SOURCE.txt` recording the URL, date and sha256, since the headers carry no version of their own); put one there by hand to build
 anything described here.
 
 ## The interface hierarchy

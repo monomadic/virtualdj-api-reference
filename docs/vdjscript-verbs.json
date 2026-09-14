@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 10,
     "Partial": 39,
-    "Pass": 109,
-    "Untested": 880
+    "Pass": 110,
+    "Untested": 879
    },
    "documented": 772,
-   "tested_pass": 109,
+   "tested_pass": 110,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -688,16 +688,18 @@
     "Pad",
     "SkinQuery"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_blink implements onQuery only -> Query; HTTP sweep classed it 'query'. Replaces the curated value 'Dual' (2026-09-15 normalisation)."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_blink implements onQuery only -> Query; HTTP sweep classed it 'query'. Replaces the curated value 'Dual' (2026-09-15 normalisation).",
+    "2026-09-09, build 18.0.9583, HTTP query-only, waveform sampling at 20 Hz: an oscillator whose two arguments are both read. Position 1 (DUR) sets the period — 1000ms/500ms/2000ms measured 1.001/0.50/2.001 s — and position 2 (PCT) the duty cycle (25% -> ~0.28, 50% -> ~0.50, 75% untested). PCT is optional and defaults to ~50%. DUR takes beat units and those lock to the master tempo: blink 1bt and blink 500ms measured 0.467 s and 0.495 s in the same run at 129.44 BPM (1bt = 0.4635 s), so ms is absolute wall-clock and bt is not. Invisible to probe_arg_positions.py by construction — one query returns one sample of a square wave — so it is correctly disqualified there as drifting. Tracker: 'blink: An Oscillator, Tempo-Locked On Beat Units'."
    ],
    "section": "Timing & Animation",
    "description": "Toggle LED on/off",
    "example": "blink 1000ms",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "blink_play": {
    "name": "blink_play",
@@ -7533,7 +7535,8 @@
    "blocked": false,
    "evidence": [
     "Local test 2026-09-06, HTTP, build 18.0.9598. All three documented fields confirmed, with two nonsense controls separating cleanly (both returned ''). The SHAPE is slot-first — 'get_sample_info <slot> <field>' — which is why a single-argument probe had errored on every token including the real ones. On sampler slot 1 (a shipped sample): 'group' -> Drums, 'length' -> 4bt (beat value for a loop, exactly as documented), 'pos' -> 00:00.0, and the regular column names work too ('fullpath' -> the .vdjsample path, 'bpm' -> 135.0). 'name' returns '' — use get_sample_name for that.",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sample_info implements onQuery only -> Query; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sample_info implements onQuery only -> Query; HTTP sweep classed it 'query'.",
+    "2026-09-09, build 18.0.9583, HTTP query-only, two loaded slots: the field argument draws from the binary's song_fields enumeration, which the catalog prose names only as 'the regular column names' — an open reference no tokenizer can follow. Confirmed above an empty-string floor (three nonsense controls): bpm, key, title, filename, filepath, remix from song_fields, plus the catalog's fullpath, length, pos. Position 1 (slot) IS read — bpm, key, title, filename and fullpath all separate slot 1 from slot 2. 'group' returned empty on both samples (this bank assigns no groups) so it is undiscriminated here, not refuted. tests/binary-vocabularies.json associates song_fields with browser_sort, get_karaoke_background_song and get_next_karaoke_song only; this is a fourth verb."
    ],
    "section": "Sampler",
    "description": "Read sample metadata such as `fullpath`, `group`, or `length`",

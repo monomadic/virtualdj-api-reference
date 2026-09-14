@@ -1,5 +1,13 @@
 set shell := ["zsh", "-eu", "-o", "pipefail", "-c"]
 
+# Every recipe runs `{{python}}`, never a bare `python3`. It is the project venv
+# when `just install` has been run and the system interpreter otherwise, so a
+# fresh clone still works and a bootstrapped one is insulated from the day
+# Homebrew moves its default python and the site-packages go with it. That day
+# is not hypothetical: it happened on 2026-09-09, numpy vanished, and the only
+# symptom was `just check` reporting an action-catalog drift — see `just doctor`.
+python := if path_exists(justfile_directory() / ".venv/bin/python3") == "true" { justfile_directory() / ".venv/bin/python3" } else { "python3" }
+
 # Variadic recipes forward "$@" rather than an interpolated string, so an
 # argument like evidence="... (2026-07-22) ..." survives verbatim instead of
 # being re-split and glob-expanded by the shell.
@@ -8,14 +16,42 @@ set positional-arguments
 default:
     @just --list
 
+# Run once per clone, and again after a python upgrade moves the interpreter
+# out from under an existing venv. `--clear` because the venv is derived state:
+# requirements.txt and .python-version are the source of truth, and recreating
+# it is a second. Everything else in this file then runs against .venv.
+# Create .venv and install requirements.txt with uv.
+install:
+    @command -v uv >/dev/null || { \
+        echo "uv not found. Install it with:  brew install uv" >&2; \
+        echo "  (or: curl -LsSf https://astral.sh/uv/install.sh | sh)" >&2; \
+        exit 1; }
+    uv venv --clear
+    uv pip install --python .venv/bin/python3 -r requirements.txt
+    @.venv/bin/python3 tools/doctor.py
+
+# The headers are third-party and deliberately NOT vendored: they carry an Atomix
+# copyright with no license text and the download page states no terms, so this
+# repo fetches them rather than redistributing them. vendor/ stays gitignored.
+# Fetch the Atomix plugin SDK headers into vendor/vdj-sdk/ (`--force` to re-fetch).
+download-sdk *args:
+    @{{python}} tools/download_sdk.py "$@"
+
+# Interpreter, packages, uv, which VirtualDJ is installed against what the
+# artifacts are anchored to, and whether the live probe channel answers. Only
+# the python section can fail; the rest are notices worth reading before work.
+# Environment health in one screen, `brew doctor` style.
+doctor:
+    @{{python}} tools/doctor.py
+
 # The first startable task in TODO.md. Refuses to select if any status line
 # in the file is malformed, rather than skipping the task it cannot read.
 next-task:
-    @python3 tools/todo_queue.py next
+    @{{python}} tools/todo_queue.py next
 
 # Every task with its state; `*` marks the startable ones.
 task-queue *args:
-    @python3 tools/todo_queue.py list "$@"
+    @{{python}} tools/todo_queue.py list "$@"
 
 # Grep the authored verb prose/examples. For record lookups use `just get-verb`.
 grep-verb-docs name:
@@ -54,9 +90,9 @@ thin-verbs:
     @rg -n '^\| `[^`]+` \| — \|' "docs/VDJScript Verbs.md"
 
 status:
-    @python3 -c 'from pathlib import Path; import re; text=Path("docs/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
+    @{{python}} -c 'from pathlib import Path; import re; text=Path("docs/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
     @printf "\nTask queue:\n"
-    @python3 tools/todo_queue.py list
+    @{{python}} tools/todo_queue.py list
 
 # `"$@"` rather than an interpolated {{script}}: interpolation puts the script
 # through zsh, which expands a VDJScript global like $ct_top before the request
@@ -77,14 +113,15 @@ vdj-up:
 # protocol only. `vdj_execute` stays disabled unless VDJ_MCP_EXECUTE=1.
 # Registration and tool list: docs/MCP Server.md
 mcp-serve:
-    @python3 tools/mcp_server.py
+    @{{python}} tools/mcp_server.py
 
 # Smoke-test the MCP server without a client: lists tools and calls a few.
 mcp-check:
-    @python3 tools/mcp_server.py --self-check
+    {{python}} tools/doctor.py --deps-only
+    @{{python}} tools/mcp_server.py --self-check
 
 inventory:
-    python3 tools/extract_xml_inventory.py
+    {{python}} tools/extract_xml_inventory.py
 
 # --- skin/pad/mapper XML element inventory ----------------------------------
 
@@ -92,115 +129,118 @@ inventory:
 # reader vocabulary, live probe results (negatives included), real usage, and which
 # attributes no doc explains. The counterpart to `just verb`.
 element name *args:
-    @python3 tools/element_summary.py "$@"
+    @{{python}} tools/element_summary.py "$@"
 
 # The bare inventory row, as `get-verb` is to `verb`.
 get-xml-element element:
-    @python3 tools/xmldb.py get "{{element}}"
+    @{{python}} tools/xmldb.py get "{{element}}"
 
 list-xml-elements *args:
-    @python3 tools/xmldb.py search "$@"
+    @{{python}} tools/xmldb.py search "$@"
 
 xml-stats:
-    @python3 tools/xmldb.py stats
+    @{{python}} tools/xmldb.py stats
 
 verb-index:
-    python3 tools/extract_verb_index.py
+    {{python}} tools/extract_verb_index.py
 
 # --- verb record store (docs/vdjscript-verbs.json) ---------------------------
 # Flat names on purpose: the argument is always data, never a subcommand, so a
 # verb called `search` or `get` can never be mistaken for a command.
 
 get-verb name:
-    @python3 tools/verbdb.py get "{{name}}"
+    @{{python}} tools/verbdb.py get "{{name}}"
 
 # EVERYTHING about one verb on one screen: store record, vendor description,
 # real usages, argument shapes with return evidence, every tail candidate by
 # source, vocabulary groups, probe state. `--format=json` for structure.
 verb name *args:
-    @python3 tools/verb_summary.py "{{name}}" {{args}}
+    @{{python}} tools/verb_summary.py "{{name}}" {{args}}
 
 list-verbs *args:
-    @python3 tools/verbdb.py search "$@"
+    @{{python}} tools/verbdb.py search "$@"
 
 put-verb name *assignments:
-    @python3 tools/verbdb.py put "$@"
+    @{{python}} tools/verbdb.py put "$@"
 
 next-incomplete-verb:
-    @python3 tools/verbdb.py next-incomplete
+    @{{python}} tools/verbdb.py next-incomplete
 
 verb-stats:
-    @python3 tools/verbdb.py stats
+    @{{python}} tools/verbdb.py stats
 
 # Non-alias records with no `section`, with their b9246 source module where one
 # exists. A query on the store; fill one with `just put-verb <name> section=...`.
 uncategorized-verbs *args:
-    @python3 tools/verbdb.py uncategorized {{args}}
+    @{{python}} tools/verbdb.py uncategorized {{args}}
 
 # The section vocabulary with per-section verb and tested counts; the names to
 # pass to `list-verbs --section=`. A query on the store, never written down.
 list-verb-categories *args:
-    @python3 tools/verbdb.py sections {{args}}
+    @{{python}} tools/verbdb.py sections {{args}}
 
 # Contract coverage across every verb, per dimension, recounted from the
 # artifacts. `--settled` names the finished verbs, `--frontier` names what each
 # dimension is waiting on. Read-only; touches no live instance.
 coverage *args:
-    @python3 tools/coverage_report.py "$@"
+    @{{python}} tools/coverage_report.py "$@"
 
 # Requires empty stopped deck 1. Generates temporary audio and verifies restoration.
 probe-long-time:
-    python3 tools/probe_long_time.py --run
+    {{python}} tools/probe_long_time.py --run
 
 long-time-forms name="":
-    @python3 tools/probe_long_time.py --get "{{name}}"
+    @{{python}} tools/probe_long_time.py --get "{{name}}"
 
 # --- native effects catalog (swept via the HTTP interface) -------------------
 
 get-fx effect:
-    @python3 tools/fxdb.py get "{{effect}}"
+    @{{python}} tools/fxdb.py get "{{effect}}"
 
 list-fx *args:
-    @python3 tools/fxdb.py search "$@"
+    @{{python}} tools/fxdb.py search "$@"
 
 fx-stats:
-    @python3 tools/fxdb.py stats
+    @{{python}} tools/fxdb.py stats
 
 # --- verb existence probe (HTTP error-code sweep) ---------------------------
 # Does this name exist, and what kind is it? Answered from the sweep artifact.
 # Re-run the sweep with `just sweep-verb-existence` (needs `just vdj-up`).
 
 verb-probe name:
-    @python3 tools/sweep_verb_existence.py --get "{{name}}"
+    @{{python}} tools/sweep_verb_existence.py --get "{{name}}"
 
 # AUTHORITATIVE: is this a real verb? Reads VirtualDJ's own verb table.
 verb-table name:
-    @python3 tools/extract_verb_table.py --get "{{name}}"
+    @{{python}} tools/extract_verb_table.py --get "{{name}}"
 
 # The exact build-stamped phrase to quote in prose. Copy it; never recall a build number.
 verb-table-stamp:
-    @python3 tools/extract_verb_table.py --stamp
+    @{{python}} tools/extract_verb_table.py --stamp
 
 extract-verb-table:
-    @python3 tools/extract_verb_table.py > tests/verb-table.json
+    @{{python}} tools/extract_verb_table.py > tests/verb-table.json.tmp
+    @mv tests/verb-table.json.tmp tests/verb-table.json
 
 # STRUCTURAL CONTRACT: capability, query return type, family from ACTION_ RTTI.
 verb-contract name:
-    @python3 tools/extract_action_contracts.py --get "{{name}}"
+    @{{python}} tools/extract_action_contracts.py --get "{{name}}"
 
 # The call-graph addresses behind one verb's traces (roots, callees, unvisited).
 verb-traces name:
-    @python3 tools/extract_action_contracts.py --traces "{{name}}"
+    @{{python}} tools/extract_action_contracts.py --traces "{{name}}"
 
 extract-action-contracts:
-    @python3 tools/extract_action_contracts.py > tests/action-contracts.json
+    @{{python}} tools/extract_action_contracts.py > tests/action-contracts.json.tmp
+    @mv tests/action-contracts.json.tmp tests/action-contracts.json
 
 # OBSERVED TYPE: what a query verb actually returns over HTTP (Tier 1).
 verb-return-type name:
-    @python3 tools/sweep_return_types.py --get "{{name}}"
+    @{{python}} tools/sweep_return_types.py --get "{{name}}"
 
 sweep-return-types:
-    @python3 tools/sweep_return_types.py > tests/verb-return-types.json
+    @{{python}} tools/sweep_return_types.py > tests/verb-return-types.json.tmp
+    @mv tests/verb-return-types.json.tmp tests/verb-return-types.json
 
 # --- prepared state (fixtures) ----------------------------------------------
 # Argument forms can only be told apart in a state where they would disagree.
@@ -208,89 +248,94 @@ sweep-return-types:
 # otherwise. `fixture-establish` changes live app state; some make sound.
 
 fixtures:
-    @python3 tools/fixtures.py --list
+    @{{python}} tools/fixtures.py --list
 
 fixture-verify name:
-    @python3 tools/fixtures.py --verify "{{name}}"
+    @{{python}} tools/fixtures.py --verify "{{name}}"
 
 fixture-establish name *args:
-    python3 tools/fixtures.py --establish "{{name}}" {{args}}
+    {{python}} tools/fixtures.py --establish "{{name}}" {{args}}
 
 # Send every vendor snippet through /query and classify the outcome.
 corpus-parses *args:
-    python3 tools/check_corpus_parses.py {{args}} > tests/corpus-parse-results.json
+    {{python}} tools/check_corpus_parses.py {{args}} > tests/corpus-parse-results.json.tmp
+    @mv tests/corpus-parse-results.json.tmp tests/corpus-parse-results.json
 
 # Argument tails Atomix wrote in shipped scripts — attested without a probe.
 attested-tails *args:
-    @python3 tools/extract_attested_tails.py {{args}}
+    @{{python}} tools/extract_attested_tails.py {{args}}
 
 # The Button Editor's own action descriptions — the official appendix prose,
 # offline. `--cross-check` diffs documented parameters against probe findings.
 # Historical installers: vendor prose and shipped-skin usages the current app no longer carries.
 vendor-history-diff root="/tmp/vdj-history-20260906":
-    @python3 tools/diff_vendor_history.py --root {{root}} --output tests/build-history-2026-09-06/vendor-text-diff.json
+    @{{python}} tools/diff_vendor_history.py --root {{root}} --output tests/build-history-2026-09-06/vendor-text-diff.json
 
 action-catalog *args:
-    @python3 tools/extract_action_catalog.py {{args}}
+    @{{python}} tools/extract_action_catalog.py {{args}}
 
 # Every VDJScript snippet Atomix wrote: catalog examples + shipped Built-In XML
 # + every factory controller mapping decoded from controllers.dat (needs
 # `just controllers-vendor`) + wiki transcriptions + statements compiled into
 # the app binary.
 script-corpus *args:
-    @python3 tools/extract_script_corpus.py {{args}}
+    @{{python}} tools/extract_script_corpus.py {{args}}
 
 # Do the vendor XML copies under examples/*/Built-In still match the installed
 # app? A VirtualDJ update silently ages them, and the corpus then attests a
 # value the vendor no longer ships. `--refresh` re-copies; re-extract after.
 bundle-copies *args:
-    @python3 tools/check_bundle_copies.py {{args}}
+    @{{python}} tools/check_bundle_copies.py {{args}}
 
 # Argument VOCABULARIES: shared enumerations (stem names, colours, sideview
 # pages) recovered as structures from the binary — pointer tables and the
 # switch functions that walk them. Tier 2: members are leads for the prober.
 binary-vocab *args:
-    @python3 tools/extract_binary_vocabularies.py {{args}}
+    @{{python}} tools/extract_binary_vocabularies.py {{args}}
 
 extract-binary-vocabularies:
-    @python3 tools/extract_binary_vocabularies.py > tests/binary-vocabularies.json
+    @{{python}} tools/extract_binary_vocabularies.py > tests/binary-vocabularies.json.tmp
+    @mv tests/binary-vocabularies.json.tmp tests/binary-vocabularies.json
 
 # SOURCE MODULE: which of Atomix's own `action_*.cpp` files implements a verb,
 # from the unstripped build's STABS. Tier 2 — it groups a verb, and says nothing
 # about whether it works. `--sections` says which modules map cleanly onto a
 # store section; `extract-action-modules` needs the b9246 pkg expanded.
 action-modules *args:
-    @python3 tools/extract_action_modules.py {{args}}
+    @{{python}} tools/extract_action_modules.py {{args}}
 
 extract-action-modules app:
-    @python3 tools/extract_action_modules.py --app "{{app}}" > tests/action-modules-9246.json
+    @{{python}} tools/extract_action_modules.py --app "{{app}}" > tests/action-modules-9246.json.tmp
+    @mv tests/action-modules-9246.json.tmp tests/action-modules-9246.json
 
 # TAIL GRAMMAR: which trailing tokens a verb actually recognizes (Tier 1).
 # Every candidate is measured against nonsense controls, in every fixture.
 verb-arg-forms name:
-    @python3 tools/probe_arg_forms.py --get "{{name}}"
+    @{{python}} tools/probe_arg_forms.py --get "{{name}}"
 
 # Needs `just vdj-up`. Establishes each fixture in turn; some make sound.
 # The tool writes the artifact itself, atomically, and only for a real run —
 # `--dry-run` and `--check` leave it untouched; `--merge FILE` updates it itself.
 # (A shell redirect here once truncated the evidence on every dry run.)
 probe-arg-forms *args:
-    python3 tools/probe_arg_forms.py --out tests/verb-arg-forms.json {{args}}
+    {{python}} tools/probe_arg_forms.py --out tests/verb-arg-forms.json {{args}}
 
 # EXECUTE-position tails. WRITES to the running instance: allowlisted settings
 # verbs only, each round-trip tested first, every value restored and verified.
 probe-execute-forms *args:
-    python3 tools/probe_execute_forms.py --out tests/verb-execute-forms.json {{args}}
+    {{python}} tools/probe_execute_forms.py --out tests/verb-execute-forms.json {{args}}
 
 # Corroborating structured sources (superseded by verb-table for existence).
 binary-verb name:
-    @python3 tools/extract_binary_verbs.py --get "{{name}}"
+    @{{python}} tools/extract_binary_verbs.py --get "{{name}}"
 
 extract-binary-verbs:
-    @python3 tools/extract_binary_verbs.py > tests/binary-verbs.json
+    @{{python}} tools/extract_binary_verbs.py > tests/binary-verbs.json.tmp
+    @mv tests/binary-verbs.json.tmp tests/binary-verbs.json
 
 sweep-verb-existence:
-    @python3 tools/sweep_verb_existence.py > tests/verb-existence-sweep.json
+    @{{python}} tools/sweep_verb_existence.py > tests/verb-existence-sweep.json.tmp
+    @mv tests/verb-existence-sweep.json.tmp tests/verb-existence-sweep.json
 
 # --- plugin channel: native typed queries (task 10a) -------------------------
 # A read-only C++ plugin asks GetInfo/GetStringInfo directly, so return types are
@@ -308,145 +353,160 @@ plugin-build *args:
     @tools/plugin/build.sh "$@"
 
 plugin-prepare *args:
-    @python3 tools/plugin_introspect.py prepare "$@"
+    @{{python}} tools/plugin_introspect.py prepare "$@"
 
 plugin-status:
-    @python3 tools/plugin_introspect.py status
+    @{{python}} tools/plugin_introspect.py status
 
 plugin-collect:
-    @python3 tools/plugin_introspect.py collect > tests/plugin-introspection.json
-    @python3 tools/plugin_introspect.py --check
+    @{{python}} tools/plugin_introspect.py collect > tests/plugin-introspection.json.tmp
+    @mv tests/plugin-introspection.json.tmp tests/plugin-introspection.json
+    @{{python}} tools/plugin_introspect.py --check
 
 # Follow-up capture: deck context for the silent query verbs, and each recovered
 # keyword paired with a nonsense control on the same verb.
 plugin-prepare-leads:
-    @python3 tools/plugin_introspect.py prepare --leads
+    @{{python}} tools/plugin_introspect.py prepare --leads
 
 # Any other capture: `just plugin-collect-as controls` -> tests/plugin-introspection-controls.json
 plugin-collect-as name:
-    @python3 tools/plugin_introspect.py collect > "tests/plugin-introspection-{{name}}.json"
+    @{{python}} tools/plugin_introspect.py collect > "tests/plugin-introspection-{{name}}.json.tmp"
+    @mv "tests/plugin-introspection-{{name}}.json.tmp" "tests/plugin-introspection-{{name}}.json"
     @echo "wrote tests/plugin-introspection-{{name}}.json"
 
 plugin-collect-leads:
-    @python3 tools/plugin_introspect.py collect > tests/plugin-introspection-leads.json
-    @python3 tools/plugin_introspect.py leads-report
+    @{{python}} tools/plugin_introspect.py collect > tests/plugin-introspection-leads.json.tmp
+    @mv tests/plugin-introspection-leads.json.tmp tests/plugin-introspection-leads.json
+    @{{python}} tools/plugin_introspect.py leads-report
 
 # OBSERVED NATIVE TYPE: which channel a verb answers on, and with what.
 plugin-probe name:
-    @python3 tools/plugin_introspect.py --get "{{name}}"
+    @{{python}} tools/plugin_introspect.py --get "{{name}}"
 
 # --- cross-corpus topic search ----------------------------------------------
 # One term -> matching verbs, effects, XML elements, REAL example files, docs,
 # and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
 
 topic *args:
-    @python3 tools/topic.py "$@"
+    @{{python}} tools/topic.py "$@"
 
 lint-skins *paths:
-    python3 tools/lint_skins.py "$@"
+    {{python}} tools/lint_skins.py "$@"
 
 lint-mappers *paths:
-    python3 tools/lint_mappers.py "$@"
+    {{python}} tools/lint_mappers.py "$@"
 
 check:
     just check-lyrics-cache
     just check-linked-sid
     just check-runtime-grammar
-    python3 tools/mcp_server.py --self-check
-    python3 tools/probe_long_time.py --check
-    python3 tools/check_bundle_copies.py
-    python3 tools/lint_pads.py
-    python3 tools/lint_skins.py
-    python3 tools/lint_mappers.py
-    python3 tools/extract_verb_index.py --check
-    python3 tools/verbdb.py check
-    python3 tools/fxdb.py check
-    python3 tools/sweep_verb_existence.py --check
-    python3 tools/extract_binary_verbs.py --check
-    python3 tools/extract_verb_table.py --check
-    python3 tools/extract_action_contracts.py --check
-    python3 tools/test_action_tail_bounds.py
-    python3 tools/test_contract_assessment.py
-    python3 tools/action_tail_leads.py --check
-    python3 tools/sweep_return_types.py --check
-    python3 tools/plugin_introspect.py --check
-    python3 tools/plugin_skin.py --check
-    python3 tools/topic.py check
-    python3 tools/fixtures.py --check
-    python3 tools/probe_arg_forms.py --check
-    python3 tools/probe_known_positions.py --check
-    python3 tools/probe_bpm_transition.py --check
-    python3 tools/probe_arg_positions.py --check
-    python3 tools/probe_execute_forms.py --check
-    python3 tools/extract_action_catalog.py --check
-    python3 tools/extract_script_corpus.py --check
-    python3 tools/extract_attested_tails.py --check
-    python3 tools/extract_binary_vocabularies.py --check
-    python3 tools/extract_action_modules.py --check
-    python3 tools/check_corpus_parses.py --check
-    python3 tools/extract_xml_inventory.py --check
-    python3 tools/extract_skin_readers.py --check
-    python3 tools/extract_skin_classes.py --check
-    python3 tools/check_reference_status.py
-    python3 tools/todo_queue.py check
-    python3 tools/todo_queue.py selftest
+    {{python}} tools/mcp_server.py --self-check
+    {{python}} tools/probe_long_time.py --check
+    {{python}} tools/check_bundle_copies.py
+    {{python}} tools/lint_pads.py
+    {{python}} tools/lint_skins.py
+    {{python}} tools/lint_mappers.py
+    {{python}} tools/extract_verb_index.py --check
+    {{python}} tools/verbdb.py check
+    {{python}} tools/fxdb.py check
+    {{python}} tools/sweep_verb_existence.py --check
+    {{python}} tools/extract_binary_verbs.py --check
+    {{python}} tools/extract_verb_table.py --check
+    {{python}} tools/extract_action_contracts.py --check
+    {{python}} tools/test_action_tail_bounds.py
+    {{python}} tools/test_contract_assessment.py
+    {{python}} tools/action_tail_leads.py --check
+    {{python}} tools/sweep_return_types.py --check
+    {{python}} tools/plugin_introspect.py --check
+    {{python}} tools/plugin_skin.py --check
+    {{python}} tools/topic.py check
+    {{python}} tools/fixtures.py --check
+    {{python}} tools/probe_arg_forms.py --check
+    {{python}} tools/probe_known_positions.py --check
+    {{python}} tools/probe_bpm_transition.py --check
+    {{python}} tools/probe_arg_positions.py --check
+    {{python}} tools/probe_execute_forms.py --check
+    {{python}} tools/extract_action_catalog.py --check
+    {{python}} tools/extract_script_corpus.py --check
+    {{python}} tools/extract_attested_tails.py --check
+    {{python}} tools/extract_binary_vocabularies.py --check
+    {{python}} tools/extract_action_modules.py --check
+    {{python}} tools/check_corpus_parses.py --check
+    {{python}} tools/extract_xml_inventory.py --check
+    {{python}} tools/extract_skin_readers.py --check
+    {{python}} tools/extract_skin_classes.py --check
+    {{python}} tools/check_reference_status.py
+    {{python}} tools/todo_queue.py check
+    {{python}} tools/todo_queue.py selftest
     git diff --check
 
 # What the skin XML readers in the binary actually compare against, and which
 # of those names appear in no shipped skin and no SDK doc.
 skin-readers:
-    @python3 tools/extract_skin_readers.py > tests/skin-reader-vocabulary.json
+    @{{python}} tools/extract_skin_readers.py > tests/skin-reader-vocabulary.json.tmp
+    @mv tests/skin-reader-vocabulary.json.tmp tests/skin-reader-vocabulary.json
     @echo "wrote tests/skin-reader-vocabulary.json"
 
 skin-reader name:
-    @python3 tools/extract_skin_readers.py --get "{{name}}"
+    @{{python}} tools/extract_skin_readers.py --get "{{name}}"
 
 skin-candidates:
-    @python3 tools/extract_skin_readers.py --candidates
+    @{{python}} tools/extract_skin_readers.py --candidates
 
 # get_time's position arguments against three independently known positions.
 # Writes to a live VirtualDJ (deck 1, stopped, no audio) and restores it.
 known-positions:
-    @python3 tools/probe_known_positions.py --run > tests/get-time-positions.json
+    @{{python}} tools/probe_known_positions.py --run > tests/get-time-positions.json.tmp
+    @mv tests/get-time-positions.json.tmp tests/get-time-positions.json
     @echo "wrote tests/get-time-positions.json"
-    @python3 tools/probe_known_positions.py --check
+    @{{python}} tools/probe_known_positions.py --check
 
 # auto_bpm_transition's three documented parameters, read by WHERE the pair of
 # decks settles rather than by whether a transition is running. Writes to a live
 # VirtualDJ (decks 1 and 2, stopped, no audio) and restores both.
 bpm-transition:
-    @python3 tools/probe_bpm_transition.py --run > tests/bpm-transition-forms.json
+    @{{python}} tools/probe_bpm_transition.py --run > tests/bpm-transition-forms.json.tmp
+    @mv tests/bpm-transition-forms.json.tmp tests/bpm-transition-forms.json
     @echo "wrote tests/bpm-transition-forms.json"
-    @python3 tools/probe_bpm_transition.py --check
+    @{{python}} tools/probe_bpm_transition.py --check
 
 # Which ARGUMENT POSITIONS a verb reads: hold the attested shape, vary one
 # position within its own class, see whether the answer moves. Query-only.
-probe-arg-positions:
-    @python3 tools/probe_arg_positions.py --run > tests/verb-arg-positions.json
-    @python3 tools/probe_arg_positions.py --check
+# `just probe-arg-positions --keywords=attested,catalog,vocab` widens the second
+# keyword source; the default two are what the queue ratified.
+probe-arg-positions *args:
+    @{{python}} tools/probe_arg_positions.py --run "$@" > tests/verb-arg-positions.json.tmp
+    @mv tests/verb-arg-positions.json.tmp tests/verb-arg-positions.json
+    @{{python}} tools/probe_arg_positions.py --check
+
+# Which verbs a probe run would reach and what evidence each rests on. Needs no
+# live VirtualDJ, so coverage is measurable before the instance is up.
+probe-arg-positions-plan *args:
+    @{{python}} tools/probe_arg_positions.py --plan "$@"
 
 verb-arg-positions name:
-    @python3 tools/probe_arg_positions.py --get "{{name}}"
+    @{{python}} tools/probe_arg_positions.py --get "{{name}}"
 
 # Confirm argument keywords against their nonsense controls in any capture.
 plugin-keyword-report capture *args:
-    @python3 tools/plugin_introspect.py keyword-report --capture "tests/plugin-introspection-{{capture}}.json" {{args}}
+    @{{python}} tools/plugin_introspect.py keyword-report --capture "tests/plugin-introspection-{{capture}}.json" {{args}}
 
 # Re-sweep the delayed probe list right now, without restarting VirtualDJ.
 # Set the app up by hand first (load a track, highlight a song), then trigger.
 plugin-go:
-    @python3 tools/plugin_introspect.py go
+    @{{python}} tools/plugin_introspect.py go
 
 # Collect the delayed/triggered capture: `just plugin-collect-late prepared`
 plugin-collect-late name:
-    @python3 tools/plugin_introspect.py collect --late > "tests/plugin-introspection-{{name}}.json"
+    @{{python}} tools/plugin_introspect.py collect --late > "tests/plugin-introspection-{{name}}.json.tmp"
+    @mv "tests/plugin-introspection-{{name}}.json.tmp" "tests/plugin-introspection-{{name}}.json"
     @echo "wrote tests/plugin-introspection-{{name}}.json"
 
 # GetSongBuffer: the raw PCM of the loaded song, at any position. No other
 # channel exposes it — this is the input side of the waveform questions.
 # Needs a track loaded; `just plugin-songbuffer` then `just plugin-go`.
 plugin-songbuffer:
-    @python3 tools/plugin_introspect.py songbuffer
+    @{{python}} tools/plugin_introspect.py songbuffer
 
 # --- runtime skin loop (task 10a follow-on) ---------------------------------
 # The Sound Effect build made with `tools/plugin/build.sh --skin --install`
@@ -458,10 +518,10 @@ plugin-songbuffer:
 #   just plugin-skin-reload               # close + re-open the panel (needs HTTP)
 #   just plugin-skin-log                  # how many times VirtualDJ asked
 plugin-skin-prepare *xml:
-    @python3 tools/plugin_skin.py prepare {{ if xml == "" { "" } else { "--xml " + xml } }}
+    @{{python}} tools/plugin_skin.py prepare {{ if xml == "" { "" } else { "--xml " + xml } }}
 
 plugin-skin-log:
-    @python3 tools/plugin_skin.py log
+    @{{python}} tools/plugin_skin.py log
 
 # Toggling the panel is what makes VirtualDJ re-ask for the XML.
 plugin-skin-reload:
@@ -471,11 +531,11 @@ plugin-skin-reload:
     @echo 'panel re-opened; run `just plugin-skin-log` to see the new call'
 
 plugin-songbuffer-report:
-    @python3 tools/plugin_introspect.py songbuffer-report
+    @{{python}} tools/plugin_introspect.py songbuffer-report
 
 # OnKey/mouse events — the only channel that might carry press vs release.
 plugin-keylog:
-    @python3 tools/plugin_introspect.py keylog
+    @{{python}} tools/plugin_introspect.py keylog
 
 # The skin object classes and the elements that build them (Tier 2 leads).
 # Bare: a read-time summary. `--element panel` says which class builds an element,
@@ -483,88 +543,90 @@ plugin-keylog:
 # candidates. Read the artifact's own `limitations` before citing: absence
 # establishes nothing.
 skin-classes *args:
-    @python3 tools/extract_skin_classes.py "$@"
+    @{{python}} tools/extract_skin_classes.py "$@"
 
 # Every skin object class, one line each. Filters: --base, --has-attr,
 # --element-backed, --format=json. Untruncated, as the other list-* are.
 list-skin-classes *args:
-    @python3 tools/extract_skin_classes.py --list "$@"
+    @{{python}} tools/extract_skin_classes.py --list "$@"
 
 # Historical skin class source provenance (Tier 2; many-to-many STABS relation).
 skin-modules *args:
-    @python3 tools/extract_skin_modules.py {{args}}
+    @{{python}} tools/extract_skin_modules.py {{args}}
 
 extract-skin-modules app:
-    @python3 tools/extract_skin_modules.py --app "{{app}}" > tests/skin-modules-9246.json
+    @{{python}} tools/extract_skin_modules.py --app "{{app}}" > tests/skin-modules-9246.json.tmp
+    @mv tests/skin-modules-9246.json.tmp tests/skin-modules-9246.json
 
 # Tier-2 bounded method/helper literal leads and ranked live probe queue.
 action-tail-leads *args:
-    @python3 tools/action_tail_leads.py {{args}}
+    @{{python}} tools/action_tail_leads.py {{args}}
 
 extract-action-tail-leads:
-    @python3 tools/action_tail_leads.py --generate > tests/action-tail-leads.json
+    @{{python}} tools/action_tail_leads.py --generate > tests/action-tail-leads.json.tmp
+    @mv tests/action-tail-leads.json.tmp tests/action-tail-leads.json
 
 # H4: frozen candidate tests, exact-script HTTP observations, bounded binary evidence.
 runtime-grammar *args:
-    @python3 tools/runtime_grammar_probes.py "$@"
+    @{{python}} tools/runtime_grammar_probes.py "$@"
 
 extract-runtime-parser app:
-    @python3 tools/extract_runtime_parser.py --app "{{app}}" --output tests/runtime-parser-9246
+    @{{python}} tools/extract_runtime_parser.py --app "{{app}}" --output tests/runtime-parser-9246
 
 runtime-parser-frontier *args:
-    @python3 tools/runtime_parser_frontier.py --report "$@"
+    @{{python}} tools/runtime_parser_frontier.py --report "$@"
 
 # Say what each queued indirect site actually is: factory, vtable, or artifact.
 frontier-closure *args:
-    @python3 tools/resolve_frontier_sites.py "$@"
+    @{{python}} tools/resolve_frontier_sites.py "$@"
 
 # Which deck-wrapper token was in flight at an exit. Read-only payloads, journal
 # flushed before each send, process identity checked after every probe.
 probe-deck-targets *args:
-    @python3 tools/probe_deck_targets.py "$@"
+    @{{python}} tools/probe_deck_targets.py "$@"
 
 # Are bare names per-deck, $ shared and @ a separate name? Writes probe variables
 # under a zzprobescope name and sets them back to 0, verifying the teardown.
 probe-variable-scope *args:
-    @python3 tools/probe_variable_scope.py "$@"
+    @{{python}} tools/probe_variable_scope.py "$@"
 
 # Whether the request pattern alone precedes an exit: fresh vs reused connection.
 probe-http-stability *args:
-    @python3 tools/probe_http_stability.py "$@"
+    @{{python}} tools/probe_http_stability.py "$@"
 
 # H4: deck-scope keywords with selection and master pinned to DIFFERENT decks.
 # Needs four unloaded, stopped decks; it refuses to mutate anything otherwise.
 runtime-grammar-master *args:
-    @python3 tools/runtime_grammar_master.py "$@"
+    @{{python}} tools/runtime_grammar_master.py "$@"
 
 check-runtime-grammar:
-    @python3 tools/runtime_parser_frontier.py --check > /dev/null
-    @python3 tools/resolve_frontier_sites.py --check > /dev/null
-    @python3 tools/test_runtime_grammar_actions.py
-    @python3 tools/test_runtime_grammar_scopes.py
-    @python3 tools/test_runtime_grammar_master.py
-    @python3 tools/runtime_grammar_master.py --check > /dev/null
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-initial-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-initial-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-second-attempt-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-fallback-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-initial-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scope-followup-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-whitespace-9598.json
-    @python3 tools/test_runtime_grammar_probes.py
-    @python3 tools/runtime_grammar_probes.py --check
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json
-    @python3 tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json
+    @{{python}} tools/runtime_parser_frontier.py --check > /dev/null
+    @{{python}} tools/resolve_frontier_sites.py --check > /dev/null
+    @{{python}} tools/test_runtime_grammar_actions.py
+    @{{python}} tools/test_runtime_grammar_scopes.py
+    @{{python}} tools/test_runtime_grammar_master.py
+    @{{python}} tools/runtime_grammar_master.py --check > /dev/null
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-initial-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-actions-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-initial-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-second-attempt-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scopes-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-fallback-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-initial-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-action-default-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-scope-followup-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-whitespace-9598.json
+    @{{python}} tools/test_runtime_grammar_probes.py
+    @{{python}} tools/runtime_grammar_probes.py --check
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-live-9598.json
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-followup-9598.json
 
 # The decoded archive the corpus mines, under gitignored vendor/ (vendor copyright,
 # like the SDK headers). Idempotent; delete the directory to re-extract after a
 # VirtualDJ update, then `just script-corpus > tests/vdjscript-corpus.json`.
 controllers-vendor:
     @test -d vendor/controllers || uv run tools/read_controllers.py --output-dir vendor/controllers > /dev/null
-    @python3 tools/extract_script_corpus.py --vendor-check
+    @{{python}} tools/extract_script_corpus.py --vendor-check
 
 # Decode every original device/mapper/audio XML member; output dir must be new.
 controllers-extract *args:
@@ -572,38 +634,38 @@ controllers-extract *args:
 
 # Offline vocabulary and mapper cross-checks; --path /device/slider or --device DDJGRV6.
 controllers *args:
-    @python3 tools/controller_schema_inventory.py "$@"
+    @{{python}} tools/controller_schema_inventory.py "$@"
 
 # Linked-track SID calculation from prepared metadata, or an offline snapshot audit.
 linked-sid *args:
-    @python3 tools/linked_sid.py "$@"
+    @{{python}} tools/linked_sid.py "$@"
 
 # Historical symbol-bounded SID extraction; requires capstone, writes JSON to stdout.
 extract-linked-sid *args:
-    @python3 tools/extract_linked_sid.py "$@"
+    @{{python}} tools/extract_linked_sid.py "$@"
 
 # Execute historical reducer/hash instructions on synthetic inputs; requires unicorn.
 probe-linked-sid-binary *args:
-    @python3 tools/probe_linked_sid_binary.py "$@"
+    @{{python}} tools/probe_linked_sid_binary.py "$@"
 
 check-linked-sid:
-    @python3 tools/test_linked_sid.py
+    @{{python}} tools/test_linked_sid.py
 
 # Every stored linked-track relationship; missing metadata stays visible by SID.
 list-linked-tracks *args:
-    @python3 tools/list_linked_tracks.py "$@"
+    @{{python}} tools/list_linked_tracks.py "$@"
 
 # Lyric key conversions, payload parsing and offline cache inspection.
 lyrics-cache *args:
-    @python3 tools/lyrics_cache.py "$@"
+    @{{python}} tools/lyrics_cache.py "$@"
 
 # Historical lyric-cache binary capture; capstone required, JSON on stdout.
 extract-lyrics-cache *args:
-    @python3 tools/extract_lyrics_cache.py "$@"
+    @{{python}} tools/extract_lyrics_cache.py "$@"
 
 # Synthetic original-instruction tests; Unicorn required, JSON on stdout.
 probe-lyrics-binary *args:
-    @python3 tools/probe_lyrics_binary.py "$@"
+    @{{python}} tools/probe_lyrics_binary.py "$@"
 
 check-lyrics-cache:
-    @python3 tools/test_lyrics_cache.py
+    @{{python}} tools/test_lyrics_cache.py

@@ -1970,9 +1970,139 @@ index. Nothing short of varying the slot on its own would have shown that.
 calibration. Full table: the tracker's "Argument Positions: A Question The Other Probers Cannot
 Ask".
 
-Still next here: a keyword position can only be varied where the verb has two attested keywords,
-so the multi-token shapes that were skipped want either attested tails or the catalog's own
-parameter list as a second value source.
+**Second keyword source landed 2026-09-09.** `probe_arg_positions.py` no longer takes its
+keyword values from the attested tails alone: `--keywords` (default `attested,catalog`) adds the
+vendor's own `documented_parameters`, minus the two buckets the catalog cross-check already
+disowns — feeding a placeholder in would have made a keyword-vs-nonsense test wear the clothes of
+a within-class comparison, which is the question the nonsense control already asks. **The
+placeholder filter is a precondition, not a nicety**: with numpy missing, the catalog silently
+reclassified 30 of the doc's own example names as vocabulary — and those are exactly the tokens
+this now consumes. That is why `just install` and `just doctor` exist (README §Setup); the
+extractor no longer swallows the ImportError that caused it.
+
+Every value carries the source that supplied it, and `summary.reads_by_weakest_source` splits the
+verdicts, because a `reads` earned between two attested tokens and one earned against a Tier-2
+lead are not the same claim. `--plan` / `just probe-arg-positions-plan` reports what a run would
+reach with no live instance at all, so coverage is measurable before VirtualDJ is up.
+
+Measured 2026-09-09 with `--plan`: probeable verbs went 37 → 44 on `attested,catalog`, the seven
+added being `auto_bpm_transition_options`, `automix_editor_movetrack`, `get_sample_info`, `padfx`,
+`slicer`, `stem_pad`, `stems_split`; adding the opt-in `vocab` source reaches 48
+(`cue_color`, `effect_stems`, `get_browsed_color`, `setting_setdefault`).
+
+One verdict changed shape at the same time and it is the reason widening is safe: a variant and
+the nonsense control that move the answer to the **same** value now score
+`variant-indistinct-from-nonsense` rather than `reads`. A word that is real in position 2 can be
+unknown in position 1, and an unknown word moves the answer exactly as a read one does; the old
+three-way verdict could not see the difference and would have counted the widened sources as
+discoveries.
+
+**Run taken 2026-09-09 on build 18.0.9583, and it cost the prober three method changes.**
+Full narrative: the tracker's "Argument Positions Re-Taken In Fixtures, 2026-09-09" and
+"`blink`: The Prober Cannot See It". Headline: **44 verbs in 5 fixtures, 2 disqualified as
+drifting, 6 read at least one position, 4 beyond the first**, each reproducing in four or five
+independent states.
+
+Three things the run established about the method, all of which cost a claim:
+
+- **This machine is not the machine the earlier captures came from** — build 18.0.9583 against
+  9598, and a different library. Fixtures pin deck, transport and FX state, and they pin the
+  audio (generated locally, so no dependence on a collection); they do **not** pin the library.
+  `get_next_karaoke_song`, `get_sample_info`, `padfx` and `automix_editor_movetrack` answer
+  `no-answer` here because the sampler bank is empty and there is no karaoke content, not because
+  anything was refuted. The artifact now carries `summary.build`.
+- **Instability anywhere disqualifies a verb everywhere.** Merging only the steady states let each
+  run keep whichever accident it saw; `blink` scored `reads` on a different position, in a
+  different fixture, on each of three runs.
+- **`stem_pad`'s position claim did not reproduce, and its token did.** `isolate` separates from
+  nonsense in all five states, so it leaves `documented_but_not_probe_confirmed`; whether position
+  1 is read depends on stem-pad state this method does not pin.
+
+`blink` turned out to be the interesting one, and it is now `Pass` in the store. It is an
+oscillator: both arguments are read (`DUR` → period, `PCT` → duty, the latter optional and
+defaulting to ~50%), **and `DUR` takes beat units that lock to the master tempo** — `blink 1bt`
+and `blink 500ms` measured 0.467 s and 0.495 s in the same run at 129.44 BPM. No comparison of
+single reads can see any of that; a verb whose arguments parameterise behaviour over time needs a
+waveform measurement, not a prober.
+
+**Still next here**, in cost order:
+
+1. **DONE 2026-09-09** — a sample went into slot 1, `sampler_slot_loaded` established, and the
+   run covered all six fixtures. `get_sample_info` came out of it confirmed: position 2 reads
+   (`group` vs `length`) in 6/6 states, from two **catalog**-sourced words, closing the verb this
+   prober was written for. `padfx` and `automix_editor_movetrack` did NOT come with it — they want
+   a pad context and the automix editor, not the sampler, and no fixture here offers either.
+   **Next, and cheaper still: load a SECOND sample.** `get_sample_info` position 1 is
+   undiscriminated only because slot 2 is empty, so slot 2 and nonsense answer alike. The karaoke
+   verbs still need the original library.
+2. **`automix_editor_movetrack` wants the execute prober, not this one** (2026-09-09). It is
+   action-only — E_NOTIMPL invariant across editor open/closed, empty automix, and every
+   documented form including the appendix's `'current' +10` — so no query-position work will ever
+   reach it. `probe_execute_forms.py` is the right instrument, and it needs three things:
+   the editor open, tracks in the automix, and a readback for track order. **The readback is
+   found**: `get_automix_song '<field>' <n>` — field first, index second, 1-based from the NEXT
+   song, verified against the Automix panel with six tracks loaded.
+   `automix_editor_getselectedtrack`, `get_playlist_song` and `playlist_count` do NOT exist
+   (`in_verb_table: false`); their E_FAIL was never evidence. So the only precondition left is
+   the editor open (`automix_editor` reports and can set it). Also record the appendix's shape:
+   the number is OPTIONAL ("can be mapped to rotary knobs or jog wheels"), so it is `KW [REL]`.
+   The test writes to a live automix and moves what plays next, so it needs the user's say-so.
+3. The opt-in `vocab` source reaches four more verbs — `cue_color`, `effect_stems`,
+   `get_browsed_color`, `setting_setdefault`. Its members are Tier-2 leads, so a `reads` there
+   rests on a word nothing has confirmed; `reads_by_weakest_source` keeps that apart, but decide
+   deliberately before running with it.
+4. **The prober captures one run and cannot see cross-run disagreement.** `stem_pad` scored
+   `reads` in two of four runs on 2026-09-09 and `rejects-nonsense-only` in the other two, stable
+   within each. `probe_arg_forms.py` has `--repeat` and a union merge; this one has neither, and
+   until it does, a single capture's weakest rows (anything seen in one or two states) are leads.
+5. Multi-token shapes still take the same keyword pair at every keyword position. Where a verb has
+   four or more candidates, giving each position its own pair would separate "this position is
+   read" from "this word belongs here".
+6. **Both remaining instrument problems already have an instrument in this repo** (2026-09-09):
+   - *Oscillators* (`blink`, and any verb whose arguments set a period, duty or rate) want the
+     **Remote protocol subscription**, not polling. `tools/vdjremote_subscribe.py` takes arbitrary
+     queries and prints every value VirtualDJ *pushes*, so an oscillator reports its own edges —
+     exact period and duty, no aliasing, no polling load. It needs `tests/vdjremote-opener.bin`
+     (present), a `dns-sd -R` advert, and Remote enabled in VirtualDJ, because VirtualDJ dials in
+     as the TCP client. This supersedes "write a waveform prober".
+   - *Sweeps* want the **introspection plugin** (task 10a). It is in-process, so the HTTP
+     connection churn that wedged `/query` twice today does not exist, and it returns the
+     **HRESULT separately from the value** — the "recognized keyword vs silently ignored" confound
+     every nonsense control in this repo is a workaround for. **Rebuilt and re-captured on this
+     machine 2026-09-09** (`just download-sdk` → `just plugin-build --install` → `just
+     plugin-prepare` → restart → `just plugin-collect`), plus the delayed sweep in
+     `tests/plugin-introspection-late-9583.json`.
+
+     **But it is not the richer channel for every question.** Tested 2026-09-09 against ground
+     truth: an empty field (`get_browsed_album`) and an unimplemented query
+     (`automix_editor_movetrack`) are **byte-identical** on the plugin — E_INVALIDARG numeric,
+     S_FALSE text, empty string — while HTTP separates them outright, returning an empty body for
+     the first and `E_NOTIMPL` for the second. `GetInfo`/`GetStringInfo` are the query interface,
+     and S_FALSE is its single word for both "no query here" and "nothing to say". The plugin's
+     real edge remains keyword discrimination; for "does this verb answer queries at all", HTTP
+     and the structural artifacts are better and cheaper. Tracker: "The Plugin Channel Does NOT
+     Separate Empty From Unimplemented".
+
+     That capture produced a method result worth carrying forward: **an absent channel is three
+     different facts wearing one face** — a subsystem not yet up (comes back in the +40 s sweep,
+     6 `get_browsed_folder*` verbs), an empty slot (differs between two load-time sweeps, the 11
+     `get_effect_slider_*` label verbs), or an item with no such field (stable across both, and
+     HTTP agrees — `get_browsed_album`, `get_browsed_genre`). Only the third is about the library.
+     A single capture cannot tell them apart, so **always take the delayed sweep**, and check a
+     suspected content-absence independently. Tracker: "Plugin Channel Re-Taken On A Second
+     Machine".
+7. **`DUR` is not one class.** `probe_arg_positions.py` varies a duration position between
+   `1000ms` and `4000ms` — two values of the same unit. `blink` shows the *unit* selects the
+   clock: `1bt` and `500ms` are both `DUR` and run off different ones. Any verb reading a duration
+   may behave differently across units while looking identical across two values of one unit, so
+   the pool wants a unit-crossing pair, and `attested-tails.json`'s `DUR` shape may be hiding two
+   things.
+8. **The prober picks its keyword pair blind.** `get_sample_info` proved the cost: its pair was
+   (`group`, `length`), and `group` is empty on both loaded samples while `length` is `4bt` on
+   both, so no comparison it could make would have separated the slots — while `bpm`, `key`,
+   `title`, `filename` and `fullpath` all do. **A pair that both return the floor proves nothing,
+   and nothing in the prober notices.** Reading each candidate once before choosing, and
+   preferring a pair whose values differ, is the fix.
 
 ### 13. Probe The Shared Enumerations The Binary Serialises
 

@@ -31,6 +31,7 @@ SWEEP = "tests/verb-existence-sweep.json"
 ARTIFACT = "tests/plugin-introspection.json"
 LEADS_ARTIFACT = "tests/plugin-introspection-leads.json"
 BOGUS = "zzznotakeyword"
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WORKDIR = os.path.expanduser(
     "~/Library/Application Support/VirtualDJ/VDJIntrospect")
 PROBES = os.path.join(WORKDIR, "probes.txt")
@@ -397,14 +398,72 @@ def cmd_status(args):
             print(f"{label:14} {size:>9,} bytes  {mtime}")
         else:
             print(f"{label:14} (absent)")
+    bundles = installed_bundles()
+    if bundles:
+        for path in bundles:
+            print(f"installed:     {path}")
+    else:
+        print("installed:     (none) — `just plugin-build --install`")
     if os.path.exists(LOG):
         print("\nlast log lines:")
         for line in open(LOG).read().splitlines()[-8:]:
             print("  " + line)
 
 
+# Where build.sh --install puts the bundle. AutoStart is the headless variant;
+# the DSP/skin builds go to SoundEffect.
+PLUGIN_DIRS = [os.path.expanduser(
+    f"~/Library/Application Support/VirtualDJ/PluginsMacArm/{sub}")
+    for sub in ("AutoStart", "SoundEffect")]
+
+
+def installed_bundles():
+    """Bundle names VirtualDJ would load, per install directory."""
+    found = []
+    for directory in PLUGIN_DIRS:
+        if os.path.isdir(directory):
+            found += [os.path.join(directory, name) for name in sorted(os.listdir(directory))
+                      if name.endswith(".bundle") and name.startswith("VDJIntrospect")]
+    return found
+
+
+def missing_results(path, late):
+    """Say which step of the chain has not happened, rather than tracebacking.
+
+    The capture is written BY VirtualDJ, through the plugin, so an absent
+    results.json is never a bug in this script — it means the bundle was not
+    built, not installed, not loaded, or had no probe list to run. Each of those
+    has a different fix and they are not interchangeable.
+    """
+    built = os.path.exists(os.path.join(REPO, "build", "VDJIntrospect.bundle"))
+    installed = installed_bundles()
+    lines = [f"no capture at {path}",
+             "",
+             "The plugin writes that file; VirtualDJ runs the plugin. Chain:"]
+    mark = lambda ok: "OK  " if ok else "MISSING"  # noqa: E731
+    lines += [
+        f"  1. {mark(built)}  build      — `just download-sdk` then `just plugin-build`",
+        f"  2. {mark(bool(installed))}  install    — `just plugin-build --install`"
+        f"{' -> ' + installed[0] if installed else ''}",
+        f"  3. {mark(os.path.exists(LATE_PROBES if late else PROBES))}  probe list — "
+        f"`just plugin-prepare`",
+        "  4. ?        load       — restart VirtualDJ (AutoStart loads at startup),",
+        "                           or `just plugin-go` to re-sweep a loaded plugin",
+    ]
+    if os.path.exists(LOG):
+        lines += ["", "plugin.log exists, so it HAS loaded at least once; last lines:"]
+        lines += ["  " + line for line in open(LOG).read().splitlines()[-5:]]
+    else:
+        lines += ["", "No plugin.log either — VirtualDJ has never loaded this plugin."]
+    lines += ["", "`just plugin-status` shows the workdir."]
+    return "\n".join(lines)
+
+
 def collect(late=False):
-    raw = json.load(open(LATE_RESULTS if late else RESULTS))
+    path = LATE_RESULTS if late else RESULTS
+    if not os.path.exists(path):
+        raise SystemExit(missing_results(path, late))
+    raw = json.load(open(path))
     out, channels = {}, {}
 
     for rec in raw["probes"]:

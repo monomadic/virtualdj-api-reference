@@ -18,6 +18,21 @@ examples/Pads/README.md            — pad page inventory, status labels, and ma
 tests/README.md               — documentation test harnesses and reproducible fixtures
 ```
 
+**Start a session with `just doctor`.** It is the `brew doctor` of this repo, and it
+answers in one screen the four things that decide what you can do today: which
+interpreter is in use and whether it can import what the extraction tools need,
+whether `uv` is there, which VirtualDJ is installed against the builds the
+artifacts are anchored to, and whether the live probe channel answers — which
+sorts the queue into desk work and live work before you pick a task. Only the
+python section can fail. `just install` fixes that one (uv creates `.venv` from
+`requirements.txt`); every recipe then runs that interpreter.
+
+Run it before regenerating any binary-derived artifact. A missing numpy does not
+fail those — it degrades them: `extract_action_catalog.py` caught the ImportError
+alongside a genuinely absent app bundle and promoted 30 of the vendor's own
+example placeholders into the probe worklist, and the only symptom was a
+cross-check drift in an unrelated-looking artifact.
+
 ## Open-ended work
 
 For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task. `just next-task` prints that task; `just task-queue` lists every task with its state. Each task carries one machine-readable `Status:` line — one word from `Ready`/`Blocked`/`Conditional`/`Parking lot`/`Done`, with the explanation in the `Note:` paragraph below it — and selection fails loudly rather than skipping a status it cannot read, so keep that shape when editing the queue.

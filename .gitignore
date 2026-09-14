@@ -8,9 +8,10 @@ build/
 # Atomix plugin SDK headers — third-party, deliberately NOT checked in.
 # The headers carry "(c)Atomix Productions 2011-2018" with no license grant and
 # no terms on the SDK download page, so this repo does not redistribute them.
-# Fetch them yourself: https://www.virtualdj.com/wiki/PluginSDK8.html
-# (VirtualDJ8_SDK_20211003.zip), or the community example set at
-# https://github.com/szemek/virtualdj-plugins-examples
+# Fetch them yourself with `just download-sdk` (writes vendor/vdj-sdk/ and a
+# SOURCE.txt recording the URL, date and digest), or by hand from
+# https://www.virtualdj.com/wiki/PluginSDK8.html (VirtualDJ8_SDK_20211003.zip).
+# Community example set: https://github.com/szemek/virtualdj-plugins-examples
 vendor/
 
 # Decoded controllers.dat (device definitions, factory mappings, audio presets)
@@ -18,3 +19,10 @@ vendor/
 # regenerates it; tests/controllers-manifest.json holds the hashes it is checked
 # against, and the corpus tools refuse a tree that disagrees with the manifest.
 vendor/controllers/
+
+# Python venv created by `just bootstrap`.
+.venv/
+
+# Half-written artifacts from an interrupted `just` capture.
+tests/*.json.tmp
+docs/*.json.tmp

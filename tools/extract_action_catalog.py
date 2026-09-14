@@ -108,9 +108,17 @@ def binary_blob() -> str | None:
     placeholders. Erring permissive keeps a real token in the worklist; erring
     strict silently deletes work.
     """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    # Deliberately OUTSIDE the try. A missing numpy is a broken environment,
+    # not an absent bundle, and it must never reach the `return None` path: the
+    # placeholder filter then collapses to LOCAL_PLACEHOLDERS and 30 of the
+    # doc's own example names (`loop_load myloop`, `var my_var`, `rack rack1`)
+    # are promoted into the probe worklist as if they were vocabulary. That is
+    # the "erring strict silently deletes work" failure wearing the opposite
+    # coat, and on 2026-09-09 it surfaced only as an unexplained cross-check
+    # drift. `just install` installs it; `just doctor` names it.
+    from extract_binary_vocabularies import Image  # noqa: PLC0415
     try:
-        sys.path.insert(0, str(Path(__file__).resolve().parent))
-        from extract_binary_vocabularies import Image  # noqa: PLC0415
         return "\n".join(Image(DEFAULT_APP).by_text)
     except Exception:  # noqa: BLE001 — absence of the binary is not an error here
         return None

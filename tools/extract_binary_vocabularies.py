@@ -56,7 +56,18 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-import numpy as np
+try:
+    import numpy as np
+except ImportError as exc:  # pragma: no cover — an environment fault, not a data one
+    # Reached by anyone running a tool as `python3 tools/…` with the system
+    # interpreter after `just install` has made .venv the supported path.
+    # Every binary-derived artifact goes through this module, so this is the
+    # one place worth spending a sentence on.
+    raise ImportError(
+        "numpy is required by the Mach-O readers. Run `just install` "
+        "(creates .venv from requirements.txt), then invoke tools through "
+        "`just`, or run .venv/bin/python3 directly."
+    ) from exc
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from extract_action_contracts import sections, slice_offset  # noqa: E402

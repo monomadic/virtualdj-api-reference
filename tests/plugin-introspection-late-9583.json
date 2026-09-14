@@ -335,12 +335,12 @@
   },
   "blink": {
    "channel": "both",
-   "numeric": 1,
-   "numeric_bits": "0x3ff0000000000000",
+   "numeric": 0,
+   "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "S_OK",
-   "text": "on",
+   "text": "off",
    "text_hresult": "S_OK",
-   "text_len": 2
+   "text_len": 3
   },
   "blink_play": {
    "channel": "both",
@@ -803,10 +803,10 @@
   },
   "countdown": {
    "channel": "both",
-   "numeric": 9765960,
-   "numeric_bits": "0x4162a08900000000",
+   "numeric": 9765237,
+   "numeric_bits": "0x4162a02ea0000000",
    "numeric_hresult": "S_OK",
-   "text": "113 days, 46:00",
+   "text": "113 days, 33:57",
    "text_hresult": "S_OK",
    "text_len": 15
   },
@@ -1343,21 +1343,21 @@
   },
   "effect_activate": {
    "channel": "both",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
+   "numeric": 1,
+   "numeric_bits": "0x3ff0000000000000",
    "numeric_hresult": "S_OK",
-   "text": "off",
+   "text": "on",
    "text_hresult": "S_OK",
-   "text_len": 3
+   "text_len": 2
   },
   "effect_active": {
    "channel": "both",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
+   "numeric": 1,
+   "numeric_bits": "0x3ff0000000000000",
    "numeric_hresult": "S_OK",
-   "text": "off",
+   "text": "on",
    "text_hresult": "S_OK",
-   "text_len": 3
+   "text_len": 2
   },
   "effect_arm_active": {
    "channel": "both",
@@ -1396,29 +1396,29 @@
    "text_len": 3
   },
   "effect_arm_select": {
-   "channel": "numeric",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "S_OK",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
-  },
-  "effect_arm_select_popup": {
-   "channel": "numeric",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "S_OK",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
-  },
-  "effect_arm_slider": {
    "channel": "both",
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "S_OK",
-   "text": "0",
+   "text": "Flanger",
+   "text_hresult": "S_OK",
+   "text_len": 7
+  },
+  "effect_arm_select_popup": {
+   "channel": "both",
+   "numeric": 0,
+   "numeric_bits": "0x0000000000000000",
+   "numeric_hresult": "S_OK",
+   "text": "Flanger",
+   "text_hresult": "S_OK",
+   "text_len": 7
+  },
+  "effect_arm_slider": {
+   "channel": "both",
+   "numeric": 1,
+   "numeric_bits": "0x3ff0000000000000",
+   "numeric_hresult": "S_OK",
+   "text": "1",
    "text_hresult": "S_OK",
    "text_len": 1
   },
@@ -1562,7 +1562,7 @@
    "numeric": 0.25,
    "numeric_bits": "0x3fd0000000000000",
    "numeric_hresult": "S_OK",
-   "text": "50.0%",
+   "text": "Slide",
    "text_hresult": "S_OK",
    "text_len": 5
   },
@@ -2477,12 +2477,12 @@
   },
   "get_battery": {
    "channel": "both",
-   "numeric": 1,
-   "numeric_bits": "0x3ff0000000000000",
+   "numeric": 0.6399999856948853,
+   "numeric_bits": "0x3fe47ae140000000",
    "numeric_hresult": "S_OK",
-   "text": "100%",
+   "text": "64%",
    "text_hresult": "S_OK",
-   "text_len": 4
+   "text_len": 3
   },
   "get_beat": {
    "channel": "both",
@@ -2647,49 +2647,49 @@
    "text_len": 88
   },
   "get_browsed_folder": {
-   "channel": "neither",
+   "channel": "text",
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "text": "Tracks (1)",
+   "text_hresult": "S_OK",
+   "text_len": 10
   },
   "get_browsed_folder_icon": {
-   "channel": "neither",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "channel": "both",
+   "numeric": 8,
+   "numeric_bits": "0x4020000000000000",
+   "numeric_hresult": "S_OK",
+   "text": "8",
+   "text_hresult": "S_OK",
+   "text_len": 1
   },
   "get_browsed_folder_path": {
-   "channel": "neither",
+   "channel": "text",
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "text": "/Users/nom/Music/Tracks",
+   "text_hresult": "S_OK",
+   "text_len": 23
   },
   "get_browsed_folder_scrollpos": {
-   "channel": "neither",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "channel": "both",
+   "numeric": 6,
+   "numeric_bits": "0x4018000000000000",
+   "numeric_hresult": "S_OK",
+   "text": "6",
+   "text_hresult": "S_OK",
+   "text_len": 1
   },
   "get_browsed_folder_scrollsize": {
-   "channel": "neither",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "channel": "both",
+   "numeric": 14,
+   "numeric_bits": "0x402c000000000000",
+   "numeric_hresult": "S_OK",
+   "text": "14",
+   "text_hresult": "S_OK",
+   "text_len": 2
   },
   "get_browsed_folder_selection_index": {
    "channel": "both",
@@ -2701,13 +2701,13 @@
    "text_len": 1
   },
   "get_browsed_folder_tab": {
-   "channel": "neither",
+   "channel": "both",
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
-   "numeric_hresult": "E_INVALIDARG",
-   "text": "",
-   "text_hresult": "S_FALSE",
-   "text_len": 0
+   "numeric_hresult": "S_OK",
+   "text": "0",
+   "text_hresult": "S_OK",
+   "text_len": 1
   },
   "get_browsed_genre": {
    "channel": "neither",
@@ -2804,7 +2804,7 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "23:14:00",
+   "text": "23:26:03",
    "text_hresult": "S_OK",
    "text_len": 8
   },
@@ -2864,8 +2864,8 @@
   },
   "get_cpu": {
    "channel": "both",
-   "numeric": 0.0005584880709648132,
-   "numeric_bits": "0x3f424cf000000000",
+   "numeric": 0.003915648441761732,
+   "numeric_bits": "0x3f7009dae0000000",
    "numeric_hresult": "S_OK",
    "text": "0",
    "text_hresult": "S_OK",
@@ -2918,8 +2918,8 @@
   },
   "get_deck_analysis": {
    "channel": "numeric",
-   "numeric": 148511328,
-   "numeric_bits": "0x41a1b434c0000000",
+   "numeric": 144071264,
+   "numeric_bits": "0x41a12cb4c0000000",
    "numeric_hresult": "S_OK",
    "text": "",
    "text_hresult": "S_FALSE",
@@ -3047,7 +3047,7 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "50.0%",
+   "text": "Slide",
    "text_hresult": "S_OK",
    "text_len": 5
   },
@@ -3056,16 +3056,16 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "50.0%",
+   "text": "Probe Slider",
    "text_hresult": "S_OK",
-   "text_len": 5
+   "text_len": 12
   },
   "get_effect_slider_label_skip_length": {
    "channel": "text",
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "50.0%",
+   "text": "Slide",
    "text_hresult": "S_OK",
    "text_len": 5
   },
@@ -3593,10 +3593,10 @@
   },
   "get_peak_audio": {
    "channel": "both",
-   "numeric": 0.012468749657273293,
-   "numeric_bits": "0x3f89893740000000",
+   "numeric": 0.006656249985098839,
+   "numeric_bits": "0x3f7b439580000000",
    "numeric_hresult": "S_OK",
-   "text": "01.2%",
+   "text": "00.7%",
    "text_hresult": "S_OK",
    "text_len": 5
   },
@@ -4154,7 +4154,7 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "50.0%",
+   "text": "Slide",
    "text_hresult": "S_OK",
    "text_len": 5
   },
@@ -4358,12 +4358,12 @@
   },
   "has_battery": {
    "channel": "both",
-   "numeric": 1,
-   "numeric_bits": "0x3ff0000000000000",
+   "numeric": 0,
+   "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "S_OK",
-   "text": "on",
+   "text": "off",
    "text_hresult": "S_OK",
-   "text_len": 2
+   "text_len": 3
   },
   "has_cover": {
    "channel": "both",
@@ -4523,9 +4523,9 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "VOCAL",
+   "text": "HIGH",
    "text_hresult": "S_OK",
-   "text_len": 5
+   "text_len": 4
   },
   "hold": {
    "channel": "both",
@@ -5396,9 +5396,9 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "BEAT",
+   "text": "LOW",
    "text_hresult": "S_OK",
-   "text_len": 4
+   "text_len": 3
   },
   "macro_play": {
    "channel": "neither",
@@ -5447,10 +5447,10 @@
   },
   "master_beat_num": {
    "channel": "both",
-   "numeric": 1079287147,
-   "numeric_bits": "0x41d015275ac00000",
+   "numeric": 1076241920,
+   "numeric_bits": "0x41d0098980000000",
    "numeric_hresult": "S_OK",
-   "text": "1079287155",
+   "text": "1076241920",
    "text_hresult": "S_OK",
    "text_len": 10
   },
@@ -5648,9 +5648,9 @@
    "numeric": 0,
    "numeric_bits": "0x0000000000000000",
    "numeric_hresult": "E_INVALIDARG",
-   "text": "INSTRU",
+   "text": "MID",
    "text_hresult": "S_OK",
-   "text_len": 6
+   "text_len": 3
   },
   "midiclock_active": {
    "channel": "neither",
@@ -7436,12 +7436,12 @@
   },
   "sampler_loaded": {
    "channel": "both",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
+   "numeric": 1,
+   "numeric_bits": "0x3ff0000000000000",
    "numeric_hresult": "S_OK",
-   "text": "off",
+   "text": "on",
    "text_hresult": "S_OK",
-   "text_len": 3
+   "text_len": 2
   },
   "sampler_loop": {
    "channel": "both",
@@ -8696,10 +8696,10 @@
   },
   "stopwatch": {
    "channel": "both",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
+   "numeric": 40.19069290161133,
+   "numeric_bits": "0x40441868a0000000",
    "numeric_hresult": "S_OK",
-   "text": "00:00.0",
+   "text": "00:40.2",
    "text_hresult": "S_OK",
    "text_len": 7
   },
@@ -9056,12 +9056,12 @@
   },
   "video_fx": {
    "channel": "both",
-   "numeric": 0,
-   "numeric_bits": "0x0000000000000000",
+   "numeric": 1,
+   "numeric_bits": "0x3ff0000000000000",
    "numeric_hresult": "S_OK",
-   "text": "off",
+   "text": "on",
    "text_hresult": "S_OK",
-   "text_len": 3
+   "text_len": 2
   },
   "video_fx_button": {
    "channel": "both",
@@ -9290,17 +9290,17 @@
   }
  },
  "summary": {
-  "captured_utc": "2026-09-09T15:14:00Z",
+  "captured_utc": "2026-09-09T15:26:03Z",
   "channel": "plugin",
   "channels": {
-   "both": 534,
-   "neither": 418,
-   "numeric": 10,
-   "text": 70
+   "both": 540,
+   "neither": 412,
+   "numeric": 8,
+   "text": 72
   },
   "host_version": "2026",
   "probes": 1032,
   "tool_version": "0.1.0",
-  "trigger": "OnLoad"
+  "trigger": "late"
  }
 }

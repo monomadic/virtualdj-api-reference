@@ -2663,3 +2663,499 @@ The test globals were read back as zero, original mapper and skin restored, virt
 endpoints disposed, and installed test files removed. Network Control remained unavailable
 at the last check and the user was asked to restore it. A hung process after initial Quit
 required SIGTERM before relaunch; this is a run limitation, not a claim about all restarts.
+
+## Argument Positions Re-Taken In Fixtures, 2026-09-09: A Different Machine, And Two Verbs That Never Held Still
+
+Build **18.0.9583**, HTTP, query-only. The captures above were taken on another
+machine against build 18.0.9598 and a different VirtualDJ library. That is not a
+footnote — it explains results a fixture cannot reach, and the artifact now
+carries `summary.build` so two captures can never again be compared as if they
+came from one install.
+
+**What fixtures do and do not pin.** `tools/fixtures.py` pins deck, transport and
+FX state, and it pins the AUDIO: it generates its own 120 BPM track with ffmpeg
+precisely so results never depend on a collection. It does **not** pin the
+LIBRARY — sampler bank contents, karaoke files, browser folders belong to the
+machine. Verbs that read those answer differently on a different install for
+reasons no fixture reaches. Measured here: `sampler_loaded 1` → `no` and
+`get_sample_name 1` → `error:1` (bank "MY BANK" is empty), `get_next_karaoke_song`
+→ E_FAIL. On the earlier machine that karaoke verb scored `reads` on both
+positions. Nothing about the verb changed.
+
+So the 2026-09-06 → 2026-09-09 differences split three ways, and only the middle
+one was a method fault:
+
+| Cause | Verbs | Fixable here? |
+| --- | --- | --- |
+| Library content differs between machines | `get_next_karaoke_song`, `get_sample_info`, `padfx`, `automix_editor_movetrack` | No — needs that library |
+| Ambient state, now pinned by fixtures | `effect_has_slider`, `effect_has_button`, `skin_panel` | Yes, done |
+| The verb genuinely does not hold still | `blink`, `get_spectrum_band`, `stem_pad` | Not by this method |
+
+**Method changes this run forced**, in the order the evidence forced them:
+
+1. **The prober holds the named fixtures**, as `probe_arg_forms.py` already did,
+   recording `by_fixture` and `seen_in` per position. A state it cannot establish
+   goes in `summary.fixtures_unavailable` rather than being silently absent —
+   `sampler_slot_loaded` asserts a sampler state it cannot create, and the bank is
+   empty here.
+2. **A variant answering exactly as the nonsense control no longer scores
+   `reads`** — it scores `variant-indistinct-from-nonsense`. A word real in
+   position 2 can be unknown in position 1, and an unknown word moves the answer
+   exactly as a read one does. This demoted `skin_panel`, `sideview`, `slicer`.
+3. **Instability anywhere disqualifies the verb everywhere.** Dropping only the
+   unsteady states and merging the rest let each run keep whichever accident it
+   saw: across three runs `blink` scored `reads` on position 1 once and position 2
+   twice, in a different fixture each time, unstable in a *different* pair of
+   fixtures each time. Drift is a property of the verb, not of the state that
+   exposed it.
+
+**Result: 44 verbs in all 6 fixtures on build 18.0.9583, 2 disqualified as
+drifting, 7 read at least one position, 5 read one beyond the first.** A sample
+was loaded into sampler slot 1 partway through the session, so
+`sampler_slot_loaded` established and `summary.fixtures_unavailable` is empty.
+
+| Verb | Shape | Position read | Value source | States |
+| --- | --- | --- | --- | --- |
+| `get_sample_info` | `NUM KW` | 2 (`group` vs `length`) | catalog | 6/6 |
+| `auto_bpm_transition_options` | `KW KW` | 1 (`stems` vs `autostart`) | catalog | 6/6 |
+| `effect_arm_slider` | `NUM NUM` | 2 only — slot ignored | pool | 6/6 |
+| `effect_slider_active` | `NUM NUM` | 2 | pool | 6/6 |
+| `get_effect_slider_label` | `NUM NUM` | 2 | pool | 6/6 |
+| `get_loaded_song_color` | `KW NUM` | 2 | attested | 5/6 |
+| `get_beat_num` | `NUM NUM` | 1 | pool | 5/6 |
+
+**`get_sample_info` closes the loop the method was written for.** This prober
+exists because that verb's three documented fields were filed as
+indistinguishable from nonsense by a single-token sweep asking them in the wrong
+shape. Held at `get_sample_info 1 <field>`, position 2 separates `group` from
+`length` in all six states — and both words came from the **catalog** source added
+2026-09-09, not from an attested tail, so the verb was unprobeable here until
+that source existed. The two additions compound: the catalog supplied the words,
+the fixture supplied the state.
+
+Its position 1 is `variant-indistinct-from-nonsense`, and correctly so: slot 2 is
+empty, so slot 2 and a junk token answer alike. **Loading a second sample would
+settle it** — a one-line state change, not a method change.
+
+`auto_bpm_transition_options` is the other verb the catalog source unlocked: no
+second attested tail, unprobeable before it.
+
+**`padfx` and `automix_editor_movetrack` are still `no-answer` in all six states,
+and the sampler was not what they were waiting for.** Filing them earlier with
+`get_sample_info` as "library-blocked" was wrong: `padfx` wants a pad context and
+`automix_editor_movetrack` wants the automix editor open, neither of which any
+fixture here establishes. They are unprobeable by this channel in this shape, not
+refuted.
+
+**`stem_pad`: the token is confirmed, the position is not.** An earlier run had
+`vocal` → `yes` and `isolate` → `no`, which read as position 1 being read; this
+run both answer alike while nonsense errors (`error:-2147467263`) in all five
+states. So `isolate` **is** recognized — it separates from the floor, which takes
+it out of the catalog cross-check's `documented_but_not_probe_confirmed` bucket —
+but whether position 1 is *read* depends on stem-pad state this method does not
+pin, and a single run claiming it would have been the same mistake as the ambient
+capture.
+
+## `blink`: An Oscillator, Tempo-Locked On Beat Units, Invisible To The Prober
+
+`blink` is not a value with a phase problem, it is an oscillator, and both its
+arguments are read — which the position prober is structurally unable to observe,
+because one query returns one sample of a square wave. Sampling the output
+instead settles it (build 18.0.9583, query-only, ~25 Hz polling):
+
+| Form | Expected | Measured period | Measured duty |
+| --- | --- | --- | --- |
+| `blink 1000ms 25%` | 1.000 s | 1.001 s | ~0.28 |
+| `blink 500ms 50%` | 0.500 s | ~0.50 s | ~0.50 |
+| `blink 2000ms 25%` | 2.000 s | 2.001 s | ~0.22 |
+| `blink 500ms` | 0.500 s | 0.495 s | ~0.45 |
+| `blink 1bt` | 0.4635 s (129.44 BPM) | 0.467 s | ~0.47 |
+| `blink 2bt` | 0.9271 s | 0.918 s | ~0.49 |
+| `blink 1bt 25%` | 0.4635 s | 0.471 s | ~0.27 |
+
+Position 1 (`DUR`) sets the **period**, position 2 (`PCT`) sets the **duty cycle**,
+and each tracks its argument with the other held. Three further facts the ms
+forms alone would have got wrong:
+
+- **The `DUR` argument takes beat units, and those lock to the master tempo.**
+  `blink 1bt` and `blink 500ms` measured **0.467 s and 0.495 s in the same run** —
+  different periods, in the direction and roughly the magnitude 60/129.44 = 0.4635
+  predicts against a round half-second. The ms forms are absolute wall-clock and
+  match their argument to a millisecond; the `bt` forms do not, and land on the
+  beat instead. (Sampling at 20 Hz bounds the period estimate to about ±0.02 s
+  over five cycles, so this separates `1bt` from `500ms` but does not pin 0.4635
+  to three decimals. The decisive test — move the master BPM and watch the `1bt`
+  period follow — needs a pitch write and a restore, and has not been run.)
+- **The second argument is optional and defaults to about 50%.** `blink 500ms`
+  alone holds its period and measures ~0.45–0.50 duty.
+- So the oscillation is driven by the argument, free-running against the caller,
+  and *conditionally* tempo-locked — which unit is used decides it.
+
+This is why the prober's fixed-interval confirmation reads could not catch it: any
+regular sampling interval beats against a regular period and agrees by luck
+whenever the samples land in the same phase. The general lesson for the method is
+that a verb whose arguments parameterise a *behaviour over time* rather than a
+value cannot be probed by comparing single reads, and instability is the only
+signal the prober can legitimately emit about one. It now emits exactly that.
+
+A second lesson for the shape classes: `probe_arg_positions.py` varies a `DUR`
+position between `1000ms` and `4000ms`, two values of the same **unit**. `blink`
+shows the unit is itself a dimension — `1bt` and `500ms` are both `DUR`, and they
+select different *clocks*. Any verb reading a duration may behave differently
+across units while looking identical across two values of one unit.
+
+**Channel note:** rapid sequential `/query` connections (25 Hz, no keep-alive)
+wedged the HTTP interface twice — single requests kept answering, sampling loops
+timed out until a few seconds' pause. Waveform sampling of this kind wants a
+lower rate or a delay between forms.
+
+## `get_sample_info` Draws From `song_fields`, And The Catalog Said So In Words No Extractor Could Read
+
+Build 18.0.9583, HTTP, query-only, 2026-09-09, two samples loaded (slot 1
+"Concentrate", slot 2 "I Wanna", same 4bt length). Three nonsense controls —
+`qzqzqz`, `wvwvwv`, `zznotafield` — all return `''`, so the floor is the empty
+string and any token returning a value is separated from it.
+
+The verb's own catalog prose is the lead, and it is an **open reference**: "In
+addition to the *regular column names*, 'group' and 'pos' are also supported, and
+'length' returns beat values for loops". `documented_parameters` recovers only
+`group`, `length`, `pos`, because "the regular column names" names a vocabulary
+rather than listing one — no tokenizer can follow that, and the extractor was
+never wrong to miss it.
+
+Sweeping the binary's `song_fields` group (40 members) plus the catalog-named
+tokens against both slots:
+
+| Token | Source | Slot 1 | Slot 2 | Differs |
+| --- | --- | --- | --- | --- |
+| `bpm` | song_fields | `126.0` | `114.0` | yes |
+| `key` | song_fields | `F#` | `A#m` | yes |
+| `title` | song_fields | `Concentrate` | `I Wanna` | yes |
+| `filename` | song_fields | `Concentrate.vdjsample` | `I Wanna.vdjsample` | yes |
+| `filepath` | song_fields | `…/MY BANK.bank/` | same | no |
+| `remix` | song_fields | `Vocal` | `Vocal` | no |
+| `fullpath` | catalog example | `…/Concentrate.vdjsample` | `…/I Wanna.vdjsample` | yes |
+| `length` | catalog | `4bt` | `4bt` | no |
+| `pos` | catalog | `00:00.0` | `00:00.0` | no |
+
+**Six `song_fields` members answer on a verb the artifact never associated with
+the group.** `tests/binary-vocabularies.json` lists `song_fields` against
+`browser_sort`, `get_karaoke_background_song` and `get_next_karaoke_song` only.
+The association is Tier-2 by construction — it records which verbs the binary is
+seen to walk the table from — and this is a Tier-1 observation that a fourth verb
+accepts its members. `fullpath` is `filepath` + `filename`, which is a coherence
+check on all three.
+
+**Position 1 is read.** Five tokens separate slot 1 from slot 2, so the slot
+argument is not decorative. This settles what `probe_arg_positions.py` had to
+leave as `variant-indistinct-from-nonsense` in the same session — and shows the
+prober's blind spot: it picks its keyword pair from the catalog list without
+asking whether either word *answers*. Its pair here was (`group`, `length`), and
+`group` is empty on both of these samples while `length` is `4bt` on both, so no
+comparison it could make would have separated the slots. **A keyword pair that
+both return the floor proves nothing, and nothing in the prober notices.**
+
+**`group` is undiscriminated here, not refuted.** It returns `''` on both samples,
+which is the floor — but the 2026-09-06 entry recorded `group` → `Drums` on a
+sample that had one. This bank simply assigns no groups.
+
+**The other 31 `song_fields` members return `''`** — `album`, `artist`, `genre`,
+`comment`, `composer`, the `iart`/`icmt`/`inam` tag-frame names and the two-letter
+codes. Undiscriminated on these two samples, which carry no such tags; a sample
+with full metadata would separate them. Recording that as a negative would be the
+error the probing rule exists to prevent.
+
+## Plugin Channel Re-Taken On A Second Machine, 2026-09-09: 20 Verbs Move, And They Move In Groups
+
+Build 18.0.9583, VDJIntrospect at `OnLoad`, 1,032 probes. The August capture in
+`tests/plugin-introspection.json` was taken on the other machine (build 18.0.9598,
+different library) on 2026-08-14 with 1,028 probes. Same plugin, same trigger,
+same tool version — so the diff isolates machine and state.
+
+**1,028 shared verbs, 20 changed channel.** The four new probes
+(`goto_beat_in_bar`, `karaoke_clear`, `repeat_start_fade`, `shoutout`) come from
+the repo's own verb-table refresh, not from the app: `plugin-prepare` writes the
+probe list from `tests/verb-table.json`, which grew since August.
+
+The 20 are not scattered. They fall into two families, and both are state:
+
+- **Gained the text channel (11, `neither` → `text`)** — every
+  `get_effect_slider_*` and `get_effect_button_*` name/label/text variant, plus
+  `get_video_fx_slider_label`. These report the label of whatever occupies an
+  effect slot; with nothing loaded there is no label to return, and the probe
+  reads as "no such channel". The slots were occupied at load time here and were
+  not in August.
+- **Lost the text channel (8, `text` → `neither`, all `S_FALSE`)** —
+  `get_browsed_album`, `get_browsed_color`, `get_browsed_genre`, `filter_label`,
+  `filter_selectcolorfx`, `get_status`, `sidereco_source`, `sideview_sort`.
+  Browser and sideview readers, which need a browsed item; `S_FALSE` is the text
+  channel's "nothing to say", not a refusal.
+- `effect_colorslider` went `numeric` → `both`.
+
+**This quantifies a caveat the repo already carried.** The channel map's own note
+says an `E_INVALIDARG` from a load-time probe means "not available now", not "no
+such form", and directs negatives to the delayed sweep. The size of that effect
+had never been measured: **about 2% of the vocabulary moves between two ordinary
+load-time sweeps**, and every mover is a verb that reads something the app may or
+may not have yet. The 418 `neither` verbs are unchanged in count across both
+captures, so the churn is entirely within the answering set.
+
+**Method consequence, and it is the same one the argument-position prober
+learned today**: `OnLoad` is a state, not the absence of one. A single capture is
+a measurement of whatever the app happened to have open. `probes-late.txt` is now
+written, so the next restart also produces the 40-second delayed sweep for free
+(`just plugin-collect-late <name>`) — the direct test of whether the browser
+readers come back once the browser is initialised.
+
+### The Delayed Sweep Settles Which Kind Of Absence Each One Was
+
+Same session, same machine, `probes-late.txt` armed so the plugin re-swept 40 s
+after load (`tests/plugin-introspection-late-9583.json`). **8 of 1,032 verbs moved
+between `OnLoad` and +40 s, and 0 lost a channel** — the delayed sweep is strictly
+more informative at load-adjacent state, never less.
+
+- **6 gained a channel, and all six are `get_browsed_folder*`**: `_folder`,
+  `_folder_path` → `text`; `_folder_icon`, `_folder_scrollpos`, `_folder_scrollsize`,
+  `_folder_tab` → `both`. This is the browser initialising after `OnLoad`, which is
+  exactly what the delayed sweep was written for, now demonstrated rather than
+  assumed.
+- **2 changed kind**: `effect_arm_select` and `effect_arm_select_popup`,
+  `numeric` → `both`.
+
+**The 8 verbs that read `neither` here but `text` in August did NOT come back**,
+and that is the interesting half. They are not late-initialising and not
+unavailable — the browser is up (`get_browsed_folder` → `Tracks (1)`) and a song
+is browsed (`get_browsed_song 'title'` → `I Wanna Dance With Somebody`). They are
+**empty because this track carries no such tags**: `get_browsed_song 'album'` and
+`'genre'` return `''` over HTTP too, in the same state, in the same instant.
+
+So an absent channel in a plugin capture is three different facts wearing one
+face, and only the third is about the library:
+
+| Absence | Signature | Example |
+| --- | --- | --- |
+| Subsystem not up yet | comes back in the +40 s sweep | `get_browsed_folder*` |
+| Nothing in the slot | differs between two load-time sweeps | `get_effect_slider_label` |
+| The item has no such field | stable across both, and HTTP agrees | `get_browsed_album`, `get_browsed_genre` |
+
+The third is the same fact that left 31 of `song_fields` undiscriminated on the
+two loaded samples earlier today, and the same one that made this machine's
+capture differ from August's. **A capture cannot distinguish them on its own** —
+it takes the delayed sweep for the first and an independent read for the third.
+Recording any of them as "the verb has no text channel" would be wrong in three
+different ways.
+
+## Two Absences Resolved Against Ground Truth, 2026-09-09
+
+**`get_browsed_album` / `get_browsed_genre`: the field is empty, and the Tag
+Editor says so.** The library had been mid-ingest (1,500 FLACs) when the earlier
+reads were taken, which is a fair alternative explanation — so it was re-tested
+after the digest. `artist`, `grouping`, `remix`, `bpm` and `key` now all answer on
+the browsed track; `album` and `genre` still return `''`, and VirtualDJ's own Tag
+Editor shows both fields blank on that file. **An empty field and an unavailable
+verb are indistinguishable through this channel, and only the UI separates them.**
+This is the third absence category in the plugin section above, now confirmed
+against ground truth rather than inferred.
+
+`get_browsed_color` behaves differently from both: bare, it returns
+`error:-2147024891` rather than an empty string, so it is not the same case as
+album/genre and has not been characterised.
+
+**`automix_editor_movetrack` is action-only; the editor was a red herring.** It
+had been filed as "wants the automix editor open, and no fixture establishes
+that". The editor was opened by hand — `automix_editor` returns `yes`, so it is
+open and that verb reports it — and `automix_editor_movetrack` still returns the
+same error in **every** form, bare included. Three sources agree and always did:
+the contracts artifact has `executes: true` with no query capability, the
+existence sweep says `kind: action-only`, and the plugin capture says
+`channel: neither` (E_INVALIDARG / S_FALSE). It cannot answer a query in any
+state. `just verb-contract` also has its argument in **slot 2** with
+`method_strings` `previous`/`current`/`next`, which is where its keywords live.
+
+**Invariance check, and a correction to how this was framed.** E_NOTIMPL comes
+back identically with the editor **open** and **closed** (`automix_editor` → `yes`
+then `no`), with 0 songs in the automix, bare, and in every documented form
+including the appendix's verbatim `automix_editor_movetrack 'current' +10`. The
+number carries no unit and none was sent — a bare signed integer, as the doc
+writes it. So the code is the dispatch saying "this is not a query verb", which
+is structural and cannot be changed by state.
+
+**The readback exists, and three of the verbs I went looking for do not.**
+`get_playlist_song`, `playlist_count` and `automix_editor_getselectedtrack` all
+return E_FAIL — and all three are `in_verb_table: false`. They are names I
+constructed from the family, not verbs, and the verb table decides existence
+outright (rule 1b). Their E_FAIL was never evidence of anything, and building
+"there is no readback" on one of them was a mistake that a single
+`just verb-table <name>` would have caught before the conclusion was written.
+
+The real readback is `get_automix_song`, and the catalog documents a shape the
+probe had not used: **field first, index second** — "get a property from the next
+song in automix: `get_automix_song 'title'`; you can also get properties from
+songs further down: `get_automix_song 'title' 2`". With six tracks in the automix
+and it playing:
+
+| Query | Answer | Automix list position |
+| --- | --- | --- |
+| (playing) | `I Wanna Dance With Somebody` | 1 |
+| `get_automix_song 'title' 1` | `Concentrate` | 2 |
+| `get_automix_song 'title' 2` | `Chediak, SPEEDTEST` | 3 |
+| `get_automix_song 'title' 3` | `Rome Fortune, Sam WOLFE…` | 4 |
+
+Checked against the Automix panel itself: **the index is 1-based from the NEXT
+song**, not from the head of the list, so the currently-playing track is not
+addressable through this verb. `'artist'` works the same way. This is a verified
+track-order readback and it is what an execute-position test of
+`automix_editor_movetrack` needs.
+
+**The automix has three separable states, and conflating them produced a wrong
+claim in the first draft of this entry.** They are:
+
+1. **content** — tracks in the automix list;
+2. **enabled** — `automix` reports `yes`/`no`;
+3. **playing** — the transport actually running.
+
+The first draft said "`automix` flipped from `no` to `yes` when tracks were
+added". That is not supported: `automix` was not queried between the tracks being
+added and the automix being started, so the two changes are not separated by any
+observation. Only the state changes actually bracketed by a query can be claimed:
+
+| Verb | Empty automix | Populated | Enabled + playing |
+| --- | --- | --- | --- |
+| `get_playlist_time` | `error:1` | `24:02` | `21:21` |
+| `get_automix_song 'title' 1` | E_FAIL | E_FAIL | `Concentrate` |
+| `automix` | `no` | *(not queried)* | `yes` |
+
+So `get_playlist_time` is **content-gated** — it answers as soon as there are
+tracks, with automix neither enabled nor playing. `get_automix_song` needs
+**something beyond content**, because it was still E_FAIL with the list
+populated; whether that something is *enabled* or *playing* is undetermined here,
+and the two were changed together. Separating them is one query away — pause the
+automix while leaving it enabled and re-read — and until that is run, "needs
+automix running" is a lead, not a result.
+
+This is the same failure the fixtures were built to prevent, one level down: a
+named state has to name every dimension it pins, or two of them move together and
+the result cannot say which mattered.
+
+But "unprobeable by this channel in this shape" was the wrong conclusion to draw
+from that. It is perfectly probeable in **execute** position, which is a
+different instrument this repo already has — `probe_execute_forms.py`, with its
+allowlist, round-trip before, restore-and-verify after, and abort on a failed
+restore. What actually blocks that test is the **readback**:
+`automix_editor_getselectedtrack` returns E_FAIL, so there is no way to observe a
+track's position before and after a move, and executing a write we cannot verify
+or restore is exactly what rule 4 forbids. Three preconditions, none of them a
+fixture in the usual sense:
+
+1. the editor open — the doc states it, and `automix_editor` reports it;
+2. tracks actually in the automix — it currently holds 0 songs, so there is
+   nothing to move (`get_playlist_song 1 'title'` and `playlist_count` both
+   E_FAIL while empty; whether they answer once populated is the thing to check);
+3. a readback for track order — the open question, and the real blocker.
+
+**Shape fact from the appendix, not yet in any artifact**: "When the number is not
+given it can be mapped to rotary knobs or jog wheels". The second argument is
+therefore **optional**, and the bare-keyword form is a knob-mapped variant rather
+than an incomplete call — so the shape is `KW [REL]`, not `KW REL`.
+
+The prober now carries `sweep_kind` per verb and splits its silences:
+`no_answer_expected_action_only` (automix_editor_movetrack, eq_mode, speedwheel)
+from `no_answer_unexplained` (get_next_karaoke_song, os2l_cmd, padfx). Only the
+second list is worth chasing. **The classification labels, it never skips** —
+`answers_despite_action_only` records `stem_pad`, which the sweep calls
+action-only and which answers anyway, and skipping that class would have
+discarded the run that confirmed its `isolate` token.
+
+**Caveat on this run's two weakest rows.** `stem_pad` has now scored `reads` in
+two of four runs today and `rejects-nonsense-only` in the other two, stable
+within each run — so it disagrees with itself ACROSS runs, which nothing in the
+artifact can see, since each capture is one run. `slicer` read in 1 of 6 states.
+Neither is claimable. The repo's own rule already says only two independent runs
+catch slow drift; the position prober has no equivalent of
+`probe_arg_forms.py --repeat` and its union merge, and it needs one.
+
+## The Plugin Channel Does NOT Separate "Empty" From "Unimplemented" — HTTP Does
+
+Build 18.0.9583, 2026-09-09, re-swept in place with `just plugin-go` while the
+browsed track was known-good ground truth (Tag Editor open, `album` and `genre`
+visibly blank). Capture: `tests/plugin-introspection-browsestate.json`.
+
+The hypothesis was reasonable and the repo's own framing invited it: the plugin
+sees the native call and returns the HRESULT *separately from* the value, so it
+should carry a type distinction that HTTP's flattened text throws away. **For this
+distinction it does not.**
+
+| Verb | Why it is silent | Plugin numeric | Plugin text | HTTP |
+| --- | --- | --- | --- | --- |
+| `get_browsed_title` | populated | E_INVALIDARG | **S_OK** `'I Wanna Dance…'` | `I Wanna Dance…` |
+| `get_browsed_bpm` | populated, numeric | **S_OK** `116.35` | S_OK | `116.4` |
+| `get_browsed_album` | **field is empty** | E_INVALIDARG | **S_FALSE** `''` | `''` |
+| `get_browsed_genre` | **field is empty** | E_INVALIDARG | **S_FALSE** `''` | `''` |
+| `automix_editor_movetrack` | **no query implementation** | E_INVALIDARG | **S_FALSE** `''` | `error:-2147467263` |
+| `eq_mode`, `speedwheel` | **no query implementation** | E_INVALIDARG | S_FALSE `''` | E_NOTIMPL |
+
+**An empty field and an unimplemented query are byte-identical on the plugin
+channel** — E_INVALIDARG numeric, S_FALSE text, empty string — while **HTTP
+separates them outright**: the empty field returns an empty body and the
+unimplemented query returns `error:-2147467263` (E_NOTIMPL). The flattened text
+channel carries a distinction the native one loses.
+
+The reason is which interface each asks. `GetInfo`/`GetStringInfo` are the *query*
+interface: a verb with no query implementation and a query with nothing to say
+both come back as "not answering here", and S_FALSE is the text channel's single
+word for both. HTTP `/query` reaches the action dispatch, which reports
+E_NOTIMPL from the verb itself.
+
+**So the two channels are complementary and neither dominates.** The plugin's
+documented strength stands — it is still the only way to separate a recognized
+keyword from a silently-ignored one, because it exposes the HRESULT at all. But
+for "does this verb answer queries, or does it just have nothing to say right
+now", **HTTP is the better instrument**, and the structural artifacts
+(`just verb-contract`, the existence sweep's `kind`) settle it without any live
+instance. Reaching for the richer channel is not automatically the right move.
+
+Incidental, same capture: `automix_editor` reads `on` with S_OK on both channels
+while the editor is open, confirming it as a real state query. `get_automix_song`
+is E_INVALIDARG/S_FALSE and `error:-2147467259` (E_FAIL) over HTTP — E_FAIL, not
+E_NOTIMPL, so unlike `movetrack` it *has* a query that failed in this state.
+
+## `automix_editor_movetrack` In Execute Position, 2026-09-09: Dispatch Confirmed, Effect Not
+
+Build 18.0.9583, HTTP, **execute position**, guarded the way
+`probe_execute_forms.py` requires: independent readback first, one change, verify,
+restore, verify the restore, abort rather than leave the automix reordered.
+
+**`automix_editor` is an execute toggle, and this is fully confirmed.**
+`execute automix_editor` returns `true` and the query flips `no` → `yes`; running
+it again flips `yes` → `no`. Both directions observed, and the editor was left as
+it was found. So the doc's precondition ("when the automix editor is opened") is
+reachable from script, in both directions, with a readback for the state.
+
+**`automix_editor_movetrack 'next' +1` returned `true` in execute position**,
+where every query-position form returns E_NOTIMPL. That settles the dispatch
+question: the verb is real, it is execute-only, and it accepts the appendix's
+documented form. It is **not** the "counterintuitive syntax" the forum threads
+suspect — the syntax is fine, it simply cannot be explored by querying, which is
+how most people would try.
+
+**The effect is NOT confirmed, and `true` is not evidence of one.** The repo's own
+rule applies: a `/execute` body is the action's own return value, not transport
+success. By the time the test ran the automix had drained to its final track
+(deck 1 playing `SIDEPIECE`, the sixth and last; `get_playlist_time` 03:24), so
+`get_automix_song 'title' 1` was E_FAIL throughout — **there was no next song to
+move**. The readback was flat before the write as well as after, so nothing was
+verified in either direction, and the restore step was correctly skipped rather
+than blindly applied. No reordering was observed and none was left behind.
+
+**This refines the gating question one more step.** `get_automix_song` E_FAILs
+when the automix is populated but not running, AND when it is running but has no
+next song. The common factor is not *enabled* and not *playing* — it is **a next
+song existing in the queue**. That is a third reading neither of the two earlier
+candidates covered, and it is why the tail of an automix looks identical to an
+empty one through this verb.
+
+**To finish**: re-populate the automix so at least three tracks sit ahead of the
+playhead, then re-run. The move is one execute, the verification is a
+before/after read of `get_automix_song 'title' 1..3`, and the restore is the
+inverse move. The script is `-1` for `+1`; whether the inverse is exact is itself
+part of what the test would establish.

@@ -1,0 +1,12 @@
+# Python dependencies for the extraction tooling.
+#
+# Install with `just install` (uv, into .venv/), not by hand — the justfile
+# runs .venv/bin/python3 when that directory exists and falls back to the system
+# python3 when it does not.
+#
+# numpy: the Mach-O readers vectorise the ADRP/ADD pair walk and the pointer
+# scans in tools/extract_binary_vocabularies.py over whole __TEXT/__DATA
+# sections. Every binary-derived artifact goes through that module —
+# skin-classes, skin-reader-vocabulary, and the action catalog's placeholder
+# filter all import it.
+numpy>=2.1

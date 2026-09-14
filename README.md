@@ -14,6 +14,29 @@ VirtualDJ does not publish a comprehensive developer reference; this repo fills 
 - **`tests/`** — reproducible documentation test harnesses, pad-page XML fixtures, and the **extracted data artifacts**: `verb-table.json` (the authoritative verb set), `action-contracts.json` (per-verb implementation contract), `verb-return-types.json` (observed types and boolean truth), `verb-existence-sweep.json`, `action-catalog.json` (816 vendor descriptions), `attested-tails.json` (argument tails and shapes Atomix wrote), `binary-vocabularies.json` (argument enumerations as groups), `vdjscript-corpus.json` (vendor snippets from every mined source) and `verb-arg-forms.json` (probe results), plus the `plugin-introspection*.json` captures from the native channel
 - **`tools/`** — extractors, sweeps, linters and the `just` query API; every artifact is regenerable and gated by `just check`
 
+## Setup
+
+```
+just install        # once per clone: creates .venv (uv) and installs requirements.txt
+just doctor         # environment health: python, packages, uv, VirtualDJ, live channel
+just check          # everything gated
+```
+
+`just install` needs [uv](https://docs.astral.sh/uv/) (`brew install uv`); it
+pins the interpreter from `.python-version` and installs `requirements.txt`.
+Every recipe then runs `.venv/bin/python3`, falling back to the system `python3`
+when no venv exists, so a fresh clone still answers a lookup question without
+any setup at all.
+
+Run `just install` again after a python upgrade moves the interpreter out from
+under the venv. `just doctor` is the `brew doctor` of this repo and the first
+thing to run when something behaves oddly: it names the interpreter in use,
+whether it can import what the extraction tools need, which VirtualDJ is
+installed against the builds the artifacts are anchored to, and whether the live
+probe channel answers. Only the python section can fail — the extraction tools
+read the VirtualDJ Mach-O binary through numpy, and the failure when it is
+missing is quiet rather than loud.
+
 ## Where to start
 
 | Goal | File |
