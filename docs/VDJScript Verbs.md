@@ -116,11 +116,13 @@ Promote compact official entries into curated sections when they become relevant
 
 ### Action vs Query vs Dual Verbs
 
-- `Action` verbs primarily do something: `play_pause`, `load`, `skin_panel`
-- `Query` verbs primarily return information: `get_browsed_song`, `get_time`, `sampler_loaded`
-- `Dual` verbs are often used both ways: `filter`, `setting`, `var`
+Every verb is one C++ class, and the class implements an execute method, a query method, or both. `Kind` records which (`tests/action-contracts.json`, cross-checked against the HTTP existence sweep; `just verb <name>` shows both):
 
-When a verb is documented here as `Dual`, that means it is commonly used in both action chains and value/query contexts.
+- `Action` verbs implement only execute: `clear_search`. Queried, they error.
+- `Query` verbs implement only query: `get_time`, `sampler_loaded`, `var`, `nothing`. Placed in an action chain they are merely evaluated, which is how `down`, `up` and `holding` work as conditions.
+- `Dual` verbs implement both: `play`, `load`, `filter`, `setting`. Most transport, cue and loop verbs are `Dual` because skins query them for state (`play` reads the play state) as well as triggering them.
+
+`Kind` is structural. It says the slot exists, not what it returns or which arguments it takes; those are Tier-1 observations recorded separately. The two grammar constructs with no class, `while_pressed` (`modifier`) and `ONINIT` (`special-control`), keep their own labels.
 
 ### Deck Scoping
 

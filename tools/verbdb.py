@@ -50,6 +50,13 @@ CSV_FIELDS = {"aliases", "surfaces"}
 # Fields that accumulate instead of replacing, so recording a second observation
 # does not silently discard the first.
 APPEND_FIELDS = {"evidence"}
+# `kind` is which of onExecute / onQuery the verb's ACTION_ class implements
+# (tests/action-contracts.json, cross-checked against the HTTP sweep): `Dual`
+# both, `Action` execute only, `Query` query only. The sweep's own outcome
+# words (query / action-only / needs-args) are joined at read time as
+# `http_probe`, never stored here. `modifier` and `special-control` mark the
+# grammar constructs that are not verbs and have no class.
+KINDS = {"Action", "Query", "Dual", "modifier", "special-control"}
 BOOL_FIELDS = {"official", "needs_test", "blocked"}
 # Fields settable via `put`. `forms`/nested contract detail are hand-edited in JSON.
 SETTABLE = {
@@ -403,6 +410,8 @@ def coerce(field: str, value: str):
         return [value.strip()] if value.strip() else []
     if field == "test_status" and value not in TEST_STATUSES:
         sys.exit(f"test_status must be one of {sorted(TEST_STATUSES)}")
+    if field == "kind" and value not in KINDS:
+        sys.exit(f"kind must be one of {sorted(KINDS)}")
     return value
 
 
@@ -750,6 +759,9 @@ def cmd_check(args):
         st = rec.get("test_status", "Untested")
         if st not in TEST_STATUSES:
             errors.append(f"{name}: invalid test_status '{st}'")
+        if rec.get("kind") is not None and rec["kind"] not in KINDS:
+            errors.append(f"{name}: invalid kind '{rec['kind']}' "
+                          f"(one of {sorted(KINDS)})")
         # A tested status must carry its proof as structured evidence, not just a
         # free-text note. This is the gate that keeps status and evidence from
         # drifting apart the way the bootstrap-seeded records once did.
