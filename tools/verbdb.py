@@ -563,6 +563,34 @@ def cmd_uncategorized(args):
           "set one with `just put-verb <name> section='<Section>'`", file=sys.stderr)
 
 
+def cmd_sections(args):
+    """The section vocabulary, as a query: each section with how many non-alias
+    records it holds and how many of those have a tested status. Aliases are
+    left out because they carry no section of their own. Uncategorized records
+    appear last as `(none)` so the gap is part of the same view."""
+    as_json = "--format=json" in args
+    store = load_store()
+    rows: dict[str, dict] = {}
+    for rec in store.values():
+        if rec.get("tier") == "alias":
+            continue
+        key = rec.get("section") or "(none)"
+        row = rows.setdefault(key, {"section": key, "verbs": 0, "tested": 0})
+        row["verbs"] += 1
+        if rec.get("test_status") not in (None, "", "Untested"):
+            row["tested"] += 1
+    ordered = sorted(rows.values(), key=lambda r: (r["section"] == "(none)", -r["verbs"], r["section"]))
+    if as_json:
+        print(json.dumps(ordered, indent=1, ensure_ascii=False))
+        return
+    width = max(len(r["section"]) for r in ordered)
+    print(f"{'section':{width}}  verbs  tested")
+    for r in ordered:
+        print(f"{r['section']:{width}}  {r['verbs']:5d}  {r['tested']:6d}")
+    print(f"\n# {len(ordered) - ('(none)' in rows)} sections; filter with "
+          "`just list-verbs --section='<name>'`", file=sys.stderr)
+
+
 FILTERS = {"surface", "section", "tier", "status", "kind", "module"}
 
 
@@ -762,6 +790,7 @@ COMMANDS = {
     "next-incomplete": cmd_next_incomplete,
     "stats": cmd_stats,
     "uncategorized": cmd_uncategorized,
+    "sections": cmd_sections,
     "search": cmd_search,
     "check": cmd_check,
 }
@@ -776,6 +805,8 @@ USAGE = """usage: verbdb.py <command> ... | verbdb.py <verb-name>
                   --needs-test --format=json --limit=N]
   next-incomplete        next active (non-hardware-blocked) work item
   stats                  counts by tier / test status
+  sections [--format=json]
+                         the section vocabulary with per-section counts
   uncategorized [--format=json]
                          non-alias records with no section, with their b9246 module
   check                  validate the store

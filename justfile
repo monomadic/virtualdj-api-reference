@@ -137,6 +137,11 @@ verb-stats:
 uncategorized-verbs *args:
     @python3 tools/verbdb.py uncategorized {{args}}
 
+# The section vocabulary with per-section verb and tested counts; the names to
+# pass to `list-verbs --section=`. A query on the store, never written down.
+list-verb-categories *args:
+    @python3 tools/verbdb.py sections {{args}}
+
 # Contract coverage across every verb, per dimension, recounted from the
 # artifacts. `--settled` names the finished verbs, `--frontier` names what each
 # dimension is waiting on. Read-only; touches no live instance.
