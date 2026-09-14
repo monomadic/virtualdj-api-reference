@@ -14,11 +14,11 @@
    "by_test_status": {
     "Fail": 10,
     "Partial": 39,
-    "Pass": 108,
-    "Untested": 881
+    "Pass": 109,
+    "Untested": 880
    },
-   "documented": 771,
-   "tested_pass": 108,
+   "documented": 772,
+   "tested_pass": 109,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -1152,14 +1152,18 @@
     "browser"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
     "Binary verb table (VirtualDJ 2026): shares id 314 with browser; flags=1 marks the alias spelling, canonical flags=0. Structural, from tools/extract_verb_table.py — not inferred from name resemblance.",
-    "Source module (bundle 18.0.9246 STABS): ACTION_browser_zoom is compiled in action_browser.cpp, a module graded mixed, its 68 already-sectioned verbs (Hidden Button Editor excluded) are 75% 'Browser'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works."
+    "Source module (bundle 18.0.9246 STABS): ACTION_browser_zoom is compiled in action_browser.cpp, a module graded mixed, its 68 already-sectioned verbs (Hidden Button Editor excluded) are 75% 'Browser'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
+    "Local observation 2026-09-14 (GUI, installed build 18.0.9598, reported by the repo owner): both `browser` and `browser_zoom` toggle the library on and off, consistent with the shared verb-table id. Bare form only; no argument forms probed.",
+    "Local observation 2026-09-14 (GUI, installed build 18.0.9598, reported by the repo owner): both browser and browser_zoom toggle the library on and off, consistent with the shared verb-table id. Bare form only; no argument forms probed."
    ],
-   "section": "Browser"
+   "section": "Browser",
+   "description": "Toggle the library (browser) area on and off; browser is the same verb under its alias spelling",
+   "confidence": "local_test"
   },
   "can_sandbox": {
    "name": "can_sandbox",
