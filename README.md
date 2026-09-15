@@ -53,7 +53,7 @@ missing is quiet rather than loud.
 | Choose or maintain a pad page | [examples/Pads/README.md](examples/Pads/README.md) |
 | Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
-| Check skin/pad XML doc coverage | `just list-xml-elements --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
+| Browse skin elements / check XML doc coverage | `just list-skin-elements` / `just list-skin-elements --family=all --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
 | Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
 | Validate skin/mapper XML | `just lint-skins [paths]` · `just lint-mappers [paths]` · [tools/README.md](tools/README.md) |
 | Run or update a test harness | [tests/README.md](tests/README.md) |
@@ -166,7 +166,7 @@ rather than assembled from documentation.
 ### Other areas
 
 - Skin SDK coverage is broad; the waveform element family is in `docs/Skin Waveforms.md`, and
-  remaining element gaps are tracked mechanically (`just list-xml-elements --undocumented`).
+  remaining element gaps are tracked mechanically (`just list-skin-elements --undocumented`).
 - Controller mapper XML is rewritten around the real `<map value="">` + device-definition
   split, with working mappers in `examples/Mappers/Local/`. Custom device-definition XML is
   official-doc-derived and still not load-tested.

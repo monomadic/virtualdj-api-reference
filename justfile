@@ -135,6 +135,12 @@ element name *args:
 get-xml-element element:
     @{{python}} tools/xmldb.py get "{{element}}"
 
+# Skin and video-skin elements; --family=all includes pads, mappers and samplerbanks.
+list-skin-elements *args:
+    @{{python}} tools/xmldb.py search --family=skin "$@"
+
+# Compatibility for existing scripts and frozen planning references.
+[private]
 list-xml-elements *args:
     @{{python}} tools/xmldb.py search "$@"
 

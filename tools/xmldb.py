@@ -84,7 +84,7 @@ def cmd_search(args):
     data = load()
     hits = []
     for family, name, e in rows(data):
-        if "family" in opts and opts["family"].lower() not in family.lower():
+        if opts.get("family", "all").lower() != "all" and opts["family"].lower() not in family.lower():
             continue
         if opts.get("undocumented") and e["documented"] is not False:
             continue
@@ -104,10 +104,27 @@ def cmd_search(args):
     if fmt == "json":
         print(json.dumps(shown, indent=1, ensure_ascii=False))
     else:
+        from element_summary import doc_sections
+        print("XML corpus usage — observed attributes attest syntax, not behavior.")
+        print("Docs = element-name coverage only; attributes are ordered by usage.\n")
         for h in shown:
-            flag = "" if h["documented"] is not False else "  UNDOCUMENTED"
-            print(f"<{h['element']:<22} [{h['family']:<12}] uses={h['uses']:<5} "
-                  f"attrs={len(h['attributes'])}{flag}")
+            doc = {True: "name documented", False: "NAME UNDOCUMENTED",
+                   None: "no doc coverage check"}[h["documented"]]
+            print(f"<{h['element']}>  [{h['family']}]  {doc}")
+            print(f"  Corpus: {h['uses']} uses in {h['files']} files; "
+                  f"{len(h['attributes'])} observed attributes")
+            attrs = sorted(h["attributes"], key=lambda a: (-h["attributes"][a], a))
+            preview = ", ".join(attrs[:10]) or "none observed"
+            if len(attrs) > 10:
+                preview += f" (+{len(attrs) - 10} more)"
+            print(f"  Attributes: {preview}")
+            sections = doc_sections(h["element"], [h["family"]])
+            for section in sections[:2]:
+                print(f"  Docs: {section['doc']}:{section['line']} — {section['heading']}")
+            if not sections:
+                print("  Docs: no dedicated heading found")
+            print()
+        print("Details, reader leads, probe notes and examples: just element <name>")
     note = f"showing {len(shown)} of {len(hits)}" if len(shown) != len(hits) \
         else f"{len(hits)} match(es)"
     print(f"\n{note}", file=sys.stderr)

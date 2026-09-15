@@ -38,6 +38,7 @@ Nothing here is new evidence: the existing artifacts and docs, read together.
 from __future__ import annotations
 
 import argparse
+from functools import lru_cache
 import json
 import re
 import subprocess
@@ -70,6 +71,11 @@ def find(name: str, data: dict) -> list[tuple[str, dict]]:
             if name in f["elements"]]
 
 
+@lru_cache(maxsize=None)
+def doc_lines(rel: str) -> list[str]:
+    return (ROOT / rel).read_text(encoding="utf-8").splitlines()
+
+
 def doc_sections(name: str, families: list[str]) -> list[dict]:
     """The element's own headings, so the reader is sent to a section rather
     than to a grep hit in a 2,900-line file."""
@@ -83,7 +89,7 @@ def doc_sections(name: str, families: list[str]) -> list[dict]:
             path = ROOT / rel
             if not path.is_file():
                 continue
-            lines = path.read_text(encoding="utf-8").splitlines()
+            lines = doc_lines(rel)
             for i, line in enumerate(lines, 1):
                 if not line.startswith("#"):
                     continue
@@ -91,6 +97,20 @@ def doc_sections(name: str, families: list[str]) -> list[dict]:
                     out.append({"doc": rel, "line": i,
                                 "heading": line.lstrip("# ").strip()})
     return out
+
+
+def doc_excerpt(section: dict) -> str:
+    """Opening paragraph, with its source label, bounded to the next heading."""
+    paragraph = []
+    for line in doc_lines(section["doc"])[section["line"]:]:
+        if line.startswith("#") or line.startswith("```"):
+            break
+        if not line.strip():
+            if paragraph:
+                break
+            continue
+        paragraph.append(line.strip())
+    return " ".join(paragraph)
 
 
 def doc_mentions_attribute(attr: str, families: list[str]) -> bool:
@@ -242,15 +262,18 @@ def probes(name: str) -> list[dict]:
     return out
 
 
-def usages(name: str, limit: int) -> list[dict]:
+def usages(name: str, limit: int) -> dict:
     """Real files that write the element, shipped ones first — a working example
     usually answers the question outright."""
     try:
         proc = subprocess.run(
-            ["rg", "-l", "--fixed-strings", f"<{name}", "examples", "tests"],
+            ["rg", "-l", "--glob", "*.xml", "--",
+             r"<" + re.escape(name) + r"(?:\s|/?>)", "examples", "tests"],
             cwd=ROOT, capture_output=True, text=True, timeout=30)
     except (OSError, subprocess.SubprocessError):
-        return []
+        return {"files": [], "total": 0, "available": False}
+    if proc.returncode not in (0, 1):
+        return {"files": [], "total": 0, "available": False}
     files = [f for f in proc.stdout.splitlines() if f]
 
     def rank(p: str) -> tuple:
@@ -288,7 +311,7 @@ def summary(name: str, limit: int) -> dict:
             for p in tested:
                 msg += f"\n  {p['fixture']}"
                 for ln in p["lines"][:2]:
-                    msg += f"\n      {ln[:110]}"
+                    msg += f"\n      {ln}"
         if near:
             msg += "\ndid you mean: " + ", ".join(f"<{n}>" for n in near)
         sys.exit(msg)
@@ -317,7 +340,8 @@ def summary(name: str, limit: int) -> dict:
         "attributes_template_params": sorted(a for a, k in kind.items()
                                              if k == "template_param"),
         "template_detection": "ok" if _placeholder_scan_ok else "unavailable (rg failed)",
-        "doc_sections": doc_sections(name, families),
+        "doc_sections": [{**d, "excerpt": doc_excerpt(d)}
+                         for d in doc_sections(name, families)],
         "reader_vocabulary": reader_vocabulary(name),
         "probes": probes(name),
         "usage": usages(name, limit),
@@ -325,7 +349,7 @@ def summary(name: str, limit: int) -> dict:
             "inventory/usage": "Tier 2 — shipped XML attests the form, not the behaviour",
             "doc_sections": "whatever label the section itself carries; check it",
             "reader_vocabulary": "Tier 2 structural — the binary names it; a lead",
-            "probes": "Tier 1 local test — the only source that proves behaviour",
+            "probes": "Fixture README mentions; inspect each source for completed tests, build and outcome",
         },
     }
 
@@ -353,6 +377,8 @@ def render(s: dict) -> str:
         L.append("Documentation")
         for d in s["doc_sections"]:
             L.append(f"  {d['doc']}:{d['line']}  {d['heading']}")
+            if d.get("excerpt"):
+                L.append(f"      {d['excerpt']}")
     else:
         L.append("Documentation: no heading names this element "
                  "(it may still be covered inside a broader section)")
@@ -376,6 +402,7 @@ def render(s: dict) -> str:
                 "template_param": "~", "not_vocabulary": "·"}
         for a in attrs:
             L.append(f"  {MARK[a['kind']]} {a['name']:<24} {a['uses']:>5}")
+        L.append("  unmarked = attribute mentioned somewhere in the family docs; not an element-specific contract")
         if read:
             L.append("  ! = an associated reader references this name; no doc explains it")
             L.append("      Tier 2 lead: the read may target a child node or helper input")
@@ -397,20 +424,25 @@ def render(s: dict) -> str:
     L.append("")
 
     if s["probes"]:
-        L.append("Live probes (Tier 1 — includes negatives recorded nowhere else)")
+        L.append("Probe notes (fixture README mentions; check build, context and outcome)")
         for p in s["probes"]:
             L.append(f"  {p['fixture']}")
             for ln in p["lines"]:
-                L.append(f"      {ln[:110]}")
+                L.append(f"      {ln}")
     else:
         L.append("Live probes: none — no fixture under tests/Skins/ names this element")
     L.append("")
 
     u = s["usage"]
-    if u and u.get("files"):
+    if u and u.get("available") is False:
+        L.append("Usage: unavailable (XML search failed)")
+    elif u and u.get("total"):
         L.append(f"Usage ({u['total']} files write it; shipped first)")
         for f in u["files"]:
-            tag = "built-in" if f["shipped"] else "probe fixture" if f["probe_fixture"] else "example"
+            tag = ("built-in" if f["shipped"] else
+                   "probe fixture" if f["probe_fixture"] else
+                   "personal / quarantined" if "Quarantine" in f["file"] or
+                   "/Local/" in f["file"] else "project example")
             L.append(f"  {f['file']}   [{tag}]")
     else:
         L.append("Usage: no file in the corpora writes this element")
@@ -427,6 +459,8 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--usages", type=int, default=8, metavar="N",
                     help="how many usage files to list (default 8)")
     args = ap.parse_args(argv)
+    if args.usages < 0:
+        ap.error("--usages must be nonnegative")
     s = summary(args.element, args.usages)
     print(json.dumps(s, indent=1) if args.format == "json" else render(s))
     return 0
