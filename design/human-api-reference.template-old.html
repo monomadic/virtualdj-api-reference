@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VirtualDJ Reference</title>
+  <!-- Source template for tools/render_reference.py; generated output lives in build/. -->
+  <style>
+    [hidden] { display: none !important; }
+    .skin-doc { margin: 16px 0; overflow-wrap: anywhere; }
+    .skin-doc p { white-space: pre-wrap; }
+    .skin-attributes .fact span { text-transform: none; letter-spacing: 0; color: var(--text); font-size: 12px; }
+    :root {
+      color-scheme: dark;
+      --bg: #090a0e; --surface: #0c0d14; --surface-2: #11121c; --surface-3: #202230;
+      --text: #eeeef5; --muted: #a5a7bb; --faint: #7d819b;
+      --border: #1c1e2a; --border-strong: #34384b;
+      --accent: #ff3038; --accent-soft: #20131c;
+      --pink: #c4c5d7; --pink-soft: #252535;
+      --teal: #e5e8f1; --teal-soft: #191d29;
+      --amber: #ffb323; --amber-soft: #332715;
+      --blue: #69b2ff; --blue-soft: #15283e;
+      --shadow: none;
+      --sans: "Avenir Next", "Segoe UI", ui-sans-serif, -apple-system, sans-serif;
+      --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+      --bar-h: 108px; --tools-h: 92px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--text); background: var(--bg); font: 14px/1.5 var(--sans); -webkit-font-smoothing: antialiased; }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    code, kbd { font-family: var(--mono); }
+    a { color: var(--accent); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+    /* ---- top bar ------------------------------------------------------- */
+    .bar {
+      position: sticky; top: 0; z-index: 20;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px;
+      min-height: var(--bar-h); padding: 8px clamp(16px, 3vw, 36px);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(16px);
+    }
+    .brand { display: flex; align-items: center; line-height: 0; }
+    .logo { height: 80px; width: auto; border-radius: 7px; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+
+    .domains { display: flex; gap: 2px; padding: 3px; border-radius: 10px; background: var(--surface-2); }
+    .domain { padding: 5px 11px; border: 0; border-radius: 8px; color: var(--muted); background: transparent; font-size: 12px; font-weight: 500; white-space: nowrap; }
+    .domain[aria-selected="true"] { color: var(--text); background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+    .domain[disabled] { color: var(--faint); cursor: not-allowed; }
+    .domain[disabled] small { margin-left: 5px; padding: 1px 5px; border-radius: 4px; background: var(--surface-3); font-size: 9px; text-transform: uppercase; letter-spacing: .05em; }
+
+    .search { position: relative; flex: 1 1 240px; max-width: 560px; }
+    .search svg { position: absolute; left: 12px; top: 50%; width: 16px; color: var(--faint); transform: translateY(-50%); pointer-events: none; }
+    .search input { width: 100%; height: 36px; padding: 0 64px 0 36px; border: 1px solid var(--border); border-radius: 10px; outline: 0; background: var(--bg); }
+    .search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); background: var(--surface); }
+    .search kbd { position: absolute; right: 10px; top: 50%; padding: 1px 6px; border: 1px solid var(--border); border-radius: 5px; color: var(--faint); background: var(--surface-2); font-size: 11px; transform: translateY(-50%); }
+
+    .count { margin-left: auto; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .count strong { color: var(--text); font-family: var(--mono); font-weight: 600; }
+    .count span { color: var(--faint); }
+
+    /* ---- filter row ---------------------------------------------------- */
+    .tools {
+      position: sticky; top: var(--bar-h); z-index: 10;
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+      min-height: var(--tools-h); padding: 8px clamp(16px, 3vw, 36px);
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(12px);
+    }
+    .seg { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--surface); }
+    .seg button { padding: 5px 11px; border: 0; border-right: 1px solid var(--border); color: var(--muted); background: transparent; font-size: 12px; }
+    .seg button:last-child { border-right: 0; }
+    .seg button:hover { color: var(--text); background: var(--surface-2); }
+    .seg button[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+    .chip { padding: 5px 11px; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); background: var(--surface); font-size: 12px; }
+    .chip:hover { color: var(--text); }
+    .chip[aria-pressed="true"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); background: var(--accent-soft); font-weight: 600; }
+    .select { height: 30px; padding: 0 26px 0 10px; border: 1px solid var(--border); border-radius: 8px; color: var(--muted); background: var(--surface); font-size: 12px; appearance: none; -webkit-appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, var(--faint) 50%), linear-gradient(135deg, var(--faint) 50%, transparent 50%);
+      background-position: calc(100% - 14px) 12px, calc(100% - 10px) 12px; background-size: 4px 4px; background-repeat: no-repeat; }
+    .select:has(option:checked:not([value="all"])) { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+    .divider { width: 1px; height: 20px; margin: 0 4px; background: var(--border); }
+    .result-total { margin-left: auto; color: var(--faint); font-size: 12px; }
+    .clear { display: none; color: var(--accent); background: none; border: 0; font-size: 12px; }
+    .clear.visible { display: inline; }
+
+    /* ---- section navigation ------------------------------------------- */
+    .workspace[data-view="verbs"] { grid-template-columns: 220px minmax(250px, 320px) minmax(0, 1fr); }
+    .category-sidebar { position: sticky; top: calc(var(--bar-h) + var(--tools-h)); height: calc(100vh - var(--bar-h) - var(--tools-h)); overflow-y: auto; padding: 24px 12px; border-right: 1px solid var(--border); background: var(--surface); }
+    .category-sidebar summary { padding: 0 12px 18px; color: var(--faint); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; cursor: pointer; }
+    .category { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; width: 100%; padding: 13px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); text-align: left; }
+    .category:hover { background: var(--surface-2); color: var(--text); }
+    .category[aria-pressed="true"] { background: var(--accent-soft); color: var(--text); }
+    .category-label { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+    .category-count, .category-percent { color: var(--faint); font: 11px var(--mono); text-align: right; }
+    .category-track { display: block; height: 4px; overflow: hidden; background: var(--surface-3); border-radius: 4px; }
+    .category-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--teal), #e7b63b); }
+    .category-help { padding: 12px; color: var(--faint); font-size: 11px; line-height: 1.5; }
+    @media (max-width: 1100px) and (min-width: 901px) {
+      .workspace[data-view="verbs"] { grid-template-columns: 180px 250px minmax(0, 1fr); }
+      .category-sidebar { padding-inline: 6px; }
+    }
+    @media (max-width: 900px) {
+      .workspace[data-view="verbs"] { grid-template-columns: minmax(0, 1fr); }
+      .category-sidebar { position: static; height: auto; max-height: 42vh; padding: 14px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
+      .category-sidebar summary { padding: 0; }
+      .category-sidebar details[open] summary { padding-bottom: 12px; }
+    }
+
+    /* ---- workspace ----------------------------------------------------- */
+    .workspace { display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); min-height: calc(100vh - var(--bar-h) - var(--tools-h)); }
+    .results { position: sticky; top: calc(var(--bar-h) + var(--tools-h)); height: calc(100vh - var(--bar-h) - var(--tools-h)); overflow-y: auto; border-right: 1px solid var(--border); background: var(--surface); }
+    .group-head { position: sticky; top: 0; z-index: 1; padding: 8px 16px 4px; color: var(--faint); background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(8px); font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+    .result {
+      display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; align-items: start; gap: 10px;
+      width: 100%; padding: 10px 16px; border: 0; border-bottom: 1px solid var(--border); background: transparent; text-align: left;
+    }
+    .result:hover { background: var(--surface-2); }
+    .result[aria-selected="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 var(--accent); }
+    .result .dot { width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: var(--faint); }
+    .result .dot.verified { background: var(--teal); }
+    .result .dot.partial, .result .dot.caveat { background: var(--amber); }
+    .result .dot.unverified { background: transparent; border: 1.5px solid var(--faint); box-sizing: border-box; }
+    .result code { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; font-weight: 600; }
+    .result p { margin: 2px 0 0; overflow: hidden; color: var(--muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .result p:empty::before { content: "No description"; color: var(--faint); font-style: italic; }
+    .result-tags { display: flex; gap: 4px; flex-direction: column; align-items: flex-end; }
+
+    .type { padding: 2px 7px; border-radius: 6px; font-size: 10px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; }
+    .type.action { color: var(--accent); background: var(--accent-soft); }
+    .type.query { color: var(--blue); background: var(--blue-soft); }
+    .type.dual { color: var(--pink); background: var(--pink-soft); }
+    .type.other { color: var(--muted); background: var(--surface-3); }
+    .flag { padding: 2px 6px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); background: var(--surface); font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .flag.hidden { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 30%, var(--border)); background: var(--amber-soft); }
+    .flag.undocumented { color: var(--pink); border-color: color-mix(in srgb, var(--pink) 30%, var(--border)); background: var(--pink-soft); }
+    .flag.unofficial { color: var(--faint); }
+
+    .empty { padding: 48px 20px; color: var(--muted); text-align: center; }
+    .empty code { color: var(--text); }
+
+    /* ---- detail -------------------------------------------------------- */
+    .detail { min-width: 0; padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 56px) 80px; }
+    .detail-inner { max-width: 860px; }
+    .crumbs { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; color: var(--faint); font-size: 12px; }
+    .crumbs b { color: var(--muted); font-weight: 500; }
+    .crumbs i { font-style: normal; opacity: .6; }
+    .title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .title h1 { margin: 0; font: 600 clamp(24px, 3.6vw, 34px)/1.15 var(--mono); letter-spacing: -.03em; overflow-wrap: anywhere; }
+    .title .copy-name { padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; color: var(--faint); background: transparent; font-size: 11px; }
+    .title .copy-name:hover { color: var(--text); }
+    .description { max-width: 680px; margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .description.none { color: var(--faint); font-style: italic; }
+    .aliases { margin: 8px 0 0; color: var(--faint); font-size: 12px; }
+    .aliases code { color: var(--muted); }
+
+    .signal { display: flex; align-items: flex-start; gap: 10px; margin: 20px 0 0; padding: 12px 14px; border: 1px solid var(--border); border-left-width: 3px; border-radius: 10px; background: var(--surface); }
+    .signal .signal-dot { flex: 0 0 auto; width: 8px; height: 8px; margin-top: 5px; border-radius: 50%; background: var(--teal); }
+    .signal.verified { border-left-color: var(--teal); }
+    .signal.partial, .signal.caveat { border-left-color: var(--amber); }
+    .signal.partial .signal-dot, .signal.caveat .signal-dot { background: var(--amber); }
+    .signal.unverified { border-left-color: var(--border-strong); }
+    .signal.unverified .signal-dot { background: var(--faint); }
+    .signal strong { display: block; font-size: 12px; }
+    .signal p { margin: 2px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .signal-meta { margin-left: auto; padding-left: 12px; color: var(--faint); font-size: 10px; text-align: right; white-space: nowrap; }
+
+    .dimensions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 12px 0 0; }
+    .dimension { padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    .dimension b { display: block; color: var(--faint); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    .dimension span { display: block; margin-top: 2px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+    .dimension.settled span { color: var(--teal); }
+    .dimension.settled { border-color: color-mix(in srgb, var(--teal) 35%, var(--border)); background: var(--teal-soft); }
+    .dimension.open span { color: var(--amber); }
+    .dimension.na { opacity: .55; }
+
+    section.block { margin-top: 32px; }
+    .block-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 10px; }
+    .block-head h2 { margin: 0; color: var(--text); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .block-head span { color: var(--faint); font-size: 11px; }
+
+    .contracts { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); overflow: hidden; }
+    .contract-row { display: grid; grid-template-columns: minmax(0, 1.4fr) 16px minmax(60px, .5fr) auto; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .contract-row:last-child { border-bottom: 0; }
+    .contract-row code { overflow-wrap: anywhere; font-size: 12.5px; }
+    .contract-arrow { color: var(--faint); font-family: var(--mono); text-align: center; }
+    .contract-result { color: var(--accent); font-family: var(--mono); font-size: 12px; font-weight: 600; }
+    .contract-meta { display: flex; align-items: center; gap: 6px; font-size: 10px; }
+    .contract-mode { color: var(--muted); font-weight: 600; }
+    .contract-source { padding: 2px 6px; border-radius: 5px; font-weight: 600; }
+    .contract-source.observed, .contract-source.local { color: var(--teal); background: var(--teal-soft); }
+    .contract-source.curated { color: var(--blue); background: var(--blue-soft); }
+    .contract-source.structural { color: var(--amber); background: var(--amber-soft); }
+    .contract-source.unresolved { color: var(--pink); background: var(--pink-soft); }
+    .none-box { padding: 14px; border: 1px dashed var(--border-strong); border-radius: 10px; color: var(--faint); background: transparent; font-size: 12px; }
+
+    .examples { display: grid; gap: 6px; }
+    .example { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+    .example-label { overflow: hidden; color: var(--faint); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+    .example code { overflow-wrap: anywhere; font-size: 13px; }
+    .copy { padding: 4px 8px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); background: var(--surface-2); font-size: 11px; }
+    .copy:hover { color: var(--text); border-color: var(--border-strong); }
+
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 20px; }
+    .fact span { display: block; margin-bottom: 4px; color: var(--faint); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+    .fact strong { display: block; font-size: 12.5px; font-weight: 500; overflow-wrap: anywhere; }
+    .fact strong code { font-size: 12px; }
+    .surfaces { display: flex; gap: 4px; flex-wrap: wrap; }
+    .surface { padding: 2px 7px; border-radius: 5px; color: var(--teal); background: var(--teal-soft); font-size: 10.5px; font-weight: 600; }
+    .fact .quiet { color: var(--faint); font-weight: 400; font-style: italic; }
+
+    details.technical { margin-top: 28px; border-top: 1px solid var(--border); }
+    details.technical summary { padding: 14px 0 0; color: var(--muted); font-size: 12px; cursor: pointer; user-select: none; }
+    details.technical summary:hover { color: var(--text); }
+    .technical-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; margin: 14px 0 0; }
+    .technical-grid div { display: grid; grid-template-columns: 110px 1fr; gap: 8px; font-size: 11.5px; }
+    .technical-grid dt { color: var(--faint); }
+    .technical-grid dd { margin: 0; overflow-wrap: anywhere; font-family: var(--mono); }
+    .technical-grid .stamp { color: var(--faint); font-family: var(--sans); }
+
+    .footer { padding: 16px clamp(16px, 3vw, 36px); border-top: 1px solid var(--border); color: var(--faint); font-size: 11px; }
+
+    @media (max-width: 900px) {
+      .domains { order: 3; width: 100%; overflow-x: auto; }
+      .search { order: 4; flex-basis: 100%; max-width: none; }
+      .tools { position: static; }
+      .workspace { grid-template-columns: 1fr; }
+      .results { position: static; height: auto; max-height: 42vh; border-right: 0; border-bottom: 1px solid var(--border); }
+      .dimensions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .example { grid-template-columns: 1fr auto; }
+      .example-label { grid-column: 1 / -1; }
+      .contract-row { grid-template-columns: minmax(0, 1fr) 16px auto; }
+      .contract-meta { grid-column: 1 / -1; }
+      .technical-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Screenshot-aligned dark reference layout. */
+    body { font-size: 14px; }
+    button:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    .bar { min-height: 0; gap: 14px 26px; padding: 16px 28px; background: #0b0c12; }
+    .logo { height: 76px; max-width: 100%; object-fit: contain; box-shadow: none; border-radius: 0; }
+    .brand { max-width: 30%; }
+    .domains { padding: 5px; border: 1px solid var(--border); border-radius: 28px; background: var(--surface-2); }
+    .domain { padding: 7px 13px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+    .domain[aria-selected="true"] { color: white; background: var(--accent); box-shadow: none; }
+    .domain[disabled] small { display: none; }
+    .search { max-width: none; flex: 1 1 220px; }
+    .search input { height: 42px; border-radius: 28px; background: var(--surface-2); font-family: var(--mono); font-size: 12px; }
+    .workspace { grid-template-columns: 360px minmax(0, 1fr); min-height: calc(100vh - var(--bar-h)); }
+    .workspace[data-view="verbs"] { grid-template-columns: minmax(220px, 17vw) minmax(300px, 25vw) minmax(0, 1fr); }
+    .category-sidebar { top: var(--bar-h); height: calc(100vh - var(--bar-h)); padding: 22px 8px; background: #0b0d14; }
+    .category-sidebar summary { font-size: 10px; padding-inline: 8px; }
+    .category { border-radius: 6px; padding: 12px 10px; gap: 9px 12px; }
+    .category-label { font-size: clamp(14px, 1vw, 18px); font-weight: 650; }
+    .category[aria-pressed="true"] { background: #172131; }
+    .category-track > span { background: linear-gradient(90deg, #ff3038, #ffb323); }
+    .browse { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); min-width: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .tools { position: static; min-height: 0; padding: 12px; gap: 8px; background: var(--bg); flex: 0 0 auto; }
+    .seg { border: 0; border-radius: 0; gap: 6px; background: none; }
+    .seg button { padding: 5px 9px; border: 1px solid var(--border); border-radius: 22px; font: 700 10px var(--mono); text-transform: uppercase; }
+    .seg button[aria-pressed="true"] { color: white; border-color: var(--accent); background: var(--accent); }
+    .result-total { font: 11px var(--mono); }
+    .extra-filters { width: 100%; }
+    .extra-filters summary { color: var(--faint); font-size: 11px; cursor: pointer; }
+    .filter-options { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 0 0; }
+    .select { max-width: 100%; }
+    .results { position: static; height: auto; flex: 1 1 auto; min-height: 0; border: 0; background: var(--bg); padding: 8px; scrollbar-color: #37394b transparent; }
+    .group-head { padding: 10px; background: var(--bg); }
+    .result { gap: 12px; border: 1px solid transparent; border-radius: 8px; margin-bottom: 7px; padding: 15px 11px; align-items: center; }
+    .result[aria-selected="true"] { background: #101e2b; border-color: #92caff; box-shadow: inset 0 0 0 1px #92caff; }
+    .result code { font-size: clamp(14px, 1vw, 18px); font-weight: 750; }
+    .result p { font-size: clamp(13px, .9vw, 16px); margin-top: 4px; }
+    .result .dot { margin-top: 0; background: #42465f; }
+    .result .dot.verified { background: #f4f5ff; box-shadow: 0 0 9px #c8d7ff66; }
+    .result .dot.caveat, .result .dot.partial { background: var(--amber); box-shadow: 0 0 8px #ffb32355; }
+    .result .dot.unverified { border: 0; background: #42465f; }
+    .result .type { background: none; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
+    .type.action { color: var(--accent); background: #301219; }
+    .type.query { color: var(--blue); }
+    .type.dual { color: #c4c5d7; }
+    .detail { padding: 34px clamp(24px, 3vw, 50px) 70px; }
+    .detail-inner { max-width: 1060px; }
+    .crumbs { font: 700 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 22px; flex-wrap: wrap; }
+    .title h1 { font-size: clamp(24px, 2.4vw, 40px); font-weight: 800; }
+    .description { font-size: 17px; color: #bfc0ce; margin-top: 16px; }
+    .featured-form { margin-top: 30px; background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 7px; overflow: hidden; }
+    .featured-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--border); color: var(--faint); font-size: 11px; }
+    .featured-head b { font: 700 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+    .featured-body { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 16px; }
+    .featured-body > div { min-width: 0; }
+    .featured-body code { font-size: clamp(15px, 1.5vw, 24px); font-weight: 750; overflow-wrap: anywhere; }
+    .featured-body p { color: var(--muted); font-size: 12px; margin: 12px 0 0; }
+    .featured-body strong { color: var(--accent); font-family: var(--mono); }
+    .featured-copy { flex-shrink: 0; padding: 13px 18px; border: 0; border-radius: 4px; background: var(--accent); color: white; font: 800 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; box-shadow: 0 5px 20px #ff303826; }
+    .signal { background: var(--surface); border-left-width: 1px; border-radius: 6px; padding: 16px; }
+    .signal strong { text-transform: uppercase; letter-spacing: .07em; }
+    .signal p { font-size: 12px; line-height: 1.7; }
+    .signal-meta { display: none; }
+    .dimensions { gap: 5px; max-width: 360px; margin-top: 10px; }
+    .dimension { border: 0; border-top: 4px solid var(--border-strong); border-radius: 2px; background: transparent; padding: 5px 4px; }
+    .dimension.settled { border-color: #eeeef5; background: transparent; }
+    .dimension.open { border-color: var(--amber); }
+    .dimension b { font-size: 8px; }
+    .dimension span { font-size: 9px; }
+    .block { margin-top: 30px; }
+    .block-head h2 { font: 800 11px var(--mono); letter-spacing: .12em; }
+    .block-head { flex-wrap: wrap; }
+    .block-head span { font-size: 11px; }
+    .contract-row { background: var(--surface-2); padding: 14px; }
+    .contract-result { color: var(--accent); }
+    .example { background: transparent; border-color: var(--border); }
+    .copy, .copy-name { font: 700 10px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+    .facts { gap: 20px; }
+    .fact span { font-family: var(--mono); letter-spacing: .1em; }
+    @media (max-width: 1200px) and (min-width: 901px) {
+      .workspace[data-view="verbs"] { grid-template-columns: 190px 300px minmax(0, 1fr); }
+      .bar { gap: 12px; padding-inline: 20px; }
+      .logo { height: 62px; }
+      .domain { padding-inline: 9px; }
+      .count { font-size: 10px; }
+      .detail { padding-inline: 22px; }
+      .featured-body { flex-wrap: wrap; }
+    }
+    @media (max-width: 900px) {
+      .workspace, .workspace[data-view="verbs"] { grid-template-columns: minmax(0, 1fr); }
+      .bar { padding: 12px 16px; }
+      .brand { max-width: 100%; }
+      .logo { height: 62px; max-width: 100%; }
+      .category-sidebar { position: static; height: auto; padding: 14px 16px; }
+      .category-sidebar summary { padding: 0; }
+      .browse { position: static; height: auto; max-height: none; border-right: 0; }
+      .results { flex: auto; height: 32vh; max-height: 32vh; }
+      .detail { padding: 28px 20px 60px; }
+      .featured-body { flex-wrap: wrap; }
+      .count { margin-left: auto; }
+      .search { flex-basis: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="#" title="VirtualDJ unofficial API reference"><img class="logo" src="logo.png" alt="VirtualDJ unofficial API reference" width="900" height="265"></a>
+    <nav class="domains" role="tablist" aria-label="Reference domains">
+      <button class="domain" type="button" role="tab" data-domain="verbs" aria-selected="true">Verbs</button>
+      <button class="domain" type="button" role="tab" data-domain="xml" aria-selected="false">Skin elements</button>
+      <button class="domain" type="button" role="tab" data-domain="stems" aria-selected="false" disabled title="Stem sidecar and cache formats — not yet rendered">Stems<small>soon</small></button>
+      <button class="domain" type="button" role="tab" data-domain="internals" aria-selected="false" disabled title="Database, paths, network protocol, and other oddities — not yet rendered">Internals<small>soon</small></button>
+    </nav>
+    <label class="search">
+      <span class="sr-only">Search</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+      <input id="search" type="search" placeholder="Search verbs, sections, aliases" autocomplete="off">
+      <kbd>/</kbd>
+    </label>
+    <div class="count" title="__STAMP__"><strong>__VERB_COUNT__</strong> verbs <span>· build __BUILD__</span></div>
+  </header>
+
+  <main class="workspace" data-view="verbs">
+    <aside class="category-sidebar" aria-label="Verb categories">
+      <details id="categoryDisclosure" open>
+        <summary>Sections · local evidence</summary>
+        <nav id="categories" aria-label="Verb sections"></nav>
+        <p class="category-help">Bars show the share marked locally verified. Counts follow your search and filters.</p>
+      </details>
+    </aside>
+<section class="browse" aria-label="Reference browser">
+  <div class="tools" aria-label="Filters">
+    <div class="seg" role="group" aria-label="Kind">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="Action" aria-pressed="false">Actions</button>
+      <button type="button" data-filter="Query" aria-pressed="false">Queries</button>
+      <button type="button" data-filter="Dual" aria-pressed="false">Dual</button>
+    </div>
+    <span class="result-total" id="resultTotal"></span>
+    <button class="clear" id="clear" type="button">Clear</button>
+    <details class="extra-filters"><summary>More filters</summary><div class="filter-options">
+    <label><span class="sr-only">Section</span><select class="select" id="section"><option value="all">All sections</option></select></label>
+    <label><span class="sr-only">Store tier</span><select class="select" id="tier"><option value="all">All tiers</option></select></label>
+    <label><span class="sr-only">Test status</span><select class="select" id="status"><option value="all">Any status</option><option value="verified">Locally verified</option><option value="partial">Partially verified</option><option value="caveat">Known caveat</option><option value="unverified">Untested</option></select></label>
+    <button class="chip" type="button" data-property="hidden" aria-pressed="false" title="Hidden from the Button Editor list">Hidden</button>
+    <button class="chip" type="button" data-property="undocumented" aria-pressed="false" title="No authored description in the store">Undocumented</button>
+    <button class="chip" type="button" data-property="unofficial" aria-pressed="false" title="Name not in the official appendix">Unofficial</button>
+    </div></details>
+  </div>
+
+    <div class="results" id="results" role="listbox" aria-label="Results"></div>
+    </section>
+    <article class="detail" id="detail" aria-live="polite"></article>
+  </main>
+
+  <footer class="footer">Rendered __RENDERED__ from the verb store, skin inventory and evidence artifacts · __STAMP__ · Evidence tiers: observed and local are direct observation of the running app; curated is vendor prose or shipped script; structural is a binary-derived lead.</footer>
+
+  <script>
+    // Each domain keeps its own data and detail renderer.
+    const domains = {
+      verbs: { label: "VDJScript verbs", records: __RECORDS__ },
+      xml: { label: "Skin elements", records: __SKIN_RECORDS__ },
+    };
+    let domain = "verbs", records = domains.verbs.records;
+
+    const state = { query: "", filter: "all", section: "all", tier: "all", status: "all", property: "all", selected: "" };
+    const $ = id => document.getElementById(id);
+    const results = $("results"), detail = $("detail"), total = $("resultTotal");
+    const sectionSelect = $("section"), tierSelect = $("tier"), statusSelect = $("status"), clearButton = $("clear");
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", "\"":"&quot;"})[c]);
+    }
+    function fillSelect(select, values) {
+      [...new Set(values)].sort((a, b) => a.localeCompare(b)).forEach(value => {
+        const option = document.createElement("option");
+        option.value = value; option.textContent = value;
+        select.append(option);
+      });
+    }
+    fillSelect(sectionSelect, records.map(r => r.section));
+    fillSelect(tierSelect, records.map(r => r.tier));
+
+    function kindClass(kind) { return ["Action", "Query", "Dual"].includes(kind) ? kind.toLowerCase() : "other"; }
+    function flags(record) {
+      return `${record.hidden ? '<span class="flag hidden">Hidden</span>' : ''}${!record.documented ? '<span class="flag undocumented">Undocumented</span>' : ''}${record.official === false ? '<span class="flag unofficial">Unofficial</span>' : ''}`;
+    }
+    function isFiltered() {
+      return state.query || state.filter !== "all" || state.section !== "all" || state.tier !== "all" || state.status !== "all" || state.property !== "all";
+    }
+
+    function visibleRecords(ignoreSection = false) {
+      const q = state.query.trim().toLowerCase();
+      return records.filter(r => {
+        const hay = [r.name, r.description, r.section, r.category, r.tier, r.aliases, ...r.surfaces, ...(r.attributes || []).map(a => a.name)].join(" ").toLowerCase();
+        if (q && !hay.includes(q)) return false;
+        if (state.filter !== "all" && r.kind !== state.filter) return false;
+        if (!ignoreSection && state.section !== "all" && (domain === "xml" ? !r.surfaces.includes(state.section) : r.section !== state.section)) return false;
+        if (state.tier !== "all" && r.tier !== state.tier) return false;
+        if (state.status !== "all" && r.status !== state.status) return false;
+        if (state.property === "hidden" && !r.hidden) return false;
+        if (state.property === "undocumented" && r.documented) return false;
+        if (state.property === "unofficial" && r.official !== false) return false;
+        return true;
+      }).sort((a, b) => {
+        // Grouped view: keep each section together. Searching: exact and
+        // prefix name matches first.
+        if (!q && state.section === "all" && a.section !== b.section) return a.section.localeCompare(b.section);
+        if (q) {
+          const ra = a.name.toLowerCase() === q ? 0 : a.name.toLowerCase().startsWith(q) ? 1 : 2;
+          const rb = b.name.toLowerCase() === q ? 0 : b.name.toLowerCase().startsWith(q) ? 1 : 2;
+          if (ra !== rb) return ra - rb;
+        }
+        return a.name.localeCompare(b.name);
+      });
+    }
+
+    function renderResults() {
+      const visible = visibleRecords();
+      total.textContent = `${visible.length.toLocaleString()} of ${records.length.toLocaleString()}`;
+      clearButton.classList.toggle("visible", !!isFiltered());
+      if (!visible.length) {
+        results.innerHTML = '<div class="empty">No records match.<br><small>Try a shorter search or clear the filters.</small></div>';
+        detail.innerHTML = '<div class="empty">Nothing selected</div>';
+        return;
+      }
+      if (!visible.some(r => r.name === state.selected)) state.selected = visible[0].name;
+      // Group by section only when the list is not already filtered to one.
+      const grouped = state.section === "all" && !state.query;
+      let last = null, html = "";
+      for (const r of visible) {
+        if (grouped && r.section !== last) { html += `<div class="group-head">${escapeHtml(r.section)}</div>`; last = r.section; }
+        html += `<button class="result" type="button" role="option" data-record="${escapeHtml(r.name)}" aria-selected="${r.name === state.selected}">
+          <span class="dot ${escapeHtml(r.status)}" title="${escapeHtml(r.statusLabel)}"></span>
+          <span><code>${escapeHtml(domain === "xml" ? `<${r.name}>` : r.name)}</code><p>${escapeHtml(r.description)}</p></span>
+          <span class="result-tags"><span class="type ${kindClass(r.kind)}">${escapeHtml(r.kind)}</span>${flags(r)}</span>
+        </button>`;
+      }
+      results.innerHTML = html;
+      results.querySelectorAll("[data-record]").forEach(b => b.addEventListener("click", () => select(b.dataset.record)));
+    }
+
+    function select(name, scroll = false) {
+      state.selected = name;
+      history.replaceState(null, "", `#${domain === "xml" ? "xml/" : ""}${encodeURIComponent(name)}`);
+      results.querySelectorAll("[data-record]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.record === name)));
+      if (scroll) scrollListTo(name, "nearest");
+      renderDetail();
+    }
+
+    // Scroll only the list, never the document (scrollIntoView would move both).
+    function scrollListTo(name, block) {
+      const el = results.querySelector(`[data-record="${CSS.escape(name)}"]`);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top - results.getBoundingClientRect().top + results.scrollTop;
+      const bottom = top + el.offsetHeight, view = results.clientHeight;
+      if (block === "center") results.scrollTop = top - view / 2 + el.offsetHeight / 2;
+      else if (top < results.scrollTop + 28) results.scrollTop = top - 28;
+      else if (bottom > results.scrollTop + view) results.scrollTop = bottom - view;
+    }
+
+    function renderDetail() {
+      const visible = visibleRecords();
+      const r = visible.find(x => x.name === state.selected) || visible[0];
+      if (!r) return;
+      if (domain === "xml") { renderSkinDetail(r); return; }
+      const dims = ["return_type", "arguments", "execute", "behaviour"].map(d => {
+        const v = r.dimensions?.[d] || "n/a";
+        const cls = v === "settled" ? "settled" : v === "n/a" ? "na" : "open";
+        return `<div class="dimension ${cls}"><b>${escapeHtml(d.replace("_", " "))}</b><span>${escapeHtml(v)}</span></div>`;
+      }).join("");
+      const sourceRank = {observed: 0, local: 0, curated: 1, structural: 2, unresolved: 3};
+      const forms = [...r.contracts].sort((a, b) => (sourceRank[a.sourceClass] ?? 4) - (sourceRank[b.sourceClass] ?? 4));
+      const best = forms[0];
+      const featured = best ? `<section class="featured-form" aria-label="Highlighted recorded form">
+        <div class="featured-head"><b>Recorded form</b><span class="contract-source ${escapeHtml(best.sourceClass)}">${escapeHtml(best.source)}</span><span>of ${forms.length} recorded forms</span></div>
+        <div class="featured-body"><div><code>${escapeHtml(best.call)}</code><p>${escapeHtml(best.mode)} · returns <strong>${escapeHtml(best.result)}</strong></p></div><button class="featured-copy" type="button" data-copy="${escapeHtml(best.call)}">Copy</button></div>
+      </section>` : "";
+      const contracts = forms.length ? forms.map(c => `<div class="contract-row"><code>${escapeHtml(c.call)}</code><span class="contract-arrow">→</span><span class="contract-result">${escapeHtml(c.result)}</span><span class="contract-meta"><span class="contract-mode">${escapeHtml(c.mode)}</span><span class="contract-source ${escapeHtml(c.sourceClass)}">${escapeHtml(c.source)}</span></span></div>`).join("") : '<div class="none-box">No callable form recorded for this verb.</div>';
+      const examples = r.examples.length ? r.examples.map((e, i) => `<div class="example"><span class="example-label" title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</span><code>${escapeHtml(e.code)}</code><button class="copy" type="button" data-copy="${escapeHtml(e.code)}">Copy</button></div>`).join("") : '<div class="none-box">No example recorded.</div>';
+      const surfaces = r.surfaces.length ? r.surfaces.map(s => `<span class="surface">${escapeHtml(s)}</span>`).join("") : '<span class="quiet">not catalogued</span>';
+      const aliases = r.aliases && r.aliases !== "None" ? `<p class="aliases">Also spelled ${r.aliases.split(", ").map(a => `<code>${escapeHtml(a)}</code>`).join(", ")}</p>` : "";
+      detail.innerHTML = `<div class="detail-inner verb-detail">
+        <p class="crumbs"><b>${escapeHtml(domains.verbs.label)}</b><i>/</i><b>${escapeHtml(r.section)}</b><i>/</i>${escapeHtml(r.tier)} tier</p>
+        <div class="title"><h1>${escapeHtml(r.name)}</h1><span class="type ${kindClass(r.kind)}">${escapeHtml(r.kind)}</span>${flags(r)}<button class="copy-name" type="button" data-copy="${escapeHtml(r.name)}">Copy name</button></div>
+        <p class="description${r.description ? "" : " none"}">${escapeHtml(r.description || "No authored description yet.")}</p>
+        ${aliases}
+        ${featured}
+        <div class="signal ${escapeHtml(r.status)}"><span class="signal-dot" aria-hidden="true"></span><div><strong>${escapeHtml(r.statusLabel)}</strong><p>${escapeHtml(r.note)}</p></div><span class="signal-meta">${escapeHtml(r.evidence === "No behavior evidence" ? "" : "evidence recorded")}</span></div>
+        <div class="dimensions" aria-label="Contract dimensions">${dims}</div>
+        <section class="block"><div class="block-head"><h2>All forms</h2><span>ordered by source evidence · behavior assessed separately</span></div><div class="contracts">${contracts}</div></section>
+        <section class="block"><div class="block-head"><h2>In the wild</h2><span>store first, then shipped scripts</span></div><div class="examples">${examples}</div></section>
+        <section class="block"><div class="block-head"><h2>Facts</h2></div><div class="facts">
+          <div class="fact"><span>Use in</span><div class="surfaces">${surfaces}</div></div>
+          <div class="fact"><span>HTTP return</span><strong><code>${escapeHtml(r.returns)}</code></strong></div>
+          <div class="fact"><span>Button Editor category</span><strong><code>${escapeHtml(r.category)}</code></strong></div>
+          <div class="fact"><span>First sampled build</span><strong><code>${escapeHtml(r.firstSampled)}</code></strong></div>
+        </div></section>
+        <details class="technical"><summary>Technical details</summary><dl class="technical-grid">
+          <div><dt>Table id</dt><dd>${escapeHtml(r.id)}</dd></div>
+          <div><dt>Contract class</dt><dd>${escapeHtml(r.contract)}</dd></div>
+          <div><dt>Module</dt><dd>${escapeHtml(r.module)}${r.moduleBuild ? ` <span class="stamp">(build ${escapeHtml(r.moduleBuild)})</span>` : ""}</dd></div>
+          <div><dt>Editor category</dt><dd>${escapeHtml(r.category)} <span class="stamp">(build ${escapeHtml(r.categoryBuild)})</span></dd></div>
+          <div><dt>Sampled builds</dt><dd>${r.sampledBuilds.length ? r.sampledBuilds.map(escapeHtml).join(", ") : "—"}</dd></div>
+          <div><dt>Evidence</dt><dd>${escapeHtml(r.evidence)}</dd></div>
+          <div><dt>Store tier</dt><dd>${escapeHtml(r.tier)}</dd></div>
+          <div><dt>Official name</dt><dd>${r.official === false ? "no" : "yes"}</dd></div>
+          <div><dt>Editor hidden</dt><dd>${r.hidden ? "yes" : "no"}</dd></div>
+          <div><dt>Documented</dt><dd>${r.documented ? "yes" : "no"}</dd></div>
+          <div><dt>Contract complete</dt><dd>${r.complete ? "yes" : "no"}</dd></div>
+        </dl></details>
+      </div>`;
+      detail.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async e => {
+        const btn = e.currentTarget, was = btn.textContent;
+        try { await navigator.clipboard.writeText(btn.dataset.copy); btn.textContent = "Copied"; }
+        catch { btn.textContent = "Select"; }
+        setTimeout(() => btn.textContent = was, 1200);
+      }));
+    }
+
+    function renderSkinDetail(r) {
+      const families = Object.entries(r.families).map(([name, f]) =>
+        `<div class="fact"><span>${escapeHtml(name)}</span><strong>${f.uses.toLocaleString()} uses · ${f.files} files · ${f.documented ? "name documented" : "name undocumented"}</strong></div>`).join("");
+      const attributes = r.attributes.map(a => `<div class="fact"><span><code>${escapeHtml(a.name)}</code></span><strong>${a.uses.toLocaleString()} uses</strong></div>`).join("");
+      const docs = r.docs.map(d => `<div class="skin-doc"><a href="${escapeHtml(d.url)}">${escapeHtml(d.heading)}</a><p class="quiet">${escapeHtml(d.doc)}:${d.line}</p><p>${escapeHtml(d.excerpt)}</p></div>`).join("");
+      const reader = r.reader;
+      const readerText = !reader.available ? "Reader vocabulary unavailable." : reader.readers.length ?
+        `Named by ${reader.readers.join(", ")} on build ${reader.build}. Structural lead; does not prove behavior.` :
+        "Not named by the bounded reader extraction; this is not evidence of absence from the parser.";
+      const probes = r.probes.map(p => `<details class="technical"><summary>${escapeHtml(p.fixture)}</summary>${p.lines.map(line => `<p>${escapeHtml(line)}</p>`).join("")}</details>`).join("");
+      detail.innerHTML = `<div class="detail-inner">
+        <p class="crumbs"><b>Skin elements</b><i>/</i>${escapeHtml(r.surfaces.join(" · "))}</p>
+        <div class="title"><h1>${escapeHtml(`<${r.name}>`)}</h1><span class="type other">XML element</span>${flags(r)}</div>
+        <p class="description">${escapeHtml(r.description)}</p>
+        <div class="signal unverified"><div><strong>Corpus vocabulary</strong><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute.</p></div></div>
+        <section class="block"><div class="block-head"><h2>Corpus usage</h2></div><div class="facts">${families}</div></section>
+        <section class="block"><div class="block-head"><h2>Observed attributes</h2><span>${r.attributes.length} · ordered by usage</span></div><div class="facts skin-attributes">${attributes || '<div class="none-box">No attributes observed.</div>'}</div><p class="quiet">Includes names written in XML, including template parameters; this is not a complete parser schema.</p></section>
+        <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
+        <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p>${escapeHtml(readerText)}</p></section>
+        <section class="block"><div class="block-head"><h2>Probe notes</h2></div><p class="quiet">Fixture README mentions; inspect the recorded build, context and outcome.</p>${probes || '<div class="none-box">No skin fixture README mentions this element.</div>'}</section>
+      </div>`;
+    }
+
+    const verbCount = document.querySelector(".count").innerHTML;
+    function switchDomain(next, updateHash = true) {
+      if (!domains[next]) return;
+      domain = next; records = domains[next].records;
+      document.querySelectorAll(".domain[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
+      const skin = next === "xml";
+      document.querySelector(".extra-filters").open = skin;
+      document.querySelector(".workspace").dataset.view = next;
+      document.querySelector(".category-sidebar").hidden = skin;
+      sectionSelect.parentElement.hidden = !skin;
+      document.querySelector(".count").innerHTML = skin ? `<strong>${records.length}</strong> skin elements` : verbCount;
+      document.querySelector(".count").title = skin ? "Unique tags from the skin and video-skin inventory" : "Verb table build";
+      $("search").placeholder = skin ? "Search elements, attributes, documentation" : "Search verbs, sections, aliases";
+      sectionSelect.innerHTML = `<option value="all">${skin ? "All skin families" : "All sections"}</option>`;
+      fillSelect(sectionSelect, skin ? records.flatMap(r => r.surfaces) : records.map(r => r.section));
+      tierSelect.innerHTML = '<option value="all">All tiers</option>';
+      fillSelect(tierSelect, records.map(r => r.tier));
+      document.querySelectorAll(".seg, .divider").forEach(el => el.hidden = skin);
+      [tierSelect, statusSelect].forEach(el => el.parentElement.hidden = skin);
+      document.querySelectorAll("[data-property]").forEach(b => b.hidden = skin && b.dataset.property !== "undocumented");
+      document.querySelector('[data-property="undocumented"]').title = skin ? "Element name not mentioned in the family docs" : "No authored description in the store";
+      state.selected = "";
+      clearFilters();
+      if (updateHash) history.replaceState(null, "", skin ? "#xml/" : "#");
+    }
+    document.querySelectorAll(".domain[data-domain]:not([disabled])").forEach(b => b.addEventListener("click", () => switchDomain(b.dataset.domain)));
+
+    function renderCategories() {
+      if (domain !== "verbs") return;
+      const candidates = visibleRecords(true);
+      const groups = new Map([...new Set(records.map(r => r.section))].sort((a, b) => a.localeCompare(b)).map(s => [s, []]));
+      for (const record of candidates) groups.get(record.section).push(record);
+      const focused = document.activeElement?.dataset.section;
+      $("categories").innerHTML = [["all", candidates], ...groups].map(([section, items]) => {
+        const verified = items.filter(r => r.status === "verified").length;
+        const percent = items.length ? Math.round(verified / items.length * 100) : 0;
+        const name = section === "all" ? "All verbs" : section;
+        const explanation = `${verified} of ${items.length} matching verbs marked locally verified`;
+        return `<button type="button" class="category" data-section="${escapeHtml(section)}" aria-pressed="${state.section === section}" title="${escapeHtml(explanation)}">
+          <span class="category-label">${escapeHtml(name)}</span><span class="category-count">${items.length}</span>
+          ${section === "all" ? "" : `<span class="category-track" aria-hidden="true"><span style="width:${percent}%"></span></span><span class="category-percent" aria-label="${escapeHtml(explanation)}">${percent}%</span>`}
+        </button>`;
+      }).join("");
+      $("categories").querySelectorAll("[data-section]").forEach(button => button.addEventListener("click", () => {
+        state.section = button.dataset.section;
+        sectionSelect.value = state.section;
+        refresh();
+        results.scrollTop = 0;
+      }));
+      if (focused) $("categories").querySelector(`[data-section="${CSS.escape(focused)}"]`)?.focus({preventScroll: true});
+    }
+    function refresh() {
+      const active = [state.tier, state.status, state.property].filter(v => v !== "all").length;
+      document.querySelector(".extra-filters summary").textContent = domain === "xml" ? "Skin filters" : `More filters${active ? ` (${active})` : ""}`;
+      renderCategories(); renderResults(); renderDetail();
+    }
+    const bar = document.querySelector(".bar"), tools = document.querySelector(".tools");
+    new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--bar-h", `${bar.offsetHeight}px`);
+      document.documentElement.style.setProperty("--tools-h", `${tools.offsetHeight}px`);
+    }).observe(bar);
+    new ResizeObserver(() => document.documentElement.style.setProperty("--tools-h", `${tools.offsetHeight}px`)).observe(tools);
+    function clearFilters() {
+      Object.assign(state, { query: "", filter: "all", section: "all", tier: "all", status: "all", property: "all" });
+      $("search").value = ""; sectionSelect.value = tierSelect.value = statusSelect.value = "all";
+      document.querySelectorAll("[data-filter]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === "all")));
+      document.querySelectorAll("[data-property]").forEach(b => b.setAttribute("aria-pressed", "false"));
+      refresh();
+    }
+
+    $("search").addEventListener("input", e => { state.query = e.target.value; refresh(); });
+    document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
+      state.filter = b.dataset.filter;
+      document.querySelectorAll("[data-filter]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      refresh();
+    }));
+    sectionSelect.addEventListener("change", e => { state.section = e.target.value; refresh(); });
+    tierSelect.addEventListener("change", e => { state.tier = e.target.value; refresh(); });
+    statusSelect.addEventListener("change", e => { state.status = e.target.value; refresh(); });
+    document.querySelectorAll("[data-property]").forEach(b => b.addEventListener("click", () => {
+      state.property = state.property === b.dataset.property ? "all" : b.dataset.property;
+      document.querySelectorAll("[data-property]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.property === state.property)));
+      refresh();
+    }));
+    clearButton.addEventListener("click", clearFilters);
+
+    document.addEventListener("keydown", e => {
+      const typing = ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName);
+      if (e.key === "/" && !typing) { e.preventDefault(); $("search").focus(); $("search").select(); return; }
+      if (e.key === "Escape" && typing) { document.activeElement.blur(); return; }
+      if ((e.key === "ArrowDown" || e.key === "ArrowUp") && (!typing || document.activeElement.id === "search")) {
+        const visible = visibleRecords();
+        const i = visible.findIndex(r => r.name === state.selected);
+        const next = visible[Math.min(Math.max(i + (e.key === "ArrowDown" ? 1 : -1), 0), visible.length - 1)];
+        if (next) { e.preventDefault(); select(next.name, true); }
+      }
+    });
+
+    // Categories collapse above the results on narrow screens.
+    const narrowSidebar = matchMedia("(max-width: 900px)");
+    const sizeSidebar = () => { $("categoryDisclosure").open = !narrowSidebar.matches; };
+    narrowSidebar.addEventListener("change", sizeSidebar);
+    sizeSidebar();
+    sectionSelect.parentElement.hidden = true;
+
+    // Keep existing verb links and namespace skin links to avoid name collisions.
+    const hash = location.hash.slice(1);
+    if (hash.startsWith("xml/")) switchDomain("xml", false);
+    let wanted = "";
+    try { wanted = decodeURIComponent(hash.startsWith("xml/") ? hash.slice(4) : hash); } catch {}
+    if (wanted && records.some(r => r.name === wanted)) state.selected = wanted;
+    refresh();
+    if (wanted) scrollListTo(wanted, "center");
+  </script>
+</body>
+</html>
