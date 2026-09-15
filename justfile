@@ -192,6 +192,13 @@ probe-long-time:
 long-time-forms name="":
     @{{python}} tools/probe_long_time.py --get "{{name}}"
 
+# --- human-facing reference page ---------------------------------------------
+# Fill design/human-api-reference.template.html from the store and the evidence
+# artifacts (the same join `just verb` makes) into the git-ignored build/ tree.
+# A rendered copy of store data: regenerate it, never commit it.
+reference out="build/reference/index.html":
+    @{{python}} tools/render_reference.py --out "{{out}}"
+
 # --- native effects catalog (swept via the HTTP interface) -------------------
 
 get-fx effect:
