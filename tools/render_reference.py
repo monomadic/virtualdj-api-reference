@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill the human-facing reference template from the verb store.
+"""Fill the human-facing reference from the verb store and skin XML inventory.
 
     just reference                      # → build/reference/index.html
     python3 tools/render_reference.py --out /tmp/x.html
@@ -16,6 +16,8 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
+from urllib.parse import quote
 import shutil
 import sys
 from pathlib import Path
@@ -231,6 +233,40 @@ def record_for(name: str, rec: dict, ctx, corpus, shapes_art, argforms, execform
     }
 
 
+def skin_records(out: Path) -> list[dict]:
+    """Use the same inventory and doc routes as list-skin-elements; one card per tag."""
+    from xmldb import load as load_inventory, rows
+    from element_summary import doc_sections, doc_excerpt, reader_vocabulary, probes
+
+    grouped = {}
+    for family, name, entry in rows(load_inventory()):
+        if family not in {"skins", "video_skins"}:
+            continue
+        grouped.setdefault(name, {})[family] = entry
+    records = []
+    for name, families in sorted(grouped.items()):
+        attributes = {}
+        for entry in families.values():
+            for attr, uses in entry["attributes"].items():
+                attributes[attr] = attributes.get(attr, 0) + uses
+        sections = [{**d, "excerpt": doc_excerpt(d),
+                     "url": quote(os.path.relpath(ROOT / d["doc"], out.resolve().parent))}
+                    for d in doc_sections(name, list(families))]
+        records.append({
+            "name": name, "kind": "Element", "section": next(iter(families)),
+            "surfaces": list(families), "families": families,
+            "attributes": [{"name": a, "uses": n} for a, n in
+                           sorted(attributes.items(), key=lambda item: (-item[1], item[0]))],
+            "description": next((d["excerpt"] for d in sections if d["excerpt"]),
+                                "Observed attributes: " + (", ".join(attributes) or "none")),
+            "documented": any(e["documented"] is True for e in families.values()),
+            "status": "unverified", "statusLabel": "Corpus vocabulary; behavior requires live evidence",
+            "tier": "corpus", "docs": sections, "reader": reader_vocabulary(name),
+            "probes": probes(name),
+        })
+    return records
+
+
 def render(out: Path) -> tuple[int, str]:
     ctx = load_context()
     corpus = load("vdjscript-corpus.json", "snippets")
@@ -241,13 +277,16 @@ def render(out: Path) -> tuple[int, str]:
     records = [record_for(n, r, ctx, corpus, shapes_art, argforms, execforms, vt)
                for n, r in sorted(ctx.canon.items(), key=lambda kv: kv[0].lower())]
     payload = json.dumps(records, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+    skins = skin_records(out)
+    skin_payload = json.dumps(skins, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     stamp = build_stamp()
     build = (vt.get("summary") or {}).get("build", "unknown")
     html = TEMPLATE.read_text()
-    for token in ("__RECORDS__", "__VERB_COUNT__", "__BUILD__", "__STAMP__", "__RENDERED__"):
+    for token in ("__RECORDS__", "__SKIN_RECORDS__", "__VERB_COUNT__", "__BUILD__", "__STAMP__", "__RENDERED__"):
         if token not in html:
             sys.exit(f"template is missing placeholder {token}")
     html = (html.replace("__RECORDS__", payload)
+                .replace("__SKIN_RECORDS__", skin_payload)
                 .replace("__VERB_COUNT__", f"{len(records):,}")
                 .replace("__BUILD__", build)
                 .replace("__STAMP__", stamp)

@@ -53,6 +53,7 @@ missing is quiet rather than loud.
 | Choose or maintain a pad page | [examples/Pads/README.md](examples/Pads/README.md) |
 | Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
+| Browse the rendered reference | `just reference` → `build/reference/index.html` (VDJScript verbs and searchable skin elements) |
 | Browse skin elements / check XML doc coverage | `just list-skin-elements` / `just list-skin-elements --family=all --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
 | Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
 | Validate skin/mapper XML | `just lint-skins [paths]` · `just lint-mappers [paths]` · [tools/README.md](tools/README.md) |

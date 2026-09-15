@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>VDJScript Reference</title>
-  <!-- TEMPLATE: filled by `just reference` (tools/render_reference.py).
-       Placeholders: __RECORDS__ __VERB_COUNT__ __BUILD__ __STAMP__ __RENDERED__
-       Domains other than verbs (skin XML elements, stem formats, internals) are
-       reserved tabs; each gets its own records array and renderer when its data
-       is wired in. -->
+  <title>VirtualDJ Reference</title>
+  <!-- Source template for tools/render_reference.py; generated output lives in build/. -->
   <style>
+    [hidden] { display: none !important; }
+    .skin-doc { margin: 16px 0; overflow-wrap: anywhere; }
+    .skin-doc p { white-space: pre-wrap; }
+    .skin-attributes .fact span { text-transform: none; letter-spacing: 0; color: var(--text); font-size: 12px; }
     :root {
       color-scheme: light dark;
       --bg: #f6f6f8;
@@ -256,7 +256,7 @@
     <a class="brand" href="#" title="VirtualDJ unofficial API reference"><img class="logo" src="logo.png" alt="VirtualDJ unofficial API reference" width="900" height="265"></a>
     <nav class="domains" role="tablist" aria-label="Reference domains">
       <button class="domain" type="button" role="tab" data-domain="verbs" aria-selected="true">VDJScript verbs</button>
-      <button class="domain" type="button" role="tab" data-domain="xml" aria-selected="false" disabled title="Skin, pad, and mapper XML elements — not yet rendered">Skin XML<small>soon</small></button>
+      <button class="domain" type="button" role="tab" data-domain="xml" aria-selected="false">Skin elements</button>
       <button class="domain" type="button" role="tab" data-domain="stems" aria-selected="false" disabled title="Stem sidecar and cache formats — not yet rendered">Stems<small>soon</small></button>
       <button class="domain" type="button" role="tab" data-domain="internals" aria-selected="false" disabled title="Database, paths, network protocol, and other oddities — not yet rendered">Internals<small>soon</small></button>
     </nav>
@@ -293,15 +293,15 @@
     <article class="detail" id="detail" aria-live="polite"></article>
   </main>
 
-  <footer class="footer">Rendered __RENDERED__ from the verb store and evidence artifacts · __STAMP__ · Evidence tiers: observed and local are direct observation of the running app; curated is vendor prose or shipped script; structural is a binary-derived lead.</footer>
+  <footer class="footer">Rendered __RENDERED__ from the verb store, skin inventory and evidence artifacts · __STAMP__ · Evidence tiers: observed and local are direct observation of the running app; curated is vendor prose or shipped script; structural is a binary-derived lead.</footer>
 
   <script>
-    // One registry per domain. Only `verbs` has data today; the other tabs
-    // are reserved so the page shape is settled before their data arrives.
+    // Each domain keeps its own data and detail renderer.
     const domains = {
       verbs: { label: "VDJScript verbs", records: __RECORDS__ },
+      xml: { label: "Skin elements", records: __SKIN_RECORDS__ },
     };
-    const records = domains.verbs.records;
+    let domain = "verbs", records = domains.verbs.records;
 
     const state = { query: "", filter: "all", section: "all", tier: "all", status: "all", property: "all", selected: "" };
     const $ = id => document.getElementById(id);
@@ -332,10 +332,10 @@
     function visibleRecords() {
       const q = state.query.trim().toLowerCase();
       return records.filter(r => {
-        const hay = [r.name, r.description, r.section, r.category, r.tier, r.aliases, ...r.surfaces].join(" ").toLowerCase();
+        const hay = [r.name, r.description, r.section, r.category, r.tier, r.aliases, ...r.surfaces, ...(r.attributes || []).map(a => a.name)].join(" ").toLowerCase();
         if (q && !hay.includes(q)) return false;
         if (state.filter !== "all" && r.kind !== state.filter) return false;
-        if (state.section !== "all" && r.section !== state.section) return false;
+        if (state.section !== "all" && (domain === "xml" ? !r.surfaces.includes(state.section) : r.section !== state.section)) return false;
         if (state.tier !== "all" && r.tier !== state.tier) return false;
         if (state.status !== "all" && r.status !== state.status) return false;
         if (state.property === "hidden" && !r.hidden) return false;
@@ -360,7 +360,7 @@
       total.textContent = `${visible.length.toLocaleString()} of ${records.length.toLocaleString()}`;
       clearButton.classList.toggle("visible", !!isFiltered());
       if (!visible.length) {
-        results.innerHTML = '<div class="empty">No verbs match.<br><small>Try a shorter search or clear the filters.</small></div>';
+        results.innerHTML = '<div class="empty">No records match.<br><small>Try a shorter search or clear the filters.</small></div>';
         detail.innerHTML = '<div class="empty">Nothing selected</div>';
         return;
       }
@@ -372,7 +372,7 @@
         if (grouped && r.section !== last) { html += `<div class="group-head">${escapeHtml(r.section)}</div>`; last = r.section; }
         html += `<button class="result" type="button" role="option" data-record="${escapeHtml(r.name)}" aria-selected="${r.name === state.selected}">
           <span class="dot ${escapeHtml(r.status)}" title="${escapeHtml(r.statusLabel)}"></span>
-          <span><code>${escapeHtml(r.name)}</code><p>${escapeHtml(r.description)}</p></span>
+          <span><code>${escapeHtml(domain === "xml" ? `<${r.name}>` : r.name)}</code><p>${escapeHtml(r.description)}</p></span>
           <span class="result-tags"><span class="type ${kindClass(r.kind)}">${escapeHtml(r.kind)}</span>${flags(r)}</span>
         </button>`;
       }
@@ -382,7 +382,7 @@
 
     function select(name, scroll = false) {
       state.selected = name;
-      history.replaceState(null, "", `#${encodeURIComponent(name)}`);
+      history.replaceState(null, "", `#${domain === "xml" ? "xml/" : ""}${encodeURIComponent(name)}`);
       results.querySelectorAll("[data-record]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.record === name)));
       if (scroll) scrollListTo(name, "nearest");
       renderDetail();
@@ -402,6 +402,7 @@
       const visible = visibleRecords();
       const r = visible.find(x => x.name === state.selected) || visible[0];
       if (!r) return;
+      if (domain === "xml") { renderSkinDetail(r); return; }
       const dims = ["return_type", "arguments", "execute", "behaviour"].map(d => {
         const v = r.dimensions?.[d] || "n/a";
         const cls = v === "settled" ? "settled" : v === "n/a" ? "na" : "open";
@@ -448,6 +449,52 @@
       }));
     }
 
+    function renderSkinDetail(r) {
+      const families = Object.entries(r.families).map(([name, f]) =>
+        `<div class="fact"><span>${escapeHtml(name)}</span><strong>${f.uses.toLocaleString()} uses · ${f.files} files · ${f.documented ? "name documented" : "name undocumented"}</strong></div>`).join("");
+      const attributes = r.attributes.map(a => `<div class="fact"><span><code>${escapeHtml(a.name)}</code></span><strong>${a.uses.toLocaleString()} uses</strong></div>`).join("");
+      const docs = r.docs.map(d => `<div class="skin-doc"><a href="${escapeHtml(d.url)}">${escapeHtml(d.heading)}</a><p class="quiet">${escapeHtml(d.doc)}:${d.line}</p><p>${escapeHtml(d.excerpt)}</p></div>`).join("");
+      const reader = r.reader;
+      const readerText = !reader.available ? "Reader vocabulary unavailable." : reader.readers.length ?
+        `Named by ${reader.readers.join(", ")} on build ${reader.build}. Structural lead; does not prove behavior.` :
+        "Not named by the bounded reader extraction; this is not evidence of absence from the parser.";
+      const probes = r.probes.map(p => `<details class="technical"><summary>${escapeHtml(p.fixture)}</summary>${p.lines.map(line => `<p>${escapeHtml(line)}</p>`).join("")}</details>`).join("");
+      detail.innerHTML = `<div class="detail-inner">
+        <p class="crumbs"><b>Skin elements</b><i>/</i>${escapeHtml(r.surfaces.join(" · "))}</p>
+        <div class="title"><h1>${escapeHtml(`<${r.name}>`)}</h1><span class="type other">XML element</span>${flags(r)}</div>
+        <p class="description">${escapeHtml(r.description)}</p>
+        <div class="signal unverified"><div><strong>Corpus vocabulary</strong><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute.</p></div></div>
+        <section class="block"><div class="block-head"><h2>Corpus usage</h2></div><div class="facts">${families}</div></section>
+        <section class="block"><div class="block-head"><h2>Observed attributes</h2><span>${r.attributes.length} · ordered by usage</span></div><div class="facts skin-attributes">${attributes || '<div class="none-box">No attributes observed.</div>'}</div><p class="quiet">Includes names written in XML, including template parameters; this is not a complete parser schema.</p></section>
+        <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
+        <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p>${escapeHtml(readerText)}</p></section>
+        <section class="block"><div class="block-head"><h2>Probe notes</h2></div><p class="quiet">Fixture README mentions; inspect the recorded build, context and outcome.</p>${probes || '<div class="none-box">No skin fixture README mentions this element.</div>'}</section>
+      </div>`;
+    }
+
+    const verbCount = document.querySelector(".count").innerHTML;
+    function switchDomain(next, updateHash = true) {
+      if (!domains[next]) return;
+      domain = next; records = domains[next].records;
+      document.querySelectorAll("[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
+      const skin = next === "xml";
+      document.querySelector(".count").innerHTML = skin ? `<strong>${records.length}</strong> skin elements` : verbCount;
+      document.querySelector(".count").title = skin ? "Unique tags from the skin and video-skin inventory" : "Verb table build";
+      $("search").placeholder = skin ? "Search elements, attributes, documentation" : "Search verbs, sections, aliases";
+      sectionSelect.innerHTML = `<option value="all">${skin ? "All skin families" : "All sections"}</option>`;
+      fillSelect(sectionSelect, skin ? records.flatMap(r => r.surfaces) : records.map(r => r.section));
+      tierSelect.innerHTML = '<option value="all">All tiers</option>';
+      fillSelect(tierSelect, records.map(r => r.tier));
+      document.querySelectorAll(".seg, .divider").forEach(el => el.hidden = skin);
+      [tierSelect, statusSelect].forEach(el => el.parentElement.hidden = skin);
+      document.querySelectorAll("[data-property]").forEach(b => b.hidden = skin && b.dataset.property !== "undocumented");
+      document.querySelector('[data-property="undocumented"]').title = skin ? "Element name not mentioned in the family docs" : "No authored description in the store";
+      state.selected = "";
+      clearFilters();
+      if (updateHash) history.replaceState(null, "", skin ? "#xml/" : "#");
+    }
+    document.querySelectorAll("[data-domain]:not([disabled])").forEach(b => b.addEventListener("click", () => switchDomain(b.dataset.domain)));
+
     function refresh() { renderResults(); renderDetail(); }
     const bar = document.querySelector(".bar"), tools = document.querySelector(".tools");
     new ResizeObserver(() => {
@@ -491,8 +538,11 @@
       }
     });
 
-    // Deep link: #verb_name opens that verb.
-    const wanted = decodeURIComponent(location.hash.slice(1));
+    // Keep existing verb links and namespace skin links to avoid name collisions.
+    const hash = location.hash.slice(1);
+    if (hash.startsWith("xml/")) switchDomain("xml", false);
+    let wanted = "";
+    try { wanted = decodeURIComponent(hash.startsWith("xml/") ? hash.slice(4) : hash); } catch {}
     if (wanted && records.some(r => r.name === wanted)) state.selected = wanted;
     refresh();
     if (wanted) scrollListTo(wanted, "center");

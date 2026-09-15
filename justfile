@@ -199,7 +199,7 @@ long-time-forms name="":
     @{{python}} tools/probe_long_time.py --get "{{name}}"
 
 # --- human-facing reference page ---------------------------------------------
-# Fill design/human-api-reference.template.html from the store and the evidence
+# Fill design/human-api-reference.template.html from the verb store, skin inventory and evidence
 # artifacts (the same join `just verb` makes) into the git-ignored build/ tree.
 # A rendered copy of store data: regenerate it, never commit it.
 reference out="build/reference/index.html":
@@ -426,6 +426,7 @@ check:
     {{python}} tools/extract_binary_verbs.py --check
     {{python}} tools/extract_verb_table.py --check
     {{python}} tools/extract_action_contracts.py --check
+    {{python}} tools/test_reference.py
     {{python}} tools/test_action_tail_bounds.py
     {{python}} tools/test_contract_assessment.py
     {{python}} tools/action_tail_leads.py --check
