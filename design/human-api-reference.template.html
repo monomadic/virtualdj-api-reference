@@ -123,6 +123,29 @@
     .clear { display: none; color: var(--accent); background: none; border: 0; font-size: 12px; }
     .clear.visible { display: inline; }
 
+    /* ---- section navigation ------------------------------------------- */
+    .workspace[data-view="verbs"] { grid-template-columns: 220px minmax(250px, 320px) minmax(0, 1fr); }
+    .category-sidebar { position: sticky; top: calc(var(--bar-h) + var(--tools-h)); height: calc(100vh - var(--bar-h) - var(--tools-h)); overflow-y: auto; padding: 24px 12px; border-right: 1px solid var(--border); background: var(--surface); }
+    .category-sidebar summary { padding: 0 12px 18px; color: var(--faint); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; cursor: pointer; }
+    .category { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px 12px; width: 100%; padding: 13px 12px; border: 0; border-radius: 10px; background: transparent; color: var(--muted); text-align: left; }
+    .category:hover { background: var(--surface-2); color: var(--text); }
+    .category[aria-pressed="true"] { background: var(--accent-soft); color: var(--text); }
+    .category-label { font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+    .category-count, .category-percent { color: var(--faint); font: 11px var(--mono); text-align: right; }
+    .category-track { display: block; height: 4px; overflow: hidden; background: var(--surface-3); border-radius: 4px; }
+    .category-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--teal), #e7b63b); }
+    .category-help { padding: 12px; color: var(--faint); font-size: 11px; line-height: 1.5; }
+    @media (max-width: 1100px) and (min-width: 901px) {
+      .workspace[data-view="verbs"] { grid-template-columns: 180px 250px minmax(0, 1fr); }
+      .category-sidebar { padding-inline: 6px; }
+    }
+    @media (max-width: 900px) {
+      .workspace[data-view="verbs"] { grid-template-columns: minmax(0, 1fr); }
+      .category-sidebar { position: static; height: auto; max-height: 42vh; padding: 14px 16px; border-right: 0; border-bottom: 1px solid var(--border); }
+      .category-sidebar summary { padding: 0; }
+      .category-sidebar details[open] summary { padding-bottom: 12px; }
+    }
+
     /* ---- workspace ----------------------------------------------------- */
     .workspace { display: grid; grid-template-columns: minmax(280px, 360px) minmax(0, 1fr); min-height: calc(100vh - var(--bar-h) - var(--tools-h)); }
     .results { position: sticky; top: calc(var(--bar-h) + var(--tools-h)); height: calc(100vh - var(--bar-h) - var(--tools-h)); overflow-y: auto; border-right: 1px solid var(--border); background: var(--surface); }
@@ -288,7 +311,14 @@
     <button class="clear" id="clear" type="button">Clear</button>
   </div>
 
-  <main class="workspace">
+  <main class="workspace" data-view="verbs">
+    <aside class="category-sidebar" aria-label="Verb categories">
+      <details id="categoryDisclosure" open>
+        <summary>Sections · local evidence</summary>
+        <nav id="categories" aria-label="Verb sections"></nav>
+        <p class="category-help">Bars show the share marked locally verified. Counts follow your search and filters.</p>
+      </details>
+    </aside>
     <div class="results" id="results" role="listbox" aria-label="Results"></div>
     <article class="detail" id="detail" aria-live="polite"></article>
   </main>
@@ -329,13 +359,13 @@
       return state.query || state.filter !== "all" || state.section !== "all" || state.tier !== "all" || state.status !== "all" || state.property !== "all";
     }
 
-    function visibleRecords() {
+    function visibleRecords(ignoreSection = false) {
       const q = state.query.trim().toLowerCase();
       return records.filter(r => {
         const hay = [r.name, r.description, r.section, r.category, r.tier, r.aliases, ...r.surfaces, ...(r.attributes || []).map(a => a.name)].join(" ").toLowerCase();
         if (q && !hay.includes(q)) return false;
         if (state.filter !== "all" && r.kind !== state.filter) return false;
-        if (state.section !== "all" && (domain === "xml" ? !r.surfaces.includes(state.section) : r.section !== state.section)) return false;
+        if (!ignoreSection && state.section !== "all" && (domain === "xml" ? !r.surfaces.includes(state.section) : r.section !== state.section)) return false;
         if (state.tier !== "all" && r.tier !== state.tier) return false;
         if (state.status !== "all" && r.status !== state.status) return false;
         if (state.property === "hidden" && !r.hidden) return false;
@@ -476,8 +506,11 @@
     function switchDomain(next, updateHash = true) {
       if (!domains[next]) return;
       domain = next; records = domains[next].records;
-      document.querySelectorAll("[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
+      document.querySelectorAll(".domain[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
       const skin = next === "xml";
+      document.querySelector(".workspace").dataset.view = next;
+      document.querySelector(".category-sidebar").hidden = skin;
+      sectionSelect.parentElement.hidden = !skin;
       document.querySelector(".count").innerHTML = skin ? `<strong>${records.length}</strong> skin elements` : verbCount;
       document.querySelector(".count").title = skin ? "Unique tags from the skin and video-skin inventory" : "Verb table build";
       $("search").placeholder = skin ? "Search elements, attributes, documentation" : "Search verbs, sections, aliases";
@@ -493,9 +526,33 @@
       clearFilters();
       if (updateHash) history.replaceState(null, "", skin ? "#xml/" : "#");
     }
-    document.querySelectorAll("[data-domain]:not([disabled])").forEach(b => b.addEventListener("click", () => switchDomain(b.dataset.domain)));
+    document.querySelectorAll(".domain[data-domain]:not([disabled])").forEach(b => b.addEventListener("click", () => switchDomain(b.dataset.domain)));
 
-    function refresh() { renderResults(); renderDetail(); }
+    function renderCategories() {
+      if (domain !== "verbs") return;
+      const candidates = visibleRecords(true);
+      const groups = new Map([...new Set(records.map(r => r.section))].sort((a, b) => a.localeCompare(b)).map(s => [s, []]));
+      for (const record of candidates) groups.get(record.section).push(record);
+      const focused = document.activeElement?.dataset.section;
+      $("categories").innerHTML = [["all", candidates], ...groups].map(([section, items]) => {
+        const verified = items.filter(r => r.status === "verified").length;
+        const percent = items.length ? Math.round(verified / items.length * 100) : 0;
+        const name = section === "all" ? "All verbs" : section;
+        const explanation = `${verified} of ${items.length} matching verbs marked locally verified`;
+        return `<button type="button" class="category" data-section="${escapeHtml(section)}" aria-pressed="${state.section === section}" title="${escapeHtml(explanation)}">
+          <span class="category-label">${escapeHtml(name)}</span><span class="category-count">${items.length}</span>
+          ${section === "all" ? "" : `<span class="category-track" aria-hidden="true"><span style="width:${percent}%"></span></span><span class="category-percent" aria-label="${escapeHtml(explanation)}">${percent}%</span>`}
+        </button>`;
+      }).join("");
+      $("categories").querySelectorAll("[data-section]").forEach(button => button.addEventListener("click", () => {
+        state.section = button.dataset.section;
+        sectionSelect.value = state.section;
+        refresh();
+        results.scrollTop = 0;
+      }));
+      if (focused) $("categories").querySelector(`[data-section="${CSS.escape(focused)}"]`)?.focus({preventScroll: true});
+    }
+    function refresh() { renderCategories(); renderResults(); renderDetail(); }
     const bar = document.querySelector(".bar"), tools = document.querySelector(".tools");
     new ResizeObserver(() => {
       document.documentElement.style.setProperty("--bar-h", `${bar.offsetHeight}px`);
@@ -537,6 +594,13 @@
         if (next) { e.preventDefault(); select(next.name, true); }
       }
     });
+
+    // Categories collapse above the results on narrow screens.
+    const narrowSidebar = matchMedia("(max-width: 900px)");
+    const sizeSidebar = () => { $("categoryDisclosure").open = !narrowSidebar.matches; };
+    narrowSidebar.addEventListener("change", sizeSidebar);
+    sizeSidebar();
+    sectionSelect.parentElement.hidden = true;
 
     // Keep existing verb links and namespace skin links to avoid name collisions.
     const hash = location.hash.slice(1);
