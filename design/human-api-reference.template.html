@@ -11,55 +11,19 @@
     .skin-doc p { white-space: pre-wrap; }
     .skin-attributes .fact span { text-transform: none; letter-spacing: 0; color: var(--text); font-size: 12px; }
     :root {
-      color-scheme: light dark;
-      --bg: #f6f6f8;
-      --surface: #ffffff;
-      --surface-2: #f0f0f4;
-      --surface-3: #e8e8ee;
-      --text: #17171d;
-      --muted: #66656f;
-      --faint: #9a99a3;
-      --border: #e3e2e8;
-      --border-strong: #cfced6;
-      --accent: #6b45d3;
-      --accent-soft: #ede7fb;
-      --pink: #d3397f;
-      --pink-soft: #fbe6f0;
-      --teal: #0a7f73;
-      --teal-soft: #dcf3ef;
-      --amber: #a15d0d;
-      --amber-soft: #fbeedb;
-      --blue: #24699a;
-      --blue-soft: #e1eff8;
-      --shadow: 0 1px 2px rgba(20, 16, 40, .05), 0 12px 40px rgba(20, 16, 40, .06);
-      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
-      --bar-h: 58px;
-      --tools-h: 52px;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f0f13;
-        --surface: #17171c;
-        --surface-2: #1f1f26;
-        --surface-3: #292931;
-        --text: #f1f0f4;
-        --muted: #aeacb7;
-        --faint: #72717c;
-        --border: #2b2b33;
-        --border-strong: #3b3b45;
-        --accent: #b497f5;
-        --accent-soft: #2c2445;
-        --pink: #ee8ab8;
-        --pink-soft: #3d2334;
-        --teal: #74d6cb;
-        --teal-soft: #163733;
-        --amber: #eebc74;
-        --amber-soft: #3d2f1c;
-        --blue: #88c6ea;
-        --blue-soft: #1f3442;
-        --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 40px rgba(0, 0, 0, .35);
-      }
+      color-scheme: dark;
+      --bg: #090a0e; --surface: #0c0d14; --surface-2: #11121c; --surface-3: #202230;
+      --text: #eeeef5; --muted: #a5a7bb; --faint: #7d819b;
+      --border: #1c1e2a; --border-strong: #34384b;
+      --accent: #ff3038; --accent-soft: #20131c;
+      --pink: #c4c5d7; --pink-soft: #252535;
+      --teal: #e5e8f1; --teal-soft: #191d29;
+      --amber: #ffb323; --amber-soft: #332715;
+      --blue: #69b2ff; --blue-soft: #15283e;
+      --shadow: none;
+      --sans: "Avenir Next", "Segoe UI", ui-sans-serif, -apple-system, sans-serif;
+      --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+      --bar-h: 108px; --tools-h: 92px;
     }
 
     * { box-sizing: border-box; }
@@ -272,13 +236,115 @@
       .contract-meta { grid-column: 1 / -1; }
       .technical-grid { grid-template-columns: 1fr; }
     }
+
+    /* Screenshot-aligned dark reference layout. */
+    body { font-size: 14px; }
+    button:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    .bar { min-height: 0; gap: 14px 26px; padding: 16px 28px; background: #0b0c12; }
+    .logo { height: 76px; max-width: 100%; object-fit: contain; box-shadow: none; border-radius: 0; }
+    .brand { max-width: 30%; }
+    .domains { padding: 5px; border: 1px solid var(--border); border-radius: 28px; background: var(--surface-2); }
+    .domain { padding: 7px 13px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+    .domain[aria-selected="true"] { color: white; background: var(--accent); box-shadow: none; }
+    .domain[disabled] small { display: none; }
+    .search { max-width: none; flex: 1 1 220px; }
+    .search input { height: 42px; border-radius: 28px; background: var(--surface-2); font-family: var(--mono); font-size: 12px; }
+    .workspace { grid-template-columns: 360px minmax(0, 1fr); min-height: calc(100vh - var(--bar-h)); }
+    .workspace[data-view="verbs"] { grid-template-columns: minmax(220px, 17vw) minmax(300px, 25vw) minmax(0, 1fr); }
+    .category-sidebar { top: var(--bar-h); height: calc(100vh - var(--bar-h)); padding: 22px 8px; background: #0b0d14; }
+    .category-sidebar summary { font-size: 10px; padding-inline: 8px; }
+    .category { border-radius: 6px; padding: 12px 10px; gap: 9px 12px; }
+    .category-label { font-size: clamp(14px, 1vw, 18px); font-weight: 650; }
+    .category[aria-pressed="true"] { background: #172131; }
+    .category-track > span { background: linear-gradient(90deg, #ff3038, #ffb323); }
+    .browse { position: sticky; top: var(--bar-h); height: calc(100vh - var(--bar-h)); min-width: 0; border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+    .tools { position: static; min-height: 0; padding: 12px; gap: 8px; background: var(--bg); flex: 0 0 auto; }
+    .seg { border: 0; border-radius: 0; gap: 6px; background: none; }
+    .seg button { padding: 5px 9px; border: 1px solid var(--border); border-radius: 22px; font: 700 10px var(--mono); text-transform: uppercase; }
+    .seg button[aria-pressed="true"] { color: white; border-color: var(--accent); background: var(--accent); }
+    .result-total { font: 11px var(--mono); }
+    .extra-filters { width: 100%; }
+    .extra-filters summary { color: var(--faint); font-size: 11px; cursor: pointer; }
+    .filter-options { display: flex; gap: 8px; flex-wrap: wrap; padding: 12px 0 0; }
+    .select { max-width: 100%; }
+    .results { position: static; height: auto; flex: 1 1 auto; min-height: 0; border: 0; background: var(--bg); padding: 8px; scrollbar-color: #37394b transparent; }
+    .group-head { padding: 10px; background: var(--bg); }
+    .result { gap: 12px; border: 1px solid transparent; border-radius: 8px; margin-bottom: 7px; padding: 15px 11px; align-items: center; }
+    .result[aria-selected="true"] { background: #101e2b; border-color: #92caff; box-shadow: inset 0 0 0 1px #92caff; }
+    .result code { font-size: clamp(14px, 1vw, 18px); font-weight: 750; }
+    .result p { font-size: clamp(13px, .9vw, 16px); margin-top: 4px; }
+    .result .dot { margin-top: 0; background: #42465f; }
+    .result .dot.verified { background: #f4f5ff; box-shadow: 0 0 9px #c8d7ff66; }
+    .result .dot.caveat, .result .dot.partial { background: var(--amber); box-shadow: 0 0 8px #ffb32355; }
+    .result .dot.unverified { border: 0; background: #42465f; }
+    .result .type { background: none; font-size: 9px; text-transform: uppercase; letter-spacing: .06em; }
+    .type.action { color: var(--accent); background: #301219; }
+    .type.query { color: var(--blue); }
+    .type.dual { color: #c4c5d7; }
+    .detail { padding: 34px clamp(24px, 3vw, 50px) 70px; }
+    .detail-inner { max-width: 1060px; }
+    .crumbs { font: 700 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 22px; flex-wrap: wrap; }
+    .title h1 { font-size: clamp(24px, 2.4vw, 40px); font-weight: 800; }
+    .description { font-size: 17px; color: #bfc0ce; margin-top: 16px; }
+    .featured-form { margin-top: 30px; background: var(--surface-2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 7px; overflow: hidden; }
+    .featured-head { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 13px 16px; border-bottom: 1px solid var(--border); color: var(--faint); font-size: 11px; }
+    .featured-head b { font: 700 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+    .featured-body { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 16px; }
+    .featured-body > div { min-width: 0; }
+    .featured-body code { font-size: clamp(15px, 1.5vw, 24px); font-weight: 750; overflow-wrap: anywhere; }
+    .featured-body p { color: var(--muted); font-size: 12px; margin: 12px 0 0; }
+    .featured-body strong { color: var(--accent); font-family: var(--mono); }
+    .featured-copy { flex-shrink: 0; padding: 13px 18px; border: 0; border-radius: 4px; background: var(--accent); color: white; font: 800 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; box-shadow: 0 5px 20px #ff303826; }
+    .signal { background: var(--surface); border-left-width: 1px; border-radius: 6px; padding: 16px; }
+    .signal strong { text-transform: uppercase; letter-spacing: .07em; }
+    .signal p { font-size: 12px; line-height: 1.7; }
+    .signal-meta { display: none; }
+    .dimensions { gap: 5px; max-width: 360px; margin-top: 10px; }
+    .dimension { border: 0; border-top: 4px solid var(--border-strong); border-radius: 2px; background: transparent; padding: 5px 4px; }
+    .dimension.settled { border-color: #eeeef5; background: transparent; }
+    .dimension.open { border-color: var(--amber); }
+    .dimension b { font-size: 8px; }
+    .dimension span { font-size: 9px; }
+    .block { margin-top: 30px; }
+    .block-head h2 { font: 800 11px var(--mono); letter-spacing: .12em; }
+    .block-head { flex-wrap: wrap; }
+    .block-head span { font-size: 11px; }
+    .contract-row { background: var(--surface-2); padding: 14px; }
+    .contract-result { color: var(--accent); }
+    .example { background: transparent; border-color: var(--border); }
+    .copy, .copy-name { font: 700 10px var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+    .facts { gap: 20px; }
+    .fact span { font-family: var(--mono); letter-spacing: .1em; }
+    @media (max-width: 1200px) and (min-width: 901px) {
+      .workspace[data-view="verbs"] { grid-template-columns: 190px 300px minmax(0, 1fr); }
+      .bar { gap: 12px; padding-inline: 20px; }
+      .logo { height: 62px; }
+      .domain { padding-inline: 9px; }
+      .count { font-size: 10px; }
+      .detail { padding-inline: 22px; }
+      .featured-body { flex-wrap: wrap; }
+    }
+    @media (max-width: 900px) {
+      .workspace, .workspace[data-view="verbs"] { grid-template-columns: minmax(0, 1fr); }
+      .bar { padding: 12px 16px; }
+      .brand { max-width: 100%; }
+      .logo { height: 62px; max-width: 100%; }
+      .category-sidebar { position: static; height: auto; padding: 14px 16px; }
+      .category-sidebar summary { padding: 0; }
+      .browse { position: static; height: auto; max-height: none; border-right: 0; }
+      .results { flex: auto; height: 32vh; max-height: 32vh; }
+      .detail { padding: 28px 20px 60px; }
+      .featured-body { flex-wrap: wrap; }
+      .count { margin-left: auto; }
+      .search { flex-basis: 100%; }
+    }
   </style>
 </head>
 <body>
   <header class="bar">
     <a class="brand" href="#" title="VirtualDJ unofficial API reference"><img class="logo" src="logo.png" alt="VirtualDJ unofficial API reference" width="900" height="265"></a>
     <nav class="domains" role="tablist" aria-label="Reference domains">
-      <button class="domain" type="button" role="tab" data-domain="verbs" aria-selected="true">VDJScript verbs</button>
+      <button class="domain" type="button" role="tab" data-domain="verbs" aria-selected="true">Verbs</button>
       <button class="domain" type="button" role="tab" data-domain="xml" aria-selected="false">Skin elements</button>
       <button class="domain" type="button" role="tab" data-domain="stems" aria-selected="false" disabled title="Stem sidecar and cache formats — not yet rendered">Stems<small>soon</small></button>
       <button class="domain" type="button" role="tab" data-domain="internals" aria-selected="false" disabled title="Database, paths, network protocol, and other oddities — not yet rendered">Internals<small>soon</small></button>
@@ -292,25 +358,6 @@
     <div class="count" title="__STAMP__"><strong>__VERB_COUNT__</strong> verbs <span>· build __BUILD__</span></div>
   </header>
 
-  <div class="tools" aria-label="Filters">
-    <div class="seg" role="group" aria-label="Kind">
-      <button type="button" data-filter="all" aria-pressed="true">All</button>
-      <button type="button" data-filter="Action" aria-pressed="false">Actions</button>
-      <button type="button" data-filter="Query" aria-pressed="false">Queries</button>
-      <button type="button" data-filter="Dual" aria-pressed="false">Dual</button>
-    </div>
-    <span class="divider" aria-hidden="true"></span>
-    <label><span class="sr-only">Section</span><select class="select" id="section"><option value="all">All sections</option></select></label>
-    <label><span class="sr-only">Store tier</span><select class="select" id="tier"><option value="all">All tiers</option></select></label>
-    <label><span class="sr-only">Test status</span><select class="select" id="status"><option value="all">Any status</option><option value="verified">Locally verified</option><option value="partial">Partially verified</option><option value="caveat">Known caveat</option><option value="unverified">Untested</option></select></label>
-    <span class="divider" aria-hidden="true"></span>
-    <button class="chip" type="button" data-property="hidden" aria-pressed="false" title="Hidden from the Button Editor list">Hidden</button>
-    <button class="chip" type="button" data-property="undocumented" aria-pressed="false" title="No authored description in the store">Undocumented</button>
-    <button class="chip" type="button" data-property="unofficial" aria-pressed="false" title="Name not in the official appendix">Unofficial</button>
-    <span class="result-total" id="resultTotal"></span>
-    <button class="clear" id="clear" type="button">Clear</button>
-  </div>
-
   <main class="workspace" data-view="verbs">
     <aside class="category-sidebar" aria-label="Verb categories">
       <details id="categoryDisclosure" open>
@@ -319,7 +366,28 @@
         <p class="category-help">Bars show the share marked locally verified. Counts follow your search and filters.</p>
       </details>
     </aside>
+<section class="browse" aria-label="Reference browser">
+  <div class="tools" aria-label="Filters">
+    <div class="seg" role="group" aria-label="Kind">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="Action" aria-pressed="false">Actions</button>
+      <button type="button" data-filter="Query" aria-pressed="false">Queries</button>
+      <button type="button" data-filter="Dual" aria-pressed="false">Dual</button>
+    </div>
+    <span class="result-total" id="resultTotal"></span>
+    <button class="clear" id="clear" type="button">Clear</button>
+    <details class="extra-filters"><summary>More filters</summary><div class="filter-options">
+    <label><span class="sr-only">Section</span><select class="select" id="section"><option value="all">All sections</option></select></label>
+    <label><span class="sr-only">Store tier</span><select class="select" id="tier"><option value="all">All tiers</option></select></label>
+    <label><span class="sr-only">Test status</span><select class="select" id="status"><option value="all">Any status</option><option value="verified">Locally verified</option><option value="partial">Partially verified</option><option value="caveat">Known caveat</option><option value="unverified">Untested</option></select></label>
+    <button class="chip" type="button" data-property="hidden" aria-pressed="false" title="Hidden from the Button Editor list">Hidden</button>
+    <button class="chip" type="button" data-property="undocumented" aria-pressed="false" title="No authored description in the store">Undocumented</button>
+    <button class="chip" type="button" data-property="unofficial" aria-pressed="false" title="Name not in the official appendix">Unofficial</button>
+    </div></details>
+  </div>
+
     <div class="results" id="results" role="listbox" aria-label="Results"></div>
+    </section>
     <article class="detail" id="detail" aria-live="polite"></article>
   </main>
 
@@ -422,7 +490,8 @@
     function scrollListTo(name, block) {
       const el = results.querySelector(`[data-record="${CSS.escape(name)}"]`);
       if (!el) return;
-      const top = el.offsetTop, bottom = top + el.offsetHeight, view = results.clientHeight;
+      const top = el.getBoundingClientRect().top - results.getBoundingClientRect().top + results.scrollTop;
+      const bottom = top + el.offsetHeight, view = results.clientHeight;
       if (block === "center") results.scrollTop = top - view / 2 + el.offsetHeight / 2;
       else if (top < results.scrollTop + 28) results.scrollTop = top - 28;
       else if (bottom > results.scrollTop + view) results.scrollTop = bottom - view;
@@ -438,19 +507,27 @@
         const cls = v === "settled" ? "settled" : v === "n/a" ? "na" : "open";
         return `<div class="dimension ${cls}"><b>${escapeHtml(d.replace("_", " "))}</b><span>${escapeHtml(v)}</span></div>`;
       }).join("");
-      const contracts = r.contracts.length ? r.contracts.map(c => `<div class="contract-row"><code>${escapeHtml(c.call)}</code><span class="contract-arrow">→</span><span class="contract-result">${escapeHtml(c.result)}</span><span class="contract-meta"><span class="contract-mode">${escapeHtml(c.mode)}</span><span class="contract-source ${escapeHtml(c.sourceClass)}">${escapeHtml(c.source)}</span></span></div>`).join("") : '<div class="none-box">No callable form recorded for this verb.</div>';
+      const sourceRank = {observed: 0, local: 0, curated: 1, structural: 2, unresolved: 3};
+      const forms = [...r.contracts].sort((a, b) => (sourceRank[a.sourceClass] ?? 4) - (sourceRank[b.sourceClass] ?? 4));
+      const best = forms[0];
+      const featured = best ? `<section class="featured-form" aria-label="Highlighted recorded form">
+        <div class="featured-head"><b>Recorded form</b><span class="contract-source ${escapeHtml(best.sourceClass)}">${escapeHtml(best.source)}</span><span>of ${forms.length} recorded forms</span></div>
+        <div class="featured-body"><div><code>${escapeHtml(best.call)}</code><p>${escapeHtml(best.mode)} · returns <strong>${escapeHtml(best.result)}</strong></p></div><button class="featured-copy" type="button" data-copy="${escapeHtml(best.call)}">Copy</button></div>
+      </section>` : "";
+      const contracts = forms.length ? forms.map(c => `<div class="contract-row"><code>${escapeHtml(c.call)}</code><span class="contract-arrow">→</span><span class="contract-result">${escapeHtml(c.result)}</span><span class="contract-meta"><span class="contract-mode">${escapeHtml(c.mode)}</span><span class="contract-source ${escapeHtml(c.sourceClass)}">${escapeHtml(c.source)}</span></span></div>`).join("") : '<div class="none-box">No callable form recorded for this verb.</div>';
       const examples = r.examples.length ? r.examples.map((e, i) => `<div class="example"><span class="example-label" title="${escapeHtml(e.label)}">${escapeHtml(e.label)}</span><code>${escapeHtml(e.code)}</code><button class="copy" type="button" data-copy="${escapeHtml(e.code)}">Copy</button></div>`).join("") : '<div class="none-box">No example recorded.</div>';
       const surfaces = r.surfaces.length ? r.surfaces.map(s => `<span class="surface">${escapeHtml(s)}</span>`).join("") : '<span class="quiet">not catalogued</span>';
       const aliases = r.aliases && r.aliases !== "None" ? `<p class="aliases">Also spelled ${r.aliases.split(", ").map(a => `<code>${escapeHtml(a)}</code>`).join(", ")}</p>` : "";
-      detail.innerHTML = `<div class="detail-inner">
+      detail.innerHTML = `<div class="detail-inner verb-detail">
         <p class="crumbs"><b>${escapeHtml(domains.verbs.label)}</b><i>/</i><b>${escapeHtml(r.section)}</b><i>/</i>${escapeHtml(r.tier)} tier</p>
         <div class="title"><h1>${escapeHtml(r.name)}</h1><span class="type ${kindClass(r.kind)}">${escapeHtml(r.kind)}</span>${flags(r)}<button class="copy-name" type="button" data-copy="${escapeHtml(r.name)}">Copy name</button></div>
         <p class="description${r.description ? "" : " none"}">${escapeHtml(r.description || "No authored description yet.")}</p>
         ${aliases}
+        ${featured}
         <div class="signal ${escapeHtml(r.status)}"><span class="signal-dot" aria-hidden="true"></span><div><strong>${escapeHtml(r.statusLabel)}</strong><p>${escapeHtml(r.note)}</p></div><span class="signal-meta">${escapeHtml(r.evidence === "No behavior evidence" ? "" : "evidence recorded")}</span></div>
         <div class="dimensions" aria-label="Contract dimensions">${dims}</div>
-        <section class="block"><div class="block-head"><h2>Forms</h2><span>${r.contracts.length} recorded · source tier on the right</span></div><div class="contracts">${contracts}</div></section>
-        <section class="block"><div class="block-head"><h2>Examples</h2><span>store first, then shipped scripts</span></div><div class="examples">${examples}</div></section>
+        <section class="block"><div class="block-head"><h2>All forms</h2><span>ordered by source evidence · behavior assessed separately</span></div><div class="contracts">${contracts}</div></section>
+        <section class="block"><div class="block-head"><h2>In the wild</h2><span>store first, then shipped scripts</span></div><div class="examples">${examples}</div></section>
         <section class="block"><div class="block-head"><h2>Facts</h2></div><div class="facts">
           <div class="fact"><span>Use in</span><div class="surfaces">${surfaces}</div></div>
           <div class="fact"><span>HTTP return</span><strong><code>${escapeHtml(r.returns)}</code></strong></div>
@@ -508,6 +585,7 @@
       domain = next; records = domains[next].records;
       document.querySelectorAll(".domain[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
       const skin = next === "xml";
+      document.querySelector(".extra-filters").open = skin;
       document.querySelector(".workspace").dataset.view = next;
       document.querySelector(".category-sidebar").hidden = skin;
       sectionSelect.parentElement.hidden = !skin;
@@ -552,7 +630,11 @@
       }));
       if (focused) $("categories").querySelector(`[data-section="${CSS.escape(focused)}"]`)?.focus({preventScroll: true});
     }
-    function refresh() { renderCategories(); renderResults(); renderDetail(); }
+    function refresh() {
+      const active = [state.tier, state.status, state.property].filter(v => v !== "all").length;
+      document.querySelector(".extra-filters summary").textContent = domain === "xml" ? "Skin filters" : `More filters${active ? ` (${active})` : ""}`;
+      renderCategories(); renderResults(); renderDetail();
+    }
     const bar = document.querySelector(".bar"), tools = document.querySelector(".tools");
     new ResizeObserver(() => {
       document.documentElement.style.setProperty("--bar-h", `${bar.offsetHeight}px`);
