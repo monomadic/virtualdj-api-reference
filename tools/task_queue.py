@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Parse, validate, and select from the TODO.md task queue.
+"""Parse, validate, and select from the TASKS.md task queue.
 
-`TODO.md` is the repository's only active planning state, and `just next-task`
-picks work out of it. The selector used to grep for an exact `Status: Ready`
+`TASKS.md` holds the open tasks and is the repository's only active planning
+state; `just next-task` picks work out of it. `HISTORY.md` holds the tasks that
+landed, moved there whole so their identifiers stay unique and their record
+stays addressable. `check` validates both files together. The selector used to grep for an exact `Status: Ready`
 line, so every decorated variant that had accumulated in the file --
 `Status: **Ready.**`, `Status: Ready -- reframed`, `Status: Ready, but low
 expected yield` -- was silently invisible, and the queue looked empty while
@@ -24,7 +26,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TODO = ROOT / "TODO.md"
+TASKS = ROOT / "TASKS.md"
+HISTORY = ROOT / "HISTORY.md"
 FIXTURES = ROOT / "tests" / "todo-status"
 
 # The closed vocabulary. The state describes what is true of the task *now*:
@@ -137,33 +140,51 @@ def parse(text: str, source: str) -> tuple[list[Task], list[str]]:
     return tasks, errors
 
 
-def load(path: Path = TODO) -> tuple[list[Task], list[str]]:
+def load(path: Path = TASKS) -> tuple[list[Task], list[str]]:
     return parse(path.read_text(encoding="utf-8"), str(path.relative_to(ROOT)))
 
 
 def cmd_check(_args: argparse.Namespace) -> int:
     tasks, errors = load()
+    history, history_errors = load(HISTORY)
+    errors = list(errors) + history_errors
+    for task in tasks:
+        if task.state == "Done":
+            errors.append(
+                f"TASKS.md:{task.line}: task {task.ident!r} is Done; move its block to HISTORY.md"
+            )
+    for task in history:
+        if task.state != "Done":
+            errors.append(
+                f"HISTORY.md:{task.line}: task {task.ident!r} is {task.state!r}; only Done tasks live here"
+            )
+    open_ids = {task.ident for task in tasks}
+    for task in history:
+        if task.ident in open_ids:
+            errors.append(
+                f"HISTORY.md:{task.line}: task {task.ident!r} also appears in TASKS.md"
+            )
     if errors:
-        print("TODO.md status metadata is malformed:", file=sys.stderr)
+        print("TASKS.md/HISTORY.md status metadata is malformed:", file=sys.stderr)
         for error in errors:
             print(f"  {error}", file=sys.stderr)
         return 1
     if not any(task.selectable for task in tasks):
         print(
-            "TODO.md: no task is startable; every task is Done, Blocked, "
+            "TASKS.md: no task is startable; every task is Blocked, "
             "Conditional, or parked. If that is wrong, a status is wrong.",
             file=sys.stderr,
         )
         return 1
     ready = sum(1 for task in tasks if task.selectable)
-    print(f"todo queue OK: {len(tasks)} tasks, {ready} startable")
+    print(f"task queue OK: {len(tasks)} open tasks, {ready} startable; {len(history)} completed in HISTORY.md")
     return 0
 
 
 def cmd_next(_args: argparse.Namespace) -> int:
     tasks, errors = load()
     if errors:
-        print("TODO.md status metadata is malformed; refusing to select:", file=sys.stderr)
+        print("TASKS.md status metadata is malformed; refusing to select:", file=sys.stderr)
         for error in errors:
             print(f"  {error}", file=sys.stderr)
         return 1
@@ -171,7 +192,7 @@ def cmd_next(_args: argparse.Namespace) -> int:
         if task.selectable:
             print("\n".join(task.block).rstrip())
             return 0
-    print("No startable task in TODO.md.", file=sys.stderr)
+    print("No startable task in TASKS.md.", file=sys.stderr)
     return 1
 
 
@@ -242,9 +263,9 @@ def cmd_selftest(_args: argparse.Namespace) -> int:
     for failure in failures:
         print(f"  {failure}", file=sys.stderr)
     if failures:
-        print(f"todo_queue selftest FAILED ({len(failures)})", file=sys.stderr)
+        print(f"task_queue selftest FAILED ({len(failures)})", file=sys.stderr)
         return 1
-    print(f"todo_queue selftest OK ({len(expectations)} fixtures)")
+    print(f"task_queue selftest OK ({len(expectations)} fixtures)")
     return 0
 
 

@@ -110,7 +110,8 @@ def check_tracked_generated_files(errors: list[str]) -> None:
 def check_markdown_links(errors: list[str]) -> None:
     link_re = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
     roots = [ROOT / "README.md", ROOT / "AGENTS.md", ROOT / "docs", ROOT / "examples", ROOT / "tests"]
-    roots.append(ROOT / "TODO.md")
+    roots.append(ROOT / "TASKS.md")
+    roots.append(ROOT / "HISTORY.md")
     files: list[Path] = []
     for root in roots:
         if root.is_file():

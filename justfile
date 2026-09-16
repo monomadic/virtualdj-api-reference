@@ -44,14 +44,14 @@ download-sdk *args:
 doctor:
     @{{python}} tools/doctor.py
 
-# The first startable task in TODO.md. Refuses to select if any status line
+# The first startable task in TASKS.md (HISTORY.md holds finished ones). Refuses to select if any status line
 # in the file is malformed, rather than skipping the task it cannot read.
 next-task:
-    @{{python}} tools/todo_queue.py next
+    @{{python}} tools/task_queue.py next
 
 # Every task with its state; `*` marks the startable ones.
 task-queue *args:
-    @{{python}} tools/todo_queue.py list "$@"
+    @{{python}} tools/task_queue.py list "$@"
 
 # Grep the authored verb prose/examples. For record lookups use `just get-verb`.
 grep-verb-docs name:
@@ -71,7 +71,7 @@ needs-test:
       "docs/VDJScript Local Test Tracker.md" \
       "docs/Completeness Roadmap.md" \
       "docs/Undocumented VDJScript Candidates.md" \
-      "TODO.md"
+      "TASKS.md"
 
 official-needs-test:
     @awk '\
@@ -92,7 +92,7 @@ thin-verbs:
 status:
     @{{python}} -c 'from pathlib import Path; import re; text=Path("docs/Official VDJScript Coverage Audit.md").read_text(); count=re.search(r"Official verb/alias names parsed: (\d+)", text); gap=re.search(r"The formal local-test gap is (\d+) official names", text); print("Official names parsed: {}".format(count.group(1) if count else "unknown")); print("Formal local-test gap: {}".format(gap.group(1) if gap else "unknown"))'
     @printf "\nTask queue:\n"
-    @{{python}} tools/todo_queue.py list
+    @{{python}} tools/task_queue.py list
 
 # `"$@"` rather than an interpolated {{script}}: interpolation puts the script
 # through zsh, which expands a VDJScript global like $ct_top before the request
@@ -462,8 +462,8 @@ check:
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
     {{python}} tools/check_reference_status.py
-    {{python}} tools/todo_queue.py check
-    {{python}} tools/todo_queue.py selftest
+    {{python}} tools/task_queue.py check
+    {{python}} tools/task_queue.py selftest
     git diff --check
 
 # What the skin XML readers in the binary actually compare against, and which

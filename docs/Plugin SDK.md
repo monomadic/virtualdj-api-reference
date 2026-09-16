@@ -411,7 +411,7 @@ depend on it), which makes it a reasonable foundation to build tooling against.
 
 ## Use in this repo
 
-A read-only introspection plugin is the next instrument for [TODO.md](../TODO.md) task 10 —
+A read-only introspection plugin is the next instrument for [TASKS.md](../TASKS.md) task 10 —
 built and offline-verified 2026-08-15 ([tools/plugin/](../tools/plugin/), `just plugin-build`),
 though not yet loaded into VirtualDJ, so nothing below is claimed as observed. Two build facts
 worth recording: **Xcode is not needed** (Command Line Tools `clang++` produces a loadable

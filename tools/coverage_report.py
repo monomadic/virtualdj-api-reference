@@ -135,11 +135,11 @@ REASONS = {
     "prose_only":      "evidence exists only in store prose, not in an artifact row",
 }
 
-# Worked-out fixtures for frontier verbs, copied from TODO.md so `just verb`
+# Worked-out fixtures for frontier verbs, copied from TASKS.md so `just verb`
 # can name the next test instead of "needs a discriminating state". A hint is
 # a pointer to a recipe, not evidence; drop it when the verb closes.
 NEXT_TEST_HINTS = {
-    "get_time_hour": "long-track fixture (TODO 10b/10d): 2h05m generated track, playhead "
+    "get_time_hour": "long-track fixture (tasks 10b/10d): 2h05m generated track, playhead "
                      "1h10m separates elapsed/remain/total; ~3,700 s at +12% separates absolute",
     "get_time_hour_absolute": "same long-track fixture as get_time_hour",
 }

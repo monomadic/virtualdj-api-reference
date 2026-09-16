@@ -2,7 +2,7 @@
 //
 // VDJIntrospect — a READ-ONLY VirtualDJ introspection plugin.
 //
-// Purpose (TODO.md task 10a): call the host's two typed query callbacks on a
+// Purpose (TASKS.md task 10a): call the host's two typed query callbacks on a
 // list of probe strings and record the NATIVE results — the raw HRESULT, the
 // `double` (with its exact bit pattern), and the UTF-8 buffer — instead of the
 // single flattened string the HTTP control interface returns.

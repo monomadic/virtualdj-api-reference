@@ -2,7 +2,7 @@
 
 This repo is already complete for official VDJScript name searchability. The remaining work is behavior depth: turning official names, bundled-resource hints, shipped XML examples, and local observations into reproducible, source-labeled guidance.
 
-Status (2026-07-22): **frozen snapshot.** The active queue is [TODO.md](../TODO.md); do not
+Status (2026-07-22): **frozen snapshot.** The active queue is [TASKS.md](../TASKS.md); do not
 refresh, reorder, or re-scope this file until a listed area actually completes. It remains
 useful as the map of evidence tiers and hardware gates.
 

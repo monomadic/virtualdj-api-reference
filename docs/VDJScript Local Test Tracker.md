@@ -643,7 +643,7 @@ null result here cannot be blamed on the setup.
 **`loaded opposite` is confirmed, by the value test HTTP could not run.** With
 exactly one deck loaded, `loaded opposite` returns `off` where
 `loaded zzznotakeyword` returns `on`. This is the case
-[TODO.md](../TODO.md) task 10 named in 2026-07-30 as needing prepared state, and
+[TASKS.md](../TASKS.md) task 10 named in 2026-07-30 as needing prepared state, and
 it behaves exactly as predicted: the keyword is silently ignored, so only a state
 where the two forms *must* disagree can prove it.
 

@@ -358,7 +358,7 @@ Query it per verb with `just verb-table <name>`, which now reports `category` al
 build's binary — only the `uint8` id → category array survives — so the extractor falls back
 to a pinned list and says so in `summary.categories_source`. The order is corroborated on two
 builds and reproduces every previously assigned category (1,028/1,028 against 9482,
-1,025/1,025 against 9246); see TODO.md.
+1,025/1,025 against 9246); see TASKS.md.
 
 ### Contract structure — the ACTION_ classes (2026-07-29)
 

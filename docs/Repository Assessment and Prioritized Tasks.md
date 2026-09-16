@@ -4,7 +4,7 @@ Date: 2026-09-05
 Status: Inert dated assessment; revised after review  
 Goal: Complete, evidence-backed documentation of VDJScript and the Skin SDK, including undocumented features.
 
-The original eleven-task prescription is superseded. [TODO.md](../TODO.md) is the sole active planning state and contains the accepted sequence and execution criteria. This document preserves the diagnosis, review decisions, and reconciliation; it is not a startable queue.
+The original eleven-task prescription is superseded. [TASKS.md](../TASKS.md) is the sole active planning state and contains the accepted sequence and execution criteria. This document preserves the diagnosis, review decisions, and reconciliation; it is not a startable queue.
 
 ## Assessment retained
 
@@ -26,7 +26,7 @@ Sources: [task selector](../justfile), [store](../tools/verbdb.py), [XML invento
 
 The original prescription put four infrastructure tasks before discovery. That was the wrong order for this goal. Storage and extractor changes should follow investigations and be sized by an actual missing representation or demonstrated extraction failure.
 
-The accepted sequence, maintained only in TODO.md, is:
+The accepted sequence, maintained only in TASKS.md, is:
 
 1. Repair queue selection and status ambiguity.
 2. Investigate panel/group attribute readers using a real deck-skin fixture.

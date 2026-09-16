@@ -160,7 +160,7 @@ copied from the current build into those records.
 
 Assessment recorded 2026-09-06. These are proposed investigations, not findings
 about runtime behavior or new test-status claims. The active operational queue
-remains [TODO.md](../TODO.md); this assessment does not change its ordering.
+remains [TASKS.md](../TASKS.md); this assessment does not change its ordering.
 
 The strongest remaining use of the older installers is to follow named calls and
 recover decision rules that the stripped builds make harder to inspect. Prefer

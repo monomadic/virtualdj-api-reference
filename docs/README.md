@@ -10,8 +10,8 @@ Start here:
 - [VirtualDJ Reference](VirtualDJ%20Reference.md)
   Method choices, source policy, quirks, and preferred patterns.
 
-- [Active Task Queue](../TODO.md)
-  Current startable maintenance and evidence-pass tasks.
+- [Active Task Queue](../TASKS.md)
+  Current startable maintenance and evidence-pass tasks; completed ones move to [HISTORY.md](../HISTORY.md).
 
 - [Routing Index](../INDEX.yml)
   Topic-to-file map for cheaper navigation.
@@ -26,7 +26,7 @@ Start here:
   Evidence backlog for turning searchable names and source hints into locally observed, curated guidance.
 
 - [VDJScript Reference Consolidation Plan](VDJScript%20Reference%20Consolidation%20Plan.md)
-  Frozen design reference (2026-07-22) for the shape of the verb documentation. Like the Completeness Roadmap it is not active state; the queue is `TODO.md`.
+  Frozen design reference (2026-07-22) for the shape of the verb documentation. Like the Completeness Roadmap it is not active state; the queue is `TASKS.md`.
 
 - [Historical Installer Excavation](Historical%20Installer%20Excavation.md)
   Build-stamped compatibility history and named skin-reader leads from the older macOS installers, including the clickthrough boolean-path correction.
@@ -175,7 +175,7 @@ Current status:
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Verb Tail Structural Discovery.md` is the method note behind the bounded contract and vocabulary extractors; the queue it produces is a query (`just action-tail-leads`), not a stored listing, and every name in it is a Tier-2 lead.
-- `Completeness Roadmap.md` is a frozen snapshot of evidence tiers and hardware gates; the active queue is `TODO.md`.
+- `Completeness Roadmap.md` is a frozen snapshot of evidence tiers and hardware gates; the active queue is `TASKS.md`.
 - `Published Skin Findings.md` tracks empirical commands and skin idioms before they are fully folded into the curated reference.
 - `Skin Runtime Findings.md` tracks local skin runtime behavior that should be shared across projects rather than kept in one skin repo.
 - `Lyrics AI and Skins.md` is the focused lyric/autodetection reference.
@@ -206,4 +206,4 @@ Source labels used in the curated docs:
 
 ## Dated review records
 
-- [Repository assessment, 2026-09-05](Repository%20Assessment%20and%20Prioritized%20Tasks.md) — diagnosis and review decisions; accepted work is maintained only in TODO.md.
+- [Repository assessment, 2026-09-05](Repository%20Assessment%20and%20Prioritized%20Tasks.md) — diagnosis and review decisions; accepted work is maintained only in TASKS.md.

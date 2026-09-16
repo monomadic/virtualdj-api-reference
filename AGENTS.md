@@ -7,7 +7,8 @@ VirtualDJ does not publish comprehensive developer documentation; this repo fill
 
 ```
 README.md                     — human-facing project overview
-TODO.md                       — active operational queue for open-ended work
+TASKS.md                      — active task queue (open tasks only)
+HISTORY.md                    — completed tasks and the dated progress log of open ones
 INDEX.yml                     — topic-to-file routing map
 docs/README.md          — index of all reference docs, source label policy, current status
 docs/VirtualDJ Reference.md — Quick Decisions guide: preferred methods, rationale, examples
@@ -35,7 +36,7 @@ cross-check drift in an unrelated-looking artifact.
 
 ## Open-ended work
 
-For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task. `just next-task` prints that task; `just task-queue` lists every task with its state. Each task carries one machine-readable `Status:` line — one word from `Ready`/`Blocked`/`Conditional`/`Parking lot`/`Done`, with the explanation in the `Note:` paragraph below it — and selection fails loudly rather than skipping a status it cannot read, so keep that shape when editing the queue.
+For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TASKS.md` first. Treat `TASKS.md` as the canonical active queue and start with the first `Ready` task unless the user names another task. `just next-task` prints that task; `just task-queue` lists every task with its state. Each task carries one machine-readable `Status:` line — one word from `Ready`/`Blocked`/`Conditional`/`Parking lot`/`Done`, with the explanation in the `Note:` paragraph below it — and selection fails loudly rather than skipping a status it cannot read, so keep that shape when editing the queue. A task that lands moves, block and all, to `HISTORY.md`; `just check` fails on a `Done` task left in `TASKS.md`.
 
 ## Session efficiency rules
 
@@ -50,7 +51,7 @@ Context load is the dominant cost in this repo. These rules outrank thoroughness
 - **Effect controls come from the FX catalog, not prose tables.** `just get-fx Echo` gives the full slider/button map with normalized defaults (spelling-tolerant: `BeatGrid` resolves to `Beat Grid`, `Shader` to its canonical `Visuals`); `just list-fx --category=video_fx`, `--has-button=quant`, `--min-sliders=6`, `--has-length`, `--format=json` answer the rest. Do not hand-transcribe the catalog into Markdown.
 - **Introspect effects by name, without loading them.** Every `get_effect_*` helper accepts an effect name where the docs show a slot number — `just vdj-query "get_effect_slider_count 'Echo'"`, `get_effect_slider_default 'Echo' 3` — so a live question about an effect needs no `effect_select` and changes no state. `get_effect_title '<name>'` returns `'<Canonical> - Deck N'` or `''`, which resolves spellings and probes existence in one call.
 - **Query the store instead of reading listings.** `just list-verbs` filters — `--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test` — and `--format=json` for structured output. Ask for the verbs you need (`just list-verbs --surface=SkinQuery --section=Sampler`); do not pull a category listing and filter it yourself. `just next-incomplete-verb` gives the next active (non-hardware-blocked) work item, `just verb-stats` the breakdown. `just uncategorized-verbs` lists the non-alias records still missing a `section`, with the b9246 source module where one exists. `just list-verb-categories` prints the section vocabulary with counts, so a `--section=` filter never has to guess a name.
-- **Planning docs are frozen.** `docs/VDJScript Reference Consolidation Plan.md` and `docs/Completeness Roadmap.md` are design references, not active state. Do not refresh, reorder, or re-scope them; do not spend turns rewriting planning prose or reordering the TODO queue. `TODO.md` is the only active planning state, and it changes when a task completes or the user asks.
+- **Planning docs are frozen.** `docs/VDJScript Reference Consolidation Plan.md` and `docs/Completeness Roadmap.md` are design references, not active state. Do not refresh, reorder, or re-scope them; do not spend turns rewriting planning prose or reordering the task queue. `TASKS.md` is the only active planning state, and it changes when a task completes or the user asks.
 - **Probe over HTTP first, fixtures second.** When VirtualDJ is running with the network interface enabled (`just vdj-up` to check), read values with `just vdj-query` instead of pad readback. Pad/skin fixtures remain necessary only for surface-specific behavior (rendering, pad context, skin runtime). Batch every probe a live session can carry, and prefer dump-style sweeps over one-question rounds.
 - **Delegate mechanical passes.** Transcribing observed values into tables, promoting settled tracker rows, and lint fixes are cheap-model subagent work; keep the main context for evidence interpretation and ambiguous calls.
 - Prefer `INDEX.yml`, `just next-task`, `just grep-verb-docs <name>`, and path-scoped `rg` over repo-wide discovery; broaden only after the task route proves insufficient or contradictory.
