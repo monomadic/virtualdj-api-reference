@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "fixture": "VDJ Contract Fixture",
+  "source": "Installed action catalog and shipped numeric sampler mappings; hypotheses frozen before playback",
+  "scope": "HTTP transport only; no captured audio, pad events or controller input",
+  "target_slot": 9,
+  "witness_slot": 12,
+  "runs": [
+    1,
+    2
+  ],
+  "cases": [
+    {
+      "id": "sampler_play-start",
+      "verb": "sampler_play",
+      "script": "sampler_play 9",
+      "playing": [],
+      "expected_active": [
+        9
+      ],
+      "motion": "start",
+      "control": false
+    },
+    {
+      "id": "sampler_play-running",
+      "verb": "sampler_play",
+      "script": "sampler_play 9",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "continue",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stop-start",
+      "verb": "sampler_play_stop",
+      "script": "sampler_play_stop 9",
+      "playing": [],
+      "expected_active": [
+        9
+      ],
+      "motion": "start",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stop-running",
+      "verb": "sampler_play_stop",
+      "script": "sampler_play_stop 9",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        12
+      ],
+      "motion": "stop",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stutter-start",
+      "verb": "sampler_play_stutter",
+      "script": "sampler_play_stutter 9",
+      "playing": [],
+      "expected_active": [
+        9
+      ],
+      "motion": "start",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stutter-running",
+      "verb": "sampler_play_stutter",
+      "script": "sampler_play_stutter 9",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "restart",
+      "control": false
+    },
+    {
+      "id": "stop-one",
+      "verb": "sampler_stop",
+      "script": "sampler_stop 9",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        12
+      ],
+      "motion": "stop",
+      "control": false
+    },
+    {
+      "id": "stop-all",
+      "verb": "sampler_stop",
+      "script": "sampler_stop all",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [],
+      "motion": "stop",
+      "control": false
+    },
+    {
+      "id": "sampler_play-zzqqx",
+      "verb": "sampler_play",
+      "script": "sampler_play zzqqx",
+      "playing": [],
+      "expected_active": [],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play-vfnrbq",
+      "verb": "sampler_play",
+      "script": "sampler_play vfnrbq",
+      "playing": [],
+      "expected_active": [],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_stop-zzqqx",
+      "verb": "sampler_stop",
+      "script": "sampler_stop zzqqx",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_stop-vfnrbq",
+      "verb": "sampler_stop",
+      "script": "sampler_stop vfnrbq",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play_stop-zzqqx",
+      "verb": "sampler_play_stop",
+      "script": "sampler_play_stop zzqqx",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play_stop-vfnrbq",
+      "verb": "sampler_play_stop",
+      "script": "sampler_play_stop vfnrbq",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play_stutter-zzqqx",
+      "verb": "sampler_play_stutter",
+      "script": "sampler_play_stutter zzqqx",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play_stutter-vfnrbq",
+      "verb": "sampler_play_stutter",
+      "script": "sampler_play_stutter vfnrbq",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "unchanged",
+      "control": true
+    },
+    {
+      "id": "sampler_play-default",
+      "verb": "sampler_play",
+      "script": "deck 1 sampler_play",
+      "playing": [],
+      "expected_active": [
+        9
+      ],
+      "motion": "start",
+      "control": false
+    },
+    {
+      "id": "sampler_stop-default",
+      "verb": "sampler_stop",
+      "script": "deck 1 sampler_stop",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        12
+      ],
+      "motion": "stop",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stop-default",
+      "verb": "sampler_play_stop",
+      "script": "deck 1 sampler_play_stop",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        12
+      ],
+      "motion": "stop",
+      "control": false
+    },
+    {
+      "id": "sampler_play_stutter-default",
+      "verb": "sampler_play_stutter",
+      "script": "deck 1 sampler_play_stutter",
+      "playing": [
+        9,
+        12
+      ],
+      "expected_active": [
+        9,
+        12
+      ],
+      "motion": "restart",
+      "control": false
+    }
+  ]
+}

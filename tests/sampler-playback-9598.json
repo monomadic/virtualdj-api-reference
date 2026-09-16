@@ -1,0 +1,1924 @@
+{
+  "schema": 1,
+  "fixture": "VDJ Contract Fixture",
+  "summary": {
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-16T04:22:23.693302+00:00"
+  },
+  "scope": "HTTP transport only; no captured audio, pad events or controller input",
+  "journal": [
+    {
+      "script": "sampler_bank 'VDJ Contract Fixture'",
+      "phase": "enter-fixture",
+      "outcome": "responded",
+      "response": "false"
+    },
+    {
+      "script": "sampler_volume_nogroup 1 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_volume_nogroup 2 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_volume_nogroup 3 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_volume_nogroup 5 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_volume_nogroup 9 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_volume_nogroup 12 0.1",
+      "phase": "restore-level",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 sampler_select 9",
+      "phase": "set-fixture-default",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "deck 2 sampler_select 12",
+      "phase": "set-fixture-default",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 12",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "false"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 12",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play_stop 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 12",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play_stop 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 12",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play_stutter 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 12",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play_stutter 9",
+      "phase": "playback-probe",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 9",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_stop 12",
+      "phase": "stop-fixture-slot",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 9",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    },
+    {
+      "script": "sampler_play 12",
+      "phase": "establish-players",
+      "outcome": "responded",
+      "response": "true"
+    }
+  ],
+  "cases": [
+    {
+      "id": "sampler_play-start",
+      "run": 0,
+      "script": "sampler_play 9",
+      "prediction": {
+        "active": [
+          9
+        ],
+        "motion": "start"
+      },
+      "control": false,
+      "initial": {
+        "start": 1.6218,
+        "end": 1.9115,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 1.9115,
+        "end": 2.2197,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 2.2206,
+      "dispatch_end": 2.2654,
+      "after": {
+        "start": 2.2654,
+        "end": 2.543,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.1",
+            "position": "0.93%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 2.998,
+        "end": 3.309,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.8",
+            "position": "8.47%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 3.446,
+        "end": 3.7411,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      }
+    },
+    {
+      "id": "sampler_play-start",
+      "run": 1,
+      "script": "sampler_play 9",
+      "prediction": {
+        "active": [
+          9
+        ],
+        "motion": "start"
+      },
+      "control": false,
+      "initial": {
+        "start": 3.8671,
+        "end": 4.1603,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 4.1603,
+        "end": 4.4534,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 4.4545,
+      "dispatch_end": 4.502,
+      "after": {
+        "start": 4.502,
+        "end": 4.7875,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.1",
+            "position": "1.04%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 5.2426,
+        "end": 5.5424,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.8",
+            "position": "8.59%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 5.6784,
+        "end": 5.9702,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "start"
+    },
+    {
+      "id": "sampler_play-running",
+      "run": 1,
+      "script": "sampler_play 9",
+      "prediction": {
+        "active": [
+          9,
+          12
+        ],
+        "motion": "continue"
+      },
+      "control": false,
+      "initial": {
+        "start": 6.0893,
+        "end": 6.3909,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 7.5914,
+        "end": 7.8774,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:01.2",
+            "position": "12.65%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.2",
+            "position": "9.47%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 7.882,
+      "dispatch_end": 7.9345,
+      "after": {
+        "start": 7.9345,
+        "end": 8.2353,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:01.6",
+            "position": "16.14%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.6",
+            "position": "12.23%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 8.6872,
+        "end": 8.9798,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:02.4",
+            "position": "23.68%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:02.3",
+            "position": "17.95%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 9.1655,
+        "end": 9.445,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "continue"
+    },
+    {
+      "id": "sampler_play_stop-start",
+      "run": 1,
+      "script": "sampler_play_stop 9",
+      "prediction": {
+        "active": [
+          9
+        ],
+        "motion": "start"
+      },
+      "control": false,
+      "initial": {
+        "start": 9.5422,
+        "end": 9.8358,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 9.8358,
+        "end": 10.1256,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 10.1267,
+      "dispatch_end": 10.1727,
+      "after": {
+        "start": 10.1728,
+        "end": 10.4541,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.1",
+            "position": "1.04%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 10.9091,
+        "end": 11.1924,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.8",
+            "position": "8.47%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 11.3367,
+        "end": 11.6332,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "start"
+    },
+    {
+      "id": "sampler_play_stop-running",
+      "run": 1,
+      "script": "sampler_play_stop 9",
+      "prediction": {
+        "active": [
+          12
+        ],
+        "motion": "stop"
+      },
+      "control": false,
+      "initial": {
+        "start": 11.7432,
+        "end": 12.0636,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 13.2706,
+        "end": 13.5539,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:01.3",
+            "position": "12.65%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.2",
+            "position": "9.47%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 13.5555,
+      "dispatch_end": 13.6041,
+      "after": {
+        "start": 13.6041,
+        "end": 13.8946,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.6",
+            "position": "12.15%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 14.3481,
+        "end": 14.6529,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:02.3",
+            "position": "17.95%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 14.7892,
+        "end": 15.0818,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "stop"
+    },
+    {
+      "id": "sampler_play_stutter-start",
+      "run": 1,
+      "script": "sampler_play_stutter 9",
+      "prediction": {
+        "active": [
+          9
+        ],
+        "motion": "start"
+      },
+      "control": false,
+      "initial": {
+        "start": 15.1876,
+        "end": 15.5243,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 15.5243,
+        "end": 15.8469,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 15.8487,
+      "dispatch_end": 15.8982,
+      "after": {
+        "start": 15.8982,
+        "end": 16.1981,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.1",
+            "position": "1.16%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 16.6531,
+        "end": 16.9366,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.8",
+            "position": "8.71%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "1",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "yes",
+          "predicate_1": "1",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 17.0793,
+        "end": 17.3654,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "start"
+    },
+    {
+      "id": "sampler_play_stutter-running",
+      "run": 1,
+      "script": "sampler_play_stutter 9",
+      "prediction": {
+        "active": [
+          9,
+          12
+        ],
+        "motion": "restart"
+      },
+      "control": false,
+      "initial": {
+        "start": 17.4761,
+        "end": 17.7764,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "before": {
+        "start": 18.9762,
+        "end": 19.2587,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:01.3",
+            "position": "12.65%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.2",
+            "position": "9.56%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "dispatch_start": 19.2598,
+      "dispatch_end": 19.3049,
+      "after": {
+        "start": 19.3049,
+        "end": 19.5836,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.1",
+            "position": "1.04%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:01.6",
+            "position": "12.06%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "later": {
+        "start": 20.0382,
+        "end": 20.3245,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "yes",
+            "elapsed": "00:00.8",
+            "position": "8.36%"
+          },
+          "12": {
+            "playing": "yes",
+            "elapsed": "00:02.3",
+            "position": "17.68%"
+          }
+        },
+        "counts": {
+          "bare": "2",
+          "0": "no",
+          "predicate_0": "0",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "yes",
+          "predicate_2": "1",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "restored": {
+        "start": 20.5146,
+        "end": 20.806,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      },
+      "observed": "restart"
+    },
+    {
+      "id": "stop-one",
+      "run": 1,
+      "script": "sampler_stop 9",
+      "prediction": {
+        "active": [
+          12
+        ],
+        "motion": "stop"
+      },
+      "control": false,
+      "initial": {
+        "start": 20.905,
+        "end": 21.1933,
+        "slots": {
+          "1": {
+            "playing": "no"
+          },
+          "2": {
+            "playing": "no"
+          },
+          "3": {
+            "playing": "no"
+          },
+          "5": {
+            "playing": "no"
+          },
+          "9": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          },
+          "12": {
+            "playing": "no",
+            "elapsed": "00:00.0",
+            "position": "0%"
+          }
+        },
+        "counts": {
+          "bare": "0",
+          "0": "yes",
+          "predicate_0": "1",
+          "1": "no",
+          "predicate_1": "0",
+          "2": "no",
+          "predicate_2": "0",
+          "3": "no",
+          "predicate_3": "0",
+          "4": "no",
+          "predicate_4": "0"
+        }
+      }
+    }
+  ],
+  "queries": [],
+  "restored": false,
+  "kind": "sampler-playback",
+  "plan_sha256": "c14079406c7f4eddbe735045252b8e80d09fbbd52f02905e16f20b2edc5f6b12",
+  "audio_observation": {
+    "captured": false,
+    "reason": "No verified loopback route for current speaker output; transport claims only"
+  },
+  "readback_scripts": {
+    "activity": "sampler_play SLOT",
+    "count": "sampler_used",
+    "elapsed": "get_sample_info SLOT 'pos'",
+    "position": "sampler_position SLOT"
+  },
+  "deck_guard_before": {
+    "deck 1 play": "no",
+    "deck 2 play": "no",
+    "deck 3 play": "no",
+    "deck 4 play": "no"
+  },
+  "bank_ready": {
+    "matches": true,
+    "queries": 1
+  },
+  "fixture_readback": {
+    "1": {
+      "loaded": "yes",
+      "name": "ContractTone01",
+      "group": "Alpha",
+      "length": "2000ms",
+      "color": "#7FFF0000"
+    },
+    "2": {
+      "loaded": "yes",
+      "name": "ContractTone02",
+      "group": "Alpha",
+      "length": "3000ms",
+      "color": "#7F00FF00"
+    },
+    "3": {
+      "loaded": "yes",
+      "name": "ContractTone03",
+      "group": "Alpha",
+      "length": "4000ms",
+      "color": "#7F0000FF"
+    },
+    "4": {
+      "loaded": "no"
+    },
+    "5": {
+      "loaded": "yes",
+      "name": "ContractTone05",
+      "group": "Beta",
+      "length": "6000ms",
+      "color": "#7FFFFF00"
+    },
+    "6": {
+      "loaded": "no"
+    },
+    "7": {
+      "loaded": "no"
+    },
+    "8": {
+      "loaded": "no"
+    },
+    "9": {
+      "loaded": "yes",
+      "name": "ContractTone09",
+      "group": "",
+      "length": "10000ms",
+      "color": "#7F00FFFF"
+    },
+    "10": {
+      "loaded": "no"
+    },
+    "11": {
+      "loaded": "no"
+    },
+    "12": {
+      "loaded": "yes",
+      "name": "ContractTone12",
+      "group": "Gamma",
+      "length": "13000ms",
+      "color": "#7FFF00FF"
+    },
+    "13": {
+      "loaded": "no"
+    }
+  },
+  "initial_fixture_levels": {
+    "1": "1",
+    "2": "1",
+    "3": "1",
+    "5": "1",
+    "9": "1",
+    "12": "1"
+  },
+  "initial_fixture_selection": {
+    "deck 1 get_sampler_slot": "1",
+    "deck 1 sampler_select": "0",
+    "deck 2 get_sampler_slot": "1",
+    "deck 2 sampler_select": "0"
+  },
+  "quiet_levels": {
+    "1": "0.1",
+    "2": "0.1",
+    "3": "0.1",
+    "5": "0.1",
+    "9": "0.1",
+    "12": "0.1"
+  },
+  "fixture_defaults": {
+    "deck 1 get_sampler_slot": "9",
+    "deck 1 sampler_select": "0.8",
+    "deck 2 get_sampler_slot": "12",
+    "deck 2 sampler_select": "1"
+  }
+}

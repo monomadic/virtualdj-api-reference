@@ -80,6 +80,8 @@ def same(a, b):
 
 
 class Runner:
+    MUTATION_VERBS = frozenset({*VOLUME_VERBS, "sampler_bank", "sampler_select"})
+
     def __init__(self, output):
         self.output = output
         if output.exists():
@@ -100,7 +102,7 @@ class Runner:
         # Hard allowlist. Values are generated internally; no arbitrary CLI scripts.
         head = script.split()[0]
         verb = script.split()[2] if head == "deck" else head
-        if verb not in {*VOLUME_VERBS, "sampler_bank", "sampler_select"}:
+        if verb not in self.MUTATION_VERBS:
             raise FixtureError(f"mutation not allowlisted: {verb}")
         if verb != "sampler_bank" and phase != "restore-original-selection":
             if self.query("get_sampler_bank") != BANK:
@@ -229,6 +231,27 @@ class Runner:
                                              "result": self.query(script)})
         self.persist()
 
+    def restore_original(self, original, restore_bank):
+        """Shared bounded bank/selection cleanup; original bank stays private."""
+        self.execute(f"sampler_bank {restore_bank}", "restore-original-bank")
+        bank_wait = self.wait_bank(original["bank"])
+        bank_ok = bank_wait["matches"]
+        if bank_ok:
+            for deck in (1, 2):
+                script = f"deck {deck} get_sampler_slot"
+                value = original["selection"][script]
+                if self.query(script) != value:
+                    self.execute(f"deck {deck} sampler_select {value}", "restore-original-selection")
+        selection_ok = self.selection() == original["selection"]
+        self.data["original_restoration"] = {"bank_matches": bank_ok,
+                                            "bank_readback_queries": bank_wait["queries"],
+                                            "selection_matches": selection_ok,
+                                            "sampler_used": self.query("sampler_used")}
+        self.data["restored"] = bank_ok and selection_ok and self.data["original_restoration"]["sampler_used"] == "0"
+        if not self.data["restored"]:
+            self.data["restoration_error"] = "original sampler state did not restore"
+            raise FixtureError("original sampler state did not restore")
+
     def run(self):
         original = None
         entered = False
@@ -283,26 +306,7 @@ class Runner:
         finally:
             try:
                 if original is not None and entered:
-                    # Redact only the original bank name, preserving the exact
-                    # generated-fixture calls and all experimental readbacks.
-                    self.execute(f"sampler_bank {restore_bank}", "restore-original-bank")
-                    bank_wait = self.wait_bank(original["bank"])
-                    bank_ok = bank_wait["matches"]
-                    if bank_ok:
-                        for deck in (1, 2):
-                            script = f"deck {deck} get_sampler_slot"
-                            value = original["selection"][script]
-                            if self.query(script) != value:
-                                self.execute(f"deck {deck} sampler_select {value}", "restore-original-selection")
-                    selection_ok = self.selection() == original["selection"]
-                    self.data["original_restoration"] = {"bank_matches": bank_ok,
-                                                        "bank_readback_queries": bank_wait["queries"],
-                                                        "selection_matches": selection_ok,
-                                                        "sampler_used": self.query("sampler_used")}
-                    self.data["restored"] = bank_ok and selection_ok and self.data["original_restoration"]["sampler_used"] == "0"
-                    if not self.data["restored"]:
-                        self.data["restoration_error"] = "original sampler state did not restore"
-                        raise FixtureError("original sampler state did not restore")
+                    self.restore_original(original, restore_bank)
             finally:
                 self.persist()
                 self.ch.close()
