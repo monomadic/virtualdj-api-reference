@@ -93,7 +93,7 @@ live_probe:
     - just verb-probe NAME          # does this name exist, and what kind is it?
     - just binary-verb NAME         # structured binary evidence for one name
     - just sweep-verb-existence     # refresh tests/verb-existence-sweep.json
-    - just fixture-list             # named states a probe can establish (10)
+    - just fixtures                 # named states a probe can establish (10)
     - just probe-arg-forms [--from-catalog|--from-corpus|--lexicon]
     - just probe-execute-forms      # WRITES: allowlisted settings verbs, restored and verified
     - just corpus-parses            # send every vendor snippet through /query
@@ -145,9 +145,9 @@ pads:
     - docs/Pad Page XML.md
     - docs/Example Pad XML Pages.md
   examples:
-    - examples/Pads/Reference - Slot FX.xml
-    - examples/Pads/Reference - ColorFX.xml
-    - examples/Pads/SAMPLER READ ONLY.xml
+    - examples/Pads/Quarantine/Reference - Slot FX.xml  # personal, see examples/Pads/README.md
+    - examples/Pads/Quarantine/Reference - ColorFX.xml  # personal, see examples/Pads/README.md
+    - examples/Pads/Quarantine/SAMPLER READ ONLY.xml  # personal, see examples/Pads/README.md
     - examples/Pads/Quarantine/Reference - Page Aware Sampler.xml  # personal/superseded, see examples/Pads/README.md
   built_in:
     - examples/Pads/Built-In/README.md
@@ -160,7 +160,7 @@ sampler:
     - docs/Example Pad XML Pages.md
     - examples/Pads/README.md
   examples:
-    - examples/Pads/SAMPLER READ ONLY.xml
+    - examples/Pads/Quarantine/SAMPLER READ ONLY.xml  # personal, see examples/Pads/README.md
     - examples/Pads/Quarantine/Reference - Page Aware Sampler.xml  # personal/superseded, see examples/Pads/README.md
   fixtures:
     - tests/Pads/Reference - Sampler Loaded Test.xml

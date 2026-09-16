@@ -121,7 +121,7 @@ restore while keeping the results already collected.
 `check_corpus_parses.py` sends every corpus snippet through `/query` and classifies the
 outcome — the one check here that can falsify a grammar claim rather than extend one.
 
-`fixtures.py` provides the 10 named states these probes run inside (`just fixture-list`). Each
+`fixtures.py` provides the 10 named states these probes run inside (`just fixtures`). Each
 asserts its own preconditions and fails loudly: a probe against an unestablished state is worse
 than no probe. Several are **assert-only** — they read state the app already has rather than
 writing, which is the right trade when there is no verified way back (`browser_populated`).

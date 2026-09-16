@@ -89,7 +89,7 @@ Start here:
   The only hand-maintained input to `just topic <term>`. Everything else that command reports is derived — verb `section`, element name, grep — so this file exists purely for what a topic cannot reach by name: the elements that draw the waveform are called `rhythmzone`, `scratchwave`, `zoomed` and `songpos`, and say so nowhere. Also carries the alias table that folds `color fx` into `colorfx` and `beat grid` into `waveform`. Tags are navigation, never evidence. `just check` fails on a tag that names a verb, element or doc which does not exist, and on a topic with no stated reason.
 
 - [VDJScript Verb Index (JSON)](vdjscript-verb-index.json)
-  Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, parsed from `VDJScript Verbs.md` plus the coverage audit. Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.
+  Generated machine-readable verb index: every official name with tier (curated/catalog/alias/official-name-only), kind, aliases, and surfaces, built from the artifacts (verb table, store, coverage audit) rather than from prose since task 11 (2026-09-06). Regenerate with `just verb-index`; consumed by `tools/lint_mappers.py` and by the verb store bootstrap.
 
 - [VDJScript Verb Record Store (JSON)](vdjscript-verbs.json)
   **Start every per-verb question with `just get-verb <name>`** — it now joins the store record with the verb table (id, category, aliases, hidden flag, or the rule-1b disproof), the structural contract (class, family, capability, arg demands, keyword candidates), the HTTP existence probe, and the observed return type, at read time. `--raw` returns the bare store record. Authoritative, hand-editable per-verb records: tier, aliases, surfaces, kind, doc coverage, plus local-test status, confidence, and evidence. Query and edit through the `just verb` API — do not hand-edit the JSON and do not generate Markdown copies of it. `search` filters (`--surface`, `--section`, `--tier`, `--status`, `--kind`, `--needs-test`) with `--format=json`, so reports come out of a query on demand rather than a stored listing. Seeded from the index, coverage audit, and tracker via `python3 tools/verbdb.py bootstrap`; validated by `just check`.
@@ -98,7 +98,7 @@ Start here:
   Validator/generator suite (`just check` gates) and the version-pinned binary-extraction pipeline, including the new-VirtualDJ-build refresh procedure.
 
 - [Pad Page Inventory](../examples/Pads/README.md)
-  Current `examples/Pads/*.xml` status labels, canonical examples, built-in pad-page copies, and maintenance checklist.
+  Status labels for every pad page under `examples/Pads/Built-In/` and `examples/Pads/Quarantine/` (no page is Canonical any more), built-in pad-page copies, and maintenance checklist.
 
 - [Skin Inventory](../examples/Skins/README.md)
   Local skin examples, copied built-in skins, and build-system demos.
@@ -135,7 +135,7 @@ Current status:
 - `Official VDJScript Coverage Audit.md` tracks official verb coverage depth, missing-name status, and the remaining local-test gap.
 - `Button Editor Catalog Audit.md` tracks the bundled Button Editor action-description catalog and runtime string-table cross-checks.
 - `Button Editor Taxonomy.md` tracks the compiled Button Editor category mapping and metadata join: 37 displayed categories, 918 visible actions, 1028 compiled action items, and exact `ACTION_*` method-symbol coverage.
-- `Undocumented VDJScript Candidates.md` hosts the authoritative verb table (existence, aliases, hidden flag, categories) and tracks the 37 hidden verbs separately from the normal VDJScript API reference.
+- `Undocumented VDJScript Candidates.md` hosts the authoritative verb table (existence, aliases, hidden flag, categories) and tracks the editor-hidden verbs (count in `just verb-table-stamp`) separately from the normal VDJScript API reference.
 - `VDJScript Syntax Evidence.md` tracks the separate parser/highlighter evidence stream for grammar and conditional semantics.
 - `VDJScript Local Test Tracker.md` is the default place to record manual VirtualDJ verification runs for `Needs local test` verbs.
 - `Verb Tail Structural Discovery.md` is the method note behind the bounded contract and vocabulary extractors; the queue it produces is a query (`just action-tail-leads`), not a stored listing, and every name in it is a Tier-2 lead.
