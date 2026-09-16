@@ -51,11 +51,17 @@ class PlaybackRunner(Runner):
         self.epoch = time.monotonic()
 
     def query(self, script):
-        # A stale keep-alive read can consume a sample's entire duration before
-        # retrying. Fresh read connections keep timed observations bounded;
-        # timestamp checks still reject delayed snapshots.
+        # The local endpoint occasionally stalls even on fresh connections.
+        # Bound read-only retries to keep a query from consuming a whole sample;
+        # mutation dispatch retains its own timeout and is NEVER retried.
         self.ch.close()
-        return super().query(script)
+        timeout = self.ch.timeout
+        self.ch.timeout = .4
+        try:
+            return super().query(script)
+        finally:
+            self.ch.close()
+            self.ch.timeout = timeout
 
     def snapshot(self):
         start = time.monotonic() - self.epoch

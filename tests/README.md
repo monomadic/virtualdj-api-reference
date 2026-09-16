@@ -25,10 +25,32 @@ deadline. Original bank names are redacted in persisted restoration entries.
 This pass covers explicit selectors, group-versus-slot levels, unequal baselines,
 and deck defaults over HTTP. It does not start playback or establish pad-page,
 pressure/release, routing, recording or deletion behavior. Next use the same bank
-for a separately allowlisted playback pass with position/audio observations;
-pad-context tests must use a real pad fixture. Record results in the verb store
+for the separately allowlisted playback pass below; pad-context tests must use
+a real pad fixture. Record results in the verb store
 and attach exact form/channel evidence to the existing assessment, rather than
 creating a parallel Markdown contract table.
+
+`just probe-sampler-playback` prints the frozen cases from
+[`sampler-playback-cases.json`](sampler-playback-cases.json) without touching the
+app. With the same owned bank installed and all decks/sampler stopped,
+`just probe-sampler-playback --run --output /tmp/sampler-playback-new.json`
+plays quiet generated tones. It distinguishes start/continue/restart/stop using
+activity, elapsed strings, percentage positions, known WAV lengths and the
+active count. Different groups supply simultaneous target/witness samples;
+separate immediate count probes establish three/four-player states. Both runs
+use nonsense controls and explicit per-slot cleanup, never the `all` form under
+test. Levels, selections, original bank and stopped deck state are verified
+afterward. Existing output files are never overwritten.
+
+[`sampler-playback-9598.json`](sampler-playback-9598.json) is the focused playback
+join. Claims are recomputed from timed readbacks, not the recorded predictions,
+execute responses or a success flag. Missing controls, discrepant positions,
+slow snapshots and possible natural endings cannot close a form. Earlier
+`-initial` and `-baseline-delay` captures are retained separately: a delayed
+read can outlive a sample even when an HTTP request eventually succeeds. Timed
+queries therefore use bounded read-only waits; mutation requests are not
+replayed. This is HTTP **transport** evidence, not captured audio or proof of
+speaker/headphone routing.
 
 Test assets are important evidence for the documentation project. They are kept outside the normal example folders so a test page, skin, mapper, or other repro fixture is not mistaken for a polished reference implementation.
 

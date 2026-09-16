@@ -195,6 +195,10 @@ coverage *args:
 probe-sampler-contracts *args:
     @{{python}} tools/probe_sampler_contracts.py "$@"
 
+# Prints frozen cases by default; --run plays quiet generated samples and restores.
+probe-sampler-playback *args:
+    @{{python}} tools/probe_sampler_playback.py "$@"
+
 # Requires empty stopped deck 1. Generates temporary audio and verifies restoration.
 probe-long-time:
     {{python}} tools/probe_long_time.py --run
@@ -436,6 +440,7 @@ check:
     {{python}} tools/test_contract_assessment.py
     {{python}} tools/test_coverage_section.py
     {{python}} tools/test_sampler_contracts.py
+    {{python}} tools/test_sampler_playback.py
     {{python}} tools/action_tail_leads.py --check
     {{python}} tools/sweep_return_types.py --check
     {{python}} tools/plugin_introspect.py --check

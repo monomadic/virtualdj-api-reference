@@ -97,6 +97,7 @@ def valid_capture(capture):
             and original.get("bank_matches") is True and original.get("selection_matches") is True
             and original.get("sampler_used") == "0"
             and levels_equal(capture.get("initial_fixture_levels", {}), capture.get("fixture_levels_restored", {}))
+            and capture.get("initial_fixture_selection")
             and capture.get("initial_fixture_selection") == capture.get("fixture_selection_restored")
             and capture.get("deck_guard_before") == capture.get("deck_guard_after")
             and capture.get("deck_guard_before")):
@@ -106,6 +107,7 @@ def valid_capture(capture):
     cases = capture.get("cases", [])
     return (bool(cases) and bool(journal) and all(r.get("outcome") == "responded" for r in journal)
             and active(capture.get("fixture_stopped", {})) == set()
+            and all(active(r.get("restored", {})) == set() for r in capture.get("count_probes", []))
             and all(active(r.get("restored", {})) == set() and r.get("script") in dispatched for r in cases))
 
 
@@ -150,6 +152,13 @@ def claims_for(name, capture):
             form += " [playing]" if active(rows[1]["before"]) else " [stopped]"
             for dim in ("execute", "arguments"):
                 add(dim, form, obs, [id, *controls])
+            if parts[0] != "deck" and parts[1] == "9" and not any(
+                    c["form"] == name + " NUM" for c in claims):
+                add("arguments", name + " NUM", "Numeric selector shape measured with absolute slot 9; "
+                    "concrete stopped/playing preconditions are listed separately. No whole-range claim.", [id, *controls])
+            if name == "sampler_stop" and parts[-1] == "all" and observed == "stop-all":
+                add("arguments", "all", "Execute: stopped both independently advancing samples in different groups; "
+                    "two nonsense selectors left both progressing. This is aggregate behavior on the tested fixture.", [id, *controls])
     if name in {"sampler_position", "get_sample_info"} and all(
             consistent(id, allowed) for id, allowed in (("sampler_play-start", {"start"}),
                                                       ("sampler_play_stutter-running", {"restart"}),
@@ -158,4 +167,28 @@ def claims_for(name, capture):
             "Slots 9/12: percent positions agree with elapsed strings and known 10s/13s WAV lengths during "
             "start, progress, restart and stop; independent witness continues. No loop/routing/audio claim.",
             ["sampler_play-start", "sampler_play_stutter-running", "stop-one"])
+    if name == "sampler_used":
+        states = defaultdict(list)
+        ids = []
+        for id, rows in pairs.items():
+            if consistent(id, {"start", "stop", "stop-all", "restart", "continue", "idle"}):
+                ids.append(id)
+                for run, row in rows.items():
+                    states[run].extend(row[k] for k in ("before", "after", "later", "restored"))
+        for row in capture.get("count_probes", []):
+            if (row.get("run") in (1, 2) and active(row.get("initial", {})) == set()
+                    and active(row.get("restored", {})) == set()
+                    and all(active(row.get(k, {})) == set(row["playing"])
+                            and positions_agree(row[k]) for k in ("after", "later"))):
+                states[row["run"]].extend(row[k] for k in ("after", "later"))
+        if all({len(active(s)) for s in states[run]} >= set(range(5)) for run in (1, 2)):
+            if all(s["counts"].get(str(n)) == ("yes" if len(active(s)) == n else "no")
+                   and s["counts"].get(f"predicate_{n}") == ("1" if len(active(s)) == n else "0")
+                   for run in (1, 2) for s in states[run] for n in range(5)):
+                add("arguments", "sampler_used NUM", "For N=0..4 and independently observed active counts 0..4, "
+                    "query returns yes exactly at N and no otherwise; conditional use agrees. Bare returns the count. "
+                    "Both runs include separate three/four-player fixtures.", [*ids, "count_probes"])
+                add("return_type", "NUM=0..4 (HTTP)", "Argument forms return rendered booleans yes/no; "
+                    "the bare form returns the active-sample count. Direct queries and conditional predicates agree.",
+                    [*ids, "count_probes"])
     return claims

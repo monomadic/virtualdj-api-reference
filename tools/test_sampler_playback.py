@@ -93,6 +93,54 @@ class PlaybackTests(unittest.TestCase):
             runner.stopped()
         runner.execute.assert_not_called()
 
+    def test_short_query_timeout_does_not_change_mutation_timeout(self):
+        runner = object.__new__(PlaybackRunner)
+        runner.ch = Mock(timeout=10)
+        runner.ch.query.side_effect = lambda script: str(runner.ch.timeout)
+        with patch("probe_sampler_contracts.time.sleep"):
+            self.assertEqual(runner.query("sampler_used"), "0.4")
+        self.assertEqual(runner.ch.timeout, 10)
+
+
+class CaptureTests(unittest.TestCase):
+    def setUp(self):
+        root = Path(__file__).resolve().parents[1]
+        self.capture = json.loads((root / "tests/sampler-playback-9598.json").read_text())
+
+    def test_confirmed_capture_closes_expected_scoped_forms(self):
+        self.assertTrue(valid_capture(self.capture))
+        for name in ("sampler_play", "sampler_stop", "sampler_play_stop", "sampler_play_stutter",
+                     "sampler_position", "sampler_used", "get_sample_info"):
+            self.assertTrue(claims_for(name, self.capture), name)
+        stop = claims_for("sampler_stop", self.capture)
+        self.assertTrue(any(c["dimension"] == "arguments" and c["form"] == "all" for c in stop))
+        self.assertTrue(all(c["evidence"]["audio_captured"] is False for c in stop))
+
+    def test_bad_control_prevents_stop_all_promotion(self):
+        capture = copy.deepcopy(self.capture)
+        row = next(r for r in capture["cases"] if r["id"] == "sampler_stop-zzqqx" and r["run"] == 1)
+        row["later"]["end"] += 10
+        self.assertEqual(claims_for("sampler_stop", capture), [])
+
+    def test_aborted_restore_failure_and_uncertain_write_are_not_evidence(self):
+        for change in (lambda c: c.update(completed=False),
+                       lambda c: c.update(restored=False),
+                       lambda c: c["journal"][0].update(outcome="uncertain"),
+                       lambda c: c["cases"][0]["restored"]["counts"].update(bare="1")):
+            capture = copy.deepcopy(self.capture)
+            change(capture)
+            self.assertFalse(valid_capture(capture))
+            self.assertEqual(claims_for("sampler_stop", capture), [])
+
+    def test_exact_count_claim_needs_positive_four_player_state(self):
+        capture = copy.deepcopy(self.capture)
+        capture["count_probes"] = []
+        self.assertEqual(claims_for("sampler_used", capture), [])
+        capture = copy.deepcopy(self.capture)
+        row = next(r for r in capture["count_probes"] if len(r["playing"]) == 4)
+        row["after"]["counts"]["predicate_4"] = "0"
+        self.assertEqual(claims_for("sampler_used", capture), [])
+
 
 if __name__ == "__main__":
     unittest.main()

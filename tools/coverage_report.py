@@ -173,6 +173,7 @@ class Context:
         self.bpm_transition = artifact("bpm-transition-forms.json") or {}
         self.fx_dump = artifact("fx-introspection-dump.json") or {}
         self.sampler_capture = artifact("sampler-contracts-9598.json") or {}
+        self.sampler_playback = artifact("sampler-playback-9598.json") or {}
         from sampler_contract_evidence import valid_capture
         if valid_capture(self.sampler_capture):
             from sweep_return_types import classify as value_type, merge as merge_types
@@ -630,7 +631,9 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     # Focused sampler observations are exact query/execute forms, not blanket
     # closure of a verb or a controller-supplied value shape.
     from sampler_contract_evidence import claims_for as sampler_claims
+    from sampler_playback_evidence import claims_for as playback_claims
     sampler = sampler_claims(name, getattr(ctx, "sampler_capture", {}))
+    sampler += playback_claims(name, getattr(ctx, "sampler_playback", {}))
     for cl in sampler:
         claims = [old for old in claims if not (
             old["dimension"] == cl["dimension"] and old["form"] == cl["form"])]
@@ -640,9 +643,15 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
             claims.append(_claim("arguments", "NUM auto (pad-page context)", "open", "unavailable",
                                  "earlier paged auto failure remains in store evidence; generated HTTP absolute-slot reads do not retest pad-page mapping",
                                  "store evidence; pad fixture required"))
+        if name == "sampler_play" and any(cl.get("source") == "tests/sampler-playback-9598.json" for cl in sampler):
+            claims.append(_claim("arguments", "NUM while_pressed (press/release surface)", "open", "unavailable",
+                                 "shipped controller usage requires distinct input-down/input-up events; HTTP transport actions do not establish held/released behavior",
+                                 "vendor script; input-event fixture required"))
         for old in claims:
             if old["dimension"] == "execute" and old["form"] == "bare" and old["status"] == "open":
-                old["observation"] = "bare/controller-supplied input not exercised by the focused capture; concrete executed forms are listed separately"
+                old["observation"] = ("unwrapped bare/default-scope form not measured; explicit deck 1 default 9 behavior is scoped below"
+                                      if name in {"sampler_play", "sampler_stop", "sampler_play_stop", "sampler_play_stutter"}
+                                      else "remaining default-scope/controller-input obligation; only the concrete contexts listed below were exercised")
             if old["dimension"] == "behaviour" and old["form"] == "(store)" and rec.get("evidence"):
                 old["observation"] = rec["evidence"][-1]
             if old.get("channel") == "vendor script":
@@ -650,7 +659,8 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                     old["observation"] = "named-selector 0.61 is measured below; remaining shipped STR NUM examples (including quoted all with 100) are not measured"
         for dim in ("arguments", "execute"):
             relevant = [cl for cl in claims if cl["dimension"] == dim]
-            if any(cl["status"] == "settled" and cl.get("source") == "tests/sampler-contracts-9598.json"
+            if any(cl["status"] == "settled" and cl.get("source") in {
+                       "tests/sampler-contracts-9598.json", "tests/sampler-playback-9598.json"}
                    for cl in relevant):
                 dims[dim] = "partial" if any(cl["status"] == "open" for cl in relevant) else "settled"
 

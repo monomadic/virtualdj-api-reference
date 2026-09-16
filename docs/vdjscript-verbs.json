@@ -15,11 +15,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 40,
-    "Pass": 114,
-    "Untested": 875
+    "Pass": 120,
+    "Untested": 869
    },
    "documented": 772,
-   "tested_pass": 114,
+   "tested_pass": 120,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -7540,14 +7540,15 @@
     "Local test 2026-09-06, HTTP, build 18.0.9598. All three documented fields confirmed, with two nonsense controls separating cleanly (both returned ''). The SHAPE is slot-first — 'get_sample_info <slot> <field>' — which is why a single-argument probe had errored on every token including the real ones. On sampler slot 1 (a shipped sample): 'group' -> Drums, 'length' -> 4bt (beat value for a loop, exactly as documented), 'pos' -> 00:00.0, and the regular column names work too ('fullpath' -> the .vdjsample path, 'bpm' -> 135.0). 'name' returns '' — use get_sample_name for that.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sample_info implements onQuery only -> Query; HTTP sweep classed it 'query'.",
     "2026-09-09, build 18.0.9583, HTTP query-only, two loaded slots: the field argument draws from the binary's song_fields enumeration, which the catalog prose names only as 'the regular column names' — an open reference no tokenizer can follow. Confirmed above an empty-string floor (three nonsense controls): bpm, key, title, filename, filepath, remix from song_fields, plus the catalog's fullpath, length, pos. Position 1 (slot) IS read — bpm, key, title, filename and fullpath all separate slot 1 from slot 2. 'group' returned empty on both samples (this bank assigns no groups) so it is undiscriminated here, not refuted. tests/binary-vocabularies.json associates song_fields with browser_sort, get_karaoke_background_song and get_next_karaoke_song only; this is a fourth verb.",
-    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Slot-first group and length queries discriminated slots 1/2/5/9: groups Alpha/Alpha/Beta/empty, generated WAV durations 2000/3000/6000/10000ms. Stopped pos returned 00:00.0; two junk field controls were empty and empty slot 4 returned error:1. Repeated twice. No moving-position, loop-unit or full metadata-column claim."
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Slot-first group and length queries discriminated slots 1/2/5/9: groups Alpha/Alpha/Beta/empty, generated WAV durations 2000/3000/6000/10000ms. Stopped pos returned 00:00.0; two junk field controls were empty and empty slot 4 returned error:1. Repeated twice. No moving-position, loop-unit or full metadata-column claim.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. get_sample_info 9 pos and 12 pos report elapsed clock strings progressing with the known-duration WAVs; target stop resets its clock and stutter resets then advances it while the independent witness continues. sampler_position percentages agree within measured snapshot time/rounding tolerance. Earlier metadata/slot findings remain scoped to their separate capture."
    ],
    "section": "Sampler",
    "description": "Read sample metadata such as `fullpath`, `group`, or `length`",
    "example": "get_sample_info 9 fullpath",
    "confidence": "local_test",
    "kind": "Query",
-   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): slot-first group/length fields discriminate generated WAVs. Stopped pos, nonsense fields and empty slots captured; metadata and moving/loop contexts remain scoped."
+   "note": "HTTP 9598 (2026-09-16): metadata/slot discrimination and moving pos strings now have separate generated-fixture captures. pos tracks start, progress, restart and stop; loops and broader metadata contexts remain open."
   },
   "get_sample_name": {
    "name": "get_sample_name",
@@ -14886,16 +14887,19 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. Absolute sampler_play 9 starts stopped slot 9; repeating it during playback continues without restarting, while independent slot 12 continues. deck 1 sampler_play starts its selected default slot 9. Two nonsense selectors start nothing. Only these HTTP states/forms; while_pressed and other input surfaces remain open."
    ],
    "section": "Sampler",
    "description": "Play the selected or specified sample slot",
    "example": "sampler_play 4",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): starts the target; repeated numeric play continues without restarting. Explicit deck-default start also measured. Held/released input remains untested."
   },
   "sampler_play_stop": {
    "name": "sampler_play_stop",
@@ -14903,16 +14907,19 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stop 9 starts a stopped target and stops/resets a playing target, leaving independent slot 12 advancing. deck 1 sampler_play_stop stops its playing default slot 9. Two junk selectors leave both playing. Input release and unwrapped default scope were not exercised."
    ],
    "section": "Sampler",
    "description": "Play sample if stopped, or stop it if already playing",
    "example": "sampler_play_stop 4",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): numeric form toggles stopped/playing transport; witness sample continues. Explicit deck-default playing-to-stopped case measured."
   },
   "sampler_play_stutter": {
    "name": "sampler_play_stutter",
@@ -14920,16 +14927,19 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stutter implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stutter implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stutter 9 starts when stopped; when already playing at a positive position it resets toward the beginning then advances again, while independent slot 12 continues monotonically. deck 1 sampler_play_stutter restarts default slot 9. Two junk selectors leave both advancing. Natural file endings excluded by known durations and snapshot timing."
    ],
    "section": "Sampler",
    "description": "Play sample and restart it from the beginning if already playing",
    "example": "sampler_play_stutter 4",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): numeric form starts or restarts; explicit deck-default restart measured. Timed positions distinguish restart from continue and natural ending."
   },
   "sampler_position": {
    "name": "sampler_position",
@@ -14937,16 +14947,19 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_position implements onQuery only -> Query; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_position implements onQuery only -> Query; HTTP sweep classed it 'query'.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_position 9 and 12 return rendered percentages agreeing with get_sample_info SLOT pos and known generated WAV durations 10s and 13s through start, progress, restart and stop. No seek action, looping or routing behavior inferred."
    ],
    "section": "Sampler",
    "description": "Get the current playback position of the selected sample",
    "example": "sampler_position",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): slot 9/12 percentages track independently read elapsed time across start/restart/stop on known-duration WAVs."
   },
   "sampler_rapidfire": {
    "name": "sampler_rapidfire",
@@ -15044,16 +15057,19 @@
     "Pad",
     "SkinAction"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_stop 9 stops/resets slot 9 while slot 12 advances. sampler_stop all stops/resets both independently advancing samples in different groups. deck 1 sampler_stop stops default slot 9 only. Two junk selectors leave both running. This establishes aggregate all behavior for sampler_stop specifically, not the rest of the sampler family."
    ],
    "section": "Sampler",
    "description": "Stop one sample or all currently playing samples",
    "example": "sampler_stop 4",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): numeric/default stop affects the target; all stopped both independent players. Separate position/count readbacks and verified cleanup; no acoustic-output claim."
   },
   "sampler_stop_rec": {
    "name": "sampler_stop_rec",
@@ -15094,16 +15110,19 @@
     "get_sampler_used"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_used implements onQuery only -> Query; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_used implements onQuery only -> Query; HTTP sweep classed it 'query'.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. Bare sampler_used reports active counts 0 through 4 matching per-slot activity. sampler_used N for N=0,1,2,3,4 returns yes exactly when that many samples are active and no otherwise; conditional predicates agree. Dedicated three/four-player states supply positive controls rather than only checking false at N=4."
    ],
    "section": "Sampler",
    "description": "Check whether any sample, or a specific count of samples, is playing",
    "example": "sampler_used",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test",
+   "note": "HTTP 9598 (2026-09-16): bare returns the active count; N=0..4 returns an exact-count boolean, confirmed across active counts 0..4 in both direct and conditional queries."
   },
   "sampler_velocity": {
    "name": "sampler_velocity",
