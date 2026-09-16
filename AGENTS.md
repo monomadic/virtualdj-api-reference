@@ -117,7 +117,15 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
   (`just plugin-collect-late`); and VirtualDJ writes `0.0` to `*result` even on failure, so the
   HRESULT is the answer, not the value. Full evidence table: the tracker's "Plugin Channel
   (VDJIntrospect)" section.
+- **A UI observation persists what it saw.** When the evidence for a row is a screenshot of the running app (agent driving the window), save the screenshot under `tests/` beside the capture and cite its path in the row's `evidence`. A reading whose screenshot was not kept is an unverifiable assertion; if that has already happened, the capture must say so in a `screenshot_provenance` field rather than cite "a screenshot in this task".
 - Recording a result has two destinations, and they hold different things. The **verb store is authoritative for per-verb conclusions**: `just put-verb <name> test_status=… confidence=local_test evidence="…"` — one verb, one settled fact, with the build in the evidence string. The **tracker holds the run narrative** for a session that does not reduce to a single verb: a fixture setup, a negative result, a multi-verb probe, cross-verb interactions. A tested status in the store with no evidence now fails `just check`, so record the evidence at the same time as the status, not later. Note the channel (HTTP vs pad) in the evidence, since some behavior is surface-specific.
+
+## Commits
+
+- **One concern per commit.** A capture and its tooling ship together; an unrelated doc note found on the way ships separately, even if it is one paragraph.
+- **Subject is a plain imperative sentence, no type prefix.** `Settle sampler default-context playback contracts`, not `test(sampler): …`; the repo's history is mostly in this form and mixing the two makes `git log --oneline` harder to scan.
+- **A superseded capture is committed under its `-initial` (or `-baseline-*`) name, never under the confirmed name.** The confirmed file name is written once, by the run that produced the confirmed capture.
+- **Task state moves, it does not accrete.** When a task lands, its block moves from `TASKS.md` to `HISTORY.md`; while a task is open, run narrative goes into the tracker or the topical doc and the task's `Note:` points at it in one sentence.
 
 ## Key facts for AI agents
 
