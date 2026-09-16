@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 
 from fixtures import FixtureError
 from probe_sampler_playback import PlaybackRunner, load_plan
-from sampler_playback_evidence import active, classify_case, claims_for, valid_capture
+from sampler_playback_evidence import active, classify_case, claims_for, default_claims_for, valid_capture
 
 
 def state(players, seconds=0, witness=0, clock=0):
@@ -125,6 +125,24 @@ class CaptureTests(unittest.TestCase):
         stop = claims_for("sampler_stop", self.capture)
         self.assertTrue(any(c["dimension"] == "arguments" and c["form"] == "all" for c in stop))
         self.assertTrue(all(c["evidence"]["audio_captured"] is False for c in stop))
+
+    def test_default_context_requires_both_states_and_stable_context(self):
+        root = Path(__file__).resolve().parents[1]
+        capture = json.loads((root / "tests/sampler-default-playback-9598.json").read_text())
+        for name in ("sampler_play", "sampler_stop", "sampler_play_stop", "sampler_play_stutter"):
+            claims = default_claims_for(name, capture)
+            self.assertTrue(any(c["dimension"] == "execute" and c["form"] == "bare" for c in claims), name)
+            self.assertTrue(all(c["source"] == "tests/sampler-default-playback-9598.json" for c in claims))
+        changed = copy.deepcopy(capture)
+        changed["cases"][-1]["default_context_after"]["get_deck"] = "2"
+        self.assertEqual(default_claims_for("sampler_play", changed), [])
+        changed = copy.deepcopy(capture)
+        changed["cases"] = [r for r in changed["cases"] if r["id"] != "sampler_play-unwrapped-playing"]
+        self.assertEqual(default_claims_for("sampler_play", changed), [])
+        changed = copy.deepcopy(capture)
+        control = next(r for r in changed["cases"] if r["id"] == "sampler_play-zzqqx" and r["run"] == 1)
+        control["later"]["end"] += 10
+        self.assertEqual(default_claims_for("sampler_play", changed), [])
 
     def test_bad_control_prevents_stop_all_promotion(self):
         capture = copy.deepcopy(self.capture)

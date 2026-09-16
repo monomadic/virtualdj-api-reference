@@ -14892,14 +14892,15 @@
    "blocked": false,
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
-    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. Absolute sampler_play 9 starts stopped slot 9; repeating it during playback continues without restarting, while independent slot 12 continues. deck 1 sampler_play starts its selected default slot 9. Two nonsense selectors start nothing. Only these HTTP states/forms; while_pressed and other input surfaces remain open."
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. Absolute sampler_play 9 starts stopped slot 9; repeating it during playback continues without restarting, while independent slot 12 continues. deck 1 sampler_play starts its selected default slot 9. Two nonsense selectors start nothing. Only these HTTP states/forms; while_pressed and other input surfaces remain open.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-default-playback-9598.json. Unwrapped sampler_play starts the stopped default sample; repeated play continues without restarting. get_deck=1 and get_sampler_slot=9 verified before/after every case, with deck 2 default 12. Both stopped/playing states repeated in two runs with two nonsense selectors; timed activity/elapsed/percent/count readbacks and final level/selection/bank/deck restoration verified. No audio, other deck contexts, pad mapping or held-input claim."
    ],
    "section": "Sampler",
    "description": "Play the selected or specified sample slot",
    "example": "sampler_play 4",
    "kind": "Dual",
    "confidence": "local_test",
-   "note": "HTTP 9598 (2026-09-16): starts the target; repeated numeric play continues without restarting. Explicit deck-default start also measured. Held/released input remains untested."
+   "note": "HTTP 9598 (2026-09-16): unwrapped default slot 9 (get_deck=1) starts the stopped default sample; repeated play continues without restarting. Numeric and explicit deck forms remain in evidence; input surfaces are separate."
   },
   "sampler_play_stop": {
    "name": "sampler_play_stop",
@@ -14912,14 +14913,15 @@
    "blocked": false,
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
-    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stop 9 starts a stopped target and stops/resets a playing target, leaving independent slot 12 advancing. deck 1 sampler_play_stop stops its playing default slot 9. Two junk selectors leave both playing. Input release and unwrapped default scope were not exercised."
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stop 9 starts a stopped target and stops/resets a playing target, leaving independent slot 12 advancing. deck 1 sampler_play_stop stops its playing default slot 9. Two junk selectors leave both playing. Input release and unwrapped default scope were not exercised.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-default-playback-9598.json. Unwrapped sampler_play_stop starts the stopped default; stops the playing default while slot 12 continues. get_deck=1 and get_sampler_slot=9 verified before/after every case, with deck 2 default 12. Both stopped/playing states repeated in two runs with two nonsense selectors; timed activity/elapsed/percent/count readbacks and final level/selection/bank/deck restoration verified. No audio, other deck contexts, pad mapping or held-input claim."
    ],
    "section": "Sampler",
    "description": "Play sample if stopped, or stop it if already playing",
    "example": "sampler_play_stop 4",
    "kind": "Dual",
    "confidence": "local_test",
-   "note": "HTTP 9598 (2026-09-16): numeric form toggles stopped/playing transport; witness sample continues. Explicit deck-default playing-to-stopped case measured."
+   "note": "HTTP 9598 (2026-09-16): unwrapped default slot 9 (get_deck=1) starts the stopped default; stops the playing default while slot 12 continues. Numeric and explicit deck forms remain in evidence; input surfaces are separate."
   },
   "sampler_play_stutter": {
    "name": "sampler_play_stutter",
@@ -14932,14 +14934,15 @@
    "blocked": false,
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_play_stutter implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
-    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stutter 9 starts when stopped; when already playing at a positive position it resets toward the beginning then advances again, while independent slot 12 continues monotonically. deck 1 sampler_play_stutter restarts default slot 9. Two junk selectors leave both advancing. Natural file endings excluded by known durations and snapshot timing."
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_play_stutter 9 starts when stopped; when already playing at a positive position it resets toward the beginning then advances again, while independent slot 12 continues monotonically. deck 1 sampler_play_stutter restarts default slot 9. Two junk selectors leave both advancing. Natural file endings excluded by known durations and snapshot timing.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-default-playback-9598.json. Unwrapped sampler_play_stutter starts the stopped default; restarts the playing default while slot 12 continues. get_deck=1 and get_sampler_slot=9 verified before/after every case, with deck 2 default 12. Both stopped/playing states repeated in two runs with two nonsense selectors; timed activity/elapsed/percent/count readbacks and final level/selection/bank/deck restoration verified. No audio, other deck contexts, pad mapping or held-input claim."
    ],
    "section": "Sampler",
    "description": "Play sample and restart it from the beginning if already playing",
    "example": "sampler_play_stutter 4",
    "kind": "Dual",
    "confidence": "local_test",
-   "note": "HTTP 9598 (2026-09-16): numeric form starts or restarts; explicit deck-default restart measured. Timed positions distinguish restart from continue and natural ending."
+   "note": "HTTP 9598 (2026-09-16): unwrapped default slot 9 (get_deck=1) starts the stopped default; restarts the playing default while slot 12 continues. Numeric and explicit deck forms remain in evidence; input surfaces are separate."
   },
   "sampler_position": {
    "name": "sampler_position",
@@ -15062,14 +15065,15 @@
    "blocked": false,
    "evidence": [
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_stop implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
-    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_stop 9 stops/resets slot 9 while slot 12 advances. sampler_stop all stops/resets both independently advancing samples in different groups. deck 1 sampler_stop stops default slot 9 only. Two junk selectors leave both running. This establishes aggregate all behavior for sampler_stop specifically, not the rest of the sampler family."
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-playback-9598.json. Generated VDJ Contract Fixture WAVs at slot levels 0.1; two runs, nonsense selectors, timed activity/elapsed/percent/count readbacks; per-case stops and final level/selection/bank/deck restoration verified. No captured audio. sampler_stop 9 stops/resets slot 9 while slot 12 advances. sampler_stop all stops/resets both independently advancing samples in different groups. deck 1 sampler_stop stops default slot 9 only. Two junk selectors leave both running. This establishes aggregate all behavior for sampler_stop specifically, not the rest of the sampler family.",
+    "Local test (HTTP transport, build 18.0.9598, 2026-09-16), tests/sampler-default-playback-9598.json. Unwrapped sampler_stop leaves the stopped default idle; stops the playing default while slot 12 continues. get_deck=1 and get_sampler_slot=9 verified before/after every case, with deck 2 default 12. Both stopped/playing states repeated in two runs with two nonsense selectors; timed activity/elapsed/percent/count readbacks and final level/selection/bank/deck restoration verified. No audio, other deck contexts, pad mapping or held-input claim."
    ],
    "section": "Sampler",
    "description": "Stop one sample or all currently playing samples",
    "example": "sampler_stop 4",
    "kind": "Dual",
    "confidence": "local_test",
-   "note": "HTTP 9598 (2026-09-16): numeric/default stop affects the target; all stopped both independent players. Separate position/count readbacks and verified cleanup; no acoustic-output claim."
+   "note": "HTTP 9598 (2026-09-16): unwrapped default slot 9 (get_deck=1) leaves the stopped default idle; stops the playing default while slot 12 continues. Numeric and explicit deck forms remain in evidence; input surfaces are separate."
   },
   "sampler_stop_rec": {
    "name": "sampler_stop_rec",

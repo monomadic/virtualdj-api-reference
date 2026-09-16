@@ -42,6 +42,16 @@ use nonsense controls and explicit per-slot cleanup, never the `all` form under
 test. Levels, selections, original bank and stopped deck state are verified
 afterward. Existing output files are never overwritten.
 
+The supplemental `just probe-sampler-playback --default-scope` prints
+[`sampler-default-playback-cases.json`](sampler-default-playback-cases.json).
+Add `--run --output /tmp/sampler-default-new.json` to exercise unwrapped forms
+from stopped/playing states, with both nonsense selectors. It requires current
+`get_deck=1`, verifies default slot 9 before/after each case, and refuses to
+change deck selection. [`sampler-default-playback-9598.json`](sampler-default-playback-9598.json)
+closes only this observed HTTP default context; changing context, missing a
+state or missing controls prevents promotion. Reuse this supplement rather
+than rerunning the full numeric/aggregate/count suite for a default-form gap.
+
 [`sampler-playback-9598.json`](sampler-playback-9598.json) is the focused playback
 join. Claims are recomputed from timed readbacks, not the recorded predictions,
 execute responses or a success flag. Missing controls, discrepant positions,

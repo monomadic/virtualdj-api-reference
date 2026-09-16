@@ -174,6 +174,7 @@ class Context:
         self.fx_dump = artifact("fx-introspection-dump.json") or {}
         self.sampler_capture = artifact("sampler-contracts-9598.json") or {}
         self.sampler_playback = artifact("sampler-playback-9598.json") or {}
+        self.sampler_default_playback = artifact("sampler-default-playback-9598.json") or {}
         from sampler_contract_evidence import valid_capture
         if valid_capture(self.sampler_capture):
             from sweep_return_types import classify as value_type, merge as merge_types
@@ -631,9 +632,10 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
     # Focused sampler observations are exact query/execute forms, not blanket
     # closure of a verb or a controller-supplied value shape.
     from sampler_contract_evidence import claims_for as sampler_claims
-    from sampler_playback_evidence import claims_for as playback_claims
+    from sampler_playback_evidence import claims_for as playback_claims, default_claims_for
     sampler = sampler_claims(name, getattr(ctx, "sampler_capture", {}))
     sampler += playback_claims(name, getattr(ctx, "sampler_playback", {}))
+    sampler += default_claims_for(name, getattr(ctx, "sampler_default_playback", {}))
     for cl in sampler:
         claims = [old for old in claims if not (
             old["dimension"] == cl["dimension"] and old["form"] == cl["form"])]
@@ -660,7 +662,7 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
         for dim in ("arguments", "execute"):
             relevant = [cl for cl in claims if cl["dimension"] == dim]
             if any(cl["status"] == "settled" and cl.get("source") in {
-                       "tests/sampler-contracts-9598.json", "tests/sampler-playback-9598.json"}
+                       "tests/sampler-contracts-9598.json", "tests/sampler-playback-9598.json", "tests/sampler-default-playback-9598.json"}
                    for cl in relevant):
                 dims[dim] = "partial" if any(cl["status"] == "open" for cl in relevant) else "settled"
 

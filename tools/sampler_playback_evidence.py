@@ -111,7 +111,7 @@ def valid_capture(capture):
             and all(active(r.get("restored", {})) == set() and r.get("script") in dispatched for r in cases))
 
 
-def claims_for(name, capture):
+def claims_for(name, capture, source=SOURCE):
     if name not in VERBS | {"sampler_position", "sampler_used", "get_sample_info"} or not valid_capture(capture):
         return []
     pairs = defaultdict(dict)
@@ -127,7 +127,7 @@ def claims_for(name, capture):
     def add(dim, form, observation, ids):
         claims.append({"dimension": dim, "form": form, "status": "settled", "observation": observation,
                        "channel": "HTTP execute + timed activity/elapsed/percent/count readbacks",
-                       "source": SOURCE, "build": capture["summary"]["build"], "provenance": capture["summary"],
+                       "source": source, "build": capture["summary"]["build"], "provenance": capture["summary"],
                        "evidence": {"case_ids": ids, "runs": [1, 2], "audio_captured": False}})
 
     if name in VERBS:
@@ -141,10 +141,10 @@ def claims_for(name, capture):
             script = rows[1]["script"]
             parts = script.split()
             verb = parts[2] if parts[0] == "deck" else parts[0]
-            if verb != name or rows[2]["script"] != script or not consistent(id, {"start", "stop", "stop-all", "restart", "continue"}):
+            if verb != name or rows[2]["script"] != script or not consistent(id, {"start", "stop", "stop-all", "restart", "continue", "idle"}):
                 continue
             observed = classify_case(rows[1])
-            form = "bare (deck 1 default 9)" if parts[0] == "deck" else " ".join(parts[1:])
+            form = "bare (deck 1 default 9)" if parts[0] == "deck" else " ".join(parts[1:]) or "bare"
             obs = f"{script}: {observed}; states {sorted(active(rows[1]['before']))} -> {sorted(active(rows[1]['after']))}. "
             obs += "Repeated with two nonsense selectors; position/count readbacks and cleanup verified. HTTP transport only."
             # Same numeric form can have stopped/running preconditions; keep
@@ -152,7 +152,7 @@ def claims_for(name, capture):
             form += " [playing]" if active(rows[1]["before"]) else " [stopped]"
             for dim in ("execute", "arguments"):
                 add(dim, form, obs, [id, *controls])
-            if parts[0] != "deck" and parts[1] == "9" and not any(
+            if len(parts) > 1 and parts[0] != "deck" and parts[1] == "9" and not any(
                     c["form"] == name + " NUM" for c in claims):
                 add("arguments", name + " NUM", "Numeric selector shape measured with absolute slot 9; "
                     "concrete stopped/playing preconditions are listed separately. No whole-range claim.", [id, *controls])
@@ -192,3 +192,25 @@ def claims_for(name, capture):
                     "the bare form returns the active-sample count. Direct queries and conditional predicates agree.",
                     [*ids, "count_probes"])
     return claims
+
+
+DEFAULT_SOURCE = "tests/sampler-default-playback-9598.json"
+
+def default_claims_for(name, capture):
+    """Close only unwrapped transport under the repeatedly observed context."""
+    if name not in VERBS or not valid_capture(capture):
+        return []
+    expected = {"get_deck": "1", "get_sampler_slot": "9"}
+    if any(row.get("default_context_before") != expected or row.get("default_context_after") != expected
+           for row in capture["cases"]):
+        return []
+    claims = [c for c in claims_for(name, capture, DEFAULT_SOURCE) if c["form"].startswith("bare [")]
+    forms = {c["form"] for c in claims if c["dimension"] == "execute"}
+    if forms != {"bare [stopped]", "bare [playing]"}:
+        return []
+    observed = " ".join(c["observation"] for c in claims if c["dimension"] == "execute")
+    summary = dict(claims[0], dimension="execute", form="bare",
+                   observation="Unwrapped HTTP default context get_deck=1, get_sampler_slot=9, checked before/after each case. " + observed,
+                   evidence={"case_ids": sorted({id for c in claims for id in c["evidence"]["case_ids"]}),
+                             "runs": [1, 2], "audio_captured": False})
+    return [*claims, summary]

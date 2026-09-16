@@ -19,13 +19,16 @@ from probe_sampler_contracts import BANK, ROOT, SLOTS, Runner, quoted
 
 PLAN = ROOT / "tests/sampler-playback-cases.json"
 VERBS = {"sampler_play", "sampler_stop", "sampler_play_stop", "sampler_play_stutter"}
+DEFAULT_PLAN = ROOT / "tests/sampler-default-playback-cases.json"
 OBSERVED = (9, 12)
 
 
-def load_plan():
-    plan = json.loads(PLAN.read_text())
+def load_plan(path=PLAN):
+    plan = json.loads(path.read_text())
     allowed = {f"{v} {tail}" for v in VERBS for tail in ("9", "all", "zzqqx", "vfnrbq")}
     allowed |= {f"deck 1 {v}" for v in VERBS}
+    if path == DEFAULT_PLAN:
+        allowed |= VERBS
     ids = set()
     for row in plan["cases"]:
         if row["id"] in ids or row["script"] not in allowed or row["verb"] not in VERBS:
@@ -39,11 +42,12 @@ def load_plan():
 class PlaybackRunner(Runner):
     MUTATION_VERBS = Runner.MUTATION_VERBS | VERBS
 
-    def __init__(self, output):
+    def __init__(self, output, plan_path=PLAN):
         super().__init__(output)
-        self.plan = load_plan()
+        self.plan = load_plan(plan_path)
+        self.default_scope = plan_path == DEFAULT_PLAN
         self.data.update(kind="sampler-playback", scope=self.plan["scope"],
-                         plan_sha256=hashlib.sha256(PLAN.read_bytes()).hexdigest(),
+                         plan_sha256=hashlib.sha256(plan_path.read_bytes()).hexdigest(),
                          audio_observation={"captured": False,
                                             "reason": "No verified loopback route for current speaker output; transport claims only"},
                          readback_scripts={"activity": "sampler_play SLOT", "count": "sampler_used",
@@ -62,6 +66,12 @@ class PlaybackRunner(Runner):
         finally:
             self.ch.close()
             self.ch.timeout = timeout
+
+    def default_context(self):
+        context = {q: self.query(q) for q in ("get_deck", "get_sampler_slot")}
+        if context != {"get_deck": "1", "get_sampler_slot": "9"}:
+            raise FixtureError("unwrapped default context changed")
+        return context
 
     def snapshot(self):
         start = time.monotonic() - self.epoch
@@ -113,12 +123,16 @@ class PlaybackRunner(Runner):
             if active != spec["playing"] or row["before"]["counts"]["bare"] != str(len(active)):
                 raise FixtureError("independent active-player baseline did not establish")
             self.persist()
+            if getattr(self, "default_scope", False):
+                row["default_context_before"] = self.default_context()
             row["dispatch_start"] = round(time.monotonic() - self.epoch, 4)
             self.execute(spec["script"], "playback-probe")
             row["dispatch_end"] = round(time.monotonic() - self.epoch, 4)
             row["after"] = self.snapshot()
             time.sleep(.45)
             row["later"] = self.snapshot()
+            if getattr(self, "default_scope", False):
+                row["default_context_after"] = self.default_context()
         finally:
             row["restored"] = self.stopped()
             self.persist()
@@ -142,6 +156,8 @@ class PlaybackRunner(Runner):
         entered = False
         try:
             self.silent()
+            if self.default_scope and self.query("get_deck") != "1":
+                raise FixtureError("default-scope suite requires current deck 1; no deck selection is changed")
             decks = int(self.query("get_decks"))
             guards = {f"deck {d} play": self.query(f"deck {d} play") for d in range(1, decks + 1)}
             if any(value != "no" for value in guards.values()):
@@ -182,8 +198,9 @@ class PlaybackRunner(Runner):
                     self.persist()
                 # Independent groups avoid exclusivity; slot 1 lasts only 2s,
                 # so read these count-only probes immediately, without warmup.
-                self.count_probe(run, [5, 9, 12])
-                self.count_probe(run, [1, 5, 9, 12])
+                if not self.default_scope:
+                    self.count_probe(run, [5, 9, 12])
+                    self.count_probe(run, [1, 5, 9, 12])
             self.data["completed"] = True
         except Exception as exc:
             self.data["error"] = f"{type(exc).__name__}: {exc}"
@@ -217,13 +234,17 @@ class PlaybackRunner(Runner):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--run", action="store_true", help="play quiet owned samples and restore")
-    ap.add_argument("--output", type=Path, default=ROOT / "tests/sampler-playback-9598.json")
+    ap.add_argument("--output", type=Path, help="new capture path; existing files are refused")
+    ap.add_argument("--default-scope", action="store_true", help="bounded unwrapped-form supplement; requires current deck 1")
     args = ap.parse_args()
+    plan_path = DEFAULT_PLAN if args.default_scope else PLAN
     if args.run:
-        PlaybackRunner(args.output).run()
-        print(f"Captured {args.output}")
+        output = args.output or ROOT / ("tests/sampler-default-playback-9598.json" if args.default_scope
+                                      else "tests/sampler-playback-9598.json")
+        PlaybackRunner(output, plan_path).run()
+        print(f"Captured {output}")
     else:
-        print(json.dumps(load_plan(), indent=2))
+        print(json.dumps(load_plan(plan_path), indent=2))
 
 
 if __name__ == "__main__":

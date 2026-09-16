@@ -3304,3 +3304,32 @@ and selections, original bank and deck defaults, and unchanged stopped deck
 transport. Original bank names are redacted before persistence. The installed
 fixture remains available for the next surface-specific tests; no private media
 or audio recording was added to the repository.
+
+
+## Sampler Unwrapped Default Transport, 2026-09-16
+
+HTTP, build 18.0.9598 (`get_build` → `9598`), owned generated sampler bank,
+quiet levels 0.1, stopped decks. The supplemental frozen plan is
+`tests/sampler-default-playback-cases.json`; capture
+`tests/sampler-default-playback-9598.json`. It reuses the playback runner and
+timed independent activity/elapsed/percent/count oracle. `get_deck=1` and
+`get_sampler_slot=9` are read before/after every case; deck 2's different default
+is 12. No deck selection action is sent. The current observed HTTP context is
+the scope of the result, not a rule for all selected/master deck combinations.
+
+Each unwrapped transport form is measured from stopped and simultaneously
+playing target/witness states, in two runs with both nonsense selectors.
+`sampler_play` starts or continues; `sampler_stop` leaves a stopped target idle
+or stops the playing target; `sampler_play_stop` starts or stops;
+`sampler_play_stutter` starts or restarts. The independent witness continues
+through target actions. The verb store carries the per-verb conclusions;
+`just verb` and section coverage recompute the scoped claims and close the
+bare-execute obligation only when both states and the context checks survive.
+All sample levels, sampler selections and original bank were restored;
+fixture players and deck transport were verified stopped.
+
+UI inspection found the current skin's pad controls, but the available UI
+automation API exposes clicks rather than separate held-down/released events.
+No pad action was sent, and this pass makes no held-button or pad-page claim.
+`while_pressed` needs an input channel with distinct events and observable
+held/released states; a completed click cannot supply those observations.
