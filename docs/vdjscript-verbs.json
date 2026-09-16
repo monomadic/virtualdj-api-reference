@@ -13,13 +13,13 @@
     "unofficial": 39
    },
    "by_test_status": {
-    "Fail": 7,
-    "Partial": 39,
-    "Pass": 110,
-    "Untested": 879
+    "Fail": 6,
+    "Partial": 40,
+    "Pass": 114,
+    "Untested": 875
    },
    "documented": 772,
-   "tested_pass": 110,
+   "tested_pass": 114,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -7539,13 +7539,15 @@
    "evidence": [
     "Local test 2026-09-06, HTTP, build 18.0.9598. All three documented fields confirmed, with two nonsense controls separating cleanly (both returned ''). The SHAPE is slot-first — 'get_sample_info <slot> <field>' — which is why a single-argument probe had errored on every token including the real ones. On sampler slot 1 (a shipped sample): 'group' -> Drums, 'length' -> 4bt (beat value for a loop, exactly as documented), 'pos' -> 00:00.0, and the regular column names work too ('fullpath' -> the .vdjsample path, 'bpm' -> 135.0). 'name' returns '' — use get_sample_name for that.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sample_info implements onQuery only -> Query; HTTP sweep classed it 'query'.",
-    "2026-09-09, build 18.0.9583, HTTP query-only, two loaded slots: the field argument draws from the binary's song_fields enumeration, which the catalog prose names only as 'the regular column names' — an open reference no tokenizer can follow. Confirmed above an empty-string floor (three nonsense controls): bpm, key, title, filename, filepath, remix from song_fields, plus the catalog's fullpath, length, pos. Position 1 (slot) IS read — bpm, key, title, filename and fullpath all separate slot 1 from slot 2. 'group' returned empty on both samples (this bank assigns no groups) so it is undiscriminated here, not refuted. tests/binary-vocabularies.json associates song_fields with browser_sort, get_karaoke_background_song and get_next_karaoke_song only; this is a fourth verb."
+    "2026-09-09, build 18.0.9583, HTTP query-only, two loaded slots: the field argument draws from the binary's song_fields enumeration, which the catalog prose names only as 'the regular column names' — an open reference no tokenizer can follow. Confirmed above an empty-string floor (three nonsense controls): bpm, key, title, filename, filepath, remix from song_fields, plus the catalog's fullpath, length, pos. Position 1 (slot) IS read — bpm, key, title, filename and fullpath all separate slot 1 from slot 2. 'group' returned empty on both samples (this bank assigns no groups) so it is undiscriminated here, not refuted. tests/binary-vocabularies.json associates song_fields with browser_sort, get_karaoke_background_song and get_next_karaoke_song only; this is a fourth verb.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Slot-first group and length queries discriminated slots 1/2/5/9: groups Alpha/Alpha/Beta/empty, generated WAV durations 2000/3000/6000/10000ms. Stopped pos returned 00:00.0; two junk field controls were empty and empty slot 4 returned error:1. Repeated twice. No moving-position, loop-unit or full metadata-column claim."
    ],
    "section": "Sampler",
    "description": "Read sample metadata such as `fullpath`, `group`, or `length`",
    "example": "get_sample_info 9 fullpath",
    "confidence": "local_test",
-   "kind": "Query"
+   "kind": "Query",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): slot-first group/length fields discriminate generated WAVs. Stopped pos, nonsense fields and empty slots captured; metadata and moving/loop contexts remain scoped."
   },
   "get_sample_name": {
    "name": "get_sample_name",
@@ -7559,14 +7561,18 @@
     "Pad",
     "SkinQuery"
    ],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
-   "evidence": [],
+   "evidence": [
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Explicit slots 1/2/5/9 returned the known generated names; empty slot 4 returned error:1. Bare deck-scoped reads followed independent sampler_select changes and distinguished the two deck defaults. Numeric query matrix repeated in both level baselines."
+   ],
    "section": "Sampler",
    "description": "Get the name of an absolute sample slot",
    "example": "get_sample_name 9",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): absolute-slot names and deck-specific default names matched known generated samples; empty slot returned error:1."
   },
   "get_sample_slot_name": {
    "name": "get_sample_slot_name",
@@ -7654,16 +7660,19 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sampler_slot implements onQuery only -> Query; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_sampler_slot implements onQuery only -> Query; HTTP sweep classed it 'query'.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Deck-scoped reads followed absolute sampler_select changes to slots 2, 5 and 9 and agreed with distinct sample-name readbacks; the other deck retained its own default and both were restored."
    ],
    "section": "Sampler",
    "description": "Get the sampler slot that currently has focus",
    "example": "get_sampler_slot",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): one-based deck defaults followed absolute selection changes, with the other deck and sample-name readback as controls."
   },
   "get_sampler_used": {
    "name": "get_sampler_used",
@@ -14589,16 +14598,19 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_group_volume implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_group_volume implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Group index 1 and name Alpha set slots 1/2/3 together and left Beta, ungrouped and Gamma samples unchanged. 1 0.61, 1 37% and 1 +5% repeated from unequal baselines; the relative form used the first member baseline. current 0.61, all 0.61 and two nonsense selectors were inert. Other group indices/controller modifiers remain open."
    ],
    "section": "Sampler",
    "description": "Adjust all samples in a sampler group",
    "example": "sampler_group_volume \"horns\" 75%",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): group index 1/name Alpha changed only that group. Relative +5% used its first member baseline; exact tested forms are scoped below."
   },
   "sampler_has_group": {
    "name": "sampler_has_group",
@@ -14664,17 +14676,18 @@
     "SkinQuery",
     "Text"
    ],
-   "test_status": "Fail",
+   "test_status": "Partial",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Local test (8.5.9307 / 18.0.9336): On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware."
+    "Local test (8.5.9307 / 18.0.9336): On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Absolute slots 1/2/5/9 returned yes and empty slot 4 returned no in both fixture baselines. This closes only these absolute-slot observations; the earlier paged auto failure is preserved and no pad-page behavior is promoted."
    ],
    "section": "Sampler",
    "description": "Check whether an absolute sampler slot has a sample loaded; do not rely on `\"auto\"` for paged empty-slot checks",
    "example": "sampler_loaded 1",
    "kind": "Query",
-   "note": "On page `9-16`, `sampler_loaded 8 auto` returned true while `sampler_loaded 16 auto` returned false. Unquoted `auto` matched quoted behavior and did not make `sampler_loaded 8` page-aware.",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): absolute loaded/empty slots confirmed. Earlier paged auto failure is preserved; no new pad-page claim.",
    "confidence": "local_test"
   },
   "sampler_loop": {
@@ -14989,16 +15002,19 @@
     "sampler_default"
    ],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_select implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_select implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. deck 1 sampler_select 2, deck 2 sampler_select 5 and deck 1 sampler_select 9 changed the respective default only, verified through get_sampler_slot and get_sample_name on both decks, then restored. Its own query returned normalized values (0.2, 0.6, 0.8 in this sparse bank), not zero-based slot indices. Relative selection, popup and input-value forms remain open."
    ],
    "section": "Sampler",
    "description": "Select the default sampler slot for the deck",
    "example": "sampler_select 5",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): absolute deck defaults verified independently. Its query is normalized; restore from get_sampler_slot. Relative/popup/input-value forms remain open."
   },
   "sampler_start_rec": {
    "name": "sampler_start_rec",
@@ -15120,13 +15136,15 @@
    "blocked": false,
    "evidence": [
     "Local test (HTTP, build 18.0.9598, 2026-09-07, sampler_slots_differ fixture): the slot argument selects a sample but the volume applies to that sample's GROUP — `sampler_volume 1 0.5` moved slots 1, 2 and 3 together, which `get_sample_info <slot> 'group'` shows are all in group 'Drums', while ungrouped slot 5 stayed at 1. `sampler_volume current 0.6` did the same to the focused sample's group. `sampler_volume all 0.7` changed nothing at all, as did a nonsense slot token. In query position every accepted form (bare, 'all', 'current', '0', a loaded slot number) returns the focused sample's volume; an empty slot returns 0 and an unrecognized token returns 0. All volumes read 1 before and after.",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_volume implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_volume implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. CORRECTION to the equal-level 2026-09-07 interpretation: numeric query slots read their own unequal levels, not always the focused sample. Bare/current/0/all query forms matched the focused slot here. Executing 1 0.61, 1 37%, current 0.61 and ContractTone02 by name changed Alpha slots 1/2/3 only; 1 +5% set the group to slot 1 baseline plus 0.05, rather than adding to each member. all 0.61 and two junk selectors changed nothing. Each level form repeated from two unequal baselines. Controller value input and other all forms remain open."
    ],
    "section": "Sampler",
    "description": "Set sample volume by absolute slot or sample name",
    "example": "sampler_volume 9 75%",
    "confidence": "local_test",
-   "kind": "Dual"
+   "kind": "Dual",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): absolute query slots discriminate unequal levels; the older equal-level focus-only interpretation was wrong. Setters act on the selected sample group. See tests/sampler-contracts-9598.json for exact tested forms."
   },
   "sampler_volume_master": {
    "name": "sampler_volume_master",
@@ -15156,13 +15174,15 @@
    "blocked": false,
    "evidence": [
     "Local test (HTTP, build 18.0.9598, 2026-09-07, sampler_slots_differ fixture): the counterpart of sampler_volume — `sampler_volume_nogroup current 0.4` moved ONLY slot 1, where `sampler_volume current 0.6` moved the whole 'Drums' group (slots 1, 2, 3). `sampler_volume_nogroup all 0.3` changed nothing. Volumes restored to 1 and verified.",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_volume_nogroup implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_sampler_volume_nogroup implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP, build 18.0.9598, 2026-09-16), tests/sampler-contracts-9598.json, generated VDJ Contract Fixture, stopped WAV samples, separate readback and verified case/bank restoration. Numeric queries tracked unequal per-slot levels. Numeric/current setters changed slot 1 only; named ContractTone02 changed slot 2 only. Decimal, percentage and relative level forms were measured twice. all 0.61 and two junk selectors were inert. Other slots remained unchanged; no claim about controller modifiers."
    ],
    "section": "Sampler",
    "description": "Adjust one sample without also changing other samples in its group",
    "example": "sampler_volume_nogroup 9 75%",
    "confidence": "local_test",
-   "kind": "Dual"
+   "kind": "Dual",
+   "note": "Build 18.0.9598 HTTP fixture (2026-09-16): numeric/current/name setters changed one sample, with separate readback and restoration. Exact forms and remaining controller-input gaps are shown below."
   },
   "sandbox": {
    "name": "sandbox",

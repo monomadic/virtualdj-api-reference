@@ -106,7 +106,7 @@ def summary(name: str, limit: int = 6) -> dict:
         "vendor_category_build": vendor_build,
         "surfaces": rec.get("surfaces", []),
         "status": {"test_status": rec.get("test_status"), "evidence": rec.get("evidence", []),
-                   "blocked": rec.get("blocked", False)},
+                   "blocked": rec.get("blocked", False), "note": rec.get("note")},
         "description": {"store": rec.get("description"), "store_example": rec.get("example"),
                         "catalog": catalog.get("text")},
         "examples": [{"script": s["script"], "sources": s["sources"], "origin": s["origins"][0]}
@@ -206,8 +206,9 @@ def render(s: dict) -> str:
         L.append(f"button editor category {s['vendor_category']}"
                  f" (verb-table, build {s.get('vendor_category_build') or '?'})")
     st = s["status"]
+    status_detail = st.get("note") or (st["evidence"][0] if st["evidence"] else "")
     L.append(f"status {st['test_status']}" + (" (blocked)" if st["blocked"] else "")
-             + (f" — {st['evidence'][0]}" if st["evidence"] else ""))
+             + (f" — {status_detail}" if status_detail else ""))
     L.append("")
     L += render_contract(s["contract"])
     L.append("")

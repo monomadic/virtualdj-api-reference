@@ -172,6 +172,22 @@ class Context:
         self.positions = artifact("verb-arg-positions.json", "verbs")
         self.bpm_transition = artifact("bpm-transition-forms.json") or {}
         self.fx_dump = artifact("fx-introspection-dump.json") or {}
+        self.sampler_capture = artifact("sampler-contracts-9598.json") or {}
+        from sampler_contract_evidence import valid_capture
+        if valid_capture(self.sampler_capture):
+            from sweep_return_types import classify as value_type, merge as merge_types
+            for name in ("sampler_volume", "sampler_volume_nogroup", "sampler_select"):
+                if name == "sampler_select":
+                    samples = {f"selection-{i}/{script}": value
+                               for i, row in enumerate(self.sampler_capture.get("selection_probe", {}).get("observations", []))
+                               for script, value in row["readback"].items() if script.endswith(" sampler_select")}
+                else:
+                    samples = {f"run-{row['run']}/{name}": row["result"]
+                               for row in self.sampler_capture["queries"] if row["script"] == name}
+                if samples:
+                    self.rtypes[name] = {"observed_type": merge_types(value_type(v) for v in samples.values()),
+                                         "samples": samples, "provenance": self.sampler_capture["summary"],
+                                         "source": "tests/sampler-contracts-9598.json"}
         tails_art = artifact("attested-tails.json") or {}
         self.attested = tails_art.get("tails", {})
         self.shapes = tails_art.get("shapes", {})
@@ -611,6 +627,33 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                      provenance=time_capture["summary"], evidence=evidence)
         claims.append(claim)
 
+    # Focused sampler observations are exact query/execute forms, not blanket
+    # closure of a verb or a controller-supplied value shape.
+    from sampler_contract_evidence import claims_for as sampler_claims
+    sampler = sampler_claims(name, getattr(ctx, "sampler_capture", {}))
+    for cl in sampler:
+        claims = [old for old in claims if not (
+            old["dimension"] == cl["dimension"] and old["form"] == cl["form"])]
+        claims.append(cl)
+    if sampler:
+        if name == "sampler_loaded":
+            claims.append(_claim("arguments", "NUM auto (pad-page context)", "open", "unavailable",
+                                 "earlier paged auto failure remains in store evidence; generated HTTP absolute-slot reads do not retest pad-page mapping",
+                                 "store evidence; pad fixture required"))
+        for old in claims:
+            if old["dimension"] == "execute" and old["form"] == "bare" and old["status"] == "open":
+                old["observation"] = "bare/controller-supplied input not exercised by the focused capture; concrete executed forms are listed separately"
+            if old["dimension"] == "behaviour" and old["form"] == "(store)" and rec.get("evidence"):
+                old["observation"] = rec["evidence"][-1]
+            if old.get("channel") == "vendor script":
+                if name == "sampler_volume" and old["form"] == "sampler_volume STR NUM":
+                    old["observation"] = "named-selector 0.61 is measured below; remaining shipped STR NUM examples (including quoted all with 100) are not measured"
+        for dim in ("arguments", "execute"):
+            relevant = [cl for cl in claims if cl["dimension"] == dim]
+            if any(cl["status"] == "settled" and cl.get("source") == "tests/sampler-contracts-9598.json"
+                   for cl in relevant):
+                dims[dim] = "partial" if any(cl["status"] == "open" for cl in relevant) else "settled"
+
     applicable = [d for d in DIMENSIONS if dims[d] != "n/a"]
     settled = [d for d in applicable if dims[d] in CLOSED]
     read_applicable = [d for d in READ_SIDE if dims[d] != "n/a"]
@@ -632,6 +675,8 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
             provenance = rt.get("provenance", {})
             if source == "tests/long-time-forms.json":
                 claim["channel"] = "HTTP long-track fixture"
+            elif source == "tests/sampler-contracts-9598.json":
+                claim["channel"] = "HTTP sampler fixture"
         if claim.get("source") and "provenance" in claim:
             continue  # focused joins carry their own provenance
         if source:

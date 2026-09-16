@@ -191,6 +191,10 @@ list-verb-categories *args:
 coverage *args:
     @{{python}} tools/coverage_report.py "$@"
 
+# Generated owned bank; see tests/README.md for preparation and bounded live scope.
+probe-sampler-contracts *args:
+    @{{python}} tools/probe_sampler_contracts.py "$@"
+
 # Requires empty stopped deck 1. Generates temporary audio and verifies restoration.
 probe-long-time:
     {{python}} tools/probe_long_time.py --run
@@ -431,6 +435,7 @@ check:
     {{python}} tools/test_action_tail_bounds.py
     {{python}} tools/test_contract_assessment.py
     {{python}} tools/test_coverage_section.py
+    {{python}} tools/test_sampler_contracts.py
     {{python}} tools/action_tail_leads.py --check
     {{python}} tools/sweep_return_types.py --check
     {{python}} tools/plugin_introspect.py --check

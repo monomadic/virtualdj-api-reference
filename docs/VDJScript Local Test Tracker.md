@@ -2217,6 +2217,13 @@ restarted: `no`. Recorded on the verb record; still one-way within a session.
 
 ## `all`: Recognized By The Sweep, Inert Where It Was Tested
 
+Follow-up, 2026-09-16 (HTTP, build 18.0.9598): the stopped generated-bank
+capture in `tests/sampler-contracts-9598.json` supersedes the **interpretation**
+of equal-level query readings below. With deliberately unequal levels, numeric
+slot queries discriminate slots rather than invariably returning the focused
+sample's level. The dated readings below remain the historical run record.
+Current per-form conclusions are in `just verb sampler_volume` and its siblings.
+
 The other open follow-up in 10b: the shared-lexicon pass found `all` recognized
 on 26 verbs — the whole sampler family plus `loop_load`, `loop_select`,
 `load_skin`, `load_pulse`, `effect_stems`, `effect_dock_gui`,
@@ -3203,3 +3210,47 @@ but does not prove the installed range of every high-index cell or identify the
 runtime pointer selected by a blank key. The original skin was restored and
 verified by independent query plus visible UI. Exact fixtures, load actions,
 captures and scope limits are linked from the fixture report.
+
+## Sampler Addressing And Levels On A Generated Bank, 2026-09-16
+
+HTTP, running build 18.0.9598 (`get_build` → `9598`). The reusable runner is
+`tools/probe_sampler_contracts.py`; the confirmed capture is
+`tests/sampler-contracts-9598.json`. Query it through `just verb` and
+`just coverage --section=Sampler`; per-verb conclusions were recorded with
+`just put-verb` rather than copied into a second contract table.
+
+The owned `VDJ Contract Fixture` bank contains generated WAVs with distinct
+names, durations and colors, an Alpha group, other groups, an ungrouped sample,
+empty slots and samples beyond the first pad page. Every sample remained stopped.
+The run verified the loaded/empty layout and group/name readbacks, proved a
+slot-only level write/restore before the suite, then used unequal levels and a
+second independent baseline for the level forms. The exact scripts, before/after
+slot vectors, nonsense controls and restore vectors are in the capture. No
+personal sample names, media paths or original bank names were retained there.
+
+The asymmetry mattered: the earlier equal-level run could not distinguish
+absolute-slot query addressing from focus fallback. The new slot queries do
+separate. For group-changing relative actions the observable is the entire
+level vector, which distinguishes applying a delta to each member from setting
+all members to a value calculated from the targeted member. The deck selection
+pass similarly checks both decks after every change and checks sample names
+independently of the normalized `sampler_select` query. These are bounded
+observations on this sparse WAV bank, not promises about every bank or input
+surface.
+
+Preserved attempts explain the runner's guards. In
+`sampler-contracts-9598-initial.json`, all level cases completed and restored but
+an immediate bank check preceded completion of the asynchronous bank switch;
+a subsequent read observed the original bank and stopped sampler. That original
+failed check is retained and excluded from the join. In
+`sampler-contracts-9598-timeout.json`, a restore request timed out; no uncertain
+request was replayed, the suite stopped, and cleanup independently restored the
+fixture levels and original bank/selection. That incomplete capture is also
+excluded. The confirmed run used fresh connections for mutation dispatch and
+bounded readback polling for bank changes, then verified final restoration.
+
+Open follow-ups remain finite: the untested shipped level forms and controller
+modifiers reported by `just verb`, playback/stop/stutter with discriminating
+position and audio observations, pad-page mapping on the pad surface, and
+routing/recording/lifecycle fixtures. Merely finding `all` in the query parser
+cannot settle `sampler_stop all`; this level pass does not promote that claim.

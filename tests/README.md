@@ -4,6 +4,32 @@ H4: [runtime argument grammar tests](../docs/Runtime%20Argument%20Grammar%20Test
 
 This folder contains small reproducible assets used to verify claims in the reference documentation.
 
+Sampler contract work: `just coverage --section=Sampler --frontier` gives the scoped
+queue; `just verb sampler_volume` joins the confirmed forms from
+[`sampler-contracts-9598.json`](sampler-contracts-9598.json). The initial and timeout
+captures with the same prefix preserve failed/aborted attempts and never supply
+contract closure. `tools/test_sampler_contracts.py` checks this boundary in `just check`.
+
+To reproduce the stopped addressing/level fixture, run
+`just probe-sampler-contracts --prepare "$HOME/Library/Application Support/VirtualDJ/Sampler/VDJ Contract Fixture.bank"`
+once, then start from the original bank with no sample playing and run
+`just probe-sampler-contracts --run --output /tmp/sampler-contracts-new.json`.
+Preparation refuses an existing directory and generates WAV tones plus a bank XML
+and SHA-256 manifest; it uses no library media. Keep the owned bank installed for
+later passes. The runner checks its names, groups and empty slots before probing,
+journals every action before dispatch, never replays an uncertain action, and
+restores/reads back every level case and the original bank and deck selections.
+Bank changes are asynchronous, so restoration polls the bank name with a bounded
+deadline. Original bank names are redacted in persisted restoration entries.
+
+This pass covers explicit selectors, group-versus-slot levels, unequal baselines,
+and deck defaults over HTTP. It does not start playback or establish pad-page,
+pressure/release, routing, recording or deletion behavior. Next use the same bank
+for a separately allowlisted playback pass with position/audio observations;
+pad-context tests must use a real pad fixture. Record results in the verb store
+and attach exact form/channel evidence to the existing assessment, rather than
+creating a parallel Markdown contract table.
+
 Test assets are important evidence for the documentation project. They are kept outside the normal example folders so a test page, skin, mapper, or other repro fixture is not mistaken for a polished reference implementation.
 
 | Area | Contents |
