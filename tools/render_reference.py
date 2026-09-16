@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Fill the human-facing reference from the verb store and skin XML inventory.
 
-    just reference                      # → build/reference/index.html
+    just build-reference                # → build/reference/index.html
+    just build-reference --open         # …and open it in the default browser
     python3 tools/render_reference.py --out /tmp/x.html
 
 The template is `design/human-api-reference.template.html`; the page it
@@ -20,6 +21,7 @@ import os
 from urllib.parse import quote
 import shutil
 import sys
+import webbrowser
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -303,10 +305,14 @@ def render(out: Path) -> tuple[int, str]:
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    ap.add_argument("--open", action="store_true",
+                    help="open the rendered page in the default browser")
     args = ap.parse_args(argv)
     n, stamp = render(args.out)
     print(f"{args.out.relative_to(ROOT) if args.out.is_relative_to(ROOT) else args.out}: "
           f"{n} records rendered from {stamp}")
+    if args.open:
+        webbrowser.open(args.out.resolve().as_uri())
 
 
 if __name__ == "__main__":

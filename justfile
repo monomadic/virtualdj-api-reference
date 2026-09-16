@@ -202,8 +202,9 @@ long-time-forms name="":
 # Fill design/human-api-reference.template.html from the verb store, skin inventory and evidence
 # artifacts (the same join `just verb` makes) into the git-ignored build/ tree.
 # A rendered copy of store data: regenerate it, never commit it.
-reference out="build/reference/index.html":
-    @{{python}} tools/render_reference.py --out "{{out}}"
+# Render the human-facing reference page; `--open` shows it in the default browser, `--out PATH` picks the file
+build-reference *flags:
+    @{{python}} tools/render_reference.py {{flags}}
 
 # --- native effects catalog (swept via the HTTP interface) -------------------
 
