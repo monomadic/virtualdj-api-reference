@@ -153,3 +153,89 @@ were not independently observed. No universal key-rejection claim is made.
 For future agents, query the manifest before loading assembly. The original
 adjacent-string list mixes attributes, suffixes, prefixes, action construction,
 and actual comparisons; repeating that discovery is unnecessary context cost.
+
+## Unnamed-cell inventory and other atlas consumers (2026-09-16)
+
+The next pass follows the wiki's unnamed pictures, rather than using its already
+named stems pictures as a discovery target. The dated
+[wiki table snapshot](../tests/sysicon-atlas-wiki-2026-09-16.json) is joined with
+existing live captures and explicitly labelled binary candidates by
+[the atlas query](../tools/sysicon_atlas.py):
+
+```sh
+just sysicon-atlas --cell H6
+just sysicon-atlas --unnamed
+just sysicon-atlas --format json
+```
+
+The query preserves the wiki's skipped J row and expands its F1–F7 range for
+individual lookup. `unknown` means that this investigation has not established
+an exposed key. It is not a claim that the picture is inaccessible. Wiki-listed
+keys remain source claims; they are not automatically promoted to live-tested.
+The existing fixture supplies the tested keys, rather than another copied table.
+
+**Binary leads, build 18.0.9598 arm64, extracted 2026-09-16:**
+
+- **H6:** the `sideview "` prefix matches at `0x1004d0500` and selects offset
+  `0x4920` at `0x1004d0698`, written to the primary icon field `+0x2a8`.
+  This connects an already recovered prefix to the wiki's unnamed custom-sideview
+  picture. It is not a newly discovered literal, and no live rendering is claimed.
+- **E3/E4:** `effect_active` selects offsets `0x2940` and `0x29e0` at
+  `0x1004d0820` and `0x1004d082c`, writing state-graphic fields `+0x260` and
+  `+0x270`. These are not two independently selectable primary-icon names.
+- **F5/F6:** `context_menu` selects offsets `0x3480` and `0x3520` at
+  `0x1004cfa60` and `0x1004cfa6c`, writing state-graphic fields `+0x260` and
+  `+0x280`. The suffix/prefix alternatives discussed above share this branch.
+- **I13:** `stop_button` can select offset `0x5780` at `0x1004d0614`.
+  The option read at `0x1004d0380` controls the choice between I13 and I14;
+  this does not establish a separate fixed key for I13 or the option's identity.
+
+The source for these assignments is the existing
+[resolver assembly](../tests/sysicon-resolver-9598/resolver.asm). The query checks
+its manifest hash and the annotated offset instructions before reporting them.
+A discriminating live fixture showing labelled reference cells beside these
+buttons, with normal/selected/hover states and an invalid-key control, would
+settle their visible use. The stop variant additionally needs the option traced
+and safely controlled. No such new live test was performed in this pass.
+
+### Internal selectors are a different access path
+
+The [consumer capture](../tests/sysicon-atlas-consumers-9598/manifest.json)
+records these additional functions from the same binary:
+
+- The [file selector](../tests/sysicon-atlas-consumers-9598/file-icon-selector.asm)
+  at `0x1001ea464` appends integer identifiers after checking file flags and paths.
+  For example, the `.vdjsample`/`.vdj` branch appends `3` at `0x1001ea4e8`, and
+  the `search://` branch appends `11` at `0x1001ea500`. Those indices correspond
+  to wiki A4 and A12 under the atlas grid layout; the path strings are not
+  `sysicon` keys. The downstream rendering of this returned list is not tested here.
+- The [IFolder vtable slot](../tests/sysicon-atlas-consumers-9598/folder-icon-slot-5.asm)
+  at `0x1002581e4` reads a stored integer at `+0xa0` and computes
+  `0x103fee0a0 + index * 160`, returning null for a negative index. It performs
+  no string lookup. Assignments of specific folder types to this field remain
+  untraced; this does not prove that their pictures lack a separate skin key.
+- The [customicons reader](../tests/sysicon-atlas-consumers-9598/customicons-reader.asm)
+  calls the [atlas loader](../tests/sysicon-atlas-consumers-9598/atlas-loader.asm).
+  On build 18.0.9598 arm64, the loader clamps the requested count to 153 at
+  `0x1001c1360`–`0x1001c1368` and uses a 160-byte object stride. It scans each
+  supplied cell's alpha bytes and skips replacement when they are all zero.
+  This supports the user's transparency concern structurally; it does not by
+  itself establish which image object any particular live button displays.
+
+Reproduce the consumer capture after `just doctor`:
+
+```sh
+UV_CACHE_DIR=/tmp/vdj-uv-cache uv run --with capstone --with numpy python tools/sysicon_atlas.py --extract --output /tmp/sysicon-atlas-consumers
+```
+
+The extractor anchors the loader and file selector on their actual string
+references, verifies the reader-to-loader call, and obtains the folder method
+from RTTI. Its folder slot locator is calibrated from the symbol-bearing
+b9246 `IFolder::getIcon(bool)`; the captured current instructions are the evidence
+for the current index calculation. A future build requires fresh interpretation,
+not reuse of the current offset annotations.
+
+**Next bounded work:** visually validate H6 and the E3/E4/F5/F6 state graphics;
+then trace assignments to the folder icon field for the remaining folder cells.
+For future agents, start with `just sysicon-atlas --cell …` and the unresolved
+record, rather than reopening the whole wiki or searching every binary string.

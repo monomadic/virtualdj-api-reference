@@ -1,0 +1,64 @@
+{
+  "build": "18.0.9598",
+  "architecture": "arm64",
+  "evidence_tier": 2,
+  "binary_sha256": "94f45962f8149410657589181f1c391287d0560919cbad623e5b920b4bf6af38",
+  "scope": "Static atlas consumers; no live behavior or new sysicon acceptance established",
+  "captures": {
+    "atlas-loader": {
+      "address": "0x1001c12ac",
+      "file": "atlas-loader.asm",
+      "sha256": "fcb593d2308631abf95cac7217d0b415728cf006b8a208483f6699d5e9c137fb"
+    },
+    "customicons-reader": {
+      "address": "0x10037df04",
+      "file": "customicons-reader.asm",
+      "sha256": "306ab4ec7d6ec2c7adb582441a064e3a410f62b12618a1c39d2bf7f234f11ad1"
+    },
+    "file-icon-selector": {
+      "address": "0x1001ea464",
+      "file": "file-icon-selector.asm",
+      "sha256": "f0112a329880d4b23c6b86eaa917969383e76108593c5d47497b14daa59f9d3e"
+    },
+    "folder-icon-slot-5": {
+      "address": "0x1002581e4",
+      "file": "folder-icon-slot-5.asm",
+      "sha256": "2bfccd8c9eb0ab8d94de4f983aa89bdf0feb73d3b1de796256a910be2dbe8407"
+    }
+  },
+  "folder_rtti": {
+    "typeinfo": 4360144016,
+    "vtable": 4360143832,
+    "slots": [
+      4297412972,
+      4297412976,
+      4295527696,
+      4295590824,
+      4295527704,
+      4297425380,
+      4297418280,
+      4297421932,
+      4295527716,
+      4295527728,
+      4295527736,
+      4295527744,
+      4295527756,
+      4295527764,
+      4295527772,
+      4295527780,
+      4297424788,
+      4295527788,
+      4295527800,
+      4297415944,
+      4297415976,
+      4295527808,
+      4295527816
+    ]
+  },
+  "limitations": [
+    "The file selector appends numeric identifiers, not sysicon strings.",
+    "The folder slot uses a stored index; assignments to that field are not enumerated.",
+    "Historical slot naming is a locator, not an assertion that every build shares the contract.",
+    "Absence of a key from this inventory does not prove that no key exists."
+  ]
+}

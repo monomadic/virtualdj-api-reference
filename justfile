@@ -436,6 +436,7 @@ check:
     {{python}} tools/extract_verb_table.py --check
     {{python}} tools/extract_action_contracts.py --check
     {{python}} tools/test_reference.py
+    {{python}} tools/test_sysicon_atlas.py
     {{python}} tools/test_action_tail_bounds.py
     {{python}} tools/test_contract_assessment.py
     {{python}} tools/test_coverage_section.py
@@ -562,6 +563,10 @@ plugin-songbuffer-report:
 # OnKey/mouse events — the only channel that might carry press vs release.
 plugin-keylog:
     @{{python}} tools/plugin_introspect.py keylog
+
+# Atlas cells joined to wiki names, live results and binary candidates.
+sysicon-atlas *args:
+    @{{python}} tools/sysicon_atlas.py "$@"
 
 # The skin object classes and the elements that build them (Tier 2 leads).
 # Bare: a read-time summary. `--element panel` says which class builds an element,
