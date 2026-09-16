@@ -430,6 +430,7 @@ check:
     {{python}} tools/test_reference.py
     {{python}} tools/test_action_tail_bounds.py
     {{python}} tools/test_contract_assessment.py
+    {{python}} tools/test_coverage_section.py
     {{python}} tools/action_tail_leads.py --check
     {{python}} tools/sweep_return_types.py --check
     {{python}} tools/plugin_introspect.py --check

@@ -5,6 +5,7 @@
     just coverage --format=json
     just coverage --settled          # the verbs with nothing left open
     just coverage --frontier         # what each dimension is blocked on, by name
+    just coverage --section=Sampler  # one canonical section, including its aliases
 
 `verb-stats` counts the store's own `test_status` field, which answers one
 question: has behaviour been confirmed live. That is a quarter of a verb's
@@ -694,20 +695,35 @@ def next_tests(name: str, dims: dict, claims: list[dict], ctx: Context) -> list[
     return out
 
 
-def collect() -> dict:
+def collect(section: str | None = None) -> dict:
     ctx = load_context()
-    verbs = {name: assess(name, rec, ctx) for name, rec in ctx.canon.items()}
+    canon, store = ctx.canon, ctx.store
+    if section is not None:
+        sections = {r["section"] for r in canon.values() if r.get("section")}
+        selected = next((s for s in sections if s.casefold() == section.casefold()), None)
+        if selected is None:
+            raise ValueError(f"unknown section {section!r}; use `just list-verb-categories` "
+                             "for the section vocabulary")
+        section = selected
+        canon = {n: r for n, r in canon.items() if r.get("section") == section}
+        # Alias records usually have no section; membership follows their target.
+        store = {n: r for n, r in store.items()
+                 if n in canon or (r.get("tier") == "alias" and r.get("canonical") in canon)}
+    checked = {k: {n: tails for n, tails in rows.items() if section is None or n in store}
+               for k, rows in ctx.checked.items()}
+    verbs = {name: assess(name, rec, ctx) for name, rec in canon.items()}
     return {
+        "section": section,
         "stamp": build_stamp(),
         "read_on": date.today().isoformat(),
         "cross_check_source": ctx.cc_source,
         "cross_check": {k: {"verbs": len(v), "tokens": sum(len(t) for t in v.values())}
-                        for k, v in ctx.checked.items()},
-        "population": population(ctx.canon, ctx.store, verbs),
+                        for k, v in checked.items()},
+        "population": population(canon, store, verbs),
         "dimensions": {d: tally(verbs, d) for d in DIMENSIONS},
         "ladder": ladder(verbs),
         "staleness": staleness(ctx.argforms, ctx.execforms, ctx.raw_rtypes),
-        "frontier": frontier(ctx.canon, verbs, ctx.store),
+        "frontier": frontier(canon, verbs, store),
         "verbs": verbs,
     }
 
@@ -824,6 +840,9 @@ def bar(pct: float, width: int = 28) -> str:
 def render(d: dict, show: str | None) -> str:
     L = ["VDJScript contract coverage", "=" * 27,
          d["stamp"], f"read {d['read_on']} from the artifacts; nothing here is stored", ""]
+    if d.get("section"):
+        L.append(f"Section: {d['section']} (aliases follow their canonical section)")
+        L.append("")
 
     p = d["population"]
     L.append(f"Population: {p['canonical']} canonical verbs ({p['aliases']} aliases folded away) — "
@@ -882,7 +901,7 @@ def render(d: dict, show: str | None) -> str:
     L.append("")
 
     if d["staleness"]:
-        L.append("STALE HEADERS   (the records were recounted; these summaries were not regenerated)")
+        L.append("STALE HEADERS   (whole artifacts; the records were recounted; summaries not regenerated)")
         for note in d["staleness"]:
             L.append(f"  {note}")
         L.append("")
@@ -916,9 +935,13 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--format", choices=("text", "json"), default="text")
     ap.add_argument("--settled", action="store_true", help="list the verbs with nothing open")
     ap.add_argument("--frontier", action="store_true", help="list what each dimension awaits")
+    ap.add_argument("--section", help="exact canonical section, case-insensitive; see list-verb-categories")
     args = ap.parse_args(argv)
 
-    data = collect()
+    try:
+        data = collect(section=args.section)
+    except ValueError as exc:
+        ap.error(str(exc))
     if args.format == "json":
         print(json.dumps(data, indent=1))
         return 0
