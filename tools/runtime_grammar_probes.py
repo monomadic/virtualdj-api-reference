@@ -235,10 +235,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--artifact", type=Path,
                         default=Path("tests/runtime-grammar-confirmation-9598.json"))
+    parser.add_argument("--audit", action="store_true", help="branch-family evidence links and finite editor corpus; no completeness inference")
     parser.add_argument("--get", metavar="CASE")
     parser.add_argument("--group")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if args.audit:
+        from runtime_grammar_audit import report
+        print(json.dumps(report(), indent=2))
+        return
     capture = json.loads(args.artifact.read_text())
     if args.check:
         mode = capture["summary"].get("mode")

@@ -1,0 +1,280 @@
+{
+  "scope": "Reviewed branch-family checklist, not an exhaustive CFG edge inventory. Source associations are manual leads; results are joined from captures, never inferred from symbol presence. Unmapped symbols remain visible for review.",
+  "obligations": [
+    {
+      "id": "head-delimiters",
+      "symbol": "IAction::create",
+      "site": "0x100597b31",
+      "question": "Which bytes delimit the action name?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "delimiters"
+        }
+      ],
+      "next_action": "Review each negative against controls; do not equate an error with recognized syntax."
+    },
+    {
+      "id": "numeric-dispatch",
+      "symbol": "IAction::stringGetParam",
+      "site": "0x1005992d0",
+      "question": "How do numeric signs, integer/decimal forms and suffixes change observable results?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "numbers"
+        },
+        {
+          "capture": "tests/runtime-grammar-actions-9598.json",
+          "group": "parser_zoom_levels"
+        },
+        {
+          "capture": "tests/runtime-grammar-action-default-9598.json",
+          "group": "argument-fallback"
+        }
+      ],
+      "next_action": "Join malformed and relative forms to stateful consumer evidence before closing individual edges."
+    },
+    {
+      "id": "post-argument-spaces",
+      "symbol": "IAction::stringGetParam",
+      "site": "0x10059961c",
+      "question": "Which bytes after a completed parameter allow the next operation?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-boundary-9598.json",
+          "group": "boundary-placement"
+        },
+        {
+          "capture": "tests/runtime-grammar-boundary-confirmation-9598.json",
+          "group": "boundary-confirmation"
+        }
+      ],
+      "next_action": "Retain the failed skip-whitespace predictions and null terminal-byte readings separately."
+    },
+    {
+      "id": "quoted-argument",
+      "symbol": "IAction::stringGetParam",
+      "site": "0x10059947e",
+      "question": "Which quote closes an argument, and what happens on empty or unmatched input?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "quotes"
+        },
+        {
+          "capture": "tests/runtime-grammar-whitespace-9598.json",
+          "group": "untrimmed-quotes"
+        }
+      ],
+      "next_action": "Unmatched and empty quotes need a discriminating consumer; blank equality alone is insufficient."
+    },
+    {
+      "id": "backtick-consumers",
+      "symbol": "IAction::getParamEval",
+      "site": "0x1005984e0",
+      "question": "Which consumers evaluate backtick text rather than return it?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "backticks"
+        }
+      ],
+      "next_action": "Audit evaluation/conversion branches individually; a constant reader cannot stand in for every consumer."
+    },
+    {
+      "id": "word-and-keyword",
+      "symbol": "IAction::stringGetParam",
+      "site": "0x1005995fb",
+      "question": "How do keyword dispatch and ordinary text differ?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "names"
+        },
+        {
+          "capture": "tests/runtime-grammar-actions-9598.json",
+          "group": "parser_beatlock_levels"
+        }
+      ],
+      "next_action": "Link boolean/flag branches to execute fixtures; do not promote null constant results."
+    },
+    {
+      "id": "unknown-and-stop",
+      "symbol": "IAction::create",
+      "site": "0x100597bb6",
+      "question": "How do unknown heads, unknown arguments and punctuation differ?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "fallback"
+        }
+      ],
+      "next_action": "Pair with editor corpus; maintain unknown-head errors separately from ignored tails."
+    },
+    {
+      "id": "prefix-lexing",
+      "symbol": "IAction::deckMatch",
+      "site": "0x100599000",
+      "question": "Which deck and legacy prefix spellings reach distinct queries?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "prefixes"
+        },
+        {
+          "capture": "tests/runtime-grammar-scopes-9598.json",
+          "group": "selected-scope"
+        }
+      ],
+      "next_action": "Separate constant-valued reachability from actual deck resolution."
+    },
+    {
+      "id": "scope-resolution",
+      "symbol": "getDeck",
+      "site": "0x10047d9ff",
+      "question": "Which selector follows the selected, master or sole playing deck?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-playing-9598.json",
+          "group": "playing-scope"
+        }
+      ],
+      "next_action": "Playback gap is measured; do not expand this into all deck-selection policy."
+    },
+    {
+      "id": "structural-operators",
+      "symbol": "IAction::create",
+      "site": "0x1005974cf",
+      "question": "How are structural operators and lifetime modifier tokens dispatched?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "operators"
+        }
+      ],
+      "next_action": "Link existing mapper lifetime evidence by its actual press/release observable, not query output."
+    },
+    {
+      "id": "remote-entry",
+      "symbol": "IAction::create",
+      "site": "0x100596f45",
+      "question": "Does isRemote change action rewriting or parameter consumption?",
+      "sources": [],
+      "next_action": "Trace the alternate entry route through 0x1005974cf, identify a discriminating payload and establish a named remote fixture."
+    },
+    {
+      "id": "list-conversion",
+      "symbol": "IAction::getListParam",
+      "site": "0x1005989e0",
+      "question": "How do missing, integer and text parameters choose list values?",
+      "sources": [],
+      "next_action": "Identify a bounded safe caller and decide whether this conversion belongs to common argument interpretation or per-verb semantics; no test linkage currently reviewed."
+    },
+    {
+      "id": "editor-structure",
+      "symbol": "DLGActionWizard::updateHint",
+      "site": "0x1006c6136",
+      "question": "Do editor spans and guards agree with the paired runtime distinctions?",
+      "sources": [],
+      "next_action": "Collect the fixed corpus with persisted screenshots; existing help-only screenshots are unrecoverable."
+    },
+    {
+      "id": "float-consumer",
+      "symbol": "IAction::getFloatParam",
+      "site": "0x1005986ea",
+      "question": "Which typed arguments move zoom under distinct baselines?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-actions-9598.json",
+          "group": "parser_zoom_levels"
+        }
+      ],
+      "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation."
+    },
+    {
+      "id": "boolean-consumer",
+      "symbol": "IActionSwitch::onExecute",
+      "site": "0x100147f18",
+      "question": "Which argument types set, toggle or leave the switch unchanged?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-actions-9598.json",
+          "group": "parser_beatlock_levels"
+        }
+      ],
+      "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation."
+    },
+    {
+      "id": "all-decks-consumer",
+      "symbol": "ACTION_all_decks::onExecute",
+      "site": "0x1000fe392",
+      "question": "How does the all-deck wrapper dispatch the same argument across asymmetric states?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-actions-9598.json",
+          "group": "parser_all_decks_asymmetric"
+        }
+      ],
+      "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation."
+    }
+  ],
+  "editor_corpus": [
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "head-tab"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "number-end-space"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "quote-single"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "quote-backslash-quote"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "quote-unclosed-single"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "numeric-ms"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "numeric-uppercase-ms"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "backtick-text-eval"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "prefix-zone"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "prefix-deck-quoted"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "fallback-word-keeps-chain"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "fallback-punctuation-stops-chain"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "fallback-unknown-head"
+    },
+    {
+      "capture": "tests/runtime-grammar-confirmation-9598.json",
+      "case": "operator-ternary"
+    }
+  ]
+}

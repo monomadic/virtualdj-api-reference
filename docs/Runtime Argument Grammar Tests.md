@@ -9,6 +9,21 @@ The common parser has been captured and its main lexical branches exercised. Thi
 an exhaustive recovery of every reachable argument consumer**. The historical call-graph frontier, its later closure, and the remaining discriminating
 fixtures are explicit below; H4 remains open.
 
+## Branch-family audit
+
+`just runtime-grammar --audit` joins the reviewed branch-family obligations in
+[the structured checklist](../tests/runtime-grammar-obligations.json) to exact case ids,
+fixtures, builds, verdicts and control separation. It validates the linked captures and
+historical assembly hashes. The output also fixes a representative editor corpus by exact
+runtime case reference, so a new UI pass can record the same source text with screenshots.
+
+This is a coverage audit in progress, **not an exhaustive control-flow-edge proof**. A mapped
+family is not a closed branch: null readings, failed predictions and the next required review
+are retained. Symbols without a family mapping are listed rather than silently counted as
+covered. The remote entry route and list conversion helper currently have no reviewed live
+case linkage; deciding their exact scope and adding discriminating fixtures remains work.
+Editor corpus entries are pending observations, not predictions of editor acceptance.
+
 ## Reproduce and inspect
 
 ```sh
