@@ -14,6 +14,8 @@ UI = ROOT / 'tests/runtime-grammar-editor-help-ui-9598.json'
 
 def compare(capture, ui):
     summary = ui['summary']
+    assert isinstance(summary.get('screenshots_persisted'), bool), 'missing screenshot retention status'
+    assert summary.get('screenshot_provenance'), 'missing screenshot provenance'
     assert summary['status'] == capture['summary']['status'] == 'complete'
     for key in ('build', 'suite', 'suite_sha256'):
         assert summary[key] == capture['summary'][key], key
@@ -54,7 +56,9 @@ def compare(capture, ui):
             'combined_verdict': 'held-in-fixture' if all(checks.values()) and case['verdict'] == 'held-in-fixture' else 'prediction-not-held',
         })
     return {'build': summary['build'], 'fixture': summary['fixture'],
-            'scope': summary['scope'], 'restoration_verified': True, 'cases': results}
+            'scope': summary['scope'],
+            'ui_evidence': {k: summary[k] for k in ('screenshots_persisted', 'screenshot_provenance')},
+            'restoration_verified': True, 'cases': results}
 
 
 def main():

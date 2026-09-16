@@ -16,8 +16,15 @@ class EditorEvidenceTests(unittest.TestCase):
             self.assertEqual(row['editor_predictions']['control_help'], 'prediction-not-held')
             self.assertEqual(row['combined_verdict'], 'prediction-not-held')
 
+    def test_report_exposes_unrecoverable_screenshots(self):
+        evidence = compare(self.http, self.ui)['ui_evidence']
+        self.assertIs(evidence['screenshots_persisted'], False)
+        self.assertIn('unrecoverable', evidence['screenshot_provenance'])
+
     def test_rejects_missing_provenance_or_restoration(self):
         for mutate in (
+            lambda u: u['summary'].pop('screenshots_persisted'),
+            lambda u: u['summary'].pop('screenshot_provenance'),
             lambda u: u['passes'].pop(),
             lambda u: u['passes'][1].reverse(),
             lambda u: u['passes'][0][0].update(source_verified_visually=False),

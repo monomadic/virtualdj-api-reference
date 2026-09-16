@@ -589,7 +589,10 @@ The [HTTP capture](../tests/runtime-grammar-editor-help-http-9598.json) and sepa
 [UI observations](../tests/runtime-grammar-editor-help-ui-9598.json) are build 9598
 observations. UI passes used forward and reverse order, with the original button action
 restored and the editor reopened between passes. The final restoration was also checked
-by reopening. No test action was executed from the editor.
+by reopening. No test action was executed from the editor. The screenshots behind the UI
+rows were not saved, so the UI file is the agent's reading of screenshots that no longer
+exist (its `screenshot_provenance` field says so); later UI passes save each screenshot
+under `tests/` beside the capture.
 
 | Discriminating prediction in `parser_editor_help` | HTTP observation on build 9598 | Help observation in both UI passes | Result |
 | --- | --- | --- | --- |
