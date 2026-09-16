@@ -4,11 +4,12 @@ import json
 from pathlib import Path
 from runtime_grammar_probes import validate_suite
 
-OUT = Path('tests/runtime-grammar-boundary-cases.json')
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / Path('tests/runtime-grammar-boundary-cases.json')
 
 
 def build_suite():
-    manifest = json.loads(Path('tests/runtime-parser-9246/manifest.json').read_text())
+    manifest = json.loads((ROOT / 'tests/runtime-parser-9246/manifest.json').read_text())
     sites = [name + '@' + manifest['symbols'][name]['start'] for name in
              ('IAction::create', 'IAction::stringGetParam')]
     cases = []

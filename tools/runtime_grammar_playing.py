@@ -16,6 +16,8 @@ from fixtures import FixtureError
 from runtime_grammar_actions import OnceChannel, Session, classify, equal
 from runtime_grammar_probes import write_capture
 
+ROOT = Path(__file__).resolve().parents[1]
+
 FIXTURE = 'parser_playing_scope'
 BASELINES = [{'master': '3', 'playing': '4'}, {'master': '4', 'playing': '3'}]
 ALLOWED = {'get_deck'} | {f'deck {s} get_deck' for s in
@@ -266,7 +268,8 @@ def run_suite(args):
 def check_capture(path):
     capture = json.loads(Path(path).read_text())
     summary = capture['summary']
-    suite_path = Path(summary['suite'])
+    # Captures record the suite repo-relative; resolve it against the repo, not the cwd.
+    suite_path = ROOT / summary['suite']
     suite = validate(json.loads(suite_path.read_text()))
     require(hashlib.sha256(suite_path.read_bytes()).hexdigest() == summary['suite_sha256'], 'suite hash mismatch')
     require(summary['channel'] == 'HTTP' and summary['build'].isdecimal(), 'missing build/channel')
@@ -328,7 +331,7 @@ def check_capture(path):
                 initial = capture['initial_state'][name]
                 require(set(restored[name]) == set(initial) and
                         all(equal([restored[name][q]], [v]) for q, v in initial.items()), 'restore state mismatch')
-    manifest_path = Path('tests/runtime-parser-9246/manifest.json')
+    manifest_path = ROOT / 'tests/runtime-parser-9246/manifest.json'
     manifest = json.loads(manifest_path.read_text())
     require(manifest['source']['bundle_version'] == '18.0.9246' and
             manifest['source']['architecture'] == 'x86_64', 'wrong historical binary')

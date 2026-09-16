@@ -7,8 +7,9 @@ import json
 from pathlib import Path
 from runtime_grammar_probes import check_capture, separation
 
-HTTP = Path('tests/runtime-grammar-editor-help-http-9598.json')
-UI = Path('tests/runtime-grammar-editor-help-ui-9598.json')
+ROOT = Path(__file__).resolve().parents[1]
+HTTP = ROOT / 'tests/runtime-grammar-editor-help-http-9598.json'
+UI = ROOT / 'tests/runtime-grammar-editor-help-ui-9598.json'
 
 
 def compare(capture, ui):

@@ -631,6 +631,7 @@ runtime-grammar-master *args:
 
 check-runtime-grammar:
     @{{python}} tools/test_runtime_grammar_playing.py
+    @{{python}} tools/build_runtime_editor_help_cases.py --check
     @{{python}} tools/build_runtime_boundary_cases.py --check
     @{{python}} tools/build_runtime_boundary_confirmation.py --check
     @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-boundary-9598.json > /dev/null

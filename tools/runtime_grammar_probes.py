@@ -13,6 +13,8 @@ import urllib.parse
 import json
 from pathlib import Path
 
+ROOT = Path(__file__).resolve().parents[1]
+
 from fixtures import Channel, FixtureError, build_fixtures, establish
 
 
@@ -196,7 +198,7 @@ def run_suite(args):
 def check_capture(path):
     capture = json.loads(path.read_text())
     summary = capture["summary"]
-    suite_path = Path(summary["suite"])
+    suite_path = ROOT / summary["suite"]  # captures record the suite repo-relative
     suite = validate_suite(json.loads(suite_path.read_text()))
     assert hashlib.sha256(suite_path.read_bytes()).hexdigest() == summary["suite_sha256"]
     assert [c["id"] for c in suite["cases"]] == [c["id"] for c in capture["cases"]]

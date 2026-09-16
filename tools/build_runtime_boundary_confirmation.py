@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 from runtime_grammar_probes import validate_suite
 
-OUT = Path('tests/runtime-grammar-boundary-confirmation-cases.json')
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / Path('tests/runtime-grammar-boundary-confirmation-cases.json')
 
 
 def build_suite():

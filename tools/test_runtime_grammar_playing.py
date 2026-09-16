@@ -5,6 +5,7 @@ import tempfile
 from pathlib import Path
 import unittest
 from fixtures import FixtureError
+ROOT = Path(__file__).resolve().parents[1]
 from runtime_grammar_playing import GUARDS, PROTECTED, PlayingSession, validate, check_capture
 
 
@@ -68,7 +69,7 @@ class PlayingSafetyTests(unittest.TestCase):
         self.assertEqual(self.capture['journal'][0]['status'], 'response-uncertain')
 
     def test_suite_refuses_execute_payloads_in_query_cases(self):
-        suite = json.loads(Path('tests/runtime-grammar-playing-cases.json').read_text())
+        suite = json.loads((ROOT / 'tests/runtime-grammar-playing-cases.json').read_text())
         validate(suite)
         suite['cases'][0]['script'] = 'deck 1 load "x"'
         with self.assertRaises(FixtureError):
@@ -78,10 +79,10 @@ class PlayingSafetyTests(unittest.TestCase):
 class PlayingEvidenceTests(unittest.TestCase):
     def test_complete_and_aborted_captures_remain_checkable(self):
         for name in ('playing', 'playing-initial'):
-            check_capture(Path(f'tests/runtime-grammar-{name}-9598.json'))
+            check_capture(ROOT / f'tests/runtime-grammar-{name}-9598.json')
 
     def test_rejects_unverified_movement_context_restore_and_journal(self):
-        capture = json.loads(Path('tests/runtime-grammar-playing-9598.json').read_text())
+        capture = json.loads((ROOT / 'tests/runtime-grammar-playing-9598.json').read_text())
         for mutate in (
             lambda c: c['phases'][0].update(advancing_position=[0, 0]),
             lambda c: c['phases'][0]['checks'][0]['state'].update({'deck 3 play': 'yes'}),
