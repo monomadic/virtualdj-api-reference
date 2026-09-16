@@ -596,6 +596,10 @@ extract-action-tail-leads:
 runtime-grammar *args:
     @{{python}} tools/runtime_grammar_probes.py "$@"
 
+# Paired editor appearance and HTTP results, with failed predictions retained.
+runtime-grammar-editor *args:
+    @{{python}} tools/runtime_grammar_editor.py "$@"
+
 extract-runtime-parser app:
     @{{python}} tools/extract_runtime_parser.py --app "{{app}}" --output tests/runtime-parser-9246
 
@@ -626,6 +630,8 @@ runtime-grammar-master *args:
     @{{python}} tools/runtime_grammar_master.py "$@"
 
 check-runtime-grammar:
+    @{{python}} tools/test_runtime_grammar_editor.py
+    @{{python}} tools/runtime_grammar_editor.py --check > /dev/null
     @{{python}} tools/runtime_parser_frontier.py --check > /dev/null
     @{{python}} tools/resolve_frontier_sites.py --check > /dev/null
     @{{python}} tools/test_runtime_grammar_actions.py

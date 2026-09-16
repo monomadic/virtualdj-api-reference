@@ -1,0 +1,117 @@
+{
+  "description": "Paired help-display/HTTP predictions, not an editor token grammar.",
+  "cases": [
+    {
+      "id": "editor-help-valid-number",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "param_add",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "editor-help-malformed-number",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37zzqqx & param_add 5",
+      "expected": "",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "param_add",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "editor-help-lowercase-unit",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37ms",
+      "expected": "37ms",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "constant",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ]
+    },
+    {
+      "id": "editor-help-uppercase-unit",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37MS",
+      "expected": "",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "constant",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ]
+    }
+  ]
+}

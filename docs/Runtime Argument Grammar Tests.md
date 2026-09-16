@@ -497,13 +497,46 @@ exact-tab paste attempt timed out. The original button action was visibly restor
 the editor closed without executing a test script. HTTP cannot read highlighting or guard
 hints, so the prober cannot adjudicate the editor half of the suite.
 
+### Paired help-display test (2026-09-16)
+
+Run `just runtime-grammar-editor` for the joined results. The frozen
+[case suite](../tests/runtime-grammar-editor-help-cases.json) runs through the existing
+argument prober in the named `parser_editor_help` fixture:
+
+```sh
+just probe-arg-forms --grammar-cases tests/runtime-grammar-editor-help-cases.json --repeat 2 --rounds 2 --out /tmp/editor-help-http.json
+```
+
+The [HTTP capture](../tests/runtime-grammar-editor-help-http-9598.json) and separate
+[UI observations](../tests/runtime-grammar-editor-help-ui-9598.json) are build 9598
+observations. UI passes used forward and reverse order, with the original button action
+restored and the editor reopened between passes. The final restoration was also checked
+by reopening. No test action was executed from the editor.
+
+| Discriminating prediction in `parser_editor_help` | HTTP observation on build 9598 | Help observation in both UI passes | Result |
+| --- | --- | --- | --- |
+| Does `constant 37 & param_add 5` return `42` and show `param_add` help? | `42` | `param_add` | Candidate predictions held |
+| Does `constant 37zzqqx & param_add 5` return blank but show the same help? | blank | `param_add` | Candidate predictions held; appearance did not distinguish the malformed form |
+| Does `constant 37ms` return `37ms` and show `constant` help? | `37ms` | `constant` | Candidate predictions held |
+| Does `constant 37MS` return blank but show the same help? | blank | `constant` | Candidate predictions held; appearance did not distinguish the suffix case |
+| Do controls `zzh4_editor_a` and `zzh4_editor_b` show no help? | Both `error:-2147467259` | Both showed `zoom` help | **Prediction did not hold** |
+| Does contrast `constant 37` return `37` and show `constant` help? | `37` | `constant` | Contrast prediction held |
+
+The frozen suite retains the failed control prediction. The joined report therefore marks
+each combined prediction as not held, while reporting the runtime and candidate-help
+predictions separately. This observation does not establish acceptance, token boundaries,
+or a general unknown-token fallback algorithm. It constrains only the displayed help for
+these exact scripts. The matching corpus still needs a token-span or guard-hint observable.
+
 ## What remains
 
-H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage` and
-`manifest.unresolved` retain the static frontier. Remaining discriminating work includes:
+H4 cannot honestly be called a complete grammar recovery yet. The static frontier is
+closed by the separate closure artifact; the original manifest retains its historical
+coverage record. Remaining discriminating work includes:
 
-- The isolated master query has now completed in a guarded fixture, but the earlier app
-  exit remains unexplained. Do not assign causation from the pending-query label.
+- The isolated master query completed in a guarded fixture. The earlier apparent-exit
+  concern is superseded by the window-minimization investigation above; the original
+  interrupted captures remain historical evidence.
 - The master/selection half of the asymmetric-scope item is **done** — see
   [asymmetric master](#asymmetric-master-2026-09-12) below and the promoted rule in
   [VDJScript Grammar](VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12).
@@ -511,9 +544,9 @@ H4 cannot honestly be called a complete grammar recovery yet. `manifest.coverage
   `active` was never pulled away from the master by a playing deck, and the `mixerN`
   permutation has no established cause. A fixture with asymmetric playback answers the first;
   the second needs a configuration channel this suite does not touch.
-- Extend the tested action consumers to button-lifetime modifiers with a channel that can
-  supply both press and release. The HTTP execute channel does not expose that lifecycle;
-  numeric, boolean and flag observations in zoom/beatlock cannot stand in for it.
+- Button-lifetime tests are **done** through the mapper press/release surface; see
+  [the dated live results](VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
+  HTTP observations alone still cannot substitute for that lifecycle.
 - Variable **isolation** is now observed (`just probe-variable-scope`,
   [capture](../tests/variable-scope-probe-9598.json)): bare names are per-deck, `$` is shared
   across decks, and bare/`$`/`@` are three separate names held at once — promoted into

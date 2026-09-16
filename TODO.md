@@ -484,7 +484,11 @@ store the same number at object+0xc. The structural finding: `IAction::create` f
 argument loop into `vector<SActionParam>` *before* calling the factory, so arguments are lexed
 centrally and only then dispatched per verb. The static route to argument grammar therefore
 ends here; what remains is per-verb behavior inside the constructed action. Variable scope is
-also settled, including `@` persistence across a real restart.
+also settled, including `@` persistence across a real restart. The paired editor-help
+pass on 2026-09-16 is captured by `just runtime-grammar-editor`: candidate HTTP/help
+predictions held, but the frozen no-help prediction for two unknown-head controls
+failed (both showed `zoom` help). This is appearance evidence only; matching
+editor token spans or guard hints remain outstanding.
 
 Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
 a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`

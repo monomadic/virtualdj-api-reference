@@ -1373,6 +1373,14 @@ CREATE INDEX idx_waveform_filename ON waveforms (filename, type);
 
 Use this for inspection only. It is a generated cache.
 
+Read-only reinspection on 2026-09-16 found the same `waveforms` table and
+`idx_waveform_filename` index in the checkpointed main-file schema, with no
+script, action-catalog or parser table. The ordinary read-only connection was
+locked by the running app; `mode=ro&immutable=1` inspected only the main file
+and excluded pending WAL changes. No private row values were read. This is a
+waveform-format lead, not evidence for the runtime argument grammar; it does
+not rule out information in other cache files or opaque blob contents.
+
 Read-only waveform count:
 
 ```sh
