@@ -3254,3 +3254,53 @@ modifiers reported by `just verb`, playback/stop/stutter with discriminating
 position and audio observations, pad-page mapping on the pad surface, and
 routing/recording/lifecycle fixtures. Merely finding `all` in the query parser
 cannot settle `sampler_stop all`; this level pass does not promote that claim.
+
+## Sampler Playback Transport And Exact Counts, 2026-09-16
+
+HTTP, build 18.0.9598 (`get_build` → `9598`), using the same owned generated
+bank as the addressing/level pass. The frozen plan is
+`tests/sampler-playback-cases.json`, runner `tools/probe_sampler_playback.py`, and
+confirmed capture `tests/sampler-playback-9598.json`. `just verb` and
+`just coverage --section=Sampler` join recomputed per-form claims; current
+per-verb conclusions are recorded in the store.
+
+Slots 9 and 12 hold different-group/ungrouped generated WAVs lasting 10s and
+13s. The runner verifies the bank, lowers only its sample levels to 0.1,
+selects distinct deck defaults, and requires stopped decks and sampler before
+starting. It calibrates play and explicit slot-stop first. Each case establishes
+stopped or simultaneous-player state, captures activity/elapsed/percentage/count
+before the action, captures again afterward and after an additional interval,
+then stops each active slot explicitly and verifies zero active samples. Cleanup
+never depends on the `all` form being tested. A second run starts from a
+different positive playback position. Separate immediate three/four-player
+states test the documented exact-count argument with positive cases.
+
+The critical discriminator is a continuously advancing witness sample. It
+separates target-only stop/restart from a bank-wide stop, and distinguishes a
+restart from simply returning `yes` while playing. Known file durations and
+measured snapshot intervals reject natural endings as evidence of an action.
+Percentage and elapsed readbacks must agree within the capture interval and
+rendered clock precision. The resulting aggregate-stop proof belongs to
+`sampler_stop all`; it does not generalize to other verbs accepting `all`.
+
+Transport observations are **not an acoustic capture**. Device inspection found
+the current default speaker output and virtual adapters, but no verified
+loopback route for that output was established. The suite neither records the
+microphone nor changes audio routing. Press/release, pad context, loop/mode
+variants and audible-output behavior remain separate obligations.
+
+Preserved timing failures are part of the evidence. The `-initial` capture
+completed and restored, but a slow read outlived a sample in a control case;
+that row is rejected by the timed classifier. The `-baseline-delay` capture
+shows the same issue on a fresh connection, so keep-alive reuse was not an
+established cause. Its inconsistent baseline stopped the pass before the probe
+action, and cleanup restored the original state. The confirmed runner bounds
+read-only query waits and retains timestamp/position/count consistency checks;
+mutation requests are never replayed. Both earlier files remain separate from
+the confirmed join.
+
+The confirmed capture verifies stopped fixture players, original fixture levels
+and selections, original bank and deck defaults, and unchanged stopped deck
+transport. Original bank names are redacted before persistence. The installed
+fixture remains available for the next surface-specific tests; no private media
+or audio recording was added to the repository.

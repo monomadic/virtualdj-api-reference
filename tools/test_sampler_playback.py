@@ -101,6 +101,16 @@ class PlaybackTests(unittest.TestCase):
             self.assertEqual(runner.query("sampler_used"), "0.4")
         self.assertEqual(runner.ch.timeout, 10)
 
+    def test_frontier_routes_to_playback_and_input_event_fixtures(self):
+        from coverage_report import next_tests
+        claims = [{"dimension": "execute", "form": "bare", "status": "open", "reason": "not_measured"},
+                  {"dimension": "arguments", "form": "NUM while_pressed", "status": "open", "reason": "unavailable"},
+                  {"dimension": "execute", "form": "9", "status": "settled", "source": "tests/sampler-playback-9598.json"}]
+        hints = next_tests("sampler_play", {}, claims, None)
+        self.assertTrue(any("probe-sampler-playback" in h for h in hints))
+        self.assertTrue(any("press/release input-event" in h for h in hints))
+        self.assertFalse(any("probe_execute_forms.py" in h for h in hints))
+
 
 class CaptureTests(unittest.TestCase):
     def setUp(self):

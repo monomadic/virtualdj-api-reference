@@ -737,9 +737,15 @@ def next_tests(name: str, dims: dict, claims: list[dict], ctx: Context) -> list[
         out.append("two independent runs with `--repeat 2`; a slow-drifting value needs both")
     if ("arguments", "prose_only") in reasons:
         out.append("locate and link the recorded test; re-probe only if its evidence is insufficient")
+    if any(c["status"] == "open" and "while_pressed" in c["form"] for c in claims):
+        out.append("press/release input-event fixture for the shipped while_pressed form; HTTP calls alone do not supply those events")
     if ("execute", "not_measured") in reasons:
-        out.append("allowlisted execute with independent readback and verified restore: "
-                   "tools/probe_execute_forms.py")
+        if any(c.get("source") == "tests/sampler-playback-9598.json" for c in claims):
+            out.append("extend the frozen default-scope cases shown by `just probe-sampler-playback`; "
+                       "reuse its timed readbacks, controls and verified restoration")
+        else:
+            out.append("allowlisted execute with independent readback and verified restore: "
+                       "tools/probe_execute_forms.py")
     if ("execute", "undiscriminated") in reasons:
         out.append("an execute observable that sees what the tail selects, not only on/off "
                    "(the bpm-transition prober is the model)")
