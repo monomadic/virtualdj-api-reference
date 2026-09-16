@@ -488,7 +488,10 @@ also settled, including `@` persistence across a real restart. The paired editor
 pass on 2026-09-16 is captured by `just runtime-grammar-editor`: candidate HTTP/help
 predictions held, but the frozen no-help prediction for two unknown-head controls
 failed (both showed `zoom` help). This is appearance evidence only; matching
-editor token spans or guard hints remain outstanding.
+editor token spans or guard hints remain outstanding. The 2026-09-16
+boundary-placement suites now isolate whitespace position from operator adjacency, retain
+the failed skip-whitespace predictions, and confirm the narrower original-value result
+with changed values and quoted forms; inspect the boundary captures through `just runtime-grammar`.
 
 Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
 a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`

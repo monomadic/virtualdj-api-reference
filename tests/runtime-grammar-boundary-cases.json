@@ -1,0 +1,2309 @@
+{
+  "description": "Position-controlled boundary predictions; blank readings remain null against malformed controls.",
+  "cases": [
+    {
+      "id": "boundary-integer-tab-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\t",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-tab-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\t & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-tab-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at after-space after 37 produce '42', independently of the space before a following operator?",
+      "script": "constant 37 \t & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-tab-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\t",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-tab-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\t & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-tab-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at after-space after 37% produce '5.37', independently of the space before a following operator?",
+      "script": "constant 37% \t & param_cast float & param_add 5",
+      "expected": "5.37",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-tab-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\t",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-tab-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\t & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-tab-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at after-space after 37ms produce '42', independently of the space before a following operator?",
+      "script": "constant 37ms \t & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-tab-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\t",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-tab-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\t & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-tab-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does tab at after-space after 37bt produce '42', independently of the space before a following operator?",
+      "script": "constant 37bt \t & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-lf-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\n",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-lf-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\n & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-lf-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at after-space after 37 produce '42', independently of the space before a following operator?",
+      "script": "constant 37 \n & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-lf-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\n",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-lf-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\n & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-lf-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at after-space after 37% produce '5.37', independently of the space before a following operator?",
+      "script": "constant 37% \n & param_cast float & param_add 5",
+      "expected": "5.37",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-lf-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\n",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-lf-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\n & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-lf-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at after-space after 37ms produce '42', independently of the space before a following operator?",
+      "script": "constant 37ms \n & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-lf-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\n",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-lf-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\n & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-lf-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does lf at after-space after 37bt produce '42', independently of the space before a following operator?",
+      "script": "constant 37bt \n & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-cr-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\r",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-cr-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\r & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-cr-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at after-space after 37 produce '42', independently of the space before a following operator?",
+      "script": "constant 37 \r & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-cr-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\r",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-cr-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\r & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-cr-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at after-space after 37% produce '5.37', independently of the space before a following operator?",
+      "script": "constant 37% \r & param_cast float & param_add 5",
+      "expected": "5.37",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-cr-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\r",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-cr-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\r & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-cr-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at after-space after 37ms produce '42', independently of the space before a following operator?",
+      "script": "constant 37ms \r & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-cr-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\r",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-cr-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\r & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-cr-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does cr at after-space after 37bt produce '42', independently of the space before a following operator?",
+      "script": "constant 37bt \r & param_cast float & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-vt-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\u000b",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-vt-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\u000b & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-vt-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at after-space after 37 produce '37', independently of the space before a following operator?",
+      "script": "constant 37 \u000b & param_cast float & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-vt-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\u000b",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-vt-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\u000b & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-vt-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at after-space after 37% produce '37%', independently of the space before a following operator?",
+      "script": "constant 37% \u000b & param_cast float & param_add 5",
+      "expected": "37%",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-vt-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\u000b",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-vt-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\u000b & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-vt-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at after-space after 37ms produce '37ms', independently of the space before a following operator?",
+      "script": "constant 37ms \u000b & param_cast float & param_add 5",
+      "expected": "37ms",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-vt-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\u000b",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-vt-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\u000b & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-vt-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does vt at after-space after 37bt produce '37bt', independently of the space before a following operator?",
+      "script": "constant 37bt \u000b & param_cast float & param_add 5",
+      "expected": "37bt",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-ff-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\f",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-ff-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\f & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-ff-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at after-space after 37 produce '37', independently of the space before a following operator?",
+      "script": "constant 37 \f & param_cast float & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-ff-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\f",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-ff-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\f & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-ff-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at after-space after 37% produce '37%', independently of the space before a following operator?",
+      "script": "constant 37% \f & param_cast float & param_add 5",
+      "expected": "37%",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-ff-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\f",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-ff-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\f & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-ff-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at after-space after 37ms produce '37ms', independently of the space before a following operator?",
+      "script": "constant 37ms \f & param_cast float & param_add 5",
+      "expected": "37ms",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-ff-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\f",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-ff-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\f & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-ff-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does ff at after-space after 37bt produce '37bt', independently of the space before a following operator?",
+      "script": "constant 37bt \f & param_cast float & param_add 5",
+      "expected": "37bt",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-nbsp-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at terminal after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\u00a0",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "integer",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-nbsp-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at before-space after 37 produce '', independently of the space before a following operator?",
+      "script": "constant 37\u00a0 & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "integer",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-integer-nbsp-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at after-space after 37 produce '37', independently of the space before a following operator?",
+      "script": "constant 37 \u00a0 & param_cast float & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37zzboundary_a & param_cast float & param_add 5",
+        "constant 37zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "integer",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-nbsp-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at terminal after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\u00a0",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "percent",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-nbsp-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at before-space after 37% produce '', independently of the space before a following operator?",
+      "script": "constant 37%\u00a0 & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "percent",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-percent-nbsp-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at after-space after 37% produce '37%', independently of the space before a following operator?",
+      "script": "constant 37% \u00a0 & param_cast float & param_add 5",
+      "expected": "37%",
+      "controls": [
+        "constant 37%zzboundary_a & param_cast float & param_add 5",
+        "constant 37%zzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & param_cast float & param_add 5",
+          "expected": "5.37"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "percent",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-nbsp-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at terminal after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\u00a0",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "milliseconds",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-nbsp-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at before-space after 37ms produce '', independently of the space before a following operator?",
+      "script": "constant 37ms\u00a0 & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "milliseconds",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-milliseconds-nbsp-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at after-space after 37ms produce '37ms', independently of the space before a following operator?",
+      "script": "constant 37ms \u00a0 & param_cast float & param_add 5",
+      "expected": "37ms",
+      "controls": [
+        "constant 37mszzboundary_a & param_cast float & param_add 5",
+        "constant 37mszzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "milliseconds",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-nbsp-terminal",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at terminal after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\u00a0",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "beats",
+        "position": "terminal"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-nbsp-before-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at before-space after 37bt produce '', independently of the space before a following operator?",
+      "script": "constant 37bt\u00a0 & param_cast float & param_add 5",
+      "expected": "",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "beats",
+        "position": "before-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    },
+    {
+      "id": "boundary-beats-nbsp-after-space",
+      "fixture": "parser_constants",
+      "group": "boundary-placement",
+      "hypothesis": "Does nbsp at after-space after 37bt produce '37bt', independently of the space before a following operator?",
+      "script": "constant 37bt \u00a0 & param_cast float & param_add 5",
+      "expected": "37bt",
+      "controls": [
+        "constant 37btzzboundary_a & param_cast float & param_add 5",
+        "constant 37btzzboundary_b & param_cast float & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & param_cast float & param_add 5",
+          "expected": "42"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "unit": "beats",
+        "position": "after-space"
+      },
+      "supersedes_confounded_family": "number-end-* and suffix-boundary-* do not isolate the inserted byte from operator adjacency"
+    }
+  ]
+}

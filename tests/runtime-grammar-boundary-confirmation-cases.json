@@ -1,0 +1,1145 @@
+{
+  "description": "Follow-up to the frozen boundary run, with new values and quoted forms; no universal whitespace rule.",
+  "cases": [
+    {
+      "id": "boundary-confirm-integer-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \t & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-tab-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \t & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-tab-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \t & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-tab-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \t & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-tab-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \t & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-tab",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does tab after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \t & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 9,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-integer-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \n & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-lf-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \n & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-lf-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \n & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-lf-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \n & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-lf-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \n & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-lf",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does lf after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \n & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 10,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-integer-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \r & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-cr-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \r & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-cr-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \r & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-cr-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \r & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-cr-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \r & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-cr",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does cr after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \r & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 13,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-integer-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \u000b & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-vt-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \u000b & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-vt-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \u000b & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-vt-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \u000b & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-vt-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \u000b & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-vt",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does vt after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \u000b & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 11,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-integer-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \f & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-ff-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \f & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-ff-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \f & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-ff-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \f & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-ff-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \f & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-ff",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does ff after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \f & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 12,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-integer-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following 53 leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53 \u00a0 & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "integer",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-integer-nbsp-after-space"
+    },
+    {
+      "id": "boundary-confirm-percent-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following 53% leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53% \u00a0 & param_cast float & param_add 9",
+      "expected": "53%",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53% & param_cast float & param_add 9",
+          "expected": "9.53"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "percent",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-percent-nbsp-after-space"
+    },
+    {
+      "id": "boundary-confirm-milliseconds-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following 53ms leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53ms \u00a0 & param_cast float & param_add 9",
+      "expected": "53ms",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53ms & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "milliseconds",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-milliseconds-nbsp-after-space"
+    },
+    {
+      "id": "boundary-confirm-beats-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following 53bt leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant 53bt \u00a0 & param_cast float & param_add 9",
+      "expected": "53bt",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53bt & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "beats",
+        "position": "after-space"
+      },
+      "prior_case": "boundary-beats-nbsp-after-space"
+    },
+    {
+      "id": "boundary-confirm-single-quote-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following '53' leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant '53' \u00a0 & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant '53' & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "single-quote",
+        "position": "after-space"
+      }
+    },
+    {
+      "id": "boundary-confirm-double-quote-nbsp",
+      "fixture": "parser_constants",
+      "group": "boundary-confirmation",
+      "hypothesis": "Does nbsp after a space following \"53\" leave the original rendered value, unlike the calculation without that byte?",
+      "script": "constant \"53\" \u00a0 & param_cast float & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53zzboundary_a & param_cast float & param_add 9",
+        "constant 53zzboundary_b & param_cast float & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant \"53\" & param_cast float & param_add 9",
+          "expected": "62"
+        },
+        {
+          "script": "constant 83",
+          "expected": "83"
+        }
+      ],
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059961c",
+        "IAction::create@0x100597c58"
+      ],
+      "dimensions": {
+        "byte": 160,
+        "kind": "double-quote",
+        "position": "after-space"
+      }
+    }
+  ]
+}

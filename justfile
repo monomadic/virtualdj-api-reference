@@ -630,6 +630,10 @@ runtime-grammar-master *args:
     @{{python}} tools/runtime_grammar_master.py "$@"
 
 check-runtime-grammar:
+    @{{python}} tools/build_runtime_boundary_cases.py --check
+    @{{python}} tools/build_runtime_boundary_confirmation.py --check
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-boundary-9598.json > /dev/null
+    @{{python}} tools/runtime_grammar_probes.py --check --artifact tests/runtime-grammar-boundary-confirmation-9598.json > /dev/null
     @{{python}} tools/test_runtime_grammar_editor.py
     @{{python}} tools/runtime_grammar_editor.py --check > /dev/null
     @{{python}} tools/runtime_parser_frontier.py --check > /dev/null

@@ -6,8 +6,8 @@ HTTP result in its named fixture, on the recorded build. It does not establish u
 argument acceptance, action behavior, editor acceptance, or equivalence between builds.
 
 The common parser has been captured and its main lexical branches exercised. This is **not
-an exhaustive recovery of every reachable argument consumer**. The unresolved call graph
-and the remaining discriminating fixtures are explicit below; H4 remains open.
+an exhaustive recovery of every reachable argument consumer**. The historical call-graph frontier, its later closure, and the remaining discriminating
+fixtures are explicit below; H4 remains open.
 
 ## Reproduce and inspect
 
@@ -66,6 +66,41 @@ setup mutations, and records loaded/playing/default-deck context. Context-depend
 cases additionally require their contrasting sampler/effect outputs to match; a changed bank
 or effect setting makes those cases inconclusive rather than evidence against the parser.
 Hardware and account state were not inspected. The live process architecture was not measured.
+
+## Position-controlled delimiter tests (2026-09-16)
+
+The earlier `number-end-*` and `suffix-boundary-*` cases confounded the inserted byte
+with operator adjacency. The frozen [boundary suite](../tests/runtime-grammar-boundary-cases.json)
+separates terminal bytes, a byte before an ordinary separating space, and a byte after it.
+It tests TAB, LF, CR, VT, FF and NBSP after integer, percent, millisecond and beat arguments,
+inside `parser_constants`. The [follow-up](../tests/runtime-grammar-boundary-confirmation-cases.json)
+changes the value and calculation and adds quoted arguments. Every row remains a question
+with a frozen expected output, two junk controls and independent contrast oracles.
+
+```sh
+just runtime-grammar --artifact tests/runtime-grammar-boundary-9598.json
+just runtime-grammar --artifact tests/runtime-grammar-boundary-confirmation-9598.json
+just probe-arg-forms --grammar-cases tests/runtime-grammar-boundary-confirmation-cases.json --repeat 2 --rounds 2 --out /tmp/boundary-confirmation.json
+```
+
+Observed on build 9598 in forward/reverse passes with repeated reads:
+
+- Did `constant 37<TAB>`, and the version with a calculation following the tab and
+  a separating space, return blank? Yes. These match their malformed-number controls,
+  so the held predictions are **null readings**, not token-recognition evidence.
+- Did `constant 37 <TAB> & param_cast float & param_add 5` reach `42`? **No: `37`.**
+  LF and CR gave the same failed prediction. The byte-free contrast returned `42`.
+  The corresponding `%`, `ms` and `bt` cases also retained the original rendered value.
+- Did the narrower prediction survive new values: `constant 53 <TAB> & param_cast float & param_add 9`
+  returning `53`, versus `62` with the tab removed? Yes. Each tested byte, including
+  VT, FF and NBSP, gave its frozen original-value prediction; the unit-bearing and quoted
+  variants also matched. These outputs separated from the blank junk controls.
+
+The initial failed predictions remain unchanged. For artifact-derived verdict and separation
+totals use the commands above. The observation constrains those exact output comparisons;
+it is not a claim that all whitespace everywhere follows one rule. The historical binary
+lead at `IAction::stringGetParam@0x10059961c` tests ordinary spaces after a parameter,
+whereas the head/prefix paths contain different delimiter masks.
 
 ## Stateful fixtures
 
