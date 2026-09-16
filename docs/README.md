@@ -135,7 +135,10 @@ Start here:
   and other runtime behavior promoted from skin project experiments.
 
 - [Sysicon Binary Resolver](Sysicon%20Binary%20Resolver.md)
-  How `sysicon` names resolve on build 9598: a compiled comparison chain into a shared icon array, the hidden mappings it adds, and the controlled-skin render test that followed. Tier 2 plus one local test.
+  Build 18.0.9598 arm64 resolver findings, saved skin-rendering tests, opaque-atlas
+  controls, and unresolved wiki cells. `just sysicon-atlas --cell H6` joins the
+  dated wiki table to tested keys and Tier-2 candidates, keeping primary icons,
+  state graphics, and internal numeric selectors distinct.
 
 - [Documentation Tests](../tests/README.md)
   Reproducible local test harnesses used to support reference claims.

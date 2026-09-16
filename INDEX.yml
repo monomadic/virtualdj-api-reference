@@ -205,7 +205,7 @@ skin_sdk:
     - docs/Example Skin XML Objects.md
   findings:
     - docs/Published Skin Findings.md    # idioms from public skins, before they are folded in
-    - docs/Sysicon Binary Resolver.md    # how sysicon names resolve on b9598, hidden mappings
+    - docs/Sysicon Binary Resolver.md    # b9598 tested keys, unnamed atlas cells, internal selectors
     - docs/Historical Installer Excavation.md  # build-stamped compatibility history from older installers
   status:
     - docs/skin-xml-inventory.json
@@ -217,6 +217,8 @@ skin_sdk:
   built_in:
     - examples/Skins/Built-In/README.md
   commands:
+    - just sysicon-atlas --cell H6       # one atlas cell, evidence tiers kept separate
+    - just sysicon-atlas --unnamed       # wiki N/A cells, recovered keys and unresolved gaps
     - just get-xml-element NAME
     - just list-skin-elements [--family=X --undocumented --has-attr=X]
     - just xml-stats

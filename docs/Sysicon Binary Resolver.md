@@ -15,6 +15,12 @@
 
 ## Reproduce and query
 
+For a picture-to-key question, start with `just sysicon-atlas --cell H6` or
+`just sysicon-atlas --unnamed`. These offline lookups join the dated wiki table
+to saved live results and labelled binary candidates; see the
+[unnamed-cell inventory](#unnamed-cell-inventory-and-other-atlas-consumers-2026-09-16)
+for scope and remaining work.
+
 Run `just doctor` first. Generation requires numpy and capstone; lookup requires
 only Python's standard library:
 
