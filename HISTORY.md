@@ -1003,6 +1003,17 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 #### H4 progress log
 
+Progress 2026-09-17 (empty-quote consumer): the frozen `parser_constants` suite
+`tests/runtime-grammar-quote-consumer-cases.json` ran through the existing argument
+prober on build 9598. Single/double empty operands and both marker/value baselines
+matched the predictions. Explicit omission contrasts distinguish the positional
+cases; those cases still match unequal-string nonsense controls and retain that
+label. The quoted-argument audit links the new capture without claiming a universal
+empty-argument rule or closing unmatched-quote behavior.
+The same-length follow-up also held and separated from both nonsense-value controls:
+equal nonempty triples and an empty last operand selected the equal result, unlike
+an empty first or second operand. This tests the argument-count alternative directly.
+
 Progress 2026-09-17 (editor span calibration): aborted before candidate tests after
 a cropped-dialog coordinate click reached a cue pad behind the editor and started
 deck 1. The safety pause was independently verified; exact position restoration

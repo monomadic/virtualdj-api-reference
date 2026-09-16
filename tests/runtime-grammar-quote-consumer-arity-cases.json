@@ -1,0 +1,181 @@
+{
+  "description": "Same-length comparisons to test the argument-count alternative to empty-operand position.",
+  "cases": [
+    {
+      "id": "quote-consumer-first-single-triple-equal",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does a same-length all-nonempty comparison select the equal branch where the empty-middle comparison does not?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4Q' 'H4Q' 'H4Q' ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal 'H4Q' 'zzqqx' ? constant 37 : constant 83",
+        "param_equal 'H4Q' 'vfnrbq' ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4Q' '' 'H4Q' ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-first-single-empty-tail",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does moving the empty operand from first to third change the result while retaining the same argument count?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4Q' 'H4Q' '' ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal 'H4Q' 'zzqqx' ? constant 37 : constant 83",
+        "param_equal 'H4Q' 'vfnrbq' ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal '' 'H4Q' 'H4Q' ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-first-double-triple-equal",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does a same-length all-nonempty comparison select the equal branch where the empty-middle comparison does not?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4Q\" \"H4Q\" \"H4Q\" ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal \"H4Q\" \"zzqqx\" ? constant 37 : constant 83",
+        "param_equal \"H4Q\" \"vfnrbq\" ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4Q\" \"\" \"H4Q\" ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-first-double-empty-tail",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does moving the empty operand from first to third change the result while retaining the same argument count?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4Q\" \"H4Q\" \"\" ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal \"H4Q\" \"zzqqx\" ? constant 37 : constant 83",
+        "param_equal \"H4Q\" \"vfnrbq\" ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"\" \"H4Q\" \"H4Q\" ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-second-single-triple-equal",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does a same-length all-nonempty comparison select the equal branch where the empty-middle comparison does not?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4R' 'H4R' 'H4R' ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal 'H4R' 'zzqqx' ? constant 53 : constant 91",
+        "param_equal 'H4R' 'vfnrbq' ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4R' '' 'H4R' ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-second-single-empty-tail",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does moving the empty operand from first to third change the result while retaining the same argument count?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4R' 'H4R' '' ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal 'H4R' 'zzqqx' ? constant 53 : constant 91",
+        "param_equal 'H4R' 'vfnrbq' ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal '' 'H4R' 'H4R' ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-second-double-triple-equal",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does a same-length all-nonempty comparison select the equal branch where the empty-middle comparison does not?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4R\" \"H4R\" \"H4R\" ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal \"H4R\" \"zzqqx\" ? constant 53 : constant 91",
+        "param_equal \"H4R\" \"vfnrbq\" ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4R\" \"\" \"H4R\" ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    },
+    {
+      "id": "quote-consumer-second-double-empty-tail",
+      "fixture": "parser_constants",
+      "group": "quote-consumer-arity",
+      "hypothesis": "Does moving the empty operand from first to third change the result while retaining the same argument count?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4R\" \"H4R\" \"\" ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal \"H4R\" \"zzqqx\" ? constant 53 : constant 91",
+        "param_equal \"H4R\" \"vfnrbq\" ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"\" \"H4R\" \"H4R\" ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; same-length contrasts test operand position without changing argument count. Nonsense operands are quoted strings, not claims of unrecognized grammar."
+    }
+  ]
+}

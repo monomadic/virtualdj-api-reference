@@ -65,9 +65,17 @@
         {
           "capture": "tests/runtime-grammar-whitespace-9598.json",
           "group": "untrimmed-quotes"
+        },
+        {
+          "capture": "tests/runtime-grammar-quote-consumer-9598.json",
+          "group": "quote-consumer"
+        },
+        {
+          "capture": "tests/runtime-grammar-quote-consumer-arity-9598.json",
+          "group": "quote-consumer-arity"
         }
       ],
-      "next_action": "Unmatched and empty quotes need a discriminating consumer; blank equality alone is insufficient."
+      "next_action": "Empty-quote param_equal tests have omission and same-length contrasts; arity-control candidates separate from both nonsense-value controls. Original asymmetric rows still match unequal-string controls. Unmatched quotes need a discriminating consumer; no universal empty-argument rule is claimed."
     },
     {
       "id": "backtick-consumers",

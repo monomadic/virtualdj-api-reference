@@ -1,0 +1,269 @@
+{
+  "description": "Empty-quote consumer predictions with positional omission contrasts and two marker/value baselines.",
+  "cases": [
+    {
+      "id": "quote-consumer-first-single-both-empty",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Do two empty quoted operands select the equal branch, unlike an empty/nonempty pair?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal '' '' ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal 'H4Q' 'zzqqx' ? constant 37 : constant 83",
+        "param_equal 'H4Q' 'vfnrbq' ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal '' 'H4Q' ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-first-single-empty-first",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty first operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal '' 'H4Q' 'H4Q' ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "param_equal 'H4Q' 'zzqqx' ? constant 37 : constant 83",
+        "param_equal 'H4Q' 'vfnrbq' ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4Q' 'H4Q' ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-first-single-empty-second",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty second operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4Q' '' 'H4Q' ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "param_equal 'H4Q' 'zzqqx' ? constant 37 : constant 83",
+        "param_equal 'H4Q' 'vfnrbq' ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4Q' 'H4Q' ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-first-double-both-empty",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Do two empty quoted operands select the equal branch, unlike an empty/nonempty pair?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"\" \"\" ? constant 37 : constant 83",
+      "expected": "37",
+      "controls": [
+        "param_equal \"H4Q\" \"zzqqx\" ? constant 37 : constant 83",
+        "param_equal \"H4Q\" \"vfnrbq\" ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"\" \"H4Q\" ? constant 37 : constant 83",
+          "expected": "83"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-first-double-empty-first",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty first operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"\" \"H4Q\" \"H4Q\" ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "param_equal \"H4Q\" \"zzqqx\" ? constant 37 : constant 83",
+        "param_equal \"H4Q\" \"vfnrbq\" ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4Q\" \"H4Q\" ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-first-double-empty-second",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty second operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4Q\" \"\" \"H4Q\" ? constant 37 : constant 83",
+      "expected": "83",
+      "controls": [
+        "param_equal \"H4Q\" \"zzqqx\" ? constant 37 : constant 83",
+        "param_equal \"H4Q\" \"vfnrbq\" ? constant 37 : constant 83"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4Q\" \"H4Q\" ? constant 37 : constant 83",
+          "expected": "37"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-single-both-empty",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Do two empty quoted operands select the equal branch, unlike an empty/nonempty pair?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal '' '' ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal 'H4R' 'zzqqx' ? constant 53 : constant 91",
+        "param_equal 'H4R' 'vfnrbq' ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal '' 'H4R' ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-single-empty-first",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty first operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal '' 'H4R' 'H4R' ? constant 53 : constant 91",
+      "expected": "91",
+      "controls": [
+        "param_equal 'H4R' 'zzqqx' ? constant 53 : constant 91",
+        "param_equal 'H4R' 'vfnrbq' ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4R' 'H4R' ? constant 53 : constant 91",
+          "expected": "53"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-single-empty-second",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty second operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal 'H4R' '' 'H4R' ? constant 53 : constant 91",
+      "expected": "91",
+      "controls": [
+        "param_equal 'H4R' 'zzqqx' ? constant 53 : constant 91",
+        "param_equal 'H4R' 'vfnrbq' ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal 'H4R' 'H4R' ? constant 53 : constant 91",
+          "expected": "53"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-double-both-empty",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Do two empty quoted operands select the equal branch, unlike an empty/nonempty pair?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"\" \"\" ? constant 53 : constant 91",
+      "expected": "53",
+      "controls": [
+        "param_equal \"H4R\" \"zzqqx\" ? constant 53 : constant 91",
+        "param_equal \"H4R\" \"vfnrbq\" ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"\" \"H4R\" ? constant 53 : constant 91",
+          "expected": "91"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-double-empty-first",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty first operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"\" \"H4R\" \"H4R\" ? constant 53 : constant 91",
+      "expected": "91",
+      "controls": [
+        "param_equal \"H4R\" \"zzqqx\" ? constant 53 : constant 91",
+        "param_equal \"H4R\" \"vfnrbq\" ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4R\" \"H4R\" ? constant 53 : constant 91",
+          "expected": "53"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    },
+    {
+      "id": "quote-consumer-second-double-empty-second",
+      "fixture": "parser_constants",
+      "group": "quote-consumer",
+      "hypothesis": "Does an empty second operand change the result relative to omitting that operand?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059957f"
+      ],
+      "script": "param_equal \"H4R\" \"\" \"H4R\" ? constant 53 : constant 91",
+      "expected": "91",
+      "controls": [
+        "param_equal \"H4R\" \"zzqqx\" ? constant 53 : constant 91",
+        "param_equal \"H4R\" \"vfnrbq\" ? constant 53 : constant 91"
+      ],
+      "contrasts": [
+        {
+          "script": "param_equal \"H4R\" \"H4R\" ? constant 53 : constant 91",
+          "expected": "53"
+        }
+      ],
+      "scope": "Exact param_equal query output; nonsense operands are quoted strings, not claims of unrecognized grammar. The omission contrast is the discriminating test for operand position."
+    }
+  ]
+}

@@ -676,6 +676,48 @@ inspectability for this repeat, not the remaining token-span or guard-hint gap.
 The comparison tool checks screenshot existence and hashes when a capture says
 its images were persisted, so a missing image cannot silently retain that status.
 
+### Empty quoted operands with an omission contrast (2026-09-17)
+
+The [frozen suite](../tests/runtime-grammar-quote-consumer-cases.json) asks whether
+empty quoted operands alter `param_equal` results relative to explicit omission.
+The [live capture](../tests/runtime-grammar-quote-consumer-9598.json), build 9598,
+uses `parser_constants`, both quote styles, two marker/value baselines, repeated
+reads, and forward/reverse query passes. Only the query endpoint was used.
+
+```sh
+just probe-arg-forms --grammar-cases tests/runtime-grammar-quote-consumer-cases.json --repeat 2 --rounds 2 --out /tmp/quote-consumer.json
+just runtime-grammar --artifact tests/runtime-grammar-quote-consumer-9598.json --get quote-consumer-first-single-empty-first
+```
+
+| Frozen question, single-quote first baseline | Observed candidate / contrast on build 9598 | Result |
+| --- | --- | --- |
+| Does `param_equal '' '' ? constant 37 : constant 83` select `37`, unlike an empty/nonempty pair? | `37` / `83` | Prediction held and separated from both unequal-string controls |
+| Does `param_equal '' 'H4Q' 'H4Q' ? constant 37 : constant 83` differ from omitting the first empty operand? | `83` / `37` | Prediction held; omission contrast discriminated |
+| Does `param_equal 'H4Q' '' 'H4Q' ? constant 37 : constant 83` differ from omitting the second empty operand? | `83` / `37` | Prediction held; omission contrast discriminated |
+
+The double-quote counterparts and the second `H4R` / `53` / `91` baseline also
+matched their frozen predictions. The positional cases returned the same value as
+the unequal-string controls, and the standard report retains `matches-controls`.
+Those controls are quoted nonsense **values**, not presumed unrecognized syntax;
+they cannot by themselves establish argument recognition. The explicit omission
+contrast supplies the positional distinction. This is an exact `param_equal`
+consumer observation, not a universal claim that every action preserves empty
+arguments. Unmatched quotes remain a separate obligation.
+
+The [same-length follow-up suite](../tests/runtime-grammar-quote-consumer-arity-cases.json)
+tests the alternative explanation that three arguments always select the unequal
+branch. In its [build-9598 capture](../tests/runtime-grammar-quote-consumer-arity-9598.json),
+`param_equal 'H4Q' 'H4Q' 'H4Q' ? constant 37 : constant 83` returned `37`,
+while replacing the middle operand with `''` returned `83`. Moving the empty
+operand from first to third likewise changed `83` to `37` without changing the
+argument count. These frozen predictions held with both quote styles and both
+marker/value baselines, and each candidate separated from its nonsense-value
+controls. This discriminates the argument-count explanation in these exact tests.
+An [initial arity capture](../tests/runtime-grammar-quote-consumer-arity-initial-9598.json)
+is retained separately because its scope text incorrectly called the same-length
+contrast an omission contrast; the corrected suite was rerun with unchanged scripts
+and expectations. No earlier capture was overwritten.
+
 ## What remains
 
 Editor coordinate calibration on 2026-09-17 was aborted before candidate tests.
