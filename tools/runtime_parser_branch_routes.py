@@ -1,0 +1,152 @@
+"""Bounded structural review of H4's remote entry and unlinked list helper.
+
+Raw direct-branch scans are candidate discovery, not disassembly or proof that
+an unreferenced function is dead. This emits no runtime grammar claims.
+"""
+import argparse
+import bisect
+import subprocess
+import hashlib
+import json
+import re
+import struct
+from pathlib import Path
+from extract_runtime_parser import x86_slice, function_starts, bounded_disassembly
+
+ROOT = Path(__file__).resolve().parents[1]
+MANIFEST = ROOT / 'tests/runtime-parser-9246/manifest.json'
+OUT = ROOT / 'tests/runtime-parser-branch-routes.json'
+
+
+def scan(binary):
+    manifest = json.loads(MANIFEST.read_text())
+    data = binary.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    assert digest == manifest['source']['sha256'], 'binary differs from bounded capture'
+    base = x86_slice(data)
+    pos = base + 32
+    segments = []
+    for _ in range(struct.unpack_from('<I', data, base + 16)[0]):
+        cmd, length = struct.unpack_from('<II', data, pos)
+        if cmd == 0x19:
+            name = data[pos+8:pos+24].rstrip(b'\0').decode()
+            vm, _, fileoff, filesize = struct.unpack_from('<QQQQ', data, pos+24)
+            if filesize and name != '__LINKEDIT':
+                segments.append((name, vm, data[base+fileoff:base+fileoff+filesize]))
+        pos += length
+    target = int(manifest['symbols']['IAction::getListParam']['start'], 16)
+    branches, pointers = [], []
+    for name, vm, chunk in segments:
+        if name == '__TEXT':
+            for opcode, kind in ((b'\xe8', 'call-rel32'), (b'\xe9', 'jump-rel32')):
+                offset = 0
+                while True:
+                    offset = chunk.find(opcode, offset)
+                    if offset < 0 or offset + 5 > len(chunk):
+                        break
+                    if vm + offset + 5 + struct.unpack_from('<i', chunk, offset+1)[0] == target:
+                        branches.append({'site': hex(vm+offset), 'kind': kind})
+                    offset += 1
+        offset = 0
+        while True:
+            offset = chunk.find(struct.pack('<Q', target), offset)
+            if offset < 0:
+                break
+            pointers.append({'segment': name, 'site': hex(vm+offset)})
+            offset += 1
+    # Identify immediate-byte mode writes, then verify them inside bounded bodies.
+    nm = subprocess.check_output(['nm', '-arch', 'x86_64', str(binary)], text=True)
+    symbols = {}
+    remote_address = None
+    for line in nm.splitlines():
+        parts = line.split()
+        if len(parts) != 3:
+            continue
+        if parts[2] == '__ZN7IAction8isRemoteE':
+            remote_address = int(parts[0], 16)
+        if parts[1].lower() == 't':
+            symbols[int(parts[0], 16)] = parts[2]
+    assert remote_address is not None
+    starts = function_starts(binary)
+    writers = {}
+    for name, vm, chunk in segments:
+        if name != '__TEXT':
+            continue
+        offset = 0
+        while True:
+            offset = chunk.find(b'\xc6\x05', offset)
+            if offset < 0 or offset + 7 > len(chunk):
+                break
+            if vm + offset + 7 + struct.unpack_from('<i', chunk, offset+2)[0] == remote_address:
+                index = bisect.bisect_right(starts, vm+offset)-1
+                start, end = starts[index:index+2]
+                if start not in writers:
+                    mangled = symbols[start]
+                    body = bounded_disassembly(binary, mangled, start, end)
+                    writers[start] = {'symbol': mangled, 'start': hex(start), 'end_exclusive': hex(end),
+                                      'assembly': body.splitlines(), 'assembly_sha256': hashlib.sha256(body.encode()).hexdigest(), 'writes': []}
+                site = hex(vm+offset)
+                assert any(site[2:].zfill(16) in line and 'isRemote' in line for line in writers[start]['assembly'])
+                writers[start]['writes'].append({'site': site, 'value': chunk[offset+6]})
+            offset += 1
+    create = manifest['symbols']['IAction::create']
+    assembly = (MANIFEST.parent / create['file']).read_text()
+    assert hashlib.sha256(assembly.encode()).hexdigest() == create['asm_sha256']
+    remote_literals = []
+    for line in assembly.splitlines():
+        match = re.match(r'([0-9a-f]{16})\s', line)
+        if match and 0x100596f45 <= int(match[1], 16) < 0x1005974cf and 'literal pool for:' in line:
+            remote_literals.append({'site': hex(int(match[1], 16)), 'instruction': line})
+    return {
+        'source': {'bundle_version': '18.0.9246', 'architecture': 'x86_64', 'binary_sha256': digest},
+        'claim_scope': 'Tier-2 structural observations only; no dead-code or runtime-behavior conclusion',
+        'mode_writer_scan_scope': 'C6 05 RIP-relative immediate-byte writes to the nm-resolved isRemote address, verified inside LC_FUNCTION_STARTS-bounded bodies; not an exhaustive dataflow analysis.',
+        'remote_mode_writers': list(writers.values()),
+        'remote_entry': {
+            'gate': 'IAction::create@0x100596f45',
+            'normal_parser_entry': '0x1005974cf',
+            'alternate_route': '0x100598365',
+            'factory_call': '0x1005983b4', 'factory_byte_offset': '0x1e8',
+            'stored_action_id_instruction': '0x1005983bd',
+            'text_parameter_assignment': '0x100598422',
+            'literal_checks': remote_literals,
+            'question': 'With isRemote independently established, which checked heads rejoin ordinary parsing and which reach the source-text wrapper?',
+            'fixture_obligation': 'parser_remote_mode: establish and independently verify the actual isRemote creation context before interpreting any paired local/remote query results.',
+            'status': 'mode-establishment-not-measured',
+            'transport_limit': 'A Remote-protocol subscription has not been shown to set this global; HTTP is not a substitute for this fixture.'},
+        'list_helper': {
+            'symbol': 'IAction::getListParam', 'target': hex(target),
+            'scan_scope': 'E8/E9 rel32 encodings in __TEXT, and exact 64-bit target-address bytes in file-backed non-LINKEDIT segments; positive matches require instruction/data review.',
+            'direct_branch_candidates': branches, 'address_candidates': pointers,
+            'status': 'reachability-not-established',
+            'question': 'Is this captured helper reachable from the recovered parser/dispatch paths, or an unused/out-of-scope utility?',
+            'next_action': 'Resolve indirect or inlined equivalents before requiring a live consumer test; absence of these encodings alone is not an unreachability proof.'}}
+
+
+def load_report():
+    result = json.loads(OUT.read_text())
+    manifest = json.loads(MANIFEST.read_text())
+    assert result['source']['binary_sha256'] == manifest['source']['sha256']
+    name, address = result['remote_entry']['gate'].split('@')
+    symbol = manifest['symbols'][name]
+    assert int(symbol['start'], 16) <= int(address, 16) < int(symbol['end_exclusive'], 16)
+    for writer in result['remote_mode_writers']:
+        body = '\n'.join(writer['assembly']) + '\n'
+        assert hashlib.sha256(body.encode()).hexdigest() == writer['assembly_sha256']
+        for write in writer['writes']:
+            assert int(writer['start'], 16) <= int(write['site'], 16) < int(writer['end_exclusive'], 16)
+            assert any(line.startswith(write['site'][2:].zfill(16)) and 'isRemote' in line
+                       for line in writer['assembly'])
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--binary', type=Path)
+    parser.add_argument('--check', action='store_true')
+    args = parser.parse_args()
+    print(json.dumps(scan(args.binary) if args.binary else load_report(), indent=2))
+
+
+if __name__ == '__main__':
+    main()

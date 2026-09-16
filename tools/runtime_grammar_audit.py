@@ -10,6 +10,8 @@ PLAN = ROOT / 'tests/runtime-grammar-obligations.json'
 
 
 def report():
+    from runtime_parser_branch_routes import load_report
+    routes = load_report()
     plan = json.loads(PLAN.read_text())
     manifest_path = ROOT / 'tests/runtime-parser-9246/manifest.json'
     manifest = json.loads(manifest_path.read_text())
@@ -57,5 +59,7 @@ def report():
         corpus.append({**ref, 'fixture': case['fixture'], 'script': case['script'],
                        'status': 'needs-screenshot-backed-span-or-guard-observation'})
     return {'scope': plan['scope'], 'binary_build': manifest['source']['bundle_version'],
+            'branch_route_review': {k: v for k, v in routes.items() if k != 'remote_mode_writers'},
+            'mode_writer_symbols': [w['symbol'] for w in routes['remote_mode_writers']],
             'completion_claim': False, 'obligations': rows, 'editor_corpus': corpus,
             'symbols_without_family_mapping': sorted(set(manifest['symbols']) - {o['symbol'] for o in rows})}

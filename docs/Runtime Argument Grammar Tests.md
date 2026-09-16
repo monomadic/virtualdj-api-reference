@@ -24,6 +24,34 @@ covered. The remote entry route and list conversion helper currently have no rev
 case linkage; deciding their exact scope and adding discriminating fixtures remains work.
 Editor corpus entries are pending observations, not predictions of editor acceptance.
 
+### Remote-entry and list-helper reachability review (2026-09-17)
+
+The [route capture](../tests/runtime-parser-branch-routes.json) records the b9246 binary hash,
+remote-branch anchors, bounded mode-writer assembly, and the exact limits of a list-helper
+reference scan. These are Tier-2 leads, not grammar rules. Reproduce with:
+
+```sh
+.venv/bin/python tools/runtime_parser_branch_routes.py --binary /tmp/vdj-h4-9246/vdj.pkg/Payload/VirtualDJ.app/Contents/MacOS/VirtualDJ > /tmp/branch-routes.json
+.venv/bin/python tools/runtime_parser_branch_routes.py --check
+just runtime-grammar --audit
+```
+
+The remote question is now specifically: **with `IAction::isRemote` independently
+established, which checked action heads rejoin ordinary parsing at `0x1005974cf`, and which
+reach the source-text wrapper route at `0x100598365`?** The capture includes the literal
+checks and the factory/text-assignment sites. Immediate-byte writes to the mode flag were
+verified in bounded skin-load, Remote-client callback and scratch-constructor bodies.
+This supplies possible fixture entry points; it does not establish that subscribing over
+the Remote protocol enables the flag. `parser_remote_mode` remains a fixture obligation,
+not an available prober fixture. No new remote behavior is claimed or marked tested.
+
+For `getListParam`, the scan found no E8/E9 direct-branch candidates in `__TEXT`, and no
+exact target-address bytes in the scanned file-backed non-LINKEDIT segments. The method
+and target are recorded so the negative is reproducible. This does **not** rule out indirect,
+computed or inlined equivalents. The earlier audit associated a captured utility with a
+possible common conversion path, but had not demonstrated reachability from `create`.
+Its obligation is therefore reachability review first, not a speculative live consumer sweep.
+
 ## Reproduce and inspect
 
 ```sh

@@ -635,6 +635,7 @@ runtime-grammar-master *args:
     @{{python}} tools/runtime_grammar_master.py "$@"
 
 check-runtime-grammar:
+    @{{python}} tools/test_runtime_parser_branch_routes.py
     @{{python}} tools/test_runtime_grammar_audit.py
     @{{python}} tools/runtime_grammar_probes.py --audit > /dev/null
     @{{python}} tools/test_runtime_grammar_playing.py
