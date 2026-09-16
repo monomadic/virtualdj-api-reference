@@ -42,7 +42,10 @@ TRACKER = ROOT / "docs" / "VDJScript Local Test Tracker.md"
 
 # ---- schema -----------------------------------------------------------------
 
-TEST_STATUSES = {"Untested", "Partial", "Pass", "Fail", "N/A"}
+TEST_STATUSES = {"Untested", "Partial", "Pass", "Fail", "N/A", "Disproved"}
+# `Disproved` is not a behaviour result: the name is not a verb on the
+# anchored build (Evidence Standards rule 1b). The record is kept so the
+# disproof stays addressable, but consumers that list or render verbs skip it.
 LIST_FIELDS = {"aliases", "surfaces", "evidence"}
 # Comma-splittable list fields. `evidence` is excluded on purpose: its entries are
 # prose sentences that contain commas, so one `evidence=` is one entry.
@@ -103,10 +106,13 @@ def load_store() -> dict:
 def counts(store: dict) -> dict:
     by_tier: dict[str, int] = {}
     by_status: dict[str, int] = {}
-    documented = tested = needs = blocked = 0
+    documented = tested = needs = blocked = disproved = 0
     for rec in store.values():
-        by_tier[rec.get("tier", "?")] = by_tier.get(rec.get("tier", "?"), 0) + 1
         st = rec.get("test_status", "Untested")
+        if st == "Disproved":
+            disproved += 1  # not a verb; kept for the disproof, not counted as one
+            continue
+        by_tier[rec.get("tier", "?")] = by_tier.get(rec.get("tier", "?"), 0) + 1
         by_status[st] = by_status.get(st, 0) + 1
         if rec.get("description"):
             documented += 1
@@ -117,7 +123,8 @@ def counts(store: dict) -> dict:
         if rec.get("blocked"):
             blocked += 1
     return {
-        "total": len(store),
+        "total": len(store) - disproved,
+        "disproved": disproved,
         "by_tier": dict(sorted(by_tier.items())),
         "by_test_status": dict(sorted(by_status.items())),
         "documented": documented,
@@ -178,7 +185,7 @@ def parse_tracker_results() -> dict[str, dict]:
     result cell. Capturing them keeps the record's provenance (which build, what
     hardware) instead of discarding it into free-text prose.
     """
-    rank = {"Untested": 0, "Partial": 1, "Fail": 1, "N/A": 1, "Pass": 2}
+    rank = {"Untested": 0, "Partial": 1, "Fail": 1, "N/A": 1, "Disproved": 1, "Pass": 2}
     out: dict[str, dict] = {}
     for line in TRACKER.read_text().splitlines():
         if not line.startswith("| `"):
@@ -581,7 +588,7 @@ def cmd_sections(args):
     store = load_store()
     rows: dict[str, dict] = {}
     for rec in store.values():
-        if rec.get("tier") == "alias":
+        if rec.get("tier") == "alias" or rec.get("test_status") == "Disproved":
             continue
         key = rec.get("section") or "(none)"
         row = rows.setdefault(key, {"section": key, "verbs": 0, "tested": 0})
@@ -638,6 +645,10 @@ def cmd_search(args):
     modules = module_map() if "module" in opts else {}
     hits = []
     for name, rec in store.items():
+        # Disproved names are not verbs; list them only when asked for by status.
+        if rec.get("test_status") == "Disproved" and \
+                "disproved" not in opts.get("status", "").lower():
+            continue
         if opts.get("needs_test") and not rec.get("needs_test"):
             continue
         if "module" in opts and opts["module"].lower() not in modules.get(name, "").lower():
@@ -744,7 +755,7 @@ def cmd_check(args):
                           f"{sorted(gap)[:5]}...")
         for name in sorted(set(store) - table):
             rec = store[name]
-            if rec.get("test_status") == "Fail":
+            if rec.get("test_status") == "Disproved":
                 continue  # disproven names stay, carrying their disproof
             if rec.get("kind") in {"modifier", "special-control"}:
                 continue  # grammar/mapper constructs, not verbs
@@ -765,7 +776,7 @@ def cmd_check(args):
         # A tested status must carry its proof as structured evidence, not just a
         # free-text note. This is the gate that keeps status and evidence from
         # drifting apart the way the bootstrap-seeded records once did.
-        if st in {"Pass", "Fail", "Partial"} and not rec.get("evidence"):
+        if st in {"Pass", "Fail", "Partial", "Disproved"} and not rec.get("evidence"):
             errors.append(f"{name}: test_status '{st}' but no evidence "
                           f"(record the proof with `just put-verb {name} "
                           f"evidence=\"…\"`)")

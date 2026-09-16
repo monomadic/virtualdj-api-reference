@@ -274,8 +274,11 @@ def render(out: Path) -> tuple[int, str]:
     argforms = load("verb-arg-forms.json", "verbs")
     execforms = load("verb-execute-forms.json", "verbs")
     vt = load("verb-table.json")
+    # Disproved names are kept in the store so the disproof stays addressable,
+    # but they are not verbs and do not belong on a verb reference page.
     records = [record_for(n, r, ctx, corpus, shapes_art, argforms, execforms, vt)
-               for n, r in sorted(ctx.canon.items(), key=lambda kv: kv[0].lower())]
+               for n, r in sorted(ctx.canon.items(), key=lambda kv: kv[0].lower())
+               if r.get("test_status") != "Disproved"]
     payload = json.dumps(records, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     skins = skin_records(out)
     skin_payload = json.dumps(skins, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")

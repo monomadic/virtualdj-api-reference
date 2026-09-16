@@ -47,7 +47,7 @@ DISPATCHER_VERB_ID_FRACTION = 0.5
 # A tested status only accounts for a tail the evidence names as a token. House
 # style quotes them ('min', 'sec'); prose that merely uses the word does not
 # count, so an unquoted mention leaves the tail open.
-TESTED = {'Pass', 'Fail', 'N/A'}
+TESTED = {'Pass', 'Fail', 'N/A', 'Disproved'}
 # The house marker for "probed, did not separate". Entry-scoped on purpose:
 # over-keeping a tail costs one probe, dropping a live one costs the finding.
 UNRESOLVED = 'UNDISCRIMINATED' 

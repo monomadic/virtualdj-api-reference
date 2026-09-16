@@ -262,7 +262,7 @@ def report(g: dict) -> None:
         for r in verbs[:lim]:
             sec = f"[{r.get('section')}]" if r.get("section") else ""
             st = r.get("test_status", "Untested")
-            flag = f" ✓{st}" if st in {"Pass", "Partial", "Fail"} else ""
+            flag = f" ✓{st}" if st in {"Pass", "Partial", "Fail"} else (" ✗Disproved" if st == "Disproved" else "")
             desc = (r.get("description") or "").split(". ")[0][:70]
             mark = "+" if r.get("matched_by") == "tag" else " "
             print(f" {mark}{r['name']:<26} {sec:<20}{flag}  {desc}")
