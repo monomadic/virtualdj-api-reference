@@ -678,6 +678,15 @@ its images were persisted, so a missing image cannot silently retain that status
 
 ## What remains
 
+Editor coordinate calibration on 2026-09-17 was aborted before candidate tests.
+The [incident record](../tests/runtime-grammar-editor-spans-calibration-aborted-9598.json)
+records a click aimed at the cropped dialog reaching a cue pad behind it instead.
+Deck 1 was paused and independently read back as stopped, but its exact prior
+position had not been recorded and was not restored. No grammar conclusion follows.
+Do not repeat cropped-dialog coordinate clicks with this CUA API; first establish
+a pointer-targeting method that preserves the dialog and record playback/position
+baselines. Keyboard-only help observations remain a different, demonstrated method.
+
 H4 cannot honestly be called a complete grammar recovery yet. The static frontier is
 closed by the separate closure artifact; the original manifest retains its historical
 coverage record. Remaining discriminating work includes:

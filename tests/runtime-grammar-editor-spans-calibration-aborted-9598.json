@@ -1,0 +1,58 @@
+{
+  "summary": {
+    "status": "aborted-before-candidate-tests",
+    "build": "9598",
+    "observed_at": "2026-09-16T18:02:29.578029+00:00",
+    "fixture_obligation": "parser_editor_spans",
+    "channel": "CUA coordinate calibration, followed by HTTP safety readback",
+    "claim_scope": "failed UI calibration; no grammar finding"
+  },
+  "sequence": [
+    {
+      "action": "Open Button Editor by right-clicking main-window coordinate [615,15]",
+      "observation": "Dialog shows original action select_master_output controller and original button name select_master_output."
+    },
+    {
+      "action": "Click [60,60], intended to place the cursor in text in the cropped dialog screenshot",
+      "observation": "Dialog disappeared; main window displayed a cue-pad activation and advancing deck 1. This coordinate interaction did not stay within the pictured dialog."
+    },
+    {
+      "channel": "HTTP query",
+      "script": "deck 1 play",
+      "result": "yes"
+    },
+    {
+      "channel": "HTTP query",
+      "script": "deck 2 play",
+      "result": "no"
+    },
+    {
+      "channel": "HTTP query",
+      "script": "deck 1 get_position",
+      "result": "0.97"
+    },
+    {
+      "channel": "HTTP execute",
+      "script": "deck 1 pause",
+      "result": "true"
+    },
+    {
+      "channel": "HTTP query",
+      "script": "deck 1 play",
+      "result": "no"
+    },
+    {
+      "channel": "HTTP query",
+      "script": "deck 1 get_position",
+      "result": "0.97"
+    }
+  ],
+  "restoration": {
+    "playback_stopped_verified": true,
+    "position_restored": false,
+    "reason": "No exact pre-click position was captured. Do not infer it from a waveform screenshot or claim full restoration.",
+    "editor_script_changed": false
+  },
+  "screenshot_provenance": "Calibration screenshots were displayed by CUA but not persisted. The UI sequence is an agent assertion, not inspectable screenshot evidence. No private library screenshot is committed. HTTP observations above are recorded tool responses.",
+  "next_action": "Do not repeat cropped-dialog coordinate interaction with this CUA API. Require a verified pointer-targeting method that preserves the active dialog, and capture playback/position baselines before UI calibration."
+}

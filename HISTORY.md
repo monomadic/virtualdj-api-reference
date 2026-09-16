@@ -1003,6 +1003,14 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 #### H4 progress log
 
+Progress 2026-09-17 (editor span calibration): aborted before candidate tests after
+a cropped-dialog coordinate click reached a cue pad behind the editor and started
+deck 1. The safety pause was independently verified; exact position restoration
+was impossible without a pre-click baseline. The failed calibration is retained in
+`tests/runtime-grammar-editor-spans-calibration-aborted-9598.json`; no span or guard
+finding was recorded. Further coordinate-based editor tests require a verified
+targeting method that preserves the active dialog.
+
 Moved from the H4 task block on 2026-09-16; the task itself stays in [TASKS.md](TASKS.md).
 
 Progress 2026-09-17: repeated the frozen `parser_editor_help` predictions on build
