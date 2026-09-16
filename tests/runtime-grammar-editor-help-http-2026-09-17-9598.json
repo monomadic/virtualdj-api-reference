@@ -1,0 +1,333 @@
+{
+  "summary": {
+    "suite_sha256": "c992c84bf91076bcef1f361e3336870d0859fcc296af633bb643bd9032902e11",
+    "suite": "tests/runtime-grammar-editor-help-cases.json",
+    "repeat": 2,
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "status": "complete",
+    "response_normalization": "none; decoded HTTP body whitespace retained",
+    "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-16T17:04:16.069421+00:00",
+    "verdicts": {
+      "held-in-fixture": 4
+    }
+  },
+  "fixture_checks": [
+    {
+      "round": 1,
+      "fixture": "parser_editor_help",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    },
+    {
+      "round": 2,
+      "fixture": "parser_editor_help",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "editor-help-valid-number",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37 & param_add 5",
+      "expected": "42",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "param_add",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "passes": [
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42"
+          ]
+        },
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37 & param_add 5": [
+            "42",
+            "42"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "editor-help-malformed-number",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37zzqqx & param_add 5",
+      "expected": "",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "param_add",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "passes": [
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37zzqqx & param_add 5": [
+            "",
+            ""
+          ]
+        },
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37zzqqx & param_add 5": [
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "editor-help-lowercase-unit",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37ms",
+      "expected": "37ms",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "constant",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "passes": [
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms"
+          ]
+        },
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37ms": [
+            "37ms",
+            "37ms"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "editor-help-uppercase-unit",
+      "fixture": "parser_editor_help",
+      "group": "editor-help",
+      "hypothesis": "Does the editor show the predicted current-statement help while HTTP returns the independently predicted value?",
+      "script": "constant 37MS",
+      "expected": "",
+      "controls": [
+        "zzh4_editor_a",
+        "zzh4_editor_b"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37",
+          "expected": "37"
+        }
+      ],
+      "editor_prediction": {
+        "help_for": "constant",
+        "control_help": "none",
+        "contrast_help": "constant"
+      },
+      "binary_sites": [
+        "DLGActionWizard::getCurrentWord@0x1006c3c0a",
+        "DLGActionWizard::onChanged@0x1006c45ee",
+        "IAction::stringGetParam@0x100599250"
+      ],
+      "passes": [
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37MS": [
+            "",
+            ""
+          ]
+        },
+        {
+          "zzh4_editor_a": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "zzh4_editor_b": [
+            "error:-2147467259",
+            "error:-2147467259"
+          ],
+          "constant 37": [
+            "37",
+            "37"
+          ],
+          "constant 37MS": [
+            "",
+            ""
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ]
+}

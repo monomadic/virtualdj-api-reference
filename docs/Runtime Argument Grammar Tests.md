@@ -652,6 +652,30 @@ predictions separately. This observation does not establish acceptance, token bo
 or a general unknown-token fallback algorithm. It constrains only the displayed help for
 these exact scripts. The matching corpus still needs a token-span or guard-hint observable.
 
+### Screenshot-backed help repeat (2026-09-17, build 9598)
+
+The same frozen predictions were rerun in `parser_editor_help` through
+`tools/probe_arg_forms.py`, with a new
+[HTTP capture](../tests/runtime-grammar-editor-help-http-2026-09-17-9598.json) and
+[UI capture](../tests/runtime-grammar-editor-help-ui-2026-09-17-9598.json).
+Every UI row links to an unmodified screenshot under
+`tests/runtime-grammar-editor-ui-2026-09-17/` and its SHA-256. The original action,
+restored action, and reopened restoration each have a screenshot too. These are
+new observations; the historical screenshots remain unrecoverable.
+
+```sh
+just runtime-grammar-editor --http tests/runtime-grammar-editor-help-http-2026-09-17-9598.json --ui tests/runtime-grammar-editor-help-ui-2026-09-17-9598.json
+```
+
+The candidate HTTP and help predictions above held again in this fixture, in
+forward and reverse UI order. The nonsense-control prediction failed again:
+both controls displayed `zoom` help. Both UI passes used one editor opening;
+afterward the original action and button name were restored, verified by reopening,
+and the editor closed. No candidate was executed through the editor. This repairs
+inspectability for this repeat, not the remaining token-span or guard-hint gap.
+The comparison tool checks screenshot existence and hashes when a capture says
+its images were persisted, so a missing image cannot silently retain that status.
+
 ## What remains
 
 H4 cannot honestly be called a complete grammar recovery yet. The static frontier is

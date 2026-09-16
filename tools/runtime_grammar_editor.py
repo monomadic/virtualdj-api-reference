@@ -3,6 +3,7 @@
 Visible help is an appearance observation, never an acceptance verdict.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from runtime_grammar_probes import check_capture, separation
@@ -22,6 +23,14 @@ def compare(capture, ui):
     assert summary['channel'] == 'agent driving Button Editor UI via CUA'
     assert all(c['fixture'] == summary['fixture'] for c in capture['cases'])
     restoration = ui['restoration']
+    if summary['screenshots_persisted']:
+        references = [ui['original_evidence'], *restoration['evidence'],
+                      *(r['evidence'] for rows in ui['passes'] for r in rows)]
+        for reference in references:
+            path = (ROOT / reference['path']).resolve()
+            assert path.is_relative_to(ROOT / 'tests'), 'screenshot must be under tests/'
+            assert path.is_file(), f'missing screenshot: {path}'
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == reference['sha256'], 'screenshot hash mismatch'
     assert all(restoration[k] is True for k in ('verified', 'reopened_verified', 'editor_closed'))
     assert restoration['test_scripts_executed'] is False
     assert restoration['action'] == ui['original_action']
@@ -64,8 +73,10 @@ def compare(capture, ui):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true', help='validate provenance and observations; failed predictions remain valid evidence')
+    parser.add_argument('--http', type=Path, default=HTTP, help='paired HTTP capture')
+    parser.add_argument('--ui', type=Path, default=UI, help='UI observation capture')
     args = parser.parse_args()
-    report = compare(check_capture(HTTP), json.loads(UI.read_text()))
+    report = compare(check_capture(args.http), json.loads(args.ui.read_text()))
     print(json.dumps(report, indent=2))
 
 

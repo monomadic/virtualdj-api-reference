@@ -1005,6 +1005,15 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 Moved from the H4 task block on 2026-09-16; the task itself stays in [TASKS.md](TASKS.md).
 
+Progress 2026-09-17: repeated the frozen `parser_editor_help` predictions on build
+9598 with forward/reverse UI screenshots saved under `tests/`, plus original and
+reopened-restoration images and a fresh paired HTTP capture. Candidate predictions
+held again; both nonsense controls again displayed `zoom` help, preserving the
+failed no-help prediction. The new capture is separate from the historical run
+whose images remain unrecoverable. `runtime_grammar_editor.py --http … --ui …`
+selects a capture pair and validates saved screenshot paths and hashes. Token spans,
+guard hints, and the independently established remote-mode fixture remain open.
+
 Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. The continuation adds guarded zoom/beatlock/all-deck execution fixtures, selected-deck query comparisons, untrimmed output tests, restoration journals and a regenerable static frontier. Inspect each capture through `just runtime-grammar --artifact <path>`; the report distinguishes complete and interrupted runs, and derives a `separation` field so a prediction that held against a blank result is not mistaken for a discriminating one. The rules that survived two suites and two baselines were promoted into [VDJScript Grammar](docs/VDJScript%20Grammar.md) on 2026-09-12 (keyword quoting, unit-suffix case/adjacency, comma decimals, signed-vs-unsigned numbers, the malformed-number reset, backtick inertness on execute), with `local_test` store records for `zoom` and `beatlock`. Single-capture and editor-side candidates stay unpromoted.
 
 Progress 2026-09-12 (later): the asymmetric-scope item is half closed. `parser_master_scope`
