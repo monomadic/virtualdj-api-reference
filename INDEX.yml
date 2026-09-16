@@ -26,6 +26,10 @@ evidence:
 tasks:
   queue: TODO.md
   roadmap: docs/Completeness Roadmap.md
+  frozen_plans:                          # design references, not active state
+    - docs/VDJScript Reference Consolidation Plan.md
+  review_records:
+    - docs/Repository Assessment and Prioritized Tasks.md
   commands:
     - just next-task
     - just status
@@ -37,12 +41,16 @@ vdjscript:
   grammar:
     - docs/VDJScript Grammar.md          # read the summary before writing VDJScript
     - docs/VDJScript Syntax Evidence.md  # raw parser/binary evidence behind it
+    - docs/Runtime Argument Grammar Tests.md  # H4: the common argument parser as executable predictions
     - tests/Pads/Reference - Grammar Battery Test.xml
   status:
     - docs/Official VDJScript Coverage Audit.md
     - docs/VDJScript Local Test Tracker.md
   candidates:
     - docs/Undocumented VDJScript Candidates.md
+  button_editor:                         # category metadata, not behaviour evidence
+    - docs/Button Editor Catalog Audit.md
+    - docs/Button Editor Taxonomy.md
   machine_index:
     - docs/vdjscript-verb-index.json
   record_store:
@@ -82,6 +90,7 @@ vdjscript:
     - just grep-verb-docs NAME
     - just needs-test
     - just verb-index
+    - just runtime-grammar               # run the H4 argument-grammar predictions live
 
 live_probe:
   primary:
@@ -192,8 +201,14 @@ skin_sdk:
     - docs/Skin SDK.md
     - docs/Skin Waveforms.md
     - docs/Example Skin XML Objects.md
+  findings:
+    - docs/Published Skin Findings.md    # idioms from public skins, before they are folded in
+    - docs/Sysicon Binary Resolver.md    # how sysicon names resolve on b9598, hidden mappings
+    - docs/Historical Installer Excavation.md  # build-stamped compatibility history from older installers
   status:
     - docs/skin-xml-inventory.json
+  topic_tags:
+    - docs/topic-tags.json               # hand-maintained input to `just topic`
   examples:
     - examples/Skins/ModularSkeleton/README.md
     - examples/Skins/GraveRaver/README.md
@@ -233,12 +248,24 @@ stems:
 mappers:
   primary:
     - docs/Mapper XML.md
+    - docs/Compiled Controller Definitions.md  # controllers.dat: decode per build, diff from manifests
   examples:
     - examples/Mappers/README.md
   related:
     - examples/Pads/README.md
   commands:
     - just lint-mappers
+    - just controllers-vendor            # decode the installed build into vendor/controllers/
+    - just controllers-archives
+    - just controllers-diff
+
+settings:
+  primary:
+    - docs/Configuration Options.md
+
+browser_filters:
+  primary:
+    - docs/Filter Syntax.md
 
 samplerbanks:
   primary:

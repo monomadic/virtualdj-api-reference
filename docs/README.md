@@ -25,6 +25,9 @@ Start here:
 - [Completeness Roadmap](Completeness%20Roadmap.md)
   Evidence backlog for turning searchable names and source hints into locally observed, curated guidance.
 
+- [VDJScript Reference Consolidation Plan](VDJScript%20Reference%20Consolidation%20Plan.md)
+  Frozen design reference (2026-07-22) for the shape of the verb documentation. Like the Completeness Roadmap it is not active state; the queue is `TODO.md`.
+
 - [Historical Installer Excavation](Historical%20Installer%20Excavation.md)
   Build-stamped compatibility history and named skin-reader leads from the older macOS installers, including the clickthrough boolean-path correction.
 
@@ -58,6 +61,9 @@ Start here:
 - [Verb Tail Structural Discovery](Verb%20Tail%20Structural%20Discovery.md)
   How the bounded binary techniques from skin discovery carry over to verb tails, and what they cannot reach. `LC_FUNCTION_STARTS` intervals replace RET-terminated scans and padded xref windows in both the contract and vocabulary extractors; helper fan-out separates a verb's own argument matcher from the script evaluator's dispatch; the verb store is joined live so settled tails leave the probe queue. Value arguments stay outside keyword recovery entirely. Queries: `just action-tail-leads`, `just verb-contract <name>`, `just verb-traces <name>`.
 
+- [Runtime Argument Grammar Tests](Runtime%20Argument%20Grammar%20Tests.md)
+  H4: the common argument parser captured from the binary, expressed as executable predictions with per-fixture HTTP verdicts on build 9598. A candidate specification, not a grammar reference; `just runtime-grammar` runs it.
+
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.
 
@@ -73,11 +79,32 @@ Start here:
 - [Mapper XML](Mapper%20XML.md)
   Controller and keyboard mapper file format: the `<mapper>`/`<map value="">` split model, special control names (`ONINIT`, `SHIFT_*`, `LED_*`), device-definition XML (MIDI and HID), and the relationship to pad pages. Ground truth in [examples/Mappers/Local/](../examples/Mappers/README.md).
 
+- [Compiled Controller Definitions](Compiled%20Controller%20Definitions.md)
+  `controllers.dat` is an encrypted ZIP of the vendor's original definition XML. How to decode one archive per build into gitignored `vendor/controllers/`, and diff builds from the committed manifests (`just controllers-vendor`, `just controllers-diff`).
+
 - [Pad Page XML](Pad%20Page%20XML.md)
   Formal pad-page container schema: `<page>` attributes, `<padN>`/`<shift_padN>` attribute surface, `<param1>`/`<param2>`, the `<menu>` mini-DSL, `<custompadsmode>`, color forms, and samplerbank XML.
 
+- [Example Pad XML Pages](Example%20Pad%20XML%20Pages.md)
+  Sampler-focused pad page walkthroughs: the read-only multi-page sampler pattern, `sampler_pad_page` text ranges, and absolute-slot `sampler_loaded` guards.
+
+- [Skin SDK](Skin%20SDK.md)
+  Broad element-and-attribute reference for VirtualDJ 8+ skins (~2,900 lines, section-addressed; do not read end-to-end). Raw material not yet normalised to source labels; `just element <name>` is the one-screen summary per element.
+
+- [Example Skin XML Objects](Example%20Skin%20XML%20Objects.md)
+  Paste-ready skin XML chunks, mainly a full sampler panel with bank/page display and navigation.
+
 - [Skin Waveforms](Skin%20Waveforms.md)
   The waveform/rhythm skin element family: `<rhythmzone>`, `<scratchwave>`, `<songpos>`, `<scratch>`, `<blockwave>`, `<beattunnel>`, their children (`<colors>`, `<grid>`, `<cue>`, `<overlay>`, ...), and how they differ from `visual type="waveform"`.
+
+- [Effects Usage](Effects%20Usage.md)
+  The mental model: which FX engines exist (deck slots, ColorFX, master, video, ...) and how each is driven from skins and pad pages. Start here.
+
+- [Effects Engines](Effects%20Engines.md)
+  The deep per-engine control reference (~1,700 lines, section-addressed): verbs, slot semantics, and usage patterns for every engine.
+
+- [Native Effects](Native%20Effects.md)
+  Catalog of the built-in audio and video effects, transitions, and visualisations by name. Slider and button maps come from `just get-fx <name>`, not from here.
 
 - [Plugin SDK](Plugin%20SDK.md)
   VirtualDJ's C++ native-code extension point — and the boundary where VDJScript return values are still typed (`GetInfo` → `double`, `GetStringInfo` → text, `SendCommand` → execute). Interface hierarchy, `VDJPARAM_*` parameter model and the `[autoparams]` manifest that all 173 built-in plugins use, plugin UI models, loading, and the interfaces present in the binary that the public headers never declare. The headers themselves are third-party and deliberately not vendored here.
@@ -107,6 +134,9 @@ Start here:
   Local-test notes for skin placeholder substitution, conditional placement,
   and other runtime behavior promoted from skin project experiments.
 
+- [Sysicon Binary Resolver](Sysicon%20Binary%20Resolver.md)
+  How `sysicon` names resolve on build 9598: a compiled comparison chain into a shared icon array, the hidden mappings it adds, and the controlled-skin render test that followed. Tier 2 plus one local test.
+
 - [Documentation Tests](../tests/README.md)
   Reproducible local test harnesses used to support reference claims.
 
@@ -121,6 +151,12 @@ Start here:
 
 - [Application Internals](Application%20Internals.md)
   Low-level macOS-first notes on VirtualDJ paths, databases, caches, stem sidecars, linked tracks, and shell tooling.
+
+- [Configuration Options](Configuration%20Options.md)
+  Settings reference by category: option name, meaning, and accepted values. Not source-labelled.
+
+- [Filter Syntax](Filter%20Syntax.md)
+  Browser filter-folder syntax with worked examples. Not source-labelled.
 
 - [VirtualDJ Stem File Format](Stem%20File%20Format.md)
   Focused `.vdjstems` sidecar format notes: Matroska container, five-stream order, stream-title metadata, inspection commands, and MP4/standalone caveats.
