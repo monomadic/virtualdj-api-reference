@@ -468,9 +468,9 @@ master deck while an unwrapped verb and `deck default` track the selection** —
 [VDJScript Grammar](docs/VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12) with
 `local_test` store records for `get_deck`, `masterdeck` and `masterdeck_auto`. It also found
 `playing` and `mixer1`-`mixer4` to be recognized targets the wiki does not list, with `mixerN`
-resolving to a deck that is not N (cause untested, recorded as an observation only). Still open
-on this item: `active` was never pulled away from the master by a playing deck, since the fixture
-requires four stopped decks. Button press/release lifetime is now **done** via the mapper surface: a virtual CoreMIDI
+resolving to a deck that is not N (cause untested, recorded as an observation only). That
+stopped fixture left asymmetric playback untested; the 2026-09-16 playing-scope result below
+now supplies that comparison. Button press/release lifetime is now **done** via the mapper surface: a virtual CoreMIDI
 button read over HTTP between note-on and note-off settles that a button action runs on press
 only, that `while_pressed` saves and RESTORES the prior value rather than clearing, and that it
 binds its own statement rather than the chain. See
@@ -491,7 +491,13 @@ failed (both showed `zoom` help). This is appearance evidence only; matching
 editor token spans or guard hints remain outstanding. The 2026-09-16
 boundary-placement suites now isolate whitespace position from operator adjacency, retain
 the failed skip-whitespace predictions, and confirm the narrower original-value result
-with changed values and quoted forms; inspect the boundary captures through `just runtime-grammar`.
+with changed values and quoted forms; inspect the boundary captures through `just runtime-grammar`. The asymmetric
+playback gap is also covered: `--grammar-playing` uses verified digital silence on initially
+empty decks 3/4, preserves loaded decks 1/2, swaps the sole playing deck against a pinned
+master, and verifies restoration. The completed build-9598 capture separated `active`/`master`
+from `playing` and `default`; the initial selection-changing calibration is retained as
+incomplete. Multiple-playing, automatic-master transitions and the mixer permutation remain
+outside that fixture.
 
 Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
 a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`

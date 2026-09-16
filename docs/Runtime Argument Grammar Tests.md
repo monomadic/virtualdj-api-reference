@@ -512,6 +512,49 @@ Both were round-tripped by hand against the live instance before the suite was a
 them. The first attempt aborted at the precondition, with an empty journal and no mutation,
 because two decks were loaded and playing; that refusal is the fixture working, not a result.
 
+## Asymmetric playback test (2026-09-16)
+
+The frozen [playing-scope suite](../tests/runtime-grammar-playing-cases.json) is run by the
+existing prober inside `parser_playing_scope`. It requires four stopped decks, deck 1 selected,
+and decks 3/4 empty and unlooped. Decks 1/2 may retain loaded tracks: their loaded/play state,
+position, volume, pitch and loop readbacks are protected. The runner generates and verifies
+digital silence, loads it only on the currently designated fixture deck, and checks that its
+position advances independently of the `play` return value.
+
+```sh
+just probe-arg-forms --grammar-playing tests/runtime-grammar-playing-cases.json --check
+just probe-arg-forms --grammar-playing tests/runtime-grammar-playing-cases.json --repeat 2 --rounds 2 --out /tmp/playing-scope.json
+just runtime-grammar --check --artifact tests/runtime-grammar-playing-9598.json
+just runtime-grammar --artifact tests/runtime-grammar-playing-9598.json --group playing-scope
+```
+
+The [completed capture](../tests/runtime-grammar-playing-9598.json) records build 9598,
+forward/reverse query order and reversed baseline order, repeated reads, nonsense controls,
+literal-deck contrasts, setup/calibration, write journals and restoration after each baseline.
+The selected deck stays at 1; automatic master mode is disabled while measuring.
+
+| Frozen question | Master 3, only deck 4 playing | Master 4, only deck 3 playing | Live verdict |
+| --- | --- | --- | --- |
+| Does `deck active get_deck` follow the pinned master despite a different playing deck? | `3` | `4` | Held in this fixture |
+| Does `deck master get_deck` return the pinned master? | `3` | `4` | Held in this fixture |
+| Does `deck playing get_deck` follow the sole playing deck? | `4` | `3` | Held in this fixture |
+| Does `deck default get_deck` remain at the selected deck? | `1` | `1` | Held in this fixture |
+
+Every candidate separated from both unknown-selector controls. Literal deck 3/4 contrasts
+returned their respective fixed deck ids. These observations do not settle multiple-playing
+deck selection, automatic-master transitions, or the cause of a mixer-number permutation.
+
+The [initial calibration](../tests/runtime-grammar-playing-initial-9598.json) aborted before
+candidate queries because the intended selection did not hold after starting playback.
+Restoration verified successfully. The corrected setup explicitly reselects deck 1 after
+starting the fixture, then verifies selection, master and every play flag before each query.
+The failed attempt remains `incomplete-run`; no expectation was changed to turn it into a pass.
+
+Cleanup pauses and unloads only media whose path matches the generated fixture, restores
+master/automatic-master mode, selection, PFL and fixture-deck pitch, and verifies the full
+recorded guards and protected readbacks. An unexpected replacement track is never unloaded.
+The complete capture passed all restoration checks; generated temporary audio is not committed.
+
 ## Contrast with the Button Editor
 
 The same-build capture includes `DLGActionWizard::updateList`, `getCurrentWord`, `onChanged`,
@@ -575,10 +618,10 @@ coverage record. Remaining discriminating work includes:
 - The master/selection half of the asymmetric-scope item is **done** — see
   [asymmetric master](#asymmetric-master-2026-09-12) below and the promoted rule in
   [VDJScript Grammar](VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12).
-  What that fixture could *not* reach still stands: every deck was unloaded and stopped, so
-  `active` was never pulled away from the master by a playing deck, and the `mixerN`
-  permutation has no established cause. A fixture with asymmetric playback answers the first;
-  the second needs a configuration channel this suite does not touch.
+  The stopped-fixture playback gap is now covered by the
+  [asymmetric playback test](#asymmetric-playback-test-2026-09-16): the master and sole playing
+  deck were swapped while selection stayed distinct. The `mixerN` permutation still has
+  no established cause and needs a configuration channel this suite does not touch.
 - Button-lifetime tests are **done** through the mapper press/release surface; see
   [the dated live results](VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
   HTTP observations alone still cannot substitute for that lifecycle.

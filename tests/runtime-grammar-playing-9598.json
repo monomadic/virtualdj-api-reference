@@ -1,0 +1,2466 @@
+{
+  "summary": {
+    "mode": "playing-scope-queries",
+    "suite": "tests/runtime-grammar-playing-cases.json",
+    "suite_sha256": "f57b3e04512ac291afe644a74aa04444906170de65f629efaf1298d22ea596b4",
+    "repeat": 2,
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "status": "complete",
+    "claim_scope": "selector outputs with one silent fixture deck playing and a different master pinned",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-16T06:17:39.822971+00:00",
+    "verdicts": {
+      "held-in-fixture": 4
+    },
+    "restoration_status": "verified",
+    "manual_restore_required": false
+  },
+  "fixture": "parser_playing_scope",
+  "baselines": [
+    {
+      "master": "3",
+      "playing": "4"
+    },
+    {
+      "master": "4",
+      "playing": "3"
+    }
+  ],
+  "audio": {
+    "path": "/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav",
+    "sha256": "1325721de4cfd86d3952320054dac50d25b45d79789e53a89d563dc4d676e210",
+    "digital_silence_verified": true,
+    "duration_seconds": 180
+  },
+  "cases": [
+    {
+      "id": "playing-scope-active",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck active yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ],
+      "passes": [
+        {
+          "deck active get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck active get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "playing-scope-master",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck master yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ],
+      "passes": [
+        {
+          "deck master get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck master get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "playing-scope-playing",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck playing yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck playing get_deck",
+      "expected": [
+        [
+          "4"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ],
+      "passes": [
+        {
+          "deck playing get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck playing get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "playing-scope-default",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck default yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck default get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ],
+      "passes": [
+        {
+          "deck default get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        },
+        {
+          "deck default get_deck": [
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ],
+            [
+              [
+                "1"
+              ],
+              [
+                "1"
+              ]
+            ]
+          ],
+          "deck zzh4scope_a get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck zzh4scope_b get_deck": [
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ],
+            [
+              [
+                "error:-2147467259"
+              ],
+              [
+                "error:-2147467259"
+              ]
+            ]
+          ],
+          "deck 3 get_deck": [
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ],
+            [
+              [
+                "3"
+              ],
+              [
+                "3"
+              ]
+            ]
+          ],
+          "deck 4 get_deck": [
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ],
+            [
+              [
+                "4"
+              ],
+              [
+                "4"
+              ]
+            ]
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ],
+  "journal": [
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 load \"/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav\"",
+      "purpose": "fixture-load-silence",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 play",
+      "purpose": "fixture-start",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "fixture-selection-after-play",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 pause",
+      "purpose": "restore-stop-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 unload",
+      "purpose": "restore-unload-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 load \"/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav\"",
+      "purpose": "fixture-load-silence",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 play",
+      "purpose": "fixture-start",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "fixture-selection-after-play",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 pause",
+      "purpose": "restore-stop-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 unload",
+      "purpose": "restore-unload-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 load \"/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav\"",
+      "purpose": "fixture-load-silence",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 play",
+      "purpose": "fixture-start",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "fixture-selection-after-play",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 pause",
+      "purpose": "restore-stop-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 unload",
+      "purpose": "restore-unload-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 load \"/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav\"",
+      "purpose": "fixture-load-silence",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 play",
+      "purpose": "fixture-start",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "fixture-selection-after-play",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 pause",
+      "purpose": "restore-stop-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 unload",
+      "purpose": "restore-unload-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto off",
+      "purpose": "fixture-auto-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 3 masterdeck on",
+      "purpose": "fixture-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 load \"/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-h4-silent-cpauqg1v.wav\"",
+      "purpose": "fixture-load-silence",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 play",
+      "purpose": "fixture-start",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "fixture-selection-after-play",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 pause",
+      "purpose": "restore-stop-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 4 unload",
+      "purpose": "restore-unload-fixture",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 select",
+      "purpose": "restore-selection",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "deck 1 masterdeck on",
+      "purpose": "restore-master",
+      "status": "response-received",
+      "response": "true"
+    },
+    {
+      "script": "masterdeck_auto on",
+      "purpose": "restore-auto-master",
+      "status": "response-received",
+      "response": "true"
+    }
+  ],
+  "phases": [
+    {
+      "baseline": {
+        "master": "3",
+        "playing": "4"
+      },
+      "round": 0,
+      "checks": [
+        {
+          "script": "deck 4 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        }
+      ],
+      "reads": {
+        "deck 4 get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ]
+      },
+      "advancing_position": [
+        0.0,
+        0.01
+      ],
+      "complete": true
+    },
+    {
+      "baseline": {
+        "master": "3",
+        "playing": "4"
+      },
+      "round": 1,
+      "checks": [
+        {
+          "script": "deck zzh4scope_a get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck zzh4scope_b get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck 3 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck 4 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck active get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck master get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck playing get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck default get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        }
+      ],
+      "reads": {
+        "deck zzh4scope_a get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck zzh4scope_b get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck 3 get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck 4 get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck active get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck master get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck playing get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck default get_deck": [
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ]
+      },
+      "advancing_position": [
+        0.0,
+        0.01
+      ],
+      "complete": true
+    },
+    {
+      "baseline": {
+        "master": "4",
+        "playing": "3"
+      },
+      "round": 1,
+      "checks": [
+        {
+          "script": "deck zzh4scope_a get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck zzh4scope_b get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck 3 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck 4 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck active get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck master get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck playing get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck default get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        }
+      ],
+      "reads": {
+        "deck zzh4scope_a get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck zzh4scope_b get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck 3 get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck 4 get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck active get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck master get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck playing get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck default get_deck": [
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ]
+      },
+      "advancing_position": [
+        0.0,
+        0.01
+      ],
+      "complete": true
+    },
+    {
+      "baseline": {
+        "master": "4",
+        "playing": "3"
+      },
+      "round": 2,
+      "checks": [
+        {
+          "script": "deck default get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck playing get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck master get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck active get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck 4 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck 3 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck zzh4scope_b get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        },
+        {
+          "script": "deck zzh4scope_a get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "yes",
+            "deck 3 masterdeck": "no",
+            "deck 4 play": "no",
+            "deck 4 masterdeck": "yes"
+          }
+        }
+      ],
+      "reads": {
+        "deck default get_deck": [
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "deck playing get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck master get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck active get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck 4 get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck 3 get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck zzh4scope_b get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck zzh4scope_a get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ]
+      },
+      "advancing_position": [
+        0.0,
+        0.01
+      ],
+      "complete": true
+    },
+    {
+      "baseline": {
+        "master": "3",
+        "playing": "4"
+      },
+      "round": 2,
+      "checks": [
+        {
+          "script": "deck default get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck playing get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck master get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck active get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck 4 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck 3 get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck zzh4scope_b get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        },
+        {
+          "script": "deck zzh4scope_a get_deck",
+          "state": {
+            "get_deck": "1",
+            "masterdeck_auto": "no",
+            "deck 1 play": "no",
+            "deck 1 masterdeck": "no",
+            "deck 2 play": "no",
+            "deck 2 masterdeck": "no",
+            "deck 3 play": "no",
+            "deck 3 masterdeck": "yes",
+            "deck 4 play": "yes",
+            "deck 4 masterdeck": "no"
+          }
+        }
+      ],
+      "reads": {
+        "deck default get_deck": [
+          [
+            "1"
+          ],
+          [
+            "1"
+          ]
+        ],
+        "deck playing get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck master get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck active get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck 4 get_deck": [
+          [
+            "4"
+          ],
+          [
+            "4"
+          ]
+        ],
+        "deck 3 get_deck": [
+          [
+            "3"
+          ],
+          [
+            "3"
+          ]
+        ],
+        "deck zzh4scope_b get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ],
+        "deck zzh4scope_a get_deck": [
+          [
+            "error:-2147467259"
+          ],
+          [
+            "error:-2147467259"
+          ]
+        ]
+      },
+      "advancing_position": [
+        0.0,
+        0.01
+      ],
+      "complete": true
+    }
+  ],
+  "restorations": [
+    {
+      "guards": {
+        "get_decks": "4",
+        "get_deck": "1",
+        "masterdeck_auto": "yes",
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 select": "yes",
+        "deck 1 pfl": "yes",
+        "deck 1 masterdeck": "yes",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 select": "no",
+        "deck 2 pfl": "no",
+        "deck 2 masterdeck": "no",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no",
+        "deck 3 loaded": "no",
+        "deck 3 play": "no",
+        "deck 3 select": "no",
+        "deck 3 pfl": "no",
+        "deck 3 masterdeck": "no",
+        "deck 3 volume": "1",
+        "deck 3 pitch": "0.5",
+        "deck 3 loop": "no",
+        "deck 4 loaded": "no",
+        "deck 4 play": "no",
+        "deck 4 select": "no",
+        "deck 4 pfl": "no",
+        "deck 4 masterdeck": "no",
+        "deck 4 volume": "1",
+        "deck 4 pitch": "0.5",
+        "deck 4 loop": "no"
+      },
+      "protected": {
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 get_position": "0.28",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 get_position": "0.38",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no"
+      },
+      "verified": true
+    },
+    {
+      "guards": {
+        "get_decks": "4",
+        "get_deck": "1",
+        "masterdeck_auto": "yes",
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 select": "yes",
+        "deck 1 pfl": "yes",
+        "deck 1 masterdeck": "yes",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 select": "no",
+        "deck 2 pfl": "no",
+        "deck 2 masterdeck": "no",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no",
+        "deck 3 loaded": "no",
+        "deck 3 play": "no",
+        "deck 3 select": "no",
+        "deck 3 pfl": "no",
+        "deck 3 masterdeck": "no",
+        "deck 3 volume": "1",
+        "deck 3 pitch": "0.5",
+        "deck 3 loop": "no",
+        "deck 4 loaded": "no",
+        "deck 4 play": "no",
+        "deck 4 select": "no",
+        "deck 4 pfl": "no",
+        "deck 4 masterdeck": "no",
+        "deck 4 volume": "1",
+        "deck 4 pitch": "0.5",
+        "deck 4 loop": "no"
+      },
+      "protected": {
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 get_position": "0.28",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 get_position": "0.38",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no"
+      },
+      "verified": true
+    },
+    {
+      "guards": {
+        "get_decks": "4",
+        "get_deck": "1",
+        "masterdeck_auto": "yes",
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 select": "yes",
+        "deck 1 pfl": "yes",
+        "deck 1 masterdeck": "yes",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 select": "no",
+        "deck 2 pfl": "no",
+        "deck 2 masterdeck": "no",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no",
+        "deck 3 loaded": "no",
+        "deck 3 play": "no",
+        "deck 3 select": "no",
+        "deck 3 pfl": "no",
+        "deck 3 masterdeck": "no",
+        "deck 3 volume": "1",
+        "deck 3 pitch": "0.5",
+        "deck 3 loop": "no",
+        "deck 4 loaded": "no",
+        "deck 4 play": "no",
+        "deck 4 select": "no",
+        "deck 4 pfl": "no",
+        "deck 4 masterdeck": "no",
+        "deck 4 volume": "1",
+        "deck 4 pitch": "0.5",
+        "deck 4 loop": "no"
+      },
+      "protected": {
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 get_position": "0.28",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 get_position": "0.38",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no"
+      },
+      "verified": true
+    },
+    {
+      "guards": {
+        "get_decks": "4",
+        "get_deck": "1",
+        "masterdeck_auto": "yes",
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 select": "yes",
+        "deck 1 pfl": "yes",
+        "deck 1 masterdeck": "yes",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 select": "no",
+        "deck 2 pfl": "no",
+        "deck 2 masterdeck": "no",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no",
+        "deck 3 loaded": "no",
+        "deck 3 play": "no",
+        "deck 3 select": "no",
+        "deck 3 pfl": "no",
+        "deck 3 masterdeck": "no",
+        "deck 3 volume": "1",
+        "deck 3 pitch": "0.5",
+        "deck 3 loop": "no",
+        "deck 4 loaded": "no",
+        "deck 4 play": "no",
+        "deck 4 select": "no",
+        "deck 4 pfl": "no",
+        "deck 4 masterdeck": "no",
+        "deck 4 volume": "1",
+        "deck 4 pitch": "0.5",
+        "deck 4 loop": "no"
+      },
+      "protected": {
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 get_position": "0.28",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 get_position": "0.38",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no"
+      },
+      "verified": true
+    },
+    {
+      "guards": {
+        "get_decks": "4",
+        "get_deck": "1",
+        "masterdeck_auto": "yes",
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 select": "yes",
+        "deck 1 pfl": "yes",
+        "deck 1 masterdeck": "yes",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 select": "no",
+        "deck 2 pfl": "no",
+        "deck 2 masterdeck": "no",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no",
+        "deck 3 loaded": "no",
+        "deck 3 play": "no",
+        "deck 3 select": "no",
+        "deck 3 pfl": "no",
+        "deck 3 masterdeck": "no",
+        "deck 3 volume": "1",
+        "deck 3 pitch": "0.5",
+        "deck 3 loop": "no",
+        "deck 4 loaded": "no",
+        "deck 4 play": "no",
+        "deck 4 select": "no",
+        "deck 4 pfl": "no",
+        "deck 4 masterdeck": "no",
+        "deck 4 volume": "1",
+        "deck 4 pitch": "0.5",
+        "deck 4 loop": "no"
+      },
+      "protected": {
+        "deck 1 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 1 get_position": "0.28",
+        "deck 1 volume": "1",
+        "deck 1 pitch": "0.28",
+        "deck 1 loop": "no",
+        "deck 2 loaded": "yes",
+        "deck 2 play": "no",
+        "deck 2 get_position": "0.38",
+        "deck 2 volume": "1",
+        "deck 2 pitch": "0.5",
+        "deck 2 loop": "no"
+      },
+      "verified": true
+    }
+  ],
+  "initial_state": {
+    "guards": {
+      "get_decks": "4",
+      "get_deck": "1",
+      "masterdeck_auto": "yes",
+      "deck 1 loaded": "yes",
+      "deck 1 play": "no",
+      "deck 1 select": "yes",
+      "deck 1 pfl": "yes",
+      "deck 1 masterdeck": "yes",
+      "deck 1 volume": "1",
+      "deck 1 pitch": "0.28",
+      "deck 1 loop": "no",
+      "deck 2 loaded": "yes",
+      "deck 2 play": "no",
+      "deck 2 select": "no",
+      "deck 2 pfl": "no",
+      "deck 2 masterdeck": "no",
+      "deck 2 volume": "1",
+      "deck 2 pitch": "0.5",
+      "deck 2 loop": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 3 select": "no",
+      "deck 3 pfl": "no",
+      "deck 3 masterdeck": "no",
+      "deck 3 volume": "1",
+      "deck 3 pitch": "0.5",
+      "deck 3 loop": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no",
+      "deck 4 select": "no",
+      "deck 4 pfl": "no",
+      "deck 4 masterdeck": "no",
+      "deck 4 volume": "1",
+      "deck 4 pitch": "0.5",
+      "deck 4 loop": "no"
+    },
+    "protected": {
+      "deck 1 loaded": "yes",
+      "deck 1 play": "no",
+      "deck 1 get_position": "0.28",
+      "deck 1 volume": "1",
+      "deck 1 pitch": "0.28",
+      "deck 1 loop": "no",
+      "deck 2 loaded": "yes",
+      "deck 2 play": "no",
+      "deck 2 get_position": "0.38",
+      "deck 2 volume": "1",
+      "deck 2 pitch": "0.5",
+      "deck 2 loop": "no"
+    }
+  },
+  "last_baseline_readback": {
+    "expected": {
+      "master": "3",
+      "playing": "4"
+    },
+    "observed": {
+      "get_deck": "1",
+      "masterdeck_auto": "no",
+      "deck 1 play": "no",
+      "deck 1 masterdeck": "no",
+      "deck 2 play": "no",
+      "deck 2 masterdeck": "no",
+      "deck 3 play": "no",
+      "deck 3 masterdeck": "yes",
+      "deck 4 play": "yes",
+      "deck 4 masterdeck": "no"
+    }
+  }
+}

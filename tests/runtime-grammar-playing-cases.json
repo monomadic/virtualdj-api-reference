@@ -1,0 +1,197 @@
+{
+  "description": "Active/master/playing comparisons with generated silence and asymmetric master pin; no universal selector claim.",
+  "cases": [
+    {
+      "id": "playing-scope-active",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck active yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck active get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "playing-scope-master",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck master yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck master get_deck",
+      "expected": [
+        [
+          "3"
+        ],
+        [
+          "4"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "playing-scope-playing",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck playing yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck playing get_deck",
+      "expected": [
+        [
+          "4"
+        ],
+        [
+          "3"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ]
+    },
+    {
+      "id": "playing-scope-default",
+      "group": "playing-scope",
+      "fixture": "parser_playing_scope",
+      "hypothesis": "Does deck default yield the frozen signature while the sole playing deck and pinned master swap between decks 3/4, with deck 1 selected?",
+      "script": "deck default get_deck",
+      "expected": [
+        [
+          "1"
+        ],
+        [
+          "1"
+        ]
+      ],
+      "controls": [
+        "deck zzh4scope_a get_deck",
+        "deck zzh4scope_b get_deck"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_deck",
+          "expected": [
+            [
+              "3"
+            ],
+            [
+              "3"
+            ]
+          ]
+        },
+        {
+          "script": "deck 4 get_deck",
+          "expected": [
+            [
+              "4"
+            ],
+            [
+              "4"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::create@0x100596f1c",
+        "IAction::deckMatch@0x100599000",
+        "getDeck@0x10047d9ff"
+      ]
+    }
+  ]
+}

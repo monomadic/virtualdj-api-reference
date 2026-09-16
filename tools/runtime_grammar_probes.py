@@ -240,7 +240,10 @@ def main():
     capture = json.loads(args.artifact.read_text())
     if args.check:
         mode = capture["summary"].get("mode")
-        if mode == "reversible-actions":
+        if mode == "playing-scope-queries":
+            from runtime_grammar_playing import check_capture as check_playing
+            capture = check_playing(args.artifact)
+        elif mode == "reversible-actions":
             from runtime_grammar_actions import check_capture as check_actions
             capture = check_actions(args.artifact)
         elif mode == "selected-scope-queries":

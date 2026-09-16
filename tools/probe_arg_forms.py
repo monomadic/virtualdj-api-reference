@@ -304,6 +304,8 @@ def _label_pairs(out_forms: list[dict]) -> None:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--grammar-playing", type=Path,
+                   help="silent fixture playback on empty decks 3/4, with a different master pinned")
     p.add_argument("--grammar-scopes", type=Path,
                    help="selected-deck fixture with query-only scope hypotheses")
     p.add_argument("--grammar-actions", type=Path,
@@ -343,8 +345,12 @@ def main() -> int:
                         "agrees; guards against verbs whose value drifts on its own")
     args = p.parse_args()
 
-    if sum(bool(x) for x in (args.grammar_actions,args.grammar_cases,args.grammar_scopes)) > 1:
+    if sum(bool(x) for x in (args.grammar_actions,args.grammar_cases,args.grammar_scopes,args.grammar_playing)) > 1:
         p.error("choose one grammar mode")
+    if args.grammar_playing:
+        from runtime_grammar_playing import run_suite
+        return run_suite(args)
+
     if args.grammar_scopes:
         from runtime_grammar_scopes import run_suite
         return run_suite(args)
