@@ -1156,3 +1156,15 @@ failed predictions; three held cases matched controls. Fractional and beat forma
 predictions failed with exact outputs retained. The audit links these observations
 to the distinct interpolation route and excludes outer-token escape, internal type,
 skin-cache and universal-formatting claims. No live state writes were needed.
+
+### H4 unmapped-symbol triage (2026-09-17)
+
+Reviewed the captured b9246 symbols lacking primary branch-family mappings and recorded
+dispositions, representative assembly anchors and next actions in the existing obligation
+checklist. `just runtime-grammar --triage` exposes this focused view; totals come from
+`disposition_counts`, with unreviewed additions visible in `symbols_without_triage`.
+Priorities are optional-cache boolean evaluation, incoming-parameter selection and the
+distinct typed/float pair evaluators. Existing family gaps remain visible and no live
+coverage was promoted. Anchor/duplicate/category regressions and the runtime grammar
+checks passed. The full `just check` stopped at the unchanged binary-vocabulary artifact's
+re-extraction mismatch against installed build 18.0.9628; historical data was not rewritten.

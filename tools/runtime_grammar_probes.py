@@ -255,10 +255,15 @@ def main():
     parser.add_argument("--artifact", type=Path,
                         default=Path("tests/runtime-grammar-confirmation-9598.json"))
     parser.add_argument("--audit", action="store_true", help="branch-family evidence links and finite editor corpus; no completeness inference")
+    parser.add_argument("--triage", action="store_true", help="only unmapped-symbol priorities and checked structural anchors; no live coverage claim")
     parser.add_argument("--get", metavar="CASE")
     parser.add_argument("--group")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
+    if args.triage:
+        from runtime_grammar_audit import triage_report
+        print(json.dumps(triage_report(), indent=2))
+        return
     if args.audit:
         from runtime_grammar_audit import report
         print(json.dumps(report(), indent=2))

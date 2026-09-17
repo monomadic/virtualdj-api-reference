@@ -10,6 +10,53 @@ ROOT = Path(__file__).resolve().parents[1]
 PLAN = ROOT / 'tests/runtime-grammar-obligations.json'
 
 
+def symbol_triage(plan, manifest, manifest_path):
+    """Validate review anchors; never turn a disposition into behavioral coverage."""
+    review = plan['unmapped_symbol_triage']
+    obligations = {r['id'] for r in plan['obligations']}
+    unmapped = set(manifest['symbols']) - {r['symbol'] for r in plan['obligations']}
+    dispositions = {'investigate-next', 'review-with-existing-family',
+                    'context-fixture-needed', 'consumer-specific',
+                    'editor-fixture-needed', 'support-only'}
+    seen, group_ids, groups = set(), set(), []
+    for group in review['groups']:
+        assert group['id'] not in group_ids, 'duplicate triage group'
+        group_ids.add(group['id'])
+        assert group['disposition'] in dispositions
+        assert group['structural_interpretation'] and group['next_action']
+        assert group['related_obligations'] and set(group['related_obligations']) <= obligations
+        assert group['symbols']
+        symbols = []
+        for row in group['symbols']:
+            name = row['symbol']
+            assert name in unmapped, 'triage symbol is unknown or already family-mapped'
+            assert name not in seen, 'duplicate triage symbol'
+            seen.add(name)
+            symbol = manifest['symbols'][name]
+            body = (manifest_path.parent / symbol['file']).read_bytes()
+            assert hashlib.sha256(body).hexdigest() == symbol['asm_sha256']
+            assert int(symbol['start'], 16) <= int(row['site'], 16) < int(symbol['end_exclusive'], 16)
+            instruction = next((line for line in body.decode().splitlines()
+                                if line.startswith(row['site'][2:].zfill(16) + '\t')), None)
+            assert instruction, 'triage anchor is not an instruction'
+            symbols.append({**row, 'instruction': instruction,
+                            'assembly': str(manifest_path.parent.relative_to(ROOT) / symbol['file']),
+                            'assembly_sha256': symbol['asm_sha256']})
+        groups.append({**group, 'symbols': symbols})
+    return {**review, 'binary_build': manifest['source']['bundle_version'],
+            'architecture': manifest['source']['architecture'],
+            'binary_sha256': manifest['source']['sha256'],
+            'groups': groups, 'live_coverage_claim': False,
+            'disposition_counts': dict(Counter(g['disposition'] for g in groups for _ in g['symbols'])),
+            'symbols_without_triage': sorted(unmapped - seen)}
+
+
+def triage_report():
+    manifest_path = ROOT / 'tests/runtime-parser-9246/manifest.json'
+    return symbol_triage(json.loads(PLAN.read_text()),
+                         json.loads(manifest_path.read_text()), manifest_path)
+
+
 def evaluator_branch_review(plan, manifest, manifest_path):
     """Check a bounded structural partition, never infer live branch coverage."""
     review = plan['evaluator_branch_review']
@@ -123,6 +170,7 @@ def report():
         corpus.append({**ref, 'fixture': case['fixture'], 'script': case['script'],
                        'status': 'needs-screenshot-backed-span-or-guard-observation'})
     return {'scope': plan['scope'], 'binary_build': manifest['source']['bundle_version'],
+            'unmapped_symbol_triage': symbol_triage(plan, manifest, manifest_path),
             'evaluator_branch_review': evaluator_branch_review(plan, manifest, manifest_path),
             'branch_route_review': {k: v for k, v in routes.items() if k not in ('remote_mode_writers', 'evaluation_callers', 'evaluation_entrypoints')},
             'evaluation_entrypoints': [{k: v for k, v in entry.items() if k != 'assembly'}

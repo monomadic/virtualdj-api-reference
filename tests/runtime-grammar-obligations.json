@@ -749,5 +749,304 @@
         ]
       }
     ]
+  },
+  "unmapped_symbol_triage": {
+    "reviewed": "2026-09-17",
+    "scope": "Triage of captured b9246 symbols lacking a primary branch-family obligation. Tier-2 structural leads only; related obligations are navigation, not live evidence links. Representative instruction anchors are not branch partitions. Newly captured unmapped symbols remain untriaged until reviewed.",
+    "groups": [
+      {
+        "id": "boolean-cache-path",
+        "disposition": "investigate-next",
+        "related_obligations": [
+          "boolean-consumer",
+          "backtick-consumers"
+        ],
+        "structural_interpretation": "getBoolParam reads a typed parameter, tests the optional cache pointer before the text/backtick path, and calls create/query. The IActionSwitch obligation is a different consumer and does not cover this helper.",
+        "next_action": "Resolve a concrete caller that supplies the cache pointer; compare missing, integer/boolean and backtick values with independent state readback. Separate cache reuse from fresh construction.",
+        "symbols": [
+          {
+            "symbol": "IAction::getBoolParam",
+            "site": "0x1005987e4"
+          }
+        ]
+      },
+      {
+        "id": "incoming-parameter-selection",
+        "disposition": "investigate-next",
+        "related_obligations": [
+          "numeric-dispatch",
+          "backtick-consumers",
+          "backtick-float-evaluator"
+        ],
+        "structural_interpretation": "getParam selects stored arguments, a caller-provided parameter area or staticNullParam under index/flag checks. Literal argument tests do not isolate these alternatives.",
+        "next_action": "Trace a named caller providing nonzero incoming parameters, then contrast explicit, omitted and chained arguments. Do not infer incoming-value behavior from zero-initialized display input.",
+        "symbols": [
+          {
+            "symbol": "IAction::getParam",
+            "site": "0x100596c6d"
+          }
+        ]
+      },
+      {
+        "id": "pair-evaluation-overloads",
+        "disposition": "investigate-next",
+        "related_obligations": [
+          "backtick-math-reader"
+        ],
+        "structural_interpretation": "Both getValues overloads construct nested actions. The SActionParam overload calls query while the float overload calls queryValue. The existing param_add linkage names only the SActionParam overload.",
+        "next_action": "Partition operand source/type branches and identify a verified float-overload consumer before adding live cases; keep typed and float results separate and retain raw-action-text controls.",
+        "symbols": [
+          {
+            "symbol": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+            "site": "0x100993038"
+          },
+          {
+            "symbol": "IParamValuesAction::getValues(float*, float*)",
+            "site": "0x1009918fc"
+          }
+        ]
+      },
+      {
+        "id": "lexical-support",
+        "disposition": "review-with-existing-family",
+        "related_obligations": [
+          "prefix-lexing",
+          "word-and-keyword",
+          "head-delimiters"
+        ],
+        "structural_interpretation": "stringMatch performs ASCII case folding, delimiter-mask checks and cursor advancement; numberMatch scans digits, checks a terminal byte and calls atoi. The CI overloads use libc comparisons with distinct pointer/length guards.",
+        "next_action": "Join exact caller sites to existing prefix/keyword cases before adding tests. Review terminal-byte, empty-input and prefix-versus-whole-string distinctions; matching helper names are not interchangeable overloads.",
+        "symbols": [
+          {
+            "symbol": "IAction::stringMatch",
+            "site": "0x100598fc3"
+          },
+          {
+            "symbol": "numberMatch",
+            "site": "0x100599a49"
+          },
+          {
+            "symbol": "isLeftCI",
+            "site": "0x1005b3e3b"
+          },
+          {
+            "symbol": "isLeftCI(string_view, char const*)",
+            "site": "0x1005b3de3"
+          },
+          {
+            "symbol": "strIsEqualCI",
+            "site": "0x1005b42ad"
+          },
+          {
+            "symbol": "strIsEqualCI(string_view, string_view)",
+            "site": "0x1005b411d"
+          }
+        ]
+      },
+      {
+        "id": "deck-name-conversion",
+        "disposition": "review-with-existing-family",
+        "related_obligations": [
+          "prefix-lexing",
+          "scope-resolution"
+        ],
+        "structural_interpretation": "getDeckFromString compares named deck strings including default, active and mixer variants. It is a separate bounded body from deckMatch and getDeck.",
+        "next_action": "Establish the consumer and caller path before borrowing deck-prefix results; contrast recognized names, numeric text and junk in that exact context.",
+        "symbols": [
+          {
+            "symbol": "IAction::getDeckFromString",
+            "site": "0x100599add"
+          }
+        ]
+      },
+      {
+        "id": "text-expansion-and-flags",
+        "disposition": "review-with-existing-family",
+        "related_obligations": [
+          "backtick-text-reader"
+        ],
+        "structural_interpretation": "actionGetText creates nested actions, sets source and calls queryText. matchStringWithFlag scans flag-prefix bytes before a length-bounded comparison and updates the input pointer on success. Existing text-reader evidence does not partition the whole formatter.",
+        "next_action": "Prioritize the preserved text-formatting failures and distinguish formatter flags from VDJScript grammar using literal/nested controls. Follow exact actionGetText call sites; do not expand every formatting branch by default.",
+        "symbols": [
+          {
+            "symbol": "actionGetText",
+            "site": "0x1004234b6"
+          },
+          {
+            "symbol": "matchStringWithFlag",
+            "site": "0x1004258e0"
+          }
+        ]
+      },
+      {
+        "id": "typed-result-conversion",
+        "disposition": "review-with-existing-family",
+        "related_obligations": [
+          "float-consumer",
+          "backtick-text-reader",
+          "backtick-float-evaluator"
+        ],
+        "structural_interpretation": "queryValue, queryBool and queryText call query and convert its typed result. paramToString has formatting calls distinct from queryText. toFloat dispatches on type tags and either reads float storage, converts integer storage or returns its initialized zero.",
+        "next_action": "Identify a reachable caller for each conversion and compare independently known typed values. HTTP text equality cannot establish equivalence of native boolean, numeric and text channels.",
+        "symbols": [
+          {
+            "symbol": "IAction::queryValue",
+            "site": "0x1005967c6"
+          },
+          {
+            "symbol": "IAction::queryBool",
+            "site": "0x100596877"
+          },
+          {
+            "symbol": "IAction::queryText",
+            "site": "0x100596910"
+          },
+          {
+            "symbol": "IAction::paramToString",
+            "site": "0x100598bc4"
+          },
+          {
+            "symbol": "SActionParam::toFloat",
+            "site": "0x1001f927c"
+          }
+        ]
+      },
+      {
+        "id": "dispatch-and-source-context",
+        "disposition": "context-fixture-needed",
+        "related_obligations": [
+          "scope-resolution",
+          "structural-operators",
+          "remote-entry"
+        ],
+        "structural_interpretation": "execute and query resolve a deck and reach indirect dispatch; execute also has a macro-engine route. setSource stores a source value and propagates through linked children.",
+        "next_action": "Use explicit source/controller context and independently observed deck/state outcomes. Keep deferred execution, virtual targets and child propagation unresolved until their exact routes are measured.",
+        "symbols": [
+          {
+            "symbol": "IAction::execute",
+            "site": "0x10059607d"
+          },
+          {
+            "symbol": "IAction::query",
+            "site": "0x10059657c"
+          },
+          {
+            "symbol": "IAction::setSource",
+            "site": "0x100599798"
+          }
+        ]
+      },
+      {
+        "id": "deck-state-selection",
+        "disposition": "context-fixture-needed",
+        "related_obligations": [
+          "scope-resolution"
+        ],
+        "structural_interpretation": "getDeckSafe falls back through defaultDeck and the deck array; getActiveDeck calls getAudibleVolume. select writes defaultDeck and conditionally reaches PFL changes; ACTION_select calls that setter.",
+        "next_action": "Reuse asymmetric named deck fixtures, then isolate multiple-playing/active selection and selection/PFL side effects with restoration. These state decisions are not new lexical grammar.",
+        "symbols": [
+          {
+            "symbol": "getDeckSafe",
+            "site": "0x10047e093"
+          },
+          {
+            "symbol": "CDeck::getActiveDeck",
+            "site": "0x10047ddf0"
+          },
+          {
+            "symbol": "CDeck::select",
+            "site": "0x100481bd3"
+          },
+          {
+            "symbol": "ACTION_select::onExecute",
+            "site": "0x10038ae3e"
+          }
+        ]
+      },
+      {
+        "id": "selected-action-implementations",
+        "disposition": "consumer-specific",
+        "related_obligations": [
+          "float-consumer",
+          "boolean-consumer"
+        ],
+        "structural_interpretation": "The zoom executor reads getParam and compares text forms before updating a setting. The captured beatlock setter is a field store. Their enclosing consumer obligations retain the actual live results.",
+        "next_action": "Extend only for an unresolved zoom/beatlock behavior question with before/change/independent-readback/restore. Do not count these implementations as additional common grammar families.",
+        "symbols": [
+          {
+            "symbol": "ACTION_zoom::onExecute",
+            "site": "0x1005c931c"
+          },
+          {
+            "symbol": "ACTION_beatlock::setValue",
+            "site": "0x1006fe2fa"
+          }
+        ]
+      },
+      {
+        "id": "editor-word-and-presentation",
+        "disposition": "editor-fixture-needed",
+        "related_obligations": [
+          "editor-structure"
+        ],
+        "structural_interpretation": "getCurrentWord scans token-character ranges; onChanged calls canComplete; updateList clears a tree and builds list entries. STree toString recursively appends text and setColor traverses children.",
+        "next_action": "Use the audit editor corpus with saved screenshots for token spans, completion and color observations. Keep reconstruction/presentation behavior separate from runtime acceptance.",
+        "symbols": [
+          {
+            "symbol": "DLGActionWizard::getCurrentWord",
+            "site": "0x1006c3d45"
+          },
+          {
+            "symbol": "DLGActionWizard::onChanged",
+            "site": "0x1006c484c"
+          },
+          {
+            "symbol": "DLGActionWizard::updateList",
+            "site": "0x1006c5851"
+          },
+          {
+            "symbol": "DLGActionWizard::STree::toString()",
+            "site": "0x1006c6947"
+          },
+          {
+            "symbol": "DLGActionWizard::STree::setColor(unsigned int)",
+            "site": "0x1006c6a70"
+          }
+        ]
+      },
+      {
+        "id": "construction-and-ownership",
+        "disposition": "support-only",
+        "related_obligations": [
+          "all-decks-consumer",
+          "structural-operators",
+          "editor-structure"
+        ],
+        "structural_interpretation": "The factories allocate and initialize wrappers. all_decks init transfers a child pointer and conditionally releases the previous child. STree clear/destruction recursively releases child storage.",
+        "next_action": "Retain as structural support. Reopen only for a concrete construction, reuse or lifetime failure; these bodies alone do not justify new syntax fixtures or prove wrapper execution.",
+        "symbols": [
+          {
+            "symbol": "createAction_all_decks",
+            "site": "0x1000fe06d"
+          },
+          {
+            "symbol": "createAction_combine_query",
+            "site": "0x1000fde25"
+          },
+          {
+            "symbol": "ACTION_all_decks::init",
+            "site": "0x1000fe6d8"
+          },
+          {
+            "symbol": "DLGActionWizard::STree::clear()",
+            "site": "0x1006c675e"
+          },
+          {
+            "symbol": "DLGActionWizard::STree::~STree()",
+            "site": "0x1006c770a"
+          }
+        ]
+      }
+    ]
   }
 }

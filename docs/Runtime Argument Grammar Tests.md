@@ -24,6 +24,30 @@ covered. The remote entry route and list conversion helper currently have no rev
 case linkage; deciding their exact scope and adding discriminating fixtures remains work.
 Editor corpus entries are pending observations, not predictions of editor acceptance.
 
+### Unmapped-symbol triage (2026-09-17)
+
+`just runtime-grammar --triage` returns only the reviewed dispositions, next actions,
+related obligation ids and checked instruction anchors for captured b9246 symbols
+without a primary family mapping. The same result is included under
+`unmapped_symbol_triage` in `--audit`; derive totals from its `disposition_counts`.
+The checklist owns the review, and the command checks each anchor against the hashed
+assembly. Related obligations are navigation links, **not live case associations**.
+
+Start with the `investigate-next` groups: the optional-cache path in `getBoolParam`,
+incoming-parameter selection in `getParam`, and the distinct typed/float `getValues`
+overloads. Each needs a verified caller and a discriminating observable before a new
+behavioral obligation. Existing switch or arithmetic results cannot silently cover
+another helper or overload. The remaining dispositions separate support for existing
+lexical/conversion families, stateful dispatch/deck questions, selected action behavior,
+editor observations, and construction/ownership support.
+
+This review does not remove entries from `symbols_without_family_mapping`, partition
+all branches, or claim live coverage. `symbols_without_triage` exposes newly captured
+gaps. Follow the recorded `next_action` instead of reopening every helper: cleanup and
+factories need a concrete lifetime/construction question, while editor evidence needs
+saved screenshots. The historical capture remains b9246; no current-build behavior
+was tested in this triage.
+
 ### Bounded evaluator branch review (2026-09-17)
 
 The audit's `evaluator_branch_review` partitions every conditional jump in the

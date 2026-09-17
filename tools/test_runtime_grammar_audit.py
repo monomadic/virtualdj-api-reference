@@ -8,6 +8,39 @@ import runtime_grammar_audit as audit
 
 
 class AuditTests(unittest.TestCase):
+    def test_triage_keeps_family_gaps_and_has_no_live_claim(self):
+        result = audit.report()
+        triage = result['unmapped_symbol_triage']
+        self.assertFalse(triage['live_coverage_claim'])
+        self.assertEqual(triage['symbols_without_triage'], [])
+        self.assertEqual({s['symbol'] for g in triage['groups'] for s in g['symbols']},
+                         set(result['symbols_without_family_mapping']))
+
+    def test_triage_rejects_invalid_review_and_exposes_new_gaps(self):
+        manifest_path = audit.ROOT / 'tests/runtime-parser-9246/manifest.json'
+        manifest = json.loads(manifest_path.read_text())
+        for mutation in ('duplicate', 'unknown', 'mapped', 'site', 'disposition', 'obligation'):
+            plan = json.loads(audit.PLAN.read_text())
+            group = plan['unmapped_symbol_triage']['groups'][0]
+            if mutation == 'duplicate':
+                group['symbols'].append(group['symbols'][0])
+            elif mutation == 'unknown':
+                group['symbols'][0]['symbol'] = 'not captured'
+            elif mutation == 'mapped':
+                group['symbols'][0]['symbol'] = 'IAction::create'
+            elif mutation == 'site':
+                group['symbols'][0]['site'] = '0x1005987e5'
+            elif mutation == 'disposition':
+                group['disposition'] = 'proven-live'
+            else:
+                group['related_obligations'] = ['missing']
+            with self.subTest(mutation=mutation), self.assertRaises(AssertionError):
+                audit.symbol_triage(plan, manifest, manifest_path)
+        plan = json.loads(audit.PLAN.read_text())
+        omitted = plan['unmapped_symbol_triage']['groups'].pop(0)['symbols'][0]['symbol']
+        self.assertEqual(audit.symbol_triage(plan, manifest, manifest_path)['symbols_without_triage'],
+                         [omitted])
+
     def test_preserves_gaps_and_null_readings(self):
         result = audit.report()
         self.assertFalse(result['completion_claim'])

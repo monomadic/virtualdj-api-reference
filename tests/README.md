@@ -4,6 +4,10 @@ H4: [runtime argument grammar tests](../docs/Runtime%20Argument%20Grammar%20Test
 
 This folder contains small reproducible assets used to verify claims in the reference documentation.
 
+For H4 symbols without a family mapping, start with `just runtime-grammar --triage`:
+it returns checked historical instruction anchors, dispositions and next actions without
+loading the full live-evidence audit. Triage does not establish behavioral coverage.
+
 Sampler contract work: `just coverage --section=Sampler --frontier` gives the scoped
 queue; `just verb sampler_volume` joins the confirmed forms from
 [`sampler-contracts-9598.json`](sampler-contracts-9598.json). The initial and timeout
