@@ -42,6 +42,24 @@ class DisplayFloatEvidence(unittest.TestCase):
             with self.assertRaises(AssertionError):
                 check_capture(path)
 
+    def test_conversion_followup_preserves_chain_failures_and_nulls(self):
+        self.assertEqual(build_suite(True), json.loads(
+            (ROOT / 'tests/runtime-grammar-display-conversions-cases.json').read_text()))
+        for suffix in ('', '-confirmation'):
+            path = ROOT / f'tests/runtime-grammar-display-conversions{suffix}-9598.json'
+            rows = check_capture(path)['cases']
+            for row in rows:
+                name = row['id'].removeprefix('display-conversion-')
+                if name.startswith('inherited-'):
+                    self.assertEqual(row['verdict'], 'prediction-not-held')
+                    expected = 'hex:' + name[-1].encode().hex()
+                    self.assertTrue(all(set(p[row['script']]) == {expected} for p in row['passes']))
+                else:
+                    self.assertEqual(row['verdict'], 'held-in-fixture')
+                    null = name in ('direct-text', 'computed-text-zero', 'omitted',
+                                    'computed-empty', 'computed-off')
+                    self.assertEqual(separation(row), 'matches-controls' if null else 'separates')
+
 
 if __name__ == '__main__':
     unittest.main()

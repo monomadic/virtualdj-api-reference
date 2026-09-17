@@ -647,6 +647,7 @@ check-runtime-grammar:
     @{{python}} tools/build_runtime_setting_eval_cases.py --discrimination --check
     @{{python}} tools/build_runtime_setting_eval_cases.py --types --check
     @{{python}} tools/build_runtime_display_float_cases.py --check
+    @{{python}} tools/build_runtime_display_float_cases.py --conversions --check
     @{{python}} tools/test_runtime_display_float.py
     @{{python}} tools/test_runtime_setting_eval.py
     @{{python}} tools/test_runtime_quote_consumer.py

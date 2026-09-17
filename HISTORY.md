@@ -1120,3 +1120,12 @@ matched controls and remains null evidence. Preserved both captures and joined
 their exact cases to the branch audit. This does not close H4: editor token spans,
 remote-mode establishment/restoration, reachability and final branch reconciliation
 remain open. Details: `docs/Runtime Argument Grammar Tests.md`.
+
+### H4 floating conversion follow-up (2026-09-17)
+
+Two independent build 18.0.9598 read-only captures each recorded 13 held and two
+failed predictions against frozen display-frame oracles. Direct numeric/unit forms,
+computed beats, and longer expressions separated from controls. Zero-frame cases
+matched controls. Chained constant-prefix predictions failed with ASCII constants,
+so they do not establish the inherited-parameter path. Original expectations and
+both captures are retained; see the Runtime Argument Grammar Tests follow-up.

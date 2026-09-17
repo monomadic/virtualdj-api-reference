@@ -904,3 +904,24 @@ These questions concern exact returned frames in this consumer and fixture.
 Physical rendering, compiled-action cache reuse, nonzero relative input, and
 universal coercion rules remain unmeasured. For future binary-valued probes,
 reuse the prober's hex mode rather than comparing replacement-decoded text.
+
+### Floating conversion follow-up (2026-09-17)
+
+The separately frozen [conversion questions](../tests/runtime-grammar-display-conversions-cases.json)
+reuse `parser_display_float` and the pre-candidate binary literal calibration.
+Generate/check with `tools/build_runtime_display_float_cases.py --conversions --check`;
+run through the same argument prober with this suite path and a new output path.
+The [first capture](../tests/runtime-grammar-display-conversions-9598.json) and
+[independent repeat](../tests/runtime-grammar-display-conversions-confirmation-9598.json)
+on build 18.0.9598 each recorded 13 held predictions and two failed predictions:
+
+| Frozen question | Both captures in `parser_display_float` |
+| --- | --- |
+| Do direct `2.0`, `200%`, `2ms`, `2bt`, and computed `constant 2bt` match literal 2? | Held and separated from both controls. |
+| Does direct `on` match literal 1? | Held and separated. |
+| Do quoted direct text `2`, computed text `2`, omission, computed empty constant, and computed `off` match literal 0? | Held but matched both controls; no recognition evidence. The earlier computed-text-to-2 prediction remains a preserved failure. |
+| Does the longer expression `constant 2 & param_add 0 & param_add 0` match literal 2, with a normal backtick pair or with an outer quote and no final backtick? | Both predictions held and separated. This does not prove a particular string-storage branch executed. |
+| Does preceding the omitted-operand display query with `constant 1 &` or `constant 2 &` supply the missing operand and return its literal frame? | Both predictions failed: exact HTTP bodies were ASCII `1` and `2` respectively. These scripts do not establish traversal of the helper's inherited-parameter path. |
+
+No setup or restoration writes were required. Zero-frame equality remains unable
+to distinguish a recognized zero from a failed evaluation in this consumer.

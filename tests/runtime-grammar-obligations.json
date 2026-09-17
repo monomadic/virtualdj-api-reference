@@ -134,6 +134,14 @@
         {
           "capture": "tests/runtime-grammar-display-float-confirmation-9598.json",
           "group": "display-float"
+        },
+        {
+          "capture": "tests/runtime-grammar-display-conversions-9598.json",
+          "group": "display-conversions"
+        },
+        {
+          "capture": "tests/runtime-grammar-display-conversions-confirmation-9598.json",
+          "group": "display-conversions"
         }
       ],
       "structural_edges": [
@@ -149,7 +157,7 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Preserve exact binary-frame comparisons in parser_display_float: computed text failed the literal-2 prediction; leading space matched controls; signed input was measured only against a zero baseline. Classify remaining cache/index branches before requiring more fixtures. No physical display or cache-reuse proof is attached.",
+      "next_action": "Preserve exact binary-frame comparisons in parser_display_float: computed text failed the literal-2 prediction; leading space matched controls; signed input was measured only against a zero baseline. Classify remaining cache/index branches before requiring more fixtures. No physical display or cache-reuse proof is attached. Direct and computed beat forms and long expressions now have frame comparisons. Chained constant prefixes returned ASCII constants, not the predicted binary frames; they do not establish inherited-parameter traversal.",
       "structural_review": "tests/runtime-parser-branch-routes.json#evaluation_callers",
       "caller_evidence": [
         {
