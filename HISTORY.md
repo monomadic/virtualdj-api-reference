@@ -1147,3 +1147,12 @@ failures, with 12 held cases matching controls. Raw quoted actions and computed 
 produced sums; direct beats returned error:1; computed numeric text yielded second-
 then-first concatenation. Trailing-backtick-only predictions failed. Frozen suites,
 both captures and exact consumer/conversion call edges are preserved and audit-linked.
+
+### H4 text interpolation comparisons (2026-09-17)
+
+Added sentinel-controlled get_text boundary, escape and formatting questions to the
+existing read-only prober. Two build 18.0.9598 captures each recorded 20 held and two
+failed predictions; three held cases matched controls. Fractional and beat formatting
+predictions failed with exact outputs retained. The audit links these observations
+to the distinct interpolation route and excludes outer-token escape, internal type,
+skin-cache and universal-formatting claims. No live state writes were needed.

@@ -1,0 +1,1666 @@
+{
+  "summary": {
+    "suite_sha256": "40a2971a972360fe170b3dfa761764ad1572109d34318a83e2df7fe5b669240d",
+    "suite": "tests/runtime-grammar-text-reader-cases.json",
+    "repeat": 3,
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "status": "complete",
+    "response_normalization": "none; decoded HTTP body whitespace retained",
+    "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-17T01:44:56.775484+00:00",
+    "verdicts": {
+      "held-in-fixture": 20,
+      "prediction-not-held": 2
+    }
+  },
+  "fixture_checks": [
+    {
+      "round": 1,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    },
+    {
+      "round": 2,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "text-reader-paired",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does paired interpolation insert the integer between literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37`B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37`B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-unclosed",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unmatched backtick remain literal with the remaining text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37 B'",
+      "expected": "A`constant 37 B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37 B'": [
+            "A`constant 37 B",
+            "A`constant 37 B",
+            "A`constant 37 B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37 B'": [
+            "A`constant 37 B",
+            "A`constant 37 B",
+            "A`constant 37 B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-empty-pair",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an empty backtick pair contribute no text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A``B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A``B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A``B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-empty-pairs-around-text",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do empty pairs leave the intervening action-looking text literal?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A``constant 37``B'",
+      "expected": "Aconstant 37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A``constant 37``B'": [
+            "Aconstant 37B",
+            "Aconstant 37B",
+            "Aconstant 37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A``constant 37``B'": [
+            "Aconstant 37B",
+            "Aconstant 37B",
+            "Aconstant 37B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-adjacent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do adjacent expressions each contribute text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37``constant 5`B'",
+      "expected": "A375B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37``constant 5`B'": [
+            "A375B",
+            "A375B",
+            "A375B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37``constant 5`B'": [
+            "A375B",
+            "A375B",
+            "A375B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-separated",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do multiple expressions preserve the intervening literal text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37`C`constant 5`B'",
+      "expected": "A37C5B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37`C`constant 5`B'": [
+            "A37C5B",
+            "A37C5B",
+            "A37C5B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37`C`constant 5`B'": [
+            "A37C5B",
+            "A37C5B",
+            "A37C5B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-leading-expression-space",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does leading space inside the expression retain its integer result?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A` constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A` constant 37`B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A` constant 37`B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-trailing-expression-space",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does trailing space inside the expression retain its integer result?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37 `B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37 `B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37 `B'": [
+            "A37B",
+            "A37B",
+            "A37B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-unknown-expression",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unknown expression leave only the literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`h4_unknown_text_reader`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`h4_unknown_text_reader`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`h4_unknown_text_reader`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-empty-result",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an empty constant result leave only the literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-boolean-on",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does the true boolean expression insert on?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`on`B'",
+      "expected": "AonB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`on`B'": [
+            "AonB",
+            "AonB",
+            "AonB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`on`B'": [
+            "AonB",
+            "AonB",
+            "AonB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-boolean-off",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does the false boolean expression insert off?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`off`B'",
+      "expected": "AoffB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`off`B'": [
+            "AoffB",
+            "AoffB",
+            "AoffB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`off`B'": [
+            "AoffB",
+            "AoffB",
+            "AoffB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-fraction",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a fractional value insert its percentage representation?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 0.37`B'",
+      "expected": "A37%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 0.37`B'": [
+            "A0.37B",
+            "A0.37B",
+            "A0.37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 0.37`B'": [
+            "A0.37B",
+            "A0.37B",
+            "A0.37B"
+          ]
+        }
+      ],
+      "verdict": "prediction-not-held"
+    },
+    {
+      "id": "text-reader-percent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a percentage operand insert the percentage text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37%`B'",
+      "expected": "A37%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37%`B'": [
+            "A37%B",
+            "A37%B",
+            "A37%B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37%`B'": [
+            "A37%B",
+            "A37%B",
+            "A37%B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-beats",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an evaluated beat value leave only the sentinels in this text consumer?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37bt`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37bt`B'": [
+            "A37 btB",
+            "A37 btB",
+            "A37 btB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A`constant 37bt`B'": [
+            "A37 btB",
+            "A37 btB",
+            "A37 btB"
+          ]
+        }
+      ],
+      "verdict": "prediction-not-held"
+    },
+    {
+      "id": "text-reader-newline-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does backslash-n insert CRLF between the sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\nB'",
+      "expected": "A\r\nB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\nB'": [
+            "A\r\nB",
+            "A\r\nB",
+            "A\r\nB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\nB'": [
+            "A\r\nB",
+            "A\r\nB",
+            "A\r\nB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-tab-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does backslash-t insert a tab?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\tB'",
+      "expected": "A\tB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\tB'": [
+            "A\tB",
+            "A\tB",
+            "A\tB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\tB'": [
+            "A\tB",
+            "A\tB",
+            "A\tB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-decimal-character",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a decimal character escape insert the requested byte?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\65B'",
+      "expected": "AAB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\65B'": [
+            "AAB",
+            "AAB",
+            "AAB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\65B'": [
+            "AAB",
+            "AAB",
+            "AAB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-double-backslash",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a doubled backslash insert one backslash?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\\\B'",
+      "expected": "A\\B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\\\B'": [
+            "A\\B",
+            "A\\B",
+            "A\\B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\\\B'": [
+            "A\\B",
+            "A\\B",
+            "A\\B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-backslash-before-backtick",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a backslash remain literal while the following paired backticks still interpolate?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\`constant 37`B'",
+      "expected": "A\\37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\`constant 37`B'": [
+            "A\\37B",
+            "A\\37B",
+            "A\\37B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\`constant 37`B'": [
+            "A\\37B",
+            "A\\37B",
+            "A\\37B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-double-percent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a doubled percent sign insert one percent sign?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A%%B'",
+      "expected": "A%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A%%B'": [
+            "A%B",
+            "A%B",
+            "A%B"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A%%B'": [
+            "A%B",
+            "A%B",
+            "A%B"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "text-reader-unknown-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unknown backslash escape preserve both characters?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\qB'",
+      "expected": "A\\qB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim.",
+      "passes": [
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\qB'": [
+            "A\\qB",
+            "A\\qB",
+            "A\\qB"
+          ]
+        },
+        {
+          "get_text 'A`zzqqx`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`vfnrbq`B'": [
+            "AB",
+            "AB",
+            "AB"
+          ],
+          "get_text 'A`constant 83`B'": [
+            "A83B",
+            "A83B",
+            "A83B"
+          ],
+          "get_text 'A\\qB'": [
+            "A\\qB",
+            "A\\qB",
+            "A\\qB"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ]
+}

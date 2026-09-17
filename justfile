@@ -651,6 +651,8 @@ check-runtime-grammar:
     @{{python}} tools/test_runtime_display_float.py
     @{{python}} tools/build_runtime_math_reader_cases.py --check
     @{{python}} tools/test_runtime_math_reader.py
+    @{{python}} tools/build_runtime_text_reader_cases.py --check
+    @{{python}} tools/test_runtime_text_reader.py
     @{{python}} tools/test_runtime_setting_eval.py
     @{{python}} tools/test_runtime_quote_consumer.py
     @{{python}} tools/build_runtime_boundary_cases.py --check

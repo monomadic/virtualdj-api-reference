@@ -977,3 +977,40 @@ Reproduce through `tools/probe_arg_forms.py --grammar-cases
 check the frozen questions with `tools/build_runtime_math_reader_cases.py --check`.
 These are query results with no state mutations. Incoming-parameter behavior,
 compiled-action reuse, and other arithmetic verbs remain outside this capture.
+
+### Text interpolation: boundary and formatting questions (2026-09-17)
+
+The [frozen text-reader suite](../tests/runtime-grammar-text-reader-cases.json) uses
+`get_text` with literal `A`/`B` sentinels in `parser_constants`. Both nonsense controls
+are otherwise matching interpolations and return the sentinels alone. The structural
+route remains `get_text` → `actionGetText` → nested create/queryText; it is not an
+observation of the generic parameter evaluator or a skin render.
+
+The [first capture](../tests/runtime-grammar-text-reader-9598.json) and
+[independent repeat](../tests/runtime-grammar-text-reader-confirmation-9598.json)
+on build 18.0.9598 each recorded 20 held predictions and two failed predictions.
+Three held predictions matched controls and remain non-discriminating.
+
+| Frozen question in `parser_constants` | Both captures |
+| --- | --- |
+| Does an unmatched backtick remain literal with the rest of the string? | Held and separated: `A` followed by the unmatched backtick and `constant 37 B`. |
+| Do adjacent and separated interpolations preserve the predicted order and intervening text? | Held and separated: `A375B` and `A37C5B`. |
+| Do leading/trailing spaces within an expression retain the integer result? | Held and separated: `A37B`. |
+| Do empty pairs around action-looking text leave that text literal? | Held and separated: `Aconstant 37B`. |
+| Do a single empty pair, an unknown expression, and an empty result leave only `AB`? | Held but matched controls; no recognition evidence. |
+| Do true/false expressions insert `on`/`off`? | Held and separated: `AonB` and `AoffB`. |
+| Does fractional `0.37` insert `37%`? | Prediction failed: `A0.37B`. |
+| Does `37%` insert percentage text? | Held and separated: `A37%B`. |
+| Does a beat value insert nothing? | Prediction failed: `A37 btB`. |
+| Do backslash-n, backslash-t, decimal `\65`, doubled backslash and doubled percent produce the predicted characters? | Held and separated: CRLF, tab, `A`, one backslash and one percent respectively, between the sentinels. |
+| Does backslash before a backtick remain literal while the expression evaluates? | Held and separated: `A\37B`. |
+| Does unknown `\q` remain literal? | Held and separated: `A\qB`. |
+
+These are exact HTTP observations of this text consumer. Do not turn them into
+outer-argument escape rules or infer an internal result tag from the rendered text.
+The failed formatting predictions do not distinguish a changed build from a
+conversion inside `queryText`; the b9246 assembly is only the structural lead.
+Legacy metadata placeholders and skin-specific cache contexts are not covered.
+Reproduce through the existing argument prober using this suite path, `--repeat 3
+--rounds 2`, and a new output path; check the suite with
+`tools/build_runtime_text_reader_cases.py --check`.

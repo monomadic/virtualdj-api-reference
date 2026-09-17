@@ -1,0 +1,555 @@
+{
+  "description": "Sentinel-controlled get_text interpolation, result formatting and escape questions.",
+  "cases": [
+    {
+      "id": "text-reader-paired",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does paired interpolation insert the integer between literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-unclosed",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unmatched backtick remain literal with the remaining text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37 B'",
+      "expected": "A`constant 37 B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-empty-pair",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an empty backtick pair contribute no text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A``B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-empty-pairs-around-text",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do empty pairs leave the intervening action-looking text literal?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A``constant 37``B'",
+      "expected": "Aconstant 37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-adjacent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do adjacent expressions each contribute text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37``constant 5`B'",
+      "expected": "A375B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-separated",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Do multiple expressions preserve the intervening literal text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37`C`constant 5`B'",
+      "expected": "A37C5B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-leading-expression-space",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does leading space inside the expression retain its integer result?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A` constant 37`B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-trailing-expression-space",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does trailing space inside the expression retain its integer result?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37 `B'",
+      "expected": "A37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-unknown-expression",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unknown expression leave only the literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`h4_unknown_text_reader`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-empty-result",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an empty constant result leave only the literal sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-boolean-on",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does the true boolean expression insert on?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`on`B'",
+      "expected": "AonB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-boolean-off",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does the false boolean expression insert off?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`off`B'",
+      "expected": "AoffB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-fraction",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a fractional value insert its percentage representation?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 0.37`B'",
+      "expected": "A37%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-percent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a percentage operand insert the percentage text?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37%`B'",
+      "expected": "A37%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-beats",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an evaluated beat value leave only the sentinels in this text consumer?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A`constant 37bt`B'",
+      "expected": "AB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-newline-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does backslash-n insert CRLF between the sentinels?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\nB'",
+      "expected": "A\r\nB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-tab-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does backslash-t insert a tab?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\tB'",
+      "expected": "A\tB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-decimal-character",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a decimal character escape insert the requested byte?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\65B'",
+      "expected": "AAB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-double-backslash",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a doubled backslash insert one backslash?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\\\B'",
+      "expected": "A\\B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-backslash-before-backtick",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a backslash remain literal while the following paired backticks still interpolate?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\`constant 37`B'",
+      "expected": "A\\37B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-double-percent",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does a doubled percent sign insert one percent sign?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A%%B'",
+      "expected": "A%B",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    },
+    {
+      "id": "text-reader-unknown-escape",
+      "fixture": "parser_constants",
+      "group": "text-reader",
+      "hypothesis": "Does an unknown backslash escape preserve both characters?",
+      "binary_sites": [
+        "actionGetText@0x100423013",
+        "actionGetText@0x1004230c1",
+        "actionGetText@0x100423462",
+        "actionGetText@0x1004235d8"
+      ],
+      "script": "get_text 'A\\qB'",
+      "expected": "A\\qB",
+      "controls": [
+        "get_text 'A`zzqqx`B'",
+        "get_text 'A`vfnrbq`B'"
+      ],
+      "contrasts": [
+        {
+          "script": "get_text 'A`constant 83`B'",
+          "expected": "A83B"
+        }
+      ],
+      "scope": "Exact whitespace-preserving HTTP text in parser_constants. No skin rendering, outer-token escape rule, cache branch or universal result-type claim."
+    }
+  ]
+}

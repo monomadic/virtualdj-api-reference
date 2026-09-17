@@ -26,8 +26,9 @@ class AuditTests(unittest.TestCase):
                          'math-reader-first-operand-1-raw-action-text'} <=
                         {e['case'] for e in rows['backtick-math-reader']['evidence']})
         self.assertEqual({e['fixture'] for e in rows['backtick-math-reader']['evidence']}, {'parser_constants'})
-        self.assertEqual({e['case'] for e in rows['backtick-text-reader']['evidence']},
-                         {'backtick-text-eval', 'backtick-text-interpolation'})
+        self.assertTrue({'backtick-text-eval', 'backtick-text-interpolation', 'text-reader-unclosed'} <=
+                        {e['case'] for e in rows['backtick-text-reader']['evidence']})
+        self.assertEqual({e['fixture'] for e in rows['backtick-text-reader']['evidence']}, {'parser_constants'})
 
     def test_rejects_invalid_external_caller(self):
         plan = json.loads(audit.PLAN.read_text())

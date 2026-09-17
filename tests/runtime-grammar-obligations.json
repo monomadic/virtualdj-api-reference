@@ -210,6 +210,14 @@
             "backtick-text-eval",
             "backtick-text-interpolation"
           ]
+        },
+        {
+          "capture": "tests/runtime-grammar-text-reader-9598.json",
+          "group": "text-reader"
+        },
+        {
+          "capture": "tests/runtime-grammar-text-reader-confirmation-9598.json",
+          "group": "text-reader"
         }
       ],
       "structural_edges": [
@@ -230,7 +238,7 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Audit the interpolation helper separately; these cases do not prove generic getParamEval branches."
+      "next_action": "The delimiter loop, adjacent/empty/unmatched expressions, basic escapes and selected result formatting now have exact HTTP comparisons. Preserve failed fraction/beat formatting predictions and sentinel-only control matches. These do not establish outer-token escape rules, skin-specific cached creation or all legacy metadata formatting."
     },
     {
       "id": "backtick-math-reader",
