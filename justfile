@@ -664,6 +664,9 @@ check-runtime-grammar:
     @{{python}} tools/runtime_parser_frontier.py --check > /dev/null
     @{{python}} tools/resolve_frontier_sites.py --check > /dev/null
     @{{python}} tools/test_runtime_grammar_actions.py
+    @{{python}} tools/build_runtime_effect_boolean_cases.py --check
+    @{{python}} tools/build_runtime_effect_boolean_cases.py --confirmation --check
+    @{{python}} tools/test_runtime_effect_boolean.py
     @{{python}} tools/test_runtime_grammar_scopes.py
     @{{python}} tools/test_runtime_grammar_master.py
     @{{python}} tools/runtime_grammar_master.py --check > /dev/null

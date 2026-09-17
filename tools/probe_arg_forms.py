@@ -309,7 +309,7 @@ def main() -> int:
     p.add_argument("--grammar-scopes", type=Path,
                    help="selected-deck fixture with query-only scope hypotheses")
     p.add_argument("--grammar-actions", type=Path,
-                   help="allowlisted zoom/beatlock stateful grammar suite")
+                   help="allowlisted zoom/beatlock or prepared Phaser-slot stateful grammar suite")
     p.add_argument("--grammar-cases", type=Path,
                    help="exact-script hypothesis suite; preserves delimiters and prefixes")
     p.add_argument("--rounds", type=int, default=2,

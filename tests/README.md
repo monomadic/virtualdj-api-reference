@@ -8,6 +8,12 @@ For H4 symbols without a family mapping, start with `just runtime-grammar --tria
 it returns checked historical instruction anchors, dispositions and next actions without
 loading the full live-evidence audit. Triage does not establish behavioral coverage.
 
+The H4 `parser_effect_boolean` action fixture requires Phaser already selected in
+deck 1 slot 1 and four unloaded, stopped decks. Inspect its guarded activation
+comparisons with `just probe-arg-forms --grammar-actions tests/runtime-grammar-effect-boolean-confirmation-cases.json --check`.
+The [H4 report](../docs/Runtime%20Argument%20Grammar%20Tests.md#boolean-cache-callers-2026-09-17)
+explains the historical cache-supplying callers and the consumer-specific evidence boundary.
+
 Sampler contract work: `just coverage --section=Sampler --frontier` gives the scoped
 queue; `just verb sampler_volume` joins the confirmed forms from
 [`sampler-contracts-9598.json`](sampler-contracts-9598.json). The initial and timeout

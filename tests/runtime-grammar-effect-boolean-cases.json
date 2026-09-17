@@ -1,0 +1,1697 @@
+{
+  "scope": "Execute/readback on an already selected Phaser slot with four unloaded stopped decks. Frozen predictions from b9246; actual build recorded at run time. Fresh HTTP requests cannot prove compiled-action cache reuse.",
+  "cases": [
+    {
+      "id": "effect-bool-selected-bare",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with bare has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-toggle",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with toggle has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 toggle",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-integer-positive",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with integer-positive has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 1",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-integer-zero",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with integer-zero has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 0",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-integer-negative",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with integer-negative has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 -1",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-float-literal",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with float-literal has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 1.0",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-percent-literal",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with percent-literal has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 25%",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-quoted-on",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with quoted-on has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'on'",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-boolean-true",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with boolean-true has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `on`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-boolean-false",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with boolean-false has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `off`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-computed-positive",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with computed-positive has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant 1`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-computed-zero",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with computed-zero has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant 0`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-computed-negative",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with computed-negative has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant -1`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-computed-float-one",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with computed-float-one has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant 1.0`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-computed-float-fraction",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with computed-float-fraction has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant 0.25`",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-quoted-expression",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with quoted-expression has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 '`constant 1`'",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-unclosed-expression",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with unclosed-expression has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 `constant 1",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-selected-raw-action-text",
+      "group": "effect-bool-selected",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "selected Phaser effect activation with raw-action-text has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'constant 1'",
+      "controls": [
+        "deck 1 effect_active 1 `zzqqx`",
+        "deck 1 effect_active 1 `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-bare",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with bare has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser'",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-toggle",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with toggle has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' toggle",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-integer-positive",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with integer-positive has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 1",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-integer-zero",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with integer-zero has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 0",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-integer-negative",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with integer-negative has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' -1",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-float-literal",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with float-literal has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 1.0",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-percent-literal",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with percent-literal has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 25%",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-quoted-on",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with quoted-on has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 'on'",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-boolean-true",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with boolean-true has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `on`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-boolean-false",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with boolean-false has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `off`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-computed-positive",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with computed-positive has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant 1`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-computed-zero",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with computed-zero has the off signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant 0`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-computed-negative",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with computed-negative has the toggle signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant -1`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "no"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-computed-float-one",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with computed-float-one has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant 1.0`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-computed-float-fraction",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with computed-float-fraction has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant 0.25`",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-quoted-expression",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with quoted-expression has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' '`constant 1`'",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-unclosed-expression",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with unclosed-expression has the on signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' `constant 1",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "yes"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    },
+    {
+      "id": "effect-bool-named-raw-action-text",
+      "group": "effect-bool-named",
+      "fixture": "parser_effect_boolean",
+      "hypothesis": "named Phaser effect activation with raw-action-text has the unchanged signature from off/on baselines; a consumer-specific prediction, not native type or cache coverage.",
+      "script": "deck 1 effect_active 1 'Phaser' 'constant 1'",
+      "controls": [
+        "deck 1 effect_active 1 'Phaser' `zzqqx`",
+        "deck 1 effect_active 1 'Phaser' `vvnnz`"
+      ],
+      "expected": [
+        [
+          "no"
+        ],
+        [
+          "yes"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "deck 1 effect_active 1 'Phaser' on",
+          "expected": [
+            [
+              "yes"
+            ],
+            [
+              "yes"
+            ]
+          ]
+        },
+        {
+          "script": "deck 1 effect_active 1 'Phaser' off",
+          "expected": [
+            [
+              "no"
+            ],
+            [
+              "no"
+            ]
+          ]
+        }
+      ],
+      "binary_sites": [
+        "IAction::getBoolParam@0x1005987e4",
+        "IAction::getBoolParam@0x10059894e"
+      ]
+    }
+  ]
+}

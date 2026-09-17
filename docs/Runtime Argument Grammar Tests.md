@@ -33,10 +33,11 @@ without a primary family mapping. The same result is included under
 The checklist owns the review, and the command checks each anchor against the hashed
 assembly. Related obligations are navigation links, **not live case associations**.
 
-Start with the `investigate-next` groups: the optional-cache path in `getBoolParam`,
-incoming-parameter selection in `getParam`, and the distinct typed/float `getValues`
-overloads. Each needs a verified caller and a discriminating observable before a new
-behavioral obligation. Existing switch or arithmetic results cannot silently cover
+Start with the remaining `investigate-next` groups: incoming-parameter selection in
+`getParam` and the distinct typed/float `getValues` overloads. The boolean-cache lead
+now has its own `boolean-cache-consumer` obligation through `effect_active`; see the
+caller review below. Each remaining lead needs a verified caller and a discriminating
+observable before a new behavioral obligation. Existing switch or arithmetic results cannot silently cover
 another helper or overload. The remaining dispositions separate support for existing
 lexical/conversion families, stateful dispatch/deck questions, selected action behavior,
 editor observations, and construction/ownership support.
@@ -86,6 +87,56 @@ current instruction execution or cache reuse. The reviewer checks nearby straigh
 setup only and leaves unresolved patterns visible; disassembler labels substituted
 for numeric displacements are not field identities. Reproduce using the branch-route
 extraction command below, whose source hash must match the historical manifest.
+
+The `parser_effect_boolean` fixture extends the existing reversible-action runner.
+It requires four unloaded, stopped decks and Phaser already selected in deck 1
+slot 1. It performs no effect selection or parameter writes. Each candidate starts
+from both off/on baselines, is read back through `deck 1 effect_active 1`, and is
+followed by verified restoration. Guards retain deck context, neighboring effect
+selections/activation, and Phaser slider/button values. The runner rejects other
+slots, effect names, chained actions and arbitrary nested expressions. A changed
+selected effect name blocks restoration writes to the replacement effect.
+
+Reproduce with the prepared fixture (the command changes activation temporarily):
+
+```sh
+just probe-arg-forms --grammar-actions tests/runtime-grammar-effect-boolean-confirmation-cases.json --check
+just probe-arg-forms --grammar-actions tests/runtime-grammar-effect-boolean-confirmation-cases.json --rounds 2 --repeat 2 --out /tmp/effect-boolean-new.json
+just runtime-grammar --artifact /tmp/effect-boolean-new.json --check
+```
+
+#### Phaser activation observations, HTTP build 18.0.9628
+
+The [initial capture](../tests/runtime-grammar-effect-boolean-initial-9628.json)
+preserves the original predictions and failures. The
+[confirmation capture](../tests/runtime-grammar-effect-boolean-9628.json) uses
+shape-matched quoted-text and unclosed-expression controls, and adds opposite-valued
+forms without rewriting the initial expectations. Each run repeats both off/on
+baselines and reverses case order on its second pass. Inspect verdicts and control
+separation through `just runtime-grammar --artifact <capture> --check`; the
+`boolean-cache-consumer` audit obligation joins both runs to their actual state readbacks.
+
+In both the selected-slot and explicit `'Phaser'` forms, bare/`toggle`/`-1` toggled,
+`1` set activation on, and `0` set it off. Paired-backtick `on`/`off` and
+`constant 1`/`constant 0` produced on/off signatures; `constant -1` toggled.
+The outer-quoted paired-backtick expression also set activation on. These outcomes
+separated from the paired-backtick nonsense controls. The tested direct decimal/percent
+forms and computed decimal forms left both baselines unchanged, matching their controls;
+this does not identify a native type or prove a general conversion rule.
+
+The control correction matters: selected-slot quoted `on`/`off`, raw quoted
+`constant 1`/`constant 0`, and quoted nonsense all set activation on. With explicit
+`'Phaser'` naming, those same quoted arguments and controls left activation unchanged.
+Unclosed expressions and unclosed nonsense toggled in both routes. None of those
+results proves successful raw-text or unclosed-expression evaluation. Failed predictions
+remain failed even where their outputs match the improved controls.
+
+The captures establish activation readback only, with restoration and collateral
+guards; they do not establish audible processing, other plugins, stems, native parameter
+types, live instruction coverage or persistent compiled-action cache reuse. The next
+cache-specific obligation is to execute the **same independently identified compiled
+action** with changing nested input and observe activation separately. Repeated HTTP
+requests alone do not supply that identity.
 
 ### Remote-entry and list-helper reachability review (2026-09-17)
 

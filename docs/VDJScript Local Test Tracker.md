@@ -8,6 +8,18 @@ Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
 **Partial**, HTTP build 9598, named read-only `parser_constants` fixture. The [run report](Runtime%20Argument%20Grammar%20Tests.md) links exact scripts, repeated outputs, controls, deck/transport context, binary provenance and the uncompleted scope/editor cases. Confirmation and focused follow-up captures completed; the original capture is incomplete after the app exited during a deck-keyword pass. Causation is unproven. No per-verb statuses or normative grammar rules were promoted. The continuation adds zoom/beatlock/all-deck action comparisons with independent readback and verified restoration, selected-deck comparisons and raw whitespace probes. The report and captures preserve aborted attempts separately from completed runs. Next: close remaining consumer/lifetime/editor gaps using the recorded static frontier.
 
+## H4 boolean effect consumer — 2026-09-17
+
+**Partial**, HTTP build 18.0.9628, `parser_effect_boolean`: four unloaded stopped
+decks, Phaser already selected in deck 1 slot 1, off/on activation baselines,
+independent `deck 1 effect_active 1` readback and verified restoration. The
+[H4 run report](Runtime%20Argument%20Grammar%20Tests.md#phaser-activation-observations-http-build-1809628)
+links initial and confirmation captures, exact scripts, preserved prediction failures,
+and corrected quoted-text/unclosed-expression controls. This is the separate
+`getBoolParam` consumer obligation, not an extension of the older switch result.
+Cache reuse, audible processing and universal boolean conversion remain unmeasured;
+per-verb conclusions belong to `just verb effect_active`.
+
 ## Evidence Snapshot
 
 Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) and local official/published skin examples.

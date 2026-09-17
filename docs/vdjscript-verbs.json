@@ -2770,13 +2770,14 @@
    "evidence": [
     "Local test (User-provided local result, build not recorded): User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
     "Local test 2026-09-07, HTTP, build 18.0.9598, fx_slot_1_on fixture (Phaser in slot 1), query position: effect_active 'Phaser' yes, 'flanger' no, nonsense no, bare yes — the effect-name argument is a recognized predicate beside the slot-number form. Tracker: Documented Parameters Taken Live 2026-09-07 (fixtures).",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_effect_active implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_effect_active implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
+    "Local test 2026-09-17, HTTP execute plus independent activation readback, build 18.0.9628, parser_effect_boolean: four unloaded stopped decks; Phaser already selected in deck 1 slot 1. Initial and confirmation runs repeat off/on baselines with verified restoration and collateral guards. For deck 1 effect_active 1 and deck 1 effect_active 1 'Phaser', literal 1/0 set on/off, bare/toggle/-1 toggle, paired-backtick on/off and constant 1/0 set on/off, and paired-backtick constant -1 toggles. Quoted text and unclosed expressions match shape-specific nonsense controls; no raw-text evaluation, native-type, audible-processing or compiled-action-cache-reuse conclusion. tests/runtime-grammar-effect-boolean-initial-9628.json; tests/runtime-grammar-effect-boolean-9628.json; docs/Runtime Argument Grammar Tests.md, Phaser activation observations."
    ],
    "section": "Effects",
    "description": "Activate/deactivate",
    "example": "effect_active 1 on",
    "kind": "Dual",
-   "note": "User-provided vocal-slot pads confirmed Echo Out and Reverb light independently while both play on the `vocals` stem FX slot. Conservative guidance is promoted to the `effect_select_multi` and `effect_active` entries; repeat on a recorded build for fixture-grade `Pass`.",
+   "note": "HTTP build 18.0.9628, prepared Phaser slot: selected-slot and explicit-name activation support tested literal and paired-backtick boolean/integer forms with independent readback and verified restoration. Quoted-text and unclosed-expression results match shape-specific nonsense controls. See runtime-grammar-effect-boolean captures; cache reuse and audible processing remain unmeasured. Earlier query and user-provided stems observations remain in evidence.",
    "confidence": "local_test"
   },
   "effect_arm_active": {

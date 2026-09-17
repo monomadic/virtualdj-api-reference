@@ -1168,3 +1168,26 @@ distinct typed/float pair evaluators. Existing family gaps remain visible and no
 coverage was promoted. Anchor/duplicate/category regressions and the runtime grammar
 checks passed. The full `just check` stopped at the unchanged binary-vocabulary artifact's
 re-extraction mismatch against installed build 18.0.9628; historical data was not rewritten.
+
+### H4 boolean cache consumer follow-up (2026-09-17)
+
+Extended the existing historical caller scan to `getBoolParam`, identifying the
+selected-slot and named-effect `effect_active` routes as cache-supplying leads on
+b9246. Reproduced the bounded assembly capture and added checked argument-setup
+classification without claiming indirect-call completeness or live cache reuse.
+
+Extended the reversible-action runner with the prepared `parser_effect_boolean`
+Phaser fixture on HTTP build 18.0.9628. Initial and independent confirmation captures
+preserve predictions, off/on baseline readbacks, controls, journals and restorations.
+The confirmation adds shape-matched quoted-text/unclosed-expression controls and
+opposite-valued forms: their null results prevent interpreting selected-slot activation
+or malformed-input toggling as expression evaluation. Paired-backtick boolean/integer
+cases separate from controls. Exact results are joined by `boolean-cache-consumer` in
+`just runtime-grammar --audit`, with per-verb evidence available through
+`just verb effect_active`. Cache reuse and native type/branch coverage remain open;
+the unmapped-symbol triage now starts with incoming-parameter selection.
+
+Runtime-grammar, capture, restoration-guard and reference-status checks passed.
+Full `just check` again stopped at the unchanged historical binary-vocabulary
+artifact's mismatch against installed build 18.0.9628; no historical binary data
+was re-anchored as part of this consumer test.

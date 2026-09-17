@@ -471,6 +471,41 @@
         }
       ],
       "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation."
+    },
+    {
+      "id": "boolean-cache-consumer",
+      "symbol": "IAction::getBoolParam",
+      "site": "0x1005987e4",
+      "question": "How do selected-slot and named-Phaser effect_active consumers distinguish literal, computed and malformed boolean parameters from both activation baselines?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-effect-boolean-initial-9628.json",
+          "group": "effect-bool-selected"
+        },
+        {
+          "capture": "tests/runtime-grammar-effect-boolean-initial-9628.json",
+          "group": "effect-bool-named"
+        },
+        {
+          "capture": "tests/runtime-grammar-effect-boolean-9628.json",
+          "group": "effect-bool-selected"
+        },
+        {
+          "capture": "tests/runtime-grammar-effect-boolean-9628.json",
+          "group": "effect-bool-named"
+        }
+      ],
+      "caller_evidence": [
+        {
+          "symbol": "__ZN20ACTION_effect_active9onExecuteEv",
+          "site": "0x1008a16ea"
+        },
+        {
+          "symbol": "__ZN20ACTION_effect_active9onExecuteEv",
+          "site": "0x1008a179c"
+        }
+      ],
+      "next_action": "Keep quoted-text and unclosed-expression results joined to shape-matched confirmation controls. Establish repeated execution of the same compiled action with changing nested input and independent activation readback before claiming cache reuse or invalidation. HTTP requests do not establish action-object identity; no instruction-coverage or general boolean-coercion claim."
     }
   ],
   "editor_corpus": [
@@ -754,22 +789,6 @@
     "reviewed": "2026-09-17",
     "scope": "Triage of captured b9246 symbols lacking a primary branch-family obligation. Tier-2 structural leads only; related obligations are navigation, not live evidence links. Representative instruction anchors are not branch partitions. Newly captured unmapped symbols remain untriaged until reviewed.",
     "groups": [
-      {
-        "id": "boolean-cache-path",
-        "disposition": "investigate-next",
-        "related_obligations": [
-          "boolean-consumer",
-          "backtick-consumers"
-        ],
-        "structural_interpretation": "getBoolParam reads a typed parameter, tests the optional cache pointer before the text/backtick path, and calls create/query. The IActionSwitch obligation is a different consumer and does not cover this helper.",
-        "next_action": "Resolve a concrete caller that supplies the cache pointer; compare missing, integer/boolean and backtick values with independent state readback. Separate cache reuse from fresh construction.",
-        "symbols": [
-          {
-            "symbol": "IAction::getBoolParam",
-            "site": "0x1005987e4"
-          }
-        ]
-      },
       {
         "id": "incoming-parameter-selection",
         "disposition": "investigate-next",

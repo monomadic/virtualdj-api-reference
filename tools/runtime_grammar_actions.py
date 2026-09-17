@@ -1,6 +1,6 @@
 """Stateful, allowlisted H4 comparisons, reached through probe_arg_forms.py.
 
-Only zoom and beatlock writes are permitted. Each observation starts from a
+Only zoom, beatlock and the named Phaser-slot fixture writes are permitted. Each observation starts from a
 verified baseline and ends with independently verified restoration. A lost
 execute response is never retried. Suite predictions are frozen before a run.
 """
@@ -37,6 +37,38 @@ PREFIXES = {"parser_zoom_levels": "zoom", "parser_beatlock_levels": "deck 1 beat
 GUARDS = ["get_decks", "get_deck", "masterdeck_auto"] + [
     f"deck {d} {v}" for d in range(1, 5) for v in ("loaded", "play", "select", "pfl", "masterdeck")]
 RESOURCES = ["zoom"] + [f"deck {d} beatlock" for d in range(1, 5)]
+EFFECT_FIXTURE = 'parser_effect_boolean'
+EFFECT_FIXTURES = {EFFECT_FIXTURE: {
+    'queries': ['deck 1 effect_active 1'], 'baselines': [['no'], ['yes']]}}
+EFFECT_RESOURCES = ['deck 1 effect_active 1']
+EFFECT_GUARDS = GUARDS + [
+    f'deck {d} {verb} {slot}' for d in range(1, 5) for slot in range(1, 4)
+    for verb in ('get_effect_name', 'effect_active')
+    if (d, slot, verb) != (1, 1, 'effect_active')]
+EFFECT_GUARDS += [f'deck 1 effect_slider 1 {i}' for i in range(1, 5)]
+EFFECT_GUARDS += [f'deck 1 effect_button 1 {i}' for i in range(1, 3)]
+EFFECT_TAILS = {'', 'on', 'off', 'toggle', '1', '0', '-1', '1.0', '0.0', '25%',
+                'zzqqx', 'vvnnz', "'on'", "'off'", '`on`', '`off`',
+                '`constant 1`', '`constant 0`', '`constant -1`',
+                '`constant 1.0`', '`constant 0.25`', '`zzqqx`', '`vvnnz`',
+                "'`constant 1`'", "'`constant 0`'", '`constant 1', '`constant 0',
+                "'constant 1'", "'constant 0'", "'zzqqx'", "'vvnnz'", '`zzqqx', '`vvnnz'}
+
+
+def fixture_profile(suite):
+    names = {c['fixture'] for c in suite['cases']}
+    if EFFECT_FIXTURE in names:
+        if names != {EFFECT_FIXTURE}:
+            raise ValueError('effect fixture cannot be mixed with other mutation profiles')
+        return EFFECT_FIXTURES
+    return FIXTURES
+
+
+def allowed_scripts(fixture):
+    if fixture == EFFECT_FIXTURE:
+        return {'deck 1 effect_active 1' + middle + (' ' + t if t else '')
+                for middle in ('', " 'Phaser'") for t in EFFECT_TAILS}
+    return {PREFIXES[fixture] + (' ' + t if t else '') for t in TAILS}
 
 
 class OnceChannel(Channel):
@@ -68,21 +100,21 @@ def equal(actual, expected):
 
 
 def validate(suite):
+    fixtures = fixture_profile(suite)
     ids = set()
     for c in suite["cases"]:
         if c["id"] in ids:
             raise ValueError(f"duplicate case id: {c['id']}")
         ids.add(c["id"])
-        if c["fixture"] not in FIXTURES:
+        if c["fixture"] not in fixtures:
             raise ValueError(f"unknown fixture: {c['fixture']}")
-        f = FIXTURES[c["fixture"]]
+        f = fixtures[c["fixture"]]
         if not c.get("hypothesis") or not c.get("binary_sites"):
             raise ValueError(f"missing hypothesis or binary sites: {c['id']}")
         if len(c["controls"]) != 2 or len(set(c["controls"])) != 2:
             raise ValueError(f"two distinct controls required: {c['id']}")
         variants = [c["script"], *c["controls"], *(x["script"] for x in c["contrasts"])]
-        prefix = PREFIXES[c["fixture"]]
-        allowed = {prefix + (" " + t if t else "") for t in TAILS}
+        allowed = allowed_scripts(c['fixture'])
         if not all(s in allowed for s in variants):
             raise ValueError(f"script outside allowlist: {c['id']}")
         if len(c["expected"]) != len(f["baselines"]):
@@ -131,21 +163,30 @@ class Session:
         self.channel, self.capture, self.path = channel, capture, path
         self.original = None
         self.guards = None
+        self.effect_profile = EFFECT_FIXTURE in capture.get('fixtures', {})
+        self.resource_queries = EFFECT_RESOURCES if self.effect_profile else RESOURCES
+        self.guard_queries = EFFECT_GUARDS if self.effect_profile else GUARDS
 
     def read(self, queries):
         return [self.channel.query(q) for q in queries]
 
     def snapshot(self):
-        self.guards = self.read(GUARDS)
-        g = dict(zip(GUARDS, self.guards))
+        self.guards = self.read(self.guard_queries)
+        g = dict(zip(self.guard_queries, self.guards))
         if g["get_decks"] != "4" or any(g[f"deck {d} {v}"] != "no"
                 for d in range(1, 5) for v in ("loaded", "play")):
             raise FixtureError("requires four unloaded, stopped decks before any mutation")
-        self.original = self.read(RESOURCES)
-        float(self.original[0])
-        if not 0 <= float(self.original[0]) <= 1 or any(v not in ("yes", "no") for v in self.original[1:]):
-            raise FixtureError("unrestorable initial readback")
-        self.capture["initial_state"] = {"resources": dict(zip(RESOURCES, self.original)),
+        if self.effect_profile and g['deck 1 get_effect_name 1'] != 'Phaser':
+            raise FixtureError('requires Phaser already selected in deck 1 slot 1; no effect selection is performed')
+        self.original = self.read(self.resource_queries)
+        if self.effect_profile:
+            if any(v not in ('yes', 'no') for v in self.original):
+                raise FixtureError('unrestorable effect readback')
+        else:
+            float(self.original[0])
+            if not 0 <= float(self.original[0]) <= 1 or any(v not in ("yes", "no") for v in self.original[1:]):
+                raise FixtureError("unrestorable initial readback")
+        self.capture["initial_state"] = {"resources": dict(zip(self.resource_queries, self.original)),
                                           "guards": g}
 
     def write(self, script, purpose):
@@ -180,11 +221,13 @@ class Session:
         self.capture["restoration_events"].append({"status": "started"})
         write_capture(self.path, self.capture)
         try:
-            self.put(RESOURCES, self.original, "restore")
-            actual_guards = self.read(GUARDS)
+            if self.effect_profile and self.channel.query('deck 1 get_effect_name 1') != 'Phaser':
+                raise FixtureError('selected effect name changed; refusing to restore a replacement effect')
+            self.put(self.resource_queries, self.original, "restore")
+            actual_guards = self.read(self.guard_queries)
             if actual_guards != self.guards:
                 raise FixtureError("collateral guard changed; aborting rather than guessing restoration")
-            restored = {"resources": self.read(RESOURCES),
+            restored = {"resources": self.read(self.resource_queries),
                         "guards": actual_guards, "verified": True}
             self.capture["restorations"].append(restored)
             self.capture["restoration_events"].append({"status": "success", **restored})
@@ -199,6 +242,8 @@ class Session:
             raise
 
     def sample(self, fixture, baseline, script, repeat):
+        if self.effect_profile and self.read(self.guard_queries) != self.guards:
+            raise FixtureError('effect fixture guards changed before baseline; no new probe issued')
         try:
             self.put(fixture["queries"], baseline, "baseline")
             self.capture["baseline_checks"].append({"script": script, "expected": baseline,
@@ -211,8 +256,9 @@ class Session:
 
 def run_suite(args):
     suite = validate(json.loads(args.grammar_actions.read_text()))
+    fixtures = fixture_profile(suite)
     if args.check or args.dry_run:
-        print(json.dumps({"mode": "allowlisted reversible state comparisons", "fixtures": FIXTURES,
+        print(json.dumps({"mode": "allowlisted reversible state comparisons", "fixtures": fixtures,
                           "cases": len(suite["cases"])}, indent=2))
         return 0
     if args.rounds < 2 or args.repeat < 2 or not args.out:
@@ -221,7 +267,7 @@ def run_suite(args):
         args.grammar_actions.read_bytes()).hexdigest(), "status": "running", "rounds_requested": args.rounds,
         "rounds_completed": 0, "repeat": args.repeat, "mode": "reversible-actions",
         "claim_scope": "state readback in named fixtures on recorded build only"},
-        "fixtures": FIXTURES, "cases": [{**c, "passes": [], "verdict": "not-run"} for c in suite["cases"]],
+        "fixtures": fixtures, "cases": [{**c, "passes": [], "verdict": "not-run"} for c in suite["cases"]],
         "journal": [], "restorations": [], "restoration_events": [], "baseline_checks": []}
     channel = OnceChannel()
     session = Session(channel, capture, args.out)
@@ -230,7 +276,7 @@ def run_suite(args):
         session.snapshot()
         # Test absolute setters and restoration before any candidate is issued.
         for name in sorted({c["fixture"] for c in suite["cases"]}):
-            f = FIXTURES[name]
+            f = fixtures[name]
             for b in f["baselines"]:
                 try:
                     session.put(f["queries"], b, "roundtrip")
@@ -246,7 +292,7 @@ def run_suite(args):
                         scripts.append(script)
             samples_by_fixture = {}
             for fixture_name, scripts in scripts_by_fixture.items():
-                f = FIXTURES[fixture_name]
+                f = fixtures[fixture_name]
                 samples_by_fixture[fixture_name] = {
                     script: [session.sample(f, b, script, args.repeat) for b in f["baselines"]]
                     for script in scripts}
@@ -286,7 +332,7 @@ def check_capture(path):
         raise ValueError(f"invalid capture status: {s.get('status')!r}")
     if s["rounds_requested"] < 2 or not 0 <= s["rounds_completed"] <= s["rounds_requested"]:
         raise ValueError("invalid round counts")
-    if capture["fixtures"] != FIXTURES:
+    if capture["fixtures"] != fixture_profile(suite):
         raise ValueError("fixture definitions changed")
     if len(capture["cases"]) != len(suite["cases"]):
         raise ValueError("case count mismatch")
@@ -296,7 +342,7 @@ def check_capture(path):
         if s["status"] == "complete" and len(c["passes"]) != s["rounds_requested"]:
             raise ValueError(f"incomplete passes: {c.get('id')}")
         required = {c["script"], *c["controls"], *(x["script"] for x in c["contrasts"])}
-        f = FIXTURES[c["fixture"]]
+        f = capture['fixtures'][c["fixture"]]
         for p in c["passes"]:
             if set(p) != required:
                 raise ValueError(f"script set mismatch: {c['id']}")
@@ -309,6 +355,15 @@ def check_capture(path):
             raise ValueError(f"aborted case is not incomplete: {c['id']}")
     if not capture.get("initial_state"):
         raise ValueError("missing initial state")
+    if EFFECT_FIXTURE in capture['fixtures']:
+        initial = capture['initial_state']
+        if (list(initial['resources']) != EFFECT_RESOURCES or
+                list(initial['guards']) != EFFECT_GUARDS or
+                initial['guards']['deck 1 get_effect_name 1'] != 'Phaser'):
+            raise ValueError('effect fixture initial-state contract differs')
+        allowed = allowed_scripts(EFFECT_FIXTURE)
+        if any(j['script'] not in allowed for j in capture['journal']):
+            raise ValueError('effect journal contains a non-allowlisted write')
     if s["status"] == "complete" and (not capture.get("restoration_events") or not capture.get("restorations")):
         raise ValueError("missing restoration events")
     if s["status"] == "complete" and s["rounds_completed"] != s["rounds_requested"]:

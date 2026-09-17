@@ -62,6 +62,13 @@ class AuditTests(unittest.TestCase):
         self.assertTrue({'backtick-text-eval', 'backtick-text-interpolation', 'text-reader-unclosed'} <=
                         {e['case'] for e in rows['backtick-text-reader']['evidence']})
         self.assertEqual({e['fixture'] for e in rows['backtick-text-reader']['evidence']}, {'parser_constants'})
+        effect = rows['boolean-cache-consumer']
+        self.assertEqual({e['fixture'] for e in effect['evidence']}, {'parser_effect_boolean'})
+        self.assertEqual({e['build'] for e in effect['evidence']}, {'9628'})
+        self.assertEqual({e['symbol'] for e in effect['caller_evidence']},
+                         {'__ZN20ACTION_effect_active9onExecuteEv'})
+        self.assertTrue(any(e['verdict'] == 'prediction-not-held' for e in effect['evidence']))
+        self.assertTrue(any(e['separation'] == 'matches-controls' for e in effect['evidence']))
 
     def test_rejects_invalid_external_caller(self):
         plan = json.loads(audit.PLAN.read_text())
