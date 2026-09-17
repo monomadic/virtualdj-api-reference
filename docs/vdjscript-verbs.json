@@ -15,11 +15,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 40,
-    "Pass": 120,
-    "Untested": 869
+    "Pass": 121,
+    "Untested": 868
    },
    "documented": 772,
-   "tested_pass": 120,
+   "tested_pass": 121,
    "needs_test": 19,
    "blocked": 28,
    "active_incomplete": 2
@@ -12625,16 +12625,18 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_multiply implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_param_multiply implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'.",
+    "Local test (HTTP query, build 18.0.9628, 2026-09-18 Asia/Manila): read-only parser_constants fixture; both operand positions with other operand 3, repeated reads and independent confirmation in tests/runtime-grammar-pair-float-9628.json and tests/runtime-grammar-pair-float-confirmation-9628.json. Integer 7, quoted action constant 7, paired-backtick constant 7 and longer quoted action chains return 21; decimal 2.5 and computed decimal return 7.5, separating from shaped nonsense controls. Direct 25% returns 75%, direct 7ms returns 21ms, computed 7bt returns 21bt; direct 7bt returns error:1. Quoted/computed numeric text and malformed expressions return 0 matching controls, not proof of evaluation. Frozen unit and trailing-backtick predictions remain failed. Historical b9246 param_multiply caller uses getValues(float*,float*), but current unit-bearing results do not establish that route or native types. No execute, incoming-input or cache-reuse claim."
    ],
    "section": "Parameters & Math",
    "description": "Multiply value",
    "example": "param_multiply 300% & effect slider",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test"
   },
   "param_pingpong": {
    "name": "param_pingpong",

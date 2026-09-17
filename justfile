@@ -674,6 +674,8 @@ check-runtime-grammar:
     @{{python}} tools/build_runtime_incoming_action_cases.py --fresh --check
     @{{python}} tools/build_runtime_incoming_action_cases.py --confirmation --check
     @{{python}} tools/test_runtime_incoming.py
+    @{{python}} tools/build_runtime_pair_float_cases.py --check
+    @{{python}} tools/test_runtime_pair_float.py
     @{{python}} tools/test_runtime_grammar_scopes.py
     @{{python}} tools/test_runtime_grammar_master.py
     @{{python}} tools/runtime_grammar_master.py --check > /dev/null

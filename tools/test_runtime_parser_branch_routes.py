@@ -8,6 +8,22 @@ import runtime_parser_branch_routes as routes
 
 
 class RouteEvidenceTests(unittest.TestCase):
+    def test_compact_pair_caller_reports_keep_rejected_candidates_and_no_live_claim(self):
+        reports = [routes.caller_report(target) for target in (
+            'IParamValuesAction::getValues(float*, float*)',
+            'IParamValuesAction::getValues(SActionParam*, SActionParam*)')]
+        for report, consumer in zip(reports, ('param_multiply7onQuery', 'param_add7onQuery')):
+            self.assertFalse(report['live_coverage_claim'])
+            self.assertTrue(any(consumer in call['caller'] and call['verified_instruction']
+                                and call['instruction'] for call in report['calls']))
+        rejected = [call for report in reports for call in report['calls']
+                    if not call['verified_instruction']]
+        self.assertEqual([call['site'] for call in rejected], ['0x10217e5b3'])
+
+    def test_compact_report_rejects_captured_but_unscanned_target(self):
+        with self.assertRaises(ValueError):
+            routes.caller_report('IAction::getParam')
+
     def test_report_remains_structural_and_mode_is_not_claimed_measured(self):
         result = routes.load_report()
         self.assertEqual(result['remote_entry']['status'], 'mode-establishment-not-measured')
@@ -15,7 +31,18 @@ class RouteEvidenceTests(unittest.TestCase):
         self.assertTrue(result['remote_mode_writers'])
         callers = result['evaluation_callers']['functions']
         self.assertTrue(callers)
-        self.assertTrue(all(c['verified_instruction'] for f in callers for c in f['calls']))
+        pair_calls = [(f['symbol'], c) for f in callers for c in f['calls']
+                      if 'getValues' in c['target']]
+        self.assertTrue(any('param_multiply7onQuery' in name and c['verified_instruction']
+                            and c['target'].endswith('(float*, float*)')
+                            for name, c in pair_calls))
+        self.assertTrue(any('param_add7onQuery' in name and c['verified_instruction']
+                            and c['target'].endswith('(SActionParam*, SActionParam*)')
+                            for name, c in pair_calls))
+        rejected = [(name, c) for name, c in pair_calls if not c['verified_instruction']]
+        self.assertEqual([c['site'] for _, c in rejected], ['0x10217e5b3'])
+        self.assertTrue(all(c['verified_instruction'] for f in callers for c in f['calls']
+                            if 'getValues' not in c['target']))
         cache = result['boolean_cache_arguments']['calls']
         self.assertTrue(cache)
         nonnull = [r for r in cache if r['cache_argument'] == 'object-relative-address']

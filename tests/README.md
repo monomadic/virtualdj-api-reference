@@ -21,6 +21,11 @@ The [incoming run report](../docs/Runtime%20Argument%20Grammar%20Tests.md#incomi
 keeps failed and aborted captures separate from completed observations. Prefer this
 scoped query to reading the mutation journals; uncertain writes must not be replayed.
 
+H4 pair-reader callers have a compact route: `just runtime-grammar --callers 'IParamValuesAction::getValues(float*, float*)'`.
+Use `--artifact tests/runtime-grammar-pair-float-confirmation-9628.json --group pair-float`
+for exact multiplication results; historical caller association does not prove the
+current float path, and unit-output prediction failures remain visible.
+
 Sampler contract work: `just coverage --section=Sampler --frontier` gives the scoped
 queue; `just verb sampler_volume` joins the confirmed forms from
 [`sampler-contracts-9598.json`](sampler-contracts-9598.json). The initial and timeout

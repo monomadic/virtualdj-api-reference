@@ -90,6 +90,27 @@ class AuditTests(unittest.TestCase):
             with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
                 audit.report()
 
+    def test_pair_overloads_keep_distinct_evidence_and_reject_byte_candidates(self):
+        rows = {r['id']: r for r in audit.report()['obligations']}
+        self.assertNotEqual(rows['pair-typed-consumer']['symbol'],
+                            rows['pair-float-consumer']['symbol'])
+        floating = rows['pair-float-consumer']
+        self.assertEqual({e['build'] for e in floating['evidence']}, {'9628'})
+        self.assertTrue(all(e['case'].startswith('pair-float-') for e in floating['evidence']))
+        self.assertTrue(any(e['verdict'] == 'prediction-not-held' for e in floating['evidence']))
+        routes = json.loads((audit.ROOT / 'tests/runtime-parser-branch-routes.json').read_text())
+        caller = next(f for f in routes['evaluation_callers']['functions']
+                      if any(not c['verified_instruction'] for c in f['calls']))
+        call = next(c for c in caller['calls'] if not c['verified_instruction'])
+        plan = json.loads(audit.PLAN.read_text())
+        row = next(r for r in plan['obligations'] if r['id'] == 'pair-typed-consumer')
+        row['caller_evidence'] = [{'symbol': caller['symbol'], 'site': call['site']}]
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'plan.json'
+            path.write_text(json.dumps(plan))
+            with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
+                audit.report()
+
     def test_rejects_invalid_entry_route(self):
         plan = json.loads(audit.PLAN.read_text())
         row = next(r for r in plan['obligations'] if r['id'] == 'backtick-float-evaluator')

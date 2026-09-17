@@ -33,10 +33,10 @@ without a primary family mapping. The same result is included under
 The checklist owns the review, and the command checks each anchor against the hashed
 assembly. Related obligations are navigation links, **not live case associations**.
 
-The remaining `investigate-next` group is the distinct typed/float `getValues`
-overloads. The boolean-cache and incoming-parameter leads now have their own
-`boolean-cache-consumer` and `incoming-parameter-selection` obligations through
-`effect_active` and `zoom`; see the bounded consumer reviews below. Each remaining lead needs a verified caller and a discriminating
+The former `investigate-next` leads now have separate consumer obligations:
+`boolean-cache-consumer`, `incoming-parameter-selection`, `pair-typed-consumer`
+and `pair-float-consumer`. The pair-reader association retains a build-specific
+route uncertainty described below; mapping is not branch closure. Each remaining lead needs a verified caller and a discriminating
 observable before a new behavioral obligation. Existing switch or arithmetic results cannot silently cover
 another helper or overload. The remaining dispositions separate support for existing
 lexical/conversion families, stateful dispatch/deck questions, selected action behavior,
@@ -106,6 +106,66 @@ just probe-arg-forms --grammar-actions tests/runtime-grammar-incoming-pipeline-c
 
 Use a new output path for a fresh guarded live run. Do not re-run aborted suites
 as a way to complete them; keep their uncertain writes excluded.
+
+### Pair-reader consumers (2026-09-18)
+
+**Tier 2, b9246 x86_64:** the bounded direct-call scan now includes both exact
+`IParamValuesAction::getValues` overloads. `ACTION_param_add::onQuery` calls the
+`SActionParam*` overload at `0x100992a73`; `ACTION_param_multiply::onQuery`
+calls the `float*` overload at `0x100993524`. Other verified float callers are
+`param_bigger`, `param_equal`, `param_smaller`, `param_pow` and `param_mod`.
+The scan retains an unrelated byte candidate at `0x10217e5b3` with
+`verified_instruction: false`; it is not a caller edge. Indirect calls and inlined
+copies remain outside this inventory.
+
+Use the compact checked lookup rather than loading every captured body:
+
+```sh
+just runtime-grammar --callers 'IParamValuesAction::getValues(float*, float*)'
+just runtime-grammar --callers 'IParamValuesAction::getValues(SActionParam*, SActionParam*)'
+```
+
+Only explicitly scanned targets are accepted. The lookup includes source build/hash,
+verified instruction sites and rejected candidates; it never claims live coverage.
+The `pair-typed-consumer` obligation joins the existing `param_add` captures without
+silently extending those observations to the float helper.
+
+**Local test, HTTP build 18.0.9628:** the read-only `parser_constants` fixture uses
+asymmetric operands in both positions, repeated reads, reversed order on the second
+pass, and shape-matched nonsense controls. The
+[initial run](../tests/runtime-grammar-pair-float-9628.json) and
+[independent confirmation](../tests/runtime-grammar-pair-float-confirmation-9628.json)
+retain the same frozen predictions, including failures. Exact outcomes are exposed by:
+
+```sh
+just runtime-grammar --artifact tests/runtime-grammar-pair-float-confirmation-9628.json --group pair-float --check
+```
+
+With the other operand fixed at `3`, in either position:
+
+- Integer `7`, quoted action text `'constant 7'`, paired-backtick `constant 7`, and
+  the longer quoted action chain return `21`, separating from their controls.
+- Decimal `2.5` and paired-backtick `constant 2.5` return `7.5`.
+- Direct `25%` returns `75%`, direct `7ms` returns `21ms`, and paired-backtick
+  `constant 7bt` returns `21bt`. These **fail** the frozen plain-number predictions.
+- Direct `7bt` returns `error:1`, failing the predicted multiplication result.
+- Quoted numeric text, computed numeric text, an outer-quoted expression missing
+  its final backtick, and trailing-backtick-only action text return `0`, matching
+  their respective controls. The trailing-only prediction remains failed; none
+  of these zero outputs proves successful evaluation or a universal coercion rule.
+
+The historical float-success branch multiplies scalar temporaries and writes a
+`val` result at `0x10099362d`–`0x100993644`. The unit-bearing outputs above do not
+establish that route on build 9628. The consumer has other paths, and the binaries
+are different builds; determining whether the current route changed requires
+current-build structural evidence or a discriminating path observation. No native
+parameter-type or current instruction execution is inferred from HTTP formatting.
+
+The separate overload obligations preserve this uncertainty. Next: partition each
+helper's operand-source/type branches and establish the current multiplication
+route before explaining the unit behavior. Implicit input, persistent action-cache
+reuse, execute behavior and the other callers remain outside this query fixture.
+Per-verb observations belong to `just verb param_multiply`.
 
 ### Bounded evaluator branch review (2026-09-17)
 

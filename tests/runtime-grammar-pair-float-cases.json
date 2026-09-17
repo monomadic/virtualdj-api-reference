@@ -1,0 +1,649 @@
+{
+  "description": "Position-controlled float-pair reader predictions with asymmetric constants and shaped controls.",
+  "cases": [
+    {
+      "id": "pair-float-1-integer",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with integer in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 7 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply zzqqx 3",
+        "param_multiply vvnnz 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-decimal",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with decimal in operand 1 returns 7.5; controls retain operand position and quoting shape.",
+      "script": "param_multiply 2.5 3",
+      "expected": "7.5",
+      "controls": [
+        "param_multiply zzqqx 3",
+        "param_multiply vvnnz 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-percent",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with percent in operand 1 returns 0.75; controls retain operand position and quoting shape.",
+      "script": "param_multiply 25% 3",
+      "expected": "0.75",
+      "controls": [
+        "param_multiply zzqqx 3",
+        "param_multiply vvnnz 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-beats",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with beats in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 7bt 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply zzqqx 3",
+        "param_multiply vvnnz 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-milliseconds",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with milliseconds in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 7ms 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply zzqqx 3",
+        "param_multiply vvnnz 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-raw-action",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with raw-action in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 'constant 7' 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply 'zzqqx' 3",
+        "param_multiply 'vvnnz' 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-paired",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with paired in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply `constant 7` 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply `zzqqx` 3",
+        "param_multiply `vvnnz` 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-computed-decimal",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-decimal in operand 1 returns 7.5; controls retain operand position and quoting shape.",
+      "script": "param_multiply `constant 2.5` 3",
+      "expected": "7.5",
+      "controls": [
+        "param_multiply `zzqqx` 3",
+        "param_multiply `vvnnz` 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-computed-beats",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-beats in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply `constant 7bt` 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply `zzqqx` 3",
+        "param_multiply `vvnnz` 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-computed-text",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-text in operand 1 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply `constant \"7\"` 3",
+      "expected": "0",
+      "controls": [
+        "param_multiply `zzqqx` 3",
+        "param_multiply `vvnnz` 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-quoted-number",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with quoted-number in operand 1 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply '7' 3",
+      "expected": "0",
+      "controls": [
+        "param_multiply 'zzqqx' 3",
+        "param_multiply 'vvnnz' 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-unclosed",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with unclosed in operand 1 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply '`constant 7' 3",
+      "expected": "0",
+      "controls": [
+        "param_multiply '`zzqqx' 3",
+        "param_multiply '`vvnnz' 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-trailing-only",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with trailing-only in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 'constant 7`' 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply 'zzqqx`' 3",
+        "param_multiply 'vvnnz`' 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-1-long-action",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with long-action in operand 1 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 'constant 7 & param_add 0 & param_add 0' 3",
+      "expected": "21",
+      "controls": [
+        "param_multiply 'zzqqx' 3",
+        "param_multiply 'vvnnz' 3"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 11 3",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-integer",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with integer in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 7",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 zzqqx",
+        "param_multiply 3 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-decimal",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with decimal in operand 2 returns 7.5; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 2.5",
+      "expected": "7.5",
+      "controls": [
+        "param_multiply 3 zzqqx",
+        "param_multiply 3 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-percent",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with percent in operand 2 returns 0.75; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 25%",
+      "expected": "0.75",
+      "controls": [
+        "param_multiply 3 zzqqx",
+        "param_multiply 3 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-beats",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with beats in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 7bt",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 zzqqx",
+        "param_multiply 3 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-milliseconds",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with milliseconds in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 7ms",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 zzqqx",
+        "param_multiply 3 vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-raw-action",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with raw-action in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 'constant 7'",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 'zzqqx'",
+        "param_multiply 3 'vvnnz'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-paired",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with paired in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 `constant 7`",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 `zzqqx`",
+        "param_multiply 3 `vvnnz`"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-computed-decimal",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-decimal in operand 2 returns 7.5; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 `constant 2.5`",
+      "expected": "7.5",
+      "controls": [
+        "param_multiply 3 `zzqqx`",
+        "param_multiply 3 `vvnnz`"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-computed-beats",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-beats in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 `constant 7bt`",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 `zzqqx`",
+        "param_multiply 3 `vvnnz`"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-computed-text",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with computed-text in operand 2 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 `constant \"7\"`",
+      "expected": "0",
+      "controls": [
+        "param_multiply 3 `zzqqx`",
+        "param_multiply 3 `vvnnz`"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-quoted-number",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with quoted-number in operand 2 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 '7'",
+      "expected": "0",
+      "controls": [
+        "param_multiply 3 'zzqqx'",
+        "param_multiply 3 'vvnnz'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-unclosed",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with unclosed in operand 2 returns 0; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 '`constant 7'",
+      "expected": "0",
+      "controls": [
+        "param_multiply 3 '`zzqqx'",
+        "param_multiply 3 '`vvnnz'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-trailing-only",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with trailing-only in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 'constant 7`'",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 'zzqqx`'",
+        "param_multiply 3 'vvnnz`'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    },
+    {
+      "id": "pair-float-2-long-action",
+      "group": "pair-float",
+      "fixture": "parser_constants",
+      "hypothesis": "Float-pair multiplication with long-action in operand 2 returns 21; controls retain operand position and quoting shape.",
+      "script": "param_multiply 3 'constant 7 & param_add 0 & param_add 0'",
+      "expected": "21",
+      "controls": [
+        "param_multiply 3 'zzqqx'",
+        "param_multiply 3 'vvnnz'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_multiply 3 11",
+          "expected": "33"
+        }
+      ],
+      "binary_sites": [
+        "IParamValuesAction::getValues(float*, float*)@0x1009918fc",
+        "IParamValuesAction::getValues(float*, float*)@0x100991992"
+      ],
+      "scope": "Exact HTTP query output only; historical verified param_multiply caller uses the float overload. No native-type, cache reuse, implicit-input, execute or all-consumer claim."
+    }
+  ]
+}

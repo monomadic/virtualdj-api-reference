@@ -547,6 +547,62 @@
       ],
       "evidence_limit": "The b9246 consumer calls getParam with index zero. The fallback reads the incoming area at object offset 0x68; execute stores its incoming pointer there and has a separate next-action gate before virtual query dispatch. These are historical structural leads, not observed branch execution on build 9628. Failed query contrasts and aborted action captures cannot establish incoming-value behavior.",
       "next_action": "Inspect exact omitted/explicit pipeline readbacks and the direct-chain negative controls. Second incoming-slot selection, suppression/count flags, other consumers and instruction coverage remain open. Do not retry either uncertain write recorded in the aborted pipeline journals."
+    },
+    {
+      "id": "pair-typed-consumer",
+      "symbol": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+      "site": "0x100993038",
+      "question": "How do typed-pair source and evaluation alternatives relate to the existing param_add outputs, without extending them to the float overload?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "backticks",
+          "case_ids": [
+            "backtick-numeric-consumer",
+            "backtick-numeric-consumer-quoted"
+          ]
+        },
+        {
+          "capture": "tests/runtime-grammar-math-reader-9598.json",
+          "group": "math-reader"
+        },
+        {
+          "capture": "tests/runtime-grammar-math-reader-confirmation-9598.json",
+          "group": "math-reader"
+        }
+      ],
+      "caller_evidence": [
+        {
+          "symbol": "__ZN16ACTION_param_add7onQueryER12SActionParam",
+          "site": "0x100992a73"
+        }
+      ],
+      "evidence_limit": "The checked caller is b9246 x86_64, while linked HTTP observations record their own builds. Caller association is not current-build instruction execution. In particular, unit-bearing multiplication outputs do not prove the historical float overload was taken.",
+      "next_action": "Partition operand-source/type branches separately for this overload. Establish the current-build consumer route before explaining unit-bearing outputs by historical instructions; retain raw-text and malformed-expression controls. Incoming input, persistent cache reuse, execute behavior and other consumers remain outside these query results."
+    },
+    {
+      "id": "pair-float-consumer",
+      "symbol": "IParamValuesAction::getValues(float*, float*)",
+      "site": "0x1009918fc",
+      "question": "Which frozen predictions motivated by the historical float-pair caller hold for exact two-operand param_multiply queries on the recorded current build?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-pair-float-9628.json",
+          "group": "pair-float"
+        },
+        {
+          "capture": "tests/runtime-grammar-pair-float-confirmation-9628.json",
+          "group": "pair-float"
+        }
+      ],
+      "caller_evidence": [
+        {
+          "symbol": "__ZN21ACTION_param_multiply7onQueryER12SActionParam",
+          "site": "0x100993524"
+        }
+      ],
+      "evidence_limit": "The checked caller is b9246 x86_64, while linked HTTP observations record their own builds. Caller association is not current-build instruction execution. In particular, unit-bearing multiplication outputs do not prove the historical float overload was taken.",
+      "next_action": "Partition operand-source/type branches separately for this overload. Establish the current-build consumer route before explaining unit-bearing outputs by historical instructions; retain raw-text and malformed-expression controls. Incoming input, persistent cache reuse, execute behavior and other consumers remain outside these query results."
     }
   ],
   "editor_corpus": [
@@ -830,25 +886,6 @@
     "reviewed": "2026-09-17",
     "scope": "Triage of captured b9246 symbols lacking a primary branch-family obligation. Tier-2 structural leads only; related obligations are navigation, not live evidence links. Representative instruction anchors are not branch partitions. Newly captured unmapped symbols remain untriaged until reviewed.",
     "groups": [
-      {
-        "id": "pair-evaluation-overloads",
-        "disposition": "investigate-next",
-        "related_obligations": [
-          "backtick-math-reader"
-        ],
-        "structural_interpretation": "Both getValues overloads construct nested actions. The SActionParam overload calls query while the float overload calls queryValue. The existing param_add linkage names only the SActionParam overload.",
-        "next_action": "Partition operand source/type branches and identify a verified float-overload consumer before adding live cases; keep typed and float results separate and retain raw-action-text controls.",
-        "symbols": [
-          {
-            "symbol": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
-            "site": "0x100993038"
-          },
-          {
-            "symbol": "IParamValuesAction::getValues(float*, float*)",
-            "site": "0x1009918fc"
-          }
-        ]
-      },
       {
         "id": "lexical-support",
         "disposition": "review-with-existing-family",

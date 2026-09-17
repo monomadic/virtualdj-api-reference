@@ -1217,3 +1217,27 @@ allowlist and reference-status checks passed. Full `just check` stopped at the
 unchanged historical binary-vocabulary artifact's re-extraction mismatch against
 installed build 18.0.9628; historical data was preserved. For efficient follow-up,
 use the scoped capture query in the run report rather than opening full journals.
+
+### H4 pair-reader consumer follow-up (2026-09-18)
+
+Extended the b9246 bounded caller scan to both exact `getValues` overloads.
+Verified typed `param_add` and float `param_multiply` associations are now separate
+obligations; a false-positive byte candidate remains explicitly unverified.
+`just runtime-grammar --callers <exact-symbol>` provides a compact, checked lookup
+and rejects symbols that were not scanned, avoiding full disassembly context loads.
+
+Read-only build-18.0.9628 `param_multiply` comparisons and an independent
+confirmation preserve frozen predictions, both operand positions and shaped controls.
+Numeric, raw-action-text and paired-backtick cases discriminate. Percentage,
+millisecond and computed-beat outputs retain units; direct beats return `error:1`.
+These fail the historical scalar-result predictions and do not prove execution of
+the b9246 float route on the newer build. Malformed/numeric-text zero outputs match
+controls and are not evaluation proof. `just verb param_multiply` records the
+bounded query result; execute, incoming input and cache reuse remain unmeasured.
+
+The pair symbols leave the unmapped triage only because each now has an explicit
+consumer association, not because its branches are closed. Next: establish the
+current-build multiplication route and partition the overloads separately. The
+runtime-grammar, capture, caller-validation and reference-status checks passed.
+Full `just check` again stopped at the unchanged historical binary-vocabulary
+re-extraction mismatch against installed build 18.0.9628; historical data was kept.

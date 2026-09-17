@@ -32,6 +32,17 @@ explicit decimal/zero/relative operands discriminate overrides. The historical
 other consumers and instruction coverage remain open; `just verb zoom` owns the
 per-verb conclusion.
 
+## H4 pair-reader consumers — 2026-09-18
+
+**Partial**, HTTP build 18.0.9628, read-only `parser_constants` fixture, asymmetric
+`param_multiply` operands in both positions, repeated reads and independent
+confirmation. The [run report](Runtime%20Argument%20Grammar%20Tests.md#pair-reader-consumers-2026-09-18)
+links exact scripts, shaped controls and frozen failed predictions. Numeric/raw-action
+cases separate; unit-bearing results differ from the historical float-path predictions;
+malformed and numeric text forms match controls. The b9246 float caller and existing
+typed `param_add` caller are separate checked associations, not proof of current-build
+route equivalence. No execute behavior or native parameter types were established.
+
 ## Evidence Snapshot
 
 Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) and local official/published skin examples.

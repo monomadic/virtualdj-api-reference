@@ -16,6 +16,10 @@ from extract_runtime_parser import x86_slice, function_starts, bounded_disassemb
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'tests/runtime-parser-9246/manifest.json'
 OUT = ROOT / 'tests/runtime-parser-branch-routes.json'
+EVALUATION_TARGETS = ('IAction::getParamEval', 'IAction::getFloatParamEval',
+                      'IAction::getBoolParam',
+                      'IParamValuesAction::getValues(SActionParam*, SActionParam*)',
+                      'IParamValuesAction::getValues(float*, float*)')
 
 
 def boolean_cache_arguments(functions):
@@ -65,8 +69,7 @@ def scan(binary):
     target = int(manifest['symbols']['IAction::getListParam']['start'], 16)
     branches, pointers = [], []
     eval_targets = {int(manifest['symbols'][name]['start'], 16): name
-                    for name in ('IAction::getParamEval', 'IAction::getFloatParamEval',
-                                 'IAction::getBoolParam')}
+                    for name in EVALUATION_TARGETS}
     eval_candidates = []
     for name, vm, chunk in segments:
         if name == '__TEXT':
@@ -166,6 +169,7 @@ def scan(binary):
         'mode_writer_scan_scope': 'C6 05 RIP-relative immediate-byte writes to the nm-resolved isRemote address, verified inside LC_FUNCTION_STARTS-bounded bodies; not an exhaustive dataflow analysis.',
         'remote_mode_writers': list(writers.values()),
         'evaluation_callers': {
+            'targets': list(EVALUATION_TARGETS),
             'scan_scope': 'E8/E9 rel32 candidates in __TEXT, checked against LC_FUNCTION_STARTS-bounded disassembly. Does not enumerate indirect callers or inlined copies, or prove live instruction execution.',
             'functions': list(eval_callers.values())},
         'evaluation_entrypoints': entrypoints,
@@ -195,6 +199,7 @@ def load_report():
     result = json.loads(OUT.read_text())
     manifest = json.loads(MANIFEST.read_text())
     assert result['source']['binary_sha256'] == manifest['source']['sha256']
+    assert result['evaluation_callers']['targets'] == list(EVALUATION_TARGETS)
     name, address = result['remote_entry']['gate'].split('@')
     symbol = manifest['symbols'][name]
     assert int(symbol['start'], 16) <= int(address, 16) < int(symbol['end_exclusive'], 16)
@@ -226,6 +231,24 @@ def load_report():
     assert result['boolean_cache_arguments'] == boolean_cache_arguments(
         result['evaluation_callers']['functions']), 'boolean cache argument review differs'
     return result
+
+
+def caller_report(target):
+    """Compact checked call sites, including rejected byte-scan candidates."""
+    result = load_report()
+    if target not in result['evaluation_callers']['targets']:
+        raise ValueError(f'symbol was not included in the caller scan: {target}')
+    calls = []
+    for caller in result['evaluation_callers']['functions']:
+        for call in caller['calls']:
+            if call['target'] == target:
+                instruction = next((line for line in caller['assembly']
+                                    if line.startswith(call['site'][2:].zfill(16) + '\t')), None)
+                calls.append({'caller': caller['symbol'], **call,
+                              'instruction': instruction,
+                              'assembly_sha256': caller['assembly_sha256']})
+    return {'source': result['source'], 'scope': result['evaluation_callers']['scan_scope'],
+            'target': target, 'calls': calls, 'live_coverage_claim': False}
 
 
 def main():
