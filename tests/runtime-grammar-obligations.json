@@ -245,6 +245,14 @@
             "backtick-numeric-consumer",
             "backtick-numeric-consumer-quoted"
           ]
+        },
+        {
+          "capture": "tests/runtime-grammar-math-reader-9598.json",
+          "group": "math-reader"
+        },
+        {
+          "capture": "tests/runtime-grammar-math-reader-confirmation-9598.json",
+          "group": "math-reader"
         }
       ],
       "structural_edges": [
@@ -262,10 +270,40 @@
           "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
           "callee": "IAction::query",
           "site": "0x100993038"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::create",
+          "site": "0x100992fb5"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::create",
+          "site": "0x100993184"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::create",
+          "site": "0x1009931f2"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::query",
+          "site": "0x10099324e"
+        },
+        {
+          "caller": "ACTION_param_add::onQuery",
+          "callee": "SActionParam::toFloat",
+          "site": "0x100992aa2"
+        },
+        {
+          "caller": "ACTION_param_add::onQuery",
+          "callee": "IAction::paramToString",
+          "site": "0x100992adc"
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Review numeric/text conversion and source-cache alternatives in this distinct helper before claiming full branch coverage."
+      "next_action": "Both operand positions now have raw-action-text, paired/malformed backtick, direct/evaluated beat, numeric-text concatenation and longer-source comparisons. Preserve failed trailing-backtick/direct-beat predictions and control-matching fallback outputs. Source-cache reuse and incoming-parameter context remain unmeasured; no full branch or all-arithmetic-verb coverage is claimed."
     },
     {
       "id": "backtick-lexical-negative",

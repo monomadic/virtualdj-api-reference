@@ -1,0 +1,1061 @@
+{
+  "description": "Position-controlled arithmetic reader predictions with asymmetric constants.",
+  "cases": [
+    {
+      "id": "math-reader-first-operand-1-raw-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Can a quoted action string without backticks supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 37' 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a paired backtick expression supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 37` 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-missing-final-backtick",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an outer-quoted expression missing its final backtick contribute zero instead of its numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add '`constant 37' 5",
+      "expected": "5",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-trailing-backtick-only",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does action text with only a trailing backtick retain the numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 37`' 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-leading-space",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a leading space before paired backticks prevent the numeric contribution?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add ' `constant 37`' 5",
+      "expected": "5",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-quoted-number",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does quoted numeric text contribute zero instead of being coerced into a number?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add '37' 5",
+      "expected": "5",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-computed-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does computed numeric text yield second-then-first text concatenation instead of arithmetic addition?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant \"37\"` 5",
+      "expected": "537",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-direct-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a direct beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37bt 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-computed-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an evaluated beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 37bt` 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-long-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does longer quoted action text without backticks contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 37 & param_add 0 & param_add 0' 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-1-long-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does the longer paired-backtick expression contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 37 & param_add 0 & param_add 0` 5",
+      "expected": "42",
+      "controls": [
+        "param_add 'zzqqx' 5",
+        "param_add 'vfnrbq' 5"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-raw-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Can a quoted action string without backticks supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 'constant 5'",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a paired backtick expression supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 `constant 5`",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-missing-final-backtick",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an outer-quoted expression missing its final backtick contribute zero instead of its numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 '`constant 5'",
+      "expected": "37",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-trailing-backtick-only",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does action text with only a trailing backtick retain the numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 'constant 5`'",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-leading-space",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a leading space before paired backticks prevent the numeric contribution?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 ' `constant 5`'",
+      "expected": "37",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-quoted-number",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does quoted numeric text contribute zero instead of being coerced into a number?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 '5'",
+      "expected": "37",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-computed-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does computed numeric text yield second-then-first text concatenation instead of arithmetic addition?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 `constant \"5\"`",
+      "expected": "537",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-direct-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a direct beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 5bt",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-computed-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an evaluated beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 `constant 5bt`",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-long-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does longer quoted action text without backticks contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 'constant 5 & param_add 0 & param_add 0'",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-first-operand-2-long-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does the longer paired-backtick expression contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 37 `constant 5 & param_add 0 & param_add 0`",
+      "expected": "42",
+      "controls": [
+        "param_add 37 'zzqqx'",
+        "param_add 37 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 37 6",
+          "expected": "43"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-raw-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Can a quoted action string without backticks supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 53' 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a paired backtick expression supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 53` 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-missing-final-backtick",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an outer-quoted expression missing its final backtick contribute zero instead of its numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add '`constant 53' 9",
+      "expected": "9",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-trailing-backtick-only",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does action text with only a trailing backtick retain the numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 53`' 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-leading-space",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a leading space before paired backticks prevent the numeric contribution?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add ' `constant 53`' 9",
+      "expected": "9",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-quoted-number",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does quoted numeric text contribute zero instead of being coerced into a number?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add '53' 9",
+      "expected": "9",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-computed-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does computed numeric text yield second-then-first text concatenation instead of arithmetic addition?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant \"53\"` 9",
+      "expected": "953",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-direct-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a direct beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53bt 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-computed-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an evaluated beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 53bt` 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-long-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does longer quoted action text without backticks contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 'constant 53 & param_add 0 & param_add 0' 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-1-long-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does the longer paired-backtick expression contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add `constant 53 & param_add 0 & param_add 0` 9",
+      "expected": "62",
+      "controls": [
+        "param_add 'zzqqx' 9",
+        "param_add 'vfnrbq' 9"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-raw-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Can a quoted action string without backticks supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 'constant 9'",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a paired backtick expression supply this operand?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 `constant 9`",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-missing-final-backtick",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an outer-quoted expression missing its final backtick contribute zero instead of its numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 '`constant 9'",
+      "expected": "53",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-trailing-backtick-only",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does action text with only a trailing backtick retain the numeric value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 'constant 9`'",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-leading-space",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a leading space before paired backticks prevent the numeric contribution?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 ' `constant 9`'",
+      "expected": "53",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-quoted-number",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does quoted numeric text contribute zero instead of being coerced into a number?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 '9'",
+      "expected": "53",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-computed-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does computed numeric text yield second-then-first text concatenation instead of arithmetic addition?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 `constant \"9\"`",
+      "expected": "953",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-direct-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does a direct beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 9bt",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-computed-beats",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does an evaluated beat-valued operand contribute its numeric magnitude?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 `constant 9bt`",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-long-action-text",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does longer quoted action text without backticks contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 'constant 9 & param_add 0 & param_add 0'",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    },
+    {
+      "id": "math-reader-second-operand-2-long-paired-backticks",
+      "fixture": "parser_constants",
+      "group": "math-reader",
+      "hypothesis": "Does the longer paired-backtick expression contribute its computed value?",
+      "binary_sites": [
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x100992ec3",
+        "IParamValuesAction::getValues(SActionParam*, SActionParam*)@0x1009930af",
+        "ACTION_param_add::onQuery@0x100992a83"
+      ],
+      "script": "param_add 53 `constant 9 & param_add 0 & param_add 0`",
+      "expected": "62",
+      "controls": [
+        "param_add 53 'zzqqx'",
+        "param_add 53 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "param_add 53 10",
+          "expected": "63"
+        }
+      ],
+      "scope": "Exact HTTP output in the read-only constant fixture. Operand-specific nonsense controls preserve arity. Does not establish instruction execution, cache reuse, implicit input or every arithmetic verb."
+    }
+  ]
+}

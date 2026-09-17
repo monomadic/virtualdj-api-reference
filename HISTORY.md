@@ -1138,3 +1138,12 @@ storage, ownership and caller-interface groups. It checks exact assembly-derived
 membership and retains a question/limit per group. This narrows future fixture work
 without claiming live branch coverage or whole-parser completeness; cache lifecycle,
 incoming parameters and nonzero relative input remain explicit evidence limits.
+
+### H4 arithmetic reader comparisons (2026-09-17)
+
+Both operand positions and two asymmetric constant pairs were tested in the existing
+read-only prober. Two build 18.0.9598 runs each recorded 36 held predictions and eight
+failures, with 12 held cases matching controls. Raw quoted actions and computed beats
+produced sums; direct beats returned error:1; computed numeric text yielded second-
+then-first concatenation. Trailing-backtick-only predictions failed. Frozen suites,
+both captures and exact consumer/conversion call edges are preserved and audit-linked.

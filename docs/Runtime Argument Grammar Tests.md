@@ -947,3 +947,33 @@ on build 18.0.9598 each recorded 13 held predictions and two failed predictions:
 
 No setup or restoration writes were required. Zero-frame equality remains unable
 to distinguish a recognized zero from a failed evaluation in this consumer.
+
+### Arithmetic reader: operand-position comparisons (2026-09-17)
+
+The [frozen arithmetic suite](../tests/runtime-grammar-math-reader-cases.json) asks
+separate questions of both operand positions, using `(37, 5)` and `(53, 9)` inside
+`parser_constants`. Same-arity nonsense controls replace only the operand under test.
+The b9246 route is `param_add` → the `SActionParam*` overload of
+`IParamValuesAction::getValues`; text concatenation and numeric conversion have
+separately captured caller edges. This is not the generic `getParamEval` route.
+
+The [first run](../tests/runtime-grammar-math-reader-9598.json) and
+[independent repeat](../tests/runtime-grammar-math-reader-confirmation-9598.json)
+on build 18.0.9598 each recorded 36 held predictions and eight failed predictions.
+Twelve held predictions matched controls and do not establish recognition.
+
+| Frozen question, tested at both operand positions and both value pairs | Both captures |
+| --- | --- |
+| Does quoted action text without backticks contribute its numeric value? | Held; sums were `42` and `62`, separated from controls. |
+| Do paired backticks and longer expressions, with or without backticks, contribute their computed value? | Held and separated. No storage or cache branch execution is inferred. |
+| Does computed numeric text concatenate second operand then first, rather than add? | Held and separated: `537` and `953`. This is an exact `param_add` result, not a universal text-conversion rule. |
+| Do direct beat operands contribute their magnitudes? | Prediction failed; every direct-beat case returned `error:1`. |
+| Do computed beat operands contribute their magnitudes? | Held and separated; sums were `42` and `62`. |
+| Does action text with only a trailing backtick retain its numeric contribution? | Prediction failed; the other operand alone was returned, matching controls. |
+| Do missing final backticks, leading space before paired backticks, and quoted numeric text contribute zero? | Held but matched controls; internal failure, null and fallback paths remain indistinguishable. |
+
+Reproduce through `tools/probe_arg_forms.py --grammar-cases
+ tests/runtime-grammar-math-reader-cases.json --repeat 3 --rounds 2 --out <new-path>`;
+check the frozen questions with `tools/build_runtime_math_reader_cases.py --check`.
+These are query results with no state mutations. Incoming-parameter behavior,
+compiled-action reuse, and other arithmetic verbs remain outside this capture.

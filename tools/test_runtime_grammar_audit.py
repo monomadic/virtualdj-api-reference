@@ -22,8 +22,10 @@ class AuditTests(unittest.TestCase):
         self.assertTrue(rows['backtick-consumers']['evidence'])
         self.assertEqual({e['fixture'] for e in rows['backtick-consumers']['evidence']}, {'parser_setting_eval'})
         self.assertEqual({e['fixture'] for e in rows['backtick-float-evaluator']['evidence']}, {'parser_display_float'})
-        self.assertEqual({e['case'] for e in rows['backtick-math-reader']['evidence']},
-                         {'backtick-numeric-consumer', 'backtick-numeric-consumer-quoted'})
+        self.assertTrue({'backtick-numeric-consumer', 'backtick-numeric-consumer-quoted',
+                         'math-reader-first-operand-1-raw-action-text'} <=
+                        {e['case'] for e in rows['backtick-math-reader']['evidence']})
+        self.assertEqual({e['fixture'] for e in rows['backtick-math-reader']['evidence']}, {'parser_constants'})
         self.assertEqual({e['case'] for e in rows['backtick-text-reader']['evidence']},
                          {'backtick-text-eval', 'backtick-text-interpolation'})
 
