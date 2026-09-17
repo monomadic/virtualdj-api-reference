@@ -16,9 +16,16 @@ class RouteEvidenceTests(unittest.TestCase):
         callers = result['evaluation_callers']['functions']
         self.assertTrue(callers)
         self.assertTrue(all(c['verified_instruction'] for f in callers for c in f['calls']))
+        cache = result['boolean_cache_arguments']['calls']
+        self.assertTrue(cache)
+        nonnull = [r for r in cache if r['cache_argument'] == 'object-relative-address']
+        self.assertEqual({r['caller'] for r in nonnull}, {'__ZN20ACTION_effect_active9onExecuteEv'})
+        self.assertEqual({r['call_site'] for r in nonnull}, {'0x1008a16ea', '0x1008a179c'})
+        self.assertNotIn('unresolved', {r['cache_argument'] for r in cache})
 
     def test_rejects_changed_source_assembly_or_bounds(self):
         for mutate in (
+            lambda d: d['boolean_cache_arguments']['calls'][0].update(cache_argument='object-relative-address'),
             lambda d: d['evaluation_entrypoints'][0]['assembly'].append('invented'),
             lambda d: d['evaluation_entrypoints'][0]['routes'][0].update(site='0x1'),
             lambda d: d['evaluation_entrypoints'][0]['routes'][0].update(target='0x1'),
@@ -36,6 +43,13 @@ class RouteEvidenceTests(unittest.TestCase):
                 path.write_text(json.dumps(data))
                 with patch.object(routes, 'OUT', path), self.assertRaises(AssertionError):
                     routes.load_report()
+
+    def test_cache_review_does_not_follow_an_intervening_call(self):
+        functions = [{'symbol': 'caller', 'assembly': [
+            'caller:', '0000000000000010\txorl\t%r8d, %r8d',
+            '0000000000000013\tcallq\tother', '0000000000000018\tcallq\tgetBoolParam'],
+            'calls': [{'target': 'IAction::getBoolParam', 'site': '0x18', 'verified_instruction': True}]}]
+        self.assertEqual(routes.boolean_cache_arguments(functions)['calls'][0]['cache_argument'], 'unresolved')
 
 
 if __name__ == '__main__':

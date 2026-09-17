@@ -70,6 +70,23 @@ and instruction-level live coverage. It does not supply a denominator for all of
 H4. Future work should consult the group's `remaining_question` before adding a
 fixture: cleanup and optional output-pointer branches are not separate syntax rules.
 
+### Boolean cache callers (2026-09-17)
+
+The [route capture](../tests/runtime-parser-branch-routes.json) now includes direct
+`getBoolParam` call candidates verified inside bounded b9246 x86_64 disassembly.
+`boolean_cache_arguments` reviews the nearby setup of the fifth SysV argument,
+`r8` (counting `this`). Both `ACTION_effect_active::onExecute` calls, at
+`0x1008a16ea` and `0x1008a179c`, supply an object-relative address. The other
+verified calls in this scan explicitly zero `r8d`. Derive the inventory from
+`boolean_cache_arguments.calls`; indirect and inlined callers are outside the scan.
+
+The selected-slot route and explicit-effect-name route therefore provide concrete
+**Tier-2 caller leads** for the helper's optional-cache path. This does not prove
+current instruction execution or cache reuse. The reviewer checks nearby straight-line
+setup only and leaves unresolved patterns visible; disassembler labels substituted
+for numeric displacements are not field identities. Reproduce using the branch-route
+extraction command below, whose source hash must match the historical manifest.
+
 ### Remote-entry and list-helper reachability review (2026-09-17)
 
 The [route capture](../tests/runtime-parser-branch-routes.json) records the b9246 binary hash,

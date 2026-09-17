@@ -18,6 +18,34 @@ MANIFEST = ROOT / 'tests/runtime-parser-9246/manifest.json'
 OUT = ROOT / 'tests/runtime-parser-branch-routes.json'
 
 
+def boolean_cache_arguments(functions):
+    """Review only a nearby straight-line r8 setup, not general dataflow."""
+    rows = []
+    for caller in functions:
+        for call in caller['calls']:
+            if call['target'] != 'IAction::getBoolParam' or not call['verified_instruction']:
+                continue
+            lines = caller['assembly']
+            index = next(i for i, line in enumerate(lines)
+                         if line.startswith(call['site'][2:].zfill(16) + '\t'))
+            setup = None
+            disposition = 'unresolved'
+            for line in reversed(lines[max(1, index-5):index]):
+                if re.search(r'\t(?:j\w*|callq|retq)\t?', line):
+                    break
+                if re.search(r',\s*%r8(?:d)?(?:\s|$)', line):
+                    setup = line
+                    if re.search(r'\txorl\s+%r8d, %r8d$', line):
+                        disposition = 'null'
+                    elif re.search(r'\tleaq\s+[^,]*\(%rbx\), %r8$', line):
+                        disposition = 'object-relative-address'
+                    break
+            rows.append({'caller': caller['symbol'], 'call_site': call['site'],
+                         'cache_argument': disposition, 'setup_instruction': setup})
+    return {'scope': 'x86_64 SysV fifth argument (r8, including this). Nearby straight-line instruction review only; no indirect/inlined caller inventory, runtime execution or cache-reuse proof. Symbolized displacement names are not field identities.',
+            'calls': rows}
+
+
 def scan(binary):
     manifest = json.loads(MANIFEST.read_text())
     data = binary.read_bytes()
@@ -37,7 +65,8 @@ def scan(binary):
     target = int(manifest['symbols']['IAction::getListParam']['start'], 16)
     branches, pointers = [], []
     eval_targets = {int(manifest['symbols'][name]['start'], 16): name
-                    for name in ('IAction::getParamEval', 'IAction::getFloatParamEval')}
+                    for name in ('IAction::getParamEval', 'IAction::getFloatParamEval',
+                                 'IAction::getBoolParam')}
     eval_candidates = []
     for name, vm, chunk in segments:
         if name == '__TEXT':
@@ -140,6 +169,7 @@ def scan(binary):
             'scan_scope': 'E8/E9 rel32 candidates in __TEXT, checked against LC_FUNCTION_STARTS-bounded disassembly. Does not enumerate indirect callers or inlined copies, or prove live instruction execution.',
             'functions': list(eval_callers.values())},
         'evaluation_entrypoints': entrypoints,
+        'boolean_cache_arguments': boolean_cache_arguments(list(eval_callers.values())),
         'remote_entry': {
             'gate': 'IAction::create@0x100596f45',
             'normal_parser_entry': '0x1005974cf',
@@ -193,6 +223,8 @@ def load_report():
             assert route['callee'] in instruction and ('callq' in instruction or '\tjmp\t' in instruction)
             assert any(c['symbol'] == route['callee'] and c['start'] == route['target']
                        for c in result['evaluation_callers']['functions'])
+    assert result['boolean_cache_arguments'] == boolean_cache_arguments(
+        result['evaluation_callers']['functions']), 'boolean cache argument review differs'
     return result
 
 
