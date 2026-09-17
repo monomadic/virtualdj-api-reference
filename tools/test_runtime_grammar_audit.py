@@ -21,7 +21,7 @@ class AuditTests(unittest.TestCase):
         rows = {r['id']: r for r in audit.report()['obligations']}
         self.assertTrue(rows['backtick-consumers']['evidence'])
         self.assertEqual({e['fixture'] for e in rows['backtick-consumers']['evidence']}, {'parser_setting_eval'})
-        self.assertEqual(rows['backtick-float-evaluator']['evidence'], [])
+        self.assertEqual({e['fixture'] for e in rows['backtick-float-evaluator']['evidence']}, {'parser_display_float'})
         self.assertEqual({e['case'] for e in rows['backtick-math-reader']['evidence']},
                          {'backtick-numeric-consumer', 'backtick-numeric-consumer-quoted'})
         self.assertEqual({e['case'] for e in rows['backtick-text-reader']['evidence']},
@@ -31,6 +31,16 @@ class AuditTests(unittest.TestCase):
         plan = json.loads(audit.PLAN.read_text())
         row = next(r for r in plan['obligations'] if r['id'] == 'backtick-consumers')
         row['caller_evidence'][0]['site'] = '0x1'
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'plan.json'
+            path.write_text(json.dumps(plan))
+            with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
+                audit.report()
+
+    def test_rejects_invalid_entry_route(self):
+        plan = json.loads(audit.PLAN.read_text())
+        row = next(r for r in plan['obligations'] if r['id'] == 'backtick-float-evaluator')
+        row['entry_evidence'][0]['site'] = '0x1'
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'plan.json'
             path.write_text(json.dumps(plan))

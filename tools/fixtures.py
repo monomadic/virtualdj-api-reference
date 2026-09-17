@@ -218,6 +218,18 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
     long_track = Path(tempfile.gettempdir()) / "vdj-long-time-7500.flac"
     return {f.name: f for f in [
         Fixture(
+            name="parser_display_float",
+            describes="read-only Pioneer cuepoint display query on empty stopped deck 3; "
+                      "binary literal oracles must match the recorded current-context calibration; "
+                      "no physical controller identity or device rendering is established",
+            setup=[], teardown=[], decks=(), needs_audio_file=False,
+            assertions=[
+                Assertion("deck 3 get_deck", lambda v: v == "3", "deck 3 identity"),
+                Assertion("deck 3 loaded", lambda v: v == "no", "no media in fixture deck"),
+                Assertion("deck 3 play", lambda v: v == "no", "fixture deck stopped"),
+            ],
+        ),
+        Fixture(
             name="parser_setting_eval",
             describes="read-only videoRandomTransition comparison while the existing setting is on; "
                       "aborts if it differs, never changes it; generic evaluated-parameter caller",

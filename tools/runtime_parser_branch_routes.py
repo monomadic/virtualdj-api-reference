@@ -89,6 +89,19 @@ def scan(binary):
         target_symbol = manifest['symbols'][call['target']]['mangled']
         call['verified_instruction'] = target_symbol in instruction and ('callq' in instruction or 'jmp' in instruction)
         eval_callers[start]['calls'].append(call)
+    entry_symbol = '__ZN26ACTION_get_pioneer_display7onQueryER12SActionParam'
+    entry_start = next(address for address, name in symbols.items() if name == entry_symbol)
+    entry_end = starts[bisect.bisect_right(starts, entry_start)]
+    entry_body = bounded_disassembly(binary, entry_symbol, entry_start, entry_end)
+    entry_routes = []
+    for caller in eval_callers.values():
+        for line in entry_body.splitlines():
+            if caller['symbol'] in line and ('callq' in line or '\tjmp\t' in line):
+                entry_routes.append({'site': hex(int(line.split()[0], 16)),
+                                     'callee': caller['symbol'], 'target': caller['start']})
+    entrypoints = [{'symbol': entry_symbol, 'start': hex(entry_start), 'end_exclusive': hex(entry_end),
+                   'assembly': entry_body.splitlines(), 'assembly_sha256': hashlib.sha256(entry_body.encode()).hexdigest(),
+                   'routes': entry_routes}]
     writers = {}
     for name, vm, chunk in segments:
         if name != '__TEXT':
@@ -126,6 +139,7 @@ def scan(binary):
         'evaluation_callers': {
             'scan_scope': 'E8/E9 rel32 candidates in __TEXT, checked against LC_FUNCTION_STARTS-bounded disassembly. Does not enumerate indirect callers or inlined copies, or prove live instruction execution.',
             'functions': list(eval_callers.values())},
+        'evaluation_entrypoints': entrypoints,
         'remote_entry': {
             'gate': 'IAction::create@0x100596f45',
             'normal_parser_entry': '0x1005974cf',
@@ -170,6 +184,15 @@ def load_report():
                                 if line.startswith(call['site'][2:].zfill(16))), '')
             verified = manifest['symbols'][call['target']]['mangled'] in instruction and ('callq' in instruction or 'jmp' in instruction)
             assert call['verified_instruction'] == verified
+    for entry in result.get('evaluation_entrypoints', []):
+        body = '\n'.join(entry['assembly']) + '\n'
+        assert hashlib.sha256(body.encode()).hexdigest() == entry['assembly_sha256']
+        for route in entry['routes']:
+            assert int(entry['start'], 16) <= int(route['site'], 16) < int(entry['end_exclusive'], 16)
+            instruction = next(line for line in entry['assembly'] if line.startswith(route['site'][2:].zfill(16)))
+            assert route['callee'] in instruction and ('callq' in instruction or '\tjmp\t' in instruction)
+            assert any(c['symbol'] == route['callee'] and c['start'] == route['target']
+                       for c in result['evaluation_callers']['functions'])
     return result
 
 

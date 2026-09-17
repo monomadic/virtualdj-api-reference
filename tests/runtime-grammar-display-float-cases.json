@@ -1,0 +1,326 @@
+{
+  "description": "Predictions of equality to pre-candidate literal binary frames.",
+  "calibration": "tests/runtime-grammar-display-float-calibration-9598.json",
+  "calibration_sha256": "aa988708475f63e3578469d6a3517428b110d1a63fa9e33e9a9387fe194c7c0a",
+  "cases": [
+    {
+      "id": "display-float-computed-integer",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does a computed integer match the literal-2 binary frame?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant 2`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-single-quoted",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does a single-quoted computed argument match literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' '`constant 2`'",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-double-quoted",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does a double-quoted computed argument match literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' \"`constant 2`\"",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-missing-final-backtick",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does the outer-quoted form without its final backtick match literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' '`constant 2'",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-leading-space",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does leading space in the quoted argument match literal 0 rather than literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' ' `constant 2`'",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 0",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "0",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-computed-float",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does a computed float match the literal-2 binary frame?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant 2.0`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-computed-percent",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does computed 200 percent match literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant 200%`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-computed-ms",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does a computed 2ms argument match literal 2 in this consumer?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant 2ms`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-computed-bool",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does computed on match literal 1?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `on`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "1",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-computed-text",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does computed text 2 match literal 2?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant \"2\"`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    },
+    {
+      "id": "display-float-relative-zero-baseline",
+      "fixture": "parser_display_float",
+      "group": "display-float",
+      "hypothesis": "Does computed signed 2 match literal 2 with this zero-initialized consumer input?",
+      "binary_sites": [
+        "IAction::getFloatParamEval@0x100596d13",
+        "IAction::getFloatParamEval@0x100596ecb"
+      ],
+      "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' `constant +2`",
+      "response_encoding": "hex",
+      "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "controls": [
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `zzqqx`",
+        "deck 3 get_pioneer_display 'cuepoints' 'rx3' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 1",
+          "expected": "hex:0000000000000000000000000000000000000000000000000000000000009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        },
+        {
+          "script": "deck 3 get_pioneer_display 'cuepoints' 'rx3' 2",
+          "expected": "hex:0000000000009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100009e2f270100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        }
+      ],
+      "literal_equivalence": "2",
+      "scope": "Exact binary HTTP response in the calibrated empty-deck/current-mapping context; no physical display validation, cache-reuse claim, or proof of relative addition to a nonzero input."
+    }
+  ]
+}

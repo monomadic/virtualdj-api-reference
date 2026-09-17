@@ -19,6 +19,9 @@ class RouteEvidenceTests(unittest.TestCase):
 
     def test_rejects_changed_source_assembly_or_bounds(self):
         for mutate in (
+            lambda d: d['evaluation_entrypoints'][0]['assembly'].append('invented'),
+            lambda d: d['evaluation_entrypoints'][0]['routes'][0].update(site='0x1'),
+            lambda d: d['evaluation_entrypoints'][0]['routes'][0].update(target='0x1'),
             lambda d: d['source'].update(binary_sha256='wrong'),
             lambda d: d['remote_mode_writers'][0]['assembly'].append('invented'),
             lambda d: d['remote_mode_writers'][0].update(end_exclusive='0x1'),

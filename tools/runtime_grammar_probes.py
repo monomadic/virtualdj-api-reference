@@ -22,12 +22,19 @@ from fixtures import Channel, FixtureError, build_fixtures, establish
 class ExactQueryChannel(Channel):
     """Retain HTTP body whitespace; the shared convenience channel strips it."""
     def query(self, script):
+        return self.query_bytes(script).decode(errors="replace")
+
+    def query_hex(self, script):
+        """Lossless, JSON-safe representation for binary query bodies."""
+        return "hex:" + self.query_bytes(script).hex()
+
+    def query_bytes(self, script):
         for attempt in range(2):
             try:
                 if self._conn is None:
                     self._conn = http.client.HTTPConnection(self.host, self.port, timeout=self.timeout)
                 self._conn.request("GET", "/query?" + urllib.parse.urlencode({"script": script}))
-                return self._conn.getresponse().read().decode(errors="replace")
+                return self._conn.getresponse().read()
             except Exception:
                 self.close()
                 if attempt:
@@ -39,6 +46,12 @@ def validate_suite(suite):
     fixtures = build_fixtures(None)
     ids = set()
     for case in suite["cases"]:
+        if case.get('response_encoding', 'utf-8') not in ('utf-8', 'hex'):
+            raise ValueError('unsupported response encoding')
+        if case.get('response_encoding') == 'hex':
+            for value in [case['expected'], *(c['expected'] for c in case['contrasts'])]:
+                if not value.startswith('hex:') or bytes.fromhex(value[4:]).hex() != value[4:]:
+                    raise ValueError('binary expectations must use canonical hex: encoding')
         if case["id"] in ids:
             raise ValueError(f"duplicate case: {case['id']}")
         ids.add(case["id"])
@@ -147,6 +160,8 @@ def run_suite(args):
         "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof"},
         "fixture_checks": [], "cases": [{**c, "passes": [], "verdict": "not-run"}
                                         for c in suite["cases"]]}
+    if any(c.get('response_encoding') == 'hex' for c in suite['cases']):
+        capture['summary']['response_normalization'] = 'per-case response_encoding: hex is lossless HTTP body bytes; utf-8 retains decoded whitespace'
     try:
         capture["summary"].update(channel.provenance())
         fixtures = build_fixtures(None)
@@ -170,7 +185,8 @@ def run_suite(args):
                 for script in scripts:
                     capture["summary"]["pending_query"] = {"case": case["id"],
                         "round": round_index + 1, "script": script}
-                    samples[script] = [channel.query(script) for _ in range(args.repeat)]
+                    query = channel.query_hex if case.get('response_encoding') == 'hex' else channel.query
+                    samples[script] = [query(script) for _ in range(args.repeat)]
                 case["passes"].append(samples)
                 case["verdict"] = verdict(case, case["passes"])
             capture["summary"].pop("pending_query", None)
@@ -212,6 +228,9 @@ def check_capture(path):
             for samples in case["passes"]:
                 assert set(samples) == required
                 assert all(len(reads) == summary["repeat"] >= 2 for reads in samples.values())
+                if case.get('response_encoding') == 'hex':
+                    assert all(v.startswith('hex:') and bytes.fromhex(v[4:]).hex() == v[4:]
+                               for reads in samples.values() for v in reads)
             assert case["verdict"] == verdict(case, case["passes"]), case["id"]
         else:
             assert case["verdict"] == "incomplete-run", case["id"]

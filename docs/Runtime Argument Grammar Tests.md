@@ -867,3 +867,40 @@ case through `just runtime-grammar --artifact <capture> --get <case>`. This avoi
 re-reading the full assembly or treating completed fixture work as an open task.
 Keep runtime output, consumer semantics, lifecycle behavior and editor appearance
 as separate predictions.
+
+### Floating evaluator: binary HTTP comparisons (2026-09-17)
+
+The b9246 structural lead now includes a bounded, hashed `get_pioneer_display`
+query entry body and its jump to `getCuepoints`, whose call at `0x1006695b6`
+targets `IAction::getFloatParamEval`. This is a recovered route, not an observed
+instruction trace. The audit joins this route to the following frozen questions.
+
+[Literal calibration](../tests/runtime-grammar-display-float-calibration-9598.json)
+recorded distinct, repeatable binary bodies for literal 0, 1 and 2 before candidate
+predictions were frozen. `parser_display_float` asserts deck 3 exists, is empty
+and is stopped; it performs no setup writes. Current implicit controller/mapping
+context was retained, with no independently identified Pioneer hardware.
+
+Run the [frozen suite](../tests/runtime-grammar-display-float-cases.json) through
+`tools/probe_arg_forms.py --grammar-cases tests/runtime-grammar-display-float-cases.json
+--repeat 3 --rounds 2 --out <new-capture-path>`. Its per-case `response_encoding: hex`
+preserves every HTTP body byte, including NUL and invalid UTF-8. Candidate and
+literal frames must agree exactly; changed literal oracles invalidate the result.
+
+The [first run](../tests/runtime-grammar-display-float-9598.json) and
+[independent repeat](../tests/runtime-grammar-display-float-confirmation-9598.json)
+on build 18.0.9598 each recorded 10 held predictions and one failed prediction:
+
+| Frozen question, in `parser_display_float` | Both captures |
+| --- | --- |
+| Do computed integer 2, float 2.0, 200%, and 2ms match the literal-2 frame? | Held; separated from both controls. |
+| Do single/double outer quotes, or an outer-quoted missing final backtick, retain the literal-2 frame? | Held; separated from both controls. |
+| Does computed `on` match the literal-1 frame? | Held; separated from both controls. |
+| Does computed text `"2"` match the literal-2 frame? | Prediction failed; matched the zero frame and controls. |
+| Does leading space inside the outer quote match the zero frame? | Held, but matched controls; not positive recognition evidence. |
+| Does computed signed `+2` match literal 2 with the consumer's zero input? | Held; separated, but cannot distinguish relative addition from absolute conversion. |
+
+These questions concern exact returned frames in this consumer and fixture.
+Physical rendering, compiled-action cache reuse, nonzero relative input, and
+universal coercion rules remain unmeasured. For future binary-valued probes,
+reuse the prober's hex mode rather than comparing replacement-decoded text.

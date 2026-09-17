@@ -126,7 +126,16 @@
       "symbol": "IAction::getFloatParamEval",
       "site": "0x100596cb2",
       "question": "Which consumer exercises evaluated-float conversion, including relative results?",
-      "sources": [],
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-display-float-9598.json",
+          "group": "display-float"
+        },
+        {
+          "capture": "tests/runtime-grammar-display-float-confirmation-9598.json",
+          "group": "display-float"
+        }
+      ],
       "structural_edges": [
         {
           "caller": "IAction::getFloatParamEval",
@@ -140,8 +149,21 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Direct callers are captured in Pioneer display browser/cuepoint readers, wait, and repeat_start. Establish a discriminating read-only display fixture, or a bounded reversible timing fixture, before claiming helper behavior. No live float-evaluator evidence is attached.",
-      "structural_review": "tests/runtime-parser-branch-routes.json#evaluation_callers"
+      "next_action": "Preserve exact binary-frame comparisons in parser_display_float: computed text failed the literal-2 prediction; leading space matched controls; signed input was measured only against a zero baseline. Classify remaining cache/index branches before requiring more fixtures. No physical display or cache-reuse proof is attached.",
+      "structural_review": "tests/runtime-parser-branch-routes.json#evaluation_callers",
+      "caller_evidence": [
+        {
+          "symbol": "__ZN26ACTION_get_pioneer_display12getCuepointsER12SActionParamim",
+          "site": "0x1006695b6"
+        }
+      ],
+      "entry_evidence": [
+        {
+          "symbol": "__ZN26ACTION_get_pioneer_display7onQueryER12SActionParam",
+          "site": "0x1006646c6",
+          "callee": "__ZN26ACTION_get_pioneer_display12getCuepointsER12SActionParamim"
+        }
+      ]
     },
     {
       "id": "backtick-literal-reader",

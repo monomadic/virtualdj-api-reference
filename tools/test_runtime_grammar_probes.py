@@ -25,6 +25,24 @@ class GrammarVerdicts(unittest.TestCase):
     def test_held(self):
         self.assertEqual(verdict(self.case, [self.samples, self.samples]), 'held-in-fixture')
 
+    def test_hex_preserves_bytes_that_text_decoding_collapses(self):
+        with patch('runtime_grammar_probes.http.client.HTTPConnection') as conn:
+            body = conn.return_value.getresponse.return_value.read
+            channel = ExactQueryChannel()
+            body.return_value = b'\x80\x00'
+            self.assertEqual(channel.query_hex('test'), 'hex:8000')
+            body.return_value = b'\xff\x00'
+            self.assertEqual(channel.query_hex('test'), 'hex:ff00')
+            channel.close()
+
+    def test_noncanonical_hex_expectations_are_rejected(self):
+        for value in ('hex:FF', 'hex:f', 'hex:ff 00', 'ff'):
+            case = copy.deepcopy(self.case)
+            case.update(response_encoding='hex', expected=value)
+            case['contrasts'][0]['expected'] = 'hex:01'
+            with self.assertRaises(ValueError):
+                validate_suite({'cases': [case]})
+
     def test_wrong_prediction_is_retained(self):
         self.case['expected'] = '38'
         self.assertEqual(verdict(self.case, [self.samples]), 'prediction-not-held')

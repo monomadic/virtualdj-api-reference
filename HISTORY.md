@@ -1108,3 +1108,15 @@ The shared factor with the asymmetric-master run is unusual deck-wrapper tokens 
 `playing`, `mixer1`-`mixer4`). Do not probe deck targets on an instance in use, and do not treat
 one clean completion as clearance — see the hazard section in
 [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md).
+
+### H4 floating evaluator progress (2026-09-17)
+
+Recovered and hashed the b9246 Pioneer display query entry route to the captured
+floating-evaluator consumer. Added lossless binary HTTP comparisons to the existing
+argument prober, a read-only empty-deck fixture, pre-candidate literal calibration,
+and frozen questions. Two independent build 18.0.9598 captures each recorded 10 held
+predictions and one failed computed-text prediction; a held leading-space result
+matched controls and remains null evidence. Preserved both captures and joined
+their exact cases to the branch audit. This does not close H4: editor token spans,
+remote-mode establishment/restoration, reachability and final branch reconciliation
+remain open. Details: `docs/Runtime Argument Grammar Tests.md`.

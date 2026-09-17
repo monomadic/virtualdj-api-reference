@@ -58,6 +58,11 @@ def report():
                        any(call['site'] == edge['site'] and call['target'] == obligation['symbol']
                            and call['verified_instruction'] for call in caller['calls'])
                        for caller in routes['evaluation_callers']['functions']), edge
+        for edge in obligation.get('entry_evidence', []):
+            assert any(entry['symbol'] == edge['symbol'] and
+                       any(route['site'] == edge['site'] and route['callee'] == edge['callee']
+                           for route in entry['routes'])
+                       for entry in routes['evaluation_entrypoints']), edge
         evidence = []
         for source in obligation['sources']:
             capture = read_capture(source['capture'])
@@ -82,7 +87,9 @@ def report():
         corpus.append({**ref, 'fixture': case['fixture'], 'script': case['script'],
                        'status': 'needs-screenshot-backed-span-or-guard-observation'})
     return {'scope': plan['scope'], 'binary_build': manifest['source']['bundle_version'],
-            'branch_route_review': {k: v for k, v in routes.items() if k not in ('remote_mode_writers', 'evaluation_callers')},
+            'branch_route_review': {k: v for k, v in routes.items() if k not in ('remote_mode_writers', 'evaluation_callers', 'evaluation_entrypoints')},
+            'evaluation_entrypoints': [{k: v for k, v in entry.items() if k != 'assembly'}
+                                      for entry in routes.get('evaluation_entrypoints', [])],
             'evaluation_callers': [{k: v for k, v in caller.items() if k != 'assembly'}
                                    for caller in routes.get('evaluation_callers', {}).get('functions', [])],
             'mode_writer_symbols': [w['symbol'] for w in routes['remote_mode_writers']],
