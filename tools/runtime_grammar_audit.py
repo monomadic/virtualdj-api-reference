@@ -1,12 +1,48 @@
 """Join reviewed H4 branch families to exact capture rows; never infer branch coverage."""
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from runtime_grammar_probes import separation, check_capture
 
 ROOT = Path(__file__).resolve().parents[1]
 PLAN = ROOT / 'tests/runtime-grammar-obligations.json'
+
+
+def evaluator_branch_review(plan, manifest, manifest_path):
+    """Check a bounded structural partition, never infer live branch coverage."""
+    review = plan['evaluator_branch_review']
+    expected = {'IAction::getParamEval', 'IAction::getFloatParamEval'}
+    assert {r['symbol'] for r in review['functions']} == expected
+    assert len(review['functions']) == len(expected)
+    categories = {'grammar-question', 'context-unmeasured', 'lifecycle-unmeasured',
+                  'storage-mechanism', 'ownership-mechanism', 'caller-interface'}
+    obligations = {r['id']: r for r in plan['obligations']}
+    functions = []
+    for row in review['functions']:
+        symbol = manifest['symbols'][row['symbol']]
+        body = (manifest_path.parent / symbol['file']).read_bytes()
+        assert hashlib.sha256(body).hexdigest() == symbol['asm_sha256']
+        branches = {}
+        for line in body.decode().splitlines():
+            match = re.match(r'^([0-9a-f]+)\s+(j[a-z]+)\s+(0x[0-9a-f]+)', line)
+            if match and match[2] != 'jmp':
+                branches[hex(int(match[1], 16))] = {'mnemonic': match[2], 'target': match[3]}
+        assert branches
+        assert obligations[row['behavior_obligation']]['symbol'] == row['symbol']
+        assigned = [site for group in row['groups'] for site in group['sites']]
+        assert len(assigned) == len(set(assigned)), 'duplicate branch classification'
+        assert set(assigned) == set(branches), 'conditional branch partition differs from captured body'
+        assert len({g['id'] for g in row['groups']}) == len(row['groups'])
+        for group in row['groups']:
+            assert group['sites'] and group['classification'] in categories
+            assert group['structural_interpretation'] and group['remaining_question']
+        functions.append({**row, 'assembly_sha256': symbol['asm_sha256'],
+                          'conditional_branches': branches,
+                          'classification_counts': dict(Counter(
+                              g['classification'] for g in row['groups'] for _ in g['sites']))})
+    return {**review, 'functions': functions, 'live_branch_coverage_claim': False}
 
 
 def report():
@@ -87,6 +123,7 @@ def report():
         corpus.append({**ref, 'fixture': case['fixture'], 'script': case['script'],
                        'status': 'needs-screenshot-backed-span-or-guard-observation'})
     return {'scope': plan['scope'], 'binary_build': manifest['source']['bundle_version'],
+            'evaluator_branch_review': evaluator_branch_review(plan, manifest, manifest_path),
             'branch_route_review': {k: v for k, v in routes.items() if k not in ('remote_mode_writers', 'evaluation_callers', 'evaluation_entrypoints')},
             'evaluation_entrypoints': [{k: v for k, v in entry.items() if k != 'assembly'}
                                       for entry in routes.get('evaluation_entrypoints', [])],

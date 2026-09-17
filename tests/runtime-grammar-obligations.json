@@ -113,7 +113,7 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Read-only setting comparisons have evaluated false/true discriminators and literal-versus-evaluated type controls; preserve failed numeric-one/text-on predictions. Classify remaining cache/index checks as grammar-relevant or bookkeeping before requiring further fixtures; HTTP repetition alone does not establish compiled-action reuse.",
+      "next_action": "The bounded conditional-branch partition now distinguishes grammar questions from string storage, ownership and cache lifecycle. Setting comparisons preserve failed numeric-one/text-on predictions. Incoming-parameter traversal and compiled-action reuse remain unmeasured; neither is established by repeated HTTP requests.",
       "caller_evidence": [
         {
           "symbol": "__ZN14ACTION_setting7onQueryER12SActionParam",
@@ -157,7 +157,7 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Preserve exact binary-frame comparisons in parser_display_float: computed text failed the literal-2 prediction; leading space matched controls; signed input was measured only against a zero baseline. Classify remaining cache/index branches before requiring more fixtures. No physical display or cache-reuse proof is attached. Direct and computed beat forms and long expressions now have frame comparisons. Chained constant prefixes returned ASCII constants, not the predicted binary frames; they do not establish inherited-parameter traversal.",
+      "next_action": "Preserve exact binary-frame comparisons in parser_display_float: computed text failed the literal-2 prediction; leading space matched controls; signed input was measured only against a zero baseline. The bounded conditional-branch partition now distinguishes grammar questions from storage, ownership, optional caller output and cache lifecycle. No physical display or cache-reuse proof is attached. Direct and computed beat forms and long expressions now have frame comparisons. Chained constant prefixes returned ASCII constants, not the predicted binary frames; they do not establish inherited-parameter traversal.",
       "structural_review": "tests/runtime-parser-branch-routes.json#evaluation_callers",
       "caller_evidence": [
         {
@@ -484,5 +484,224 @@
       "capture": "tests/runtime-grammar-confirmation-9598.json",
       "case": "operator-ternary"
     }
-  ]
+  ],
+  "evaluator_branch_review": {
+    "scope": "Tier-2 interpretation of every conditional jump in the two named b9246 evaluator bodies only. Excludes unconditional transfers, callees, other helpers and live instruction coverage; not a whole-parser denominator.",
+    "functions": [
+      {
+        "symbol": "IAction::getParamEval",
+        "behavior_obligation": "backtick-consumers",
+        "groups": [
+          {
+            "id": "literal-cache",
+            "classification": "lifecycle-unmeasured",
+            "sites": [
+              "0x1005984f8"
+            ],
+            "structural_interpretation": "The byte at cache offset 0x4c gates a fast return; the literal-copy path later sets it according to parameter availability.",
+            "remaining_question": "No compiled-action reuse trace is available. This is not a new token or quoting prediction."
+          },
+          {
+            "id": "argument-availability",
+            "classification": "context-unmeasured",
+            "sites": [
+              "0x100598527",
+              "0x100598534"
+            ],
+            "structural_interpretation": "Count/index comparisons select a stored operand, the incoming parameter/static null, or failure.",
+            "remaining_question": "Establish an observable incoming-parameter fixture before assigning an inherited-operand behavior result."
+          },
+          {
+            "id": "text-backtick-gate",
+            "classification": "grammar-question",
+            "sites": [
+              "0x100598559",
+              "0x100598571"
+            ],
+            "structural_interpretation": "Text tag and initial-backtick checks choose literal copying or nested action creation/evaluation.",
+            "remaining_question": "Use only the exact setting-fixture comparisons linked by the obligation; no universal coercion claim."
+          },
+          {
+            "id": "string-storage",
+            "classification": "storage-mechanism",
+            "sites": [
+              "0x100598578",
+              "0x1005985de",
+              "0x1005985f1",
+              "0x100598600",
+              "0x10059862a",
+              "0x100598659",
+              "0x100598691"
+            ],
+            "structural_interpretation": "Low-bit tests choose inline-string versus separately stored length/data access in the captured code.",
+            "remaining_question": "These alternatives do not introduce separate syntax. HTTP results do not establish which storage path ran."
+          },
+          {
+            "id": "source-cache-comparison",
+            "classification": "lifecycle-unmeasured",
+            "sites": [
+              "0x1005985ed",
+              "0x100598613"
+            ],
+            "structural_interpretation": "Length and memcmp outcomes decide whether to rebuild the nested action or reuse its pointer.",
+            "remaining_question": "Repeated independent HTTP requests are not evidence of compiled-action cache reuse or invalidation."
+          },
+          {
+            "id": "closing-backtick",
+            "classification": "grammar-question",
+            "sites": [
+              "0x100598637",
+              "0x10059864c"
+            ],
+            "structural_interpretation": "Final-byte comparisons select temporary removal of a trailing backtick before nested create.",
+            "remaining_question": "Keep outer-quoted missing-final-backtick results scoped to their tested consumer; do not infer internal cursor position."
+          },
+          {
+            "id": "release-old-action",
+            "classification": "ownership-mechanism",
+            "sites": [
+              "0x10059867c",
+              "0x100598682"
+            ],
+            "structural_interpretation": "Null and reference-count tests guard destruction of the previous cached nested action.",
+            "remaining_question": "No independent argument-grammar prediction; allocation/lifetime correctness is outside this bounded grammar review."
+          },
+          {
+            "id": "restore-final-byte",
+            "classification": "storage-mechanism",
+            "sites": [
+              "0x10059869b",
+              "0x1005986b1"
+            ],
+            "structural_interpretation": "Post-create final-byte checks guard writing a backtick back into the stored source.",
+            "remaining_question": "Do not promote restoration mechanics into a measured source-mutation or cache-lifetime claim."
+          },
+          {
+            "id": "nested-create-result",
+            "classification": "grammar-question",
+            "sites": [
+              "0x1005986c0"
+            ],
+            "structural_interpretation": "A null cached action pointer exits with failure instead of querying a nested action.",
+            "remaining_question": "Nonsense-expression controls measure this consumer output, not the internal create return or branch taken."
+          }
+        ]
+      },
+      {
+        "symbol": "IAction::getFloatParamEval",
+        "behavior_obligation": "backtick-float-evaluator",
+        "groups": [
+          {
+            "id": "argument-availability",
+            "classification": "context-unmeasured",
+            "sites": [
+              "0x100596ce9",
+              "0x100596cf5",
+              "0x100596d53"
+            ],
+            "structural_interpretation": "Count/index and zero-tag tests select an explicit/incoming/null operand or return failure.",
+            "remaining_question": "Display omission matches controls; constant-prefix tests return ASCII constants. Neither establishes inherited-parameter traversal."
+          },
+          {
+            "id": "text-backtick-gate",
+            "classification": "grammar-question",
+            "sites": [
+              "0x100596d1c",
+              "0x100596d38"
+            ],
+            "structural_interpretation": "Text tag and initial-backtick checks select direct conversion or nested evaluation.",
+            "remaining_question": "Use direct and evaluated display-frame comparisons; zero-frame matches remain non-discriminating."
+          },
+          {
+            "id": "string-storage",
+            "classification": "storage-mechanism",
+            "sites": [
+              "0x100596d41",
+              "0x100596d96",
+              "0x100596daa",
+              "0x100596db9",
+              "0x100596de3",
+              "0x100596e13",
+              "0x100596e4b"
+            ],
+            "structural_interpretation": "Low-bit tests select alternative string length/data locations.",
+            "remaining_question": "Short and long expression outputs are measured; storage representation and branch execution are not."
+          },
+          {
+            "id": "source-cache-comparison",
+            "classification": "lifecycle-unmeasured",
+            "sites": [
+              "0x100596da6",
+              "0x100596dce"
+            ],
+            "structural_interpretation": "Length and memcmp outcomes choose rebuilding versus reusing the cached nested action.",
+            "remaining_question": "No repeated-HTTP result proves cache reuse or invalidation."
+          },
+          {
+            "id": "closing-backtick",
+            "classification": "grammar-question",
+            "sites": [
+              "0x100596df0",
+              "0x100596e08"
+            ],
+            "structural_interpretation": "Final-byte tests guard removal of a trailing backtick before nested create.",
+            "remaining_question": "Short and long missing-final-backtick predictions have exact display-frame results, not instruction traces."
+          },
+          {
+            "id": "relative-value",
+            "classification": "context-unmeasured",
+            "sites": [
+              "0x100596d67",
+              "0x100596ed4"
+            ],
+            "structural_interpretation": "The relative byte gates addition of the existing float input after direct or evaluated conversion.",
+            "remaining_question": "The display consumer initializes the input to zero. A nonzero input is still needed to distinguish addition from absolute conversion."
+          },
+          {
+            "id": "optional-output-type",
+            "classification": "caller-interface",
+            "sites": [
+              "0x100596d78",
+              "0x100596ee7"
+            ],
+            "structural_interpretation": "Null-pointer tests guard copying the source/evaluated type into an optional caller output.",
+            "remaining_question": "HTTP bodies do not expose this pointer output. It adds no token or delimiter alternative."
+          },
+          {
+            "id": "release-and-cleanup",
+            "classification": "ownership-mechanism",
+            "sites": [
+              "0x100596e38",
+              "0x100596e3e",
+              "0x100596ea8",
+              "0x100596ef2",
+              "0x100596f08"
+            ],
+            "structural_interpretation": "Null/reference-count checks guard old-action destruction; string ownership checks guard cleanup on return or unwinding.",
+            "remaining_question": "No independent language prediction; these are not evidence of live exception-path coverage."
+          },
+          {
+            "id": "restore-final-byte",
+            "classification": "storage-mechanism",
+            "sites": [
+              "0x100596e55",
+              "0x100596e6d"
+            ],
+            "structural_interpretation": "Post-create final-byte tests guard restoring the backtick in the source string.",
+            "remaining_question": "The mutation mechanism is structural only and does not establish live cache lifetime."
+          },
+          {
+            "id": "nested-create-query-result",
+            "classification": "grammar-question",
+            "sites": [
+              "0x100596e7c",
+              "0x100596ea2"
+            ],
+            "structural_interpretation": "Nested-action pointer and query return tests choose conversion or failure.",
+            "remaining_question": "The fixture cannot distinguish recognized zero, unavailable nested evaluation and failed creation when all yield the zero frame."
+          }
+        ]
+      }
+    ]
+  }
 }

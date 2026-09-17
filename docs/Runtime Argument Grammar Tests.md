@@ -24,6 +24,28 @@ covered. The remote entry route and list conversion helper currently have no rev
 case linkage; deciding their exact scope and adding discriminating fixtures remains work.
 Editor corpus entries are pending observations, not predictions of editor acceptance.
 
+### Bounded evaluator branch review (2026-09-17)
+
+The audit's `evaluator_branch_review` partitions every conditional jump in the
+captured b9246 `IAction::getParamEval` and `IAction::getFloatParamEval` bodies.
+Each group records exact instruction sites, a **Tier-2 structural interpretation**,
+and the unresolved question or evidence limit. The checker derives the conditional
+jump set from the hashed assembly and rejects missing, duplicate or unknown sites.
+The output includes the branch instructions/targets and derived classification counts.
+
+The classifications distinguish token/evaluation questions from caller context,
+cache lifecycle, string storage, ownership, and optional caller outputs. This is
+an inspection boundary, not a declaration that a branch executed or worked. In
+particular, the constant-prefix display failures do not settle incoming parameters;
+the zero-initialized display input does not settle nonzero relative addition; and
+separate HTTP requests do not establish compiled-action reuse or invalidation.
+Long-expression results do not prove which string-storage alternative ran.
+
+The partition excludes unconditional transfers, callees, other parser functions,
+and instruction-level live coverage. It does not supply a denominator for all of
+H4. Future work should consult the group's `remaining_question` before adding a
+fixture: cleanup and optional output-pointer branches are not separate syntax rules.
+
 ### Remote-entry and list-helper reachability review (2026-09-17)
 
 The [route capture](../tests/runtime-parser-branch-routes.json) records the b9246 binary hash,

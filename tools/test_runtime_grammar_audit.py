@@ -47,6 +47,36 @@ class AuditTests(unittest.TestCase):
             with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
                 audit.report()
 
+    def test_evaluator_partition_is_bounded_and_not_live_coverage(self):
+        result = audit.report()['evaluator_branch_review']
+        self.assertFalse(result['live_branch_coverage_claim'])
+        self.assertEqual({f['symbol'] for f in result['functions']},
+                         {'IAction::getParamEval', 'IAction::getFloatParamEval'})
+        for function in result['functions']:
+            self.assertEqual(sum(function['classification_counts'].values()),
+                             len(function['conditional_branches']))
+
+    def test_rejects_incomplete_or_duplicated_evaluator_partition(self):
+        for mutation in ('missing', 'duplicate', 'unknown-site', 'unknown-category', 'missing-function'):
+            plan = json.loads(audit.PLAN.read_text())
+            functions = plan['evaluator_branch_review']['functions']
+            group = functions[0]['groups'][0]
+            if mutation == 'missing':
+                functions[0]['groups'].pop()
+            elif mutation == 'duplicate':
+                group['sites'].append(group['sites'][0])
+            elif mutation == 'unknown-site':
+                group['sites'][0] = '0x1'
+            elif mutation == 'unknown-category':
+                group['classification'] = 'proven-live'
+            else:
+                functions.pop()
+            with tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / 'plan.json'
+                path.write_text(json.dumps(plan))
+                with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
+                    audit.report()
+
     def test_rejects_wrong_consumer_edge_or_unknown_selected_case(self):
         for change_edge in (True, False):
             plan = json.loads(audit.PLAN.read_text())

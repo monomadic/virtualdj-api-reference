@@ -1129,3 +1129,12 @@ computed beats, and longer expressions separated from controls. Zero-frame cases
 matched controls. Chained constant-prefix predictions failed with ASCII constants,
 so they do not establish the inherited-parameter path. Original expectations and
 both captures are retained; see the Runtime Argument Grammar Tests follow-up.
+
+### H4 evaluator branch classification (2026-09-17)
+
+The structured audit now partitions the conditional jumps of the two captured b9246
+evaluator bodies into grammar questions, caller context, cache lifecycle, string
+storage, ownership and caller-interface groups. It checks exact assembly-derived
+membership and retains a question/limit per group. This narrows future fixture work
+without claiming live branch coverage or whole-parser completeness; cache lifecycle,
+incoming parameters and nonzero relative input remain explicit evidence limits.
