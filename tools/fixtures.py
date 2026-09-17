@@ -218,6 +218,17 @@ def build_fixtures(track: Path | None) -> dict[str, Fixture]:
     long_track = Path(tempfile.gettempdir()) / "vdj-long-time-7500.flac"
     return {f.name: f for f in [
         Fixture(
+            name="parser_setting_eval",
+            describes="read-only videoRandomTransition comparison while the existing setting is on; "
+                      "aborts if it differs, never changes it; generic evaluated-parameter caller",
+            setup=[], teardown=[], decks=(), needs_audio_file=False,
+            assertions=[
+                Assertion("setting 'videoRandomTransition'", lambda v: v == "yes", "existing setting value"),
+                Assertion("setting 'videoRandomTransition' on", lambda v: v == "yes", "literal equality oracle"),
+                Assertion("setting 'videoRandomTransition' off", lambda v: v == "no", "literal inequality oracle"),
+            ],
+        ),
+        Fixture(
             name="parser_editor_help",
             describes="read-only constant oracles for paired HTTP/editor-help comparisons; "
                       "UI observations and button restoration are separately required",

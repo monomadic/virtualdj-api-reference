@@ -36,6 +36,9 @@ def scan(binary):
         pos += length
     target = int(manifest['symbols']['IAction::getListParam']['start'], 16)
     branches, pointers = [], []
+    eval_targets = {int(manifest['symbols'][name]['start'], 16): name
+                    for name in ('IAction::getParamEval', 'IAction::getFloatParamEval')}
+    eval_candidates = []
     for name, vm, chunk in segments:
         if name == '__TEXT':
             for opcode, kind in ((b'\xe8', 'call-rel32'), (b'\xe9', 'jump-rel32')):
@@ -44,8 +47,12 @@ def scan(binary):
                     offset = chunk.find(opcode, offset)
                     if offset < 0 or offset + 5 > len(chunk):
                         break
-                    if vm + offset + 5 + struct.unpack_from('<i', chunk, offset+1)[0] == target:
+                    destination = vm + offset + 5 + struct.unpack_from('<i', chunk, offset+1)[0]
+                    if destination == target:
                         branches.append({'site': hex(vm+offset), 'kind': kind})
+                    if destination in eval_targets:
+                        eval_candidates.append({'site': hex(vm+offset), 'kind': kind,
+                                                'target': eval_targets[destination]})
                     offset += 1
         offset = 0
         while True:
@@ -68,6 +75,20 @@ def scan(binary):
             symbols[int(parts[0], 16)] = parts[2]
     assert remote_address is not None
     starts = function_starts(binary)
+    eval_callers = {}
+    for call in eval_candidates:
+        index = bisect.bisect_right(starts, int(call['site'], 16))-1
+        start, end = starts[index:index+2]
+        if start not in eval_callers:
+            mangled = symbols[start]
+            body = bounded_disassembly(binary, mangled, start, end)
+            eval_callers[start] = {'symbol': mangled, 'start': hex(start), 'end_exclusive': hex(end),
+                                  'assembly': body.splitlines(), 'assembly_sha256': hashlib.sha256(body.encode()).hexdigest(), 'calls': []}
+        instruction = next((line for line in eval_callers[start]['assembly']
+                            if line.startswith(call['site'][2:].zfill(16))), '')
+        target_symbol = manifest['symbols'][call['target']]['mangled']
+        call['verified_instruction'] = target_symbol in instruction and ('callq' in instruction or 'jmp' in instruction)
+        eval_callers[start]['calls'].append(call)
     writers = {}
     for name, vm, chunk in segments:
         if name != '__TEXT':
@@ -102,6 +123,9 @@ def scan(binary):
         'claim_scope': 'Tier-2 structural observations only; no dead-code or runtime-behavior conclusion',
         'mode_writer_scan_scope': 'C6 05 RIP-relative immediate-byte writes to the nm-resolved isRemote address, verified inside LC_FUNCTION_STARTS-bounded bodies; not an exhaustive dataflow analysis.',
         'remote_mode_writers': list(writers.values()),
+        'evaluation_callers': {
+            'scan_scope': 'E8/E9 rel32 candidates in __TEXT, checked against LC_FUNCTION_STARTS-bounded disassembly. Does not enumerate indirect callers or inlined copies, or prove live instruction execution.',
+            'functions': list(eval_callers.values())},
         'remote_entry': {
             'gate': 'IAction::create@0x100596f45',
             'normal_parser_entry': '0x1005974cf',
@@ -137,6 +161,15 @@ def load_report():
             assert int(writer['start'], 16) <= int(write['site'], 16) < int(writer['end_exclusive'], 16)
             assert any(line.startswith(write['site'][2:].zfill(16)) and 'isRemote' in line
                        for line in writer['assembly'])
+    for caller in result.get('evaluation_callers', {}).get('functions', []):
+        body = '\n'.join(caller['assembly']) + '\n'
+        assert hashlib.sha256(body.encode()).hexdigest() == caller['assembly_sha256']
+        for call in caller['calls']:
+            assert int(caller['start'], 16) <= int(call['site'], 16) < int(caller['end_exclusive'], 16)
+            instruction = next((line for line in caller['assembly']
+                                if line.startswith(call['site'][2:].zfill(16))), '')
+            verified = manifest['symbols'][call['target']]['mangled'] in instruction and ('callq' in instruction or 'jmp' in instruction)
+            assert call['verified_instruction'] == verified
     return result
 
 

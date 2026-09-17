@@ -13,12 +13,18 @@ class RouteEvidenceTests(unittest.TestCase):
         self.assertEqual(result['remote_entry']['status'], 'mode-establishment-not-measured')
         self.assertEqual(result['list_helper']['status'], 'reachability-not-established')
         self.assertTrue(result['remote_mode_writers'])
+        callers = result['evaluation_callers']['functions']
+        self.assertTrue(callers)
+        self.assertTrue(all(c['verified_instruction'] for f in callers for c in f['calls']))
 
     def test_rejects_changed_source_assembly_or_bounds(self):
         for mutate in (
             lambda d: d['source'].update(binary_sha256='wrong'),
             lambda d: d['remote_mode_writers'][0]['assembly'].append('invented'),
             lambda d: d['remote_mode_writers'][0].update(end_exclusive='0x1'),
+            lambda d: d['evaluation_callers']['functions'][0]['assembly'].append('invented'),
+            lambda d: d['evaluation_callers']['functions'][0]['calls'][0].update(site='0x1'),
+            lambda d: d['evaluation_callers']['functions'][0]['calls'][0].update(verified_instruction=False),
         ):
             data = json.loads(routes.OUT.read_text())
             mutate(data)

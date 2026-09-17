@@ -1,0 +1,113 @@
+{
+  "description": "Generic evaluated-parameter consumer questions, with literal on/off oracles and failed-expression controls.",
+  "cases": [
+    {
+      "id": "setting-eval-discrimination-computed-equality",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-discrimination",
+      "hypothesis": "Does a true computed comparison differ from plain nonsense text and the literal false comparison?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `param_equal 37 37`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' 'zzqqx'",
+        "setting 'videoRandomTransition' 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `param_equal 37 83`",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-discrimination-computed-number-one",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-discrimination",
+      "hypothesis": "Does computed numeric one differ from plain nonsense text and literal false?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant 1`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' 'zzqqx'",
+        "setting 'videoRandomTransition' 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `param_equal 37 83`",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-discrimination-computed-text-on",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-discrimination",
+      "hypothesis": "Does computed text on differ from plain nonsense text and literal false?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant \"on\"`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' 'zzqqx'",
+        "setting 'videoRandomTransition' 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `param_equal 37 83`",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-discrimination-missing-final-backtick-true",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-discrimination",
+      "hypothesis": "Does a true computed comparison without its final backtick differ from plain nonsense text and literal false?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' '`param_equal 53 53'",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' 'zzqqx'",
+        "setting 'videoRandomTransition' 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `param_equal 37 83`",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    }
+  ]
+}

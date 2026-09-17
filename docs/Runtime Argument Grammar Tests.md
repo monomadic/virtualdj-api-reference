@@ -758,11 +758,66 @@ trace or a claim that every branch was exercised.
 `just runtime-grammar --audit` now selects exact case IDs for these consumers and
 checks each recorded direct edge against both the captured manifest and hashed
 assembly. Literal, interpolation, numeric and lexical-negative results stay separate.
-The generic `getParamEval` and `getFloatParamEval` rows have no attached live result
-until an invoking consumer and discriminating fixture are established. Their empty
+At that review, the generic `getParamEval` and `getFloatParamEval` rows had no
+attached live result. The setting fixture below subsequently adds an identified
+caller and discriminating results for `getParamEval`; the float helper remains open. Their empty
 evidence lists must not be filled merely because some other verb evaluated a
 backtick expression. Cache-hit behavior and conversion branches also require their
 own observable before any completeness claim.
+
+### Generic evaluated-parameter caller and setting fixture (2026-09-17)
+
+The [route capture](../tests/runtime-parser-branch-routes.json) now includes an
+`evaluation_callers` section. The extractor scans x86_64 direct relative calls/jumps
+to the generic evaluation helpers and checks each candidate in a function body
+bounded by `LC_FUNCTION_STARTS`. Caller assembly and hashes are retained. This is
+Tier-2 evidence: it excludes indirect callers and inlined copies and does not claim
+that an observed live query executed an instruction from this older binary.
+
+`ACTION_setting::onQuery` contains the call to `getParamEval` at `0x10050c448` in
+b9246. The named `parser_setting_eval` fixture uses the existing
+`videoRandomTransition` setting while it reads `yes`, compares equal to literal
+`on`, and unequal to literal `off`. It aborts if these preconditions differ and
+never changes a setting, loads media, or calls the execute endpoint. The audit
+checks the caller anchor and links the new exact query results, rather than
+borrowing observations from the separate `param_add` or `get_text` readers.
+
+The frozen [initial suite](../tests/runtime-grammar-setting-eval-cases.json),
+[true-value discrimination suite](../tests/runtime-grammar-setting-eval-discrimination-cases.json),
+and [literal/type follow-up](../tests/runtime-grammar-setting-eval-types-cases.json)
+ran through `tools/probe_arg_forms.py` with repeated reads and forward/reverse passes.
+Their build-9598 captures are [initial](../tests/runtime-grammar-setting-eval-9598.json),
+[discrimination](../tests/runtime-grammar-setting-eval-discrimination-9598.json), and
+[types](../tests/runtime-grammar-setting-eval-types-9598.json).
+
+| Frozen question in `parser_setting_eval` | Observed build-9598 result | Verdict and limit |
+| --- | --- | --- |
+| Do bare and outer-quoted computed `off` arguments compare unequal? | `no`; failed-expression controls read `yes` | Held and separated |
+| Does outer-quoted `` '`off' `` compare unequal without its final backtick? | `no` | Held and separated |
+| Does outer-quoted `` ' `on`' `` with a leading space compare unequal? | `no` | Held; exact consumer output, not a universal whitespace rule |
+| Does computed `param_equal 37 37` compare equal, unlike plain nonsense text and computed `param_equal 37 83`? | `yes` versus `no` | Held and separated |
+| Does outer-quoted `` '`param_equal 53 53' `` also compare equal without its final backtick? | `yes` versus `no` | Held and separated |
+| Do computed numeric `1` and computed text `"on"` compare equal? | Both `no` | **Predictions did not hold**; both matched plain nonsense-text controls |
+| Do literal `1` and literal quoted `'on'` likewise compare unequal? | Both `no` | Follow-up predictions held and separated from failed-expression controls |
+| Do computed `constant on` / `constant off` compare equal / unequal? | `yes` / `no` | Follow-up predictions held and separated |
+
+The initial computed-true row also read `yes` against `yes` failed-expression
+controls; it remains `matches-controls`. The later true-comparison and type controls
+supply the distinction. No expectation was rewritten to turn a failure into a pass.
+The setting still read `yes` after the runs, and fixture assertions were checked
+at the start of each pass and at completion. These results concern this setting
+comparison only; they do not prove all settings coerce values alike or prove
+persistent compiled-action cache reuse.
+
+For `getFloatParamEval`, verified direct callers include Pioneer display browser/
+cuepoint readers and `wait` / `repeat_start`. Those are fixture leads only. No live
+float-evaluator result is attached yet; selecting a bounded query observable remains
+preferable to introducing asynchronous timing mutations.
+
+```sh
+just runtime-grammar --artifact tests/runtime-grammar-setting-eval-discrimination-9598.json --group setting-eval-discrimination
+just runtime-grammar --audit
+```
 
 ## What remains
 

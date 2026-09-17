@@ -1,0 +1,569 @@
+{
+  "summary": {
+    "suite_sha256": "677a24e9377671f1fabd1267d186f0f47ecabc8b48281f9942312e4cda92eb8f",
+    "suite": "tests/runtime-grammar-setting-eval-cases.json",
+    "repeat": 2,
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "status": "complete",
+    "response_normalization": "none; decoded HTTP body whitespace retained",
+    "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-17T00:41:37.097293+00:00",
+    "verdicts": {
+      "held-in-fixture": 8
+    }
+  },
+  "fixture_checks": [
+    {
+      "round": 1,
+      "fixture": "parser_setting_eval",
+      "assertions": [
+        {
+          "script": "setting 'videoRandomTransition'",
+          "value": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "value": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "value": "no"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    },
+    {
+      "round": 2,
+      "fixture": "parser_setting_eval",
+      "assertions": [
+        {
+          "script": "setting 'videoRandomTransition'",
+          "value": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "value": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "value": "no"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "setting-eval-bare-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the evaluated false value differ from the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `off`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `off`": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `off`": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-single-quoted-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a single-quoted backtick expression produce the false comparison?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' '`off`'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' '`off`'": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' '`off`'": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-double-quoted-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a double-quoted backtick expression produce the false comparison?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' \"`off`\"",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' \"`off`\"": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' \"`off`\"": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-quoted-without-final-backtick",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the outer-quoted argument evaluate without a final backtick?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' '`off'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' '`off'": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' '`off'": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-quoted-leading-space",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a leading space prevent this argument from comparing equal, unlike the unpadded computed true value?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' ' `on`'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' ' `on`'": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' ' `on`'": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-evaluated-zero",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does evaluated numeric zero compare unequal to the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant 0`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `constant 0`": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `constant 0`": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-evaluated-text-off",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does evaluated text off compare unequal to the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant \"off\"`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `constant \"off\"`": [
+            "no",
+            "no"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' on": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `constant \"off\"`": [
+            "no",
+            "no"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "setting-eval-evaluated-true",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the computed true value compare equal, while the literal false contrast does not?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `on`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse.",
+      "passes": [
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' off": [
+            "no",
+            "no"
+          ],
+          "setting 'videoRandomTransition' `on`": [
+            "yes",
+            "yes"
+          ]
+        },
+        {
+          "setting 'videoRandomTransition' `zzqqx`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' `vfnrbq`": [
+            "yes",
+            "yes"
+          ],
+          "setting 'videoRandomTransition' off": [
+            "no",
+            "no"
+          ],
+          "setting 'videoRandomTransition' `on`": [
+            "yes",
+            "yes"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ]
+}

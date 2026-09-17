@@ -85,8 +85,21 @@
       "id": "backtick-consumers",
       "symbol": "IAction::getParamEval",
       "site": "0x1005984e0",
-      "question": "Which independently identified consumer exercises this generic evaluated-parameter reader?",
-      "sources": [],
+      "question": "Which setting comparison predictions hold in parser_setting_eval, whose b9246 query caller reaches getParamEval?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-setting-eval-9598.json",
+          "group": "setting-eval"
+        },
+        {
+          "capture": "tests/runtime-grammar-setting-eval-discrimination-9598.json",
+          "group": "setting-eval-discrimination"
+        },
+        {
+          "capture": "tests/runtime-grammar-setting-eval-types-9598.json",
+          "group": "setting-eval-types"
+        }
+      ],
       "structural_edges": [
         {
           "caller": "IAction::getParamEval",
@@ -100,7 +113,13 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Identify a caller and discriminating fixture for this helper. Existing param_add and get_text observations must not be counted as direct coverage of it."
+      "next_action": "Read-only setting comparisons have evaluated false/true discriminators and literal-versus-evaluated type controls; preserve failed numeric-one/text-on predictions. Classify remaining cache/index checks as grammar-relevant or bookkeeping before requiring further fixtures; HTTP repetition alone does not establish compiled-action reuse.",
+      "caller_evidence": [
+        {
+          "symbol": "__ZN14ACTION_setting7onQueryER12SActionParam",
+          "site": "0x10050c448"
+        }
+      ]
     },
     {
       "id": "backtick-float-evaluator",
@@ -121,7 +140,8 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "Identify the invoking consumer before mapping a live numeric result here; cache and relative-result branches remain unmeasured."
+      "next_action": "Direct callers are captured in Pioneer display browser/cuepoint readers, wait, and repeat_start. Establish a discriminating read-only display fixture, or a bounded reversible timing fixture, before claiming helper behavior. No live float-evaluator evidence is attached.",
+      "structural_review": "tests/runtime-parser-branch-routes.json#evaluation_callers"
     },
     {
       "id": "backtick-literal-reader",

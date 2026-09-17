@@ -1,0 +1,113 @@
+{
+  "description": "Generic evaluated-parameter consumer questions, with literal on/off oracles and failed-expression controls.",
+  "cases": [
+    {
+      "id": "setting-eval-types-literal-number-one",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-types",
+      "hypothesis": "Does literal numeric one also compare unequal, like its evaluated counterpart?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' 1",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `constant on`",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-types-literal-text-on",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-types",
+      "hypothesis": "Does literal quoted text on also compare unequal, like its evaluated counterpart?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' 'on'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `constant on`",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-types-computed-bool-on",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-types",
+      "hypothesis": "Does the computed constant on form compare equal where computed numeric one does not?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant on`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' 'zzqqx'",
+        "setting 'videoRandomTransition' 'vfnrbq'"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `constant 1`",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-types-computed-bool-off",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval-types",
+      "hypothesis": "Does the computed constant off form compare unequal where computed constant on compares equal?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant off`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        },
+        {
+          "script": "setting 'videoRandomTransition' `constant on`",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    }
+  ]
+}

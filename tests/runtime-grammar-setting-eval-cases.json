@@ -1,0 +1,189 @@
+{
+  "description": "Generic evaluated-parameter consumer questions, with literal on/off oracles and failed-expression controls.",
+  "cases": [
+    {
+      "id": "setting-eval-bare-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the evaluated false value differ from the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `off`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-single-quoted-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a single-quoted backtick expression produce the false comparison?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' '`off`'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-double-quoted-false",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a double-quoted backtick expression produce the false comparison?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' \"`off`\"",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-quoted-without-final-backtick",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the outer-quoted argument evaluate without a final backtick?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' '`off'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-quoted-leading-space",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does a leading space prevent this argument from comparing equal, unlike the unpadded computed true value?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' ' `on`'",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-evaluated-zero",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does evaluated numeric zero compare unequal to the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant 0`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-evaluated-text-off",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does evaluated text off compare unequal to the current true setting?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `constant \"off\"`",
+      "expected": "no",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' on",
+          "expected": "yes"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    },
+    {
+      "id": "setting-eval-evaluated-true",
+      "fixture": "parser_setting_eval",
+      "group": "setting-eval",
+      "hypothesis": "Does the computed true value compare equal, while the literal false contrast does not?",
+      "binary_sites": [
+        "IAction::getParamEval@0x100598552",
+        "IAction::getParamEval@0x1005986d9"
+      ],
+      "script": "setting 'videoRandomTransition' `on`",
+      "expected": "yes",
+      "controls": [
+        "setting 'videoRandomTransition' `zzqqx`",
+        "setting 'videoRandomTransition' `vfnrbq`"
+      ],
+      "contrasts": [
+        {
+          "script": "setting 'videoRandomTransition' off",
+          "expected": "no"
+        }
+      ],
+      "scope": "Read-only HTTP comparison against an existing true setting; no setting writes, no claim of observed machine-code execution or persistent action-cache reuse."
+    }
+  ]
+}

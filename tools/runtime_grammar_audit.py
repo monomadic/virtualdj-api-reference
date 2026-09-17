@@ -53,6 +53,11 @@ def report():
         assert obligation['site'][2:].zfill(16).encode() in assembly
         for edge in obligation.get('structural_edges', []):
             validate_edge(edge)
+        for edge in obligation.get('caller_evidence', []):
+            assert any(caller['symbol'] == edge['symbol'] and
+                       any(call['site'] == edge['site'] and call['target'] == obligation['symbol']
+                           and call['verified_instruction'] for call in caller['calls'])
+                       for caller in routes['evaluation_callers']['functions']), edge
         evidence = []
         for source in obligation['sources']:
             capture = read_capture(source['capture'])
@@ -77,7 +82,9 @@ def report():
         corpus.append({**ref, 'fixture': case['fixture'], 'script': case['script'],
                        'status': 'needs-screenshot-backed-span-or-guard-observation'})
     return {'scope': plan['scope'], 'binary_build': manifest['source']['bundle_version'],
-            'branch_route_review': {k: v for k, v in routes.items() if k != 'remote_mode_writers'},
+            'branch_route_review': {k: v for k, v in routes.items() if k not in ('remote_mode_writers', 'evaluation_callers')},
+            'evaluation_callers': [{k: v for k, v in caller.items() if k != 'assembly'}
+                                   for caller in routes.get('evaluation_callers', {}).get('functions', [])],
             'mode_writer_symbols': [w['symbol'] for w in routes['remote_mode_writers']],
             'completion_claim': False, 'obligations': rows, 'editor_corpus': corpus,
             'symbols_without_family_mapping': sorted(set(manifest['symbols']) - {o['symbol'] for o in rows})}

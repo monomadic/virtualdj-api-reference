@@ -1003,6 +1003,15 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 #### H4 progress log
 
+Progress 2026-09-17 (generic evaluator caller): retained the direct-caller scan and
+bounded bodies in `runtime-parser-branch-routes.json`. A verified b9246
+`ACTION_setting::onQuery` call supplied the read-only `parser_setting_eval` fixture
+on build 9598. Computed boolean comparisons and the outer-quoted missing-final-
+backtick forms discriminated. Computed numeric one and text on failed their true
+predictions; literal/type controls retained and explained the exact consumer
+comparison without generalizing to other settings. No settings were changed.
+`getFloatParamEval` caller bodies are captured, but its live fixture is still open.
+
 Progress 2026-09-17 (backtick evidence routing): split the broad backtick family into
 exact consumer/case links. The existing constant, get_text and param_add results
 follow distinct captured readers; they no longer stand in for generic getParamEval
