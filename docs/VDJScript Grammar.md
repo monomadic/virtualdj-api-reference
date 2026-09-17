@@ -39,8 +39,9 @@ and not writing script, you can stop after this section.
 - **Store numbers in variables, never strings.** A string-valued variable cannot be read
   back (`get_var` returns blank) *or* compared (`var_equal` returns `yes` against
   everything). Use numeric codes.
-- **Backticks only interpolate in XML attribute contexts**, not everywhere — confirmed
-  inert in execute position too, by state readback.
+- **Computed arguments are consumer-specific.** Backticks work in some HTTP consumers
+  and XML attributes; the tested `zoom`/`beatlock` execute forms ignore them. Check
+  the verb record and the [bounded examples below](#backticks-are-a-surface-feature-not-a-parser-feature).
 - **A malformed number can wipe the value, not be ignored.** `zoom 0.25zzqqx` resets zoom
   rather than doing nothing. And a **signed** number is relative where unsigned is
   absolute — `zoom +0.25` adds, `zoom 0.25` sets.
@@ -513,13 +514,17 @@ that statement shape, not where VDJScript stops.
 Lesson worth keeping: when a channel and a language limit can produce the same symptom,
 distinguish them before measuring — here, by re-running over a different transport.
 
-## Backticks are a surface feature, not a parser feature
+<a id="backticks-are-a-surface-feature-not-a-parser-feature"></a>
 
-`` `verb` `` evaluates and substitutes **in XML attribute string/colour contexts**. It is
-not a general argument-evaluation mechanism, and the surface decides whether it works.
+## Backticks depend on the consumer and surface
 
-Proven not to substitute in HTTP argument position (`HTTP`), with `Echo` — a 6-slider
-effect — loaded in slot 1:
+`` `verb` `` evaluates in supported XML attribute string/colour contexts and in some
+HTTP argument consumers. It is not a universal argument-evaluation mechanism: test
+the exact verb, argument position and channel. The former claim that HTTP never
+evaluates backticks was too broad.
+
+These HTTP effect-introspection arguments did not substitute (`HTTP`), with `Echo`
+loaded in slot 1:
 
 ```
 get_effect_slider_count 'Echo'                 -> 6
@@ -541,7 +546,7 @@ get_var '$src' & param_multiply 2 & set '$dst'
 Whether a *given verb* honours a computed argument is per-verb: `loop`, `beatjump`, and
 `phrase_sync` ignore them even where the identical literal works. Check the verb record.
 
-The same holds in **execute** position, which the query evidence above could not show —
+These negative results also occur in specific **execute** consumers, which the query evidence above could not show —
 a flattened query result is consistent with "the surface stringified it", but a state
 readback is not. With `zoom` and `beatlock` driven from two prepared baselines and read
 back independently (`Local test` 2026-09-12, `HTTP`, build 9598), every backtick form left
@@ -554,8 +559,18 @@ deck 1 beatlock `constant 1`    -> unchanged      deck 1 beatlock on -> on
 deck 1 beatlock '`constant 1`'  -> unchanged
 ```
 
-Quoting the backtick expression does not rescue it. A computed deck prefix is worse than
+Quoting the backtick expression does not rescue these `zoom`/`beatlock` forms. A computed deck prefix is worse than
 inert — `` deck `constant 2` get_deck `` returns `error:-2147467259`.
+
+By contrast, `Local test` 2026-09-17 on build 18.0.9628 established HTTP execute
+evaluation for `deck 1 effect_active 1` with paired-backtick `on`/`off` and
+`constant 1`/`constant 0`, both with and without an explicit `'Phaser'` argument.
+Independent activation readback from off/on baselines separated these forms from
+paired-backtick nonsense. Raw quoted text and unclosed expressions matched their
+shape-matched controls, so those forms are not evaluation proof. See the
+[consumer fixture and preserved captures](Runtime%20Argument%20Grammar%20Tests.md#boolean-cache-callers-2026-09-17)
+for scope and restoration evidence. This does not establish other effect consumers
+or persistent action-cache behavior.
 
 ## Variable scope prefixes
 
@@ -993,7 +1008,8 @@ Do not guess in these gaps; test and record.
   button. It **saves and restores the prior value**, and it binds **its own statement only**.
   See [Button lifetime](#button-lifetime-what-press-and-release-actually-run-2026-09-14).
 - **Backtick boundaries in nested quoting**: `` param_equal "`get_text 'x'`" "x" ? on : off ``
-  — and more usefully, which surfaces interpolate backticks at all, since HTTP does not.
+  — and which argument consumers evaluate nested expressions on each surface; the
+  consumer-specific HTTP results above do not settle every quoting boundary.
 - **The exact chain ceiling** and what drives it (parse buffer? execution budget?).
 - ~~**Whether `&&`'s query-position short-circuit is deliberate** or a parse artefact~~ —
   **answered 2026-07-30**: `&&` is not a distinct operator structurally (identical parse to
