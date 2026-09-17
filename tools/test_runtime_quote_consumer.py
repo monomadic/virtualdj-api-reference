@@ -7,6 +7,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class QuoteConsumerEvidence(unittest.TestCase):
+    def test_unmatched_quote_chain_has_discriminating_results(self):
+        capture = check_capture(ROOT / 'tests/runtime-grammar-unmatched-quote-9598.json')
+        for case in capture['cases']:
+            self.assertEqual(case['verdict'], 'held-in-fixture')
+            self.assertEqual(separation(case), 'separates')
+            for readings in case['passes']:
+                self.assertNotEqual(readings[case['script']], readings[case['contrasts'][0]['script']])
+
     def test_same_length_controls_separate(self):
         initial = check_capture(ROOT / 'tests/runtime-grammar-quote-consumer-arity-initial-9598.json')
         self.assertIn('scope wording', initial['summary']['retention_note'])

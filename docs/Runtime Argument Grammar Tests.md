@@ -718,6 +718,33 @@ is retained separately because its scope text incorrectly called the same-length
 contrast an omission contrast; the corrected suite was rerun with unchanged scripts
 and expectations. No earlier capture was overwritten.
 
+### Unmatched quotes with a chain observable (2026-09-17)
+
+The [frozen suite](../tests/runtime-grammar-unmatched-quote-cases.json) asks what
+happens to a following addition when a quote after a numeric prefix is unmatched.
+It ran through the existing argument prober in `parser_constants`; the
+[build-9598 capture](../tests/runtime-grammar-unmatched-quote-9598.json) retains both
+quote styles, both numeric baselines, repeated reads and forward/reverse passes.
+
+| Frozen question, first single-quote baseline | Observed output | Matching-quote contrast / nonsense-value controls | Verdict |
+| --- | --- | --- | --- |
+| Does `constant 37 ' & param_add 5` retain `37`? | `37` | `42` | Held and separated |
+| Does `constant 37 'H4Q & param_add 5` retain `37`? | `37` | `42` | Held and separated |
+| Does `constant 37 'H4Q" & param_add 5` also retain `37`? | `37` | `42` | Held and separated |
+| Does `constant 37 'H4Q & param_add 5' & param_add 10` return `47`, rather than applying the inner addition too? | `47` | `42` | Held and separated |
+
+All corresponding double-quote and second-baseline predictions held. The exact
+matching-quote contrast was `constant 37 'H4Q' & param_add 5` in the first baseline;
+controls replaced the quoted contents with each nonsense value. This measures
+preservation of the numeric prefix and the observable effect of the following
+chain. It does not expose an internal cursor, prove an argument representation,
+or establish the same fallback for every consumer. Earlier unmatched-first-argument
+`get_text` observations remain separate evidence.
+
+```sh
+just runtime-grammar --artifact tests/runtime-grammar-unmatched-quote-9598.json --group unmatched-quote-chain
+```
+
 ## What remains
 
 Completion review, 2026-09-17: the historical package and bounded parser bodies are
@@ -731,8 +758,8 @@ The remaining completion obligations are:
 
 - **Audit runtime branches and conversion paths.** Use `just runtime-grammar --audit`
   to join each reviewed path to its actual query, execute or lifecycle observable.
-  Resolve unmatched-quote discrimination and review backtick evaluation/conversion
-  branches; preserve failed predictions and readings that match controls. A mapped
+  The unmatched-quote chain discriminator is now captured; review backtick
+  evaluation/conversion branches; preserve failed predictions and readings that match controls. A mapped
   function or branch family is not proof that every edge was measured.
 - **Complete the Button Editor comparison.** The frozen `editor_corpus` in
   `tests/runtime-grammar-obligations.json` still needs screenshot-backed token-span

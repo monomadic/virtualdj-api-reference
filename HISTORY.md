@@ -1003,6 +1003,14 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 #### H4 progress log
 
+Progress 2026-09-17 (unmatched-quote chains): froze and ran the
+`parser_constants` suite in `tests/runtime-grammar-unmatched-quote-cases.json` on
+build 9598. Unmatched opening quotes and opposite closers preserved the numeric
+prefix instead of applying the following addition; a later matching closer allowed
+the outer addition. Both quote styles and numeric baselines matched their frozen
+predictions and separated from their controls. The audit links the capture without
+claiming internal cursor behavior or universal consumer fallback.
+
 Progress 2026-09-17 (empty-quote consumer): the frozen `parser_constants` suite
 `tests/runtime-grammar-quote-consumer-cases.json` ran through the existing argument
 prober on build 9598. Single/double empty operands and both marker/value baselines

@@ -1,0 +1,1057 @@
+{
+  "summary": {
+    "suite_sha256": "f332f3a2298e5719b4310c4e874a22999511ce1c899c47adf7a08778637bf01b",
+    "suite": "tests/runtime-grammar-unmatched-quote-cases.json",
+    "repeat": 2,
+    "rounds_requested": 2,
+    "rounds_completed": 2,
+    "status": "complete",
+    "response_normalization": "none; decoded HTTP body whitespace retained",
+    "claim_scope": "exact HTTP outputs in named fixtures; no universal grammar proof",
+    "build": "9598",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-17T00:27:04.214966+00:00",
+    "verdicts": {
+      "held-in-fixture": 16
+    }
+  },
+  "fixture_checks": [
+    {
+      "round": 1,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    },
+    {
+      "round": 2,
+      "fixture": "parser_constants",
+      "assertions": [
+        {
+          "script": "constant 37",
+          "value": "37"
+        },
+        {
+          "script": "constant 83",
+          "value": "83"
+        },
+        {
+          "script": "deck 1 get_deck",
+          "value": "1"
+        },
+        {
+          "script": "deck 2 get_deck",
+          "value": "2"
+        }
+      ],
+      "context": {
+        "deck 1 loaded": "yes",
+        "deck 2 loaded": "yes",
+        "deck 1 play": "no",
+        "deck 2 play": "no",
+        "get_deck": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "unmatched-quote-first-single-open-only",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched opening quote leave the numeric prefix unchanged instead of applying the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 ' & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 'zzqqx' & param_add 5",
+        "constant 37 'vfnrbq' & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 'H4Q' & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 ' & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 ' & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-single-open-word",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched quoted word leave the numeric prefix unchanged, unlike the matched-quote contrast?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 'H4Q & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 'zzqqx' & param_add 5",
+        "constant 37 'vfnrbq' & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 'H4Q' & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-single-opposite-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does the opposite quote still leave the numeric prefix unchanged rather than restoring the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 'H4Q\" & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 'zzqqx' & param_add 5",
+        "constant 37 'vfnrbq' & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 'H4Q' & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q\" & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q\" & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-single-late-matching-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does a matching quote after the inner addition allow only the outer addition to determine this result?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 'H4Q & param_add 5' & param_add 10",
+      "expected": "47",
+      "controls": [
+        "constant 37 'zzqqx' & param_add 5",
+        "constant 37 'vfnrbq' & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 'H4Q' & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q & param_add 5' & param_add 10": [
+            "47",
+            "47"
+          ]
+        },
+        {
+          "constant 37 'zzqqx' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'vfnrbq' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q' & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 'H4Q & param_add 5' & param_add 10": [
+            "47",
+            "47"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-double-open-only",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched opening quote leave the numeric prefix unchanged instead of applying the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 \" & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 \"zzqqx\" & param_add 5",
+        "constant 37 \"vfnrbq\" & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 \"H4Q\" & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \" & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \" & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-double-open-word",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched quoted word leave the numeric prefix unchanged, unlike the matched-quote contrast?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 \"H4Q & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 \"zzqqx\" & param_add 5",
+        "constant 37 \"vfnrbq\" & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 \"H4Q\" & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-double-opposite-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does the opposite quote still leave the numeric prefix unchanged rather than restoring the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 \"H4Q' & param_add 5",
+      "expected": "37",
+      "controls": [
+        "constant 37 \"zzqqx\" & param_add 5",
+        "constant 37 \"vfnrbq\" & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 \"H4Q\" & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q' & param_add 5": [
+            "37",
+            "37"
+          ]
+        },
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q' & param_add 5": [
+            "37",
+            "37"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-first-double-late-matching-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does a matching quote after the inner addition allow only the outer addition to determine this result?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 37 \"H4Q & param_add 5\" & param_add 10",
+      "expected": "47",
+      "controls": [
+        "constant 37 \"zzqqx\" & param_add 5",
+        "constant 37 \"vfnrbq\" & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 \"H4Q\" & param_add 5",
+          "expected": "42"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q & param_add 5\" & param_add 10": [
+            "47",
+            "47"
+          ]
+        },
+        {
+          "constant 37 \"zzqqx\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"vfnrbq\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q\" & param_add 5": [
+            "42",
+            "42"
+          ],
+          "constant 37 \"H4Q & param_add 5\" & param_add 10": [
+            "47",
+            "47"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-single-open-only",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched opening quote leave the numeric prefix unchanged instead of applying the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 ' & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 'zzqqx' & param_add 9",
+        "constant 53 'vfnrbq' & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 'H4R' & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 ' & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 ' & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-single-open-word",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched quoted word leave the numeric prefix unchanged, unlike the matched-quote contrast?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 'H4R & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 'zzqqx' & param_add 9",
+        "constant 53 'vfnrbq' & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 'H4R' & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-single-opposite-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does the opposite quote still leave the numeric prefix unchanged rather than restoring the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 'H4R\" & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 'zzqqx' & param_add 9",
+        "constant 53 'vfnrbq' & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 'H4R' & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R\" & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R\" & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-single-late-matching-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does a matching quote after the inner addition allow only the outer addition to determine this result?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 'H4R & param_add 9' & param_add 18",
+      "expected": "71",
+      "controls": [
+        "constant 53 'zzqqx' & param_add 9",
+        "constant 53 'vfnrbq' & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 'H4R' & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R & param_add 9' & param_add 18": [
+            "71",
+            "71"
+          ]
+        },
+        {
+          "constant 53 'zzqqx' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'vfnrbq' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R' & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 'H4R & param_add 9' & param_add 18": [
+            "71",
+            "71"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-double-open-only",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched opening quote leave the numeric prefix unchanged instead of applying the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 \" & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 \"zzqqx\" & param_add 9",
+        "constant 53 \"vfnrbq\" & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 \"H4R\" & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \" & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \" & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-double-open-word",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does an unmatched quoted word leave the numeric prefix unchanged, unlike the matched-quote contrast?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 \"H4R & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 \"zzqqx\" & param_add 9",
+        "constant 53 \"vfnrbq\" & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 \"H4R\" & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-double-opposite-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does the opposite quote still leave the numeric prefix unchanged rather than restoring the following addition?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 \"H4R' & param_add 9",
+      "expected": "53",
+      "controls": [
+        "constant 53 \"zzqqx\" & param_add 9",
+        "constant 53 \"vfnrbq\" & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 \"H4R\" & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R' & param_add 9": [
+            "53",
+            "53"
+          ]
+        },
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R' & param_add 9": [
+            "53",
+            "53"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    },
+    {
+      "id": "unmatched-quote-second-double-late-matching-closer",
+      "fixture": "parser_constants",
+      "group": "unmatched-quote-chain",
+      "hypothesis": "Does a matching quote after the inner addition allow only the outer addition to determine this result?",
+      "binary_sites": [
+        "IAction::stringGetParam@0x10059958d"
+      ],
+      "script": "constant 53 \"H4R & param_add 9\" & param_add 18",
+      "expected": "71",
+      "controls": [
+        "constant 53 \"zzqqx\" & param_add 9",
+        "constant 53 \"vfnrbq\" & param_add 9"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 53 \"H4R\" & param_add 9",
+          "expected": "62"
+        }
+      ],
+      "scope": "Exact constant/param_add HTTP output with a parsed numeric prefix. Quoted nonsense-value controls have matching delimiters. No claim about internal cursor position, discarded argument representation, or every consumer.",
+      "passes": [
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R & param_add 9\" & param_add 18": [
+            "71",
+            "71"
+          ]
+        },
+        {
+          "constant 53 \"zzqqx\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"vfnrbq\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R\" & param_add 9": [
+            "62",
+            "62"
+          ],
+          "constant 53 \"H4R & param_add 9\" & param_add 18": [
+            "71",
+            "71"
+          ]
+        }
+      ],
+      "verdict": "held-in-fixture"
+    }
+  ]
+}
