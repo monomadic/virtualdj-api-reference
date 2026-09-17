@@ -720,51 +720,49 @@ and expectations. No earlier capture was overwritten.
 
 ## What remains
 
-Editor coordinate calibration on 2026-09-17 was aborted before candidate tests.
-The [incident record](../tests/runtime-grammar-editor-spans-calibration-aborted-9598.json)
-records a click aimed at the cropped dialog reaching a cue pad behind it instead.
-Deck 1 was paused and independently read back as stopped, but its exact prior
-position had not been recorded and was not restored. No grammar conclusion follows.
-Do not repeat cropped-dialog coordinate clicks with this CUA API; first establish
-a pointer-targeting method that preserves the dialog and record playback/position
-baselines. Keyboard-only help observations remain a different, demonstrated method.
+Completion review, 2026-09-17: the historical package and bounded parser bodies are
+captured, the queued indirect-call frontier is resolved, and the ordinary parser has
+broad live coverage. Delimiters, numeric/unit forms, quoting, keyword/fallback forms,
+representative typed consumers, deck scopes and variable isolation have named-fixture
+captures. Empty quoted operands now have omission and same-length controls. These
+results do not yet establish exhaustive branch coverage or a complete editor comparison.
 
-H4 cannot honestly be called a complete grammar recovery yet. The static frontier is
-closed by the separate closure artifact; the original manifest retains its historical
-coverage record. Remaining discriminating work includes:
+The remaining completion obligations are:
 
-- The isolated master query completed in a guarded fixture. The earlier apparent-exit
-  concern is superseded by the window-minimization investigation above; the original
-  interrupted captures remain historical evidence.
-- The master/selection half of the asymmetric-scope item is **done** — see
-  [asymmetric master](#asymmetric-master-2026-09-12) below and the promoted rule in
-  [VDJScript Grammar](VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12).
-  The stopped-fixture playback gap is now covered by the
-  [asymmetric playback test](#asymmetric-playback-test-2026-09-16): the master and sole playing
-  deck were swapped while selection stayed distinct. The `mixerN` permutation still has
-  no established cause and needs a configuration channel this suite does not touch.
-- Button-lifetime tests are **done** through the mapper press/release surface; see
-  [the dated live results](VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
-  HTTP observations alone still cannot substitute for that lifecycle.
-- Variable **isolation** is now observed (`just probe-variable-scope`,
-  [capture](../tests/variable-scope-probe-9598.json)): bare names are per-deck, `$` is shared
-  across decks, and bare/`$`/`@` are three separate names held at once — promoted into
-  [VDJScript Grammar](VDJScript%20Grammar.md#the-isolation-is-real-and-tested-2026-09-12).
-  `#name` and `%name` are now covered too: `#X` is a *separate variable* from `X` (which
-  corrects the grammar table, where they shared a row), and `%X` keys on the logical deck
-  reference rather than the deck behind it — `deck left` and `deck 1` are the same deck here
-  and still held two values. `@` persistence is confirmed too, across a real restart: every probe name was
-  left at `0` rather than deleted, and after a full quit and relaunch only `@zzprobescope`
-  still read `0` while the bare, `$`, `#` and `%` names read blank. `@` turned out to be a
-  modifier on the scope rather than a scope — `@name` is persistent *and* deck-local, `@$name`
-  persistent *and* global — stored in `settings.xml` under `<VDJScriptGlobalVariables>` with
-  the `@` stripped. Still open on this item: remote-mode creation and the `isRemote` branch.
-- The static frontier is **closed** (`just frontier-closure`,
-  [artifact](../tests/runtime-parser-frontier-closure.json)): all 30 queued indirect sites are
-  accounted for and **none consumes script arguments** — see below. Running the matching
-  candidate corpus through the live Button Editor is still outstanding.
+- **Audit runtime branches and conversion paths.** Use `just runtime-grammar --audit`
+  to join each reviewed path to its actual query, execute or lifecycle observable.
+  Resolve unmatched-quote discrimination and review backtick evaluation/conversion
+  branches; preserve failed predictions and readings that match controls. A mapped
+  function or branch family is not proof that every edge was measured.
+- **Complete the Button Editor comparison.** The frozen `editor_corpus` in
+  `tests/runtime-grammar-obligations.json` still needs screenshot-backed token-span
+  or guard-hint observations. Help-display repeats now have durable screenshots,
+  but do not substitute for those observables. Coordinate-based observation is
+  blocked pending a verified targeting method that preserves the active dialog.
+- **Measure the alternate remote entry.** Establish `parser_remote_mode` independently,
+  record a restoration procedure, and test the checked-head bypass versus source-text
+  wrapper predictions. A Remote-protocol subscription or ordinary HTTP response
+  alone does not establish `IAction::isRemote`.
+- **Resolve scope and reconcile the final specification.** Determine whether
+  `IAction::getListParam` is actually reached from the recovered paths; absence of
+  direct references does not prove it is unused. Then ensure every in-scope proposed
+  rule links to a discriminating live result or an explicit unresolved status, and
+  distinguish b9246 structural leads from b9598 behavior. Do not expand H4 into every
+  action implementation, every mixer configuration or every deck-selection policy.
 
-For future agents, inspect `just runtime-grammar --group …` and `just runtime-parser-frontier` first. Reuse the exact-script
-suite and raw captures instead of re-reading assembly or adding token variants to a prober
-that normalizes their separators. Keep formatting, parsing, consumer semantics and editor
-appearance as separate predictions.
+There is no defensible completion percentage until the runtime branch audit has a
+closed denominator. Editor targeting and remote-mode establishment are the principal
+fixture blockers; the remaining read-only tests and evidence joins can proceed.
+
+The [failed editor calibration](../tests/runtime-grammar-editor-spans-calibration-aborted-9598.json)
+records a cropped-dialog click reaching a cue pad behind the editor. Deck 1 was
+paused and independently read back as stopped; its exact prior position was not
+recorded and was not restored. Do not repeat that coordinate method. Capture
+playback/position baselines before any future UI calibration. Keyboard-only help
+observations remain a separate demonstrated method.
+
+For future agents, start with `just runtime-grammar --audit`, then retrieve the exact
+case through `just runtime-grammar --artifact <capture> --get <case>`. This avoids
+re-reading the full assembly or treating completed fixture work as an open task.
+Keep runtime output, consumer semantics, lifecycle behavior and editor appearance
+as separate predictions.
