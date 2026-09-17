@@ -1003,6 +1003,13 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 #### H4 progress log
 
+Progress 2026-09-17 (backtick evidence routing): split the broad backtick family into
+exact consumer/case links. The existing constant, get_text and param_add results
+follow distinct captured readers; they no longer stand in for generic getParamEval
+or getFloatParamEval coverage. The audit validates recorded call edges against the
+manifest and hashed assembly and rejects unknown selected case IDs. No live result
+or grammar prediction was changed by this correction.
+
 Progress 2026-09-17 (unmatched-quote chains): froze and ran the
 `parser_constants` suite in `tests/runtime-grammar-unmatched-quote-cases.json` on
 build 9598. Unmatched opening quotes and opposite closers preserved the numeric

@@ -17,6 +17,17 @@ def report():
     manifest = json.loads(manifest_path.read_text())
     captures = {}
 
+    def validate_edge(edge):
+        caller = manifest['symbols'][edge['caller']]
+        callee = manifest['symbols'][edge['callee']]
+        assert any(c['site'] == edge['site'] and c['target'] == callee['start']
+                   for c in caller['direct_calls']), edge
+        assembly = (manifest_path.parent / caller['file']).read_bytes()
+        assert hashlib.sha256(assembly).hexdigest() == caller['asm_sha256']
+        instruction = next(line for line in assembly.decode().splitlines()
+                           if line.startswith(edge['site'][2:].zfill(16)))
+        assert 'callq' in instruction and callee['mangled'] in instruction, edge
+
     def read_capture(relative):
         if relative not in captures:
             path = ROOT / relative
@@ -40,10 +51,17 @@ def report():
         assembly = (manifest_path.parent / symbol['file']).read_bytes()
         assert hashlib.sha256(assembly).hexdigest() == symbol['asm_sha256']
         assert obligation['site'][2:].zfill(16).encode() in assembly
+        for edge in obligation.get('structural_edges', []):
+            validate_edge(edge)
         evidence = []
         for source in obligation['sources']:
             capture = read_capture(source['capture'])
             matches = [c for c in capture['cases'] if c['group'] == source['group']]
+            if 'case_ids' in source:
+                wanted = source['case_ids']
+                assert wanted and len(set(wanted)) == len(wanted), source
+                matches = [c for c in matches if c['id'] in wanted]
+                assert {c['id'] for c in matches} == set(wanted), source
             assert matches, source
             for case in matches:
                 evidence.append({'capture': source['capture'], 'case': case['id'],

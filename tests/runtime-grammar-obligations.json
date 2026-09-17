@@ -85,14 +85,156 @@
       "id": "backtick-consumers",
       "symbol": "IAction::getParamEval",
       "site": "0x1005984e0",
-      "question": "Which consumers evaluate backtick text rather than return it?",
+      "question": "Which independently identified consumer exercises this generic evaluated-parameter reader?",
+      "sources": [],
+      "structural_edges": [
+        {
+          "caller": "IAction::getParamEval",
+          "callee": "IAction::create",
+          "site": "0x10059866c"
+        },
+        {
+          "caller": "IAction::getParamEval",
+          "callee": "IAction::query",
+          "site": "0x1005986d9"
+        }
+      ],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Identify a caller and discriminating fixture for this helper. Existing param_add and get_text observations must not be counted as direct coverage of it."
+    },
+    {
+      "id": "backtick-float-evaluator",
+      "symbol": "IAction::getFloatParamEval",
+      "site": "0x100596cb2",
+      "question": "Which consumer exercises evaluated-float conversion, including relative results?",
+      "sources": [],
+      "structural_edges": [
+        {
+          "caller": "IAction::getFloatParamEval",
+          "callee": "IAction::create",
+          "site": "0x100596e28"
+        },
+        {
+          "caller": "IAction::getFloatParamEval",
+          "callee": "SActionParam::toFloat",
+          "site": "0x100596ecb"
+        }
+      ],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Identify the invoking consumer before mapping a live numeric result here; cache and relative-result branches remain unmeasured."
+    },
+    {
+      "id": "backtick-literal-reader",
+      "symbol": "ACTION_constant::onQuery",
+      "site": "0x100990c2a",
+      "question": "Does this exact constant query preserve the backtick text?",
       "sources": [
         {
           "capture": "tests/runtime-grammar-confirmation-9598.json",
-          "group": "backticks"
+          "group": "backticks",
+          "case_ids": [
+            "backtick-literal"
+          ]
         }
       ],
-      "next_action": "Audit evaluation/conversion branches individually; a constant reader cannot stand in for every consumer."
+      "structural_edges": [
+        {
+          "caller": "ACTION_constant::onQuery",
+          "callee": "IAction::getParam",
+          "site": "0x100990c36"
+        }
+      ],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Keep literal-return evidence separate from interpolation and numeric evaluation."
+    },
+    {
+      "id": "backtick-text-reader",
+      "symbol": "ACTION_get_text::onQuery",
+      "site": "0x100425bac",
+      "question": "Do the exact get_text forms evaluate and interpolate their backtick text?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "backticks",
+          "case_ids": [
+            "backtick-text-eval",
+            "backtick-text-interpolation"
+          ]
+        }
+      ],
+      "structural_edges": [
+        {
+          "caller": "ACTION_get_text::onQuery",
+          "callee": "actionGetText",
+          "site": "0x100425cf5"
+        },
+        {
+          "caller": "actionGetText",
+          "callee": "IAction::create",
+          "site": "0x100423462"
+        },
+        {
+          "caller": "actionGetText",
+          "callee": "IAction::queryText",
+          "site": "0x1004234b6"
+        }
+      ],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Audit the interpolation helper separately; these cases do not prove generic getParamEval branches."
+    },
+    {
+      "id": "backtick-math-reader",
+      "symbol": "ACTION_param_add::onQuery",
+      "site": "0x1009929f4",
+      "question": "Do quoted and bare backtick operands yield the predicted sum in param_add?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "backticks",
+          "case_ids": [
+            "backtick-numeric-consumer",
+            "backtick-numeric-consumer-quoted"
+          ]
+        }
+      ],
+      "structural_edges": [
+        {
+          "caller": "ACTION_param_add::onQuery",
+          "callee": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "site": "0x100992a73"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::create",
+          "site": "0x100992f87"
+        },
+        {
+          "caller": "IParamValuesAction::getValues(SActionParam*, SActionParam*)",
+          "callee": "IAction::query",
+          "site": "0x100993038"
+        }
+      ],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Review numeric/text conversion and source-cache alternatives in this distinct helper before claiming full branch coverage."
+    },
+    {
+      "id": "backtick-lexical-negative",
+      "symbol": "IAction::create",
+      "site": "0x100596f1c",
+      "question": "What do the exact unclosed backtick and computed deck-selector inputs return?",
+      "sources": [
+        {
+          "capture": "tests/runtime-grammar-confirmation-9598.json",
+          "group": "backticks",
+          "case_ids": [
+            "backtick-unclosed",
+            "backtick-deck-consumer"
+          ]
+        }
+      ],
+      "structural_edges": [],
+      "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
+      "next_action": "Retain lexical negatives and control matches without assigning them to an evaluated-parameter helper."
     },
     {
       "id": "word-and-keyword",

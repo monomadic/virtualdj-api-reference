@@ -745,6 +745,25 @@ or establish the same fallback for every consumer. Earlier unmatched-first-argum
 just runtime-grammar --artifact tests/runtime-grammar-unmatched-quote-9598.json --group unmatched-quote-chain
 ```
 
+### Backtick evidence routed by consumer (2026-09-17)
+
+The audit previously attached the whole backtick case group to
+`IAction::getParamEval`. That association was too broad. The b9246 bounded bodies
+contain distinct call paths: `constant` calls `getParam`; `get_text` calls
+`actionGetText`, which creates an action and calls `queryText`; `param_add` calls
+`IParamValuesAction::getValues(SActionParam*, SActionParam*)`, which has its own
+creation/query path. These are Tier-2 call-site observations, not a live instruction
+trace or a claim that every branch was exercised.
+
+`just runtime-grammar --audit` now selects exact case IDs for these consumers and
+checks each recorded direct edge against both the captured manifest and hashed
+assembly. Literal, interpolation, numeric and lexical-negative results stay separate.
+The generic `getParamEval` and `getFloatParamEval` rows have no attached live result
+until an invoking consumer and discriminating fixture are established. Their empty
+evidence lists must not be filled merely because some other verb evaluated a
+backtick expression. Cache-hit behavior and conversion branches also require their
+own observable before any completeness claim.
+
 ## What remains
 
 Completion review, 2026-09-17: the historical package and bounded parser bodies are
