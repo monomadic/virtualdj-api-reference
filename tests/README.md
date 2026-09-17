@@ -14,6 +14,13 @@ comparisons with `just probe-arg-forms --grammar-actions tests/runtime-grammar-e
 The [H4 report](../docs/Runtime%20Argument%20Grammar%20Tests.md#boolean-cache-callers-2026-09-17)
 explains the historical cache-supplying callers and the consumer-specific evidence boundary.
 
+The H4 incoming-parameter fixture reuses `parser_zoom_levels`. Inspect
+`just runtime-grammar --artifact tests/runtime-grammar-incoming-pipeline-confirmation-9628.json --group incoming-zoom`
+for the discriminating `param_cast float` bridge and same-source direct-chain controls.
+The [incoming run report](../docs/Runtime%20Argument%20Grammar%20Tests.md#incoming-parameter-selection-2026-09-17)
+keeps failed and aborted captures separate from completed observations. Prefer this
+scoped query to reading the mutation journals; uncertain writes must not be replayed.
+
 Sampler contract work: `just coverage --section=Sampler --frontier` gives the scoped
 queue; `just verb sampler_volume` joins the confirmed forms from
 [`sampler-contracts-9598.json`](sampler-contracts-9598.json). The initial and timeout

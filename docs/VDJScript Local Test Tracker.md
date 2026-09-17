@@ -20,6 +20,18 @@ and corrected quoted-text/unclosed-expression controls. This is the separate
 Cache reuse, audible processing and universal boolean conversion remain unmeasured;
 per-verb conclusions belong to `just verb effect_active`.
 
+## H4 incoming parameter consumer — 2026-09-17
+
+**Partial**, HTTP build 18.0.9628, four unloaded stopped decks, `parser_zoom_levels`
+at `0.25`/`0.65`, independent zoom readback and verified restoration. The
+[run report](Runtime%20Argument%20Grammar%20Tests.md#incoming-parameter-selection-2026-09-17)
+links failed query/direct-chain fixtures, aborted writes, and the completed pipeline
+and confirmation runs. A `param_cast float` bridge supplies the omitted zoom operand;
+explicit decimal/zero/relative operands discriminate overrides. The historical
+`getParam(0)` consumer edge is checked separately. Second-slot selection, flag bits,
+other consumers and instruction coverage remain open; `just verb zoom` owns the
+per-verb conclusion.
+
 ## Evidence Snapshot
 
 Last sparse-prose spot-check: 2026-05-21 against the [official VDJScript verbs appendix](https://www.virtualdj.com/manuals/virtualdj/appendix/vdjscriptverbs.html) and local official/published skin examples.

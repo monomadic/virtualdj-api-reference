@@ -1191,3 +1191,29 @@ Runtime-grammar, capture, restoration-guard and reference-status checks passed.
 Full `just check` again stopped at the unchanged historical binary-vocabulary
 artifact's mismatch against installed build 18.0.9628; no historical binary data
 was re-anchored as part of this consumer test.
+
+### H4 incoming parameter consumer follow-up (2026-09-17)
+
+Mapped `IAction::getParam` to the captured b9246 `ACTION_zoom::onExecute` index-zero
+call and exact build-18.0.9628 HTTP execute/readback comparisons. The initial
+query fixture failed its contrasts, and direct constant-to-zoom chains did not
+propagate the source. Completed pipeline and independent confirmation runs show
+that `param_cast float` supplies the omitted zoom operand; explicit decimal/zero
+values override it and explicit relative values use the current zoom baseline.
+Same-source direct-chain controls separate the bridge from bare default behavior.
+
+Both interrupted pipeline attempts remain aborted captures with verified
+restoration and uncertain writes excluded from subsequent suites. Each mutation
+now starts on a fresh HTTP connection without retrying a lost response; the
+original timeout cause remains unproved. Frozen suites, exact readbacks, controls,
+journals and restoration are joined through `incoming-parameter-selection` in
+`just runtime-grammar --audit`; per-verb evidence is in `just verb zoom`.
+Second incoming slots, flag branches and other consumers remain open. The unmapped
+triage's next priority is the distinct typed/float `getValues` overloads.
+
+Corrected the grammar summary's blanket XML-only backtick claim using the already
+verified effect consumer captures. Runtime-grammar, incoming evidence, transport,
+allowlist and reference-status checks passed. Full `just check` stopped at the
+unchanged historical binary-vocabulary artifact's re-extraction mismatch against
+installed build 18.0.9628; historical data was preserved. For efficient follow-up,
+use the scoped capture query in the run report rather than opening full journals.

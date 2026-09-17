@@ -37,9 +37,10 @@ class AuditTests(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(AssertionError):
                 audit.symbol_triage(plan, manifest, manifest_path)
         plan = json.loads(audit.PLAN.read_text())
-        omitted = plan['unmapped_symbol_triage']['groups'].pop(0)['symbols'][0]['symbol']
+        omitted = sorted(row['symbol'] for row in
+                         plan['unmapped_symbol_triage']['groups'].pop(0)['symbols'])
         self.assertEqual(audit.symbol_triage(plan, manifest, manifest_path)['symbols_without_triage'],
-                         [omitted])
+                         omitted)
 
     def test_preserves_gaps_and_null_readings(self):
         result = audit.report()
@@ -69,6 +70,15 @@ class AuditTests(unittest.TestCase):
                          {'__ZN20ACTION_effect_active9onExecuteEv'})
         self.assertTrue(any(e['verdict'] == 'prediction-not-held' for e in effect['evidence']))
         self.assertTrue(any(e['separation'] == 'matches-controls' for e in effect['evidence']))
+        incoming = rows['incoming-parameter-selection']
+        self.assertEqual(incoming['symbol'], 'IAction::getParam')
+        self.assertEqual({e['fixture'] for e in incoming['evidence']},
+                         {'parser_constants', 'parser_zoom_levels'})
+        self.assertTrue(any(e['verdict'] == 'inconclusive-oracle' for e in incoming['evidence']))
+        self.assertTrue(any(e['verdict'] == 'incomplete-run' and e['separation'] == 'not-run'
+                            for e in incoming['evidence']))
+        self.assertTrue(any(e['verdict'] == 'held-in-fixture' and e['separation'] == 'separates'
+                            for e in incoming['evidence']))
 
     def test_rejects_invalid_external_caller(self):
         plan = json.loads(audit.PLAN.read_text())

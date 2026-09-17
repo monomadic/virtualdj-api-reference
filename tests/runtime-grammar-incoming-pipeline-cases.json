@@ -1,0 +1,485 @@
+{
+  "scope": "Historical b9246 incoming-parameter route tested through HTTP execute and independent zoom readback on the recorded live build. No native type, second incoming slot, flag-bit or instruction coverage claim.",
+  "cases": [
+    {
+      "id": "incoming-zoom-0.37-omitted",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.37 & param_cast float & zoom",
+      "controls": [
+        "constant 0.37 & param_cast float & zoom zzqqx",
+        "constant 0.37 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.37"
+        ],
+        [
+          "0.37"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.37, omitted selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.37-explicit",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.37 & param_cast float & zoom 0.25",
+      "controls": [
+        "constant 0.37 & param_cast float & zoom zzqqx",
+        "constant 0.37 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.37, explicit selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.37-explicit-zero",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.37 & param_cast float & zoom 0.0",
+      "controls": [
+        "constant 0.37 & param_cast float & zoom zzqqx",
+        "constant 0.37 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.0"
+        ],
+        [
+          "0.0"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.37, explicit-zero selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.37-explicit-relative",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.37 & param_cast float & zoom +0.25",
+      "controls": [
+        "constant 0.37 & param_cast float & zoom zzqqx",
+        "constant 0.37 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.9"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.37, explicit-relative selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.37-default",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.37 & param_cast float & zoom default",
+      "controls": [
+        "constant 0.37 & param_cast float & zoom zzqqx",
+        "constant 0.37 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.37"
+        ],
+        [
+          "0.37"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.37 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.37, default selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.83-omitted",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.83 & param_cast float & zoom",
+      "controls": [
+        "constant 0.83 & param_cast float & zoom zzqqx",
+        "constant 0.83 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.83"
+        ],
+        [
+          "0.83"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.83, omitted selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.83-explicit",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.83 & param_cast float & zoom 0.25",
+      "controls": [
+        "constant 0.83 & param_cast float & zoom zzqqx",
+        "constant 0.83 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.25"
+        ],
+        [
+          "0.25"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.83, explicit selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.83-explicit-zero",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.83 & param_cast float & zoom 0.0",
+      "controls": [
+        "constant 0.83 & param_cast float & zoom zzqqx",
+        "constant 0.83 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.0"
+        ],
+        [
+          "0.0"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.83, explicit-zero selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.83-explicit-relative",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.83 & param_cast float & zoom +0.25",
+      "controls": [
+        "constant 0.83 & param_cast float & zoom zzqqx",
+        "constant 0.83 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.5"
+        ],
+        [
+          "0.9"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.83, explicit-relative selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    },
+    {
+      "id": "incoming-zoom-0.83-default",
+      "group": "incoming-zoom",
+      "fixture": "parser_zoom_levels",
+      "script": "constant 0.83 & param_cast float & zoom default",
+      "controls": [
+        "constant 0.83 & param_cast float & zoom zzqqx",
+        "constant 0.83 & param_cast float & zoom vvnnz"
+      ],
+      "expected": [
+        [
+          "0.83"
+        ],
+        [
+          "0.83"
+        ]
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.25",
+          "expected": [
+            [
+              "0.25"
+            ],
+            [
+              "0.25"
+            ]
+          ]
+        },
+        {
+          "script": "constant 0.83 & param_cast float & zoom 0.0",
+          "expected": [
+            [
+              "0.0"
+            ],
+            [
+              "0.0"
+            ]
+          ]
+        }
+      ],
+      "hypothesis": "With incoming decimal 0.83, default selects the frozen zoom signature from two independent baselines; explicit overrides must discriminate source propagation.",
+      "binary_sites": [
+        "ACTION_zoom::onExecute@0x1005c931c",
+        "IAction::getParam@0x100596c6d",
+        "IAction::execute@0x100596111"
+      ]
+    }
+  ]
+}

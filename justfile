@@ -667,6 +667,13 @@ check-runtime-grammar:
     @{{python}} tools/build_runtime_effect_boolean_cases.py --check
     @{{python}} tools/build_runtime_effect_boolean_cases.py --confirmation --check
     @{{python}} tools/test_runtime_effect_boolean.py
+    @{{python}} tools/build_runtime_incoming_cases.py --check
+    @{{python}} tools/build_runtime_incoming_action_cases.py --check
+    @{{python}} tools/build_runtime_incoming_action_cases.py --pipeline --check
+    @{{python}} tools/build_runtime_incoming_action_cases.py --bounded --check
+    @{{python}} tools/build_runtime_incoming_action_cases.py --fresh --check
+    @{{python}} tools/build_runtime_incoming_action_cases.py --confirmation --check
+    @{{python}} tools/test_runtime_incoming.py
     @{{python}} tools/test_runtime_grammar_scopes.py
     @{{python}} tools/test_runtime_grammar_master.py
     @{{python}} tools/runtime_grammar_master.py --check > /dev/null

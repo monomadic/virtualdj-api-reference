@@ -34,6 +34,12 @@ TAILS = {"", "on", "off", "toggle", "1", "0", "-1", "+0", "+1", "1.0", "0.0",
          "`constant 0.25`", "'`constant 0.25`'", "`constant 1`", "'`constant 1`'"}
 PREFIXES = {"parser_zoom_levels": "zoom", "parser_beatlock_levels": "deck 1 beatlock",
             "parser_all_decks_asymmetric": "deck all beatlock"}
+# Exact bounded incoming-value experiments; never accept arbitrary chain text.
+INCOMING_ZOOM_SCRIPTS = {
+    'constant ' + source + bridge + ' & zoom' + (' ' + tail if tail else '')
+    for source in ('0.37', '0.83', '0.41', '0.79')
+    for bridge in ('', ' & param_cast float')
+    for tail in ('', '0.25', '0.0', '+0.25', 'default', 'zzqqx', 'vvnnz')}
 GUARDS = ["get_decks", "get_deck", "masterdeck_auto"] + [
     f"deck {d} {v}" for d in range(1, 5) for v in ("loaded", "play", "select", "pfl", "masterdeck")]
 RESOURCES = ["zoom"] + [f"deck {d} beatlock" for d in range(1, 5)]
@@ -68,7 +74,10 @@ def allowed_scripts(fixture):
     if fixture == EFFECT_FIXTURE:
         return {'deck 1 effect_active 1' + middle + (' ' + t if t else '')
                 for middle in ('', " 'Phaser'") for t in EFFECT_TAILS}
-    return {PREFIXES[fixture] + (' ' + t if t else '') for t in TAILS}
+    scripts = {PREFIXES[fixture] + (' ' + t if t else '') for t in TAILS}
+    if fixture == 'parser_zoom_levels':
+        scripts |= INCOMING_ZOOM_SCRIPTS
+    return scripts
 
 
 class OnceChannel(Channel):
@@ -76,8 +85,9 @@ class OnceChannel(Channel):
         time.sleep(0.025)  # Bound mutation bursts; not a retry or a readiness assertion.
         # Do not use Channel._request: it replays on a lost response, which is
         # invalid for toggles and relative actions.
-        if self._conn is None:
-            self._conn = http.client.HTTPConnection(self.host, self.port, timeout=self.timeout)
+        # Start each write on a fresh connection instead of reusing query traffic.
+        self.close()
+        self._conn = http.client.HTTPConnection(self.host, self.port, timeout=self.timeout)
         try:
             self._conn.request("GET", "/execute?" + urllib.parse.urlencode({"script": script}))
             return self._conn.getresponse().read().decode(errors="replace").strip()

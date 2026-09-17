@@ -33,10 +33,10 @@ without a primary family mapping. The same result is included under
 The checklist owns the review, and the command checks each anchor against the hashed
 assembly. Related obligations are navigation links, **not live case associations**.
 
-Start with the remaining `investigate-next` groups: incoming-parameter selection in
-`getParam` and the distinct typed/float `getValues` overloads. The boolean-cache lead
-now has its own `boolean-cache-consumer` obligation through `effect_active`; see the
-caller review below. Each remaining lead needs a verified caller and a discriminating
+The remaining `investigate-next` group is the distinct typed/float `getValues`
+overloads. The boolean-cache and incoming-parameter leads now have their own
+`boolean-cache-consumer` and `incoming-parameter-selection` obligations through
+`effect_active` and `zoom`; see the bounded consumer reviews below. Each remaining lead needs a verified caller and a discriminating
 observable before a new behavioral obligation. Existing switch or arithmetic results cannot silently cover
 another helper or overload. The remaining dispositions separate support for existing
 lexical/conversion families, stateful dispatch/deck questions, selected action behavior,
@@ -48,6 +48,64 @@ gaps. Follow the recorded `next_action` instead of reopening every helper: clean
 factories need a concrete lifetime/construction question, while editor evidence needs
 saved screenshots. The historical capture remains b9246; no current-build behavior
 was tested in this triage.
+
+### Incoming parameter selection (2026-09-17)
+
+**Tier 2 route, b9246:** `ACTION_zoom::onExecute` calls `IAction::getParam(0)`
+at `0x1005c931c`. The getter first selects explicit stored arguments; its fallback
+at `0x100596c6d` reads the incoming area at object offset `0x68`, subject to
+index/flag checks. `IAction::execute` stores its incoming pointer there and checks
+the following action before virtual query dispatch (`0x100596126`–`0x100596175`).
+These checked historical bodies motivate the fixture; they do not identify which
+instructions executed on the current build.
+
+The [initial query capture](../tests/runtime-grammar-incoming-query-initial-9628.json)
+did not discriminate: `constant 37 & constant 11` still returned `37`, and the
+opposite-valued source repeated that pattern. Its oracle failures cannot establish
+incoming-argument fallback. The
+[direct action capture](../tests/runtime-grammar-incoming-actions-initial-9628.json)
+then showed that `constant 0.37 & zoom` and the `0.83` source reset zoom to `0.2`;
+explicit decimal/zero/relative tails worked, while `default` matched nonsense
+controls. Those frozen failed propagation predictions remain in the audit.
+
+The [first pipeline attempt](../tests/runtime-grammar-incoming-pipeline-aborted-9628.json)
+and [bounded attempt](../tests/runtime-grammar-incoming-pipeline-bounded-aborted-9628.json)
+aborted on uncertain HTTP writes. Both verified restoration; neither supplies
+behavior evidence. Their uncertain scripts were not replayed. The write channel
+now opens a fresh connection for each mutation, still without retrying a lost
+response. Connection reuse was a suspected transport issue, not a demonstrated
+cause of those timeouts.
+
+**Local test, HTTP build 18.0.9628:** the
+[completed pipeline run](../tests/runtime-grammar-incoming-pipeline-9628.json) and
+[independent confirmation](../tests/runtime-grammar-incoming-pipeline-confirmation-9628.json)
+use four unloaded, stopped decks and the existing `parser_zoom_levels` fixture.
+Each script starts from zoom `0.25` and `0.65`, repeats independent `zoom` readback,
+then restores the original resource values and verifies deck/context guards.
+The confirmation adds same-source direct-chain contrasts.
+
+- `constant 0.41 & param_cast float & zoom` sets zoom to `0.41`; source `0.79`
+  sets it to `0.79`. Both separate from pipeline nonsense tails.
+- Adding explicit `zoom 0.25` or `zoom 0.0` overrides either incoming source.
+- Explicit `zoom +0.25` yields `0.5` and `0.9` from the prepared baselines,
+  rather than adding to the incoming source.
+- Removing the `param_cast float` bridge resets bare zoom to `0.2`, including
+  the same `0.41`/`0.79` source controls in the confirmation.
+
+These exact observations map the getter to a discriminating live consumer. They
+are not a universal chain rule, native-type proof, flag-bit coverage, or evidence
+for the second incoming slot. `default` with the bridge remains unmeasured after
+the uncertain write. Per-verb conclusions are available through `just verb zoom`.
+
+Inspect without loading the journals into agent context:
+
+```sh
+just runtime-grammar --artifact tests/runtime-grammar-incoming-pipeline-confirmation-9628.json --group incoming-zoom --check
+just probe-arg-forms --grammar-actions tests/runtime-grammar-incoming-pipeline-confirmation-cases.json --check
+```
+
+Use a new output path for a fresh guarded live run. Do not re-run aborted suites
+as a way to complete them; keep their uncertain writes excluded.
 
 ### Bounded evaluator branch review (2026-09-17)
 

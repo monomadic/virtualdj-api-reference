@@ -1,0 +1,680 @@
+{
+  "description": "Read-only incoming constant/getParam comparisons. Predictions frozen before live measurement.",
+  "cases": [
+    {
+      "id": "incoming-37-omitted",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with omitted operand, return '37'?",
+      "script": "constant 37 & constant",
+      "expected": "37",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-explicit",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with explicit operand, return '9'?",
+      "script": "constant 37 & constant 9",
+      "expected": "9",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-zero",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with zero operand, return '0'?",
+      "script": "constant 37 & constant 0",
+      "expected": "0",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-negative",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with negative operand, return '-7'?",
+      "script": "constant 37 & constant -7",
+      "expected": "-7",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-decimal",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with decimal operand, return '0.25'?",
+      "script": "constant 37 & constant 0.25",
+      "expected": "0.25",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-default",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with default operand, return '37'?",
+      "script": "constant 37 & constant default",
+      "expected": "37",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-empty-text",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with empty-text operand, return ''?",
+      "script": "constant 37 & constant ''",
+      "expected": "",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-malformed-number",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 37, with malformed-number operand, return ''?",
+      "script": "constant 37 & constant 9zzqqx",
+      "expected": "",
+      "controls": [
+        "constant 37 & constant zzqqx",
+        "constant 37 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-37-downstream",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does a later arithmetic consumer observe the omitted-operand result?",
+      "script": "constant 37 & constant & param_add 5",
+      "expected": "42",
+      "controls": [
+        "constant 37 & constant zzqqx & param_add 5",
+        "constant 37 & constant vvnnz & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37 & constant 9 & param_add 5",
+          "expected": "14"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-omitted",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with omitted operand, return '83'?",
+      "script": "constant 83 & constant",
+      "expected": "83",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-explicit",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with explicit operand, return '9'?",
+      "script": "constant 83 & constant 9",
+      "expected": "9",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-zero",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with zero operand, return '0'?",
+      "script": "constant 83 & constant 0",
+      "expected": "0",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-negative",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with negative operand, return '-7'?",
+      "script": "constant 83 & constant -7",
+      "expected": "-7",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-decimal",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with decimal operand, return '0.25'?",
+      "script": "constant 83 & constant 0.25",
+      "expected": "0.25",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-default",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with default operand, return '83'?",
+      "script": "constant 83 & constant default",
+      "expected": "83",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-empty-text",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with empty-text operand, return ''?",
+      "script": "constant 83 & constant ''",
+      "expected": "",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-malformed-number",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does constant after incoming 83, with malformed-number operand, return ''?",
+      "script": "constant 83 & constant 9zzqqx",
+      "expected": "",
+      "controls": [
+        "constant 83 & constant zzqqx",
+        "constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-83-downstream",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does a later arithmetic consumer observe the omitted-operand result?",
+      "script": "constant 83 & constant & param_add 5",
+      "expected": "88",
+      "controls": [
+        "constant 83 & constant zzqqx & param_add 5",
+        "constant 83 & constant vvnnz & param_add 5"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 9 & param_add 5",
+          "expected": "14"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-zero",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 0 & constant",
+      "expected": "0",
+      "controls": [
+        "constant 0 & constant zzqqx",
+        "constant 0 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-negative",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant -7 & constant",
+      "expected": "-7",
+      "controls": [
+        "constant -7 & constant zzqqx",
+        "constant -7 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant -7 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-decimal",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 0.25 & constant",
+      "expected": "0.25",
+      "controls": [
+        "constant 0.25 & constant zzqqx",
+        "constant 0.25 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 0.25 & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-percent",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 37% & constant",
+      "expected": "37%",
+      "controls": [
+        "constant 37% & constant zzqqx",
+        "constant 37% & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37% & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-milliseconds",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 37ms & constant",
+      "expected": "37ms",
+      "controls": [
+        "constant 37ms & constant zzqqx",
+        "constant 37ms & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37ms & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-beats",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 37bt & constant",
+      "expected": "37bt",
+      "controls": [
+        "constant 37bt & constant zzqqx",
+        "constant 37bt & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 37bt & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-typed-text",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does omitting the final constant operand preserve the source observable, including its displayed unit/text?",
+      "script": "constant 'incoming_sentinel' & constant",
+      "expected": "incoming_sentinel",
+      "controls": [
+        "constant 'incoming_sentinel' & constant zzqqx",
+        "constant 'incoming_sentinel' & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 'incoming_sentinel' & constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-no-source",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does an omitted operand without a source remain blank?",
+      "script": "constant",
+      "expected": "",
+      "controls": [
+        "constant zzqqx",
+        "constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 11",
+          "expected": "11"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    },
+    {
+      "id": "incoming-replacement-chain",
+      "group": "incoming-constant",
+      "fixture": "parser_constants",
+      "binary_sites": [
+        "ACTION_constant::onQuery@0x100990c36",
+        "IAction::getParam@0x100596c6d",
+        "IAction::query@0x10059650d",
+        "IAction::query@0x1005966e0"
+      ],
+      "hypothesis": "Does the nearest explicit replacement, rather than the first source, supply the final omitted operand?",
+      "script": "constant 37 & constant 83 & constant",
+      "expected": "83",
+      "controls": [
+        "constant 37 & constant 83 & constant zzqqx",
+        "constant 37 & constant 83 & constant vvnnz"
+      ],
+      "contrasts": [
+        {
+          "script": "constant 83 & constant 37 & constant",
+          "expected": "37"
+        }
+      ],
+      "scope": "Exact HTTP query-chain output only. Historical buffer/reader associations are Tier 2; no live branch, flag-bit, execute-input or native-type proof."
+    }
+  ]
+}

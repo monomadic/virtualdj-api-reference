@@ -18306,7 +18306,8 @@
    "blocked": false,
    "evidence": [
     "HTTP execute on build 9598, 2026-09-12, two-baseline fixture parser_zoom_levels (0.25/0.65), restored and verified: unsigned number is absolute (zoom 0.25 -> 0.25 from both), signed is relative (zoom +0.25 -> 0.5/0.9), percent maps to the same scale (zoom 25% -> 0.25), clamped to 0..1. A malformed number resets to 0.2 (zoom 0.25zzqqx, 25MS, 1e-1, 0x1, .25, bare zoom); a purely alphabetic junk token is ignored. Bare integers (zoom 1) and durations (zoom 25ms/25bt) are parsed but discarded. Backticks inert. See tests/runtime-grammar-actions-9598.json and tests/runtime-grammar-action-default-9598.json",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_zoom implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_zoom implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "Local test (HTTP execute/readback, build 18.0.9628, 2026-09-17): four unloaded stopped decks, zoom baselines 0.25/0.65, verified restoration after every sample. In tests/runtime-grammar-incoming-pipeline-9628.json and independent tests/runtime-grammar-incoming-pipeline-confirmation-9628.json, constant 0.41 & param_cast float & zoom sets 0.41 and source 0.79 sets 0.79, separating from pipeline nonsense tails. Explicit zoom 0.25 or zoom 0.0 overrides either incoming source; zoom +0.25 yields 0.5/0.9 from the current zoom baseline. Same-source direct constant chains without param_cast float reset bare zoom to 0.2. Failed initial and aborted captures remain linked in the incoming-parameter-selection audit; neither establishes propagation. Exact consumer/context only, no native-type, second-slot, flag-bit or universal chain claim."
    ],
    "section": "Skin Control",
    "description": "Zoom horizontal",
