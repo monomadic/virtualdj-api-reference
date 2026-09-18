@@ -153,11 +153,8 @@
     .skin-doc { margin: 0 0 8px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-2); }
     .skin-doc a { font: 700 14px var(--mono); }
     .skin-doc small { display: block; margin: 2px 0 6px; font: 500 12px var(--sans); color: var(--faint); }
+    .skin-doc summary { cursor: pointer; color: var(--muted); font: 500 12px/1.6 var(--sans); }
     .skin-doc p { margin: 0; font: 500 14px/1.5 var(--sans); color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
-    .relations { margin: 12px 0; font: 500 14px/1.6 var(--sans); overflow-wrap: anywhere; }
-    .relations p { margin: 4px 0; }
-    .relations a { font-family: var(--mono); }
-    .relations summary { cursor: pointer; color: var(--muted); font-size: 12px; }
     .attrs { display: flex; flex-wrap: wrap; gap: 6px; }
     .attrs span { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font: 400 12.5px var(--mono); }
     .attrs span b { margin-left: 6px; font-weight: 400; color: var(--faint); }
@@ -326,7 +323,7 @@
     const relations = ["parents", "children"].map(direction => {
       const other = direction === "parents" ? "parent" : "child";
       const edges = r.relationships[direction].filter(e => state.family === "all" || e.family === state.family);
-      return `<section class="relations"><h3>${direction === "parents" ? "Parents" : "Children"} · ${edges.length}</h3>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None recorded; support unknown.</p>'}</section>`;
+      return `<section class="block"><div class="block-head"><h2>${direction === "parents" ? "Parents" : "Children"}</h2><span>${edges.length} · vendor XML</span></div>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None recorded; support unknown.</p>'}</section>`;
     }).join("");
     const attributes = r.attributes.map(a => `<span>${esc(a.name)}<b>${a.uses.toLocaleString()}</b></span>`).join("");
     const docs = r.docs.map(d => `<div class="skin-doc"><a href="${esc(d.url)}">${esc(d.heading)}</a><small>${esc(d.doc)}:${d.line}</small><p>${esc(d.excerpt)}</p></div>`).join("");
@@ -339,10 +336,10 @@
       <p class="crumbs">Skin XML / ${esc(r.section)} / ${esc(r.tier)} tier</p>
       <div class="title"><h1>${esc(`<${r.name}>`)}</h1><span class="tag kind element">Element</span>${r.documented ? "" : '<span class="tag undocumented">Undocumented</span>'}</div>
       <p class="description">${esc(r.description)}</p>
-      <div class="signal unverified"><div><div class="signal-head"><span class="dot"></span>${esc(r.statusLabel)}</div><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute.</p></div></div>
+      <div class="signal unverified"><div><div class="signal-head"><span class="dot"></span>${esc(r.statusLabel)}</div><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute. Parent and child links reflect literal vendor XML, not a complete support schema.</p></div></div>
       <section class="facts">${families}</section>
       <section class="block"><div class="block-head"><h2>Attributes</h2><span>${r.attributes.length} · ordered by usage · includes template parameters, not a parser schema</span></div><div class="attrs">${attributes || '<div class="none-box">No attributes observed.</div>'}</div></section>
-      <section class="block"><div class="block-head"><h2>Nesting</h2></div><p>${esc(r.relationships.note)}</p>${relations}</section>
+      ${relations}
       <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
       <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p class="signal" style="display:block">${esc(readerText)}</p></section>
       <section class="block"><div class="block-head"><h2>Probe notes</h2><span>skin fixture README mentions</span></div>${probes || '<div class="none-box">No skin fixture README mentions this element.</div>'}</section>
