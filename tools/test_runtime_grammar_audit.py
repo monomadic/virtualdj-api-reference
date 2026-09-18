@@ -15,14 +15,34 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(triage['symbols_without_triage'], [])
         self.assertEqual({s['symbol'] for g in triage['groups'] for s in g['symbols']},
                          set(result['symbols_without_family_mapping']))
+        folded = {r['symbol'] for o in result['obligations'] for r in o.get('related_symbols', [])}
+        self.assertEqual(folded, {s['symbol'] for g in triage['groups'] for s in g['symbols']
+                                  if g['disposition'] == 'review-with-existing-family'})
+        self.assertTrue(folded <= set(result['symbols_without_family_mapping']))
 
     def test_triage_rejects_invalid_review_and_exposes_new_gaps(self):
         manifest_path = audit.ROOT / 'tests/runtime-parser-9246/manifest.json'
         manifest = json.loads(manifest_path.read_text())
-        for mutation in ('duplicate', 'unknown', 'mapped', 'site', 'disposition', 'obligation'):
+        for mutation in ('duplicate', 'unknown', 'mapped', 'site', 'disposition', 'obligation',
+                         'related-missing', 'related-extra', 'related-evidence',
+                         'out-of-scope-missing', 'out-of-scope-extra'):
             plan = json.loads(audit.PLAN.read_text())
             group = plan['unmapped_symbol_triage']['groups'][0]
-            if mutation == 'duplicate':
+            obligations = {o['id']: o for o in plan['obligations']}
+            groups = {g['disposition']: g for g in plan['unmapped_symbol_triage']['groups']}
+            if mutation == 'related-missing':
+                obligations[group['related_obligations'][0]]['related_symbols'].pop()
+            elif mutation == 'related-extra':
+                obligations['scope-resolution']['related_symbols'].append(
+                    {'symbol': groups['context-fixture-needed']['symbols'][0]['symbol'],
+                     'triage_group': groups['context-fixture-needed']['id']})
+            elif mutation == 'related-evidence':
+                obligations[group['related_obligations'][0]]['related_symbols'][0]['evidence'] = []
+            elif mutation == 'out-of-scope-missing':
+                del groups['support-only']['symbols'][0]['out_of_scope']
+            elif mutation == 'out-of-scope-extra':
+                group['symbols'][0]['out_of_scope'] = 'not support-only'
+            elif mutation == 'duplicate':
                 group['symbols'].append(group['symbols'][0])
             elif mutation == 'unknown':
                 group['symbols'][0]['symbol'] = 'not captured'
@@ -37,8 +57,11 @@ class AuditTests(unittest.TestCase):
             with self.subTest(mutation=mutation), self.assertRaises(AssertionError):
                 audit.symbol_triage(plan, manifest, manifest_path)
         plan = json.loads(audit.PLAN.read_text())
-        omitted = sorted(row['symbol'] for row in
-                         plan['unmapped_symbol_triage']['groups'].pop(0)['symbols'])
+        removed = plan['unmapped_symbol_triage']['groups'].pop(0)
+        omitted = sorted(row['symbol'] for row in removed['symbols'])
+        for obligation in plan['obligations']:
+            obligation['related_symbols'] = [r for r in obligation.get('related_symbols', [])
+                                             if r['triage_group'] != removed['id']]
         self.assertEqual(audit.symbol_triage(plan, manifest, manifest_path)['symbols_without_triage'],
                          omitted)
 

@@ -12,7 +12,33 @@
           "group": "delimiters"
         }
       ],
-      "next_action": "Review each negative against controls; do not equate an error with recognized syntax."
+      "next_action": "Review each negative against controls; do not equate an error with recognized syntax.",
+      "related_symbols": [
+        {
+          "symbol": "IAction::stringMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "numberMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI(string_view, char const*)",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI(string_view, string_view)",
+          "triage_group": "lexical-support"
+        }
+      ]
     },
     {
       "id": "numeric-dispatch",
@@ -171,6 +197,28 @@
           "site": "0x1006646c6",
           "callee": "__ZN26ACTION_get_pioneer_display12getCuepointsER12SActionParamim"
         }
+      ],
+      "related_symbols": [
+        {
+          "symbol": "IAction::queryValue",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryBool",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryText",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::paramToString",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "SActionParam::toFloat",
+          "triage_group": "typed-result-conversion"
+        }
       ]
     },
     {
@@ -238,7 +286,37 @@
         }
       ],
       "evidence_limit": "Structural call edges on b9246 and exact HTTP outputs on b9598 are separate evidence; no observed instruction execution or cache-branch coverage is claimed.",
-      "next_action": "The delimiter loop, adjacent/empty/unmatched expressions, basic escapes and selected result formatting now have exact HTTP comparisons. Preserve failed fraction/beat formatting predictions and sentinel-only control matches. These do not establish outer-token escape rules, skin-specific cached creation or all legacy metadata formatting."
+      "next_action": "The delimiter loop, adjacent/empty/unmatched expressions, basic escapes and selected result formatting now have exact HTTP comparisons. Preserve failed fraction/beat formatting predictions and sentinel-only control matches. These do not establish outer-token escape rules, skin-specific cached creation or all legacy metadata formatting.",
+      "related_symbols": [
+        {
+          "symbol": "actionGetText",
+          "triage_group": "text-expansion-and-flags"
+        },
+        {
+          "symbol": "matchStringWithFlag",
+          "triage_group": "text-expansion-and-flags"
+        },
+        {
+          "symbol": "IAction::queryValue",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryBool",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryText",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::paramToString",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "SActionParam::toFloat",
+          "triage_group": "typed-result-conversion"
+        }
+      ]
     },
     {
       "id": "backtick-math-reader",
@@ -347,7 +425,33 @@
           "group": "parser_beatlock_levels"
         }
       ],
-      "next_action": "Link boolean/flag branches to execute fixtures; do not promote null constant results."
+      "next_action": "Link boolean/flag branches to execute fixtures; do not promote null constant results.",
+      "related_symbols": [
+        {
+          "symbol": "IAction::stringMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "numberMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI(string_view, char const*)",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI(string_view, string_view)",
+          "triage_group": "lexical-support"
+        }
+      ]
     },
     {
       "id": "unknown-and-stop",
@@ -377,7 +481,37 @@
           "group": "selected-scope"
         }
       ],
-      "next_action": "Separate constant-valued reachability from actual deck resolution."
+      "next_action": "Separate constant-valued reachability from actual deck resolution.",
+      "related_symbols": [
+        {
+          "symbol": "IAction::stringMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "numberMatch",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "isLeftCI(string_view, char const*)",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "strIsEqualCI(string_view, string_view)",
+          "triage_group": "lexical-support"
+        },
+        {
+          "symbol": "IAction::getDeckFromString",
+          "triage_group": "deck-name-conversion"
+        }
+      ]
     },
     {
       "id": "scope-resolution",
@@ -390,7 +524,13 @@
           "group": "playing-scope"
         }
       ],
-      "next_action": "Playback gap is measured; do not expand this into all deck-selection policy."
+      "next_action": "Playback gap is measured; do not expand this into all deck-selection policy.",
+      "related_symbols": [
+        {
+          "symbol": "IAction::getDeckFromString",
+          "triage_group": "deck-name-conversion"
+        }
+      ]
     },
     {
       "id": "structural-operators",
@@ -444,7 +584,29 @@
           "group": "parser_zoom_levels"
         }
       ],
-      "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation."
+      "next_action": "Inspect both baseline signatures and restoration in the linked capture; representative consumer evidence is not every action implementation.",
+      "related_symbols": [
+        {
+          "symbol": "IAction::queryValue",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryBool",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::queryText",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "IAction::paramToString",
+          "triage_group": "typed-result-conversion"
+        },
+        {
+          "symbol": "SActionParam::toFloat",
+          "triage_group": "typed-result-conversion"
+        }
+      ]
     },
     {
       "id": "boolean-consumer",
@@ -1107,26 +1269,35 @@
         "symbols": [
           {
             "symbol": "createAction_all_decks",
-            "site": "0x1000fe06d"
+            "site": "0x1000fe06d",
+            "out_of_scope": "Allocates and initializes the all-decks wrapper; its live questions belong to all-decks-consumer, and the body alone does not prove wrapper execution."
           },
           {
             "symbol": "createAction_combine_query",
-            "site": "0x1000fde25"
+            "site": "0x1000fde25",
+            "out_of_scope": "Allocates and initializes the combined-query wrapper; operator results belong to structural-operators."
           },
           {
             "symbol": "ACTION_all_decks::init",
-            "site": "0x1000fe6d8"
+            "site": "0x1000fe6d8",
+            "out_of_scope": "Transfers a child pointer and conditionally releases the previous child; an ownership step, reopened only for a concrete lifetime failure."
           },
           {
             "symbol": "DLGActionWizard::STree::clear()",
-            "site": "0x1006c675e"
+            "site": "0x1006c675e",
+            "out_of_scope": "Recursively releases editor-tree child storage; editor observations belong to editor-structure."
           },
           {
             "symbol": "DLGActionWizard::STree::~STree()",
-            "site": "0x1006c770a"
+            "site": "0x1006c770a",
+            "out_of_scope": "Editor-tree destructor releasing child storage; editor observations belong to editor-structure."
           }
         ]
       }
-    ]
+    ],
+    "family_fold_in": {
+      "reviewed": "2026-09-19",
+      "rule": "Each review-with-existing-family symbol is listed under related_symbols on every obligation its group names. That listing is navigation for a later caller join; it adds no evidence link and does not map the symbol to the family. support-only symbols carry a one-line out_of_scope reason. context-fixture-needed, editor-fixture-needed and consumer-specific groups remain open items."
+    }
   }
 }

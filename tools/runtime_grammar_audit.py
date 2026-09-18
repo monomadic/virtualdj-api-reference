@@ -32,6 +32,8 @@ def symbol_triage(plan, manifest, manifest_path):
             assert name in unmapped, 'triage symbol is unknown or already family-mapped'
             assert name not in seen, 'duplicate triage symbol'
             seen.add(name)
+            assert bool(row.get('out_of_scope')) == (group['disposition'] == 'support-only'), \
+                'out_of_scope reason belongs exactly to support-only symbols'
             symbol = manifest['symbols'][name]
             body = (manifest_path.parent / symbol['file']).read_bytes()
             assert hashlib.sha256(body).hexdigest() == symbol['asm_sha256']
@@ -43,6 +45,17 @@ def symbol_triage(plan, manifest, manifest_path):
                             'assembly': str(manifest_path.parent.relative_to(ROOT) / symbol['file']),
                             'assembly_sha256': symbol['asm_sha256']})
         groups.append({**group, 'symbols': symbols})
+    # Family fold-in is navigation: exactly the review-with-existing-family symbols, under
+    # exactly the obligations their group names, with no evidence fields attached.
+    expected = Counter((ob, s['symbol'], g['id']) for g in review['groups']
+                       if g['disposition'] == 'review-with-existing-family'
+                       for ob in g['related_obligations'] for s in g['symbols'])
+    listed = Counter()
+    for obligation in plan['obligations']:
+        for row in obligation.get('related_symbols', []):
+            assert set(row) == {'symbol', 'triage_group'}, 'related symbol carries more than navigation'
+            listed[(obligation['id'], row['symbol'], row['triage_group'])] += 1
+    assert listed == expected, 'related_symbols differ from the review-with-existing-family triage'
     return {**review, 'binary_build': manifest['source']['bundle_version'],
             'architecture': manifest['source']['architecture'],
             'binary_sha256': manifest['source']['sha256'],

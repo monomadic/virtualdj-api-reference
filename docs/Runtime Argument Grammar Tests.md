@@ -49,6 +49,28 @@ factories need a concrete lifetime/construction question, while editor evidence 
 saved screenshots. The historical capture remains b9246; no current-build behavior
 was tested in this triage.
 
+**Fold-in (2026-09-19).** The triage is now split three ways:
+
+- **Joined to a family as navigation.** Every `review-with-existing-family` symbol is
+  listed under `related_symbols` on each obligation its group names. These are the lexical
+  helpers, `getDeckFromString`, the text-expansion pair and the typed-result conversions.
+  Such a listing adds no evidence link. The symbol stays in
+  `symbols_without_family_mapping`, and the family's result counts are unchanged. The next
+  step for each is still its group's `next_action`: join exact caller sites to existing
+  cases.
+- **Out of scope.** Each `support-only` symbol has a one-line `out_of_scope` reason: the
+  all-decks and combined-query factories, `ACTION_all_decks::init`, and the editor-tree
+  `clear`/destructor.
+- **Named open items.** The `context-fixture-needed` groups are dispatch/source context and
+  deck-state selection. `editor-fixture-needed` is editor word and presentation.
+  `consumer-specific` is the selected `zoom`/`beatlock` implementations. These stay open,
+  and none is closed by this fold-in.
+
+`just check-runtime-grammar` fails if any `related_symbols` entry names a symbol, group or
+obligation that the triage does not, or carries anything beyond navigation. It also fails if
+an `out_of_scope` reason appears on a symbol that is not `support-only`, or is missing from
+one that is.
+
 ### Incoming parameter selection (2026-09-17)
 
 **Tier 2 route, b9246:** `ACTION_zoom::onExecute` calls `IAction::getParam(0)`
