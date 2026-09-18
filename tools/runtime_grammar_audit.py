@@ -174,6 +174,13 @@ def report():
                     'fixture': case['fixture'], 'build': capture['summary']['build'],
                     'script': case['script'], 'verdict': case['verdict'],
                     'separation': separation(case) if capture['summary']['status'] == 'complete' else 'not-run'})
+        # An obligation with no live case is a named limit, never a silent gap or a pass.
+        limit = obligation.get('limit')
+        if not evidence:
+            assert limit and limit['status'] == 'blocked', obligation['id']
+            assert all(limit.get(k) for k in ('binary_shows', 'why_not_testable_now', 'unblock', 'affects')), obligation['id']
+        else:
+            assert limit is None, 'limit on an obligation with evidence: ' + obligation['id']
         rows.append({**obligation, 'evidence': evidence,
                      'result_counts': dict(Counter((e['verdict'] + '/' + e['separation']) for e in evidence))})
     corpus = []

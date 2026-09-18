@@ -1110,6 +1110,12 @@ selection (`… & param_cast float & zoom`). They are in
 
 Do not guess in these gaps; test and record.
 
+- **Three runtime-parser limits (named at H4 closure, 2026-09-19).** It is not known
+  whether script in Remote skins or during skin load parses differently, how list-valued
+  parameters are chosen, or whether Button Editor token spans agree with the runtime. Each
+  is a [named limit](Runtime%20Argument%20Grammar%20Tests.md#named-limits-at-h4-closure-2026-09-19),
+  not a finding.
+
 
 - ~~**`while_pressed` release behaviour**~~ — **answered 2026-09-14** on a real MIDI
   button. It **saves and restores the prior value**, and it binds **its own statement only**.

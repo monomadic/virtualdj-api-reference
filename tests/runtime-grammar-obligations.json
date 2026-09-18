@@ -552,7 +552,15 @@
       "question": "Does isRemote change action rewriting or parameter consumption?",
       "sources": [],
       "next_action": "Establish parser_remote_mode through an independently verified skin/Remote-client creation context; mode-writer bodies are captured. A Remote subscription alone is not a verified isRemote fixture.",
-      "structural_review": "tests/runtime-parser-branch-routes.json#remote_entry"
+      "structural_review": "tests/runtime-parser-branch-routes.json#remote_entry",
+      "limit": {
+        "status": "blocked",
+        "scope": "A lead, not a finding: scoped to actions created while IAction::isRemote is set, which the b9246 mode writers place only in Remote-skin (Remote-client callback) and skin-load contexts.",
+        "binary_shows": "On b9246, IAction::create tests isRemote at 0x100596f45. When it is set, a fixed list of checked heads (deck, zone, skin_panel, get_time, zoom, get_var, set, toggle, get_text and others) either rejoins ordinary parsing at 0x1005974cf or reaches a source-text wrapper route at 0x100598365. Immediate-byte writes to the flag were verified in CSkinEngine::load, the CSkinScratch constructor and CVDJRemoteClient callbacks.",
+        "why_not_testable_now": "No fixture establishes isRemote independently. HTTP has not been shown to create actions with the flag set and is not a substitute for the fixture, a Remote-protocol subscription has not been shown to set it, and the flag is located by name only on b9246.",
+        "unblock": "A parser_remote_mode fixture: a verified way to create actions with isRemote set (a Remote-skin or skin-load context with a readback), an independent check that the flag is set, and a restoration procedure; then paired local and remote runs of the checked heads against nonsense controls.",
+        "affects": "If the lead holds, script in Remote skins and script evaluated during skin load. The existing HTTP captures are not evidence either way for those contexts."
+      }
     },
     {
       "id": "list-conversion",
@@ -561,7 +569,15 @@
       "question": "How do missing, integer and text parameters choose list values?",
       "sources": [],
       "next_action": "Resolve reachability before requiring a live fixture: no direct E8/E9 branch or exact address candidates were found in the scoped b9246 scan. Capturing this helper did not establish a path from create; do not label it dead code.",
-      "structural_review": "tests/runtime-parser-branch-routes.json#list_helper"
+      "structural_review": "tests/runtime-parser-branch-routes.json#list_helper",
+      "limit": {
+        "status": "blocked",
+        "binary_shows": "IAction::getListParam is captured on b9246 and itself calls IAction::getBoolParam. The scoped reference scan found no direct E8/E9 branch to it in __TEXT and no exact target-address bytes in file-backed non-LINKEDIT segments.",
+        "no_direct_reference": "No direct reference does not prove dead code: an indirect call, computed target or inlined copy would not appear in that scan.",
+        "why_not_testable_now": "No consumer is known, so there is no verb to build a fixture around, and a live sweep could not attribute any reading to this helper.",
+        "unblock": "Resolve reachability first: an indirect-call or vtable inventory, or a runtime breakpoint on a build where the helper can be located, that names a consumer. Then a fixture contrasting missing, integer and text arguments in that consumer against nonsense controls.",
+        "affects": "Unknown until a consumer is named. Any verb whose argument selects from a value list could route through it."
+      }
     },
     {
       "id": "editor-structure",
@@ -571,7 +587,15 @@
       "sources": [],
       "next_action": "Collect the fixed corpus with persisted token-span or guard-hint screenshots after establishing safe dialog targeting. The 2026-09-17 help repeat has durable images but does not measure these observables.",
       "help_evidence": "tests/runtime-grammar-editor-help-ui-2026-09-17-9598.json",
-      "failed_calibration": "tests/runtime-grammar-editor-spans-calibration-aborted-9598.json"
+      "failed_calibration": "tests/runtime-grammar-editor-spans-calibration-aborted-9598.json",
+      "limit": {
+        "status": "blocked",
+        "binary_shows": "On b9246 the Button Editor has its own tree builder: getCurrentWord scans token-character ranges, updateList builds list entries and updateHint produces the hint. The selected builder does not call IAction::create. This is a structural contrast, not proof that the editor accepts a different language.",
+        "why_not_testable_now": "Token spans and guard hints are visible only on screen. The dialog exposes no script field or spans to accessibility, and the one coordinate calibration clicked through a cropped dialog onto a cue pad and started deck 1, whose prior position could not be restored. The help-display captures do not measure spans or guards.",
+        "coordinate_clicking": "Banned. Do not repeat the coordinate method recorded in tests/runtime-grammar-editor-spans-calibration-aborted-9598.json.",
+        "unblock": "A verified targeting method that keeps the editor dialog in front without coordinate clicks (keyboard-only or accessibility-addressed), playback and position baselines captured first, and a saved screenshot for every editor_corpus observation.",
+        "affects": "Authors who judge a script by the Button Editor colouring or hints. Runtime rules are unaffected, and editor appearance is not evidence of runtime acceptance."
+      }
     },
     {
       "id": "float-consumer",

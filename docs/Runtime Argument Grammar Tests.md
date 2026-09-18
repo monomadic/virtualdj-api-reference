@@ -20,8 +20,9 @@ runtime case reference, so a new UI pass can record the same source text with sc
 This is a coverage audit in progress, **not an exhaustive control-flow-edge proof**. A mapped
 family is not a closed branch: null readings, failed predictions and the next required review
 are retained. Symbols without a family mapping are listed rather than silently counted as
-covered. The remote entry route and list conversion helper currently have no reviewed live
-case linkage; deciding their exact scope and adding discriminating fixtures remains work.
+covered. The remote entry route, the list conversion helper and the editor structure have
+no live case linkage. Each is recorded as a
+[named limit](#named-limits-at-h4-closure-2026-09-19) with what would unblock it.
 Editor corpus entries are pending observations, not predictions of editor acceptance.
 
 ### Unmapped-symbol triage (2026-09-17)
@@ -1073,7 +1074,80 @@ just runtime-grammar --artifact tests/runtime-grammar-setting-eval-discriminatio
 just runtime-grammar --audit
 ```
 
+## Named limits at H4 closure (2026-09-19)
+
+These three obligations have no live case. They are limits, not passes. Each has the same
+structured `limit` record in [the checklist](../tests/runtime-grammar-obligations.json),
+and `just check-runtime-grammar` fails if an obligation with no evidence lacks one. The
+binary facts are b9246 structural leads (Tier 2), and none is a behaviour claim for build
+9598 or 9628.
+
+### Remote entry (`remote-entry`)
+
+**This is a lead, not a finding.** It is scoped to actions created while
+`IAction::isRemote` is set. The b9246 mode writers set that flag only in Remote-skin
+(Remote-client callback) and skin-load contexts.
+
+- **What the binary shows.** On b9246, `IAction::create` tests `isRemote` at `0x100596f45`.
+  When it is set, a fixed list of checked heads either rejoins ordinary parsing at
+  `0x1005974cf` or reaches a source-text wrapper route at `0x100598365`. The list includes
+  `deck`, `zone`, `skin_panel`, `get_time`, `zoom`, `get_var`, `set`, `toggle` and
+  `get_text`. Immediate-byte writes to the flag were verified in `CSkinEngine::load`, the
+  `CSkinScratch` constructor and `CVDJRemoteClient` callbacks.
+- **Why it cannot be tested now.** No fixture establishes `isRemote` independently. HTTP
+  has not been shown to create actions with the flag set, and it is no substitute for the
+  fixture. A Remote-protocol subscription has not been shown to set the flag. The flag is
+  located by name only on b9246.
+- **What would unblock it.** A `parser_remote_mode` fixture needs three things: a verified
+  way to create actions with the flag set (a Remote-skin or skin-load context with a
+  readback), an independent check that the flag is set, and a restoration procedure. Then
+  run the checked heads locally and remotely against nonsense controls.
+- **Who it affects.** If the lead holds, it affects script in Remote skins and script
+  evaluated during skin load. The existing HTTP captures are not evidence either way for
+  those contexts.
+
+### List conversion (`list-conversion`)
+
+- **What the binary shows.** `IAction::getListParam` is captured on b9246 and itself calls
+  `IAction::getBoolParam`. The scoped reference scan found no direct E8/E9 branch to it in
+  `__TEXT`, and no exact target-address bytes in file-backed non-LINKEDIT segments.
+  **No direct reference does not prove dead code.** An indirect call, computed target or
+  inlined copy would not appear in that scan.
+- **Why it cannot be tested now.** No consumer is known, so there is no verb to build a
+  fixture around. A live sweep could not attribute any reading to this helper.
+- **What would unblock it.** Resolve reachability first. That needs an indirect-call or
+  vtable inventory, or a runtime breakpoint on a build where the helper can be located,
+  that names a consumer. Then build a fixture that contrasts missing, integer and text
+  arguments in that consumer against nonsense controls.
+- **Who it affects.** Unknown until a consumer is named. Any verb whose argument selects
+  from a value list could route through it.
+
+### Editor structure (`editor-structure`)
+
+- **What the binary shows.** On b9246 the Button Editor has its own tree builder.
+  `getCurrentWord` scans token-character ranges, `updateList` builds list entries and
+  `updateHint` produces the hint. The selected builder does not call `IAction::create`. This
+  is a structural contrast, not proof that the editor accepts a different language.
+- **Why it cannot be tested now.** Token spans and guard hints are visible only on screen,
+  and the dialog exposes no script field or spans to accessibility. The one coordinate
+  calibration clicked through a cropped dialog onto a cue pad and started deck 1, whose
+  prior position could not be restored. The help-display captures do not measure spans or
+  guards.
+- **Coordinate clicking is banned.** Do not repeat the method recorded in
+  [the aborted calibration](../tests/runtime-grammar-editor-spans-calibration-aborted-9598.json).
+- **What would unblock it.** Three things: a verified targeting method that keeps the
+  editor dialog in front without coordinate clicks (keyboard-only or
+  accessibility-addressed), playback and position baselines captured first, and a saved
+  screenshot for every `editor_corpus` observation.
+- **Who it affects.** Authors who judge a script by the Button Editor's colouring or hints.
+  Runtime rules are unaffected, and editor appearance is not evidence of runtime
+  acceptance.
+
 ## What remains
+
+The list below is the 2026-09-17 completion review, kept as written. At closure, its
+remote-entry, list-conversion and editor items became the
+[named limits above](#named-limits-at-h4-closure-2026-09-19).
 
 Completion review, 2026-09-17: the historical package and bounded parser bodies are
 captured, the queued indirect-call frontier is resolved, and the ordinary parser has

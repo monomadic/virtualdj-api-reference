@@ -188,6 +188,30 @@ class AuditTests(unittest.TestCase):
                 with patch.object(audit, 'PLAN', path), self.assertRaises(AssertionError):
                     audit.report()
 
+    def test_empty_obligations_are_named_limits_not_passes(self):
+        rows = {r['id']: r for r in audit.report()['obligations']}
+        for name in ('remote-entry', 'list-conversion', 'editor-structure'):
+            self.assertEqual(rows[name]['evidence'], [])
+            self.assertEqual(rows[name]['limit']['status'], 'blocked')
+        self.assertIn('not a finding', rows['remote-entry']['limit']['scope'])
+        self.assertIn('does not prove dead code', rows['list-conversion']['limit']['no_direct_reference'])
+        self.assertIn('Banned', rows['editor-structure']['limit']['coordinate_clicking'])
+        for mutation in ('drop-limit', 'drop-field', 'limit-on-evidence'):
+            plan = json.loads(audit.PLAN.read_text())
+            rows = {r['id']: r for r in plan['obligations']}
+            if mutation == 'drop-limit':
+                del rows['remote-entry']['limit']
+            elif mutation == 'drop-field':
+                del rows['list-conversion']['limit']['affects']
+            else:
+                rows['head-delimiters']['limit'] = rows['remote-entry']['limit']
+            with tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / 'plan.json'
+                path.write_text(json.dumps(plan))
+                with self.subTest(mutation=mutation), patch.object(audit, 'PLAN', path), \
+                        self.assertRaises(AssertionError):
+                    audit.report()
+
     def test_rejects_invalid_anchor_and_missing_case_family(self):
         for field, value in [('site', '0x1'), ('sources', [{'capture': 'tests/runtime-grammar-confirmation-9598.json', 'group': 'missing'}])]:
             plan = json.loads(audit.PLAN.read_text())
