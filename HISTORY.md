@@ -397,6 +397,308 @@ expanded with `pkgutil --expand-full`; the memory notes hold the same paths):
   the extractor/bootstrap path so `just verb <name>` prints them — never by hand, and never as a
   release date: the samples bracket table appearance, nothing finer.
 
+### H4. Runtime argument parsing from the named `IAction::create`
+
+Status: Done
+
+Note: Closed 2026-09-19 by a desk-only reconciliation that added no evidence. It closed
+**with named limits; it did not complete.** `just runtime-grammar --audit` still reports
+`completion_claim: false`, because `tools/runtime_grammar_audit.py` has no
+closed-with-limits state and hardcodes the field. The three named limits are in
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md#named-limits-at-h4-closure-2026-09-19)
+and in each obligation's `limit` record:
+
+- **`remote-entry`.** A b9246 lead scoped to Remote-skin and skin-load contexts, not a
+  finding. It is blocked until the `isRemote` flag can be established independently.
+- **`list-conversion`.** Reachability of `IAction::getListParam` is unresolved. No direct
+  reference does not prove dead code.
+- **`editor-structure`.** Editor token spans and guard hints are blocked on a safe targeting
+  method, and coordinate clicking is banned.
+
+What the closure did:
+
+- It labelled every H4 rule in [VDJScript Grammar](docs/VDJScript%20Grammar.md#h4-rule-status-2026-09-19)
+  as repeated, one capture, or matches controls. Rules resting on one capture or on
+  control-matching readings were reworded as unresolved.
+- It folded the unmapped-symbol triage into the obligations. `review-with-existing-family`
+  symbols are now navigation-only `related_symbols`, and `support-only` symbols are out of
+  scope.
+
+These stay named open items, not blockers of this closure:
+
+- the `context-fixture-needed` triage groups (dispatch/source context and deck-state
+  selection, which covers multiple-playing and automatic-master transitions);
+- `editor-fixture-needed`;
+- `consumer-specific`;
+- the cause of the `mixerN` permutation.
+
+Per-verb behaviour inside constructed actions passes to task 10, which now points at the
+b9246 caller scan as a lead list.
+
+Progress: every dated pass is summarised in [HISTORY.md](HISTORY.md#h4-progress-log) and
+reported by `just runtime-grammar` (per capture), `just runtime-grammar-editor` and
+`just frontier-closure`; the rules that survived two suites are promoted in
+[VDJScript Grammar](docs/VDJScript%20Grammar.md) and the method in
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). Still open:
+editor token spans and guard hints, multiple-playing and automatic-master transitions, the
+`mixerN` permutation cause, and per-verb behaviour inside constructed actions.
+
+Original note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
+(fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.
+Every rule this walk recovers is a 10b test and nothing else. Folded into task 10 as its
+first sub-step; listed here so the lead is not lost. Bound it to the questions that change
+how a probe is *constructed* — delimiters, quoting, fallback when a token is unrecognized —
+and stop there; it is not a mandate to reverse every action implementation. Order: 10c's
+tooling pass first (it is what H4's findings get recorded against), then this.
+`IAction::create(char const*, char const**, int)` is named on 18.0.9246 (x86_64 entry
+`0x100596f1c`; resolve it again with `nm` before use). Follow argument consumption, delimiter
+handling and fallback branches, and contrast with the separately documented editor parser.
+Every recovered rule becomes a discriminating test for the 10b harness, not a documented rule
+on its own — editor acceptance and parser tolerance cannot substitute for an observed result.
+This has the highest ceiling of the excavation's leads because VDJScript grammar is the
+repo's stated cliff and the parser reports no errors.
+
+#### H4 progress log
+
+Progress 2026-09-17 (generic evaluator caller): retained the direct-caller scan and
+bounded bodies in `runtime-parser-branch-routes.json`. A verified b9246
+`ACTION_setting::onQuery` call supplied the read-only `parser_setting_eval` fixture
+on build 9598. Computed boolean comparisons and the outer-quoted missing-final-
+backtick forms discriminated. Computed numeric one and text on failed their true
+predictions; literal/type controls retained and explained the exact consumer
+comparison without generalizing to other settings. No settings were changed.
+`getFloatParamEval` caller bodies are captured, but its live fixture is still open.
+
+Progress 2026-09-17 (backtick evidence routing): split the broad backtick family into
+exact consumer/case links. The existing constant, get_text and param_add results
+follow distinct captured readers; they no longer stand in for generic getParamEval
+or getFloatParamEval coverage. The audit validates recorded call edges against the
+manifest and hashed assembly and rejects unknown selected case IDs. No live result
+or grammar prediction was changed by this correction.
+
+Progress 2026-09-17 (unmatched-quote chains): froze and ran the
+`parser_constants` suite in `tests/runtime-grammar-unmatched-quote-cases.json` on
+build 9598. Unmatched opening quotes and opposite closers preserved the numeric
+prefix instead of applying the following addition; a later matching closer allowed
+the outer addition. Both quote styles and numeric baselines matched their frozen
+predictions and separated from their controls. The audit links the capture without
+claiming internal cursor behavior or universal consumer fallback.
+
+Progress 2026-09-17 (empty-quote consumer): the frozen `parser_constants` suite
+`tests/runtime-grammar-quote-consumer-cases.json` ran through the existing argument
+prober on build 9598. Single/double empty operands and both marker/value baselines
+matched the predictions. Explicit omission contrasts distinguish the positional
+cases; those cases still match unequal-string nonsense controls and retain that
+label. The quoted-argument audit links the new capture without claiming a universal
+empty-argument rule or closing unmatched-quote behavior.
+The same-length follow-up also held and separated from both nonsense-value controls:
+equal nonempty triples and an empty last operand selected the equal result, unlike
+an empty first or second operand. This tests the argument-count alternative directly.
+
+Progress 2026-09-17 (editor span calibration): aborted before candidate tests after
+a cropped-dialog coordinate click reached a cue pad behind the editor and started
+deck 1. The safety pause was independently verified; exact position restoration
+was impossible without a pre-click baseline. The failed calibration is retained in
+`tests/runtime-grammar-editor-spans-calibration-aborted-9598.json`; no span or guard
+finding was recorded. Further coordinate-based editor tests require a verified
+targeting method that preserves the active dialog.
+
+Moved from the H4 task block on 2026-09-16; the block itself followed on 2026-09-19, when H4 closed.
+
+Progress 2026-09-17: repeated the frozen `parser_editor_help` predictions on build
+9598 with forward/reverse UI screenshots saved under `tests/`, plus original and
+reopened-restoration images and a fresh paired HTTP capture. Candidate predictions
+held again; both nonsense controls again displayed `zoom` help, preserving the
+failed no-help prediction. The new capture is separate from the historical run
+whose images remain unrecoverable. `runtime_grammar_editor.py --http … --ui …`
+selects a capture pair and validates saved screenshot paths and hashes. Token spans,
+guard hints, and the independently established remote-mode fixture remain open.
+
+Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. The continuation adds guarded zoom/beatlock/all-deck execution fixtures, selected-deck query comparisons, untrimmed output tests, restoration journals and a regenerable static frontier. Inspect each capture through `just runtime-grammar --artifact <path>`; the report distinguishes complete and interrupted runs, and derives a `separation` field so a prediction that held against a blank result is not mistaken for a discriminating one. The rules that survived two suites and two baselines were promoted into [VDJScript Grammar](docs/VDJScript%20Grammar.md) on 2026-09-12 (keyword quoting, unit-suffix case/adjacency, comma decimals, signed-vs-unsigned numbers, the malformed-number reset, backtick inertness on execute), with `local_test` store records for `zoom` and `beatlock`. Single-capture and editor-side candidates stay unpromoted.
+
+Progress 2026-09-12 (later): the asymmetric-scope item is half closed. `parser_master_scope`
+(`just runtime-grammar-master`) pins selection and master to different decks, which the earlier
+suites never did, and the capture settles that **`deck master` and `deck active` both track the
+master deck while an unwrapped verb and `deck default` track the selection** — promoted into
+[VDJScript Grammar](docs/VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12) with
+`local_test` store records for `get_deck`, `masterdeck` and `masterdeck_auto`. It also found
+`playing` and `mixer1`-`mixer4` to be recognized targets the wiki does not list, with `mixerN`
+resolving to a deck that is not N (cause untested, recorded as an observation only). That
+stopped fixture left asymmetric playback untested; the 2026-09-16 playing-scope result below
+now supplies that comparison. Button press/release lifetime is now **done** via the mapper surface: a virtual CoreMIDI
+button read over HTTP between note-on and note-off settles that a button action runs on press
+only, that `while_pressed` saves and RESTORES the prior value rather than clearing, and that it
+binds its own statement rather than the chain. See
+[VDJScript Grammar](docs/VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
+
+Progress 2026-09-13: the static frontier is closed (`just frontier-closure`, gated in
+`just check`). All 30 queued indirect sites resolve to virtual dispatch (26, of which 18 are
+refcount releases), `_actionFactory` calls (3) or a disassembly artifact (1) — **no argument
+consumers**. `_actionFactory` is indexed by verb id, proven by two fixed-entry calls that
+store the same number at object+0xc. The structural finding: `IAction::create` finishes the
+argument loop into `vector<SActionParam>` *before* calling the factory, so arguments are lexed
+centrally and only then dispatched per verb. The static route to argument grammar therefore
+ends here; what remains is per-verb behavior inside the constructed action. Variable scope is
+also settled, including `@` persistence across a real restart. The paired editor-help
+pass on 2026-09-16 is captured by `just runtime-grammar-editor`: candidate HTTP/help
+predictions held, but the frozen no-help prediction for two unknown-head controls
+failed (both showed `zoom` help). This is appearance evidence only; matching
+editor token spans or guard hints remain outstanding. The 2026-09-16
+boundary-placement suites now isolate whitespace position from operator adjacency, retain
+the failed skip-whitespace predictions, and confirm the narrower original-value result
+with changed values and quoted forms; inspect the boundary captures through `just runtime-grammar`. The asymmetric
+playback gap is also covered: `--grammar-playing` uses verified digital silence on initially
+empty decks 3/4, preserves loaded decks 1/2, swaps the sole playing deck against a pinned
+master, and verifies restoration. The completed build-9598 capture separated `active`/`master`
+from `playing` and `default`; the initial selection-changing calibration is retained as
+incomplete. Multiple-playing, automatic-master transitions and the mixer permutation remain
+outside that fixture.
+
+Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
+a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`
+is inert; `/execute minimize` is what does it, and every skin has a minimize button. See
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). The original
+note read: These exits
+leave **no crash report**, so a clean artifact directory is not evidence a run was safe; the one
+recorded instance had `deck master constant 37` pending right after `deck sandbox constant 37`.
+The shared factor with the asymmetric-master run is unusual deck-wrapper tokens (`sandbox`,
+`playing`, `mixer1`-`mixer4`). Do not probe deck targets on an instance in use, and do not treat
+one clean completion as clearance — see the hazard section in
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md).
+
+#### H4 floating evaluator progress (2026-09-17)
+
+Recovered and hashed the b9246 Pioneer display query entry route to the captured
+floating-evaluator consumer. Added lossless binary HTTP comparisons to the existing
+argument prober, a read-only empty-deck fixture, pre-candidate literal calibration,
+and frozen questions. Two independent build 18.0.9598 captures each recorded 10 held
+predictions and one failed computed-text prediction; a held leading-space result
+matched controls and remains null evidence. Preserved both captures and joined
+their exact cases to the branch audit. This does not close H4: editor token spans,
+remote-mode establishment/restoration, reachability and final branch reconciliation
+remain open. Details: `docs/Runtime Argument Grammar Tests.md`.
+
+#### H4 floating conversion follow-up (2026-09-17)
+
+Two independent build 18.0.9598 read-only captures each recorded 13 held and two
+failed predictions against frozen display-frame oracles. Direct numeric/unit forms,
+computed beats, and longer expressions separated from controls. Zero-frame cases
+matched controls. Chained constant-prefix predictions failed with ASCII constants,
+so they do not establish the inherited-parameter path. Original expectations and
+both captures are retained; see the Runtime Argument Grammar Tests follow-up.
+
+#### H4 evaluator branch classification (2026-09-17)
+
+The structured audit now partitions the conditional jumps of the two captured b9246
+evaluator bodies into grammar questions, caller context, cache lifecycle, string
+storage, ownership and caller-interface groups. It checks exact assembly-derived
+membership and retains a question/limit per group. This narrows future fixture work
+without claiming live branch coverage or whole-parser completeness; cache lifecycle,
+incoming parameters and nonzero relative input remain explicit evidence limits.
+
+#### H4 arithmetic reader comparisons (2026-09-17)
+
+Both operand positions and two asymmetric constant pairs were tested in the existing
+read-only prober. Two build 18.0.9598 runs each recorded 36 held predictions and eight
+failures, with 12 held cases matching controls. Raw quoted actions and computed beats
+produced sums; direct beats returned error:1; computed numeric text yielded second-
+then-first concatenation. Trailing-backtick-only predictions failed. Frozen suites,
+both captures and exact consumer/conversion call edges are preserved and audit-linked.
+
+#### H4 text interpolation comparisons (2026-09-17)
+
+Added sentinel-controlled get_text boundary, escape and formatting questions to the
+existing read-only prober. Two build 18.0.9598 captures each recorded 20 held and two
+failed predictions; three held cases matched controls. Fractional and beat formatting
+predictions failed with exact outputs retained. The audit links these observations
+to the distinct interpolation route and excludes outer-token escape, internal type,
+skin-cache and universal-formatting claims. No live state writes were needed.
+
+#### H4 unmapped-symbol triage (2026-09-17)
+
+Reviewed the captured b9246 symbols lacking primary branch-family mappings and recorded
+dispositions, representative assembly anchors and next actions in the existing obligation
+checklist. `just runtime-grammar --triage` exposes this focused view; totals come from
+`disposition_counts`, with unreviewed additions visible in `symbols_without_triage`.
+Priorities are optional-cache boolean evaluation, incoming-parameter selection and the
+distinct typed/float pair evaluators. Existing family gaps remain visible and no live
+coverage was promoted. Anchor/duplicate/category regressions and the runtime grammar
+checks passed. The full `just check` stopped at the unchanged binary-vocabulary artifact's
+re-extraction mismatch against installed build 18.0.9628; historical data was not rewritten.
+
+#### H4 boolean cache consumer follow-up (2026-09-17)
+
+Extended the existing historical caller scan to `getBoolParam`, identifying the
+selected-slot and named-effect `effect_active` routes as cache-supplying leads on
+b9246. Reproduced the bounded assembly capture and added checked argument-setup
+classification without claiming indirect-call completeness or live cache reuse.
+
+Extended the reversible-action runner with the prepared `parser_effect_boolean`
+Phaser fixture on HTTP build 18.0.9628. Initial and independent confirmation captures
+preserve predictions, off/on baseline readbacks, controls, journals and restorations.
+The confirmation adds shape-matched quoted-text/unclosed-expression controls and
+opposite-valued forms: their null results prevent interpreting selected-slot activation
+or malformed-input toggling as expression evaluation. Paired-backtick boolean/integer
+cases separate from controls. Exact results are joined by `boolean-cache-consumer` in
+`just runtime-grammar --audit`, with per-verb evidence available through
+`just verb effect_active`. Cache reuse and native type/branch coverage remain open;
+the unmapped-symbol triage now starts with incoming-parameter selection.
+
+Runtime-grammar, capture, restoration-guard and reference-status checks passed.
+Full `just check` again stopped at the unchanged historical binary-vocabulary
+artifact's mismatch against installed build 18.0.9628; no historical binary data
+was re-anchored as part of this consumer test.
+
+#### H4 incoming parameter consumer follow-up (2026-09-17)
+
+Mapped `IAction::getParam` to the captured b9246 `ACTION_zoom::onExecute` index-zero
+call and exact build-18.0.9628 HTTP execute/readback comparisons. The initial
+query fixture failed its contrasts, and direct constant-to-zoom chains did not
+propagate the source. Completed pipeline and independent confirmation runs show
+that `param_cast float` supplies the omitted zoom operand; explicit decimal/zero
+values override it and explicit relative values use the current zoom baseline.
+Same-source direct-chain controls separate the bridge from bare default behavior.
+
+Both interrupted pipeline attempts remain aborted captures with verified
+restoration and uncertain writes excluded from subsequent suites. Each mutation
+now starts on a fresh HTTP connection without retrying a lost response; the
+original timeout cause remains unproved. Frozen suites, exact readbacks, controls,
+journals and restoration are joined through `incoming-parameter-selection` in
+`just runtime-grammar --audit`; per-verb evidence is in `just verb zoom`.
+Second incoming slots, flag branches and other consumers remain open. The unmapped
+triage's next priority is the distinct typed/float `getValues` overloads.
+
+Corrected the grammar summary's blanket XML-only backtick claim using the already
+verified effect consumer captures. Runtime-grammar, incoming evidence, transport,
+allowlist and reference-status checks passed. Full `just check` stopped at the
+unchanged historical binary-vocabulary artifact's re-extraction mismatch against
+installed build 18.0.9628; historical data was preserved. For efficient follow-up,
+use the scoped capture query in the run report rather than opening full journals.
+
+#### H4 pair-reader consumer follow-up (2026-09-18)
+
+Extended the b9246 bounded caller scan to both exact `getValues` overloads.
+Verified typed `param_add` and float `param_multiply` associations are now separate
+obligations; a false-positive byte candidate remains explicitly unverified.
+`just runtime-grammar --callers <exact-symbol>` provides a compact, checked lookup
+and rejects symbols that were not scanned, avoiding full disassembly context loads.
+
+Read-only build-18.0.9628 `param_multiply` comparisons and an independent
+confirmation preserve frozen predictions, both operand positions and shaped controls.
+Numeric, raw-action-text and paired-backtick cases discriminate. Percentage,
+millisecond and computed-beat outputs retain units; direct beats return `error:1`.
+These fail the historical scalar-result predictions and do not prove execution of
+the b9246 float route on the newer build. Malformed/numeric-text zero outputs match
+controls and are not evaluation proof. `just verb param_multiply` records the
+bounded query result; execute, incoming input and cache reuse remain unmeasured.
+
+The pair symbols leave the unmapped triage only because each now has an explicit
+consumer association, not because its branches are closed. Next: establish the
+current-build multiplication route and partition the overloads separately. The
+runtime-grammar, capture, caller-validation and reference-status checks passed.
+Full `just check` again stopped at the unchanged historical binary-vocabulary
+re-extraction mismatch against installed build 18.0.9628; historical data was kept.
+
 ## Ready Tasks
 
 ### 0b. Topic Search Across Every Corpus
@@ -1001,243 +1303,4 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 
 ## Progress log for open tasks
 
-#### H4 progress log
-
-Progress 2026-09-17 (generic evaluator caller): retained the direct-caller scan and
-bounded bodies in `runtime-parser-branch-routes.json`. A verified b9246
-`ACTION_setting::onQuery` call supplied the read-only `parser_setting_eval` fixture
-on build 9598. Computed boolean comparisons and the outer-quoted missing-final-
-backtick forms discriminated. Computed numeric one and text on failed their true
-predictions; literal/type controls retained and explained the exact consumer
-comparison without generalizing to other settings. No settings were changed.
-`getFloatParamEval` caller bodies are captured, but its live fixture is still open.
-
-Progress 2026-09-17 (backtick evidence routing): split the broad backtick family into
-exact consumer/case links. The existing constant, get_text and param_add results
-follow distinct captured readers; they no longer stand in for generic getParamEval
-or getFloatParamEval coverage. The audit validates recorded call edges against the
-manifest and hashed assembly and rejects unknown selected case IDs. No live result
-or grammar prediction was changed by this correction.
-
-Progress 2026-09-17 (unmatched-quote chains): froze and ran the
-`parser_constants` suite in `tests/runtime-grammar-unmatched-quote-cases.json` on
-build 9598. Unmatched opening quotes and opposite closers preserved the numeric
-prefix instead of applying the following addition; a later matching closer allowed
-the outer addition. Both quote styles and numeric baselines matched their frozen
-predictions and separated from their controls. The audit links the capture without
-claiming internal cursor behavior or universal consumer fallback.
-
-Progress 2026-09-17 (empty-quote consumer): the frozen `parser_constants` suite
-`tests/runtime-grammar-quote-consumer-cases.json` ran through the existing argument
-prober on build 9598. Single/double empty operands and both marker/value baselines
-matched the predictions. Explicit omission contrasts distinguish the positional
-cases; those cases still match unequal-string nonsense controls and retain that
-label. The quoted-argument audit links the new capture without claiming a universal
-empty-argument rule or closing unmatched-quote behavior.
-The same-length follow-up also held and separated from both nonsense-value controls:
-equal nonempty triples and an empty last operand selected the equal result, unlike
-an empty first or second operand. This tests the argument-count alternative directly.
-
-Progress 2026-09-17 (editor span calibration): aborted before candidate tests after
-a cropped-dialog coordinate click reached a cue pad behind the editor and started
-deck 1. The safety pause was independently verified; exact position restoration
-was impossible without a pre-click baseline. The failed calibration is retained in
-`tests/runtime-grammar-editor-spans-calibration-aborted-9598.json`; no span or guard
-finding was recorded. Further coordinate-based editor tests require a verified
-targeting method that preserves the active dialog.
-
-Moved from the H4 task block on 2026-09-16; the task itself stays in [TASKS.md](TASKS.md).
-
-Progress 2026-09-17: repeated the frozen `parser_editor_help` predictions on build
-9598 with forward/reverse UI screenshots saved under `tests/`, plus original and
-reopened-restoration images and a fresh paired HTTP capture. Candidate predictions
-held again; both nonsense controls again displayed `zoom` help, preserving the
-failed no-help prediction. The new capture is separate from the historical run
-whose images remain unrecoverable. `runtime_grammar_editor.py --http … --ui …`
-selects a capture pair and validates saved screenshot paths and hashes. Token spans,
-guard hints, and the independently established remote-mode fixture remain open.
-
-Progress 2026-09-12: bounded parser/editor capture and exact-script HTTP candidate suites landed; see [Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). `just runtime-grammar` reports the completed build-9598 confirmation capture. H4 remains open: factory/consumer coverage is not exhaustive, live editor comparison has only a visual spot check, and the interrupted deck-context case has unproven exit causation. The continuation adds guarded zoom/beatlock/all-deck execution fixtures, selected-deck query comparisons, untrimmed output tests, restoration journals and a regenerable static frontier. Inspect each capture through `just runtime-grammar --artifact <path>`; the report distinguishes complete and interrupted runs, and derives a `separation` field so a prediction that held against a blank result is not mistaken for a discriminating one. The rules that survived two suites and two baselines were promoted into [VDJScript Grammar](docs/VDJScript%20Grammar.md) on 2026-09-12 (keyword quoting, unit-suffix case/adjacency, comma decimals, signed-vs-unsigned numbers, the malformed-number reset, backtick inertness on execute), with `local_test` store records for `zoom` and `beatlock`. Single-capture and editor-side candidates stay unpromoted.
-
-Progress 2026-09-12 (later): the asymmetric-scope item is half closed. `parser_master_scope`
-(`just runtime-grammar-master`) pins selection and master to different decks, which the earlier
-suites never did, and the capture settles that **`deck master` and `deck active` both track the
-master deck while an unwrapped verb and `deck default` track the selection** — promoted into
-[VDJScript Grammar](docs/VDJScript%20Grammar.md#which-deck-a-target-resolves-to-2026-09-12) with
-`local_test` store records for `get_deck`, `masterdeck` and `masterdeck_auto`. It also found
-`playing` and `mixer1`-`mixer4` to be recognized targets the wiki does not list, with `mixerN`
-resolving to a deck that is not N (cause untested, recorded as an observation only). That
-stopped fixture left asymmetric playback untested; the 2026-09-16 playing-scope result below
-now supplies that comparison. Button press/release lifetime is now **done** via the mapper surface: a virtual CoreMIDI
-button read over HTTP between note-on and note-off settles that a button action runs on press
-only, that `while_pressed` saves and RESTORES the prior value rather than clearing, and that it
-binds its own statement rather than the chain. See
-[VDJScript Grammar](docs/VDJScript%20Grammar.md#button-lifetime-what-press-and-release-actually-run-2026-09-14).
-
-Progress 2026-09-13: the static frontier is closed (`just frontier-closure`, gated in
-`just check`). All 30 queued indirect sites resolve to virtual dispatch (26, of which 18 are
-refcount releases), `_actionFactory` calls (3) or a disassembly artifact (1) — **no argument
-consumers**. `_actionFactory` is indexed by verb id, proven by two fixed-entry calls that
-store the same number at object+0xc. The structural finding: `IAction::create` finishes the
-argument loop into `vector<SActionParam>` *before* calling the factory, so arguments are lexed
-centrally and only then dispatched per verb. The static route to argument grammar therefore
-ends here; what remains is per-verb behavior inside the constructed action. Variable scope is
-also settled, including `@` persistence across a real restart. The paired editor-help
-pass on 2026-09-16 is captured by `just runtime-grammar-editor`: candidate HTTP/help
-predictions held, but the frozen no-help prediction for two unknown-head controls
-failed (both showed `zoom` help). This is appearance evidence only; matching
-editor token spans or guard hints remain outstanding. The 2026-09-16
-boundary-placement suites now isolate whitespace position from operator adjacency, retain
-the failed skip-whitespace predictions, and confirm the narrower original-value result
-with changed values and quoted forms; inspect the boundary captures through `just runtime-grammar`. The asymmetric
-playback gap is also covered: `--grammar-playing` uses verified digital silence on initially
-empty decks 3/4, preserves loaded decks 1/2, swaps the sole playing deck against a pinned
-master, and verifies restoration. The completed build-9598 capture separated `active`/`master`
-from `playing` and `default`; the initial selection-changing calibration is retained as
-incomplete. Multiple-playing, automatic-master transitions and the mixer permutation remain
-outside that fixture.
-
-Hazard 2026-09-12 (superseded, kept for the reasoning): the reported VirtualDJ "crashes" were
-a minimized window — live process, live HTTP, no window, cmd-tab unable to restore it. `/query`
-is inert; `/execute minimize` is what does it, and every skin has a minimize button. See
-[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). The original
-note read: These exits
-leave **no crash report**, so a clean artifact directory is not evidence a run was safe; the one
-recorded instance had `deck master constant 37` pending right after `deck sandbox constant 37`.
-The shared factor with the asymmetric-master run is unusual deck-wrapper tokens (`sandbox`,
-`playing`, `mixer1`-`mixer4`). Do not probe deck targets on an instance in use, and do not treat
-one clean completion as clearance — see the hazard section in
-[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md).
-
-### H4 floating evaluator progress (2026-09-17)
-
-Recovered and hashed the b9246 Pioneer display query entry route to the captured
-floating-evaluator consumer. Added lossless binary HTTP comparisons to the existing
-argument prober, a read-only empty-deck fixture, pre-candidate literal calibration,
-and frozen questions. Two independent build 18.0.9598 captures each recorded 10 held
-predictions and one failed computed-text prediction; a held leading-space result
-matched controls and remains null evidence. Preserved both captures and joined
-their exact cases to the branch audit. This does not close H4: editor token spans,
-remote-mode establishment/restoration, reachability and final branch reconciliation
-remain open. Details: `docs/Runtime Argument Grammar Tests.md`.
-
-### H4 floating conversion follow-up (2026-09-17)
-
-Two independent build 18.0.9598 read-only captures each recorded 13 held and two
-failed predictions against frozen display-frame oracles. Direct numeric/unit forms,
-computed beats, and longer expressions separated from controls. Zero-frame cases
-matched controls. Chained constant-prefix predictions failed with ASCII constants,
-so they do not establish the inherited-parameter path. Original expectations and
-both captures are retained; see the Runtime Argument Grammar Tests follow-up.
-
-### H4 evaluator branch classification (2026-09-17)
-
-The structured audit now partitions the conditional jumps of the two captured b9246
-evaluator bodies into grammar questions, caller context, cache lifecycle, string
-storage, ownership and caller-interface groups. It checks exact assembly-derived
-membership and retains a question/limit per group. This narrows future fixture work
-without claiming live branch coverage or whole-parser completeness; cache lifecycle,
-incoming parameters and nonzero relative input remain explicit evidence limits.
-
-### H4 arithmetic reader comparisons (2026-09-17)
-
-Both operand positions and two asymmetric constant pairs were tested in the existing
-read-only prober. Two build 18.0.9598 runs each recorded 36 held predictions and eight
-failures, with 12 held cases matching controls. Raw quoted actions and computed beats
-produced sums; direct beats returned error:1; computed numeric text yielded second-
-then-first concatenation. Trailing-backtick-only predictions failed. Frozen suites,
-both captures and exact consumer/conversion call edges are preserved and audit-linked.
-
-### H4 text interpolation comparisons (2026-09-17)
-
-Added sentinel-controlled get_text boundary, escape and formatting questions to the
-existing read-only prober. Two build 18.0.9598 captures each recorded 20 held and two
-failed predictions; three held cases matched controls. Fractional and beat formatting
-predictions failed with exact outputs retained. The audit links these observations
-to the distinct interpolation route and excludes outer-token escape, internal type,
-skin-cache and universal-formatting claims. No live state writes were needed.
-
-### H4 unmapped-symbol triage (2026-09-17)
-
-Reviewed the captured b9246 symbols lacking primary branch-family mappings and recorded
-dispositions, representative assembly anchors and next actions in the existing obligation
-checklist. `just runtime-grammar --triage` exposes this focused view; totals come from
-`disposition_counts`, with unreviewed additions visible in `symbols_without_triage`.
-Priorities are optional-cache boolean evaluation, incoming-parameter selection and the
-distinct typed/float pair evaluators. Existing family gaps remain visible and no live
-coverage was promoted. Anchor/duplicate/category regressions and the runtime grammar
-checks passed. The full `just check` stopped at the unchanged binary-vocabulary artifact's
-re-extraction mismatch against installed build 18.0.9628; historical data was not rewritten.
-
-### H4 boolean cache consumer follow-up (2026-09-17)
-
-Extended the existing historical caller scan to `getBoolParam`, identifying the
-selected-slot and named-effect `effect_active` routes as cache-supplying leads on
-b9246. Reproduced the bounded assembly capture and added checked argument-setup
-classification without claiming indirect-call completeness or live cache reuse.
-
-Extended the reversible-action runner with the prepared `parser_effect_boolean`
-Phaser fixture on HTTP build 18.0.9628. Initial and independent confirmation captures
-preserve predictions, off/on baseline readbacks, controls, journals and restorations.
-The confirmation adds shape-matched quoted-text/unclosed-expression controls and
-opposite-valued forms: their null results prevent interpreting selected-slot activation
-or malformed-input toggling as expression evaluation. Paired-backtick boolean/integer
-cases separate from controls. Exact results are joined by `boolean-cache-consumer` in
-`just runtime-grammar --audit`, with per-verb evidence available through
-`just verb effect_active`. Cache reuse and native type/branch coverage remain open;
-the unmapped-symbol triage now starts with incoming-parameter selection.
-
-Runtime-grammar, capture, restoration-guard and reference-status checks passed.
-Full `just check` again stopped at the unchanged historical binary-vocabulary
-artifact's mismatch against installed build 18.0.9628; no historical binary data
-was re-anchored as part of this consumer test.
-
-### H4 incoming parameter consumer follow-up (2026-09-17)
-
-Mapped `IAction::getParam` to the captured b9246 `ACTION_zoom::onExecute` index-zero
-call and exact build-18.0.9628 HTTP execute/readback comparisons. The initial
-query fixture failed its contrasts, and direct constant-to-zoom chains did not
-propagate the source. Completed pipeline and independent confirmation runs show
-that `param_cast float` supplies the omitted zoom operand; explicit decimal/zero
-values override it and explicit relative values use the current zoom baseline.
-Same-source direct-chain controls separate the bridge from bare default behavior.
-
-Both interrupted pipeline attempts remain aborted captures with verified
-restoration and uncertain writes excluded from subsequent suites. Each mutation
-now starts on a fresh HTTP connection without retrying a lost response; the
-original timeout cause remains unproved. Frozen suites, exact readbacks, controls,
-journals and restoration are joined through `incoming-parameter-selection` in
-`just runtime-grammar --audit`; per-verb evidence is in `just verb zoom`.
-Second incoming slots, flag branches and other consumers remain open. The unmapped
-triage's next priority is the distinct typed/float `getValues` overloads.
-
-Corrected the grammar summary's blanket XML-only backtick claim using the already
-verified effect consumer captures. Runtime-grammar, incoming evidence, transport,
-allowlist and reference-status checks passed. Full `just check` stopped at the
-unchanged historical binary-vocabulary artifact's re-extraction mismatch against
-installed build 18.0.9628; historical data was preserved. For efficient follow-up,
-use the scoped capture query in the run report rather than opening full journals.
-
-### H4 pair-reader consumer follow-up (2026-09-18)
-
-Extended the b9246 bounded caller scan to both exact `getValues` overloads.
-Verified typed `param_add` and float `param_multiply` associations are now separate
-obligations; a false-positive byte candidate remains explicitly unverified.
-`just runtime-grammar --callers <exact-symbol>` provides a compact, checked lookup
-and rejects symbols that were not scanned, avoiding full disassembly context loads.
-
-Read-only build-18.0.9628 `param_multiply` comparisons and an independent
-confirmation preserve frozen predictions, both operand positions and shaped controls.
-Numeric, raw-action-text and paired-backtick cases discriminate. Percentage,
-millisecond and computed-beat outputs retain units; direct beats return `error:1`.
-These fail the historical scalar-result predictions and do not prove execution of
-the b9246 float route on the newer build. Malformed/numeric-text zero outputs match
-controls and are not evaluation proof. `just verb param_multiply` records the
-bounded query result; execute, incoming input and cache reuse remain unmeasured.
-
-The pair symbols leave the unmapped triage only because each now has an explicit
-consumer association, not because its branches are closed. Next: establish the
-current-build multiplication route and partition the overloads separately. The
-runtime-grammar, capture, caller-validation and reference-status checks passed.
-Full `just check` again stopped at the unchanged historical binary-vocabulary
-re-extraction mismatch against installed build 18.0.9628; historical data was kept.
+No open task carries a progress log here at present. The H4 log moved under its closed block on 2026-09-19.

@@ -62,7 +62,7 @@ Start here:
   How the bounded binary techniques from skin discovery carry over to verb tails, and what they cannot reach. `LC_FUNCTION_STARTS` intervals replace RET-terminated scans and padded xref windows in both the contract and vocabulary extractors; helper fan-out separates a verb's own argument matcher from the script evaluator's dispatch; the verb store is joined live so settled tails leave the probe queue. Value arguments stay outside keyword recovery entirely. Queries: `just action-tail-leads`, `just verb-contract <name>`, `just verb-traces <name>`.
 
 - [Runtime Argument Grammar Tests](Runtime%20Argument%20Grammar%20Tests.md)
-  H4: the common argument parser captured from the binary, expressed as executable predictions with per-fixture HTTP verdicts on build 9598. A candidate specification, not a grammar reference; `just runtime-grammar` runs it.
+  H4 (closed 2026-09-19 with named limits): the common argument parser captured from the b9246 binary, expressed as executable predictions with per-fixture HTTP verdicts on builds 9598 and 9628. A candidate specification, not a grammar reference; `just runtime-grammar` runs it, `--audit` joins cases to branch families, and "Named limits at H4 closure" lists what stays untested and why.
 
 - [VDJScript Syntax Evidence](VDJScript%20Syntax%20Evidence.md)
   Local notes on Button Editor syntax highlighting, hover tokenization, parser symbols, and conditional grammar test targets.

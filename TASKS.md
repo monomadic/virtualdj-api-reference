@@ -62,40 +62,6 @@ recovers it, with a focused regression. Follow `CSkinEngine::createAction` or an
 helper only when the investigation supplies a concrete question. No upfront coverage schema,
 general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
-## Historical-installer follow-ups (2026-09-07 review)
-
-Translated from the assessment in
-[docs/Historical Installer Excavation.md](docs/Historical%20Installer%20Excavation.md). Same
-rule as the R sequence: existing task numbers own their broader work, and these entries name
-only the bounded piece the excavation made startable. The two live pieces ran the same day.
-
-### H4. Runtime argument parsing from the named `IAction::create`
-
-Status: Ready
-
-Progress: every dated pass is summarised in [HISTORY.md](HISTORY.md#h4-progress-log) and
-reported by `just runtime-grammar` (per capture), `just runtime-grammar-editor` and
-`just frontier-closure`; the rules that survived two suites are promoted in
-[VDJScript Grammar](docs/VDJScript%20Grammar.md) and the method in
-[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md). Still open:
-editor token spans and guard hints, multiple-playing and automatic-master transitions, the
-`mixerN` permutation cause, and per-verb behaviour inside constructed actions.
-
-Note: Was `Conditional` on task 10b's harness landing; that trigger fired on 2026-09-02
-(fixtures and the argument prober both shipped), and the status was flipped on 2026-09-11.
-Every rule this walk recovers is a 10b test and nothing else. Folded into task 10 as its
-first sub-step; listed here so the lead is not lost. Bound it to the questions that change
-how a probe is *constructed* — delimiters, quoting, fallback when a token is unrecognized —
-and stop there; it is not a mandate to reverse every action implementation. Order: 10c's
-tooling pass first (it is what H4's findings get recorded against), then this.
-`IAction::create(char const*, char const**, int)` is named on 18.0.9246 (x86_64 entry
-`0x100596f1c`; resolve it again with `nm` before use). Follow argument consumption, delimiter
-handling and fallback branches, and contrast with the separately documented editor parser.
-Every recovered rule becomes a discriminating test for the 10b harness, not a documented rule
-on its own — editor acceptance and parser tolerance cannot substitute for an observed result.
-This has the highest ceiling of the excavation's leads because VDJScript grammar is the
-repo's stated cliff and the parser reports no errors.
-
 ## Ready Tasks
 
 ### 0. Build The Verb Record Store And `just` Data API
@@ -308,9 +274,16 @@ Contract fields to establish per verb:
   `method_strings` recovers per-method keywords (`loaded` → `opposite`, `get_time` →
   `short`). Remaining streams for the *forms and types*:
 
-  0. **Runtime parser walk (H4, added 2026-09-07).** Before more sweeps, follow the named
-     `IAction::create` on the unstripped 18.0.9246 build for delimiter, quoting and fallback
-     rules; each rule becomes a discriminating 10b test. See H4 above for the boundary.
+  0. **Runtime parser walk (H4, added 2026-09-07; closed with named limits 2026-09-19).**
+     This stream followed the named `IAction::create` on the unstripped 18.0.9246 build for
+     delimiter, quoting and fallback rules, and each rule became a discriminating 10b test.
+     The closed block, its limits and its log are in
+     [HISTORY.md](HISTORY.md#h4-runtime-argument-parsing-from-the-named-iactioncreate).
+     For computed-argument probing, the `evaluation_callers` section of
+     [tests/runtime-parser-branch-routes.json](tests/runtime-parser-branch-routes.json) is a
+     Tier-2 lead list of the b9246 verb methods that call the evaluator and boolean helpers
+     directly (`just runtime-grammar --callers IAction::getParamEval`), not evidence of any
+     verb's behaviour.
   1. **Argument keywords — DONE (2026-07-30)**; **types — closed as not-extractable.**
      `__stubs` are now named via DYSYMTAB's indirect symbol table (this build is classic
      `LC_DYLD_INFO_ONLY`, not chained fixups), so methods that compare an argument against

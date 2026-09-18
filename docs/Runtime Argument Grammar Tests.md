@@ -6,8 +6,13 @@ HTTP result in its named fixture, on the recorded build. It does not establish u
 argument acceptance, action behavior, editor acceptance, or equivalence between builds.
 
 The common parser has been captured and its main lexical branches exercised. This is **not
-an exhaustive recovery of every reachable argument consumer**. The historical call-graph frontier, its later closure, and the remaining discriminating
-fixtures are explicit below; H4 remains open.
+an exhaustive recovery of every reachable argument consumer**. The historical call-graph
+frontier, its later closure, and the remaining discriminating fixtures are explicit below.
+**H4 closed on 2026-09-19 with named limits; it did not complete.** Remote entry, list
+conversion and editor structure are the
+[named limits](#named-limits-at-h4-closure-2026-09-19), and the audit's
+`completion_claim` stays `false`. The closed task and its log are in
+[HISTORY.md](../HISTORY.md#h4-runtime-argument-parsing-from-the-named-iactioncreate).
 
 ## Branch-family audit
 
