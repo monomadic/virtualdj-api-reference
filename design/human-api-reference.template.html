@@ -189,6 +189,9 @@
         <button class="chip" type="button" data-kind="Action" aria-pressed="false">Action</button>
         <button class="chip" type="button" data-kind="Query" aria-pressed="false">Query</button>
         <button class="chip" type="button" data-kind="Dual" aria-pressed="false">Dual</button>
+        <button class="chip" type="button" data-family="all" aria-pressed="true" hidden>All</button>
+        <button class="chip" type="button" data-family="skins" aria-pressed="false" hidden>Skins</button>
+        <button class="chip" type="button" data-family="video_skins" aria-pressed="false" hidden>Video skins</button>
         <span class="hits" id="hits"></span>
       </div>
       <div class="results" id="results" role="listbox" aria-label="Results"></div>
@@ -219,8 +222,7 @@
     const eligible = records.filter(r => !skin || state.family === "all" || r.surfaces.includes(state.family));
     const labels = r => skin ? [...new Set(Object.entries(r.categories).filter(([f]) => state.family === "all" || f === state.family).map(([,c]) => c.label))] : [r.section];
     for (const r of eligible) for (const s of labels(r)) (by[s] ||= []).push(r);
-    let html = skin ? `<label class="label" for="xml-family">XML family</label><select class="section" id="xml-family"><option value="all">All skin families</option><option value="skins">Skins</option><option value="video_skins">Video skins</option></select>` : "";
-    html += `<div class="label">${skin ? "Categories · name documented" : "Sections · local evidence"}</div>
+    let html = `<div class="label">${skin ? "Categories · name documented" : "Sections · local evidence"}</div>
       <button class="section" type="button" data-section="all" aria-selected="${state.section === "all"}"><span class="section-row"><span>${skin ? "All elements" : "All verbs"}</span><span>${eligible.length}</span></span></button>`;
     for (const name of Object.keys(by).sort()) {
       const list = by[name], local = list.filter(r => skin ? r.documented : r.status === "verified" || r.status === "partial").length;
@@ -229,10 +231,6 @@
         <span class="cover"><b style="width:${Math.round(100 * local / list.length)}%"></b></span></button>`;
     }
     rail.innerHTML = html;
-    if (skin) {
-      $("xml-family").value = state.family;
-      $("xml-family").addEventListener("change", e => { state.family = e.target.value; state.section = "all"; refresh(); });
-    }
     rail.querySelectorAll("[data-section]").forEach(b => b.addEventListener("click", () => { state.section = b.dataset.section; refresh(); }));
   }
 
@@ -363,6 +361,8 @@
     $("search").placeholder = skin ? "Search elements, categories, attributes" : "Search verbs, aliases, sections";
     $("search").value = "";
     document.querySelectorAll("[data-kind]").forEach(b => { b.hidden = skin; b.setAttribute("aria-pressed", String(b.dataset.kind === "all")); });
+    document.querySelector(".tools").setAttribute("aria-label", skin ? "XML family" : "Kind");
+    document.querySelectorAll("[data-family]").forEach(b => { b.hidden = !skin; b.setAttribute("aria-pressed", String(b.dataset.family === "all")); });
     Object.assign(state, { query: "", kind: "all", section: "all", family: "all", selected: "" });
     if (updateHash) history.replaceState(null, "", skin ? "#xml/" : "#");
     refresh();
@@ -374,6 +374,11 @@
   document.querySelectorAll("[data-kind]").forEach(b => b.addEventListener("click", () => {
     state.kind = b.dataset.kind;
     document.querySelectorAll("[data-kind]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    refresh();
+  }));
+  document.querySelectorAll("[data-family]").forEach(b => b.addEventListener("click", () => {
+    state.family = b.dataset.family; state.section = "all";
+    document.querySelectorAll("[data-family]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     refresh();
   }));
   document.addEventListener("keydown", e => {
