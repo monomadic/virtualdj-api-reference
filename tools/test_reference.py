@@ -47,6 +47,23 @@ class SkinReferenceTests(unittest.TestCase):
         for token in ('__RECORDS__', '__SKIN_RECORDS__'):
             self.assertEqual(template.count(token), 1, token)
 
+    def test_categories_and_nesting_keep_family_and_source_context(self):
+        records = {r['name']: r for r in self.records}
+        self.assertEqual(records['font']['categories']['skins']['id'], 'assets')
+        self.assertEqual(records['define']['categories']['skins']['id'], 'directives')
+        self.assertNotEqual(records['item']['categories']['skins'],
+                            records['item']['categories']['video_skins'])
+        for record in self.records:
+            for direction, other in (('parents', 'parent'), ('children', 'child')):
+                for edge in record['relationships'][direction]:
+                    self.assertIn(edge[other], records)
+                    self.assertEqual(edge['tier'], 2)
+                    self.assertEqual(edge['evidence'], 'observed_vendor_xml')
+                    for loc in edge['locations']:
+                        path = (self.out.parent / unquote(loc['url'])).resolve()
+                        self.assertEqual(path, ROOT / loc['path'])
+                        self.assertGreaterEqual(loc['line'], loc['parent_line'])
+
 
 if __name__ == '__main__':
     unittest.main()

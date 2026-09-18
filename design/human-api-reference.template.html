@@ -58,6 +58,7 @@
     .section[aria-selected="true"] { background: var(--sel); color: var(--text); }
     .section-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font: 600 16px var(--sans); }
     .section-row span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rail[data-domain="xml"] .section-row span:first-child { white-space: normal; overflow-wrap: anywhere; }
     .section-row span:last-child { font: 400 12px var(--mono); color: var(--faint); }
     .cover { display: block; height: 4px; margin-top: 5px; border-radius: 2px; background: var(--surface-2); overflow: hidden; }
     .cover b { display: block; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--red), var(--amber)); }
@@ -204,7 +205,7 @@
 
   const RANK = { observed: 0, local: 1, curated: 2, structural: 3, unresolved: 4 };
   const TIER_LABEL = { observed: "Observed live", local: "Ran locally", curated: "Vendor text", structural: "Binary lead", unresolved: "Unresolved" };
-  const state = { query: "", kind: "all", section: "all", selected: "" };
+  const state = { query: "", kind: "all", section: "all", family: "all", selected: "" };
   const $ = id => document.getElementById(id);
   const rail = $("rail"), results = $("results"), detail = $("detail"), hits = $("hits");
   const esc = v => String(v ?? "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[c]);
@@ -214,9 +215,13 @@
   function renderRail() {
     const by = {};
     const skin = domain === "xml";
-    for (const r of records) for (const s of (skin ? r.surfaces : [r.section])) (by[s] ||= []).push(r);
-    let html = `<div class="label">${skin ? "Families · documented" : "Sections · local evidence"}</div>
-      <button class="section" type="button" data-section="all" aria-selected="${state.section === "all"}"><span class="section-row"><span>${skin ? "All elements" : "All verbs"}</span><span>${records.length}</span></span></button>`;
+    rail.dataset.domain = domain;
+    const eligible = records.filter(r => !skin || state.family === "all" || r.surfaces.includes(state.family));
+    const labels = r => skin ? [...new Set(Object.entries(r.categories).filter(([f]) => state.family === "all" || f === state.family).map(([,c]) => c.label))] : [r.section];
+    for (const r of eligible) for (const s of labels(r)) (by[s] ||= []).push(r);
+    let html = skin ? `<label class="label" for="xml-family">XML family</label><select class="section" id="xml-family"><option value="all">All skin families</option><option value="skins">Skins</option><option value="video_skins">Video skins</option></select>` : "";
+    html += `<div class="label">${skin ? "Categories · name documented" : "Sections · local evidence"}</div>
+      <button class="section" type="button" data-section="all" aria-selected="${state.section === "all"}"><span class="section-row"><span>${skin ? "All elements" : "All verbs"}</span><span>${eligible.length}</span></span></button>`;
     for (const name of Object.keys(by).sort()) {
       const list = by[name], local = list.filter(r => skin ? r.documented : r.status === "verified" || r.status === "partial").length;
       html += `<button class="section" type="button" data-section="${esc(name)}" aria-selected="${state.section === name}">
@@ -224,6 +229,10 @@
         <span class="cover"><b style="width:${Math.round(100 * local / list.length)}%"></b></span></button>`;
     }
     rail.innerHTML = html;
+    if (skin) {
+      $("xml-family").value = state.family;
+      $("xml-family").addEventListener("change", e => { state.family = e.target.value; state.section = "all"; refresh(); });
+    }
     rail.querySelectorAll("[data-section]").forEach(b => b.addEventListener("click", () => { state.section = b.dataset.section; refresh(); }));
   }
 
@@ -234,7 +243,8 @@
         ...(r.attributes || []).map(a => a.name), ...(r.docs || []).map(d => d.heading)];
       if (q && !hay.join(" ").toLowerCase().includes(q)) return false;
       if (state.kind !== "all" && r.kind !== state.kind) return false;
-      if (state.section !== "all" && (domain === "xml" ? !r.surfaces.includes(state.section) : r.section !== state.section)) return false;
+      if (domain === "xml" && state.family !== "all" && !r.surfaces.includes(state.family)) return false;
+      if (state.section !== "all" && (domain === "xml" ? !Object.entries(r.categories).some(([f,c]) => (state.family === "all" || f === state.family) && c.label === state.section) : r.section !== state.section)) return false;
       return true;
     }).sort((a, b) => {
       if (q) { const ra = a.name.toLowerCase().startsWith(q) ? 0 : 1, rb = b.name.toLowerCase().startsWith(q) ? 0 : 1; if (ra !== rb) return ra - rb; }
@@ -310,7 +320,12 @@
   }
 
   function renderSkinDetail(r) {
-    const families = Object.entries(r.families).map(([name, f]) => `<div><div class="label">${esc(name)}</div><code>${f.uses.toLocaleString()} uses · ${f.files} files · ${f.documented ? "name documented" : "name undocumented"}</code></div>`).join("");
+    const families = Object.entries(r.families).map(([name, f]) => `<div><div class="label">${esc(name)} · ${esc(r.categories[name].label)}</div><code>${f.uses.toLocaleString()} uses · ${f.files} files · ${f.documented ? "name documented" : "name undocumented"}</code></div>`).join("");
+    const relations = ["parents", "children"].map(direction => {
+      const other = direction === "parents" ? "parent" : "child";
+      const edges = r.relationships[direction].filter(e => state.family === "all" || e.family === state.family);
+      return `<details class="probe"><summary>Observed ${direction} · ${edges.length}</summary>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None observed; support unknown.</p>'}</details>`;
+    }).join("");
     const attributes = r.attributes.map(a => `<span>${esc(a.name)}<b>${a.uses.toLocaleString()}</b></span>`).join("");
     const docs = r.docs.map(d => `<div class="skin-doc"><a href="${esc(d.url)}">${esc(d.heading)}</a><small>${esc(d.doc)}:${d.line}</small><p>${esc(d.excerpt)}</p></div>`).join("");
     const reader = r.reader || {};
@@ -319,16 +334,23 @@
       "Not named by the bounded reader extraction; this is not evidence of absence from the parser.";
     const probes = (r.probes || []).map(p => `<details class="probe"><summary>${esc(p.fixture)}</summary>${p.lines.map(l => `<p>${esc(l)}</p>`).join("")}</details>`).join("");
     detail.innerHTML = `<div class="detail-inner">
-      <p class="crumbs">Skin XML / ${esc(r.surfaces.join(" · "))} / ${esc(r.tier)} tier</p>
+      <p class="crumbs">Skin XML / ${esc(r.section)} / ${esc(r.tier)} tier</p>
       <div class="title"><h1>${esc(`<${r.name}>`)}</h1><span class="tag kind element">Element</span>${r.documented ? "" : '<span class="tag undocumented">Undocumented</span>'}</div>
       <p class="description">${esc(r.description)}</p>
       <div class="signal unverified"><div><div class="signal-head"><span class="dot"></span>${esc(r.statusLabel)}</div><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute.</p></div></div>
       <section class="facts">${families}</section>
+      <section class="block"><div class="block-head"><h2>Observed nesting</h2></div><p>${esc(r.relationships.note)}</p>${relations}</section>
       <section class="block"><div class="block-head"><h2>Observed attributes</h2><span>${r.attributes.length} · ordered by usage · includes template parameters, not a parser schema</span></div><div class="attrs">${attributes || '<div class="none-box">No attributes observed.</div>'}</div></section>
       <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
       <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p class="signal" style="display:block">${esc(readerText)}</p></section>
       <section class="block"><div class="block-head"><h2>Probe notes</h2><span>skin fixture README mentions</span></div>${probes || '<div class="none-box">No skin fixture README mentions this element.</div>'}</section>
     </div>`;
+    detail.querySelectorAll("[data-related]").forEach(link => link.addEventListener("click", event => {
+      event.preventDefault();
+      state.query = ""; state.section = "all"; $("search").value = "";
+      state.selected = link.dataset.related;
+      refresh(); select(link.dataset.related, true); detail.scrollTop = 0;
+    }));
   }
 
   const verbCount = document.querySelector(".count").innerHTML;
@@ -338,10 +360,10 @@
     const skin = next === "xml";
     document.querySelectorAll(".domain[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
     document.querySelector(".count").innerHTML = skin ? `<strong>${records.length}</strong> skin elements` : verbCount;
-    $("search").placeholder = skin ? "Search elements, attributes, documentation" : "Search verbs, aliases, sections";
+    $("search").placeholder = skin ? "Search elements, categories, attributes" : "Search verbs, aliases, sections";
     $("search").value = "";
     document.querySelectorAll("[data-kind]").forEach(b => { b.hidden = skin; b.setAttribute("aria-pressed", String(b.dataset.kind === "all")); });
-    Object.assign(state, { query: "", kind: "all", section: "all", selected: "" });
+    Object.assign(state, { query: "", kind: "all", section: "all", family: "all", selected: "" });
     if (updateHash) history.replaceState(null, "", skin ? "#xml/" : "#");
     refresh();
   }

@@ -239,8 +239,10 @@ def skin_records(out: Path) -> list[dict]:
     """Use the same inventory and doc routes as list-skin-elements; one card per tag."""
     from xmldb import load as load_inventory, rows
     from element_summary import doc_sections, doc_excerpt, reader_vocabulary, probes
+    import skin_relations
 
     grouped = {}
+    relation_data = skin_relations.load()
     for family, name, entry in rows(load_inventory()):
         if family not in {"skins", "video_skins"}:
             continue
@@ -254,8 +256,19 @@ def skin_records(out: Path) -> list[dict]:
         sections = [{**d, "excerpt": doc_excerpt(d),
                      "url": quote(os.path.relpath(ROOT / d["doc"], out.resolve().parent))}
                     for d in doc_sections(name, list(families))]
+        relations = skin_relations.relationships(name, data=relation_data)
+        # Keep the browser payload compact; the query artifact retains all lines.
+        for direction in ("parents", "children"):
+            relations[direction] = [{**edge, "locations": [
+                {"path": loc["path"], "source_label": loc["source_label"],
+                 "line": loc["lines"][0][1], "parent_line": loc["lines"][0][0],
+                 "url": quote(os.path.relpath(ROOT / loc["path"], out.resolve().parent))}
+                for loc in edge["locations"]]} for edge in relations[direction]]
+        category_labels = list(dict.fromkeys(e["category"]["label"] for e in families.values()))
         records.append({
-            "name": name, "kind": "Element", "section": next(iter(families)),
+            "name": name, "kind": "Element", "section": " / ".join(category_labels),
+            "categories": {f: e["category"] for f, e in families.items()},
+            "relationships": relations,
             "surfaces": list(families), "families": families,
             "attributes": [{"name": a, "uses": n} for a, n in
                            sorted(attributes.items(), key=lambda item: (-item[1], item[0]))],
