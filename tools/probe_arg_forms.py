@@ -280,6 +280,17 @@ def _pair_shape_counts(verbs_out: dict) -> dict:
     return dict(sorted(c.items(), key=lambda kv: -kv[1]))
 
 
+def _totals(verbs_out: dict) -> dict:
+    """Recount the summary's size fields from the records under it.
+
+    Every path that rewrites `verbs` must call this. A merge unions form lists,
+    so the header's totals drift the moment they are carried over — they sat at
+    the 2026-09-02 sweep's figures while the records grew to more than twice as many forms.
+    """
+    return {"verbs": len(verbs_out),
+            "forms": sum(len(r["forms"]) for r in verbs_out.values())}
+
+
 def _label_pairs(out_forms: list[dict]) -> None:
     """A recognized pair means nothing until compared with its own singles."""
     single = {tuple(r["tokens"]): r for r in out_forms if len(r["tokens"]) == 1}
@@ -468,6 +479,7 @@ def main() -> int:
         recognized = sum(1 for r in base["verbs"].values()
                          for f in r["forms"] if f["verdict"] == "recognized")
         base["summary"].update({
+            **_totals(base["verbs"]),
             "recognized_forms": recognized,
             "verbs_with_recognized_token": sum(1 for r in base["verbs"].values()
                                                if r["recognized_tokens"]),
@@ -500,6 +512,7 @@ def main() -> int:
                          for f in r["forms"] if f["verdict"] == "recognized")
         data["verbs"] = rebuilt
         data["summary"].update({
+            **_totals(rebuilt),
             "recognized_forms": recognized,
             "verbs_with_recognized_token": sum(1 for r in rebuilt.values()
                                                if r["recognized_tokens"]),
