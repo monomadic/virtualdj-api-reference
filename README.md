@@ -55,6 +55,7 @@ missing is quiet rather than loud.
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
 | Browse the rendered reference | `just build-reference` → `build/reference/index.html` (`--open` opens it in the browser) (VDJScript verbs and searchable skin elements) |
 | Browse skin elements / check XML doc coverage | `just list-skin-elements` / `just list-skin-elements --family=all --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
+| Browse skin categories / observed nesting | `just list-skin-categories`, `just list-skin-elements --category=assets`, `just element button --children`, `just element text --parents` ([scope and evidence](docs/Skin%20Element%20Discovery.md)) |
 | Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
 | Validate skin/mapper XML | `just lint-skins [paths]` · `just lint-mappers [paths]` · [tools/README.md](tools/README.md) |
 | Run or update a test harness | [tests/README.md](tests/README.md) |

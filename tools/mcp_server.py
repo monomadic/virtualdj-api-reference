@@ -202,6 +202,7 @@ def t_element(a):
     args = [a["name"]]
     if a.get("format") == "json":
         args += ["--format", "json"]
+    args += opt_flags(a, {"parents": "parents", "children": "children", "family": "family"})
     return tool_script("element_summary.py", *args)
 
 
@@ -209,10 +210,15 @@ def t_list_xml_elements(a):
     flags = opt_flags(a, {
         "family": "family", "undocumented": "undocumented",
         "has_attr": "has-attr", "min_uses": "min-uses",
+        "category": "category", "uncategorized": "uncategorized", "parent": "parent", "child": "child",
         "limit": "limit", "format": "format",
     })
     term = [a["term"]] if a.get("term") else []
     return tool_script("xmldb.py", "search", *term, *flags)
+
+
+def t_skin_categories(a):
+    return tool_script("xmldb.py", "categories", *opt_flags(a, {"family": "family", "format": "format"}))
 
 
 def t_attested_tails(a):
@@ -424,12 +430,16 @@ TOOLS = [
         "description": (
             "Everything about one skin/pad XML element on one screen: inventory row, doc "
             "section, reader vocabulary, live probe results (negatives included), real "
-            "usage in shipped skins, and which of its attributes no doc explains."
+            "usage in shipped skins, editorial categories and observed nesting. "
+            "parents/children return source locations; observed nesting is not parser support."
         ),
         "inputSchema": {
             "type": "object",
             "properties": {
                 "name": S(type="string", description="Element name, e.g. 'panel' or 'mousecircle'."),
+                "parents": S(type="boolean"),
+                "children": S(type="boolean"),
+                "family": S(type="string", enum=["skins", "video_skins"], description="For parents/children lookup only."),
                 "format": S(type="string", enum=["text", "json"]),
             },
             "required": ["name"],
@@ -438,12 +448,16 @@ TOOLS = [
     },
     {
         "name": "vdj_list_xml_elements",
-        "description": "Search the skin/pad XML element inventory by name, family, attribute, or usage count.",
+        "description": "Search XML elements by name, family, attribute, category or observed parent/child. Nesting is vendor corpus evidence, not parser support. Category IDs: vdj_list_skin_categories.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "term": S(type="string"),
                 "family": S(type="string"),
+                "category": S(type="string"),
+                "uncategorized": S(type="boolean"),
+                "parent": S(type="string"),
+                "child": S(type="string"),
                 "undocumented": S(type="boolean"),
                 "has_attr": S(type="string"),
                 "min_uses": S(type="integer"),
@@ -452,6 +466,15 @@ TOOLS = [
             },
         },
         "fn": t_list_xml_elements,
+    },
+    {
+        "name": "vdj_list_skin_categories",
+        "description": "List editorial skin XML category IDs and derived unique-element totals.",
+        "inputSchema": {"type": "object", "properties": {
+            "family": S(type="string"),
+            "format": S(type="string", enum=["text", "json"]),
+        }},
+        "fn": t_skin_categories,
     },
     {
         "name": "vdj_attested_tails",
@@ -651,6 +674,9 @@ def self_check():
     check("vdj_get_fx", lambda: t_get_fx({"effect": "Echo"}))
     check("vdj_list_fx", lambda: t_list_fx({"category": "video_fx", "limit": 3}))
     check("vdj_element", lambda: t_element({"name": "panel"}))
+    check("vdj_list_skin_categories", lambda: t_skin_categories({"format": "json"}))
+    check("vdj_element children", lambda: t_element({"name": "button", "children": True, "family": "video_skins"}))
+    check("vdj_list_xml_elements parent", lambda: t_list_xml_elements({"parent": "button", "category": "text-labels", "limit": 2}))
     check("vdj_list_xml_elements", lambda: t_list_xml_elements({"limit": 3}))
     check("vdj_attested_tails", lambda: t_attested_tails({"verb": "fadeout"}))
     check("vdj_action_catalog", lambda: t_action_catalog({"name": "get_song_event"}))

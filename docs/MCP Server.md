@@ -53,8 +53,9 @@ Offline — these read the store and artifacts and need no running VirtualDJ:
 | `vdj_verb_stats` | `verbdb.py stats` | Tier and test-status breakdown |
 | `vdj_get_fx` | `fxdb.py get` | Slider/button map with normalized defaults, spelling-tolerant |
 | `vdj_list_fx` | `fxdb.py search` | Effects by category or control shape |
-| `vdj_element` | `element_summary.py` | One skin/pad XML element: usage, docs, probe results, unexplained attributes |
-| `vdj_list_xml_elements` | `xmldb.py search` | The element inventory, filtered |
+| `vdj_element` | `element_summary.py` | One XML element: usage, docs, categories, probe results; `parents`/`children` give observed nesting and sources |
+| `vdj_list_xml_elements` | `xmldb.py search` | Filter by family, category, attribute, observed parent/child, or usage; nesting does not prove support |
+| `vdj_list_skin_categories` | `xmldb.py categories` | Editorial category IDs and derived unique-name totals |
 | `vdj_attested_tails` | `extract_attested_tails.py` | Argument tails Atomix wrote in shipped scripts, with return evidence |
 | `vdj_action_catalog` | `extract_action_catalog.py` | The vendor's own description and parameters, read from the app bundle |
 | `vdj_lint` | `lint_{skins,pads,mappers}.py` | Validate authored XML before handing it back |

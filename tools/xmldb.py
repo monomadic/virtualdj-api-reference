@@ -18,6 +18,8 @@ import difflib
 import json
 import sys
 from pathlib import Path
+from skin_categories import category, categories, validate
+import skin_relations
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "docs" / "skin-xml-inventory.json"
@@ -33,7 +35,35 @@ def rows(data: dict):
     """Flatten to (family, element, entry) triples."""
     for family, fam in data["families"].items():
         for name, entry in fam["elements"].items():
-            yield family, name, entry
+            yield family, name, {**entry, "category": category(name, family)}
+
+
+def family_matches(wanted, family):
+    return wanted == "all" or (wanted == "skin" and family in {"skins", "video_skins"}) or wanted == family
+
+
+def cmd_categories(args):
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--family", default="skin")
+    ap.add_argument("--format", choices=("json", "text"), default="text")
+    ap.add_argument("--check", action="store_true")
+    opts = ap.parse_args(args)
+    data = load()
+    validate(data)
+    if opts.check:
+        print("Skin categories check passed")
+        return
+    members = list(rows(data))
+    result = [{**c, "elements": len({n for f, n, e in members
+               if family_matches(opts.family, f)
+               and e["category"]["id"] == c["id"]})} for c in categories()]
+    if opts.format == "json":
+        print(json.dumps(result, indent=1))
+    else:
+        print("Editorial categories; unique element names in selected families")
+        for c in result:
+            print(f"{c['id']:<24} {c['label']:<28} {c['elements']}")
 
 
 def cmd_get(args):
@@ -52,7 +82,7 @@ def cmd_get(args):
     for family, n, e in found:
         doc = {True: "documented", False: "UNDOCUMENTED", None: "no doc to check"}[
             e["documented"]]
-        print(f"<{n}>  [{family}]  uses={e['uses']} files={e['files']}  {doc}")
+        print(f"<{n}>  [{family}]  {e['category']['label']}  uses={e['uses']} files={e['files']}  {doc}")
         attrs = e["attributes"]
         if attrs:
             for attr, count in attrs.items():
@@ -71,22 +101,33 @@ def cmd_search(args):
                 fmt = val
             elif key == "limit":
                 limit = int(val) if val else 0
-            elif key == "undocumented":
-                opts["undocumented"] = True
-            elif key in {"family", "has-attr", "min-uses"}:
+            elif key in {"undocumented", "uncategorized"}:
+                opts[key] = True
+            elif key in {"family", "has-attr", "min-uses", "category", "parent", "child"}:
                 opts[key] = val
             else:
                 sys.exit(f"unknown option --{key}; filters: --family, "
-                         "--undocumented, --has-attr, --min-uses")
+                         "--undocumented, --has-attr, --min-uses, --category, --uncategorized, --parent, --child")
         else:
             terms.append(a.lower())
 
     data = load()
+    if "category" in opts and opts["category"] not in {c["id"] for c in categories()}:
+        sys.exit("Unknown category; use `just list-skin-categories` for IDs.")
+    edges = skin_relations.load()["relationships"] if {"parent", "child"} & opts.keys() else []
     hits = []
     for family, name, e in rows(data):
-        if opts.get("family", "all").lower() != "all" and opts["family"].lower() not in family.lower():
+        if not family_matches(opts.get("family", "all").lower(), family):
             continue
         if opts.get("undocumented") and e["documented"] is not False:
+            continue
+        if "category" in opts and e["category"]["id"] != opts["category"]:
+            continue
+        if opts.get("uncategorized") and e["category"]["id"] != "uncategorized":
+            continue
+        if "parent" in opts and not any(r["family"] == family and r["parent"] == opts["parent"].strip("<>") and r["child"] == name for r in edges):
+            continue
+        if "child" in opts and not any(r["family"] == family and r["child"] == opts["child"].strip("<>") and r["parent"] == name for r in edges):
             continue
         if "has-attr" in opts and not any(
                 opts["has-attr"].lower() in a.lower() for a in e["attributes"]):
@@ -94,10 +135,13 @@ def cmd_search(args):
         if "min-uses" in opts and e["uses"] < int(opts["min-uses"]):
             continue
         if terms:
-            hay = (name + " " + " ".join(e["attributes"])).lower()
+            hay = (name + " " + e["category"]["label"] + " " + " ".join(e["attributes"])).lower()
             if not all(t in hay for t in terms):
                 continue
-        hits.append({"family": family, "element": name, **e})
+        hit = {"family": family, "element": name, **e}
+        if {"parent", "child"} & opts.keys():
+            hit["relationship_evidence"] = skin_relations.NOTE
+        hits.append(hit)
 
     hits.sort(key=lambda h: (-h["uses"], h["element"]))
     shown = hits[:limit] if limit else hits
@@ -107,10 +151,13 @@ def cmd_search(args):
         from element_summary import doc_sections
         print("XML corpus usage — observed attributes attest syntax, not behavior.")
         print("Docs = element-name coverage only; attributes are ordered by usage.\n")
+        if {"parent", "child"} & opts.keys():
+            print(skin_relations.NOTE + "\n")
         for h in shown:
             doc = {True: "name documented", False: "NAME UNDOCUMENTED",
                    None: "no doc coverage check"}[h["documented"]]
             print(f"<{h['element']}>  [{h['family']}]  {doc}")
+            print(f"  Category: {h['category']['label']} (editorial)")
             print(f"  Corpus: {h['uses']} uses in {h['files']} files; "
                   f"{len(h['attributes'])} observed attributes")
             attrs = sorted(h["attributes"], key=lambda a: (-h["attributes"][a], a))
@@ -142,14 +189,16 @@ def cmd_stats(args):
     print(json.dumps(out, indent=1, ensure_ascii=False))
 
 
-COMMANDS = {"get": cmd_get, "search": cmd_search, "stats": cmd_stats}
+COMMANDS = {"get": cmd_get, "search": cmd_search, "stats": cmd_stats, "categories": cmd_categories}
 
 USAGE = """usage: xmldb.py <command> ... | xmldb.py <element>
 
   <element>              shorthand for `get <element>`
   get <element>          uses, files, documented state, attribute counts
   search [term] [--family=X --undocumented --has-attr=NAME --min-uses=N
+                 --category=ID --uncategorized --parent=TAG --child=TAG
                  --format=json --limit=N]
+  categories [--family=skin --format=json --check]  editorial category vocabulary
   stats                  per-family totals and undocumented lists"""
 
 

@@ -288,6 +288,8 @@ def usages(name: str, limit: int) -> dict:
 
 
 def summary(name: str, limit: int) -> dict:
+    from skin_categories import category
+    from skin_relations import relationships
     name = name.strip("<>")
     data = load(INVENTORY, "inventory")
     found = find(name, data)
@@ -325,6 +327,8 @@ def summary(name: str, limit: int) -> dict:
 
     return {
         "element": name,
+        "categories": {fam: category(name, fam) for fam, _ in found},
+        "relationships": relationships(name),
         "families": {fam: {"uses": e["uses"], "files": e["files"],
                            "name_documented": e["documented"]}
                      for fam, e in found},
@@ -356,6 +360,8 @@ def summary(name: str, limit: int) -> dict:
 
 def render(s: dict) -> str:
     L = [f"<{s['element']}>", "=" * (len(s["element"]) + 2)]
+    for family, cat in s["categories"].items():
+        L.append(f"  Category [{family}]: {cat['label']} (editorial)")
     for fam, f in s["families"].items():
         doc = {True: "name documented", False: "NAME UNDOCUMENTED",
                None: "no doc to check"}[f["name_documented"]]
@@ -371,6 +377,13 @@ def render(s: dict) -> str:
         else:
             L.append("  reader vocab   not in the extracted reader vocabulary "
                      "(the extractor covers 3 readers, not the whole parser)")
+    L.append("")
+
+    for direction, other in (("parents", "parent"), ("children", "child")):
+        names = sorted({r[other] for r in s["relationships"][direction]})
+        L.append(f"Observed {direction}: " + (", ".join(names) or "none; support unknown"))
+    L.append("  Vendor XML nesting only (Tier 2), not a support schema. "
+             "Use --parents / --children for sources and locations.")
     L.append("")
 
     if s["doc_sections"]:
@@ -458,9 +471,28 @@ def main(argv: list[str]) -> int:
     ap.add_argument("--format", choices=("text", "json"), default="text")
     ap.add_argument("--usages", type=int, default=8, metavar="N",
                     help="how many usage files to list (default 8)")
+    ap.add_argument("--parents", action="store_true", help="show observed parents with provenance")
+    ap.add_argument("--children", action="store_true", help="show observed children with provenance")
+    ap.add_argument("--family", choices=("skins", "video_skins"), help="scope relationship lookup")
     args = ap.parse_args(argv)
     if args.usages < 0:
         ap.error("--usages must be nonnegative")
+    if args.parents or args.children:
+        from skin_relations import relationships, render as render_relations
+        from xmldb import load as load_inventory, rows
+        name = args.element.strip("<>")
+        if not any(n == name and (args.family is None or f == args.family)
+                   for f, n, _ in rows(load_inventory())):
+            ap.error(f"no element <{name}> in the selected inventory")
+        result = relationships(name, args.family)
+        if not args.parents:
+            del result["parents"]
+        if not args.children:
+            del result["children"]
+        print(json.dumps(result, indent=1) if args.format == "json" else render_relations(result))
+        return 0
+    if args.family:
+        ap.error("--family requires --parents or --children")
     s = summary(args.element, args.usages)
     print(json.dumps(s, indent=1) if args.format == "json" else render(s))
     return 0

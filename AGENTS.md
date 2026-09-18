@@ -174,6 +174,14 @@ When VirtualDJ is running with its network interface enabled, VDJScript can be e
 
 **No pad page in this repo is `Canonical` any more** (2026-09-04): the three `Reference - *` pages were quarantined, so `Built-in` rows — Atomix's own shipped pages — are now the only pad source to copy patterns from or cite as evidence. `Quarantined` rows are real personal working files kept as usage examples only; **never cite one as evidence that a verb exists or behaves a given way**, because a personal page legitimately contains experiments that were never claimed to work. See [examples/Pads/README.md](examples/Pads/README.md) and [examples/Mappers/README.md](examples/Mappers/README.md) for the full provenance tables.
 
+For skin XML discovery, start with `just list-skin-categories`, then use
+`just list-skin-elements --category=<id>`. `just element <tag> --parents` /
+`--children` return observed vendor nesting with source locations; `--parent=<tag>` /
+`--child=<tag>` filter the listing. Prefer these scoped queries over opening
+`tests/skin-xml-relations.json`. Categories are editorial and nesting is Tier 2,
+not a supported-child schema. Refresh nesting with `just skin-relations` after
+source XML changes. See [Skin Element Discovery](docs/Skin%20Element%20Discovery.md).
+
 ## macOS paths
 
 | Path | Content |

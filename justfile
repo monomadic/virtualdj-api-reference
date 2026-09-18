@@ -139,6 +139,14 @@ get-xml-element element:
 list-skin-elements *args:
     @{{python}} tools/xmldb.py search --family=skin "$@"
 
+# Editorial vocabulary with derived totals; no parser-support claim.
+list-skin-categories *args:
+    @{{python}} tools/xmldb.py categories "$@"
+
+# Literal direct nesting in vendor skin XML, with source hashes and diagnostics.
+skin-relations *args:
+    @{{python}} tools/skin_relations.py "$@"
+
 # Compatibility for existing scripts and frozen planning references.
 [private]
 list-xml-elements *args:
@@ -460,6 +468,9 @@ check:
     {{python}} tools/extract_action_modules.py --check
     {{python}} tools/check_corpus_parses.py --check
     {{python}} tools/extract_xml_inventory.py --check
+    {{python}} tools/xmldb.py categories --check
+    {{python}} tools/skin_relations.py --check
+    {{python}} tools/test_skin_metadata.py
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
     {{python}} tools/check_reference_status.py
