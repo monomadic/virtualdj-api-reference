@@ -326,10 +326,7 @@
     const relations = ["parents", "children"].map(direction => {
       const other = direction === "parents" ? "parent" : "child";
       const edges = r.relationships[direction].filter(e => state.family === "all" || e.family === state.family);
-      const names = [...new Set(edges.map(e => e[other]))];
-      const links = names.map(name => `<a data-related="${esc(name)}" href="#xml/${encodeURIComponent(name)}">${esc(`<${name}>`)}</a>`).join(", ");
-      const sources = edges.map(e => `<div><p><strong>${esc(`<${e[other]}>`)}</strong> · ${esc(e.family)} · ${e.uses} occurrences · Tier 2</p>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</div>`).join("");
-      return `<div class="relations"><p><strong>${direction === "parents" ? "Parents" : "Children"}:</strong> ${links || 'None recorded; support unknown.'}</p>${edges.length ? `<details><summary>Source files · first location in each</summary>${sources}</details>` : ""}</div>`;
+      return `<section class="relations"><h3>${direction === "parents" ? "Parents" : "Children"} · ${edges.length}</h3>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None recorded; support unknown.</p>'}</section>`;
     }).join("");
     const attributes = r.attributes.map(a => `<span>${esc(a.name)}<b>${a.uses.toLocaleString()}</b></span>`).join("");
     const docs = r.docs.map(d => `<div class="skin-doc"><a href="${esc(d.url)}">${esc(d.heading)}</a><small>${esc(d.doc)}:${d.line}</small><p>${esc(d.excerpt)}</p></div>`).join("");
