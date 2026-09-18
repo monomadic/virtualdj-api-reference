@@ -182,7 +182,7 @@
     <div class="count" title="__STAMP__"><span><strong>__VERB_COUNT__</strong> verbs</span><i></i><span>build __BUILD__</span></div>
   </header>
   <main class="workspace">
-    <aside class="rail" id="rail" aria-label="Sections"><div class="label">Sections · local evidence</div></aside>
+    <aside class="rail" id="rail" aria-label="Sections"><div class="label">Categories</div></aside>
     <div class="list">
       <div class="tools" role="group" aria-label="Kind">
         <button class="chip" type="button" data-kind="all" aria-pressed="true">All</button>
@@ -222,7 +222,7 @@
     const eligible = records.filter(r => !skin || state.family === "all" || r.surfaces.includes(state.family));
     const labels = r => skin ? [...new Set(Object.entries(r.categories).filter(([f]) => state.family === "all" || f === state.family).map(([,c]) => c.label))] : [r.section];
     for (const r of eligible) for (const s of labels(r)) (by[s] ||= []).push(r);
-    let html = `<div class="label">${skin ? "Categories · name documented" : "Sections · local evidence"}</div>
+    let html = `<div class="label">Categories</div>
       <button class="section" type="button" data-section="all" aria-selected="${state.section === "all"}"><span class="section-row"><span>${skin ? "All elements" : "All verbs"}</span><span>${eligible.length}</span></span></button>`;
     for (const name of Object.keys(by).sort()) {
       const list = by[name], local = list.filter(r => skin ? r.documented : r.status === "verified" || r.status === "partial").length;
