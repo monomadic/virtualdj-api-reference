@@ -14,6 +14,16 @@ v2026-m b9482, 2026-07-14. Where a rule is proven on only one surface, it says s
 [backticks](#backticks-are-a-surface-feature-not-a-parser-feature) are the proof that this
 distinction is not pedantic.
 
+Rules from the runtime-parser task (H4) carry one of three labels, joined to exact cases by
+`just runtime-grammar --audit` and summarised in
+[H4 rule status](#h4-rule-status-2026-09-19). **Repeated**: held and separated from the
+nonsense controls, with the same reading in a second complete capture. **One capture**:
+held and separated in a single complete capture, so it is unresolved beyond that capture.
+**Matches controls**: the form did the same as nonsense arguments. That shows it did not do
+what the literal did, but not why, so the reason stays unresolved. The b9246 binary
+supplies structural leads only; behaviour comes from builds 9598 and 9628, as each rule
+states.
+
 ## Read this much
 
 Enough to write correct VDJScript. If you are only editing skin layout or XML structure
@@ -39,18 +49,24 @@ and not writing script, you can stop after this section.
 - **Store numbers in variables, never strings.** A string-valued variable cannot be read
   back (`get_var` returns blank) *or* compared (`var_equal` returns `yes` against
   everything). Use numeric codes.
-- **Computed arguments are consumer-specific.** Backticks work in some HTTP consumers
-  and XML attributes; the tested `zoom`/`beatlock` execute forms ignore them. Check
-  the verb record and the [bounded examples below](#backticks-are-a-surface-feature-not-a-parser-feature).
-- **A malformed number can wipe the value, not be ignored.** `zoom 0.25zzqqx` resets zoom
-  rather than doing nothing. And a **signed** number is relative where unsigned is
-  absolute — `zoom +0.25` adds, `zoom 0.25` sets.
-- **Quote names, not keywords.** `beatlock 'on'` is silently inert where `beatlock on` works.
+- **Computed arguments are consumer-specific.** Backticks evaluate in XML attributes and
+  in some HTTP consumers (`effect_active`, build 9628). In the `zoom`/`beatlock` execute
+  forms tested on build 9598 they did not apply the computed value. Those readings match
+  the nonsense controls, so it is unresolved whether the forms are ignored or rejected.
+  Check the verb record and the [bounded examples below](#backticks-are-a-surface-feature-not-a-parser-feature).
+- **On `zoom`, a malformed number resets the value.** `zoom 0.25zzqqx` lands on the same
+  `0.2` as bare `zoom`; it is not ignored. Also on `zoom`, a **signed** number is relative
+  and an unsigned one absolute: `zoom +0.25` adds, `zoom 0.25` sets. Other verbs were not
+  measured, so check the verb record.
+- **Leave fixed keywords bare.** On `beatlock`, bare `on` set the switch and quoted `'on'`
+  did not. The quoted form read the same as nonsense arguments. That is one capture on
+  one verb; whether it holds for other switch verbs is unresolved.
 - **There are no comments.** `//`, `#`, `;`, `--`, `/* */` all silently discard the rest of
   the statement.
 - **`deck active` is the master deck, not the selected deck.** So is `deck master`; the
-  selected deck is what an unwrapped verb and `deck default` use. And `deck mixerN` is not
-  deck N — see [which deck a target resolves to](#which-deck-a-target-resolves-to-2026-09-12).
+  selected deck is what an unwrapped verb and `deck default` use. Do not assume
+  `deck mixerN` means deck N: in the one capture that measured it, it did not — see
+  [which deck a target resolves to](#which-deck-a-target-resolves-to-2026-09-12).
 - **Variable prefixes are part of the name.** `mode` and `$mode` are different variables.
   `$` = global, `@` = persists across restarts, bare = deck-local.
 - In XML, `&` must be written `&amp;`.
@@ -71,6 +87,7 @@ and not writing script, you can stop after this section.
 - [Deck and scope wrappers](#deck-and-scope-wrappers)
 - [XML escaping](#xml-escaping)
 - [Testing a construct yourself](#testing-a-construct-yourself)
+- [H4 rule status](#h4-rule-status-2026-09-19)
 - [Not yet established](#not-yet-established)
 
 ## The parser never reports an error
@@ -383,29 +400,34 @@ nothing (`HTTP`).
 ### Quoting a *keyword* argument can disable it
 
 The equivalence above covers a string being matched. It does **not** hold for the fixed
-keywords a switch-style verb accepts, where quoting silently turns a working argument into
-a no-op (`Local test` 2026-09-12, `HTTP` execute with independent state readback, build
-9598, from beatlock off and on baselines):
+keywords a switch-style verb accepts. There, the quoted form did not do what the bare
+keyword did (`Local test` 2026-09-12, `HTTP` execute with independent state readback, build
+9598, from beatlock off and on baselines,
+[capture](../tests/runtime-grammar-actions-9598.json)):
 
 ```
 deck 1 beatlock on       -> on from both baselines
-deck 1 beatlock 'on'     -> unchanged            <- silently inert
-deck 1 beatlock "on"     -> unchanged            <- silently inert
+deck 1 beatlock 'on'     -> unchanged            <- same as the nonsense controls
+deck 1 beatlock "on"     -> unchanged            <- same as the nonsense controls
 ```
 
-So the habit of quoting every argument, which is right for names, is wrong for keywords.
-Quote values that may contain a space; leave bare the fixed words a verb enumerates.
+**Status: bare `on` is one capture; the quoted forms match controls.** The capture shows a
+quoted keyword did not set the switch. It does not show whether the quoted token is rejected
+or simply unrecognised, and no second capture repeats it. The practical advice still
+follows: quoting every argument is right for names and was wrong here for a keyword. Quote
+values that may contain a space; leave bare the fixed words a verb enumerates.
 
-`beatlock` reaches the shared `IActionSwitch::onExecute`, so the vocabulary below is likely
-common to switch verbs, but it was measured on `beatlock` alone:
+On b9246, `beatlock` reaches the shared `IActionSwitch::onExecute`. That is a structural lead
+that the vocabulary below may be common to switch verbs. It was measured on `beatlock` alone,
+in the same single capture:
 
-| Argument | Effect |
-| --- | --- |
-| *(none)*, `toggle` | toggles |
-| `on`, `1` | sets on |
-| `off`, `0` | sets off |
-| `+1`, `+0`, `-1` | toggles — a **signed** integer does not set |
-| `'on'`, `"on"`, `1.0`, `100%`, `default`, `all`, `value`, `` `constant 1` `` | inert |
+| Argument | Effect | Status |
+| --- | --- | --- |
+| *(none)*, `toggle` | toggles | One capture |
+| `on`, `1` | sets on | One capture |
+| `off`, `0` | sets off | One capture |
+| `+1`, `+0`, `-1` | toggles — a **signed** integer does not set | One capture |
+| `'on'`, `"on"`, `1.0`, `100%`, `default`, `all`, `value`, `` `constant 1` `` | unchanged, as with nonsense arguments | Matches controls |
 
 Argument *matching* is a per-verb matter, not grammar — effect names are case-insensitive
 but not space-insensitive, some verbs require a signed number, some ignore computed
@@ -413,7 +435,8 @@ values. Those live on the verb record: `just get-verb <name>`.
 
 ### Unit suffixes are case-sensitive and must be adjacent
 
-`%`, `ms` and `bt` attach to the number with no space, in lower case (`HTTP`, build 9598):
+`%`, `ms` and `bt` attach to the number with no space, in lower case (`HTTP`, build 9598,
+[confirmation capture](../tests/runtime-grammar-confirmation-9598.json)):
 
 ```
 constant 37ms   -> 37ms       constant 37MS    -> ''      <- wrong case, no value
@@ -421,9 +444,19 @@ constant 37%    -> 37%        constant 37 ms   -> 37      <- suffix dropped
 constant 37bt   -> 37bt       constant 37msbt  -> ''      <- one suffix only
 ```
 
-A comma is accepted as a decimal separator on both surfaces: `constant 37,5` returns
-`37.5` and `zoom 0,25` sets the same value as `zoom 0.25`. A number with no integer part
-is **not** parsed — `constant .5` returns blank — so write `0.5`.
+**Status.** The left column and `37 ms` are one capture. The
+[interrupted initial capture](../tests/runtime-grammar-live-9598.json) read the same in its
+single round, but its verdicts are `incomplete-run`. `37MS` and `37msbt` match controls,
+because `constant`'s nonsense controls also return blank. The discriminating evidence for
+case is on `zoom`: `zoom 25MS` and `zoom 25BT` reset to `0.2`, like other malformed
+numbers, in two captures ([below](#a-malformed-number-is-not-ignored--it-can-reset-the-value-2026-09-12)).
+That case rule is repeated. On `zoom`, a separated `25 %` matches controls.
+
+A comma was accepted as a decimal separator in both channels: `constant 37,5` returned
+`37.5` (query), and `zoom 0,25` set the same value as `zoom 0.25` (execute,
+[capture](../tests/runtime-grammar-actions-9598.json)). Each is one capture. A number with no
+integer part is **not** parsed as one. `constant .5` returned blank, which matches controls.
+`zoom .25` reset to `0.2` in two captures, which is repeated. So write `0.5`.
 
 A `+`-combined argument is one token and takes no whitespace, for the same reason
 (`Local test` 2026-09-08, `HTTP`): `effect_arm_stem 'kick+bass'` arms both stems,
@@ -549,8 +582,9 @@ Whether a *given verb* honours a computed argument is per-verb: `loop`, `beatjum
 These negative results also occur in specific **execute** consumers, which the query evidence above could not show —
 a flattened query result is consistent with "the surface stringified it", but a state
 readback is not. With `zoom` and `beatlock` driven from two prepared baselines and read
-back independently (`Local test` 2026-09-12, `HTTP`, build 9598), every backtick form left
-both baselines exactly where the nonsense controls did, while the literal moved them:
+back independently (`Local test` 2026-09-12, `HTTP`, build 9598,
+[capture](../tests/runtime-grammar-actions-9598.json)), every backtick form left both
+baselines exactly where the nonsense controls did, while the literal moved them:
 
 ```
 zoom `constant 0.25`            -> unchanged      zoom 0.25          -> 0.25
@@ -559,15 +593,28 @@ deck 1 beatlock `constant 1`    -> unchanged      deck 1 beatlock on -> on
 deck 1 beatlock '`constant 1`'  -> unchanged
 ```
 
-Quoting the backtick expression does not rescue these `zoom`/`beatlock` forms. A computed deck prefix is worse than
-inert — `` deck `constant 2` get_deck `` returns `error:-2147467259`.
+**Status: all four backtick forms match controls, in one capture.** They show that the
+computed value was not applied, and that quoting the expression did not change that. They
+do not show whether the consumer ignores the argument or rejects it.
+
+A computed deck prefix does not resolve either: `` deck `constant 2` get_deck `` returned
+`error:-2147467259`. That is the same error a junk target returns. The
+[scope capture](../tests/runtime-grammar-scopes-9598.json) and its
+[follow-up](../tests/runtime-grammar-scope-followup-9598.json), which use junk-target
+controls, both record it as matching controls. The
+[confirmation capture](../tests/runtime-grammar-confirmation-9598.json) records it as
+separating only against blank-returning `constant` controls. So it behaves like an
+unrecognised target, not like a distinct failure.
 
 By contrast, `Local test` 2026-09-17 on build 18.0.9628 established HTTP execute
 evaluation for `deck 1 effect_active 1` with paired-backtick `on`/`off` and
 `constant 1`/`constant 0`, both with and without an explicit `'Phaser'` argument.
 Independent activation readback from off/on baselines separated these forms from
-paired-backtick nonsense. Raw quoted text and unclosed expressions matched their
-shape-matched controls, so those forms are not evaluation proof. See the
+paired-backtick nonsense. That is repeated: the
+[initial](../tests/runtime-grammar-effect-boolean-initial-9628.json) and
+[confirmation](../tests/runtime-grammar-effect-boolean-9628.json) captures agree. Raw quoted
+text and unclosed expressions matched their shape-matched controls, so those forms are not
+evaluation proof. See the
 [consumer fixture and preserved captures](Runtime%20Argument%20Grammar%20Tests.md#boolean-cache-callers-2026-09-17)
 for scope and restoration evidence. This does not establish other effect consumers
 or persistent action-cache behavior.
@@ -762,15 +809,24 @@ both deck 1: every target answered `1`, which fits "follows master", "follows se
 four unloaded and stopped decks, state restored and verified —
 [capture](../tests/runtime-grammar-master-9598.json)):
 
-| Target | Answers with | Signature `(1,2)` → `(2,3)` |
-| --- | --- | --- |
-| *(no wrapper)* | the **selected** deck | `1` → `2` |
-| `deck default` | the **selected** deck | `1` → `2` |
-| `deck master` | the **master** deck | `2` → `3` |
-| `deck active` | the **master** deck | `2` → `3` |
-| `deck playing` | the selected deck, with nothing playing | `1` → `2` |
-| `deck left`, `deck leftvideo` | deck 1 | `1` → `1` |
-| `deck right`, `deck rightvideo` | deck 2 | `2` → `2` |
+| Target | Answers with | Signature `(1,2)` → `(2,3)` | Status |
+| --- | --- | --- | --- |
+| *(no wrapper)* | the **selected** deck | `1` → `2` | One capture |
+| `deck default` | the **selected** deck | `1` → `2` | Repeated |
+| `deck master` | the **master** deck | `2` → `3` | Repeated |
+| `deck active` | the **master** deck | `2` → `3` | Repeated |
+| `deck playing` | the selected deck, with nothing playing | `1` → `2` | One capture |
+| `deck left`, `deck leftvideo` | deck 1 | `1` → `1` | One capture |
+| `deck right`, `deck rightvideo` | deck 2 | `2` → `2` | One capture |
+
+The rows marked **Repeated** also held and separated in the
+[playing-deck capture](../tests/runtime-grammar-playing-9598.json) (build 9598), a
+different fixture. There the selection stayed on deck 1 while the pinned master and the sole
+playing deck were different decks. `deck active` and `deck master` answered with the pinned
+master, `deck default` with the selected deck, and `deck playing` with the playing deck. The
+other rows discriminate only in the capture above. The symmetric
+[scope capture](../tests/runtime-grammar-scopes-9598.json) is consistent for bare, `left` and
+`right`, but its fixture cannot tell the selected deck from the master.
 
 **`active` is not the selected deck.** This is the trap the symmetric fixture hid: a script
 using `deck active` to mean "the deck the user is looking at" gets the master deck instead.
@@ -780,15 +836,21 @@ The earlier run's `1` was the master deck answering, not a constant and not the 
 nine does not mention** — they return a deck number where a junk target
 (`deck zzqqx get_deck`) returns `error:-2147467259`.
 
-`deck mixerN` resolves to a fixed deck that is *not* the identity mapping: on this instance
-`mixer1` → 3, `mixer2` → 1, `mixer3` → 2, `mixer4` → 4, unchanged across both selections and
-both master decks, and reproduced by an independent read afterwards. Whether that permutation
-is a configurable channel assignment or a fixed internal order is **untested** — do not assume
-`mixerN` means deck N.
+`deck mixerN` did *not* resolve to the identity mapping in the capture above: on this
+instance `mixer1` → 3, `mixer2` → 1, `mixer3` → 2, `mixer4` → 4, unchanged across both
+selections and both master decks, and reproduced by an independent read afterwards. **Status:
+one capture.** The identity predictions for `mixer1`–`mixer3` are retained there as failed.
+That these tokens are recognised targets is repeated, because
+[the confirmation capture](../tests/runtime-grammar-confirmation-9598.json) separates
+`deck mixerN constant 37` from junk. The mapping itself has no second measurement. Whether
+it is a configurable channel assignment or a fixed internal order is **untested**, so do not
+assume `mixerN` means deck N.
 
-Two limits on the table. Every deck was unloaded and stopped, so `playing` was only observed
-in its fallback, and whether `active` follows a playing deck away from the master is
-**untested**. And these are query resolutions; execute-side fan-out is the separate
+Three limits on the table. In the capture above every deck was unloaded and stopped, so
+`playing` was observed only in its fallback there. The playing-deck capture covers a single
+playing deck with automatic master disabled. That is one capture, and it does not settle
+multiple playing decks or automatic-master transitions, which remain **untested**. And these
+are query resolutions; execute-side fan-out is the separate
 [`deck all`](#deck-all-broadcasts-on-execute-and-collapses-to-one-deck-on-query-2026-09-03)
 result.
 
@@ -904,7 +966,13 @@ instead, and on at least one it **discards the current value**. None is reported
 
 The third row is the dangerous one, because "unknown tokens are ignored" is the intuition
 most scripts are written on. Measured on `zoom` from baselines `0.25` and `0.65`, two
-passes, restored and verified (`Local test` 2026-09-12, `HTTP` execute, build 9598):
+passes, restored and verified (`Local test` 2026-09-12, `HTTP` execute, build 9598). Every
+`-> 0.2` form in the first three rows is **repeated**. The
+[revised capture](../tests/runtime-grammar-action-default-9598.json) held and separated.
+The [original fallback capture](../tests/runtime-grammar-action-fallback-9598.json) read the
+same `0.2` and separated too; its predictions of `0.5` failed and remain recorded as failed.
+`zoom 0.25 zzqqx` is **one capture**, in [the action capture](../tests/runtime-grammar-actions-9598.json).
+`zoom zzqqx` is the nonsense control itself:
 
 ```
 zoom 0.25zzqqx    -> 0.2        zoom 25MS    -> 0.2       zoom .25     -> 0.2
@@ -925,7 +993,13 @@ mechanism reads harmlessly on a toggle — `deck 1 beatlock #zzqqx` simply toggl
 
 ### A signed number is relative; unsigned is absolute (2026-09-12)
 
-Same fixture and build. The sign is not decoration — it selects the operation:
+Same fixture and build, [one action capture](../tests/runtime-grammar-actions-9598.json).
+For `zoom`, the sign is not decoration: it selects the operation. `zoom 0.25` and
+`zoom +0.25` are **repeated**. They read the same on build 9628 after a
+`param_cast float` pipeline, in the
+[pipeline](../tests/runtime-grammar-incoming-pipeline-9628.json) and
+[confirmation](../tests/runtime-grammar-incoming-pipeline-confirmation-9628.json) captures.
+The other rows are **one capture**:
 
 ```
 zoom 0.25     -> 0.25, 0.25      absolute
@@ -942,9 +1016,10 @@ A verb may accept only one of the two forms, which is why
 does nothing) and why a signed integer on a switch verb toggles instead of setting. Check
 the verb record before assuming a bare number works.
 
-Two forms that look valid are ignored by `zoom` outright: a bare integer (`zoom 1`,
-`zoom 0`) and a duration (`zoom 25ms`, `zoom 25bt`) — parsed, wrong type for this
-consumer, discarded without falling back to `0.2`.
+Two forms that look valid did not set `zoom`: a bare integer (`zoom 1`, `zoom 0`) and a
+duration (`zoom 25ms`, `zoom 25bt`). They left both baselines where the nonsense controls
+did, and they did not reset to `0.2`. **Status: matches controls, one capture.** Whether
+they are parsed and rejected as the wrong type, or not accepted at all, is unresolved.
 
 Two-baseline measurement is what separates these at all. From a single baseline, `beatlock on`
 and `beatlock <junk>` both end up on and look identical; only running from both baselines
@@ -1000,9 +1075,41 @@ often a silently-dropped argument than a rejected script. Prefer probes whose tw
 answers are visibly different — that is why the examples above use `get_version` against
 `get_clock` rather than two effects that might both be empty.
 
+## H4 rule status (2026-09-19)
+
+This is where each runtime-parser rule above stands after the H4 reconciliation. Captures
+are under `tests/`. `just runtime-grammar --artifact <capture> --get <case>` returns the
+exact case, and `just runtime-grammar --audit` joins cases to branch families. Behaviour is
+from builds 9598 and 9628. The b9246 binary only suggested which questions to ask.
+
+| Rule | Status | Captures |
+| --- | --- | --- |
+| Quoted keyword did not set `beatlock`; bare keyword did | Bare keyword: one capture. Quoted: matches controls | `runtime-grammar-actions-9598` |
+| `beatlock` argument vocabulary | One capture (inert row: matches controls) | `runtime-grammar-actions-9598` |
+| Unit suffixes attach lower-case and adjacent (`constant`) | One capture (wrong-case and double-suffix rows: matches controls) | `runtime-grammar-confirmation-9598`; interrupted `runtime-grammar-live-9598` agrees |
+| Wrong-case suffix is malformed on `zoom` | Repeated | `runtime-grammar-action-default-9598`, `runtime-grammar-action-fallback-9598` |
+| Comma decimal | One capture per channel | `runtime-grammar-confirmation-9598` (query), `runtime-grammar-actions-9598` (execute) |
+| Malformed number resets `zoom` to `0.2` | Repeated | `runtime-grammar-action-default-9598`, `runtime-grammar-action-fallback-9598` |
+| Separated junk keeps the parsed number (`zoom 0.25 zzqqx`) | One capture | `runtime-grammar-actions-9598` |
+| Signed relative, unsigned absolute on `zoom` | `0.25`/`+0.25`: repeated. Other forms: one capture | `runtime-grammar-actions-9598`; `runtime-grammar-incoming-pipeline-9628`, `runtime-grammar-incoming-pipeline-confirmation-9628` |
+| Bare integer and duration did not set `zoom` | Matches controls | `runtime-grammar-actions-9598` |
+| Backticks in `zoom`/`beatlock` execute forms not applied | Matches controls | `runtime-grammar-actions-9598` |
+| Paired backticks evaluate in `effect_active` execute | Repeated | `runtime-grammar-effect-boolean-initial-9628`, `runtime-grammar-effect-boolean-9628` |
+| Computed deck prefix returns the junk-target error | Matches controls | `runtime-grammar-scopes-9598`, `runtime-grammar-scope-followup-9598` |
+| `active`/`master` → master deck; `default` → selected deck | Repeated | `runtime-grammar-master-9598`, `runtime-grammar-playing-9598` |
+| Bare, `playing` fallback, `left`/`right`/`*video` targets | One capture | `runtime-grammar-master-9598` |
+| `mixerN` recognised as a target | Repeated | `runtime-grammar-confirmation-9598`, `runtime-grammar-master-9598` |
+| `mixerN` → non-identity deck permutation | One capture (identity predictions failed) | `runtime-grammar-master-9598` |
+
+H4 also produced captured candidates that were **never promoted** here and stay unresolved
+as grammar: unmatched quotes in chains, empty quoted operands, and incoming-parameter
+selection (`… & param_cast float & zoom`). They are in
+[Runtime Argument Grammar Tests](Runtime%20Argument%20Grammar%20Tests.md), with their captures.
+
 ## Not yet established
 
 Do not guess in these gaps; test and record.
+
 
 - ~~**`while_pressed` release behaviour**~~ — **answered 2026-09-14** on a real MIDI
   button. It **saves and restores the prior value**, and it binds **its own statement only**.
@@ -1017,10 +1124,11 @@ Do not guess in these gaps; test and record.
   statement's value a query reports. See
   [Boolean composition with `&&`](#boolean-composition-with-).
 - **Operator-lookalike names in verb argument position**, e.g. a verb whose parameter is
-  literally `on`, where a constant and a value collide. `set` is settled, and `beatlock` is
-  now settled the other way — bare `on` sets, quoted `'on'` is inert
-  ([Quoting a keyword argument](#quoting-a-keyword-argument-can-disable-it)). Whether that
-  split is `IActionSwitch`-wide or per-verb is still open.
+  literally `on`, where a constant and a value collide. `set` is settled. For `beatlock`,
+  one capture found the opposite split: bare `on` sets, and quoted `'on'` matched the
+  nonsense controls
+  ([Quoting a keyword argument](#quoting-a-keyword-argument-can-disable-it)). That is not
+  yet repeated, and whether the split is `IActionSwitch`-wide or per-verb is still open.
 
 
 Recording an answer: put the observation in
