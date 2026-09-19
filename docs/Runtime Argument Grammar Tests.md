@@ -1129,6 +1129,33 @@ binary facts are b9246 structural leads (Tier 2), and none is a behaviour claim 
 
 ### Editor structure (`editor-structure`)
 
+**Reassessed 2026-09-19, after closure: startable, not blocked.** No evidence was added;
+the obligation is still empty. The bullets below record the state at closure and the first,
+second and fourth are superseded by this paragraph. The `limit` record now has status
+`startable` with a dated `reassessment`, which `just runtime-grammar --audit` requires.
+
+- **The blocker was narrower than recorded.** In
+  [the aborted calibration](../tests/runtime-grammar-editor-spans-calibration-aborted-9598.json)
+  the right-click that opened the editor worked. The click that went through to a cue pad
+  was the second one, meant to place the text cursor.
+- **That click was never needed.** The operator reports that the script text is already
+  focused when the dialog opens. Both completed help-display captures typed into the editor
+  and record no click inside it, which is consistent with the report but does not state it.
+- **A pointer-free chain follows.** Open the editor with `custom_button_edit` over HTTP
+  execute, or a keyboard shortcut mapped to it. Select all and type the `editor_corpus`
+  script. Move the caret with arrow keys, Home and End, since `getCurrentWord` follows the
+  caret. Screenshot and read the token colouring. Restore by keyboard and verify by
+  reopening. Hover-based guard hints need a pointer move and no click.
+- **Still unverified.** `custom_button_edit` is untested and its contract demands an
+  argument. A modal editor may stall the HTTP interface, which decides whether safety
+  readbacks work mid-run. Focus was reported for an editor opened by mouse, not by verb,
+  and says nothing about whether VirtualDJ is the active application at that moment.
+  Keystrokes that reach another window fire keyboard shortcuts, which is worse than one
+  stray click.
+- **Preconditions for any run.** Playback and position baselines for every deck, VirtualDJ
+  brought to the front, and the dialog's existence confirmed through accessibility before
+  each batch of keystrokes. The ban on coordinate clicking stands.
+
 - **What the binary shows.** On b9246 the Button Editor has its own tree builder.
   `getCurrentWord` scans token-character ranges, `updateList` builds list entries and
   `updateHint` produces the hint. The selected builder does not call `IAction::create`. This

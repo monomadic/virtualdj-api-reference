@@ -589,12 +589,23 @@
       "help_evidence": "tests/runtime-grammar-editor-help-ui-2026-09-17-9598.json",
       "failed_calibration": "tests/runtime-grammar-editor-spans-calibration-aborted-9598.json",
       "limit": {
-        "status": "blocked",
+        "status": "startable",
         "binary_shows": "On b9246 the Button Editor has its own tree builder: getCurrentWord scans token-character ranges, updateList builds list entries and updateHint produces the hint. The selected builder does not call IAction::create. This is a structural contrast, not proof that the editor accepts a different language.",
-        "why_not_testable_now": "Token spans and guard hints are visible only on screen. The dialog exposes no script field or spans to accessibility, and the one coordinate calibration clicked through a cropped dialog onto a cue pad and started deck 1, whose prior position could not be restored. The help-display captures do not measure spans or guards.",
+        "why_not_testable_now": "Not yet run, no longer blocked. Token spans and guard hints are visible only on screen, and the dialog exposes no script field or spans to accessibility, so every observation is a screenshot. The one coordinate calibration clicked through a cropped dialog onto a cue pad and started deck 1, whose prior position could not be restored; that click was meant to place the text cursor, which the 2026-09-19 reassessment shows was never needed. The help-display captures do not measure spans or guards.",
         "coordinate_clicking": "Banned. Do not repeat the coordinate method recorded in tests/runtime-grammar-editor-spans-calibration-aborted-9598.json.",
-        "unblock": "A verified targeting method that keeps the editor dialog in front without coordinate clicks (keyboard-only or accessibility-addressed), playback and position baselines captured first, and a saved screenshot for every editor_corpus observation.",
-        "affects": "Authors who judge a script by the Button Editor colouring or hints. Runtime rules are unaffected, and editor appearance is not evidence of runtime acceptance."
+        "unblock": "A pointer-free chain, none of whose steps needs targeting: open the editor with custom_button_edit over HTTP execute (fallback: a keyboard shortcut mapped to the same verb); the script text is already focused when the dialog opens; select all and type the editor_corpus script; move the caret with arrow keys, Home and End, since getCurrentWord follows the caret; screenshot and read the token colouring; restore the original action by keyboard and verify by reopening, as the help-display runs did. Hover-based guard hints need a pointer move but no click. Before any keystroke: capture playback and position baselines for every deck, bring VirtualDJ to the front, and confirm through accessibility that the dialog exists. Save a screenshot for every editor_corpus observation.",
+        "affects": "Authors who judge a script by the Button Editor colouring or hints. Runtime rules are unaffected, and editor appearance is not evidence of runtime acceptance.",
+        "reassessment": {
+          "date": "2026-09-19",
+          "basis": "Desk review of the aborted calibration plus an operator report. The capture shows the failed click was the second one, intended to place the cursor; the right-click that opened the editor worked. The operator reported that the script text is already focused when the dialog opens. Both completed help-display captures typed into the editor and record no click inside the dialog, which is consistent with that report but does not state it. The verb table (build 18.0.9598) lists custom_button_edit as execute-only, with the vendor description 'open the custom button editor to set or change the action'.",
+          "unverified": [
+            "custom_button_edit is untested and its binary contract demands an argument, presumably the button number",
+            "whether the modal editor stalls the HTTP interface while open, which decides whether safety readbacks work mid-run",
+            "whether the text is focused when the editor is opened by verb rather than by mouse, and whether VirtualDJ is the active application at that moment; keystrokes reaching another window would fire keyboard shortcuts",
+            "the operator's focus report names no build; the installed build that day was 18.0.9628"
+          ],
+          "evidence_added": "none; this changes what is thought possible, not what has been observed"
+        }
       }
     },
     {

@@ -177,8 +177,15 @@ def report():
         # An obligation with no live case is a named limit, never a silent gap or a pass.
         limit = obligation.get('limit')
         if not evidence:
-            assert limit and limit['status'] == 'blocked', obligation['id']
+            assert limit and limit['status'] in ('blocked', 'startable'), obligation['id']
             assert all(limit.get(k) for k in ('binary_shows', 'why_not_testable_now', 'unblock', 'affects')), obligation['id']
+            # 'startable' is a blocker reassessed without new evidence: it must carry the dated
+            # reassessment and what is still unverified, so it cannot read as a result.
+            if limit['status'] == 'startable':
+                review = limit.get('reassessment') or {}
+                assert all(review.get(k) for k in ('date', 'basis', 'unverified')), obligation['id']
+            else:
+                assert 'reassessment' not in limit, 'reassessment on a blocked limit: ' + obligation['id']
         else:
             assert limit is None, 'limit on an obligation with evidence: ' + obligation['id']
         rows.append({**obligation, 'evidence': evidence,
