@@ -1421,6 +1421,111 @@ distinctly instead of folding them into the element's own, and would make S2 ste
 rather than a judgement call. Owner is whoever holds `tools/extract_skin_classes.py`; do not
 re-run the binary traversal for it.
 
+### H5. Establish remote parser mode through the `-remote` launch argument
+
+Status: Ready
+
+Note: Opened 2026-09-19 from a desk review after H4 closed with `remote-entry` as a named
+limit. It was filed as `Parking lot` pending a second instance; the operator ran one the same
+day and `-remote` worked on build 18.0.9628 (see "Observed" below), so the trigger fired. The
+payoff is still narrow (Remote-skin authoring), so it sits after the per-verb work in queue
+order. Steps 1 and 3 remain; step 2 is mostly answered. An agent never launches or drives a
+second instance without the operator saying so in that session.
+
+**What changed.** H4 recorded `IAction::isRemote` as untestable because nothing was known to
+set it. A caller review on the unstripped 18.0.9246 x86_64 binary now supplies a candidate
+switch. Everything in this block is a Tier-2 structural lead. None of it is behaviour.
+
+- **The flag is a runtime static, not a build-time option.** Its writers and the `cmpb` in
+  `IAction::create` are already captured in
+  [tests/runtime-parser-branch-routes.json](tests/runtime-parser-branch-routes.json)
+  (`remote_mode_writers`, `remote_entry`). A preprocessor constant would have left neither.
+- **The desktop binary carries both Remote roles.** `CVDJRemote` is the host role
+  (`uploadSkin`, `sendCues`, `sendFullWave`, `sendCover`, the `remotes` list).
+  `CVDJRemoteClient` is the device role (`requestInit`, `activateQueries`, `getFakeDeck`,
+  `requestSongPos`, `requestFolder`, and an `onMessage` handler that calls
+  `CSkinEngine::changeSkin`). Every Remote-class writer of the flag is in `CVDJRemoteClient`.
+- **So the flag marks the process that is acting as the Remote, not the host serving one.**
+  This corrects the reading in the H4 limit record, which scoped the lead to "Remote-skin and
+  skin-load contexts" without saying on which side. The consequence is practical: task 8
+  observed this desktop connecting out to the phone as the host, so no probe through the
+  host — HTTP, or a phone attached to this instance — can reach the remote route.
+- **`-remote` starts the device role on the desktop.** A direct-call scan for
+  `CVDJRemoteClient::start` (`0x100884028`) found two callers. `CMainWindow::handleCommandLine`
+  (`[0x1003b9310, 0x1003b93c8)`) holds one string literal, `-remote`, and calls
+  `CVDJRemoteClient::get` (`0x100883cbe`) then `start`. `ACTION_debug::onExecute`
+  (`0x1002ca346`) reaches `getExisting`, `stop`, `start` under the literal
+  `remote_init_status`; that restarts a client that already exists and does not create one.
+  The scan covers E8 rel32 calls only, so indirect callers are not excluded.
+- **Both literals are still present in the installed build.** `strings` finds `-remote` and
+  `remote_init_status` in the arm64 and x86_64 slices of build 18.0.9628 (read 2026-09-19).
+  A surviving string does not show that the code path is unchanged.
+- **`Inference`, untested:** the checked heads that rejoin ordinary parsing are UI-local
+  (`skin_panel`, `browser_zoom`, `font_size`, `skin_width`, `custom_button`, `load_skin`,
+  `get_var`, `set_var`), which fits a device that runs those itself and wraps every other
+  script as source text to send to the host.
+
+**Observed 2026-09-19, build 18.0.9628 (`Local test`, operator-driven UI plus agent-read
+system state).** Capture:
+[tests/remote-mode-launch-initial-9628.json](tests/remote-mode-launch-initial-9628.json), with
+the operator's screenshot under `tests/remote-mode-2026-09-19/`.
+
+- The operator launched a second VirtualDJ with `-remote`, connected to it from the primary
+  instance, and changed the Remote skin from the primary; the change took effect. The
+  `-remote` instance is always fullscreen.
+- Read independently while both ran: the second process carries the `-remote` argument,
+  listens on `*:4243` and advertises `_vdjremote8._tcp`. The primary holds `*:80` and has an
+  established connection **out** to port 4243 — the direction and port task 8 recorded with
+  an iOS device.
+- The device instance had no port-80 listener, but the host already held that port, so
+  whether a device instance would serve HTTP on a free port is still open.
+- **What this does not show:** that `IAction::isRemote` is set in that process (the flag is
+  named only on b9246), or anything about how that process parses script. The b9246 lead and
+  this observation agree; they are still separate claims.
+- **What it gives the repo beyond H5:** a Remote-skin test bench with no phone, and both
+  ends of the Remote protocol on one machine, where task 8 had to shim the phone side.
+
+**Provenance gap.** The role listing and the caller scan were run ad hoc from an expanded
+copy of `~/Downloads/install_virtualdj_2026_b9246_mac.pkg` and are not yet in any capture.
+Until step 1 lands, cite this block as the lead, not as a recorded observation.
+
+Work, in order:
+
+1. **Persist the lead (desk).** Extend
+   [tools/runtime_parser_branch_routes.py](tools/runtime_parser_branch_routes.py), which
+   already scans direct callers for the evaluator helpers, to record the callers of
+   `CVDJRemoteClient::start` and `::get` with the bounded, hashed `handleCommandLine` body
+   and its literal. Then update the `remote-entry` limit in
+   [tests/runtime-grammar-obligations.json](tests/runtime-grammar-obligations.json) —
+   `scope`, `why_not_testable_now` and `unblock` — and the matching paragraph under
+   "Named limits at H4 closure" in
+   [docs/Runtime Argument Grammar Tests.md](docs/Runtime%20Argument%20Grammar%20Tests.md).
+   The audit asserts the limit's fields, so keep their shape.
+2. **Finish characterising `-remote` on the installed build.** Answered 2026-09-19: it
+   starts the device role, advertises, accepts the host, and takes a skin change. Still open:
+   how the host UI initiates the connection, whether the device instance reads or writes the
+   shared settings folder, and whether it serves HTTP when port 80 is free. Operator-driven
+   or operator-approved only; save screenshots under `tests/` beside the capture. The
+   confirmed capture name `tests/remote-mode-launch-9628.json` is written by the run that
+   answers these, not before.
+3. **Build `parser_remote_mode`.** It needs an observable on the device side. HTTP on the
+   device instance is unproven, so the likely observable is a Remote skin written for the
+   purpose: `<text>` elements whose actions are the checked heads and their nonsense
+   controls, read from screenshots of the fullscreen device instance. Pair the checked heads against
+   nonsense controls in local and remote runs. Restoration is quitting the device instance;
+   verify the host instance is unchanged afterwards.
+
+Stop conditions: if `-remote` does not start the device role on the installed build, record
+the negative with its build and leave the H4 limit standing. Do not run
+`debug 'remote_init_status'` on the operator's instance; `debug` is outside every allowlist,
+and "harmless without an existing client" is a reading of b9246, not a test.
+
+Start here:
+
+- [HISTORY.md](HISTORY.md#h4-runtime-argument-parsing-from-the-named-iactioncreate) — the closed H4 block and its limits
+- `just runtime-grammar --audit` — the `remote-entry` obligation and its `limit` record
+- [docs/Application Internals.md](docs/Application%20Internals.md) (Remote Skins) and task 8 in HISTORY.md — the observed transport
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.

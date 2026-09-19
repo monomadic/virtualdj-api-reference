@@ -1,0 +1,66 @@
+{
+ "summary": {
+  "question": "Does launching the desktop app with -remote start the Remote device role on the installed build?",
+  "build": "18.0.9628",
+  "platform": "macOS arm64",
+  "date": "2026-09-19",
+  "status": "initial",
+  "channel": "operator-driven UI plus agent-read process, socket and Bonjour state",
+  "scope": "Establishes that -remote starts a Remote device role that a host instance connects to. Establishes nothing about IAction::isRemote, which is located by name only on b9246, and nothing about parser behaviour in that instance."
+ },
+ "operator_report": {
+  "provenance": "Reported by the operator in chat on 2026-09-19; the agent did not drive either instance.",
+  "steps": [
+   "Launched VirtualDJ a second time with -remote while the primary instance was running",
+   "Connected to it from the primary instance",
+   "Changed the Remote skin from the primary instance"
+  ],
+  "observed": [
+   "The skin change took effect on the -remote instance",
+   "The -remote instance is always fullscreen"
+  ],
+  "not_recorded": [
+   "How the connection was initiated in the primary instance's UI",
+   "Which Remote skin was selected before and after"
+  ]
+ },
+ "agent_readings": {
+  "provenance": "Read-only commands run by the agent at 10:16 local time while both instances were up: ps, lsof -iTCP, dns-sd -B _vdjremote8._tcp (3 s browse), PlistBuddy on the app bundle.",
+  "host_instance": {
+   "pid": 26630,
+   "started": "09:58:09",
+   "arguments": [],
+   "listening": [
+    "*:80"
+   ],
+   "established": [
+    "192.168.1.129:49550->192.168.1.129:4243"
+   ]
+  },
+  "device_instance": {
+   "pid": 29711,
+   "started": "10:11:41",
+   "arguments": [
+    "-remote"
+   ],
+   "listening": [
+    "*:4243"
+   ],
+   "established": [
+    "192.168.1.129:4243->192.168.1.129:49550"
+   ]
+  },
+  "bonjour": {
+   "service_type": "_vdjremote8._tcp",
+   "instance_name": "M3",
+   "interfaces_seen": 2
+  },
+  "reading": "The host connected out to the device's port 4243, the same direction and port task 8 observed with an iOS device. The device instance had no listener on port 80; port 80 was already held by the host, so this does not show whether a device instance would serve HTTP if the port were free."
+ },
+ "screenshot": {
+  "path": "tests/remote-mode-2026-09-19/device-instance-fullscreen-behind-host.webp",
+  "sha256": "489ce22d449cae208898e242dfb1341515d2ec8b942c9ab1b8d6df03201043fd",
+  "provenance": "Supplied by the operator; unmodified. Shows the fullscreen device instance (large two-deck Remote skin) behind the host instance's window.",
+  "note": "Contains the operator's library listing."
+ }
+}
