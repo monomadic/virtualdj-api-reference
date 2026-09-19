@@ -1526,6 +1526,73 @@ Start here:
 - `just runtime-grammar --audit` — the `remote-entry` obligation and its `limit` record
 - [docs/Application Internals.md](docs/Application%20Internals.md) (Remote Skins) and task 8 in HISTORY.md — the observed transport
 
+### H6. Read Button Editor token spans without the pointer
+
+Status: Ready
+
+Note: Opened 2026-09-19. H4 closed with `editor-structure` as a blocked limit; a desk review
+and an operator report the same day reassessed it as startable, and the `limit` record in
+[tests/runtime-grammar-obligations.json](tests/runtime-grammar-obligations.json) carries that
+reassessment with what is still unverified. This task owns the work. It sits last in queue
+order behind the per-verb tasks. Every live step needs an idle instance and the operator's
+say-so in that session: the operator performs on this machine, and a stray keystroke fires a
+keyboard shortcut.
+
+**Question (unchanged from H4):** do the editor's token spans and guard hints agree with the
+paired runtime distinctions? The frozen scripts are the `editor_corpus` in the obligations
+file; `just runtime-grammar --audit` lists them with their runtime case references. Editor
+appearance is never evidence of runtime acceptance, and the two stay separate predictions.
+
+**Why it is startable.** The aborted calibration's failed click was meant to place the text
+cursor. The operator reports the script text is already focused when the dialog opens, so
+no step needs targeting: open by verb, type, move the caret by keyboard, screenshot, restore.
+The reasoning and its provenance are in
+[Runtime Argument Grammar Tests](docs/Runtime%20Argument%20Grammar%20Tests.md#editor-structure-editor-structure).
+
+Work, in order:
+
+1. **Settle the three unknowns first, with no test script typed.** This task names
+   `custom_button_edit` for execute; nothing else is added to any allowlist.
+   - Choose the button with read-only queries (`has_custom_button`, `custom_button_name`,
+     `custom_button`) and record its action and name as the restoration target.
+   - Capture playback state and position for every deck.
+   - Execute `custom_button_edit` with that button's number. Record whether the dialog
+     opens, whether the HTTP call returns while it is open, and whether a read-only query
+     answers meanwhile. A stalled interface means safety readbacks are unavailable mid-run,
+     and the run design must say so.
+   - Record, from a screenshot and accessibility, whether VirtualDJ is the active
+     application and whether the text has focus when the editor is opened by verb. The
+     operator's report covers opening by mouse.
+   - Close with Escape, verify the button is unchanged, and re-read the deck baselines.
+   If the verb does not open the editor, try a keyboard shortcut mapped to it before giving
+   up; record the negative either way with `just put-verb`.
+2. **Run the corpus.** For each script: select all, type it, screenshot. Then walk the caret
+   across the tokens with arrow keys, Home and End, one screenshot per position whose help or
+   hint differs. Confirm through accessibility that the dialog still exists before each batch
+   of keystrokes, and stop the run the first time it does not. Read spans from the saved
+   screenshots as colour runs per token; do not describe them from memory of the screen.
+3. **Guard hints, if they turn out to be hover-only.** A pointer move with no click, aimed
+   from a full-window screenshot and never a cropped one. Skip this step rather than click.
+4. **Restore and verify** as the help-display runs did: original action and button name back
+   by keyboard, verified by reopening, editor closed, deck baselines unchanged. No test script
+   is ever executed through the editor.
+5. **Record.** Frozen predictions before the run, every screenshot under `tests/` beside
+   the capture with its SHA-256, the first capture under an `-initial` name. Link the cases
+   from the `editor-structure` obligation; the audit then requires its `limit` to be removed,
+   which is the intended signal that the limit is gone.
+
+Stop conditions: any keystroke that reaches a window other than the editor ends the session,
+with the deck baselines re-read and the difference recorded. Coordinate clicking stays banned
+under every circumstance, including to recover a lost dialog; use Escape, or the operator.
+
+Start here:
+
+- `just runtime-grammar --audit` — the `editor-structure` obligation, its `limit` and the `editor_corpus`
+- `just runtime-grammar-editor` — the existing help-display comparison and its capture pair
+- [tests/runtime-grammar-editor-spans-calibration-aborted-9598.json](tests/runtime-grammar-editor-spans-calibration-aborted-9598.json) — what not to repeat
+- `just verb custom_button_edit` — contract state before probing
+- project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
