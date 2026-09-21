@@ -337,3 +337,55 @@ python tools/probe_time_sign_positions.py --output /tmp/time-sign-new.json
 `--include-negative` reproduces the attempted negative setup and aborts if its
 position cannot be established. Future work should first resolve negative-position
 readback/seek behavior, rather than repeat this now-discriminating zero fixture.
+
+### Loaded long_time boundaries — 2026-09-22, build 18.0.9644 arm64
+
+Local test over HTTP: [time-sign-loaded-9644.json](../tests/time-sign-loaded-9644.json)
+reuses `probe_long_time.audio()` and the named `long_time` fixture. Independent
+unload/reload runs in the same application session reverse phase/form order;
+`--repeat 3` samples each form in each stopped state under each display mode.
+The capture embeds exact queries, readbacks, write intent and restoration.
+
+**Negative elapsed is reachable.** Both `goto -1000ms` from zero and
+`goto -0.013333333333%` establish elapsed **-1000 ms**, remaining **7501000 ms**.
+`get_position` and its scaled readback still return zero before start. Thus the
+older position-only rejection above did not establish that seeking had failed.
+The retained runner verifies signed `get_time 'elapsed' 'absolute'` and
+`get_time 'remain' 'absolute'` together, retaining the position readback too.
+Start (0 ms) and end (7500000 ms, remaining zero) were also verified in both runs.
+No requested state was skipped in the confirmed capture; playback stayed stopped.
+
+| Explicit form | Start | Before start (-1000 ms) | End | Argument conclusion |
+| --- | --- | --- | --- | --- |
+| `elapsed` | 0 | -1 | 1 | UNDISCRIMINATED; matches both controls |
+| `remain` | 1 | 1 | 0 | Recognized; separates at every boundary in both runs |
+| `total` | 1 | 1 | 1 | Recognized; separates at start and before start in both runs |
+| `elapsed absolute` | 0 | -1 | 1 | UNDISCRIMINATED; matches first- and second-slot controls |
+| Either first-slot nonsense token | 0 | -1 | 1 | Elapsed fallback observed |
+
+Bare form follows `display_time`; explicit forms above have the same results
+under elapsed, remain and total display modes. `absolute` here is the **second
+argument**, not a one-token string containing a space, and not a standalone
+first-argument claim. Its recognition and pitch-scaling semantics remain open;
+zero pitch and sign alone do not discriminate them. No tail is marked Fail.
+
+The [initial aborted attempt](../tests/time-sign-loaded-9644-initial.aborted.json)
+and its [journal](../tests/time-sign-loaded-9644-initial.journal.jsonl) retain an
+HTTP read timeout and verified restoration. The subsequent
+[position-only initial capture](../tests/time-sign-loaded-9644-initial.json)
+skipped negative states despite recording signed elapsed -1000 ms; it is
+superseded by the confirmed signed-readback capture. Read-only queries may retry
+once after a timeout; writes never retry. Every attempt restored and verified the
+original empty/stopped deck, pitch and remaining-time display mode.
+
+```sh
+python tools/probe_time_sign_loaded.py --check tests/time-sign-loaded-9644.json
+# Requires an empty, stopped deck 1; writes a new capture only:
+python tools/probe_time_sign_loaded.py --output /tmp/time-sign-loaded-new.json --repeat 3
+```
+
+For future agents: inspect `just verb get_time_sign` and this compact matrix,
+not the embedded request journal. The focused coverage query now reads this
+capture. Do not repeat positive-midpoint sweeps or use `get_position` alone to
+reject negative elapsed. Next: prepare loopin/loopout markers, cue-prefix suffix
+fixtures, and lyric content for `to_lyrics` separately; these were out of scope.

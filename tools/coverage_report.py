@@ -155,6 +155,10 @@ class Context:
         self.contracts = artifact("action-contracts.json", "verbs")
         self.rtypes = artifact("verb-return-types.json", "verbs")
         self.raw_rtypes = dict(self.rtypes)
+        self.time_sign_loaded = artifact("time-sign-loaded-9644.json") or {}
+        if self.time_sign_loaded:
+            from probe_time_sign_loaded import validate
+            validate(self.time_sign_loaded)
         self.long_time = artifact("long-time-forms.json") or {}
         if self.long_time:
             from sweep_return_types import classify as value_type, merge as merge_types
@@ -164,6 +168,12 @@ class Context:
                 self.rtypes[name] = {"observed_type": merge_types(value_type(v) for v in samples.values()),
                                      "samples": samples, "provenance": self.long_time["summary"],
                                      "source": "tests/long-time-forms.json"}
+        if self.time_sign_loaded:
+            samples = {f"run-{run['number']}/{phase['id']}": phase["readings"]["bare"][0]
+                       for run in self.time_sign_loaded["runs"] for phase in run["phases"] if not phase["skipped"]}
+            self.rtypes["get_time_sign"] = {"observed_type": "int", "samples": samples,
+                                           "provenance": self.time_sign_loaded["summary"],
+                                           "source": "tests/time-sign-loaded-9644.json"}
         self.argforms = artifact("verb-arg-forms.json", "verbs")
         af_summary = (artifact("verb-arg-forms.json") or {}).get("summary", {})
         self.arg_fixtures = af_summary.get("fixtures", [])
@@ -629,6 +639,21 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
                      provenance=time_capture["summary"], evidence=evidence)
         claims.append(claim)
 
+    if name == "get_time_sign" and getattr(ctx, "time_sign_loaded", {}):
+        capture = ctx.time_sign_loaded
+        for form, evidence in capture["verdicts"].items():
+            claims = [cl for cl in claims if not (cl["dimension"] == "arguments" and cl["form"] == form)]
+            recognized = evidence["verdict"] == "recognized"
+            claim = _claim("arguments", form, "settled" if recognized else "open",
+                           None if recognized else "undiscriminated",
+                           "separates from both controls in both stopped boundary runs" if recognized else
+                           "matches both controls at verified start, -1000 ms and end; second-slot controls also tested for absolute",
+                           "HTTP stopped long_time boundary fixture")
+            claim.update(source="tests/time-sign-loaded-9644.json", build=capture["summary"]["build"],
+                         provenance=capture["summary"], evidence=evidence)
+            claims.append(claim)
+        dims["arguments"] = "partial"
+
     # Focused sampler observations are exact query/execute forms, not blanket
     # closure of a verb or a controller-supplied value shape.
     from sampler_contract_evidence import claims_for as sampler_claims
@@ -685,7 +710,7 @@ def assess(name: str, rec: dict, ctx: Context) -> dict:
         elif channel == "HTTP return-type sweep":
             source = rt.get("source", "tests/verb-return-types.json")
             provenance = rt.get("provenance", {})
-            if source == "tests/long-time-forms.json":
+            if source in {"tests/long-time-forms.json", "tests/time-sign-loaded-9644.json"}:
                 claim["channel"] = "HTTP long-track fixture"
             elif source == "tests/sampler-contracts-9598.json":
                 claim["channel"] = "HTTP sampler fixture"

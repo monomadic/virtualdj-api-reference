@@ -799,7 +799,9 @@ is-using-keywords:
 plugin-keywords-build *args:
     tools/plugin/build.sh --keywords {{args}}
 
-# Verify the stopped zero/positive-time sign capture and its restoration journal.
+# Verify stopped sign captures, boundary readbacks and restoration evidence.
 time-sign-check:
     {{python}} tools/probe_time_sign_positions.py --check tests/time-sign-positions-9644.json
     {{python}} -m unittest discover -s tools -p test_time_sign_positions.py
+    {{python}} tools/probe_time_sign_loaded.py --check tests/time-sign-loaded-9644.json
+    {{python}} -m unittest discover -s tools -p test_time_sign_loaded.py

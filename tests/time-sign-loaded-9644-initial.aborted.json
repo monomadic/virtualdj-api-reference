@@ -1,0 +1,29 @@
+{
+  "summary": {
+    "build": "9644",
+    "build_query": "get_build",
+    "channel": "HTTP",
+    "captured_at": "2026-09-21T16:22:46.021353+00:00"
+  },
+  "repeat": 3,
+  "runs": [],
+  "scripts": {
+    "bare": "deck 1 get_time_sign",
+    "elapsed": "deck 1 get_time_sign 'elapsed'",
+    "remain": "deck 1 get_time_sign 'remain'",
+    "total": "deck 1 get_time_sign 'total'",
+    "elapsed absolute": "deck 1 get_time_sign 'elapsed' 'absolute'",
+    "zzqqx": "deck 1 get_time_sign 'zzqqx'",
+    "vfnrbq": "deck 1 get_time_sign 'vfnrbq'",
+    "elapsed zzqqx": "deck 1 get_time_sign 'elapsed' 'zzqqx'",
+    "elapsed vfnrbq": "deck 1 get_time_sign 'elapsed' 'vfnrbq'"
+  },
+  "session_scope": "Two independent unload/reload runs in the same application session; fresh HTTP connection per request",
+  "fixture": {
+    "name": "long_time",
+    "duration_seconds": 7500,
+    "path": "/var/folders/7n/l2qhvj893z3ftzzlynkr374m0000gn/T/vdj-long-time-7500.flac",
+    "position_oracle": "get_position & param_multiply 7500000"
+  },
+  "error": "timed out"
+}

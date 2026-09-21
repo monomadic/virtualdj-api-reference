@@ -2727,6 +2727,24 @@ No personal media was loaded: the runner refuses an occupied deck. Generated aud
 is temporary; the checked-in artifact contains only synthetic-media measurements.
 
 
+### Sign boundary follow-up — 2026-09-22, build 18.0.9644
+
+Local test over HTTP; `tests/time-sign-loaded-9644.json` reuses the stopped
+`long_time` fixture with independent reloads and `--repeat 3` in both runs.
+Start, negative elapsed (-1000 ms), and end were all verified. Before start,
+`get_position` remains zero but signed elapsed and remaining readbacks establish
+-1000 ms and 7501000 ms; the earlier position-only rejection did not prove an
+unreachable state. `remain` separated from both controls at all boundaries;
+`total` separated at start and before start. `elapsed` and second-slot
+`absolute` in `elapsed absolute` matched controls throughout and remain
+UNDISCRIMINATED. The store owns the per-verb conclusion; the compact matrix and
+initial-attempt provenance are in [Runtime Memory Probe](Runtime%20Memory%20Probe.md#loaded-long_time-boundaries--2026-09-22-build-1809644-arm64).
+Every attempt verified original empty/stopped state, pitch and display restoration.
+Both confirmed runs used one application session; no playback or marker/lyric
+preparation was performed. Next tests need loop markers, cue-prefix fixtures and
+lyrics, not another positive-midpoint sweep.
+
+
 ## Custom SIMPLE_MIDI Device Definition — 2026-09-12
 
 **Local test, bundle 18.0.9598, paired virtual CoreMIDI ports, stopped/empty decks.**
