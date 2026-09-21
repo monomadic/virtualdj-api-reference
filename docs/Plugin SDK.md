@@ -386,6 +386,27 @@ stops at the first acceptance, the positions of `IID_IVdjPluginStartStop8` and
 `IID_IVdjPluginOnlineSource` in the order are unknown — a plugin that declines everything would
 reveal the full list.
 
+**Sound Effect bundles load lazily, and the loading path is language-agnostic** (`Local test`,
+VirtualDJ 2026 bundle `18.0.9644`, macOS 26.6.2 arm64, 2026-09-22). A new bundle dropped into
+`SoundEffect/` appears in the effects catalog after a restart *without being loaded*: no
+`DllGetClassObject`, no `OnLoad`, no auto-written `.ini`. The catalog identity is the **bundle
+filename** (`get_effect_title 'RustTremolo'` answers; the declared `PluginName` "Rust Tremolo"
+does not). First `effect_select` triggers the real load — negotiation, `OnGetPluginInfo`,
+`OnLoad` — and the host instantiated the plugin twice. The instrument was the first
+**Rust-built** plugin ([rust/](../rust/), hand-laid Itanium vtables, no Atomix code): it loaded,
+listed, ran its `OnStart`/`OnStop` lifecycle, and from inside `OnLoad` observed the typed-channel
+split directly — `GetStringInfo("get_version")` → `S_OK` + `"2026"` while
+`GetInfo("get_version")` → `E_INVALIDARG` with `0.0` written to the out-parameter anyway,
+corroborating both the two-channel model above and the HRESULT-is-the-answer rule.
+
+One observation from the same session, recorded because it cost an hour and is not understood:
+on the *first* launch after installing that freshly built bundle, VirtualDJ started with its
+plugin layer inert — no Network Control listener on port 80, no plugin loads, `go.txt` triggers
+unconsumed — while the app itself ran normally. Removing the bundle and relaunching was clean in
+~3 s; reinstalling the identical bundle and relaunching was *also* clean. Unreproduced, cause
+unknown (first-seen-binary system assessment is a suspect). Practical rule: after installing any
+new bundle, confirm the HTTP interface answers before reading anything else as signal.
+
 **Still open — the second path.** The bundled
 `beatport16_vdj.bundle` (an online-source plugin) exports 11,303 symbols and **none** is
 `DllGetClassObject`, nor does it contain any SDK GUID as raw bytes. Nor do those GUID byte
