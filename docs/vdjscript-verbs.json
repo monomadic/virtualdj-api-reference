@@ -14,15 +14,15 @@
    },
    "by_test_status": {
     "Fail": 6,
-    "Partial": 40,
+    "Partial": 41,
     "Pass": 121,
-    "Untested": 868
+    "Untested": 867
    },
    "documented": 772,
    "tested_pass": 121,
-   "needs_test": 19,
+   "needs_test": 20,
    "blocked": 28,
-   "active_incomplete": 2
+   "active_incomplete": 3
   }
  },
  "verbs": {
@@ -7988,18 +7988,20 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
-   "needs_test": false,
+   "test_status": "Partial",
+   "needs_test": true,
    "blocked": false,
    "evidence": [
     "Local test 2026-09-12, HTTP, live get_build=9598, tests/long-time-forms.json (tools/probe_long_time.py). Bare and 'elapsed'/'remain'/'total'/'absolute' stay 1 in every measured positive-time phase, including the long pitched track; all match two nonsense controls. These tails remain UNDISCRIMINATED; this fixture does not establish negative-sign behavior. Empty stopped deck, original pitch and display_time restored and verified after each run.",
     "Source module (bundle 18.0.9246 STABS): ACTION_get_time_sign is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
     "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_time_sign implements onQuery only -> Query; HTTP sweep classed it 'false-here'.",
-    "Local test 2026-09-22, HTTP, build 18.0.9644 arm64: tests/time-sign-empty-9644.json records stopped/unloaded decks 1-4 before and after; every fixed form and two nonsense controls returned error:1 in both rounds. UNDISCRIMINATED: this fixture establishes no argument recognition. Tier-2 tests/time-sign-consumer-9644.json traces the shared reader and its early deck-data guard, mode comparisons, cue prefix and to_lyrics lead. Negative/zero sign and candidate behavior remain unresolved; see docs/Runtime Memory Probe.md."
+    "Local test 2026-09-22, HTTP, build 18.0.9644 arm64: tests/time-sign-empty-9644.json records stopped/unloaded decks 1-4 before and after; every fixed form and two nonsense controls returned error:1 in both rounds. UNDISCRIMINATED: this fixture establishes no argument recognition. Tier-2 tests/time-sign-consumer-9644.json traces the shared reader and its early deck-data guard, mode comparisons, cue prefix and to_lyrics lead. Negative/zero sign and candidate behavior remain unresolved; see docs/Runtime Memory Probe.md.",
+    "Local test 2026-09-22, HTTP, build 18.0.9644 arm64, tests/time-sign-positions-9644.json: two independently loaded stopped generated 60s-audio runs at independently verified 0ms/1000ms, all three display modes, repeated/reversed queries. At zero, bare follows display mode (elapsed 0, remain/total 1); remain and total return 1 against both nonsense controls 0. Explicit elapsed matches nonsense 0; absolute follows display mode here, without establishing pitch semantics. At 1000ms all forms return 1. Zero return confirmed. UNDISCRIMINATED: explicit elapsed recognition remains fallback-equivalent. Negative setup read back zero and was aborted/restored (tests/time-sign-positions-9644-initial.aborted.json); negative-sign behavior remains open. Every attempt restored empty/stopped deck, pitch and display mode."
    ],
    "confidence": "local_test",
    "section": "Position & Seeking",
-   "kind": "Query"
+   "kind": "Query",
+   "_authored_needs_test": true
   },
   "get_timecode_quality": {
    "name": "get_timecode_quality",

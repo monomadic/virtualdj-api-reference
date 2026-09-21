@@ -289,3 +289,51 @@ For future agents, the tail queue's full JSON includes extensive helper evidence
 Project only verb names, open tails and candidate fields when choosing work;
 open a selected record afterwards. A full queue dump consumes context without
 improving target selection.
+
+### Stopped position fixture — 2026-09-22, build 18.0.9644 arm64
+
+[time-sign-positions-9644.json](../tests/time-sign-positions-9644.json) records
+two independently loaded runs using generated, silent 60-second WAV audio.
+Each tests stopped positions 0 ms and 1000 ms under elapsed, remain and total
+display modes, with forward/reversed query order and reversed phase order in
+the second run. `get_position & param_multiply 60000` independently verifies
+each position. The companion journal records write intent before each action;
+neither actions nor uncertain writes are retried.
+
+At position zero, both runs produced:
+
+| Form | Elapsed display | Remaining display | Total display |
+| --- | --- | --- | --- |
+| bare | 0 | 1 | 1 |
+| `elapsed` | 0 | 0 | 0 |
+| `remain` | 1 | 1 | 1 |
+| `total` | 1 | 1 | 1 |
+| `absolute` | 0 | 1 | 1 |
+| either nonsense control | 0 | 0 | 0 |
+
+At 1000 ms all tested forms returned 1. **Zero is an observed return value**,
+despite the vendor description naming only -1 and +1. `remain` and `total`
+separate from nonsense at zero; their measured sign is positive. Bare form
+follows the selected display mode. `absolute` follows that mode in this fixture,
+but this does not establish its pitch-scaling semantics. Explicit `elapsed`
+returns zero even when the display mode is remaining/total, but matches both
+nonsense controls; its fallback-equivalent recognition remains unresolved.
+
+The [initial aborted attempt](../tests/time-sign-positions-9644-initial.aborted.json)
+requested `goto -1000ms` after establishing zero. The independent position
+readback stayed zero, so the runner aborted and restored the starting state.
+This does not establish whether the seek was clamped or the position reader
+hides negative positions. **Negative-sign behavior remains untested.** The
+completed runs omit that unavailable phase. All attempts verified restoration
+of empty/stopped state, pitch and display mode; no playback was started.
+
+```sh
+python tools/probe_time_sign_positions.py --check tests/time-sign-positions-9644.json
+python -m unittest discover -s tools -p test_time_sign_positions.py
+# New capture, requiring an empty stopped deck 1:
+python tools/probe_time_sign_positions.py --output /tmp/time-sign-new.json
+```
+
+`--include-negative` reproduces the attempted negative setup and aborts if its
+position cannot be established. Future work should first resolve negative-position
+readback/seek behavior, rather than repeat this now-discriminating zero fixture.
