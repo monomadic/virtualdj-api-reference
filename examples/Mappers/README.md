@@ -47,6 +47,10 @@ Observed special `value=""` names across these files: `ONINIT`, `ONEXIT`, `UNMAP
 
 Do not hand-edit these copies. Refresh from the live Mappers folder when useful, then review the diff.
 
+## Official-Addons/
+
+Atomix-published controller add-ons from the VirtualDJ catalog: a Numark Mixtrack Platinum definition fix and a Traktor Kontrol S4 MK3 definition with its mapping. Authorship comes from the catalog, not from `author=`. See [Official-Addons/README.md](Official-Addons/README.md).
+
 ## Quarantine/
 
 Personal/local-authorship mapper files, moved out of `Local/` so the ground-truth table above stays official-only (Atomix factory mappings and factory-default exports). These remain real, useful evidence for *format* idioms (key-name syntax, control-name conventions, `ONINIT`/`ONEXIT` structure) but **never for verb existence** — see the warning above: a personal mapping legitimately contains experiments and guesses that were never claimed to work.

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper device="TRAKTORS4MK3" author="Atomix Productions" version="830" date="2019-02-23">
+	<map value="CROSSFADER" action="crossfader" />
+	<map value="VOLUME" action="volume" />
+	<map value="PITCH" action="pitch" />
+	<map value="GAIN" action="gain" />
+	<map value="EQ_LOW" action="eq_low" />
+	<map value="EQ_MID" action="eq_mid" />
+	<map value="EQ_HIGH" action="eq_high" />
+	<map value="FILTER" action="filter" />
+	<map value="FX_PRM2" action="effect_3slots_layout ? effect_slider 2 1 : effect_slider 2" />
+	<map value="FX_PRM3" action="effect_3slots_layout ? effect_slider 3 1 : effect_slider 3" />
+	<map value="FX_PRM1" action="effect_slider 1" />
+	<map value="FX_PRM4" action="device_side &apos;left&apos; ? deck master video_fx_slider 1 : video_transition_slider 1" />
+	<map value="MASTER_VOL" action="master_volume" />
+	<map value="BOOTH_VOL" action="booth_volume" />
+	<map value="HEADPHONE_MIX" action="headphone_mix" />
+	<map value="HEADPHONE_VOL" action="headphone_volume" />
+	<map value="PLAY" action="play_pause" />
+	<map value="CUE" action="cue_stop" />
+	<map value="MASTER" action="masterdeck" />
+	<map value="FX_ON_1" action="effect_active" />
+	<map value="FX_ON_2" action="effect_3slots_layout ? effect_active 2 : effect_select -1" />
+	<map value="FX_ON_3" action="effect_3slots_layout ? effect_active 3 : effect_select +1" />
+	<map value="FX_ON_4" action="device_side &apos;left&apos; ? deck master video_fx : video_transition" />
+	<map value="FX_SEL_PUSH" action="effect_3slots_layout" />
+	<map value="HOTCUE_MODE" action="pad_page &apos;hotcues&apos; ? pad_page &apos;cueloop&apos; : pad_page &apos;hotcues&apos;" />
+	<map value="PFL" action="pfl" />
+	<map value="PAD1" action="pad 1" />
+	<map value="PAD2" action="pad 2" />
+	<map value="PAD3" action="pad 3" />
+	<map value="PAD4" action="pad 4" />
+	<map value="PAD5" action="pad 5" />
+	<map value="PAD6" action="pad 6" />
+	<map value="PAD7" action="pad 7" />
+	<map value="PAD8" action="pad 8" />
+	<map value="SHIFT" action="shift" />
+	<map value="SAMPLES_MODE" action="pad_page &apos;sampler&apos;" />
+	<map value="STEMS_MODE" action="pad_page &apos;slicer&apos; ? pad_page &apos;loop roll&apos; : pad_page &apos;slicer&apos;" />
+	<map value="BROWSER_ENC" action="browser_scroll" />
+	<map value="MOVE_ENC" action="loop_move" />
+	<map value="LOOP_ENC" action="loop_double" />
+	<map value="LOOP_ENC_PUSH" action="loop" />
+	<map value="LED_FOLDERS" action="on" />
+	<map value="LED_GRID" action="var &apos;cbgadjust&apos; ? blink ?  get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50% : var &apos;cbgslide&apos; ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50%" />
+	<map value="LED_LIST" action="on" />
+	<map value="LED_FLUX" action="get_slip_active ? blink : slip_mode" />
+	<map value="LED_REVERSE" action="reverse" />
+	<map value="LED_HOTCUES_MODE" action="pad_page &apos;hotcues&apos; ? color &apos;red&apos; : pad_page &apos;saved loops&apos; ? color &apos;blue&apos; : pad_page &apos;cueloop&apos; ? color &apos;magenta&apos; : pad_page &apos;remix points&apos; ? color &apos;white&apos; : color 50% white" />
+	<map value="LED_BROWSER_BACK" action="browser_window &apos;folders&apos; ? color &apos;orange&apos; : color &apos;gray&apos;" />
+	<map value="LED_BROWSER_LIST" action="browser_window &apos;sideview&apos; ? color &apos;orange&apos; : color &apos;gray&apos;" />
+	<map value="LED_BROWSER_STAR" action="browser_window &apos;songs&apos; ? color &apos;orange&apos; : color &apos;gray&apos;" />
+	<map value="LED_BROWSER_VIEW" action="browser_zoom ? color &apos;magenta&apos; : color &apos;darkmagenta&apos;" />
+	<map value="LED_COLORFX_SEL_3" action="deck all effect_select &apos;colorfx&apos; &apos;noise&apos; ? color &apos;violet&apos; : color 50% &apos;violet&apos;" />
+	<map value="LED_COLORFX_SEL_FILTER" action="deck all effect_select &apos;colorfx&apos; &apos;filter&apos; ? color &apos;violet&apos; : color 50% &apos;violet&apos;" />
+	<map value="LED_DECKA" action="deck 1 leftdeck ? color &apos;blue&apos;" />
+	<map value="LED_DECKB" action="deck 2 rightdeck ? color &apos;red&apos;" />
+	<map value="LED_COLORFX_ON" action="filter_activate ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50%" />
+	<map value="LED_PLAY" action="pioneer_play" />
+	<map value="LED_MASTER" action="masterdeck ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50%" />
+	<map value="LED_SYNC" action="pitch_reset ? blink 400ms ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50% :  beatlock ? get_deck_color &apos;absolute&apos; : is_sync ? color &apos;white&apos; : get_deck_color &apos;absolute&apos; 50%" />
+	<map value="LED_VINYL" action="vinyl_mode? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50%" />
+	<map value="LED_CUE" action="pioneer_cue ? color &apos;red&apos; : color &apos;darkred&apos;" />
+	<map value="SYNC" action="holding 2000ms ? pitch_reset : sync" />
+	<map value="GRID" action="holding ? set_firstbeat : toggle &apos;cbgslide&apos; &amp; set &apos;cbgadjust&apos; 0" />
+	<map value="FLEX" action="slip_mode" />
+	<map value="REVERSE" action="slip_mode ? dump while_pressed : reverse" />
+	<map value="DECKA" action="deck 1 leftdeck" />
+	<map value="DECKC" action="deck 3 leftdeck" />
+	<map value="DECKB" action="deck 2 rightdeck" />
+	<map value="DECKD" action="deck 4 rightdeck" />
+	<map value="COLORFX_ON" action="filter_activate" />
+	<map value="COLORFX_SEL_FILTER" action="deck all filter_selectcolorfx &apos;filter&apos;" />
+	<map value="COLORFX_SEL_1" action="deck all filter_selectcolorfx &apos;Echo&apos;" />
+	<map value="LED_COLORFX_SEL_1" action="deck all effect_select &apos;colorfx&apos; &apos;echo&apos; ? color &apos;violet&apos; : color 50% &apos;violet&apos;" />
+	<map value="LED_COLORFX_SEL_2" action="deck all effect_select &apos;colorfx&apos; &apos;flanger&apos; ? color &apos;violet&apos; : color 50% &apos;violet&apos;" />
+	<map value="COLORFX_SEL_2" action="deck all filter_selectcolorfx &apos;flanger&apos;" />
+	<map value="MOVE_ENC_PUSH" action="loop_button" />
+	<map value="SHIFT_MOVE_ENC" action="pad_param" />
+	<map value="SHIFT_LOOP_ENC" action="pad_param2" />
+	<map value="SHIFT_MOVE_ENC_PUSH" action="nothing" />
+	<map value="SHIFT_LOOP_ENC_PUSH" action="nothing" />
+	<map value="LED_DECKD" action="deck 4 rightdeck ? color &apos;orange&apos; : off" />
+	<map value="LED_DECKC" action="deck 3 leftdeck ? color &apos;green&apos;" />
+	<map value="LED_PAD1" action="pad_button_color 1" />
+	<map value="LED_PAD2" action="pad_button_color 2" />
+	<map value="LED_PAD3" action="pad_button_color 3" />
+	<map value="LED_PAD4" action="pad_button_color 4" />
+	<map value="LED_PAD5" action="pad_button_color 5" />
+	<map value="LED_PAD6" action="pad_button_color 6" />
+	<map value="LED_PAD7" action="pad_button_color 7" />
+	<map value="LED_PAD8" action="pad_button_color 8" />
+	<map value="COLORFX_SEL_3" action="deck all filter_selectcolorfx &apos;noise&apos;" />
+	<map value="COLORFX_SEL_4" action="deck all filter_selectcolorfx &apos;pitch&apos;" />
+	<map value="LED_COLORFX_SEL_4" action="deck all effect_select &apos;colorfx&apos; &apos;pitch&apos; ? color &apos;violet&apos; : color 50% &apos;violet&apos;" />
+	<map value="LED_STEMS_MODE" action="pad_page &apos;slicer&apos; ? color &apos;green&apos; : pad_page &apos;beatjump&apos; ? color &apos;orange&apos; : pad_page &apos;loop roll&apos; ? color &apos;cyan&apos; : pad_page &apos;keycue&apos; ? color &apos;magenta&apos; : color 50% &apos;white&apos;" />
+	<map value="SAMPLER_REC" action="sampler_rec" />
+	<map value="SAMPLER_MUTE" action="sampler_stop all" />
+	<map value="LED_SAMPLER_MUTE" action="sampler_used" />
+	<map value="VINYL" action="vinyl_mode" />
+	<map value="HAPTIC" action="vinyl_mode" />
+	<map value="LED_VUMETER_01" action="param_bigger 1% get_level ? on : off" />
+	<map value="LED_VUMETER_02" action="param_bigger 6% get_level ? on : off" />
+	<map value="LED_VUMETER_03" action="param_bigger 13% get_level ? on : off" />
+	<map value="LED_VUMETER_04" action="param_bigger 20% get_level ? on : off" />
+	<map value="LED_VUMETER_05" action="param_bigger 26% get_level ? on : off" />
+	<map value="LED_VUMETER_06" action="param_bigger 32% get_level ? on : off" />
+	<map value="LED_VUMETER_07" action="param_bigger 40% get_level ? on : off" />
+	<map value="LED_VUMETER_08" action="param_bigger 47% get_level ? on : off" />
+	<map value="LED_VUMETER_09" action="param_bigger 53% get_level ? on : off" />
+	<map value="LED_VUMETER_10" action="param_bigger 60% get_level ? on : off" />
+	<map value="LED_VUMETER_11" action="param_bigger 66% get_level ? on : off" />
+	<map value="LED_VUMETER_12" action="param_bigger 73% get_level ? on : off" />
+	<map value="LED_VUMETER_13" action="param_bigger 80% get_level ? on : off" />
+	<map value="LED_VUMETER_14" action="param_bigger 87% get_level ? on : off" />
+	<map value="LED_VUMETER_15" action="param_bigger 94% get_level ? on : off" />
+	<map value="LED_ROT" action="get_rotation" />
+	<map value="LED_JOGRING_COLOR" action="get_deck_color &apos;absolute&apos;" />
+	<map value="LED_JOGRING_BLINK" action="linein ? off : is_audible ? songpos_remain 30000ms ? on : off" />
+	<map value="LED_VUMETER_MASTER_R_3" action="on" />
+	<map value="EXT" action="linein" />
+	<map value="CF_ASSIGN_LEFT" action="cross_assign &apos;left&apos;" />
+	<map value="CF_ASSIGN_RIGHT" action="cross_assign &apos;right&apos;" />
+	<map value="CF_ASSIGN" action="param_bigger 50% ? cross_assign &apos;left&apos; : param_equal 0% ? cross_assign &apos;right&apos; : cross_assign &apos;thru&apos;" />
+	<map value="SHIFT_FX_PRM1" action="effect_3slots_layout ? effect_slider 1 2 : effect_slider 4" />
+	<map value="SHIFT_FX_PRM2" action="effect_3slots_layout ? effect_slider 2 2 : effect_slider 5" />
+	<map value="SHIFT_FX_PRM3" action="effect_3slots_layout ? effect_slider 3 2 : effect_slider 6" />
+	<map value="SHIFT_FX_ON_1" action="effect_3slots_layout ? effect_select +1 : effect_show_gui" />
+	<map value="SHIFT_FX_ON_2" action="effect_3slots_layout ? effect_select 2 +1 : effect_button 1" />
+	<map value="SHIFT_FX_ON_3" action="effect_3slots_layout ? effect_select 3 +1 : effect_button 2" />
+	<map value="SHIFT_FX_ON_4" action="device_side &apos;left&apos; ? deck master video_fx_select +1 : video_transition_select +1" />
+	<map value="BROWSER_BACK" action="browser_folder" />
+	<map value="BROWSER_PUSH" action="browser_enter" />
+	<map value="BROWSER_VIEW" action="browser_zoom" />
+	<map value="BROWSER_STAR" action="browser_window &apos;songs&apos;" />
+	<map value="BROWSER_LIST" action="browser_window &apos;sideview&apos;" />
+	<map value="SHIFT_MASTER" action="masterdeck_auto" />
+	<map value="SHIFT_SYNC" action="beatlock" />
+	<map value="CF_ASSIGN_THRU" action="cross_assign &apos;thru&apos;" />
+	<map value="CF_CURVE1" action="crossfader_curve &apos;smooth&apos;" />
+	<map value="CF_CURVE2" action="crossfader_curve &apos;full&apos;" />
+	<map value="CF_CURVE3" action="crossfader_curve &apos;scratch&apos;" />
+	<map value="SHIFT_STEMS_MODE" action="pad_page &apos;beatjump&apos; ? pad_page &apos;keycue&apos; : pad_page &apos;beatjump&apos;" />
+	<map value="SHIFT_HOTCUE_MODE" action="pad_page &apos;saved loops&apos; ? pad_page &apos;remix points&apos; : pad_page &apos;saved loops&apos;" />
+	<map value="FX_ASSIGN1" action="leftvideo ? leftvideo &apos;auto&apos; : leftvideo" />
+	<map value="FX_ASSIGN2" action="rightvideo ? rightvideo &apos;auto&apos; : rightvideo" />
+	<map value="SHIFT_FX_ASSIGN2" action="rightvideo &apos;auto&apos;" />
+	<map value="SHIFT_FX_ASSIGN1" action="leftvideo &apos;auto&apos;" />
+	<map value="LED_FX_ASSIGN2" action="rightvideo" />
+	<map value="SHIFT_EXT" action="nothing" />
+	<map value="LED_TT" action="get_deck_color &apos;absolute&apos; 50%" />
+	<map value="JOG_TOUCH" action="var &apos;cbgslide&apos; ? nothing : var &apos;cbgadjust&apos; ? nothing : touchwheel_touch" />
+	<map value="JOG" action="var &apos;cbgadjust&apos; ? set_bpm : var &apos;cbgslide&apos; ? adjust_cbg : touchwheel" />
+	<map value="LED_JOGRING_POSITION" action="get_rotation" />
+	<map value="TT" action="nothing" />
+	<map value="LED_JOGRING_ON" action="load_pulse" />
+	<map value="LED_FX_ASSIGN1" action="leftvideo" />
+	<map value="QUANTIZE" action="deck 1 smart_cue ? deck all smart_cue off &amp; smart_play off &amp; quantize_loop off : deck all smart_cue on &amp; smart_play on &amp; quantize_loop on" />
+	<map value="LED_QUANTIZE" action="deck all smart_cue" />
+	<map value="SHIFT_GRID" action="holding ? reanalyze : toggle &apos;cbgadjust&apos; &amp; set &apos;cbgslide&apos; 0" />
+	<map value="SHIFT_BROWSER_LIST" action="sideview +1" />
+	<map value="SHIFT_BROWSER_STAR" action="playlist_add" />
+	<map value="SHIFT_BROWSER_VIEW" action="skin_panelgroup &apos;mixer&apos; +1" />
+	<map value="SHIFT_BROWSER_PUSH" action="show_splitpanel &apos;info&apos;" />
+	<map value="SHIFT_BROWSER_ENC" action="param_bigger 0 ? browser_scroll +10 : browser_scroll -10" />
+	<map value="LED_PITCHZERO" action="param_bigger pitch pitch_slider ? blink ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50% : param_bigger pitch_slider  pitch ? blink ? get_deck_color &apos;absolute&apos; : get_deck_color &apos;absolute&apos; 50% : get_pitch_zero 3% ? get_deck_color &apos;absolute&apos; : off" />
+</mapper>

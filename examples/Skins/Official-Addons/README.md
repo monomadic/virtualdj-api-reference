@@ -32,6 +32,8 @@ later copy be compared with this one.
 | [Denon Prime2 Screen/](Denon%20Prime2%20Screen/) | 81109 | Denon DJ Prime 2 Screen | 2025-12-21 | `Skins/Denon Prime2 Screen.zip` | `0f8893d48e0cbf17f62108ca075cc719852f00056db39baa093fb6b8ecae5e26` | none |
 | [Denon SC5000 Screen/](Denon%20SC5000%20Screen/) | 81108 | Denon DJ SC5000 Screen | 2025-12-21 | `Skins/Denon SC5000 Screen.zip` | `adee11ea0dd8a68fb567bf16eb3cd0ef34655eb1f11157b1b3be463a77f6f2b8` | none |
 | [Denon SCLIVE2 Screen/](Denon%20SCLIVE2%20Screen/) | 81555 | Denon DJ SC Live 2 Screen | 2025-12-21 | `Skins/Denon SCLIVE2 Screen.zip` | `4663856cf7412c49ccc527b30d89f3945d0ba7a2f76fd498f0fa3728680110c7` | none |
+| [Gemini GMX/](Gemini%20GMX/) | 81742 | Gemini GMX | 2024-06-18 | `Skins/Gemini GMX.zip` | `f203f2556e6f4aafacb5d2321e4dc72cf7325a0e472e0c2adb9c3935964663ea` | `Atomix Productions` |
+| [Stanton DJC4/](Stanton%20DJC4/) | 81743 | Stanton DJC4 | 2024-06-18 | `Skins/Stanton DJC4.zip` | `03ddab39acea2104db44e27311b0a22aff91b2d2113bcbf8e835e304afe62786` | `Atomix Productions` |
 | [Hercules RMX2/](Hercules%20RMX2/) | 81744 | Hercules RMX2 | 2024-06-18 | `Skins/Hercules RMX2.zip` | `118fd6a843dde692df55078f638732ef637452b0c5e7f9f9d3a6fd02e3f57181` | `Atomix Productions` |
 | [Numark IDJLIVE II/](Numark%20IDJLIVE%20II/) | 80046 | Numark IDJLIVE II | 2014-08-29 | `Skins/Numark IDJLIVE II.zip` | `c16916da2ddea58cb100d6bfdd8110d7e6a4e7d0aacb9fc9647e963634ba5a38` | `Atomix Productions` |
 | [Numark Mixstream Pro Screen/](Numark%20Mixstream%20Pro%20Screen/) | 81430 | Numark Mixstream Pro Screen | 2025-12-21 | `Skins/Numark Mixstream Pro Screen.zip` | `f7bd5cee1842256705930bf7d08e34bf3815a9759cf303332d506ea624da327e` | none |
@@ -50,7 +52,7 @@ later copy be compared with this one.
 | [Traktor X1 MK3 Screens/](Traktor%20X1%20MK3%20Screens/) | 81710 | Traktor X1 MK3 Screens | 2024-02-26 | `Skins/Traktor X1 MK3 Screens.zip` | `7763ebb5c3eb01e0575636c838c5d568da9b3090b9eb6cd82a3f3282b62beac0` | `Atomix Productions` |
 | [Traktor Z1 MK2 Screens/](Traktor%20Z1%20MK2%20Screens/) | 81793 | Traktor Z1 MK2 Screens | 2024-11-25 | `Skins/Traktor Z1 MK2 Screens.zip` | `969805cdac764988883690b5201ac4528188319db567a6aa777ab1e9f5fcd6cb` | `Atomix Productions` |
 
-Copied 2026-09-21 on installed VirtualDJ bundle `18.0.9644`. The first six rows were already installed before that day. The rest were installed through the Extensions browser on 2026-09-21 and copied the same day, so they are fresh installs. The add-ons are versioned by their
+Copied 2026-09-21 on installed VirtualDJ bundle `18.0.9644`. The first six rows were already installed before that day. The rest were installed through the Extensions browser on 2026-09-21 or 2026-09-22 and copied within minutes of installing, so they are fresh installs. Gemini GMX and Stanton DJC4 went in on 2026-09-22. The catalog describes both as "auto-installed when device is first connected". The add-ons are versioned by their
 catalog `lastdate`, not by app build.
 
 Evidence tier: `Published skin` (Tier 2, see [Evidence Standards](../../../docs/Evidence%20Standards.md)).
@@ -72,8 +74,10 @@ but a file loading without complaint is not proof that any verb in it works.
   unzip it over the folder and update the hash and `lastdate` above.
 - `skin2018/` is the catalog's "VirtualDJ 8 Old Default": the 2018-era default skin in 2-, 4- and 6-deck variants.
   The folder keeps the installed zip's name so it can be traced back to that file.
-- Not yet copied: the Atomix add-ons `Gemini GMX` (81742) and `Stanton DJC4` (81743). Their catalog entries say they are
-  "auto-installed when device is first connected", and neither was installed on 2026-09-21.
+- Every Atomix skin add-on in the catalog as fetched on 2026-09-21 is copied here.
+  The controller definitions are in [Mappers/Official-Addons/](../../Mappers/Official-Addons/README.md) and the sampler banks in
+  [Samplerbanks/Official-Addons/](../../Samplerbanks/Official-Addons/README.md). The catalog's Atomix effect entries are compiled plugins
+  or listings of built-in effects, so they have no XML to copy.
 - Deliberately excluded: `Photon.zip`. Its XML says `author="Atomix Productions"` and the controller
   manifest auto-installs it, but the catalog credits add-on 81121 to `Rune (DJ-In-Norway)`. Also
   excluded is `Hercules RMX2 BLACK.zip`, a community variant; the Atomix add-on is `Hercules RMX2` (81744), copied above.

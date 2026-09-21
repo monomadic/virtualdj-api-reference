@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<device name="TRAKTORS4MK3" type="HID" macbyteoffset="0x01" description="Traktor Kontrol S4 MK3" decks="4" analogmixer="no" padColumns="4" padRows="2" padSides="2" vid="0x17CC" pid="0x1720" reportsize="78" outReportSize="94" author="Atomix Productions" version="800" category="3" >
+<audio description="Traktor Kontrol S4 MK3" input="4" output="2" mixer="yes" mic="no" linein="4" vid="0x17CC" pid="0x1720" identifier="#niks4mk3_audio#" asio="Traktor Kontrol S4 MK3" inputChannels="1,2,3,4,5,6,7,8"/>
+
+<page type="init">
+	<constant byte="-1" value="0x80" />
+	<buffer byte="0" nbbits="768" value="0x00"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x81" />
+	<buffer byte="0" nbbits="768" value="0x00"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x30" />
+	<constant byte="0" buffer="000103000000000000000000000000000000000000000000000000"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x32" />
+	<constant byte="0" buffer="000200002E0000000000000000000000000000000000000000000000000000000000000000000000"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x30" />
+	<constant byte="0" buffer="010103000000000000000000000000000000000000000000000000"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x32" />
+	<constant byte="0" buffer="010200002E0000000000000000000000000000000000000000000000000000000000000000000000"/> 
+</page>
+<page type="init">
+	<constant byte="-1" value="0x31" />
+	<constant byte="0" buffer="01200100000120010100"/>
+</page>
+
+
+<page type="in">
+	<constant byte="-1" value="0x02" />
+	<slider word="0x00" endian="little" min="0x00" max="0xFF0" name="CROSSFADER" />
+	<slider word="0x01" endian="little" min="0x00" max="0xFF0" name="VOLUME" deck="1"/>
+	<slider word="0x02" endian="little" min="0x00" max="0xFF0" name="VOLUME" deck="2"/>
+	<slider word="0x03" endian="little" min="0x00" max="0xFF0" name="VOLUME" deck="3"/>
+	<slider word="0x04" endian="little" min="0x00" max="0xFF0" name="VOLUME" deck="4"/>
+	<slider word="0x05" endian="little" min="0x00" max="0xFF0" name="PITCH" zero="0x08BE" inverted="true" deck="right"/>
+	<slider word="0x06" endian="little" min="0x00" max="0xFF0" name="PITCH" zero="0x08BE" inverted="true" deck="left"/>
+	<slider word="0x07" endian="little" min="0x00" max="0xFF0" name="GAIN" deck="3"/>
+	<slider word="0x08" endian="little" min="0x00" max="0xFF0" name="GAIN" deck="1"/>
+	<slider word="0x09" endian="little" min="0x00" max="0xFF0" name="GAIN" deck="2"/>
+	<slider word="0x0A" endian="little" min="0x00" max="0xFF0" name="GAIN" deck="4"/>
+	<slider word="0x0B" endian="little" min="0x00" max="0xFF0" name="MASTER_VOL" />
+	<slider word="0x0C" endian="little" min="0x00" max="0xFF0" name="BOOTH_VOL" />
+	<slider word="0x0D" endian="little" min="0x00" max="0xFF0" name="HEADPHONE_VOL" />
+	<slider word="0x0E" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="HEADPHONE_MIX" />
+	<slider word="0x0F" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM1" deck="left"/>
+	<slider word="0x10" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM2" deck="left"/>
+	<slider word="0x11" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM3" deck="left"/>
+	<slider word="0x12" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM4" deck="left"/>
+	<slider word="0x13" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_HIGH" deck="3"/>
+	<slider word="0x14" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_MID" deck="3" />
+	<slider word="0x15" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_LOW" deck="3" />
+	<slider word="0x16" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_HIGH" deck="1"/>
+	<slider word="0x17" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_MID" deck="1" />
+	<slider word="0x18" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_LOW" deck="1" />
+	<slider word="0x19" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_HIGH" deck="2"/>
+	<slider word="0x1A" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_MID" deck="2" />
+	<slider word="0x1B" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_LOW" deck="2" />
+	<slider word="0x1C" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_HIGH" deck="4"/>
+	<slider word="0x1D" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_MID" deck="4" />
+	<slider word="0x1E" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="EQ_LOW" deck="4" />
+	<slider word="0x1F" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FILTER" deck="3"/>
+	<slider word="0x20" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FILTER" deck="1" />
+	<slider word="0x21" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FILTER" deck="2" />
+	<slider word="0x22" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FILTER" deck="4"/>
+	<slider word="0x23" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM1" deck="right" />
+	<slider word="0x24" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM2" deck="right" />
+	<slider word="0x25" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM3" deck="right" />
+	<slider word="0x26" endian="little" min="0x00" max="0xFF0" zero="0x7FF" zerorange="16" name="FX_PRM4" deck="right" />
+	
+
+</page>
+
+<!-- MOTOR
+	<jog byte="0x0F" size="dword" endian="little" full="2200" name="JOG" deck="left"/> 
+	<jog byte="0x27" size="dword" endian="little" full="2200" name="JOG" deck="right"/>
+	<raw byte="0x0B" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" name="JOGFINE" deck="left">
+		<raw2 byte="0x07" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" name="TIMESTAMP" deck="left" />
+	</raw>
+	<raw byte="0x27" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" name="JOGFINE" deck="right">
+		<raw2 byte="0x23" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" name="TIMESTAMP"  deck="right" />
+	</raw>
+-->
+
+<page type="in">
+	<constant byte="-1" value="0x03" />
+	<jog byte="0x0B" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" full="3800" name="JOG" deck="left"/> 
+	<jog byte="0x27" size="dword" endian="little" min="0x00" max="0xFFFFFFFF" full="3800" name="JOG" deck="right"/>
+	
+</page>
+
+<page type="in">
+	<constant byte="-1" value="0x01" />
+
+	
+	<button bit="0x84" name="SHIFT_EXT" deck="4" />
+	<button bit="0x85" name="SHIFT_EXT" deck="3" />
+	<button bit="0x86" name="SHIFT_EXT" deck="2" />
+	<button bit="0x87" name="SHIFT_EXT" deck="1" />
+	
+	<button bit="0x88" name="CF_ASSIGN_LEFT" deck="3" />
+	<button bit="0x8A" name="CF_ASSIGN_LEFT" deck="1" />
+	<button bit="0x8C" name="CF_ASSIGN_LEFT" deck="2" />
+	<button bit="0x8E" name="CF_ASSIGN_LEFT" deck="4" />
+	<button bit="0x88" nbbits="2" value="0x00" name="CF_ASSIGN_RIGHT" deck="3" />
+	<button bit="0x8A" nbbits="2" value="0x00" name="CF_ASSIGN_RIGHT" deck="1" />
+	<button bit="0x8C" nbbits="2" value="0x00" name="CF_ASSIGN_RIGHT" deck="2" />
+	<button bit="0x8E" nbbits="2" value="0x00" name="CF_ASSIGN_RIGHT" deck="4" />
+	<button bit="0x88" nbbits="2" value="0x01" name="CF_ASSIGN_THRU" deck="3" />
+	<button bit="0x8A" nbbits="2" value="0x01" name="CF_ASSIGN_THRU" deck="1" />
+	<button bit="0x8C" nbbits="2" value="0x01" name="CF_ASSIGN_THRU" deck="2" />
+	<button bit="0x8E" nbbits="2" value="0x01" name="CF_ASSIGN_THRU" deck="4" />
+	
+	<button bit="0x96" name="CF_CURVE1" />
+	<button bit="0x96" nbbits="2" value="0x01" name="CF_CURVE2" />
+	<button bit="0x96" nbbits="2" value="0x00" name="CF_CURVE3" />
+	
+	
+	<button bit="0x02" name="BROWSER_BACK" deck="left" />
+	<button bit="0x03" name="BROWSER_STAR" deck="left" />
+	<button bit="0x06" name="BROWSER_PUSH" deck="left" />
+	<button bit="0x07" name="MASTER" deck="left" />
+	<button bit="0x08" name="FX_ON_2" deck="left" />
+	<button bit="0x09" name="FX_ON_1" deck="left" />
+	<button bit="0x0A" name="FLEX" deck="left" />
+	<button bit="0x0B" name="REVERSE" deck="left" />
+	<button bit="0x0C" name="FX_ON_3" deck="left" />
+	<button bit="0x0D" name="FX_ON_4" deck="left" />
+	<button bit="0x0E" name="BROWSER_LIST" deck="left" />
+	<button bit="0x0F" name="BROWSER_VIEW" deck="left" />
+	<button bit="0x10" name="FX_ASSIGN1" deck="4" />
+	<button bit="0x11" name="FX_ASSIGN2" deck="2" />
+	<button bit="0x12" name="FX_ASSIGN1" deck="2" />
+	<button bit="0x13" name="FX_ASSIGN2" deck="1" />
+	<button bit="0x14" name="FX_ASSIGN1" deck="1" />
+	<button bit="0x15" name="FX_ASSIGN2" deck="3" />
+	<button bit="0x16" name="EXT" deck="3" />
+	<button bit="0x17" name="FX_ASSIGN1" deck="3" />
+	<button bit="0x18" name="PAD3" deck="left" />
+	<button bit="0x19" name="PAD4" deck="left" />
+	<button bit="0x1A" name="PAD1" deck="left" />
+	<button bit="0x1B" name="PAD2" deck="left" />
+	<button bit="0x1C" name="PAD5" deck="left" />
+	<button bit="0x1D" name="PAD6" deck="left" />
+	<button bit="0x1E" name="PAD7" deck="left" />
+	<button bit="0x1F" name="PAD8" deck="left" />
+	<button bit="0x22" name="SAMPLER_MUTE" deck="left" />
+	<button bit="0x23" name="SAMPLES_MODE" deck="left" />
+	<button bit="0x24" name="SAMPLER_REC" deck="left" />
+	<button bit="0x25" name="HOTCUE_MODE" deck="left" />
+	<button bit="0x26" name="CUE" deck="left" />
+	<button bit="0x27" name="PLAY" deck="left" />
+	<button bit="0x28" name="SYNC" deck="left" />
+	<button bit="0x29" name="GRID" deck="left" />
+	<button bit="0x2A" name="TT" deck="left" />
+	<button bit="0x2B" name="VINYL" deck="left" />
+	<button bit="0x2C" name="DECKC" deck="left" />
+	<button bit="0x2D" name="DECKA" deck="left" />
+	<button bit="0x2E" name="SHIFT" deck="left" />
+	<button bit="0x2F" name="STEMS_MODE" deck="left" />
+	<button bit="0x32" name="LOOP_ENC_PUSH" deck="left" />
+	<button bit="0x33" name="LOOP_ENC_TOUCH" deck="left" />
+	<button bit="0x34" name="MOVE_ENC_TOUCH" deck="left" />
+	<button bit="0x35" name="MOVE_ENC_PUSH" deck="left" />
+	<button bit="0x38" name="PFL" deck="4" />
+	<button bit="0x39" name="PFL" deck="2" />
+	<button bit="0x3A" name="COLORFX_ON" deck="2" />
+	<button bit="0x3B" name="COLORFX_ON" deck="4" />
+	<button bit="0x3C" name="PFL" deck="1" />
+	<button bit="0x3D" name="PFL" deck="3" />
+	<button bit="0x3E" name="COLORFX_ON" deck="3" />
+	<button bit="0x3F" name="COLORFX_ON" deck="1" />
+	<button bit="0x40" name="COLORFX_SEL_FILTER" />
+	<button bit="0x41" name="COLORFX_SEL_3" />
+	<button bit="0x42" name="COLORFX_SEL_1" />
+	<button bit="0x46" name="COLORFX_SEL_2" />
+	<button bit="0x47" name="COLORFX_SEL_4" />
+	<button bit="0x48" name="FX_ON_4" deck="right" />
+	<button bit="0x49" name="FX_ON_3" deck="right" />
+	<button bit="0x4A" name="FX_ON_2" deck="right" />
+	<button bit="0x4B" name="FX_ON_1" deck="right" />
+	<button bit="0x4C" name="BROWSER_LIST" deck="right" />
+	<button bit="0x4D" name="BROWSER_BACK" deck="right" />
+	<button bit="0x4E" name="BROWSER_STAR" deck="right" />
+	<button bit="0x4F" name="BROWSER_VIEW" deck="right" />
+	<button bit="0x52" name="FLEX" deck="right" />
+	<button bit="0x53" name="REVERSE" deck="right" />
+	<button bit="0x56" name="BROWSER_PUSH" deck="right" />
+	<button bit="0x57" name="MASTER" deck="right" />
+	<button bit="0x58" name="FX_ASSIGN2" deck="4" />
+	<button bit="0x59" name="QUANTIZE"  />
+	<button bit="0x5D" name="EXT" deck="4" />
+	<button bit="0x5E" name="EXT" deck="2" />
+	<button bit="0x5F" name="EXT" deck="1" />
+	<button bit="0x62" name="SAMPLER_MUTE" deck="right" />
+	<button bit="0x63" name="SAMPLES_MODE" deck="right" />
+	<button bit="0x64" name="SAMPLER_REC" deck="right" />
+	<button bit="0x65" name="HOTCUE_MODE" deck="right" />
+	<button bit="0x66" name="STEMS_MODE" deck="right" />
+	<button bit="0x67" name="PLAY" deck="right" />
+	<button bit="0x68" name="PAD3" deck="right" />
+	<button bit="0x69" name="PAD4" deck="right" />
+	<button bit="0x6A" name="PAD1" deck="right" />
+	<button bit="0x6B" name="PAD2" deck="right" />
+	<button bit="0x6C" name="PAD5" deck="right" />
+	<button bit="0x6D" name="PAD6" deck="right" />
+	<button bit="0x6E" name="PAD7" deck="right" />
+	<button bit="0x6F" name="PAD8" deck="right" />
+	<button bit="0x70" name="GRID" deck="right" />
+	<button bit="0x71" name="TT" deck="right" />
+	<button bit="0x72" name="CUE" deck="right" />
+	<button bit="0x73" name="SYNC" deck="right" />
+	<button bit="0x74" name="DECKD" deck="right" />
+	<button bit="0x75" name="DECKB" deck="right" />
+	<button bit="0x76" name="SHIFT" deck="right" />
+	<button bit="0x77" name="VINYL" deck="right" />
+	<button bit="0x7A" name="MOVE_ENC_PUSH" deck="right" />
+	<button bit="0x7B" name="MOVE_ENC_TOUCH" deck="right" />
+	<button bit="0x7C" name="LOOP_ENC_TOUCH" deck="right" />
+	<button bit="0x7D" name="LOOP_ENC_PUSH" deck="right" />
+	<button bit="0x82" name="JOG_TOUCH" deck="right" />
+	<button bit="0x83" name="JOG_TOUCH" deck="left" />
+	<encoder bit="0x98" nbbits="4" min="0x00" max="0x0F" endian="little" name="LOOP_ENC" deck="left" />
+	<encoder bit="0x9C" nbbits="4" min="0x00" max="0x0F" endian="little" name="MOVE_ENC" deck="left" />
+	<encoder bit="0xA0" nbbits="4" min="0x00" max="0x0F" endian="little" name="MOVE_ENC" deck="right" />
+	<encoder bit="0xA4" nbbits="4" min="0x00" max="0x0F" endian="little" name="BROWSER_ENC" deck="left" />
+	<encoder bit="0xA8" nbbits="4" min="0x00" max="0x0F" endian="little" name="BROWSER_ENC" deck="right" />
+	<encoder bit="0xAC" nbbits="4" min="0x00" max="0x0F" endian="little" name="LOOP_ENC" deck="right" />
+
+
+</page>
+
+
+
+<!-- MOTOR LEDS
+<page type="out">
+	<constant byte="-1" value="0x31" />
+	<led byte="0x00" endian="little" value="0x01" name="LED_JOG_MOTOR" deck="left"/>
+	<led byte="0x01" size="word" endian="little" zero="0x120" value="0xFEE0" name="LED_JOG_MOVE" deck="left"/>
+	<bar byte="0x03" size="word" endian="little" min="0x00" max="0xFFFF" name="LED_JOG_SPEED" deck="left"/>
+	<led byte="0x05" endian="little" value="0x01" name="LED_JOG_MOTOR" deck="right"/>
+	<led byte="0x06" size="word" endian="little" zero="0x120" value="0xFEE0" name="LED_JOG_MOVE" deck="right"/>
+	<bar byte="0x08" size="word" endian="little" min="0x00" max="0xFFFF" name="LED_JOG_SPEED" deck="right"/>
+</page>
+-->
+
+<!-- JOG RING LEDS LEFT 32 00-->
+<page type="out">
+	<constant byte="-1" value="0x32" />
+	<constant byte="0x00" value="0x00" />
+	<led bit="0x0E" name="LED_JOGRING_ON" deck="left"/>
+	<led bit="0x0F" name="LED_JOGRING_BLINK" deck="left"/>
+	<bar byte="0x02" size="word" endian="little" min="0x01" max="0xB3F" name="LED_JOGRING_POSITION" deck="left"/>
+	<color byte="0x04" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_COLOR" deck="left" table="0x00=black,0x06=red,0x04=darkred, 0x13=orange, 0x10=darkorange, 0x1B=yellow, 0x18=darkyellow, 0x1E=green,0x1C=darkgreen,0x23=cyan,0x20=darkcyan,0x2B=marine, 0x28=darkmarine, 0x2E=blue,0x2C=darkblue, 0x33=magenta, 0x30=darkmagenta, 0x3F=violet, 0x3C=darkviolet,0x7E=white,0x7C=gray,0x7C=lightgray"/>
+	<color byte="0x08" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_01" deck="left" />
+	<color byte="0x09" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_02" deck="left" />
+	<color byte="0x0A" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_03" deck="left" />
+	<color byte="0x0B" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_04" deck="left" />
+	<color byte="0x0C" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_05" deck="left" />
+	<color byte="0x0D" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_06" deck="left" />
+	<color byte="0x0E" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_07" deck="left" />
+	<color byte="0x0F" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_08" deck="left" />
+	<color byte="0x10" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_09" deck="left" />
+	<color byte="0x11" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_10" deck="left" />
+	<color byte="0x12" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_11" deck="left" />
+	<color byte="0x13" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_12" deck="left" />
+	<color byte="0x14" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_13" deck="left" />
+	<color byte="0x15" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_14" deck="left" />
+	<color byte="0x16" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_15" deck="left" />
+	<color byte="0x17" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_16" deck="left" />
+	<color byte="0x18" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_17" deck="left" />
+	<color byte="0x19" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_18" deck="left" />
+	<color byte="0x1A" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_19" deck="left" />
+	<color byte="0x1B" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_20" deck="left" />
+	<color byte="0x1C" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_21" deck="left" />
+	<color byte="0x1D" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_22" deck="left" />
+	<color byte="0x1E" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_23" deck="left" />
+	<color byte="0x1F" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_24" deck="left" />
+	<color byte="0x20" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_25" deck="left" />
+	<color byte="0x21" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_26" deck="left" />
+	<color byte="0x22" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_27" deck="left" />
+	<color byte="0x23" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_28" deck="left" />
+	<color byte="0x24" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_29" deck="left" />
+	<color byte="0x25" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_30" deck="left" />
+	<color byte="0x26" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_31" deck="left" />
+	<color byte="0x27" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_32" deck="left" />
+</page>
+
+<!-- JOG RING LEDS RIGHT 32 01-->
+<page type="out">
+	<constant byte="-1" value="0x32" />
+	<constant byte="0x00" value="0x01" />
+	<led bit="0x0E" name="LED_JOGRING_ON" deck="right"/>
+	<led bit="0x0F" name="LED_JOGRING_BLINK" deck="right"/>
+	<bar byte="0x02" size="word" endian="little" min="0x01" max="0xB3F" name="LED_JOGRING_POSITION" deck="right"/>
+	<color byte="0x04" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_COLOR" deck="right" table="0x00=black,0x06=red,0x04=darkred, 0x13=orange, 0x10=darkorange, 0x1B=yellow, 0x18=darkyellow, 0x1E=green,0x1C=darkgreen,0x23=cyan,0x20=darkcyan,0x2B=marine, 0x28=darkmarine, 0x2E=blue,0x2C=darkblue, 0x33=magenta, 0x30=darkmagenta, 0x3F=violet, 0x3C=darkviolet,0x7E=white,0x7C=gray,0x7C=lightgray"/>
+	<color byte="0x08" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_01" deck="right" />
+	<color byte="0x09" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_02" deck="right" />
+	<color byte="0x0A" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_03" deck="right" />
+	<color byte="0x0B" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_04" deck="right" />
+	<color byte="0x0C" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_05" deck="right" />
+	<color byte="0x0D" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_06" deck="right" />
+	<color byte="0x0E" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_07" deck="right" />
+	<color byte="0x0F" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_08" deck="right" />
+	<color byte="0x10" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_09" deck="right" />
+	<color byte="0x11" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_10" deck="right" />
+	<color byte="0x12" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_11" deck="right" />
+	<color byte="0x13" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_12" deck="right" />
+	<color byte="0x14" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_13" deck="right" />
+	<color byte="0x15" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_14" deck="right" />
+	<color byte="0x16" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_15" deck="right" />
+	<color byte="0x17" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_16" deck="right" />
+	<color byte="0x18" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_17" deck="right" />
+	<color byte="0x19" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_18" deck="right" />
+	<color byte="0x1A" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_19" deck="right" />
+	<color byte="0x1B" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_20" deck="right" />
+	<color byte="0x1C" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_21" deck="right" />
+	<color byte="0x1D" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_22" deck="right" />
+	<color byte="0x1E" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_23" deck="right" />
+	<color byte="0x1F" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_24" deck="right" />
+	<color byte="0x20" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_25" deck="right" />
+	<color byte="0x21" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_26" deck="right" />
+	<color byte="0x22" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_27" deck="right" />
+	<color byte="0x23" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_28" deck="right" />
+	<color byte="0x24" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_29" deck="right" />
+	<color byte="0x25" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_30" deck="right" />
+	<color byte="0x26" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_31" deck="right" />
+	<color byte="0x27" values="table" endian="little" fullRGB="yes" name="LED_JOGRING_32" deck="right" />
+</page>
+
+<!-- VUMETERS 81-->
+<page type="out" >
+	<constant byte="-1" value="0x81" />
+	<led byte="0x00" zero="0x00" value="0x7E" name="LED_VUMETER_01" deck="1" />
+	<led byte="0x01" zero="0x00" value="0x7E" name="LED_VUMETER_02" deck="1" />
+	<led byte="0x02" zero="0x00" value="0x7E" name="LED_VUMETER_03" deck="1" />
+	<led byte="0x03" zero="0x00" value="0x7E" name="LED_VUMETER_04" deck="1" />
+	<led byte="0x04" zero="0x00" value="0x7E" name="LED_VUMETER_05" deck="1" />
+	<led byte="0x05" zero="0x00" value="0x7E" name="LED_VUMETER_06" deck="1" />
+	<led byte="0x06" zero="0x00" value="0x7E" name="LED_VUMETER_07" deck="1" />
+	<led byte="0x07" zero="0x00" value="0x7E" name="LED_VUMETER_08" deck="1" />
+	<led byte="0x08" zero="0x00" value="0x7E" name="LED_VUMETER_09" deck="1" />
+	<led byte="0x09" zero="0x00" value="0x7E" name="LED_VUMETER_10" deck="1" />
+	<led byte="0x0A" zero="0x00" value="0x7E" name="LED_VUMETER_11" deck="1" />
+	<led byte="0x0B" zero="0x00" value="0x7E" name="LED_VUMETER_12" deck="1" />
+	<led byte="0x0C" zero="0x00" value="0x7E" name="LED_VUMETER_13" deck="1" />
+	<led byte="0x0D" zero="0x00" value="0x7E" name="LED_VUMETER_14" deck="1" />
+	<led byte="0x0E" zero="0x00" value="0x7E" name="LED_VUMETER_15" deck="1" />
+	
+	<led byte="0x0F" zero="0x00" value="0x7E" name="LED_VUMETER_01" deck="2" />
+	<led byte="0x10" zero="0x00" value="0x7E" name="LED_VUMETER_02" deck="2" />
+	<led byte="0x11" zero="0x00" value="0x7E" name="LED_VUMETER_03" deck="2" />
+	<led byte="0x12" zero="0x00" value="0x7E" name="LED_VUMETER_04" deck="2" />
+	<led byte="0x13" zero="0x00" value="0x7E" name="LED_VUMETER_05" deck="2" />
+	<led byte="0x14" zero="0x00" value="0x7E" name="LED_VUMETER_06" deck="2" />
+	<led byte="0x15" zero="0x00" value="0x7E" name="LED_VUMETER_07" deck="2" />
+	<led byte="0x16" zero="0x00" value="0x7E" name="LED_VUMETER_08" deck="2" />
+	<led byte="0x17" zero="0x00" value="0x7E" name="LED_VUMETER_09" deck="2" />
+	<led byte="0x18" zero="0x00" value="0x7E" name="LED_VUMETER_10" deck="2" />
+	<led byte="0x19" zero="0x00" value="0x7E" name="LED_VUMETER_11" deck="2" />
+	<led byte="0x1A" zero="0x00" value="0x7E" name="LED_VUMETER_12" deck="2" />
+	<led byte="0x1B" zero="0x00" value="0x7E" name="LED_VUMETER_13" deck="2" />
+	<led byte="0x1C" zero="0x00" value="0x7E" name="LED_VUMETER_14" deck="2" />
+	<led byte="0x1D" zero="0x00" value="0x7E" name="LED_VUMETER_15" deck="2" />
+
+	<led byte="0x1E" zero="0x00" value="0x7E" name="LED_VUMETER_01" deck="3" />
+	<led byte="0x1F" zero="0x00" value="0x7E" name="LED_VUMETER_02" deck="3" />
+	<led byte="0x20" zero="0x00" value="0x7E" name="LED_VUMETER_03" deck="3" />
+	<led byte="0x21" zero="0x00" value="0x7E" name="LED_VUMETER_04" deck="3" />
+	<led byte="0x22" zero="0x00" value="0x7E" name="LED_VUMETER_05" deck="3" />
+	<led byte="0x23" zero="0x00" value="0x7E" name="LED_VUMETER_06" deck="3" />
+	<led byte="0x24" zero="0x00" value="0x7E" name="LED_VUMETER_07" deck="3" />
+	<led byte="0x25" zero="0x00" value="0x7E" name="LED_VUMETER_08" deck="3" />
+	<led byte="0x26" zero="0x00" value="0x7E" name="LED_VUMETER_09" deck="3" />
+	<led byte="0x27" zero="0x00" value="0x7E" name="LED_VUMETER_10" deck="3" />
+	<led byte="0x28" zero="0x00" value="0x7E" name="LED_VUMETER_11" deck="3" />
+	<led byte="0x29" zero="0x00" value="0x7E" name="LED_VUMETER_12" deck="3" />
+	<led byte="0x2A" zero="0x00" value="0x7E" name="LED_VUMETER_13" deck="3" />
+	<led byte="0x2B" zero="0x00" value="0x7E" name="LED_VUMETER_14" deck="3" />
+	<led byte="0x2C" zero="0x00" value="0x7E" name="LED_VUMETER_15" deck="3" />
+	
+	<led byte="0x2D" zero="0x00" value="0x7E" name="LED_VUMETER_01" deck="4" />
+	<led byte="0x2E" zero="0x00" value="0x7E" name="LED_VUMETER_02" deck="4" />
+	<led byte="0x2F" zero="0x00" value="0x7E" name="LED_VUMETER_03" deck="4" />
+	<led byte="0x30" zero="0x00" value="0x7E" name="LED_VUMETER_04" deck="4" />
+	<led byte="0x31" zero="0x00" value="0x7E" name="LED_VUMETER_05" deck="4" />
+	<led byte="0x32" zero="0x00" value="0x7E" name="LED_VUMETER_06" deck="4" />
+	<led byte="0x33" zero="0x00" value="0x7E" name="LED_VUMETER_07" deck="4" />
+	<led byte="0x34" zero="0x00" value="0x7E" name="LED_VUMETER_08" deck="4" />
+	<led byte="0x35" zero="0x00" value="0x7E" name="LED_VUMETER_09" deck="4" />
+	<led byte="0x36" zero="0x00" value="0x7E" name="LED_VUMETER_10" deck="4" />
+	<led byte="0x37" zero="0x00" value="0x7E" name="LED_VUMETER_11" deck="4" />
+	<led byte="0x38" zero="0x00" value="0x7E" name="LED_VUMETER_12" deck="4" />
+	<led byte="0x39" zero="0x00" value="0x7E" name="LED_VUMETER_13" deck="4" />
+	<led byte="0x3A" zero="0x00" value="0x7E" name="LED_VUMETER_14" deck="4" />
+	<led byte="0x3B" zero="0x00" value="0x7E" name="LED_VUMETER_15" deck="4" />
+	
+	<led byte="0x3C" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_1"/>
+	<led byte="0x3D" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_2"/>
+	<led byte="0x3E" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_3"/>
+	<led byte="0x3F" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_4"/>
+	<led byte="0x40" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_5"/>
+	<led byte="0x41" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_6"/>
+	<led byte="0x42" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_7"/>
+	<led byte="0x43" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_8"/>
+	<led byte="0x44" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_L_9"/>
+	<led byte="0x45" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_1"/>
+	<led byte="0x46" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_2"/>
+	<led byte="0x47" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_3"/>
+	<led byte="0x48" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_4"/>
+	<led byte="0x4A" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_5"/>
+	<led byte="0x4B" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_6"/>
+	<led byte="0x4C" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_7"/>
+	<led byte="0x4D" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_8"/>
+	<led byte="0x4E" zero="0x00" value="0x7E" name="LED_VUMETER_MASTER_R_9"/>
+
+</page>
+
+<!-- LEDS PAGE 80-->
+<page type="out" >
+	<constant byte="-1" value="0x80" />
+	<color byte="0x00" values="table" endian="little" fullRGB="yes" name="LED_PAD1" deck="left" table="0x00=black,0x06=red,0x04=darkred, 0x13=orange, 0x10=darkorange, 0x1B=yellow, 0x18=darkyellow, 0x1E=green,0x1C=darkgreen,0x23=cyan,0x20=darkcyan,0x2B=marine, 0x28=darkmarine, 0x2E=blue,0x2C=darkblue, 0x33=magenta, 0x30=darkmagenta, 0x3F=violet, 0x3C=darkviolet,0x7E=white,0x7C=gray,0x7C=lightgray"/>
+	<color byte="0x01" values="table" endian="little" fullRGB="yes" name="LED_PAD2" deck="left"/>
+	<color byte="0x02" values="table" endian="little" fullRGB="yes" name="LED_PAD3" deck="left"/>
+	<color byte="0x03" values="table" endian="little" fullRGB="yes" name="LED_PAD4" deck="left"/>
+	<color byte="0x04" values="table" endian="little" fullRGB="yes" name="LED_PAD5" deck="left"/>
+	<color byte="0x05" values="table" endian="little" fullRGB="yes" name="LED_PAD6" deck="left"/>
+	<color byte="0x06" values="table" endian="little" fullRGB="yes" name="LED_PAD7" deck="left"/>
+	<color byte="0x07" values="table" endian="little" fullRGB="yes" name="LED_PAD8" deck="left"/>
+	<color byte="0x08" values="table" endian="little" fullRGB="yes" name="LED_CUE" deck="left"/>
+	<color byte="0x09" values="table" endian="little" fullRGB="yes" name="LED_HOTCUES_MODE" deck="left"/>
+	<color byte="0x0A" values="table" endian="little" fullRGB="yes" name="LED_STEMS_MODE" deck="left" />
+	<color byte="0x0B" values="table" endian="little" fullRGB="yes" name="LED_PITCHZERO" deck="left" />
+	<color byte="0x0C" values="table" endian="little" fullRGB="yes" name="LED_DECKA" />
+	<color byte="0x0D" values="table" endian="little" fullRGB="yes" name="LED_DECKC"/>
+	<color byte="0x0E" values="table" endian="little" fullRGB="yes" name="LED_SYNC" deck="left"  />
+	<color byte="0x0F" values="table" endian="little" fullRGB="yes" name="LED_MASTER" deck="left" />
+	<color byte="0x10" values="table" endian="little" fullRGB="yes" name="LED_VINYL" deck="left" />
+	<color byte="0x11" values="table" endian="little" fullRGB="yes" name="LED_TT" deck="left" />
+	<color byte="0x12" values="table" endian="little" fullRGB="yes" name="LED_GRID" deck="left" />
+	<color byte="0x13" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_VIEW" deck="left"  />
+	<color byte="0x14" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_LIST" deck="left"  />
+	<color byte="0x15" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_STAR" deck="left"  />
+	<color byte="0x16" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_BACK" deck="left"  />
+	<color byte="0x17" values="table" endian="little" fullRGB="yes" name="LED_PAD1" deck="right"/>
+	<color byte="0x18" values="table" endian="little" fullRGB="yes" name="LED_PAD2" deck="right"/>
+	<color byte="0x19" values="table" endian="little" fullRGB="yes" name="LED_PAD3" deck="right"/>
+	<color byte="0x1A" values="table" endian="little" fullRGB="yes" name="LED_PAD4" deck="right"/>
+	<color byte="0x1B" values="table" endian="little" fullRGB="yes" name="LED_PAD5" deck="right"/>
+	<color byte="0x1C" values="table" endian="little" fullRGB="yes" name="LED_PAD6" deck="right" />
+	<color byte="0x1D" values="table" endian="little" fullRGB="yes" name="LED_PAD7" deck="right"/>
+	<color byte="0x1E" values="table" endian="little" fullRGB="yes" name="LED_PAD8" deck="right"/>
+	<color byte="0x1F" values="table" endian="little" fullRGB="yes" name="LED_CUE" deck="right"/>
+	<color byte="0x20" values="table" endian="little" fullRGB="yes" name="LED_HOTCUES_MODE" deck="right"/>
+	<color byte="0x21" values="table" endian="little" fullRGB="yes" name="LED_STEMS_MODE" deck="right" />
+	<color byte="0x22" values="table" endian="little" fullRGB="yes" name="LED_PITCHZERO" deck="right" />
+	<color byte="0x23" values="table" endian="little" fullRGB="yes" name="LED_DECKB" />
+	<color byte="0x24" values="table" endian="little" fullRGB="yes" name="LED_DECKD"/>
+	<color byte="0x25" values="table" endian="little" fullRGB="yes" name="LED_SYNC" deck="right"  />
+	<color byte="0x26" values="table" endian="little" fullRGB="yes" name="LED_MASTER" deck="right" />
+	<color byte="0x27" values="table" endian="little" fullRGB="yes" name="LED_VINYL" deck="right" />
+	<color byte="0x28" values="table" endian="little" fullRGB="yes" name="LED_TT" deck="right" />
+	<color byte="0x29" values="table" endian="little" fullRGB="yes" name="LED_GRID" deck="right" />
+	<color byte="0x2A" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_VIEW" deck="right"  />
+	<color byte="0x2B" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_LIST" deck="right"  />
+	<color byte="0x2C" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_STAR" deck="right"  />
+	<color byte="0x2D" values="table" endian="little" fullRGB="yes" name="LED_BROWSER_BACK" deck="right"  />
+	<color byte="0x2E" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_ON" deck="1" />
+	<color byte="0x2F" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_ON" deck="2" />
+	<color byte="0x30" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_ON" deck="3" />
+	<color byte="0x31" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_ON" deck="4" />
+	<color byte="0x32" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_SEL_1" />
+	<color byte="0x33" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_SEL_2" />
+	<color byte="0x34" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_SEL_3" />
+	<color byte="0x35" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_SEL_4" />
+	<color byte="0x36" values="table" endian="little" fullRGB="yes" name="LED_COLORFX_SEL_FILTER"/>
+	<led byte="0x37" zero="0x7C" value="0x7E" name="LED_PLAY" default="PLAY" deck="left"/>
+	<led byte="0x38" zero="0x7C" value="0x7E" name="LED_SAMPLER_REC" default="SAMPLER_REC" deck="left" />
+	<led byte="0x39" zero="0x7C" value="0x7E" name="LED_SAMPLES_MODE" default="SAMPLES_MODE" deck="left" />
+	<led byte="0x3A" zero="0x7C" value="0x7E" name="LED_SAMPLER_MUTE" default="SAMPLER_MUTE" deck="left" />
+	<led byte="0x3B" zero="0x7C" value="0x7E" name="LED_SHIFT" default="SHIFT" deck="left"/>
+	<led byte="0x3C" zero="0x7C" value="0x7E" name="LED_REVERSE" default="REVERSE" deck="left"/>
+	<led byte="0x3D" zero="0x7C" value="0x7E" name="LED_FLUX" default="FLUX" deck="left"/>
+	<led byte="0x3E" zero="0x7C" value="0x7E" name="LED_FX_ON_1" default="FX_ON_1" deck="left"/>
+	<led byte="0x3F" zero="0x7C" value="0x7E" name="LED_FX_ON_2" default="FX_ON_2" deck="left"/>
+	<led byte="0x40" zero="0x7C" value="0x7E" name="LED_FX_ON_3" default="FX_ON_3" deck="left"/>
+	<led byte="0x41" zero="0x7C" value="0x7E" name="LED_FX_ON_4" default="FX_ON_4" deck="left"/>
+	<led byte="0x42" zero="0x7C" value="0x7E" name="LED_PLAY" default="PLAY" deck="right"/>
+	<led byte="0x43" zero="0x7C" value="0x7E" name="LED_SAMPLER_REC" default="SAMPLER_REC" deck="right" />
+	<led byte="0x44" zero="0x7C" value="0x7E" name="LED_SAMPLES_MODE" default="SAMPLES_MODE" deck="right" />
+	<led byte="0x45" zero="0x7C" value="0x7E" name="LED_SAMPLER_MUTE" default="SAMPLER_MUTE" deck="right" />
+	<led byte="0x46" zero="0x7C" value="0x7E" name="LED_SHIFT" default="SHIFT" deck="right"/>
+	<led byte="0x47" zero="0x7C" value="0x7E" name="LED_REVERSE" default="REVERSE" deck="right"/>
+	<led byte="0x48" zero="0x7C" value="0x7E" name="LED_FLUX" default="FLUX" deck="right"/>
+	<led byte="0x49" zero="0x7C" value="0x7E" name="LED_FX_ON_1" default="FX_ON_1" deck="right"/>
+	<led byte="0x4A" zero="0x7C" value="0x7E" name="LED_FX_ON_2" default="FX_ON_2" deck="right"/>
+	<led byte="0x4B" zero="0x7C" value="0x7E" name="LED_FX_ON_3" default="FX_ON_3" deck="right"/>
+	<led byte="0x4C" zero="0x7C" value="0x7E" name="LED_FX_ON_4" default="FX_ON_4" deck="right"/>
+	<led byte="0x4D" zero="0x7C" value="0x7E" name="LED_PFL" default="PFL" deck="1" />
+	<led byte="0x4E" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN1" default="FX_ASSIGN1" deck="1"/>
+	<led byte="0x4F" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN2" default="FX_ASSIGN2" deck="1"/>
+	<led byte="0x50" zero="0x7C" value="0x7E" name="LED_EXT" default="EXT" deck="1"/>
+	<led byte="0x51" zero="0x7C" value="0x7E" name="LED_PFL" default="PFL" deck="2" />
+	<led byte="0x52" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN1" default="FX_ASSIGN1" deck="2"/>
+	<led byte="0x53" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN2" default="FX_ASSIGN2" deck="2"/>
+	<led byte="0x54" zero="0x7C" value="0x7E" name="LED_EXT" default="EXT" deck="2"/>
+	<led byte="0x55" zero="0x7C" value="0x7E" name="LED_PFL" default="PFL" deck="3" />
+	<led byte="0x56" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN1" default="FX_ASSIGN1" deck="3"/>
+	<led byte="0x57" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN2" default="FX_ASSIGN2" deck="3"/>
+	<led byte="0x58" zero="0x7C" value="0x7E" name="LED_EXT" default="EXT" deck="3"/>
+	<led byte="0x59" zero="0x7C" value="0x7E" name="LED_PFL" default="PFL" deck="4" />
+	<led byte="0x5A" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN1" default="FX_ASSIGN1" deck="4"/>
+	<led byte="0x5B" zero="0x7C" value="0x7E" name="LED_FX_ASSIGN2" default="FX_ASSIGN2" deck="4"/>
+	<led byte="0x5C" zero="0x7C" value="0x7E" name="LED_EXT" default="EXT" deck="4"/>
+	<led byte="0x5D" zero="0x7C" value="0x7E" name="LED_QUANTIZE" default="QUANTIZE"  />
+
+</page>
+
+
+
+
+
+<page type="exit">
+	<constant byte="-1" value="0x80" />
+	<buffer byte="0" nbbits="768" value="0x00"/> 
+</page>
+
+</device>

@@ -14,7 +14,7 @@ Verb checks (warnings, exit 0 unless --strict):
   closest-match suggestion.
 
 Usage:
-  python3 tools/lint_mappers.py [paths ...]   # default: examples/Mappers/**/*.xml
+  python3 tools/lint_mappers.py [paths ...]   # default: examples/Mappers/**/*.xml, minus <device> definitions
   python3 tools/lint_mappers.py --strict      # verb warnings become failures
 """
 
@@ -116,6 +116,15 @@ def lint_file(path: Path, verbs: set[str], errors: list[str], warnings: list[str
                     )
 
 
+def root_tag(path: Path) -> str | None:
+    try:
+        for _, elem in ET.iterparse(path, events=("start",)):
+            return elem.tag
+    except ET.ParseError:
+        return None
+    return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="*", help="mapper XML files (default: examples/Mappers)")
@@ -125,7 +134,10 @@ def main() -> int:
     if args.paths:
         files = [Path(p).resolve() for p in args.paths]
     else:
-        files = sorted(ROOT.glob(DEFAULT_GLOB))
+        # Controller add-ons ship their <device> definition beside the mapper
+        # (examples/Mappers/Official-Addons); discovery skips those, an
+        # explicit path still gets the <mapper> root check.
+        files = [p for p in sorted(ROOT.glob(DEFAULT_GLOB)) if root_tag(p) != "device"]
     if not files:
         print("No mapper XML files found")
         return 1

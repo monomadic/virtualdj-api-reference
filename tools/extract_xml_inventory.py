@@ -166,6 +166,11 @@ def scan_tags(text: str) -> list[tuple[str, list[str]]]:
     return tags
 
 
+def is_device_definition(path: Path) -> bool:
+    tags = scan_tags(path.read_text(encoding="utf-8", errors="replace"))
+    return bool(tags) and tags[0][0] == "device"
+
+
 def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[Path]]:
     files: list[Path] = []
     seen: set[Path] = set()
@@ -176,6 +181,9 @@ def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[P
             if path.is_file() and path not in seen:
                 seen.add(path)
                 files.append(path)
+    # A controller add-on ships its <device> definition beside the mapper;
+    # definition vocabulary belongs to tests/controller-schema-inventory.json.
+    files = [p for p in files if not is_device_definition(p)]
     stats: dict[str, ElementStats] = {}
     for path in files:
         text = path.read_text(encoding="utf-8", errors="replace")
