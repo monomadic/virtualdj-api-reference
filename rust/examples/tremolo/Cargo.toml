@@ -1,0 +1,14 @@
+[package]
+name = "vdj-rust-tremolo"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+# staticlib so package.sh can produce a true MH_BUNDLE with `clang -bundle`,
+# byte-for-byte the load format the C++ instrument proved loadable; cdylib so a
+# plain `cargo build` also sanity-checks the export.
+crate-type = ["staticlib", "cdylib"]
+
+[dependencies]
+vdj-plugin = { path = "../../vdj-plugin" }
