@@ -14,9 +14,11 @@ script; it does not run VDJIntrospect's general probe lists.
   in the macOS arm64 SoundEffect directory. It may require restarting VirtualDJ
   to discover a newly installed effect. Do not restart a working session without
   checking whether its loaded state can be interrupted.
-- Load **VDJMemoryProbe** into an inactive effect slot. Its `OnLoad` takes the
-  capture; activating audio processing is unnecessary. Restore the original slot
-  selection afterward.
+- Prefer `just vdj-query "get_effect_title 'VDJMemoryProbe'"` after the app has
+  discovered the installed plugin. On build 18.0.9644 this loaded the plugin and
+  captured from `OnLoad` without selecting an effect slot or activating it.
+  Alternatively load **VDJMemoryProbe** into an inactive effect slot and restore
+  that selection afterward. Cached title queries may not invoke `OnLoad` again.
 - Captures are new files named `memory-<pid>-<unix-time>.json` under
   `~/Library/Application Support/VirtualDJ/VDJIntrospect/`. Existing captures are
   never overwritten. A same-second duplicate load can fail to create a file.
@@ -55,9 +57,43 @@ fresh extraction, and records the disk binary's SHA-256. This is a reproduction 
 the same structure through a live channel, **not independent proof of verb
 behaviour**, and not a claim that the entire memory image equals the disk file.
 
-Unit tests and a successful build establish instrument readiness only. Until a
-verified host capture is linked here, direct access in VirtualDJ remains unmeasured
-by this instrument.
+## Live result — 2026-09-21, build 18.0.9644, arm64
+
+[Verified capture](../tests/plugin-memory-9644.json) and
+[HTTP run record](../tests/plugin-memory-run-9644.json): a read-only title query
+loaded the plugin. The mapped image UUID, build, unslid table address and every
+name/id/flags record matched the fresh same-build disk extraction. This directly
+establishes that the plugin could read these host memory regions. It recovered
+no additional verb names relative to that disk extraction. Query `verification.records`
+in the capture for the measured total.
+
+All public callback addresses landed inside the host executable. The
+[bounded callback trace](../tests/plugin-memory-callbacks-9644.json) records their
+numeric/text entry points and one direct-call level, with exact LC_FUNCTION_STARTS
+bounds and code hashes. This trace is **Tier 2 disk analysis rooted in live-located
+addresses**, not observation of a private parser call executing.
+
+On this build, both query callbacks pass the script pointer to `0x10057d5f8`
+with two zero arguments, test the returned pointer, call `0x10058029c`, and then
+use separate numeric/text routines. Both later decrement a field at returned-object
+`+8`, conditionally invoking a virtual method at vtable `+8`. **Inference:** this
+is a shared parser/factory followed by context setup, evaluation and release;
+the decrement means an object may be destroyed before the public callback returns.
+The exact private ABI and lifetime are not established. Do not call these addresses
+or read a guessed object layout based on this trace.
+
+Reproduce the structural trace with an optional isolated capstone environment:
+
+```sh
+uv run --with capstone --python .venv/bin/python3 python tools/plugin_memory_trace.py \
+  tests/plugin-memory-9644.json --output /tmp/plugin-memory-callbacks.json
+```
+
+For this run, Apple's `llvm-objdump` Mach-O disassembly ignored the requested
+address bounds and began at the start of `__text`. Use the bounded helper above
+instead; it decodes only exact selected function intervals and caps routine size.
+The base environment did not have capstone, so this optional command supplies it
+without changing the project's dependency set.
 
 The next discriminating experiment is to follow the current-build GetInfo callback
 to its parser boundary and inspect one known-valid tail against nonsense controls.

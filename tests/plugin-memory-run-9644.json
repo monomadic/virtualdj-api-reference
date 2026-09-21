@@ -1,0 +1,27 @@
+{
+  "build": "18.0.9644",
+  "arch": "arm64",
+  "capture": "tests/plugin-memory-9644.json",
+  "capture_time_utc": "2026-09-21T14:55:32+00:00",
+  "channel": "HTTP query triggering in-process OnLoad capture",
+  "queries": [
+    {
+      "script": "deck 1 get_effect_name 2",
+      "before": "",
+      "after": ""
+    },
+    {
+      "script": "deck 1 effect_active 2",
+      "before": "no",
+      "after": "no"
+    },
+    {
+      "script": "get_effect_title 'VDJMemoryProbe'",
+      "result": "VDJMemoryProbe - Deck 2",
+      "role": "load trigger; subsequent identical query returned same title"
+    }
+  ],
+  "execute_calls": [],
+  "scope": "One live memory capture; read-only title lookup loaded the plugin without slot selection or activation. Slot checks cover deck 1 slot 2 only. No claim of complete application-state comparison.",
+  "screenshot_provenance": "Not applicable: evidence is HTTP responses and the plugin-written capture, not a UI observation."
+}
