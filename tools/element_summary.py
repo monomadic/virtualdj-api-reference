@@ -324,11 +324,19 @@ def summary(name: str, limit: int) -> dict:
         for attr, n in entry["attributes"].items():
             attributes[attr] = attributes.get(attr, 0) + n
     kind = {a: classify_attribute(a, families, name) for a in attributes}
+    from skin_schema import DEFAULT as schema_capture
+    pilot = None
+    if name == 'button' and schema_capture.exists():
+        schema = json.loads(schema_capture.read_text())
+        pilot = {'build': schema['source']['build'], 'evidence_tier': schema['evidence_tier'],
+                 'capture': str(schema_capture.relative_to(ROOT)), 'command': 'just skin-schema button',
+                 'note': 'Bounded node ownership: outer/shared/child reads and unresolved paths. Not confirmed support or a complete schema.'}
 
     return {
         "element": name,
         "categories": {fam: category(name, fam) for fam, _ in found},
         "relationships": relationships(name),
+        "schema_pilot": pilot,
         "families": {fam: {"uses": e["uses"], "files": e["files"],
                            "name_documented": e["documented"]}
                      for fam, e in found},
@@ -378,6 +386,12 @@ def render(s: dict) -> str:
             L.append("  reader vocab   not in the extracted reader vocabulary "
                      "(the extractor covers 3 readers, not the whole parser)")
     L.append("")
+
+    if s.get('schema_pilot'):
+        p = s['schema_pilot']
+        L.append(f"XML ownership pilot (build {p['build']}, Tier {p['evidence_tier']}): {p['command']}")
+        L.append('  ' + p['note'])
+        L.append('')
 
     for direction, other in (("parents", "parent"), ("children", "child")):
         names = sorted({r[other] for r in s["relationships"][direction]})

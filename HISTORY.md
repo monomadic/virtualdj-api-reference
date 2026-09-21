@@ -1304,3 +1304,16 @@ Note: Both loose ends closed; details below. Added 2026-09-03.
 ## Progress log for open tasks
 
 No open task carries a progress log here at present. The H4 log moved under its closed block on 2026-09-19.
+
+### S4. Establish a build-scoped button XML ownership pilot
+
+Status: Done
+
+Note: 2026-09-22. The initial structural pilot on build 18.0.9644 (arm64) preserves
+outer/shared/child XML read paths and unresolved alternatives, with verified memory-capture
+image identity and reproducible disk analysis. `just skin-schema button` is the compact
+entry point. No skin behavior was promoted and no complete-schema claim was made.
+[Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) records the method, remaining
+conditional-node/helper gaps and the next discriminating fixture work. General class
+extraction now supports fresh output without requiring a historical app or overwriting
+older captures.

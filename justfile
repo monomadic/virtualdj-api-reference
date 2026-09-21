@@ -471,6 +471,7 @@ check:
     {{python}} tools/xmldb.py categories --check
     {{python}} tools/skin_relations.py --check
     {{python}} tools/test_skin_metadata.py
+    {{python}} -m unittest discover -s tools -p test_skin_schema.py
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
     {{python}} tools/check_reference_status.py
@@ -586,6 +587,13 @@ sysicon-atlas *args:
 # establishes nothing.
 skin-classes *args:
     @{{python}} tools/extract_skin_classes.py "$@"
+
+# Build-stamped XML ownership pilot; ordinary queries require only stdlib.
+skin-schema *args:
+    @{{python}} tools/skin_schema.py "$@"
+
+check-skin-schema:
+    @{{python}} -m unittest discover -s tools -p test_skin_schema.py
 
 # Every skin object class, one line each. Filters: --base, --has-attr,
 # --element-backed, --format=json. Untruncated, as the other list-* are.

@@ -13,10 +13,10 @@ import plistlib
 import re
 import struct
 import sys
+from types import SimpleNamespace
 from pathlib import Path
 
 ARTIFACT = Path('tests/skin-classes.json')
-DEBUG = Path('tests/skin-classes-debug.json')
 
 
 def function_starts(img):
@@ -99,11 +99,13 @@ class Analysis:
         return tuple(out)
 
 
-def inspect(app, historical):
+def inspect(app, historical=None, debug_output=None):
     from extract_action_contracts import rtti_graph
     from extract_action_vtables import demangled, symbol_maps
-    cur, old = Analysis(app), Analysis(historical)
-    old.symbols, _ = symbol_maps(demangled(historical / 'Contents/MacOS/VirtualDJ', 'arm64'))
+    cur = Analysis(app)
+    old = Analysis(historical) if historical else SimpleNamespace(symbols={}, starts=[])
+    if historical:
+        old.symbols, _ = symbol_maps(demangled(historical / 'Contents/MacOS/VirtualDJ', 'arm64'))
     graph = rtti_graph(cur.img.data, ('CSkin', 'ISkinObject'))
     # Byte-shape matches are cross-build leads, retained only when unique.
     wanted = {fn: name for fn, name in old.symbols.items()
@@ -114,7 +116,7 @@ def inspect(app, historical):
         if len(fp) >= 8:
             fingerprints.setdefault(fp, []).append((fn, name))
     matches = {}
-    for fn in cur.starts:
+    for fn in (cur.starts if fingerprints else ()):
         fp = cur.fingerprint(fn)
         if fp in fingerprints:
             matches.setdefault(fp, []).append(fn)
@@ -126,7 +128,9 @@ def inspect(app, historical):
     debug = {'matches': {hex(k):v for k,v in linked.items()}, 'anchors': {}, 'graph': graph}
     for anchor in ['multibutton','resizepanel','keyboardmap','pannel','action2','action%d','action%i','action','clickthrough']:
         debug['anchors'][anchor] = [{'function':hex(fn),'references':[(hex(pc),s) for pc,s in cur.refs.get(fn,[])], 'calls':[(hex(pc),hex(t),linked.get(t,{}).get('name')) for pc,t in cur.calls(fn)]} for fn in sorted({cur.owner(pc) for vm in cur.img.by_text.get(anchor,[]) for pc in cur.img.xrefs.get(vm,[])})]
-    DEBUG.write_text(json.dumps(debug,indent=2))
+    if debug_output:
+        with debug_output.open('x') as stream:
+            json.dump(debug, stream, indent=2)
     return cur, old, graph, linked
 
 
@@ -238,6 +242,9 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     p.add_argument('--historical-app', type=Path)
+    p.add_argument('--generate', action='store_true', help='extract current image; historical matching is optional')
+    p.add_argument('--output', type=Path, help='new capture path (never overwritten)')
+    p.add_argument('--debug-output', type=Path, help='optional new diagnostic capture')
     p.add_argument('--get', metavar='CLASS', help='one class record')
     p.add_argument('--element', metavar='NAME', help='which class(es) build this XML element')
     p.add_argument('--attributes', metavar='CLASS', help='just the attribute candidates')
@@ -253,8 +260,19 @@ def main():
     p.add_argument('--questions', action='store_true', help='Q1-Q3 conclusions and limits')
     p.add_argument('--check', action='store_true')
     args = p.parse_args()
-    if args.historical_app:
-        print(json.dumps(generate(args.app, args.historical_app), indent=2))
+    if (args.output or args.debug_output) and not (args.generate or args.historical_app):
+        p.error('--output/--debug-output requires --generate or --historical-app')
+    if args.generate or args.historical_app:
+        if args.output and args.output.exists():
+            p.error('output already exists')
+        result = generate(args.app, args.historical_app, args.debug_output)
+        if args.output:
+            with args.output.open('x') as stream:
+                json.dump(result, stream, indent=2)
+                stream.write('\n')
+            print(args.output)
+        else:
+            print(json.dumps(result, indent=2))
         return 0
     if not ARTIFACT.exists():
         raise SystemExit(f"missing {ARTIFACT}; regenerate with --historical-app")
@@ -365,9 +383,9 @@ def literal_calls(a, fn, argument_register="x1"):
     return out
 
 
-def generate(app, historical):
+def generate(app, historical=None, debug_output=None):
     from extract_binary_vocabularies import SEEDS
-    cur, old, graph, linked = inspect(app, historical)
+    cur, old, graph, linked = inspect(app, historical, debug_output)
     anchors = SEEDS['skin_elements'][0]
     owners = [{cur.owner(pc) for vm in cur.img.by_text.get(s,[]) for pc in cur.img.xrefs.get(vm,[])} for s in anchors]
     common = set.intersection(*owners)
@@ -513,7 +531,7 @@ def generate(app, historical):
         classes[name]={'typeinfo':hex(r['typeinfo']),'vtable':hex(r['vtable']) if r['vtable'] else None,'bases':r['bases'],'vtable_slots':[hex(t) for t in r['slots']], 'elements':sorted(e for e,rs in mappings.items() if any(x['class']==name for x in rs)), 'roots':[hex(f) for f in sorted(roots)], 'visited_functions':[hex(f) for f in sorted(reached)], 'attribute_candidates':sorted({c['name'] for c in attrs}), 'attribute_reads':attrs,'child_node_reads':children,'other_literal_calls':unclassified,'unvisited_call_targets':sorted(set(unresolved))}
     inv=json.loads(Path('docs/skin-xml-inventory.json').read_text())
     metadata=plistlib.loads((app/'Contents/Info.plist').read_bytes())
-    result={'schema_version':1,'source':{'build':metadata['CFBundleVersion'],'architecture':'arm64','binary_sha256':hashlib.sha256(cur.img.data).hexdigest(),'binary_date':'2026-08-24','evidence_tier':2},'summary':{},'factory':{'function':hex(factory),'end':hex(cur.ends[cur.starts.index(factory)]),'method':'LC_FUNCTION_STARTS boundary; element comparison success control flow to constructor vptr store to RTTI','pointer_tables':cur.img.tables([vm for s in anchors for vm in cur.img.by_text.get(s,[])]),'dispatch':dispatch,'element_classes':{e:sorted({r['class'] for r in rs}) for e,rs in mappings.items()}},'xml_reader_anchors':{hex(k):v for k,v in getters.items()},'classes':classes,'limitations':['Tier 2 leads only. Validate with a discriminating skin canary and independent readback.','Attributes include reads on child nodes and direct helper callees; not necessarily attributes on the outer element.','Only statically recovered x1 literals at direct calls to anchored XML readers are classified. Other calls are retained separately.','Traversal covers root routines and direct BL callees only; indirect calls and further callees remain unresolved.','Vptr writers include constructors and destructors; method names are not inferred from class spelling.','No absence from these candidate sets establishes a dead attribute. Template parameters are an open vocabulary.']}
+    result={'schema_version':1,'source':{'build':metadata['CFBundleVersion'],'architecture':'arm64','binary_sha256':hashlib.sha256(cur.img.data).hexdigest(),'evidence_tier':2},'summary':{},'factory':{'function':hex(factory),'end':hex(cur.ends[cur.starts.index(factory)]),'method':'LC_FUNCTION_STARTS boundary; element comparison success control flow to constructor vptr store to RTTI','pointer_tables':cur.img.tables([vm for s in anchors for vm in cur.img.by_text.get(s,[])]),'dispatch':dispatch,'element_classes':{e:sorted({r['class'] for r in rs}) for e,rs in mappings.items()}},'xml_reader_anchors':{hex(k):v for k,v in getters.items()},'classes':classes,'limitations':['Tier 2 leads only. Validate with a discriminating skin canary and independent readback.','Attributes include reads on child nodes and direct helper callees; not necessarily attributes on the outer element.','Only statically recovered x1 literals at direct calls to anchored XML readers are classified. Other calls are retained separately.','Traversal covers root routines and direct BL callees only; indirect calls and further callees remain unresolved.','Vptr writers include constructors and destructors; method names are not inferred from class spelling.','No absence from these candidate sets establishes a dead attribute. Template parameters are an open vocabulary.']}
     result['questions'] = {
         'Q1': {'status': 'partial structural mapping recovered',
                'finding': 'The anchored factory is a bounded function containing comparison branches and constructor calls. Followed success paths reach stores of RTTI-linked vtable pointers. Some tags share classes or select different classes conditionally.',
@@ -537,9 +555,10 @@ def generate(app, historical):
     result['questions']['Q3']['binary_evidence']['format_literal_occurrences'] = {
         name: cur.img.data.count(name.encode())
         for name in ('action%d', 'action%i', 'action%u', 'textaction%d')}
-    result['questions']['Q3']['binary_evidence']['historical_build'] = plistlib.loads(
-        (historical / 'Contents/Info.plist').read_bytes())['CFBundleVersion']
-    ARTIFACT.write_text(json.dumps(result,indent=2))
+    result['questions']['Q3']['binary_evidence']['historical_build'] = (plistlib.loads(
+        (historical / 'Contents/Info.plist').read_bytes())['CFBundleVersion'] if historical else None)
+    if not historical:
+        result['limitations'].append('Historical symbol matching was not requested; symbol-linked helpers are not classified.')
     return result
 
 if __name__ == '__main__':

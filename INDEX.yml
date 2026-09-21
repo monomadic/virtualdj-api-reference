@@ -207,6 +207,7 @@ skin_sdk:
   findings:
     - docs/Published Skin Findings.md    # idioms from public skins, before they are folded in
     - docs/Sysicon Binary Resolver.md    # b9598 tested keys, unnamed atlas cells, internal selectors
+    - docs/Skin Schema Recovery.md       # build-scoped button node ownership pilot; open gaps
     - docs/Historical Installer Excavation.md  # build-stamped compatibility history from older installers
   status:
     - docs/skin-xml-inventory.json
@@ -222,6 +223,7 @@ skin_sdk:
     - just sysicon-atlas --cell H6       # one atlas cell, evidence tiers kept separate
     - just sysicon-atlas --unnamed       # wiki N/A cells, recovered keys and unresolved gaps
     - just get-xml-element NAME
+    - just skin-schema button           # outer/shared/child reads, unresolved paths; Tier 2
     - just list-skin-elements [--family=X --undocumented --has-attr=X]
     - just xml-stats
     - just inventory
