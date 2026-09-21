@@ -135,6 +135,7 @@ void Capture(IVdjCallbacks8* cb) {
     }
     fputs("}\n}\n",out); fclose(out);
 }
+#ifndef VDJ_MEMORY_HELPERS_ONLY
 class Probe: public IVdjPluginDsp8 {
     HRESULT VDJ_API OnGetPluginInfo(TVdjPluginInfo8* info) override {
         info->PluginName="VDJMemoryProbe"; info->Author="virtualdj-api-reference";
@@ -147,9 +148,12 @@ class Probe: public IVdjPluginDsp8 {
     }
     HRESULT VDJ_API OnProcessSamples(float*,int) override { return S_OK; }
 };
+#endif
 }
+#ifndef VDJ_MEMORY_HELPERS_ONLY
 extern "C" VDJ_EXPORT HRESULT VDJ_API DllGetClassObject(const GUID& cls,const GUID& iid,void** out) {
     if(!out) return static_cast<HRESULT>(0x80004005); *out=nullptr;
     if(memcmp(&cls,&CLSID_VdjPlugin8,sizeof(cls)) || memcmp(&iid,&IID_IVdjPluginDsp8,sizeof(iid))) return CLASS_E_CLASSNOTAVAILABLE;
     *out=static_cast<IVdjPluginDsp8*>(new Probe); return S_OK;
 }
+#endif

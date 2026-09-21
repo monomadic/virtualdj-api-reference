@@ -777,3 +777,17 @@ plugin-memory-check capture *args:
 plugin-memory-test:
     clang++ -std=c++17 -arch arm64 -I vendor/vdj-sdk/audio-plugin-dsp-example-1 -framework CoreFoundation tools/plugin/test_memory.cpp -o /tmp/vdj-memory-test
     /tmp/vdj-memory-test
+
+# Fixed-input, build-gated parser object experiment; never executes parsed scripts.
+plugin-parser-build *args:
+    tools/plugin/build.sh --parser {{args}}
+
+plugin-parser-test:
+    clang++ -std=c++17 -arch arm64 -I vendor/vdj-sdk/audio-plugin-dsp-example-1 -framework CoreFoundation tools/plugin/test_parser.cpp -o /tmp/vdj-parser-test
+    /tmp/vdj-parser-test
+    {{python}} -m unittest discover -s tools -p test_parser_objects.py
+    {{python}} tools/prepare_parser_probe.py --check
+
+# Small decoded view; validates complete capture, guards, ownership and repeat agreement.
+parser-objects *args:
+    {{python}} tools/parser_objects.py {{args}}

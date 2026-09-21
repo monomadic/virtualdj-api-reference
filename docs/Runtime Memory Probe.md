@@ -95,13 +95,81 @@ instead; it decodes only exact selected function intervals and caps routine size
 The base environment did not have capstone, so this optional command supplies it
 without changing the project's dependency set.
 
-The next discriminating experiment is to follow the current-build GetInfo callback
-to its parser boundary and inspect one known-valid tail against nonsense controls.
-Old x86_64 parser addresses must not be reused in the current arm64 host. Private
-object layouts and ownership have to be recovered before any inspection or call;
-this first probe deliberately does not guess them. If that boundary cannot be
-observed safely, keep the parser-object experiment unresolved and use the existing
-native HRESULT and prepared-state probes.
+The follow-up parser-object experiment below tests this candidate with fixed
+inputs and additional code/ownership guards. It does not make these addresses a
+supported or general-purpose API.
 
 For agents: use the small verified JSON artifact and the commands above. Do not
 read raw process dumps or create a second Markdown list of verb records.
+
+## Parser objects — 2026-09-21, build 18.0.9644, arm64
+
+A **separate experimental plugin**, `VDJParserProbe`, now calls the parser candidate
+on a fixed list of `is_using` inputs. This expands beyond the memory-only probe's
+no-private-calls scope. The calling convention is supported by the current public
+callback call sites and the historical named `IAction::create(char const*, char
+const**, int)` signature. Current consumer code supplies the parameter-vector
+layout; the public callback and current deleting destructor supply the release
+sequence. The [guard manifest](../tests/parser-object-layout-9644.json) records the
+exact image, vtable, function bounds and code hashes. The historical address is
+not called or transplanted.
+
+Before calling private code, the plugin checks the loaded build, architecture,
+UUID and SHA-256 of every guarded code interval. It accepts only the expected
+`ACTION_is_using` vtable, a reference count of one, and a bounded parameter span.
+It copies only tag/payload fields and input-matching text, then atomically releases
+its reference and calls the verified deleting destructor. It never evaluates or
+executes that private object. Separately, public `GetInfo` evaluates the same
+fixed script to obtain its HRESULT. Thus this is live object inspection, **not a
+hook observing the object created inside a particular SDK call**.
+
+The [live capture](../tests/parser-objects-9644.jsonl) completed two identical
+rounds within one load; the [run journal](../tests/parser-object-run-9644.json)
+records context, bundle/capture hashes and before/after checks. All four decks
+were stopped and unloaded, and remained so. Every expected release call returned.
+The earlier [discovery attempt](../tests/parser-object-run-9644-initial.json)
+returned an empty title and produced no parser capture before restart.
+
+Observed representation and recognition, scoped to this fixture:
+
+- `cue`, quoted `cue`, and both nonsense controls became text parameters in the
+  same action class. Nonsense was **retained**, not discarded by this parse.
+  Public evaluation distinguished `cue` (`S_OK`) from nonsense (`E_NOTIMPL`).
+- Bare `is_using` yielded an empty parameter vector and public `E_INVALIDARG`.
+- The second arguments `7`, `7.5`, `1000ms` and `50%` produced distinct integer,
+  decimal, millisecond and percentage tags. The percentage payload was float32
+  `0.5`; the millisecond payload was float32 `1000`. `just parser-objects` prints
+  all decoded fields from the capture, avoiding another hand-maintained table.
+- No conclusion about recency, timing, or whether the extra arguments affect
+  behaviour follows from these results. `is_using` remains behaviour-Untested.
+- The rounds are repeats within one run, not independent sessions. Object layout
+  is measured for these cases on this build, not a public or portable ABI.
+
+Reproduction:
+
+```sh
+just plugin-parser-test
+just plugin-parser-build --install
+just vdj-query "get_effect_title 'VDJParserProbe'"
+just parser-objects
+```
+
+`parser-<pid>-<time>.jsonl` is written in the same working directory as the memory
+probe. The last command validates the committed capture by default; pass a new
+capture path to validate another run. A cached plugin may not rerun `OnLoad`.
+Do not overwrite an in-use bundle expecting it to reload. A newly installed name
+required a restart in this session. Normal quit left an idle process without
+UI/HTTP; SIGTERM and relaunch restored the app before the first parser call. The
+cause of that shutdown issue is unresolved; it is not evidence of parser failure.
+
+Failure handling is bounded: an unexpected class or shared reference count aborts
+rather than guessing a destructor or freeing someone else's reference. Such an
+abort can retain one parser allocation until app exit. The happy path was observed;
+private API changes can still invalidate assumptions outside the guarded intervals.
+This tool is deliberately not a general arbitrary-script parser service.
+
+**Next useful discovery target:** the consumer's keyword comparisons, joined to
+these typed parameters. This run shows why dumping parsed objects alone will not
+enumerate valid tails: real and nonsense text both survive parsing. Keep any
+consumer-derived list as candidates until a discriminating runtime test validates
+it. Use the parser instrument for argument types, units and binding questions.
