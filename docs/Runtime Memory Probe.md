@@ -173,3 +173,68 @@ these typed parameters. This run shows why dumping parsed objects alone will not
 enumerate valid tails: real and nonsense text both survive parsing. Keep any
 consumer-derived list as candidates until a discriminating runtime test validates
 it. Use the parser instrument for argument types, units and binding questions.
+
+## Consumer keyword pass — 2026-09-21, build 18.0.9644, arm64
+
+`just is-using-keywords` joins the
+[current consumer extraction](../tests/is-using-consumer-9644.json) to the native
+captures named and hashed in the [run journal](../tests/is-using-keyword-run-9644.json).
+The extractor locates `ACTION_is_using` through current RTTI and its query vtable
+slot, then records exact direct literal-setup/comparison sites and helper bodies.
+It accepts only a contiguous ADRP/ADD/MOV/BL pattern, checks the helper's text-tag
+and literal-length checks, and keeps source register/callsite provenance. This is
+bounded Tier 2 extraction, not transitive analysis or a complete keyword schema.
+
+The separate **VDJKeywordProbe** uses public `GetInfo` and `GetStringInfo` only.
+It has no private parser calls and never executes the scripts it queries. Its
+compiled [case list](../tests/is-using-keyword-cases.json) includes every recovered
+literal in first position, nonsense controls, quoted/uppercase `cue`, and later
+`inaudible` positions paired with nonsense at the same positions.
+
+The captures agree across rounds and repeat triggers in one stopped/unloaded
+session. First-argument `cue`, `effect`, `equalizer`, `filter`, `load`, `loop`,
+`loopsize`, `pads`, `sample` and `stems` returned native `S_OK` and `off` text.
+`inaudible` in first position matched the nonsense controls: numeric `E_NOTIMPL`
+and empty text with `S_FALSE`. Bare `is_using` returned numeric `E_INVALIDARG`.
+Quoted and uppercase `cue` matched lowercase `cue` in this fixture.
+
+The consumer compares `inaudible` against later parameter values, whereas its
+feature comparisons use the first parameter (see recorded parameter setup and
+callsite registers). This is a **structural modifier lead**. Both later-position
+forms in the live suite matched their nonsense-tail controls; their behaviour is
+unresolved in this fixture. Do not turn a string recovered from this routine into
+a first-argument keyword without checking its role. No new keyword was found
+relative to the existing vocabulary, and behaviour remains Untested.
+
+Commands:
+
+```sh
+just plugin-keywords-build --install
+just vdj-query "get_effect_title 'VDJKeywordProbe'"
+just is-using-keywords
+```
+
+The first title query loaded the plugin and captured without selecting an effect
+slot. To repeat the fixed sweep in the loaded plugin, read its button state first,
+then use `effect_button 'VDJKeywordProbe' 1` and explicitly restore `off` if the
+starting state was off. In this run the bare button action captured but stayed on;
+repeating the bare action did not turn it off. The explicit `off` restore was
+independently read back as `no`. The journal preserves that initial restore failure
+and final successful restore. Multiple callbacks can produce multiple captures;
+never infer capture count from the number of actions. Files are
+`keywords-<pid>-<time>-<serial>.jsonl` in the shared probe working directory.
+
+Re-extract the structural evidence without touching the canonical vocabulary:
+
+```sh
+uv run --with capstone --python .venv/bin/python3 python tools/is_using_consumer.py \
+  --check tests/is-using-consumer-9644.json
+python3 -m unittest discover -s tools -p test_is_using_keywords.py
+```
+
+For future agents, query the compact join before opening disassembly. This pass
+supports the method **consumer comparisons → position-aware candidates → native
+recognition controls**. For `inaudible` behaviour, the next fixture must actually
+separate audible from inaudible use while controlling timing; another idle sweep
+will not answer it. For broader discovery, apply the method to a verb whose
+consumer vocabulary is unresolved rather than repeating this settled list.

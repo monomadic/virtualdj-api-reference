@@ -1,0 +1,23 @@
+// Frozen from tests/is-using-keyword-cases.json. Public queries only.
+static const char* kKeywordCases[] = {
+    "is_using",
+    "is_using cue",
+    "is_using effect",
+    "is_using equalizer",
+    "is_using filter",
+    "is_using inaudible",
+    "is_using load",
+    "is_using loop",
+    "is_using loopsize",
+    "is_using pads",
+    "is_using sample",
+    "is_using stems",
+    "is_using zzunknowna",
+    "is_using zzunknownb",
+    "is_using 'cue'",
+    "is_using CUE",
+    "is_using cue inaudible",
+    "is_using cue zzunknowna",
+    "is_using cue 1000ms inaudible",
+    "is_using cue 1000ms zzunknowna",
+};

@@ -7,6 +7,7 @@
 #   tools/plugin/build.sh --skin     # Sound Effect + custom skin interface
 #   tools/plugin/build.sh --memory   # bounded read-only host memory capture
 #   tools/plugin/build.sh --parser   # build-gated fixed-input parser experiment
+#   tools/plugin/build.sh --keywords # public-SDK fixed keyword/control sweep
 #
 # Needs the Atomix SDK headers, which this repo does not vendor. Put a copy under
 # vendor/ (see .gitignore and docs/Plugin SDK.md); any directory containing
@@ -49,6 +50,12 @@ if [[ " $* " == *" --parser "* ]]; then
     NAME="VDJParserProbe"
     DEFINES=(-DVDJINTROSPECT_DSP)
     SOURCE="$REPO/tools/plugin/VDJParserProbe.cpp"
+    SUBDIR_DEFAULT="SoundEffect"
+fi
+if [[ " $* " == *" --keywords "* ]]; then
+    NAME="VDJKeywordProbe"
+    DEFINES=(-DVDJINTROSPECT_DSP)
+    SOURCE="$REPO/tools/plugin/VDJKeywordProbe.cpp"
     SUBDIR_DEFAULT="SoundEffect"
 fi
 BUILD="$REPO/build"

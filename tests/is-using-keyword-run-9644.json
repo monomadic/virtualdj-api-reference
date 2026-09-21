@@ -1,0 +1,71 @@
+{
+  "build": "18.0.9644",
+  "captured_utc": "2026-09-21T15:31:24.047731+00:00",
+  "before_restart": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "before": {
+    "deck 1 play": "no",
+    "deck 1 loaded": "no",
+    "deck 2 play": "no",
+    "deck 2 loaded": "no",
+    "deck 3 play": "no",
+    "deck 3 loaded": "no",
+    "deck 4 play": "no",
+    "deck 4 loaded": "no",
+    "effect_button 'VDJKeywordProbe' 1": "no"
+  },
+  "trigger_query": "get_effect_title 'VDJKeywordProbe'",
+  "trigger_result": "VDJKeywordProbe - Deck 1",
+  "button_name": "Capture",
+  "actions": [
+    {
+      "script": "effect_button 'VDJKeywordProbe' 1",
+      "result": "true"
+    },
+    {
+      "script": "effect_button 'VDJKeywordProbe' 1",
+      "role": "restore",
+      "result": "true"
+    },
+    {
+      "script": "effect_button 'VDJKeywordProbe' 1 off",
+      "role": "explicit restore",
+      "result": "true"
+    }
+  ],
+  "restart_note": "Normal quit closed HTTP/UI but left idle process; SIGTERM and relaunch restored it before probe.",
+  "button_after_trigger": "yes",
+  "after": {
+    "deck 1 play": "no",
+    "deck 1 loaded": "no",
+    "deck 2 play": "no",
+    "deck 2 loaded": "no",
+    "deck 3 play": "no",
+    "deck 3 loaded": "no",
+    "deck 4 play": "no",
+    "deck 4 loaded": "no",
+    "effect_button 'VDJKeywordProbe' 1": "no"
+  },
+  "state_checks_match": true,
+  "plugin_sha256": "99b0beafaef04533a5e030741b835a003ea39bf12dcc634107c612c0bc360606",
+  "screenshot_provenance": "Not applicable: evidence is HTTP journal and native plugin captures.",
+  "arch": "arm64",
+  "consumer_source": "tests/is-using-consumer-9644.json",
+  "binary_sha256": "f8cda97264a1b6211a889b808dfb6f06a9d4379afa0db0cf8e631b1a02c3eec3",
+  "captures": {
+    "tests/is-using-keywords-9644-run1.jsonl": "19b3eb57aa2c63fdfd0f4ae45ffc0e01155960470809ae72980b862cc0f308f6",
+    "tests/is-using-keywords-9644-run2.jsonl": "335a29334d3a3f4e73011cf790db95f647e9415cb3ea2f2576eda3fb0b06f792",
+    "tests/is-using-keywords-9644-run3.jsonl": "b47af91374f0e3c37694431f40312121cab2835a14636fb35257f37f71af4fc8",
+    "tests/is-using-keywords-9644-run4.jsonl": "b47af91374f0e3c37694431f40312121cab2835a14636fb35257f37f71af4fc8",
+    "tests/is-using-keywords-9644-run5.jsonl": "b47af91374f0e3c37694431f40312121cab2835a14636fb35257f37f71af4fc8"
+  },
+  "scope": "Repeated public SDK queries in one stopped/unloaded app session. Capture button produced multiple callbacks; capture count is not an action-count assertion."
+}

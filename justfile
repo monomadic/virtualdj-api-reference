@@ -791,3 +791,10 @@ plugin-parser-test:
 # Small decoded view; validates complete capture, guards, ownership and repeat agreement.
 parser-objects *args:
     {{python}} tools/parser_objects.py {{args}}
+
+# Current-build is_using consumer candidates joined to public SDK capture results.
+is-using-keywords:
+    {{python}} tools/is_using_keywords.py
+
+plugin-keywords-build *args:
+    tools/plugin/build.sh --keywords {{args}}
