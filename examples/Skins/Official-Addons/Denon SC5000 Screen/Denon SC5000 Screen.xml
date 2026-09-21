@@ -1,0 +1,4201 @@
+﻿<skin name="denonsc5000" version="2020" width="1280" height="800" nbdecks="4" dpi="2.0" hidden="true">
+<!-- Dual Layer -->
+
+	<font name="Arial"/>
+	<group name="windowdefines">
+
+		
+		<define color="backbright" value="#404040"/>
+		<define color="backdark" value="#303030"/>
+		
+		<define color="deckcolor" value="#649EF0" deck="1"/>
+		<define color="deckcolor" value="#D93636" deck="2"/>
+		<define color="deckcolor" value="#4AC95F" deck="3"/>
+		<define color="deckcolor" value="#C99438" deck="4"/>
+		
+		<define color="deckcolordark" value="#365E8F" deck="1"/>
+		<define color="deckcolordark" value="#8F2424" deck="2"/>
+		<define color="deckcolordark" value="#368F47" deck="3"/>
+		<define color="deckcolordark" value="#966E29" deck="4"/>
+		
+		<define color="deckcolorbright" value="#1e7b96" deck="1"/>
+		<define color="deckcolorbright" value="#E82525" deck="2"/>
+		<define color="deckcolorbright" value="#64F082" deck="3"/>
+		<define color="deckcolorbright" value="#F0C164" deck="4"/>
+		<define color="deckcolorbright" value="#eeeeee" deck="master"/>
+		<define color="colorBass" value="#2C6DAC" deck="1"/>
+		<define color="colorMed" value="#5993CE" deck="1"/>
+		<define color="colorHigh" value="#699ED2" deck="1"/>
+		<define color="colorHigh" value="#e97f81" deck="2"/>
+		<define color="colorMed" value="#e4000d" deck="2"/>
+		<define color="colorBass" value="#7a0005" deck="2"/>
+
+		<define color="buttonoff" value="#151515"/> 
+		<define color="padbuttonselected" value="#17313b" deck="1"/> 
+		<define color="padbuttonselected" value="#53181e" deck="2"/>
+		<define color="padbuttonselected" value="#16322f" deck="3"/> 
+		<define color="padbuttonselected" value="#4a271d" deck="4"/>
+
+		<define color="buttonon" value="#156c89" deck="1"/>
+		<define color="buttonon" value="#ac2f37" deck="2"/>
+		<define color="buttonon" value="#0d7264" deck="3"/>
+		<define color="buttonon" value="#a54d30" deck="4"/>
+
+		<define color="buttonover" value="#233d48" deck="1"/>
+		<define color="buttonover" value="#502b2f" deck="2"/>
+		<define color="buttonover" value="#203f3d" deck="3"/>
+		<define color="buttonover" value="#4e342d" deck="4"/>
+		<define color="bordercolor" value="#000000"/>
+
+		<!-- Texts -->
+		<define color="textoff2" value="#a6a6a6"/>
+		<define color="texton" value="#d4d4d4"/>
+		<define color="textselected" value="#a6a6a6"/>
+	
+		<define class="denonbrowser">
+			<background color="#000000"/>
+			<colors>
+				<lists background="#000000" stripes="#151515" focus="#303030" selected="#303030" text="#eeeeee" overtext="#eeeeee" selectedtext="#eeeeee" focustext="#eeeeee" />
+				<scrollbars background="#303030" button="#eeeeee"/>
+				<columns background="#202020" text="#aaaaaa"/>
+				<info background="#0A0A0A" stripes="#151515" text="#eeeeee" label="#909090" artist="#eeeeee" title="#eeeeee"/>
+			</colors>
+			<font size="34" />
+			<fontheader size="34" />
+		</define>
+		
+		<define class="newpadbutton" placeholders="action,rightclick,important=true,textaction,sourcecolor,textsize=26">
+			<button action="[ACTION]" rightclick="[RIGHTCLICK]">
+				<size width="142" height="70"/>
+				<off color="#1A1A1A" shape="square" border="bordercolor" border_size="2" />
+				<selected color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<down color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<text dx="+4" dy="-10" width="134" fontsize="[TEXTSIZE]" color="textoff2" colorselected="textselected" colordown="texton" align="center" action="[TEXTACTION]"  />
+			</button>
+			<visual type="color" source="[SOURCECOLOR]" visibility="0.6" tooltip="">
+				<pos x="+37" y="+60"/>
+				<size width="70" height="4"/>
+			</visual>
+		</define>
+		
+		<define class="padbutton" placeholders="action,rightclick,important=true,textaction,sourcecolor,textsize=26">
+			<button action="[ACTION]" rightclick="[RIGHTCLICK]">
+				<size width="130" height="70"/>
+				<off color="#1A1A1A" shape="square" border="bordercolor" border_size="2" />
+				<selected color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<down color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<text dx="+4" dy="-10" width="122" fontsize="[TEXTSIZE]" color="textoff2" colorselected="textselected" colordown="texton" align="center" action="[TEXTACTION]"  />
+			</button>
+			<visual type="color" source="[SOURCECOLOR]" visibility="0.6" tooltip="">
+				<pos x="+35" y="+60"/>
+				<size width="60" height="4"/>
+			</visual>
+		</define>
+		<define class="padbuttonshort" placeholders="action,rightclick,important=true,textaction,sourcecolor,textsize=26">
+			<button action="[ACTION]" rightclick="[RIGHTCLICK]">
+				<size width="130" height="40"/>
+				<off color="#1A1A1A" shape="square" border="bordercolor" border_size="2" />
+				<selected color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<down color="#202020" shape="square" border="deckcolordark" border_size="2" />
+				<text dx="+4" dy="-8" width="122" fontsize="[TEXTSIZE]" color="textoff2" colorselected="textselected" colordown="texton" align="center" action="[TEXTACTION]"  />
+			</button>
+			<visual type="color" source="[SOURCECOLOR]" visibility="0.6" tooltip="">
+				<pos x="+35" y="+32"/>
+				<size width="60" height="4"/>
+			</visual>
+		</define>
+		
+		<define class="custombutton" action="[ACTION]" placeholders="*bwidth=120,bheight=70,textaction,textsize=26">
+			<size width="[BWIDTH]" height="[BHEIGHT]"/>
+			<off color="buttonoff" shape="square" border="bordercolor" border_size="2" radius="2"/>
+			<selected color="padbuttonselected" shape="square" border="deckcolordark" border_size="2" radius="2"/>
+			<down color="padbuttonselected" shape="square" border="deckcolordark" border_size="2" radius="2"/>
+			<text dx="+4" width="[BWIDTH]-8" fontsize="[TEXTSIZE]" color="textoff2" colorselected="textselected" colordown="texton" align="center" action="[TEXTACTION]"  />
+		</define>
+		
+		<define class="samplerbutton" placeholders="*cwidth=90,*bwidth=244,action,textaction,sourcecolor,textsize=26">
+			<button action="[ACTION]">
+				<size width="[BWIDTH]" height="67"/>
+				<off color="#1A1A1A"  border_size="1" border="#000000"/>
+				<on color="#303030" border_size="1" border="#303030"/>
+				<text dx="+4" dy="-5" width="[BWIDTH]-4" fontsize="[TEXTSIZE]" color="#909090" colorselected="white" colordown="white" align="center" action="[TEXTACTION]"  />
+			</button>
+			<visual type="color" source="[SOURCECOLOR]" visibility="0.6">
+				<pos x="+[BWIDTH]*30/100" y="+59" width="[BWIDTH]*40/100" height="4"/>
+			</visual>
+		</define>
+		
+		<define class="beat_bar">
+			<size width="35" height="15"/>
+			<off shape="square" color="buttonoff" border_size="1" border="#909090" />
+			<on shape="square" color="deckcolordark" border_size="1" border="deckcolor" />
+		</define>
+		<define class="beat_barm">
+			<size width="35" height="15"/>
+			<off shape="square" color="buttonoff" border_size="1" border="deckcolordark" />
+			<on shape="square" color="deckcolordark" border_size="1" border="deckcolordark" />
+		</define>
+		<define class="beat_bar_master">
+			<size width="35" height="15"/>
+			<off shape="square" color="#000000" border_size="1" border="#909090" />
+			<on shape="square" color="#909090" border_size="1" border="#909090" />
+		</define>
+		<define class="beat_bar_masteroff">
+			<size width="35" height="15"/>
+			<off shape="square" color="#000000" border_size="1" border="#505050" />
+			<on shape="square" color="#505050" border_size="1" border="#505050" />
+		</define>
+		
+		<define class="beat_phase">
+			
+			<slider orientation="horizontal" frommiddle="true" direction="left" action="get_beatdiff" visibility="play ? not masterdeck">
+				<pos x="+3" y="+2"/>
+				<size width="155-6" height="15-4"/>
+				<on shape="square" color="buttonoff" />
+				<off shape="square" color="deckcolorbright"  />
+				<fader height="15-4" width="0" color="deckcolorbright"/>
+			</slider>
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="2" height="15"/>
+				<off shape="square" color="#909090" />
+			</visual>
+			<visual>
+				<pos x="+155" y="+0"/>
+				<size width="2" height="15"/>
+				<off shape="square" color="#909090"  />
+			</visual>
+			<visual>
+				<pos x="+77" y="+0"/>
+				<size width="1" height="15"/>
+				<off shape="square" color="#909090"/>
+			</visual>
+			<visual>
+				<pos x="+38" y="+0"/>
+				<size width="1" height="15"/>
+				<off shape="square" color="#707070"/>
+			</visual>
+			<visual>
+				<pos x="+77+38" y="+0"/>
+				<size width="1" height="15"/>
+				<off shape="square" color="#707070"/>
+			</visual>
+		</define>
+		
+		<define class="beats_deck">
+			<visual class="beat_bar" x="+0" y="+0" source="goto_bar 1"/>
+			<visual class="beat_bar" x="+40" y="+0" source="goto_bar 2"/>
+			<visual class="beat_bar" x="+40+40" y="+0" source="goto_bar 3"/>
+			<visual class="beat_bar" x="+40+40+40" y="+0" source="goto_bar 4"/>
+		</define>
+		<define class="beats_deckmaster">
+			<visual class="beat_barm" x="+0" y="+0" source="goto_bar 1"/>
+			<visual class="beat_barm" x="+40" y="+0" source="goto_bar 2"/>
+			<visual class="beat_barm" x="+40+40" y="+0" source="goto_bar 3"/>
+			<visual class="beat_barm" x="+40+40+40" y="+0" source="goto_bar 4"/>
+		</define>
+		<define class="beats_master">
+			<deck deck="master">
+				<visual class="beat_bar_master" x="+0" y="+0" source="goto_bar 1"/>
+				<visual class="beat_bar_master" x="+40" y="+0" source="goto_bar 2"/>
+				<visual class="beat_bar_master" x="+40+40" y="+0" source="goto_bar 3"/>
+				<visual class="beat_bar_master" x="+40+40+40" y="+0" source="goto_bar 4"/>
+			</deck>
+		</define>
+		<define class="beats_masterempty">
+			<deck deck="master">
+				<visual class="beat_bar_masteroff" x="+0" y="+0" source="off"/>
+				<visual class="beat_bar_masteroff" x="+40" y="+0" source="off"/>
+				<visual class="beat_bar_masteroff" x="+40+40" y="+0" source="off"/>
+				<visual class="beat_bar_masteroff" x="+40+40+40" y="+0" source="off"/>
+			</deck>
+		</define>
+		
+		<define class="brbutton">
+			<off color="#1A1A1A" border_size="2" border="#000000"/>
+			<selected color="#1A1A1A" border_size="2" border="#000000"/>
+			<down color="#303030" border_size="2" border="#aaaaaa"/>
+		</define>
+			
+		<define class="songprogress" colorPlayed="#000000" colorHigh="colorHigh" colorMed="colorMed" colorBass="colorBass" >
+			<size width="1260-20-80-145" height="70"/>
+			<wave>
+				<size height="70-16"/>
+				<pos y="+8"/>
+			</wave>
+			<cues dy="-8" shade="0">
+				<size width="25" height="70"/>
+				<clipmask x="30" y="88"/>
+			</cues>
+			<loops dy="-8" shade="0">
+				<size width="36" height="70"/>
+				<clipmask x="92" y="88"/>
+			</loops>
+		</define>
+		<define class="songprogresscolors" colorVocal="#075CDB" colorInstru="#0CFF00" colorBeat="#FFFFFF" colorNoBeat="#000000" colorPlayed="#000000" colorHigh="colorHigh" colorMed="colorMed" colorBass="colorBass" >
+			<size width="1260-20-80-145" height="70"/>
+			<wave>
+				<size height="70-16"/>
+				<pos y="+8"/>
+			</wave>
+			<cues dy="-8" shade="0">
+				<size width="25" height="70"/>
+				<clipmask x="30" y="88"/>
+			</cues>
+			<loops dy="-8" shade="0">
+				<size width="36" height="70"/>
+				<clipmask x="92" y="88"/>
+			</loops>
+		</define>
+		
+		<define class="songprogresssmall" colorPlayed="#000000" colorHigh="colorHigh" colorMed="colorMed" colorBass="colorBass" >
+			<size width="1280-730-20-90" height="70"/>
+			<wave>
+				<size height="70-16"/>
+				<pos y="+8"/>
+			</wave>
+			<cues dy="-8" shade="0">
+				<size width="25" height="70"/>
+				<clipmask x="30" y="88"/>
+			</cues>
+			<loops dy="-8" shade="0">
+				<size width="36" height="70"/>
+				<clipmask x="92" y="88"/>
+			</loops>
+		</define>
+		<define class="songprogresssmallcolors" colorVocal="#075CDB" colorInstru="#0CFF00" colorBeat="#FFFFFF" colorNoBeat="#000000" colorPlayed="#000000" colorHigh="colorHigh" colorMed="colorMed" colorBass="colorBass"  >
+			<size width="1280-730-20-90" height="70"/>
+			<wave>
+				<size height="70-16"/>
+				<pos y="+8"/>
+			</wave>
+			<cues dy="-8" shade="0">
+				<size width="25" height="70"/>
+				<clipmask x="30" y="88"/>
+			</cues>
+			<loops dy="-8" shade="0">
+				<size width="36" height="70"/>
+				<clipmask x="92" y="88"/>
+			</loops>
+		</define>
+		
+		<define class="needlelock" action="nothing" visibility="var '@$denonneedlelock' 1 ? is_audible">
+			<size width="1260-20-80-145" height="70"/>
+		</define>
+	
+		<define class="needlelocksmall" action="nothing" visibility="var '@$denonneedlelock' 1 ? is_audible">
+			<size width="1280-730-20-90" height="70"/>
+		</define>
+			
+		<define class="songprogressbar" type="linear" orientation="horizontal" source="song_pos" visibility="loaded">
+			<size width="1260-20-80-145" height="7"/>
+			<on color="#000000" shape="square" border_size="1" border="#606060" />
+			<off color="deckcolordark" shape="square" border_size="1" border="#606060" />
+		</define>
+		<define class="songprogressbarsmall" type="linear" orientation="horizontal" source="song_pos" visibility="loaded">
+			<size width="1280-730-20-90" height="7"/>
+			<on color="#000000" shape="square"  border_size="1" border="#606060"/>
+			<off color="deckcolordark" shape="square"  border_size="1" border="#606060"/>
+		</define>
+
+
+		<!-- Scratchwave-->
+		<define class="scratchwtallcolor" placeholders="*wheight=155" orientation="horizontal" colorVocal="#075CDB" colorInstru="#0CFF00" colorBeat="#FFFFFF" colorNoVocal="#36393B" colorNoInstru="#4B4C4D" colorNoBeat="#595A5C">
+			<size width="1010" height="[WHEIGHT]-20"/>
+			<grid mirrored="yes" pos="-10" shapepos="-10" shapemirrored="both" background="no" backgroundshaded="no" height="10" size="4" mainsize="8" maincolor="deckcolorbright" color="#707070"/>
+			<gridlines width="1" color="#aaaaaa" transparency="0.8"/>
+			<cue y="-10" height="19">
+				<text dx="25" dy="-1" size="22" />
+				<mask x="67" y="166" width="23" height="19"/>
+			</cue>
+			<overlay>
+				<pos x="+503" y="-15"/>
+				<size width="4" height="[WHEIGHT]+10"/>
+				<background color="white" shape="square"/>
+			</overlay>
+		</define>
+		<define class="scratchwtall" placeholders="*wheight=155"  orientation="horizontal">
+			<size width="1010" height="[WHEIGHT]-20"/>
+			<grid mirrored="yes" pos="-10" shapepos="-10" shapemirrored="both" background="no" backgroundshaded="no" height="10" size="4" mainsize="8" maincolor="deckcolorbright" color="#707070"/>
+			<gridlines width="1" color="#aaaaaa" transparency="0.8"/>
+			<cue y="-10" height="19">
+				<text dx="25" dy="-1" size="22" />
+				<mask x="67" y="166" width="23" height="19"/>
+			</cue>
+			<overlay>
+				<pos x="+503" y="-15"/>
+				<size width="4" height="[WHEIGHT]+10"/>
+				<background color="white" shape="square"/>
+			</overlay>
+		</define>
+		
+		<define class="scratchwmstcolor" placeholders="*wheight=40" orientation="horizontal" colorVocal="#075CDB" colorInstru="#0CFF00" colorBeat="#FFFFFF" colorNoVocal="#36393B" colorNoInstru="#4B4C4D" colorNoBeat="#595A5C">
+			<size width="1010" height="[WHEIGHT]-20"/>
+			<grid mirrored="yes" pos="-10" shapepos="-10" shapemirrored="both" background="no" backgroundshaded="no" height="10" size="4" mainsize="8" maincolor="deckcolorbright" color="#707070"/>
+			<gridlines width="1" color="#aaaaaa" transparency="0.8"/>
+			<cue y="-10" height="19">
+				<text dx="25" dy="-1" size="20" />
+				<mask x="67" y="166" width="23" height="19"/>
+			</cue>
+			<overlay>
+				<pos x="+503" y="-15"/>
+				<size width="4" height="[WHEIGHT]+10"/>
+				<background color="white" shape="square"/>
+			</overlay>
+		</define>
+		<define class="scratchwmst" placeholders="*wheight=40" orientation="horizontal">
+			<size width="1010" height="[WHEIGHT]-20"/>
+			<grid mirrored="yes" pos="-10" shapepos="-10" shapemirrored="both" background="no" backgroundshaded="no" height="10" size="4" mainsize="8" maincolor="deckcolorbright" color="#707070"/>
+			<gridlines width="1" color="#aaaaaa" transparency="0.8"/>
+			<cue y="-10" height="19">
+				<text dx="25" dy="-1" size="20" />
+				<mask x="67" y="166" width="23" height="19"/>
+			</cue>
+			<overlay>
+				<pos x="+503" y="-15"/>
+				<size width="4" height="[WHEIGHT]+10"/>
+				<background color="white" shape="square"/>
+			</overlay>
+		</define>
+
+		<define class="wavelock" y="-10" action="nothing" placeholders="*lheight=110">
+			<size width="1010" height="[LHEIGHT]+20"/>
+		</define>
+
+
+		<!-- Deck panels-->
+		<define class="minideck">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="100"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+77" y="+0"/>
+				<size width="1280-77" height="100"/>
+				<off color="#000000"/>
+			</visual>
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="100"/>
+				<off color="deckcolorbright"/>
+			</visual>
+			<dropzone>
+				<pos x="+0" y="+0"/>
+				<size width="1260" height="100"/>
+			</dropzone>
+			<textzone>
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="100"/>
+				<text fontsize="52" align="center" color="deckcolorbright" action="get_deck_letter"/>
+			</textzone>
+				
+			<songpos class="songprogresssmall" x="+730+90" y="+5" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+			<songpos class="songprogresssmallcolors" x="+730+90" y="+5" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false : false" />
+			<visual class="songprogressbarsmall" x="+730+90" y="+5+70+10"/>
+			<button class="needlelocksmall" x="+730+90" y="+5"/>
+
+			
+
+			<group name="deckdata" x="+90" y="+10">
+				
+					
+				<group name="bpm" x="+130+320+30" y="+0">
+		
+					<textzone visibility="loaded">
+						<pos x="+0" y="+0"/>
+						<size width="170" height="80"/>
+						<text fontsize="76" color="deckcolorbright" align="right" valign="bottom" format="`get_bpm &amp; param_cast &apos;int_trunc&apos; 2`."/>
+					</textzone>
+					<textzone visibility="loaded">
+						<pos x="+170" y="+0"/>
+						<size width="70" height="80"/>
+						<text fontsize="46" color="deckcolorbright" align="left" valign="bottom" action="get_bpm &amp; param_cast frac 2 &amp; param_multiply 100 &amp; param_cast &apos;00&apos;"/>
+					</textzone>
+				</group>
+
+
+				<group name="time" x="+130" y="+0" visibility="loaded">
+					<button action="nothing" query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+0" y="+0"/>
+						<size width="140" height="75"/>
+						<text fontsize="80" color="#505050" align="right" valign="bottom" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+						<textselected fontsize="80" color="#eeeeee" align="right" valign="bottom" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+					</button>
+					<button action="nothing" query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140" y="+0"/>
+						<size width="120" height="75"/>
+						<text fontsize="80" color="#505050" align="right" valign="bottom" format="`get_time_sec &amp; param_cast '00'`."/>
+						<textselected fontsize="80" color="#eeeeee" align="right" valign="bottom" format="`get_time_sec &amp; param_cast '00'`."/>
+					</button>
+					<button action="nothing" query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140+120+2" y="+0"/>
+						<size width="50" height="75"/>
+						<text fontsize="54" color="#505050" align="left" valign="bottom" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+						<textselected fontsize="54" color="#eeeeee" align="left" valign="bottom" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+					</button>
+					<button action="display_time 'remain,elapsed'"  >
+						<pos x="+0" y="+0"/>
+						<size width="320" height="75"/>
+					</button>
+				</group>
+
+				<group name="key" x="+0" y="+10"> 
+					<textzone>
+						<pos x="+0" y="+0"/>
+						<size width="100" height="45"/>
+						<text fontsize="40" color="#eeeeee" align="center" action="get_key"/>
+					</textzone>
+					<visual type="color" source="get_key_color" visibility="loaded">
+						<pos x="+20" y="+55"/>
+						<size width="100-40" height="6"/>
+					</visual>
+				</group>
+
+			</group>
+			
+			<visual >
+				<pos x="0" y="-5"/>
+				<size width="1280" height="6"/>
+				<off color="#000000"/>
+			</visual>
+			<visual >
+				<pos x="0" y="-3"/>
+				<size width="1280" height="2"/>
+				<off color="#404040"/>
+			</visual>
+		</define>
+
+		<define class="minidecksub">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="100"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+77" y="+0"/>
+				<size width="1280-77" height="100"/>
+				<off color="#000000"/>
+			</visual>
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="100"/>
+				<off color="deckcolorbright"/>
+			</visual>
+			<dropzone>
+				<pos x="+0" y="+0"/>
+				<size width="1260" height="100"/>
+			</dropzone>
+			<button action="controllerscreen_deck & controllervar '$decksubassign[MOD]' 1">
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="100"/>
+				<text fontsize="52" align="center" color="deckcolorbright" action="get_deck_letter"/>
+			</button>
+				
+			<songpos class="songprogresssmall" x="+730+90" y="+5" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+			<songpos class="songprogresssmallcolors" x="+730+90" y="+5" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false : false" />
+			<visual class="songprogressbarsmall" x="+730+90" y="+5+70+10"/>
+			<button class="needlelocksmall" x="+730+90" y="+5"/>
+
+			
+
+			<group name="deckdata" x="+90" y="+10">
+				
+					
+				<group name="bpm" x="+130+320+30" y="+0">
+		
+					<textzone visibility="loaded">
+						<pos x="+0" y="+0"/>
+						<size width="170" height="80"/>
+						<text fontsize="76" color="deckcolorbright" align="right" valign="bottom" format="`get_bpm &amp; param_cast &apos;int_trunc&apos; 2`."/>
+					</textzone>
+					<textzone visibility="loaded">
+						<pos x="+170" y="+0"/>
+						<size width="70" height="80"/>
+						<text fontsize="46" color="deckcolorbright" align="left" valign="bottom" action="get_bpm &amp; param_cast frac 2 &amp; param_multiply 100 &amp; param_cast &apos;00&apos;"/>
+					</textzone>
+				</group>
+
+
+				<group name="time" x="+130" y="+0" visibility="loaded">
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+0" y="+0"/>
+						<size width="140" height="75"/>
+						<text fontsize="80" color="#505050" align="right" valign="bottom" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+						<textselected fontsize="80" color="#eeeeee" align="right" valign="bottom" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+					</button>
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140" y="+0"/>
+						<size width="120" height="75"/>
+						<text fontsize="80" color="#505050" align="right" valign="bottom" ormat="`get_time_sec &amp; param_cast '00'`."/>
+						<textselected fontsize="80" color="#eeeeee" align="right" valign="bottom" format="`get_time_sec &amp; param_cast '00'`."/>
+					</button>
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140+120+2" y="+0"/>
+						<size width="50" height="75"/>
+						<text fontsize="54" color="#505050" align="left" valign="bottom" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+						<textselected fontsize="54" color="#eeeeee" align="left" valign="bottom" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+					</button>
+					<button action="display_time 'remain,elapsed'"  >
+						<pos x="+0" y="+0"/>
+						<size width="320" height="75"/>
+					</button>
+				</group>
+
+				<group name="key" x="+0" y="+10"> 
+					<textzone>
+						<pos x="+0" y="+0"/>
+						<size width="100" height="45"/>
+						<text fontsize="40" color="#eeeeee" align="center" action="get_key"/>
+					</textzone>
+					<visual type="color" source="get_key_color" visibility="loaded">
+						<pos x="+20" y="+55"/>
+						<size width="100-40" height="6"/>
+					</visual>
+				</group>
+
+			</group>
+			
+			<visual >
+				<pos x="0" y="-5"/>
+				<size width="1280" height="6"/>
+				<off color="#000000"/>
+			</visual>
+			<visual >
+				<pos x="0" y="-3"/>
+				<size width="1280" height="2"/>
+				<off color="#404040"/>
+			</visual>
+		</define>
+		
+		<define class="deckdatafull" >
+
+			<group name="bpmbuttons" x="+1116" y="+0">
+				<button action="quantize_all">
+					<pos x="+0" y="+6"/>
+					<size width="164" height="50"/>
+					<off color="#1A1A1A" border_size="1" border="#505050"/>
+					<on color="#99DE38" border_size="1" border="#99DE38"/>
+					<text fontsize="22" color="#707070" align="center" text="QUANTIZE"/>
+					<textselected fontsize="22" color="#000000" align="center" text="QUANTIZE"/>
+				</button>	
+				<button action="beatlock" >
+					<pos x="+0" y="+6+65"/>
+					<size width="164" height="50"/>
+					<off color="#1A1A1A" border_size="1" border="#505050"/>
+					<on color="#99DE38" border_size="1" border="#99DE38"/>
+					<text fontsize="24" color="#707070" align="center" text="BEATLOCK"/>
+					<textselected fontsize="24" color="#000000" align="center" text="BEATLOCK"/>
+				</button>
+				
+				
+				
+			</group>
+			
+			<group name="bpm" x="+1280-400-60+20" y="+5">
+			
+				<button action="nothing" query="masterdeck" visibility="masterdeck_auto">
+					<pos x="+125" y="+6"/>
+					<size width="120" height="26"/>
+					<off color="#000000" border_size="1" border="#505050"/>
+					<selected color="#aaaaaa" border_size="1" border="#aaaaaa"/>
+					<text fontsize="22" color="#707070" align="center" text="MASTER"/>
+					<textselected fontsize="20" color="#000000" align="center" text="MASTER"/>
+				</button>
+				<button action="nothing" query="masterdeck" visibility="not masterdeck_auto">
+					<pos x="+125" y="+6"/>
+					<size width="120" height="26"/>
+					<off color="#000000" border_size="1" border="#505050"/>
+					<selected color="deckcolordark" border_size="1" border="#aaaaaa"/>
+					<text fontsize="22" color="#707070" align="center" text="MASTER"/>
+					<textselected fontsize="20" color="#FFFFFF" align="center" text="MASTER"/>
+				</button>
+				
+				<textzone >
+					<pos x="+0" y="+6"/>
+					<size width="80" height="26"/>
+					<text fontsize="22" color="#909090" align="right" text="BPM"/>
+				</textzone>
+	
+				<textzone visibility="loaded">
+					<pos x="+20" y="+45"/>
+					<size width="170" height="70"/>
+					<text fontsize="76" color="deckcolorbright" valign="bottom" align="right" format="`get_bpm &amp; param_cast &apos;int_trunc&apos; 2`."/>
+				</textzone>
+				<textzone visibility="loaded">
+					<pos x="+20+170" y="+45"/>
+					<size width="70" height="70"/>
+					<text fontsize="46" color="deckcolorbright" valign="bottom" align="left" action="get_bpm &amp; param_cast frac 2 &amp; param_multiply 100 &amp; param_cast &apos;00&apos;"/>
+				</textzone>
+				
+				<button action="loaded ? set 'keydisplay' 0 & toggle 'denoneditbpm'" >
+					<pos x="+0" y="+47"/>
+					<size width="260" height="80"/>
+				</button>
+			</group>
+			
+			<group name="pitch" x="+680" y="+5">
+				<textzone>
+					<pos x="+0" y="+40"/>
+					<size width="160" height="30"/>
+					<text fontsize="22" color="#909090" align="right" text="PITCH"/>
+				</textzone>
+				<textzone>
+					<pos x="+0" y="+5"/>
+					<size width="160" height="30"/>
+					<text fontsize="22" color="#aaaaaa" align="right" format="RANGE ± %pitchrange%%"/>
+				</textzone>
+				
+				<textzone>
+					<pos x="+0" y="+72"/>
+					<size width="160" height="50"/>
+					<text fontsize="42" color="#dddddd" align="right" format="%Ppitch%"/>
+				</textzone>
+			</group>
+
+			<group name="times" x="+215" y="+5">
+				<button action="nothing" query="display_time 'elapsed'" >
+					<pos x="+5" y="+3"/>
+					<size width="140" height="30"/>
+					<text fontsize="22" color="#505050" align="right" text="ELAPSED"/>
+					<textselected fontsize="22" color="#aaaaaa" align="right" text="ELAPSED"/>
+				</button>
+				<button action="nothing" query="display_time 'remain'" >
+					<pos x="+5+165" y="+3"/>
+					<size width="130" height="30"/>
+					<text fontsize="22" color="#505050" align="right" text="REMAIN"/>
+					<textselected fontsize="22" color="#aaaaaa" align="right" text="REMAIN"/>
+				</button>
+
+				<group name="time" visibility="loaded">
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+0" y="+45+3"/>
+						<size width="140" height="65"/>
+						<text fontsize="80" color="#505050" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+						<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+					</button>
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140" y="+45+3"/>
+						<size width="120" height="65"/>
+						<text fontsize="80" color="#505050" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+						<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+					</button>
+					<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+						<pos x="+140+120+2" y="+45+3"/>
+						<size width="50" height="65"/>
+						<text fontsize="54" color="#505050" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+						<textselected fontsize="54" color="#eeeeee" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+					</button>
+				</group>
+				<button action="display_time 'remain,elapsed'"  >
+					<pos x="+0" y="+5"/>
+					<size width="310" height="120"/>
+				</button>
+				
+			</group>
+
+			<group name="loop" x="+107" y="+12">
+				<textzone>
+					<pos x="+0" y="+0"/>
+					<size width="130" height="25"/>
+					<text fontsize="22" color="#909090" align="center" text="LOOP"/>
+				</textzone>
+				<button action="nothing" query="loop">
+					<pos x="+0" y="+40"/>
+					<size width="130" height="68"/>
+					<text fontsize="62" color="#707070" align="center" format="%loop"/>
+					<textselected fontsize="62" color="deckcolorbright" align="center" format="%loop"/>
+				</button>
+			</group>
+
+			<group name="beatjump" x="+555" y="+12">
+				<textzone>
+					<pos x="+0" y="+0"/>
+					<size width="120" height="25"/>
+					<text fontsize="22" color="#909090" align="center" text="BEATJUMP"/>
+				</textzone>
+				<textzone >
+					<pos x="+0" y="+40"/>
+					<size width="120" height="68"/>
+					<text fontsize="62" color="#bbbbbb" align="center" action="beatjump_select"/>
+				</textzone>
+			</group>
+					
+
+			<group name="key" x="+3" y="+0" > 
+				<button action="nothing" query="match_key">
+					<pos x="+10" y="+5"/>
+					<size width="80" height="25"/>
+					<off color="#1A1A1A"/>
+					<on color="#aaaaaa"/>
+					<text fontsize="18" color="#707070" align="center" text="MATCH"/>
+					<textselected fontsize="18" color="#000000" align="center" text="MATCH"/>
+				</button>
+				<textzone>
+					<pos x="+0" y="+40"/>
+					<size width="100" height="25"/>
+					<text fontsize="22" color="#aaaaaa" align="center" action="get_key_modifier_text"/>
+				</textzone>
+				<textzone>
+					<pos x="+0" y="+53+10"/>
+					<size width="100" height="45"/>
+					<text fontsize="40" color="#eeeeee" align="center" action="get_key"/>
+				</textzone>
+				<visual type="color" source="get_key_color" visibility="loaded">
+					<pos x="+20" y="+53+10+55"/>
+					<size width="100-40" height="6"/>
+				</visual>
+				
+				
+				<button action="toggle 'keydisplay' & set 'denoneditbpm' 0">
+					<tooltip></tooltip>
+					<pos x="+0" y="+0"/>
+					<size width="80" height="127"/>
+				</button>
+			</group>
+
+		</define>
+				
+		<define class="deckfull">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="230"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+83" y="+0"/>
+				<size width="1025" height="126"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+1114" y="+0"/>
+				<size width="166" height="230"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="230"/>
+				<off color="deckcolorbright"/>
+			</visual>
+			<button action="controllerscreen_deck & controllervar '$deckassign' 0">
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="230"/>
+				<text fontsize="52" align="center" color="deckcolorbright" action="get_deck_letter"/>
+			</button>
+				
+				<group x="+1114+5" y="+3" name="trackinfo">
+					
+					<visual>
+						<pos x="+110" y="+3+5"/>
+						<size width="42" height="60"/>
+						<off x="440" y="92"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+3"/>
+						<size width="105" height="60"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'bpm'"/>
+					</textzone>
+					
+					
+					<visual >
+						<pos x="+110" y="+72+12"/>
+						<size width="32" height="32"/>
+						<off x="310" y="100"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+72"/>
+						<size width="105" height="55"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'length'"/>
+					</textzone>
+					
+					<button action="setting 'keydisplay'" >
+						<pos x="+110" y="+72+72"/>
+						<size width="42" height="55"/>
+						<icon x="360" y="100" width="32" height="32"/>
+					</button>
+					<textzone action="setting 'keydisplay'">
+						<pos x="+0" y="+72+72"/>
+						<size width="105" height="55"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'key'"/>
+					</textzone>
+				</group>
+				
+				<panel x="+140" y="+0" visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 1">
+					<textzone >
+						<pos x="+0" y="+40"/>
+						<size width="200" height="46"/>
+						<text fontsize="26" color="#909090" align="left" text="ADJUST KEY"/>
+					</textzone>
+					<button action="key_move -1" query="off">
+						<pos x="+210" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="-"/>
+					</button>
+					<button action="key 0" query="off">
+						<pos x="+210+110" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" action="get_key_modifier"/>
+					</button>
+					<button action="key_move +1"  query="off">
+						<pos x="+210+110+110" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="+"/>
+					</button>
+					
+					<button action="match_key">
+						<pos x="+550" y="+18"/>
+						<size width="170" height="90"/>
+						<off color="#202020" radius="8" border="#707070" border_size="2"/>
+						<selected color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<down color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<text size="26" align="center" color="white" text="MATCH"/>
+						<textselected size="26" align="center" color="#000000" text="MATCH"/>
+						<textdown size="26" align="center" color="#000000" text="MATCH"/>
+					</button>
+					
+					<button action="set 'keydisplay' 0" query="off">
+						<pos x="+790" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+					
+				</panel>
+	
+				<panel visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 0 ? true : false">
+					<panel visibility="var 'showtrackinfo' 0 ? var '@$denonshowdeckalbumart' 0">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="40" color="#eeeeee" action="get_title_before_remix" />
+								<text fontsize="40" color="#cccccc" action="get_remix_after_title" />
+							</textzone>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+63"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#aaaaaa" action="get_artist_before_feat" />
+								<text fontsize="36" color="#909090" action="get_featuring_after_artist" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="125"/>
+							</button>
+						
+					</panel>
+					
+					<panel visibility="var 'showtrackinfo' 0 ? var '@$denonshowdeckalbumart' 1">
+							<cover>
+								<pos x="+100" y="+8"/>
+								<size width="110" height="110"/>
+							</cover>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100+130" y="+3"/>
+								<size width="1177-200-130" height="60"/>
+								<text fontsize="40" color="#eeeeee" action="get_title_before_remix" />
+								<text fontsize="40" color="#cccccc" action="get_remix_after_title" />
+							</textzone>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100+130" y="+63"/>
+								<size width="1177-200-130" height="60"/>
+								<text fontsize="36" color="#aaaaaa" action="get_artist_before_feat" />
+								<text fontsize="36" color="#909090" action="get_featuring_after_artist" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="125"/>
+							</button>
+						
+					</panel>
+					
+					<panel visibility="var 'showtrackinfo' 1">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Album: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'album'" />
+								<text fontsize="36" color="#808080" format="  Year: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'year'" />
+							</textzone>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+63"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Genre: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'genre'" />
+								<text fontsize="36" color="#808080" format="  Comment: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'comment'" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="125"/>
+							</button>
+						
+					</panel>
+					
+				</panel>
+				
+				<panel visibility="loaded ? var 'denoneditbpm' 1 ? var 'keydisplay' 0">
+					<textzone >
+						<pos x="+100" y="+20"/>
+						<size width="130" height="86"/>
+						<text fontsize="26" color="#909090" align="center" format="ADJUST\nCBG"/>
+					</textzone>
+					<button action="adjust_cbg -1" query="off">
+						<pos x="+260" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg -0.1" query="off">
+						<pos x="+260+100" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					
+					<button action="adjust_cbg +0.1" query="off">
+						<pos x="+260+225" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg +1" query="off">
+						<pos x="+260+230+95" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+
+					
+					
+					<button action="beat_tap" query="off">
+						<pos x="+300+230+95+80" y="+18"/>
+						<size width="100" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="TAP"/>
+					</button>
+					<button action="reanalyze" query="off">
+						<pos x="+300+230+85+220" y="+18"/>
+						<size width="130" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="RESET"/>
+					</button>
+					
+					<button action="set 'denoneditbpm' 0" query="off">
+						<pos x="+990" y="+18"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+				</panel>
+				
+				<songpos class="songprogress" x="+5+80" y="+140" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true" />
+				<songpos class="songprogresscolors" x="+5+80" y="+140" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false" />
+				<visual class="songprogressbar" x="+5+80" y="+140+70+10"/>
+				<button class="needlelock" x="+5+80" y="+140"/>
+				
+
+				<panel class="deckdatafull" x="+0" y="+233"/>
+
+
+		</define>
+
+		<define class="decksubempty" placeholders="*mod">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+83" y="+0"/>
+				<size width="1025" height="60"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+1114" y="+0"/>
+				<size width="166" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="155"/>
+				<off color="white"/>
+			</visual>
+			<button action="controllerscreen_deck & controllervar '$decksubassign[MOD]' 1" query="blink" >
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="155"/>
+				<text fontsize="52" align="center" color="white" text="-"/>
+				<textselected fontsize="52" align="center" color="white" text=""/>
+			</button>
+			<button action="controllerscreen_deck & controllervar '$decksubassign[MOD]' 1"  >
+				<pos x="+140" y="+4"/>
+				<size width="1177-200" height="45"/>
+				<text fontsize="32" color="#aaaaaa" text="Select a Deck to Display on this Sub-Deck" />
+			</button>
+
+		</define>
+
+		<define class="decksub" placeholders="*mod">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+83" y="+0"/>
+				<size width="1025" height="60"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+1114" y="+0"/>
+				<size width="166" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="155"/>
+				<off color="deckcolorbright"/>
+			</visual>
+			<button action="controllerscreen_deck & controllervar '$decksubassign[MOD]' 1">
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="155"/>
+				<text fontsize="52" align="center" color="deckcolorbright" action="get_deck_letter"/>
+			</button>
+				
+				<group x="+1114+5" y="+3" name="trackinfo">
+					
+					<visual>
+						<pos x="+110" y="+7"/>
+						<size width="42" height="34"/>
+						<off x="440" y="98"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+0"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'bpm'"/>
+					</textzone>
+					
+					
+					<visual >
+						<pos x="+110" y="+48+8"/>
+						<size width="32" height="32"/>
+						<off x="310" y="100"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+48"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'length'"/>
+					</textzone>
+					
+					<button action="setting 'keydisplay'" >
+						<pos x="+110" y="+96"/>
+						<size width="42" height="48"/>
+						<icon x="360" y="100" width="32" height="32"/>
+					</button>
+					<textzone action="setting 'keydisplay'">
+						<pos x="+0" y="+96"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'key'"/>
+					</textzone>
+				</group>
+				
+				<panel x="+140" y="+0" visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 1">
+					<visual >
+						<pos x="-57" y="+0"/>
+						<size width="1025" height="155"/>
+						<off color="#1A1A1A"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+40+10"/>
+						<size width="200" height="46"/>
+						<text fontsize="26" color="#909090" align="left" text="ADJUST KEY"/>
+					</textzone>
+					<button action="key_move -1" query="off">
+						<pos x="+210" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="-"/>
+					</button>
+					<button action="key 0" query="off">
+						<pos x="+210+110" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" action="get_key_modifier"/>
+					</button>
+					<button action="key_move +1"  query="off">
+						<pos x="+210+110+110" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="+"/>
+					</button>
+					
+					<button action="match_key">
+						<pos x="+550" y="+18+10"/>
+						<size width="170" height="90"/>
+						<off color="#202020" radius="8" border="#707070" border_size="2"/>
+						<selected color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<down color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<text size="26" align="center" color="white" text="MATCH"/>
+						<textselected size="26" align="center" color="#000000" text="MATCH"/>
+						<textdown size="26" align="center" color="#000000" text="MATCH"/>
+					</button>
+					
+					<button action="set 'keydisplay' 0" query="off">
+						<pos x="+790" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+					
+				</panel>
+
+				<panel visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 0 ? true : false">
+					<panel visibility="var '@$denonshowdeckalbumart' 0">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="45"/>
+								<text fontsize="36" color="#eeeeee" action="var 'showtrackinfo' 1 ? get_artist_before_feat : get_title_before_remix" />
+								<text fontsize="36" color="#cccccc" action="var 'showtrackinfo' 1 ? get_featuring_after_artist : get_remix_after_title" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="45"/>
+							</button>
+						
+					</panel>
+					
+					<panel visibility="var '@$denonshowdeckalbumart' 1">
+							<cover>
+								<pos x="+100" y="+3"/>
+								<size width="110" height="60"/>
+							</cover>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100+130" y="+3"/>
+								<size width="1177-200-130" height="60"/>
+								<text fontsize="36" color="#eeeeee" action="var 'showtrackinfo' 1 ? get_artist_before_feat : get_title_before_remix" />
+								<text fontsize="36" color="#cccccc" action="var 'showtrackinfo' 1 ? get_featuring_after_artist : get_remix_after_title" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="45"/>
+							</button>
+						
+					</panel>
+<!--					
+					<panel visibility="var 'showtrackinfo' 1">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Album: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'album'" />
+								<text fontsize="36" color="#808080" format="  Year: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'year'" />
+							</textzone>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+63"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Genre: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'genre'" />
+								<text fontsize="36" color="#808080" format="  Comment: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'comment'" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="125"/>
+							</button>
+						
+					</panel>
+-->					
+				</panel>
+				
+				<panel visibility="loaded ? var 'denoneditbpm' 1 ? var 'keydisplay' 0">
+					<visual >
+						<pos x="-57+140" y="+0"/>
+						<size width="1025" height="155"/>
+						<off color="#1A1A1A"/>
+					</visual>
+					<textzone >
+						<pos x="+100" y="+20+10"/>
+						<size width="130" height="86"/>
+						<text fontsize="26" color="#909090" align="center" format="ADJUST\nCBG"/>
+					</textzone>
+					<button action="adjust_cbg -1" query="off">
+						<pos x="+260" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg -0.1" query="off">
+						<pos x="+260+100" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					
+					<button action="adjust_cbg +0.1" query="off">
+						<pos x="+260+225" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg +1" query="off">
+						<pos x="+260+230+95" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+
+					
+					
+					<button action="beat_tap" query="off">
+						<pos x="+300+230+95+80" y="+18+10"/>
+						<size width="100" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="TAP"/>
+					</button>
+					<button action="reanalyze" query="off">
+						<pos x="+300+230+85+220" y="+18+10"/>
+						<size width="130" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="RESET"/>
+					</button>
+					
+					<button action="set 'denoneditbpm' 0" query="off">
+						<pos x="+990" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+				</panel>
+				
+				<panel visibility="var 'keydisplay' 1 ? false : var 'denoneditbpm' 1 ? false : true">
+					<songpos class="songprogress" x="+5+80" y="+140-75" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true" />
+					<songpos class="songprogresscolors" x="+5+80" y="+140-75" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false : false" />
+					
+					<visual class="songprogressbar" x="+5+80" y="+140+70+10-75"/>
+					
+					<button class="needlelock" x="+5+80" y="+140-75"/>
+				</panel>
+				
+				<group name="deckdata" x="+0" y="+233-75">
+
+					<group name="bpmbuttons" x="+1116" y="+0">
+						<button action="quantize_all">
+							<pos x="+0" y="+6"/>
+							<size width="164" height="40"/>
+							<off color="#1A1A1A" border_size="1" border="#505050"/>
+							<on color="#99DE38" border_size="1" border="#99DE38"/>
+							<text fontsize="20" color="#707070" align="center" text="QUANTIZE"/>
+							<textselected fontsize="20" color="#000000" align="center" text="QUANTIZE"/>
+						</button>	
+						<button action="beatlock" >
+							<pos x="+0" y="+6+45"/>
+							<size width="164" height="40"/>
+							<off color="#1A1A1A" border_size="1" border="#505050"/>
+							<on color="#99DE38" border_size="1" border="#99DE38"/>
+							<text fontsize="20" color="#707070" align="center" text="BEATLOCK"/>
+							<textselected fontsize="20" color="#000000" align="center" text="BEATLOCK"/>
+						</button>
+					</group>
+						
+					<group name="bpm" x="+825" y="+0">
+					
+						<button action="nothing" query="masterdeck" visibility="masterdeck_auto">
+							<pos x="+180" y="+5"/>
+							<size width="100" height="25"/>
+							<off color="#000000" />
+							<selected color="#aaaaaa" border_size="1" border="#aaaaaa"/>
+							<text fontsize="20" color="#909090" align="center" text="MASTER"/>
+							<textselected fontsize="20" color="#000000" align="center" text="MASTER"/>
+						</button>
+						<button action="nothing" query="masterdeck" visibility="not masterdeck_auto">
+							<pos x="+180" y="+5"/>
+							<size width="100" height="25"/>
+							<off color="#000000" />
+							<selected color="deckcolordark" border_size="1" border="#aaaaaa"/>
+							<text fontsize="20" color="#909090" align="center" text="MASTER"/>
+							<textselected fontsize="20" color="#FFFFFF" align="center" text="MASTER"/>
+						</button>
+			
+						<textzone visibility="loaded">
+							<pos x="+20" y="+12"/>
+							<size width="170" height="80"/>
+							<text fontsize="76" color="deckcolorbright" align="right" valign="bottom" format="`get_bpm &amp; param_cast &apos;int_trunc&apos; 2`."/>
+						</textzone>
+						<textzone visibility="loaded">
+							<pos x="+20+170" y="+12"/>
+							<size width="70" height="80"/>
+							<text fontsize="46" color="deckcolorbright" align="left" valign="bottom"  action="get_bpm &amp; param_cast frac 2 &amp; param_multiply 100 &amp; param_cast &apos;00&apos;"/>
+						</textzone>
+						
+						<button action="loaded ? set 'keydisplay' 0 & toggle 'denoneditbpm'" >
+							<pos x="+20" y="+12"/>
+							<size width="240" height="80"/>
+						</button>
+					</group>
+					
+					<group name="pitch" x="+670" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="170" height="25"/>
+							<text fontsize="20" color="#909090" align="right" format="PITCH ± %pitchrange%%" />
+						</textzone>
+						<textzone>
+							<pos x="+0" y="+77+5-40"/>
+							<size width="170" height="50"/>
+							<text fontsize="42" color="#aaaaaa" align="right" format="%Ppitch%"/>
+						</textzone>
+					</group>
+
+					<group name="times" x="+222" y="+10">
+
+						<group name="time" visibility="loaded">
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+0" y="+3"/>
+								<size width="140" height="75"/>
+								<text fontsize="80" color="#505050" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+								<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+							</button>
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+140" y="+3"/>
+								<size width="120" height="75"/>
+								<text fontsize="80" color="#505050" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+								<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+							</button>
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+140+120+2" y="+3"/>
+								<size width="50" height="75"/>
+								<text fontsize="54" color="#505050" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+								<textselected fontsize="54" color="#eeeeee" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+							</button>
+						</group>
+						<button action="display_time 'remain,elapsed'"  >
+							<pos x="+0" y="+3"/>
+							<size width="310" height="75"/>
+						</button>
+						
+					</group>
+					
+					<group name="beatjump" x="+545" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="120" height="25"/>
+							<text fontsize="20" color="#909090" align="center" text="BEATJUMP"/>
+						</textzone>
+						<textzone >
+							<pos x="+10" y="+28"/>
+							<size width="100" height="68"/>
+							<text fontsize="56" color="#bbbbbb" align="center" action="beatjump_select"/>
+						</textzone>
+					</group>
+					
+					<group name="loop" x="+107" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="130" height="25"/>
+							<text fontsize="20" color="#909090" align="center" text="LOOP"/>
+						</textzone>
+						<button action="nothing" query="loop">
+							<pos x="+0" y="+28"/>
+							<size width="130" height="68"/>
+							<text fontsize="56" color="#707070" align="center" format="%loop"/>
+							<textselected fontsize="56" color="deckcolorbright" align="center" format="%loop"/>
+						</button>
+					</group>
+					
+		
+					<group name="key" x="+3" y="+0" > 
+						<textzone>
+							<pos x="+0" y="+40-35"/>
+							<size width="100" height="25"/>
+							<text fontsize="22" color="#aaaaaa" align="center" action="get_key_modifier_text"/>
+						</textzone>
+						<textzone>
+							<pos x="+0" y="+53+10-32"/>
+							<size width="100" height="45"/>
+							<text fontsize="40" color="#eeeeee" align="center" action="get_key"/>
+						</textzone>
+						<visual type="color" source="get_key_color" visibility="loaded">
+							<pos x="+20" y="+53+10+55-35-2"/>
+							<size width="100-40" height="6"/>
+						</visual>
+						
+						
+						<button action="toggle 'keydisplay' & set 'denoneditbpm' 0">
+							<tooltip></tooltip>
+							<pos x="+0" y="+0"/>
+							<size width="80" height="127-35"/>
+						</button>
+					</group>
+
+				</group>
+
+
+		</define>
+
+		<define class="decksubmain" >
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+83" y="+0"/>
+				<size width="1025" height="60"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			<visual >
+				<pos x="+1114" y="+0"/>
+				<size width="166" height="155"/>
+				<off color="#1A1A1A"/>
+			</visual>
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="5" height="155"/>
+				<off color="deckcolorbright"/>
+			</visual>
+			<button action="controllerscreen_deck & controllervar '$deckassign' 0">
+				<pos x="+5" y="+0"/>
+				<size width="77-5" height="155"/>
+				<text fontsize="52" align="center" color="deckcolorbright" action="get_deck_letter"/>
+			</button>
+				
+				<group x="+1114+5" y="+3" name="trackinfo">
+					
+					<visual>
+						<pos x="+110" y="+7"/>
+						<size width="42" height="34"/>
+						<off x="440" y="98"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+0"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'bpm'"/>
+					</textzone>
+					
+					
+					<visual >
+						<pos x="+110" y="+48+8"/>
+						<size width="32" height="32"/>
+						<off x="310" y="100"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+48"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'length'"/>
+					</textzone>
+					
+					<button action="setting 'keydisplay'" >
+						<pos x="+110" y="+96"/>
+						<size width="42" height="48"/>
+						<icon x="360" y="100" width="32" height="32"/>
+					</button>
+					<textzone action="setting 'keydisplay'">
+						<pos x="+0" y="+96"/>
+						<size width="105" height="48"/>
+						<text fontsize="32" color="#909090" align="right" action="get_loaded_song 'key'"/>
+					</textzone>
+				</group>
+				
+				<panel x="+140" y="+0" visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 1">
+					<visual >
+						<pos x="-57" y="+0"/>
+						<size width="1025" height="155"/>
+						<off color="#1A1A1A"/>
+					</visual>
+					<textzone >
+						<pos x="+0" y="+40+10"/>
+						<size width="200" height="46"/>
+						<text fontsize="26" color="#909090" align="left" text="ADJUST KEY"/>
+					</textzone>
+					<button action="key_move -1" query="off">
+						<pos x="+210" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="-"/>
+					</button>
+					<button action="key 0" query="off">
+						<pos x="+210+110" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" action="get_key_modifier"/>
+					</button>
+					<button action="key_move +1"  query="off">
+						<pos x="+210+110+110" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="30" align="center" color="white" text="+"/>
+					</button>
+					
+					<button action="match_key">
+						<pos x="+550" y="+18+10"/>
+						<size width="170" height="90"/>
+						<off color="#202020" radius="8" border="#707070" border_size="2"/>
+						<selected color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<down color="#aaaaaa" radius="8" border="#aaaaaa" border_size="2"/>
+						<text size="26" align="center" color="white" text="MATCH"/>
+						<textselected size="26" align="center" color="#000000" text="MATCH"/>
+						<textdown size="26" align="center" color="#000000" text="MATCH"/>
+					</button>
+					
+					<button action="set 'keydisplay' 0" query="off">
+						<pos x="+790" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+					
+				</panel>
+
+				<panel visibility="loaded ? var 'denoneditbpm' 0 ? var 'keydisplay' 0 ? true : false">
+					<panel visibility="var '@$denonshowdeckalbumart' 0">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="45"/>
+								<text fontsize="36" color="#eeeeee" action="var 'showtrackinfo' 1 ? get_artist_before_feat : get_title_before_remix" />
+								<text fontsize="36" color="#cccccc" action="var 'showtrackinfo' 1 ? get_featuring_after_artist : get_remix_after_title" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="45"/>
+							</button>
+						
+					</panel>
+					
+					<panel visibility="var '@$denonshowdeckalbumart' 1">
+							<cover>
+								<pos x="+100" y="+3"/>
+								<size width="110" height="60"/>
+							</cover>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100+130" y="+3"/>
+								<size width="1177-200-130" height="60"/>
+								<text fontsize="36" color="#eeeeee" action="var 'showtrackinfo' 1 ? get_artist_before_feat : get_title_before_remix" />
+								<text fontsize="36" color="#cccccc" action="var 'showtrackinfo' 1 ? get_featuring_after_artist : get_remix_after_title" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="45"/>
+							</button>
+						
+					</panel>
+<!--					
+					<panel visibility="var 'showtrackinfo' 1">
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+3"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Album: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'album'" />
+								<text fontsize="36" color="#808080" format="  Year: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'year'" />
+							</textzone>
+							<textzone group="horizontal" scroll="no" >
+								<pos x="+100" y="+63"/>
+								<size width="1177-200" height="60"/>
+								<text fontsize="36" color="#808080" format="Genre: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'genre'" />
+								<text fontsize="36" color="#808080" format="  Comment: " />
+								<text fontsize="36" color="#eeeeee" action="get_loaded_song 'comment'" />
+							</textzone>
+							<button action="toggle 'showtrackinfo'">
+								<pos x="+100" y="+1"/>
+								<size width="1020" height="125"/>
+							</button>
+						
+					</panel>
+-->					
+				</panel>
+				
+				<panel visibility="loaded ? var 'denoneditbpm' 1 ? var 'keydisplay' 0">
+					<visual >
+						<pos x="-57+140" y="+0"/>
+						<size width="1025" height="155"/>
+						<off color="#1A1A1A"/>
+					</visual>
+					<textzone >
+						<pos x="+100" y="+20+10"/>
+						<size width="130" height="86"/>
+						<text fontsize="26" color="#909090" align="center" format="ADJUST\nCBG"/>
+					</textzone>
+					<button action="adjust_cbg -1" query="off">
+						<pos x="+260" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg -0.1" query="off">
+						<pos x="+260+100" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					
+					<button action="adjust_cbg +0.1" query="off">
+						<pos x="+260+225" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+					<button action="adjust_cbg +1" query="off">
+						<pos x="+260+230+95" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<icon x="984+61" y="71+42" width="39" height="28" coloroff="#bbbbbb" colordown="white"/>
+					</button>
+
+					
+					
+					<button action="beat_tap" query="off">
+						<pos x="+300+230+95+80" y="+18+10"/>
+						<size width="100" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="TAP"/>
+					</button>
+					<button action="reanalyze" query="off">
+						<pos x="+300+230+85+220" y="+18+10"/>
+						<size width="130" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<selected color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text fontsize="24" color="#bbbbbb" align="center" text="RESET"/>
+					</button>
+					
+					<button action="set 'denoneditbpm' 0" query="off">
+						<pos x="+990" y="+18+10"/>
+						<size width="90" height="90"/>
+						<off color="#202020" border_size="2" border="#707070" radius="6" />
+						<on color="#202020" border_size="2" border="#707070" radius="6" />
+						<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+						<text size="26" align="center" color="white" text="OK"/>
+					</button>
+					
+				</panel>
+				
+				<panel visibility="var 'keydisplay' 1 ? false : var 'denoneditbpm' 1 ? false : true">
+					<songpos class="songprogress" x="+5+80" y="+140-75" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true" />
+					<songpos class="songprogresscolors" x="+5+80" y="+140-75" visibility="setting 'SkinWaveformScratchType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false : false" />
+					
+					<visual class="songprogressbar" x="+5+80" y="+140+70+10-75"/>
+					
+					<button class="needlelock" x="+5+80" y="+140-75"/>
+				</panel>
+				
+				<group name="deckdata" x="+0" y="+233-75">
+
+					<group name="bpmbuttons" x="+1116" y="+0">
+						<button action="quantize_all">
+							<pos x="+0" y="+6"/>
+							<size width="164" height="40"/>
+							<off color="#1A1A1A" border_size="1" border="#505050"/>
+							<on color="#99DE38" border_size="1" border="#99DE38"/>
+							<text fontsize="20" color="#707070" align="center" text="QUANTIZE"/>
+							<textselected fontsize="20" color="#000000" align="center" text="QUANTIZE"/>
+						</button>	
+						<button action="beatlock" >
+							<pos x="+0" y="+6+45"/>
+							<size width="164" height="40"/>
+							<off color="#1A1A1A" border_size="1" border="#505050"/>
+							<on color="#99DE38" border_size="1" border="#99DE38"/>
+							<text fontsize="20" color="#707070" align="center" text="BEATLOCK"/>
+							<textselected fontsize="20" color="#000000" align="center" text="BEATLOCK"/>
+						</button>
+					</group>
+						
+					<group name="bpm" x="+825" y="+0">
+					
+						<button action="nothing" query="masterdeck" visibility="masterdeck_auto">
+							<pos x="+180" y="+5"/>
+							<size width="100" height="25"/>
+							<off color="#000000" />
+							<selected color="#aaaaaa" border_size="1" border="#aaaaaa"/>
+							<text fontsize="20" color="#909090" align="center" text="MASTER"/>
+							<textselected fontsize="20" color="#000000" align="center" text="MASTER"/>
+						</button>
+						<button action="nothing" query="masterdeck" visibility="not masterdeck_auto">
+							<pos x="+180" y="+5"/>
+							<size width="100" height="25"/>
+							<off color="#000000" />
+							<selected color="deckcolordark" border_size="1" border="#aaaaaa"/>
+							<text fontsize="20" color="#909090" align="center" text="MASTER"/>
+							<textselected fontsize="20" color="#FFFFFF" align="center" text="MASTER"/>
+						</button>
+			
+						<textzone visibility="loaded">
+							<pos x="+20" y="+12"/>
+							<size width="170" height="80"/>
+							<text fontsize="76" color="deckcolorbright" align="right" valign="bottom" format="`get_bpm &amp; param_cast &apos;int_trunc&apos; 2`."/>
+						</textzone>
+						<textzone visibility="loaded">
+							<pos x="+20+170" y="+12"/>
+							<size width="70" height="80"/>
+							<text fontsize="46" color="deckcolorbright" align="left" valign="bottom" action="get_bpm &amp; param_cast frac 2 &amp; param_multiply 100 &amp; param_cast &apos;00&apos;"/>
+						</textzone>
+						
+						<button action="loaded ? set 'keydisplay' 0 & toggle 'denoneditbpm'" >
+							<pos x="+20" y="+12"/>
+							<size width="240" height="80"/>
+						</button>
+					</group>
+					
+					<group name="pitch" x="+670" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="170" height="25"/>
+							<text fontsize="20" color="#909090" align="right" format="PITCH ± %pitchrange%%" />
+						</textzone>
+						<textzone>
+							<pos x="+0" y="+77+5-40"/>
+							<size width="170" height="50"/>
+							<text fontsize="42" color="#aaaaaa" align="right" format="%Ppitch%"/>
+						</textzone>
+					</group>
+
+					<group name="times" x="+222" y="+10">
+
+						<group name="time" visibility="loaded">
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+0" y="+3"/>
+								<size width="140" height="75"/>
+								<text fontsize="80" color="#505050" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+								<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" action="display_time 'remain' ? get_text '-`get_time_min`:' : get_text '`get_time_min`:'"/>
+							</button>
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+140" y="+3"/>
+								<size width="120" height="75"/>
+								<text fontsize="80" color="#505050" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+								<textselected fontsize="80" color="#eeeeee" valign="bottom" align="right" format="`get_time_sec &amp; param_cast '00'`."/>
+							</button>
+							<button action="nothing"  query="var '@$denonblinktime' 0 ? songpos_warning ? blink 1000ms : on : on">
+								<pos x="+140+120+2" y="+3"/>
+								<size width="50" height="75"/>
+								<text fontsize="54" color="#505050" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+								<textselected fontsize="54" color="#eeeeee" valign="bottom" align="left" action="get_time_ms &amp; param_multiply 0.1 &amp; param_cast 'int_trunc'"/>
+							</button>
+						</group>
+						<button action="display_time 'remain,elapsed'"  >
+							<pos x="+0" y="+3"/>
+							<size width="310" height="75"/>
+						</button>
+						
+					</group>
+					
+					<group name="beatjump" x="+545" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="120" height="25"/>
+							<text fontsize="20" color="#909090" align="center" text="BEATJUMP"/>
+						</textzone>
+						<textzone >
+							<pos x="+10" y="+28"/>
+							<size width="100" height="68"/>
+							<text fontsize="56" color="#bbbbbb" align="center" action="beatjump_select"/>
+						</textzone>
+					</group>
+					
+					<group name="loop" x="+107" y="+0">
+						<textzone>
+							<pos x="+0" y="+5"/>
+							<size width="130" height="25"/>
+							<text fontsize="20" color="#909090" align="center" text="LOOP"/>
+						</textzone>
+						<button action="nothing" query="loop">
+							<pos x="+0" y="+28"/>
+							<size width="130" height="68"/>
+							<text fontsize="56" color="#707070" align="center" format="%loop"/>
+							<textselected fontsize="56" color="deckcolorbright" align="center" format="%loop"/>
+						</button>
+					</group>
+					
+		
+					<group name="key" x="+3" y="+0" > 
+						<textzone>
+							<pos x="+0" y="+40-35"/>
+							<size width="100" height="25"/>
+							<text fontsize="22" color="#aaaaaa" align="center" action="get_key_modifier_text"/>
+						</textzone>
+						<textzone>
+							<pos x="+0" y="+53+10-32"/>
+							<size width="100" height="45"/>
+							<text fontsize="40" color="#eeeeee" align="center" action="get_key"/>
+						</textzone>
+						<visual type="color" source="get_key_color" visibility="loaded">
+							<pos x="+20" y="+53+10+55-35-2"/>
+							<size width="100-40" height="6"/>
+						</visual>
+						
+						
+						<button action="toggle 'keydisplay' & set 'denoneditbpm' 0">
+							<tooltip></tooltip>
+							<pos x="+0" y="+0"/>
+							<size width="80" height="127-35"/>
+						</button>
+					</group>
+
+				</group>
+
+
+		</define>
+
+		<!-- Pads-->
+		<define class="subdeckpadspanel" placeholders="*mod">
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 1">
+				<deck deck="1">
+					<panel class="subdeckpads" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 2">
+				<deck deck="2">
+					<panel class="subdeckpads" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 3">
+				<deck deck="3">
+					<panel class="subdeckpads" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 4">
+				<deck deck="4">
+					<panel class="subdeckpads" x="+0" y="+0" />
+				</deck>
+			</panel>
+		</define>
+
+		<define class="subdeckpads">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="50"/>
+				<off color="#101010"/>
+			</visual>
+			<textzone>
+				<pos x="+1088+15" y="+5"/>
+				<size width="180" height="40"/>
+				<text fontsize="22" align="center" color="#707070" action="shift ? pad_param2 : pad_param"/>
+			</textzone>
+			<group x="+15+5" y="+5">
+				<panel class="padbuttonshort" x="+0" y="+0" action="pad 1" rightclick="padshift 1" textaction="pad 1" sourcecolor="pad_color 1"/>
+				<panel class="padbuttonshort" x="+136" y="+0"  action="pad 2" rightclick="padshift 2" textaction="pad 2" sourcecolor="pad_color 2"/>
+				<panel class="padbuttonshort" x="+136+136" y="+0"  action="pad 3" rightclick="padshift 3" textaction="pad 3" sourcecolor="pad_color 3"/>
+				<panel class="padbuttonshort" x="+136+136+136" y="+0"  action="pad 4" rightclick="padshift 4" textaction="pad 4" sourcecolor="pad_color 4"/>
+				<panel class="padbuttonshort" x="+136+136+136+136" y="+0"  action="pad 5" rightclick="padshift 5" textaction="pad 5" sourcecolor="pad_color 5"/>
+				<panel class="padbuttonshort" x="+136+136+136+136+136" y="+0"  action="pad 6" rightclick="padshift 6" textaction="pad 6" sourcecolor="pad_color 6"/>
+				<panel class="padbuttonshort" x="+136+136+136+136+136+136" y="+0"  action="pad 7" rightclick="padshift 7" textaction="pad 7" sourcecolor="pad_color 7"/>
+				<panel class="padbuttonshort" x="+136+136+136+136+136+136+136" y="+0"  action="pad 8" rightclick="padshift 8" textaction="pad 8" sourcecolor="pad_color 8"/>
+			</group>
+		</define>
+		
+		<define class="deckpads">
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="132"/>
+				<off color="#101010"/>
+			</visual>
+			<textzone>
+				<pos x="+30" y="+0"/>
+				<size width="400-10" height="35"/>
+				<text fontsize="28" align="left" color="#909090" action="pad_page &amp; param_uppercase"/>
+			</textzone>
+			<textzone visibility="pad_has_param 1">
+				<pos x="+10+400" y="+6"/>
+				<size width="350-10" height="30"/>
+				<text fontsize="24" align="center" color="#707070" format="PR.1 :  `pad_param`"/>
+			</textzone>
+			<textzone visibility="pad_has_param 2">
+				<pos x="+10+400+350" y="+6"/>
+				<size width="350-10" height="30"/>
+				<text fontsize="24" align="center" color="#707070" format="PR.2 :  `pad_param2`"/>
+			</textzone>
+			<group x="+30" y="+45">
+				<panel class="padbutton" x="+0" y="+0" action="pad 1" rightclick="padshift 1" textaction="pad 1" sourcecolor="pad_color 1"/>
+				<panel class="padbutton" x="+152" y="+0"  action="pad 2" rightclick="padshift 2" textaction="pad 2" sourcecolor="pad_color 2"/>
+				<panel class="padbutton" x="+152+152" y="+0"  action="pad 3" rightclick="padshift 3" textaction="pad 3" sourcecolor="pad_color 3"/>
+				<panel class="padbutton" x="+152+152+152" y="+0"  action="pad 4" rightclick="padshift 4" textaction="pad 4" sourcecolor="pad_color 4"/>
+				<panel class="padbutton" x="+152+152+152+152" y="+0"  action="pad 5" rightclick="padshift 5" textaction="pad 5" sourcecolor="pad_color 5"/>
+				<panel class="padbutton" x="+152+152+152+152+152" y="+0"  action="pad 6" rightclick="padshift 6" textaction="pad 6" sourcecolor="pad_color 6"/>
+				<panel class="padbutton" x="+152+152+152+152+152+152" y="+0"  action="pad 7" rightclick="padshift 7" textaction="pad 7" sourcecolor="pad_color 7"/>
+				<panel class="padbutton" x="+152+152+152+152+152+152+152" y="+0"  action="pad 8" rightclick="padshift 8" textaction="pad 8" sourcecolor="pad_color 8"/>
+			</group>
+		</define>
+
+
+		<!-- Sampler - Custom buttons-->
+		<define class="custombuts">
+			<button class="custombutton" x="+0" y="+5" action="custom_button 1" textaction="custom_button_name 1" />
+			<button class="custombutton" x="+125" y="+5" action="custom_button 2" textaction="custom_button_name 2" />
+			<button class="custombutton" x="+0" y="+5+75" action="custom_button 3" textaction="custom_button_name 3" />
+			<button class="custombutton" x="+125" y="+5+75" action="custom_button 4" textaction="custom_button_name 4" />
+		</define>
+		<define class="custombuts2">
+			<button class="custombutton" x="+0" y="+5" bwidth="95" bheight="70" action="custom_button 1" textaction="custom_button_name 1" />
+			<button class="custombutton" x="+105" y="+5" bwidth="95" bheight="70" action="custom_button 2" textaction="custom_button_name 2" />
+			<button class="custombutton" x="+105+105" y="+5" bwidth="95" bheight="70" action="custom_button 3" textaction="custom_button_name 3" />
+			<button class="custombutton" x="+105+105+105" y="+5" bwidth="95" bheight="70" action="custom_button 4" textaction="custom_button_name 4" />
+		</define>
+		
+		<define class="samplerbuttons">
+			<button action="sampler_bank -1">
+				<pos x="+0" y="+10"/>
+				<size width="70" height="60"/>
+				<off color="#303030" border_size="1" border="#000000"/>
+				<icon sysicon="arrowleft" width="36" height="36" coloroff="#909090"/>
+				<off color="#242424"/>
+			</button>
+			<textzone>
+				<pos x="+70+10" y="+5"/>
+				<size width="160+10" height="25"/>
+				<text fontsize="14" align="center" color="#707070" text="SAMPLER BANK"/>
+			</textzone>
+			<textzone>
+				<pos x="+70+10" y="+26"/>
+				<size width="160+10" height="50"/>
+				<text fontsize="24" align="center" color="#aaaaaa" action="get_sampler_bank &amp; param_uppercase"/>
+			</textzone>
+			<button action="sampler_bank">
+				<pos x="+70" y="+10"/>
+				<size width="160+10" height="50"/>
+			</button>
+			<button action="sampler_bank +1">
+				<pos x="+340-80" y="+10"/>
+				<size width="70" height="60"/>
+				<off color="#303030" border_size="1" border="#000000"/>
+				<icon sysicon="arrowright" width="36" height="36" coloroff="#909090"/>
+				<off color="#242424"/>
+			</button>
+		</define>
+
+		<define class="samplerbuttons2">
+			<button action="sampler_mode -1">
+				<pos x="+0" y="+10"/>
+				<size width="70" height="60"/>
+				<off color="#303030" border_size="1" border="#000000"/>
+				<icon sysicon="arrowleft" width="36" height="36" coloroff="#909090"/>
+				<off color="#242424"/>
+			</button>
+			<textzone>
+				<pos x="+70+10" y="+5"/>
+				<size width="160+10" height="25"/>
+				<text fontsize="14" align="center" color="#707070" text="SAMPLER MODE"/>
+			</textzone>
+			<textzone>
+				<pos x="+70+10" y="+26"/>
+				<size width="160+10" height="50"/>
+				<text fontsize="24" align="center" color="#aaaaaa" action="sampler_mode 'unmute' ? get_text 'UNMUTE' : sampler_mode 'hold' ? get_text 'HOLD' : sampler_mode 'stutter' ? get_text 'STUTTER' : get_text 'ON-OFF'"/>
+			</textzone>
+			<button action="sampler_mode +1">
+				<pos x="+340-80" y="+10"/>
+				<size width="70" height="60"/>
+				<off color="#303030" border_size="1" border="#000000"/>
+				<icon sysicon="arrowright" width="36" height="36" coloroff="#909090"/>
+				<off color="#242424"/>
+			</button>
+		</define>
+
+		<define class="sampcustview" >
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#101010"/>
+			</visual>
+			<visual >
+				<pos x="+89" y="+0"/>
+				<size width="1112-5" height="155"/>
+				<off color="#101010"/>
+			</visual>
+			<visual >
+				<pos x="+1280-77" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#101010"/>
+			</visual>
+			<button action="toggle 'samplersettings'" >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<icon sysicon="sideview 'sampler'" iconsize="36"  color="#808080" colorselected="#dddddd"/>
+				<off color="#101010" />
+				<on color="#191919" />
+			</button>
+			
+			<group visibility="var 'customview' 0">
+				<group visibility="var 'samplersettings' 0">
+					<group x="+5+90" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="270" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+275" y="+0"  bwidth="270" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+275+275" y="+0"  bwidth="270" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+275+275+275" y="+0"  bwidth="270" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="270" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+275" y="+75"  bwidth="270" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+275+275" y="+75"  bwidth="270" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+275+275+275" y="+75"  bwidth="270" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+				</group>
+				<group visibility="var 'samplersettings' 1">
+					<panel class="samplerbuttons" x="+5+95" y="+3"/>
+					<panel class="samplerbuttons2" x="+5+95" y="+82"/>	
+					
+					<visual >
+						<pos x="+5+90+360-10" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+					
+					<group x="+5+90+360" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="180" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+185" y="+0"  bwidth="180" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+185+185" y="+0"  bwidth="180" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+185+185+185" y="+0"  bwidth="180" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="180" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+185" y="+75"  bwidth="180" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+185+185" y="+75" bwidth="180" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+185+185+185" y="+75" bwidth="180" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+				</group>
+			</group>
+			
+			<group visibility="var 'customview' 1">
+				<group visibility="var 'samplersettings' 0">
+					<group x="+5+90" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="200" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+206" y="+0"  bwidth="200" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+206+206" y="+0"  bwidth="200" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+206+206+206" y="+0"  bwidth="200" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="200" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+206" y="+75"  bwidth="200" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+206+206" y="+75" bwidth="200" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+206+206+206" y="+75" bwidth="200" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+					<visual>
+						<pos x="+5+825+90" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+				</group>
+				
+				<group visibility="var 'samplersettings' 1">
+					<panel class="samplerbuttons" x="+5+95" y="+3"/>
+					<panel class="samplerbuttons2" x="+5+95" y="+82"/>	
+
+					<visual>
+						<pos x="+5+825+90" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+					
+					<group x="+5+93+360" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="110" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+115" y="+0"  bwidth="110" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+115+115" y="+0"  bwidth="110" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+115+115+115" y="+0"  bwidth="110" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="110" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+115" y="+75"  bwidth="110" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+115+115" y="+75" bwidth="110" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+115+115+115" y="+75" bwidth="110" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+					
+					<visual >
+						<pos x="+5+90+360-10" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+					
+					
+				</group>
+				
+				<panel class="custombuts" x="+5+845+90" />
+			
+			</group>
+		
+			<button action="toggle 'customview'">
+				<pos x="1280-77" y="+0"/>
+				<size width="77" height="155"/>
+				<icon x="935" y="10" width="20" height="38" coloroff="#808080" colorselected="#dddddd"/>
+				<off color="#101010" />
+				<on color="#191919" />
+			</button>
+		</define>
+
+		<define class="sampcustview2" >
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<off color="#101010"/>
+			</visual>
+			<button action="toggle 'samplersettings'" >
+				<pos x="+0" y="+0"/>
+				<size width="77" height="155"/>
+				<icon sysicon="sideview 'sampler'" iconsize="36"  color="#808080" colorselected="#dddddd"/>
+				<off color="#101010" />
+				<on color="#191919" />
+			</button>
+			<visual >
+				<pos x="+89" y="+0"/>
+				<size width="1280-89" height="155"/>
+				<off color="#101010"/>
+			</visual>
+
+				<group visibility="var 'samplersettings' 0">
+					<group x="+5+90" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="180" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+186" y="+0"  bwidth="180" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+186+186" y="+0"  bwidth="180" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+186+186+186" y="+0"  bwidth="180" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="180" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+186" y="+75"  bwidth="180" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+186+186" y="+75" bwidth="180" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+186+186+186" y="+75" bwidth="180" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+					<visual>
+						<pos x="+5+825+20" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+				</group>
+				
+				<group visibility="var 'samplersettings' 1">
+					<panel class="samplerbuttons" x="+5+95" y="+3"/>
+					<panel class="samplerbuttons2" x="+5+95" y="+82"/>	
+
+					<visual>
+						<pos x="+5+825+20" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+					
+					<group x="+5+93+360" y="+5">
+						<panel class="samplerbutton" x="+0" y="+0" bwidth="90" action="sampler_pad 1" textaction="get_sample_name 1" sourcecolor="get_sample_color 1"/>
+						<panel class="samplerbutton" x="+95" y="+0"  bwidth="90" action="sampler_pad 2" textaction="get_sample_name 2" sourcecolor="get_sample_color 2"/>
+						<panel class="samplerbutton" x="+95+95" y="+0"  bwidth="90" action="sampler_pad 3" textaction="get_sample_name 3" sourcecolor="get_sample_color 3"/>
+						<panel class="samplerbutton" x="+95+95+95" y="+0"  bwidth="90" action="sampler_pad 4" textaction="get_sample_name 4" sourcecolor="get_sample_color 4"/>
+						<panel class="samplerbutton" x="+0" y="+75"  bwidth="90" action="sampler_pad 5" textaction="get_sample_name 5" sourcecolor="get_sample_color 5"/>
+						<panel class="samplerbutton" x="+95" y="+75"  bwidth="90" action="sampler_pad 6" textaction="get_sample_name 6" sourcecolor="get_sample_color 6"/>
+						<panel class="samplerbutton" x="+95+95" y="+75" bwidth="90" action="sampler_pad 7" textaction="get_sample_name 7" sourcecolor="get_sample_color 7"/>
+						<panel class="samplerbutton" x="+95+95+95" y="+75" bwidth="90" action="sampler_pad 8" textaction="get_sample_name 8" sourcecolor="get_sample_color 8"/>
+					</group>
+					
+					<visual >
+						<pos x="+5+90+360-10" y="+0"/>
+						<size width="7" height="155"/>
+						<off color="#000000" />
+					</visual>
+					
+					
+				</group>
+
+		</define>
+
+		<define class="custombutsub" placeholders="*mod">
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 1">
+				<deck deck="1">
+					<panel class="custombuts2" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 2">
+				<deck deck="2">
+					<panel class="custombuts2" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 3">
+				<deck deck="3">
+					<panel class="custombuts2" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 4">
+				<deck deck="4">
+					<panel  class="custombuts2" x="+0" y="+0" />
+				</deck>
+			</panel>
+		</define>
+
+		<!-- ScratchWaves-->
+		<define class="wavezoombuttons">
+			<button action="zoom +1%" query="off">
+				<pos x="+150" y="+0"/>
+				<size width="90" height="90"/>
+				<off color="#202020" border_size="2" border="#707070" radius="6" />
+				<selected color="#202020" border_size="2" border="#707070" radius="6" />
+				<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+				<text fontsize="30" align="center" color="white" text="-"/>
+			</button>
+			<button action="zoom -1%" query="off">
+				<pos x="+150+100" y="+0"/>
+				<size width="90" height="90"/>
+				<off color="#202020" border_size="2" border="#707070" radius="6" />
+				<selected color="#202020" border_size="2" border="#707070" radius="6" />
+				<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+				<text fontsize="30" align="center" color="white" text="+"/>
+			</button>
+			<button action="set 'wavezoom' 0" query="off">
+				<pos x="+150+100+160" y="+0"/>
+				<size width="90" height="90"/>
+				<off color="#202020" border_size="2" border="#707070" radius="6" />
+				<selected color="#202020" border_size="2" border="#707070" radius="6" />
+				<down color="#404040" border_size="2" border="#eeeeee" radius="6" />
+				<text fontsize="30" align="center" color="white" text="OK"/>
+			</button>
+		</define>
+		
+		<define class="scratchmenu" placeholders="mheight=265">
+				<size width="77" height="[MHEIGHT]"/>
+				<off color="#000000"/>
+				<icon x="495" y="98" width="32" height="30" coloroff="#aaaaaa" />
+				<item text="Controller Deck" action="set '@$wavemaster' 0" hascheck="true"/>
+				<item text="Controller Deck + Master" action="set '@$wavemaster' 1" hascheck="true"/>
+				<item text="Controller Deck + Other Deck" action="set '@$wavemaster' 2" hascheck="true"/>
+				<item text="-" />
+				<item text="Zoom Butons" action="toggle 'wavezoom'" hascheck="true"/>
+		</define>
+
+		<define class="scratchmenu2" placeholders="mheight=104">
+				<size width="77" height="[MHEIGHT]"/>
+				<off color="#000000"/>
+				<icon x="495" y="98" width="32" height="30" coloroff="#aaaaaa" />
+				<item text="Show Master Deck" action="toggle '@$wave2master'" hascheck="true"/>
+				<item text="-" />
+				<item text="Zoom Butons" action="toggle 'wavezoom'" hascheck="true"/>
+		</define>
+
+		<define class="beatsbar">
+			<visual >
+				<pos x="+0" y="-10"/>
+				<size width="170" height="270"/>
+				<off color="#000000"/>
+			</visual>
+			<button action="toggle '@$denonbeats'">
+				<pos x="+0" y="-10"/>
+				<size width="170" height="270"/>
+			</button>
+			
+			<panel y="+30" visibility="var '@$wavemaster' 2 ? false : true">
+				<panel visibility="var '@$denonbeats' 0">
+					<panel visibility="masterdeck">
+						<panel class="beats_deck" x="+5" y="+100" />
+						<panel class="beats_masterempty" x="+5" y="+135" />
+					</panel>
+					<panel visibility="not masterdeck">
+						<panel class="beats_deckmaster" x="+5" y="+100" />
+						<panel class="beats_master" x="+5" y="+135" />
+					</panel>
+				</panel>
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+100" />
+					<panel class="beats_masterempty" x="+5" y="+135" visibility="masterdeck"/>
+					<panel class="beats_master" x="+5" y="+135" visibility="not masterdeck"/>
+				</panel>
+			</panel>	
+			<panel y="+30" visibility="var '@$wavemaster' 2">
+				<panel visibility="var '@$denonbeats' 0">
+					<panel class="beats_deck" x="+5" y="+100" visibility="masterdeck"/>
+					<panel class="beats_deckmaster" x="+5" y="+100" visibility="not masterdeck"/>
+					<panel visibility="controllerscreen_deck 1">
+						<deck deck="2">
+							<panel class="beats_deck" x="+5" y="+135" visibility="masterdeck"/>
+							<panel class="beats_deckmaster" x="+5" y="+135" visibility="not masterdeck"/>
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck 2">
+						<deck deck="1">
+							<panel class="beats_deck" x="+5" y="+135" visibility="masterdeck"/>
+							<panel class="beats_deckmaster" x="+5" y="+135" visibility="not masterdeck"/>
+						</deck>
+					</panel>
+				</panel>
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+100"/>
+					<panel visibility="controllerscreen_deck 1">
+						<deck deck="2">
+							<panel class="beat_phase" x="+5" y="+135" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck 2">
+						<deck deck="1">
+							<panel class="beat_phase" x="+5" y="+135"/>
+						</deck>
+					</panel>
+				</panel>
+				
+			</panel>
+			<textzone visibility="loaded">
+				<pos x="+0" y="+50+30"/>
+				<size width="160" height="30"/>
+				<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+			</textzone>
+			
+		</define>
+
+		<define class="beatsbar2">
+			<visual >
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+				<off color="#000000"/>
+			</visual>
+			<button action="toggle '@$denonbeats'">
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+			</button>
+			
+			<panel y="+35" visibility="var '@$wavemaster' 2 ? false : true">
+				<panel visibility="var '@$denonbeats' 0">
+					<panel visibility="masterdeck">
+						<panel class="beats_deck" x="+5" y="+0" />
+						<panel class="beats_masterempty" x="+5" y="+35" />
+					</panel>
+					<panel visibility="not masterdeck">
+						<panel class="beats_deckmaster" x="+5" y="+0" />
+						<panel class="beats_master" x="+5" y="+35" />
+					</panel>
+				</panel>
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+0" />
+					<panel class="beats_masterempty" x="+5" y="+35" visibility="masterdeck"/>
+					<panel class="beats_master" x="+5" y="+35" visibility="not masterdeck"/>
+				</panel>
+			</panel>	
+			<panel y="+35" visibility="var '@$wavemaster' 2">
+				<panel visibility="var '@$denonbeats' 0">
+					<panel class="beats_deck" x="+5" y="+0" visibility="masterdeck"/>
+					<panel class="beats_deckmaster" x="+5" y="+0" visibility="not masterdeck"/>
+					<panel visibility="controllerscreen_deck 1">
+						<deck deck="2">
+							<panel class="beats_deck" x="+5" y="+35" visibility="masterdeck"/>
+							<panel class="beats_deckmaster" x="+5" y="+35" visibility="not masterdeck"/>
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck 2">
+						<deck deck="1">
+							<panel class="beats_deck" x="+5" y="+35" visibility="masterdeck"/>
+							<panel class="beats_deckmaster" x="+5" y="+35" visibility="not masterdeck"/>
+						</deck>
+					</panel>
+				</panel>
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+0" />
+					<panel visibility="controllerscreen_deck 1">
+					<deck deck="2">
+						<panel class="beat_phase" x="+5" y="+35" />
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck 2">
+					<deck deck="1">
+						<panel class="beat_phase" x="+5" y="+35"/>
+					</deck>
+				</panel>
+				</panel>
+				
+			</panel>
+
+					
+			<textzone visibility="loaded">
+				<pos x="+0" y="-5"/>
+				<size width="160" height="30"/>
+				<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+			</textzone>
+			
+		</define>
+		
+		<define class="beatsbar3">
+			<visual >
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+				<off color="#000000"/>
+			</visual>
+			<button action="toggle '@$denonbeats'">
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+			</button>
+			
+			<panel y="+0" visibility="var '@$wave2master' 0">
+				<textzone visibility="loaded">
+					<pos x="+0" y="+0"/>
+					<size width="160" height="30"/>
+					<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+				</textzone>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				
+				
+				<panel visibility="var '@$denonbeats' 0">
+					<panel class="beats_deck" x="+5" y="+45" />
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+						<deck deck="1">
+							<panel class="beats_deck" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+						<deck deck="2">
+							<panel class="beats_deck" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+						<deck deck="3">
+							<panel class="beats_deck" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+						<deck deck="4">
+							<panel class="beats_deck" x="+5" y="+80" />
+						</deck>
+					</panel>
+				</panel>
+				
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+45" />
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+						<deck deck="1">
+							<panel class="beat_phase" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+						<deck deck="2">
+							<panel class="beat_phase" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+						<deck deck="3">
+							<panel class="beat_phase" x="+5" y="+80" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+						<deck deck="4">
+							<panel class="beat_phase" x="+5" y="+80" />
+						</deck>
+					</panel>
+				</panel>
+
+			</panel>	
+			
+			<panel y="+0" visibility="var '@$wave2master' 1">
+				<textzone visibility="loaded">
+					<pos x="+0" y="-10"/>
+					<size width="160" height="30"/>
+					<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+				</textzone>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+					</deck>
+				</panel>
+				
+				<panel visibility="var '@$denonbeats' 0">
+					<panel class="beats_deck" x="+5" y="+30" />
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+						<deck deck="1">
+							<panel class="beats_deck" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+						<deck deck="2">
+							<panel class="beats_deck" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+						<deck deck="3">
+							<panel class="beats_deck" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+						<deck deck="4">
+							<panel class="beats_deck" x="+5" y="+95" />
+						</deck>
+					</panel>
+				</panel>
+				
+				<panel visibility="var '@$denonbeats' 1">
+					<panel class="beat_phase" x="+5" y="+30" />
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+						<deck deck="1">
+							<panel class="beat_phase" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+						<deck deck="2">
+							<panel class="beat_phase" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+						<deck deck="3">
+							<panel class="beat_phase" x="+5" y="+95" />
+						</deck>
+					</panel>
+					<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+						<deck deck="4">
+							<panel class="beat_phase" x="+5" y="+95" />
+						</deck>
+					</panel>
+				</panel>
+				
+				<panel class="beats_master" x="+5" y="+65" />
+			</panel>
+			
+
+
+			
+		</define>
+
+		<define class="beatsbar4">
+			<visual >
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+				<off color="#000000"/>
+			</visual>
+			<button action="toggle '@$denonbeats'">
+				<pos x="+0" y="-10"/>
+				<size width="170" height="104"/>
+			</button>
+			<panel y="+0" visibility="var '@$wave2master' 0">
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+0"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+45" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+45" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+0"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+45" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+45" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+0"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+45" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+45" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+0"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+45" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+45" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				
+			
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+80" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+80" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+80" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+80" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+80" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+80" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+105"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+80" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+80" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+			</panel>
+			
+			<panel y="+0" visibility="var '@$wave2master' 1">
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="-10"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+30" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+30" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="-10"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+30" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+30" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="-10"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+30" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+30" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck1' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="-10"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+30" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+30" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				
+			
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 1">
+					<deck deck="1">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+95" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+95" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 2">
+					<deck deck="2">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+95" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+95" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 3">
+					<deck deck="3">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+95" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+95" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck & controllervar '$subdeck2' 4">
+					<deck deck="4">
+						<textzone visibility="loaded">
+							<pos x="+0" y="+120"/>
+							<size width="160" height="30"/>
+							<text fontsize="24" color="deckcolorbright" align="right" format="`get_bar`:`get_beat_num` bars"/>
+						</textzone>
+						<panel class="beats_deck" x="+5" y="+95" visibility="var '@$denonbeats' 0"/>
+						<panel class="beat_phase" x="+5" y="+95" visibility="var '@$denonbeats' 1"/>
+					</deck>
+				</panel>
+			
+				<panel class="beats_master" x="+5" y="+65" />
+			</panel>
+			
+			
+		</define>
+
+		
+		<define class="scratch" placeholders="*sheight,*mheight">
+			<panel visibility="var '@$wavemaster' 0">
+				<scratchwave class="scratchwtall" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+				<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+			</panel>
+			<panel visibility="var '@$wavemaster' 1">
+				<scratchwave class="scratchwtall" wheight="[SHEIGHT]-[MHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+				<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]-[MHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+				<panel visibility="not masterdeck">
+					<deck deck="master">
+						<scratchwave class="scratchwtall" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+						<scratchwave class="scratchwtallcolor" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+					</deck>
+				</panel>
+				<panel visibility="masterdeck">
+					<textzone>
+						<pos x="+93" y="+[SHEIGHT]-[MHEIGHT]-10"/>
+						<size width="1010" height="[MHEIGHT]+20"/>
+						<text fontsize="24" align="center" color="#505050" text="MASTER DECK"/>
+					</textzone>
+				</panel>
+			</panel>
+			<panel visibility="var '@$wavemaster' 2">
+				<scratchwave class="scratchwtall" wheight="[SHEIGHT]-[MHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+				<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]-[MHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+				<panel visibility="controllerscreen_deck 1">
+					<deck deck="2">
+						<scratchwave class="scratchwtall" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+						<scratchwave class="scratchwtallcolor" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+					</deck>
+				</panel>
+				<panel visibility="controllerscreen_deck 2">
+					<deck deck="1">
+						<scratchwave class="scratchwtall" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+						<scratchwave class="scratchwtallcolor" wheight="[MHEIGHT]" x="+93" y="+[SHEIGHT]-[MHEIGHT]" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+					</deck>
+				</panel>
+			</panel>
+
+			<button class="wavelock" x="+93" lheight="[SHEIGHT]" visibility="var '@$denonwavelock' 0"/>
+		</define>
+
+		<define class="scratchsub" placeholders="*sheight=74">
+			<scratchwave class="scratchwtall" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+			<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+			<button class="wavelock" x="+93" lheight="[SHEIGHT]" visibility="var '@$denonwavelock' 0"/>
+		</define>
+
+		<define class="scratchsubmain" placeholders="*sheight=74">
+			<scratchwave class="scratchwtall" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+			<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+			<button class="wavelock" x="+93" lheight="[SHEIGHT]" visibility="var '@$denonwavelock' 0"/>
+		</define>
+
+		<define class="scratchsubmaster" placeholders="*sheight=55">
+			<deck deck="master">
+				<scratchwave class="scratchwtall" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? false : true : true"/>
+				<scratchwave class="scratchwtallcolor" wheight="[SHEIGHT]" x="+93" y="+0" visibility="setting 'SkinWaveformType' 'Shapes' ? var '@$denonshapescolors' 1 ? true : false"/>
+				<button class="wavelock" x="+93" lheight="[SHEIGHT]" visibility="var '@$denonwavelock' 0"/>
+			</deck>
+		</define>
+
+		<define class="scratchsubdeck" placeholders="*mod,*sheight">
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 1">
+				<deck deck="1">
+					<panel class="scratchsub" sheight="[SHEIGHT]" x="+0" y="+0"/>
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 2">
+				<deck deck="2">
+					<panel class="scratchsub" sheight="[SHEIGHT]" x="+0" y="+0"/>
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 3">
+				<deck deck="3">
+					<panel class="scratchsub" sheight="[SHEIGHT]" x="+0" y="+0"/>
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 4">
+				<deck deck="4">
+					<panel class="scratchsub" sheight="[SHEIGHT]" x="+0" y="+0"/>
+				</deck>
+			</panel>
+		</define>
+
+	
+		<define class="denonsetting" placeholders="text,text1,text2,*action1,*action2,*action3">
+			<button action="[ACTION3]">
+				<pos x="-55+10" y="+0"/>
+				<size width="55" height="70"/>
+				<icon x="560" y="306" width="18" height="18" coloroff="#101010" colorselected="#909090"/>
+			</button>
+			<button action="[ACTION3]">
+				<pos x="+10" y="+0"/>
+				<size width="600" height="70"/>
+				<text fontsize="30" align="left" color="#909090" text="[TEXT]"/>
+				<textselected fontsize="30" align="left" color="#cccccc" text="[TEXT]"/>
+			</button>
+			<button action="[ACTION1] & [ACTION3]" >
+				<pos x="+610" y="+0"/>
+				<size width="200" height="70"/>
+				<text fontsize="30" align="center" color="#909090" text="[TEXT1]"/>
+				<off color="#1A1A1A" border_size="2" border="#000000"/>
+				<on color="#053F63" border_size="2" border="#000000"/>
+			</button>
+			<button action="[ACTION2] & [ACTION3]">
+				<pos x="+610+200+20" y="+0"/>
+				<size width="200" height="70"/>
+				<text fontsize="30" align="center" color="#909090" text="[TEXT2]"/>
+				<off color="#1A1A1A" border_size="2" border="#000000"/>
+				<on color="#053F63" border_size="2" border="#000000"/>
+			</button>
+			<visual>
+				<pos x="+0+10" y="+75"/>
+				<size width="580+20+200+20+200" height="2"/>
+				<off color="#202020"/>
+			</visual>
+		</define>
+		
+		<define class="denonsettingq" placeholders="text,text1,text2,*action1,*action2,*action3,query1,query2">
+			<button action="[ACTION3]">
+				<pos x="-55+10" y="+0"/>
+				<size width="55" height="70"/>
+				<icon x="560" y="306" width="18" height="18" coloroff="#101010" colorselected="#909090"/>
+			</button>
+			<button action="[ACTION3]">
+				<pos x="+0+10" y="+0"/>
+				<size width="590" height="70"/>
+				<text fontsize="30" align="left" color="#909090" text="[TEXT]"/>
+				<textselected fontsize="30" align="left" color="#cccccc" text="[TEXT]"/>
+			</button>
+			<button action="[ACTION1] & [ACTION3]" query="[QUERY1]">
+				<pos x="+590+20" y="+0"/>
+				<size width="200" height="70"/>
+				<text fontsize="30" align="center" color="#909090" text="[TEXT1]"/>
+				<off color="#1A1A1A" border_size="2" border="#000000"/>
+				<on color="#053F63" border_size="2" border="#000000"/>
+			</button>
+			<button action="[ACTION2] & [ACTION3]" query="[QUERY2]">
+				<pos x="+590+20+200+20" y="+0"/>
+				<size width="200" height="70"/>
+				<text fontsize="30" align="center" color="#909090" text="[TEXT2]"/>
+				<off color="#1A1A1A" border_size="2" border="#000000"/>
+				<on color="#053F63" border_size="2" border="#000000"/>
+			</button>
+			<visual>
+				<pos x="+0+10" y="+75"/>
+				<size width="590+20+200+20+200-10" height="2"/>
+				<off color="#202020"/>
+			</visual>
+		</define>
+	
+	
+		<define class="settingview" x="0" y="0" >
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="800"/>
+				<off color="#101010"/>
+			</visual>
+			
+			<visual>
+				<pos x="+0" y="90"/>
+				<size width="155" height="800-90"/>
+				<off color="#050505"/>
+			</visual>
+			
+
+			<visual>
+				<pos x="+0" y="90"/>
+				<size width="1280" height="5"/>
+				<off color="#000000"/>
+			</visual>
+			
+			<logo>
+				<pos x="+12" y="30"/>
+				<size width="140" height="35"/>
+			</logo>
+			
+			<textzone>
+				<pos x="155+50" y="0"/>
+				<size width="200" height="90"/>
+				<text fontsize="34" align="left" color="#707070" text="SETTINGS"/>
+			</textzone>
+		
+			<visual>
+				<pos x="160" y="800-100+20"/>
+				<size width="49" height="49"/>
+				<off x="450" y="291"/>
+			</visual>
+			
+			<button action="skin_panel 'DNS2_deck' on">
+				<pos x="+0" y="95"/>
+				<size width="155" height="110"/>
+				<text fontsize="24" align="center" color="#808080" text="DECK"/>
+				<textselected fontsize="24" align="center" color="#bbbbbb" text="DECK"/>
+				<off color="#050505" />
+				<on color="#101010" />
+			</button>
+			<button action="skin_panel 'DNS2_browser' on">
+				<pos x="+0" y="95+100"/>
+				<size width="155" height="110"/>
+				<text fontsize="24" align="center" color="#808080" text="BROWSER"/>
+				<textselected fontsize="24" align="center" color="#bbbbbb" text="BROWSER"/>
+				<off color="#050505" />
+				<on color="#101010" />
+			</button>
+			<button action="skin_panel 'DNS2_wave' on">
+				<pos x="+0" y="95+100+100"/>
+				<size width="155" height="110"/>
+				<text fontsize="24" align="center" color="#808080" text="WAVES"/>
+				<textselected fontsize="24" align="center" color="#bbbbbb" text="WAVES"/>
+				<off color="#050505" />
+				<on color="#101010" />
+			</button>
+			
+			<button action="setting 'SkinWaveformType' 'Shapes' & set '@$denonshapescolors' 0 & set '@$denonshowdeckalbumart' 0 & set '@$denonblinktime' 0 & setting 'loadSecurity' 'on' & setting 'KeyDisplay' 'Harmonic' & setting 'autoKey' 0 & set '@$denonbrowserswitch' 0 & grid_view off &  setting 'WaveformCenter' 'Centered' & setting 'ColoredWaveforms' 'monochrome' & set '@$denonneedlelock' 0 & set '@$denonbrowserinfo' 0 & set '@$denonlistappend' 0 & setting 'multiTouchTwoFingerScroll' 0 & set '@$denonwavelock' 0" query="off">
+				<pos x="1280-20-280" y="+10"/>
+				<size width="280" height="70"/>
+				<text fontsize="28" align="center" color="#808080" text="Reset to Default"/>
+				<textdown fontsize="28" align="center" color="#bbbbbb" text="Reset to Default"/>
+				<off color="#1A1A1A" border_size="2" border="#000000"/>
+				<on color="#404040" border_size="2" border="#606060"/>
+			</button>
+
+			<panel name="DNS2_deck" group="DNS2_settings" visible="yes">
+				<panel class="denonsetting" x="220" y="120" text="Sub-Decks" text1="No" text2="Yes" action3="set '$denonsetdeck' 0" action1="set '@$denondualdeck' 0" action2="set '@$denondualdeck' 1"/>
+
+				<panel class="denonsetting" x="220" y="120" text="Sub-Decks" text1="1" text2="2" action3="set '$denonsetdeck' 0" action1="set '@$denondualdeck' 1" action2="set '@$denondualdeck' 2">
+					<button/>
+					<button><size width="370" height="70"/></button>
+					<button/>
+					<button/>
+					<button action="set '@$denondualdeck' 0 & set '$denonsetview' 1">
+						<pos x="+610-220" y="+0"/>
+						<size width="210" height="70"/>
+						<text dx="4" width="192" fontsize="30" align="center" color="#909090" text="None"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#053F63" border_size="2" border="#000000"/>
+					</button>
+				</panel>
+				<panel class="denonsetting" x="220" y="120+80" text="Show AlbumArt on Deck" text1="No" text2="Yes" action3="set '$denonsetdeck' 1" action1="set '@$denonshowdeckalbumart' 0" action2="set '@$denonshowdeckalbumart' 1"/>
+				<panel class="denonsetting" x="220" y="120+80+80" text="Blink Time near End" text1="No" text2="Yes" action3="set '$denonsetdeck' 2" action1="set '@$denonblinktime' 1" action2="set '@$denonblinktime' 0"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80" text="Key Display" text1="Musical" text2="Harmonic" action3="set '$denonsetdeck' 3" action1="setting 'KeyDisplay' 'Musical'" action2="setting 'KeyDisplay' 'Harmonic'"/>
+				<panel class="denonsettingq" x="220" y="120+80+80+80+80" text="Auto Key Match" text1="No" text2="Yes" action3="set '$denonsetdeck' 4" action1="setting 'autoKey' 0" action2="setting 'autoKey' 1" query1="setting 'autoKey' ? off : on" query2="setting 'autoKey'"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80+80+80" text="Needle Lock" text1="No" text2="Yes" action3="set '$denonsetdeck' 5" action1="set '@$denonneedlelock' 0" action2="set '@$denonneedlelock' 1"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80+80+80+80" text="Load Security" text1="No" text2="Yes" action3="set '$denonsetdeck' 6" action1="setting 'loadSecurity' 'off'" action2="setting 'loadSecurity' 'on'"/>
+
+				<textzone visibility="var '$denonsetdeck' 0">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" format="Select None to display just the Controller Deck. Select 1 to add a Sub-Deck, or 2 to\ndisplay 2 Sub-Decks. Note that Sub-Decks will not follow the selected Layer (Controller\nDeck)"/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 1">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" format="Set to Yes to display Track's AlbumArt on Deck View"/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 2">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" format="When enabled, Track Time on Deck and Jogwheel Ring Led will blink when the track is near\nits End. The time before End can be defined from VirtualDJ Options tab of Settings\n(endOfSongWarning setting)"/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 3">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Select the type for the Musical Key value of the Track displayed on Decks and Browser"/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 4">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="When enabled, tracks loaded to a Deck will automatically match the Key of the other Deck"/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 5">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="When enabled, the Song Progress Wave area of the Deck will be protected from touch."/>
+				</textzone>
+				<textzone visibility="var '$denonsetdeck' 6">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="When set to No, tracks will load to Decks even if playing."/>
+				</textzone>
+
+
+
+			</panel>
+			
+			<panel name="DNS2_browser" group="DNS2_settings" visible="no">
+				<panel class="denonsetting" x="220" y="120" text="Show Browser Info" text1="No" text2="Yes" action3="set '$denonsetbrowser' 0" action1="set '@$denonbrowserinfo' 0" action2="set '@$denonbrowserinfo' 1"/>
+				<panel class="denonsetting" x="220" y="120+80" text="Browser Auto-Switch" text1="No" text2="Yes" action3="set '$denonsetbrowser' 1" action1="set '@$denonbrowserswitch' 1" action2="set '@$denonbrowserswitch' 0"/>
+				<panel class="denonsetting" x="220" y="120+80+80" text="Browser view" text1="List" text2="Grid" action3="set '$denonsetbrowser' 2" action1="grid_view off" action2="grid_view on"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80" text="Append when adding to Sideview" text1="No" text2="Yes" action3="set '$denonsetbrowser' 3" action1="set '@$denonlistappend' 0" action2="set '@$denonlistappend' 1"/>
+				<panel class="denonsettingq" x="220" y="120+80+80+80+80" text="2 Fingers Scroll" text1="No" text2="Yes" action3="set '$denonsetbrowser' 4" action1="setting 'multiTouchTwoFingerScroll' 0" action2="setting 'multiTouchTwoFingerScroll' 1" query1="setting 'multiTouchTwoFingerScroll' ? off : on" query2="setting 'multiTouchTwoFingerScroll'"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80+80+80" text="Browser Text Fit" text1="Scroll" text2="Smart" action3="set '$denonsetbrowser' 5" action1="setting 'browserTextFit' 'scroll'" action2="setting 'browserTextFit' 'smart'">
+					<button/>
+					<button><size width="370" height="70"/></button>
+					<button/>
+					<button/>
+					<button action="setting 'browserTextFit' 'fixed' & set '$denonsetbrowser' 5">
+						<pos x="+610-220" y="+0"/>
+						<size width="210" height="70"/>
+						<text dx="4" width="192" fontsize="30" align="center" color="#909090" text="Fixed"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#053F63" border_size="2" border="#000000"/>
+					</button>
+				</panel>
+				<textzone visibility="var '$denonsetbrowser' 0">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="When set to Yes, the selected Track's Info panel will be displayed at the right side of Browser."/>
+				</textzone>
+				<textzone visibility="var '$denonsetbrowser' 1">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" format="When set to Yes, Browser view will be displayed automatically, if any Browser related button\nor knob is triggered from the device. When set to No, Browser will be displayed usinng the\nVIEW button on the device "/>
+				</textzone>
+				<textzone visibility="var '$denonsetbrowser' 2">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Select between the List and Grid view for the Browser"/>
+				</textzone>
+				<textzone visibility="var '$denonsetbrowser' 3">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" format="When enabled, the Folders that you choose to add to Sidelist (Automix, Sidelist, Karaoke) \nwill append their tracks at the end of the current list, instead of replacing"/>
+				</textzone>
+				<textzone visibility="var '$denonsetbrowser' 4">
+					<pos x="240" y="800-100-15"/>
+					<size width="1280-30-230" height="120"/>
+					<text fontsize="24" align="left" color="#707070" format="When set to Yes, scrolling the Browser lists will require two fingers, while dragging will require\none finger. When set to No, scrolling will require one finger and dragging will be offered with\none finger on the Album Art in Grid view."/>
+				</textzone>
+				<textzone visibility="var '$denonsetbrowser' 5">
+					<pos x="240" y="800-100-15"/>
+					<size width="1280-30-230" height="120"/>
+					<text fontsize="24" align="left" color="#707070" format="Choose how to display large text in the Browser if too long to fit"/>
+				</textzone>
+			
+
+				
+			</panel>
+			
+			<panel name="DNS2_wave" group="DNS2_settings" visible="no">
+				<panel class="denonsetting" x="220" y="120" text="Scratch-Wave Align" text1="Center" text2="Left" action3="set '$denonsetwave' 0" action1="setting 'WaveformCenter' 'Centered'" action2="setting 'WaveformCenter' 'Left'"/>
+				<panel class="denonsetting" x="220" y="120+80" text="Scratch-Wave Type" text1="Shapes" text2="Colors" action3="set '$denonsetwave' 1" action1="setting 'SkinWaveformType' 'Shapes'" action2="setting 'SkinWaveformType' 'Colors'"/>
+				<panel class="denonsetting" x="220" y="120+80+80" text="Shapes Wave Colors" text1="Per-Deck" text2="3 Colors" action3="set '$denonsetwave' 2" action1="set '@$denonshapescolors' 0" action2="set '@$denonshapescolors' 1" visibility="setting 'SkinWaveformType' 'Colors' ? false : true"/>
+				<panel class="denonsetting" x="220" y="120+80+80" text="Waves Color" text1="Multi-Color" text2="Per Deck" action3="set '$denonsetwave' 2" action1="setting 'ColoredWaveforms' 'neutral'" action2="setting 'ColoredWaveforms' 'per-deck'" visibility="setting 'SkinWaveformType' 'Colors'">
+					<button/>
+					<button><size width="370" height="70"/></button>
+					<button/>
+					<button/>
+					<button action="setting 'ColoredWaveforms' 'monochrome' & set '$denonsetwave' 1">
+						<pos x="+610-220" y="+0"/>
+						<size width="210" height="70"/>
+						<text dx="4" width="192" fontsize="30" align="center" color="#909090" text="Monochrome"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#053F63" border_size="2" border="#000000"/>
+					</button>
+				</panel>
+				<panel class="denonsetting" x="220" y="120+80+80+80" text="Show Grid Lines" text1="No" text2="Yes" action3="set '$denonsetwave' 3" action1="setting 'showGridLines' off" action2="setting 'showGridLines' on"/>
+				<panel class="denonsetting" x="220" y="120+80+80+80+80" text="Lock Scratch-Wave" text1="No" text2="Yes" action3="set '$denonsetwave' 4" action1="set '@$denonwavelock' 1" action2="set '@$denonwavelock' 0"/>
+
+				<textzone visibility="var '$denonsetwave' 0">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Select between Center and Left Horizontal Align for the Scratch Wave"/>
+				</textzone>
+				<textzone visibility="var '$denonsetwave' 1">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Select the type for the ScratchWave"/>
+				</textzone>
+				<textzone visibility="var '$denonsetwave' 2">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Select the Color pattern for the Scratch and Progress Waves"/>
+				</textzone>
+				<textzone visibility="var '$denonsetwave' 3">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="Show extra Grid-Lines in Scratch Wave"/>
+				</textzone>
+				<textzone visibility="var '$denonsetwave' 4">
+					<pos x="240" y="800-100"/>
+					<size width="1280-30-240" height="90"/>
+					<text fontsize="24" align="left" color="#707070" text="When set to Yes, the Scratch Wave area will be blocked from touching."/>
+				</textzone>
+				
+					
+
+			</panel>
+			
+		</define>
+	
+		<define class="browserview" placeholders="*setpos=0,*brheight=800">
+			<visual >
+				<pos x="0" y="0"/>
+				<size width="1280" height="[BRHEIGHT]"/>
+				<off color="#101010"/>
+			</visual>
+			<visual >
+				<pos x="140" y="0"/>
+				<size width="5" height="[BRHEIGHT]"/>
+				<off color="#000000"/>
+			</visual>
+
+			
+			
+			<panel visibility="var 'denonbrowserview' 0 ? var '@$denonsmalldeck' 1 ? true : false : var '$browseroptions' 0">
+				<button class="brbutton" action="browser_window 'folders'">
+					<pos x="15" y="30"/>
+					<size width="110" height="100"/>
+					<icon x="602" y="168" width="49" height="34" coloroff="#606060" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'songs'">
+					<pos x="15" y="30+120"/>
+					<size width="110" height="100"/>
+					<icon x="675" y="169" width="50" height="37" coloroff="#606060" colorselected="#eeeeee"/>
+				</button>
+				
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'automix'">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'automix'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'karaoke'">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'karaoke'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'sidelist'">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'sidelist'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'remixes'">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'remixes'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'sampler'">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'sampler'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="browser_window 'sideview' ? sideview +1 : browser_window 'sideview'" query="browser_window 'sideview'" visibility="sideview 'sampler' ? false : sideview 'automix' ? false : sideview 'sidelist' ? false : sideview 'karaoke' ? false : sideview 'remixes' ? false : true">
+					<pos x="15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon sysicon="sideview 'clone'" width="60" height="60" coloroff="#606060" colordown="#eeeeee" colorselected="#eeeeee"/>
+				</button>
+				
+			</panel>
+			
+			
+			<button class="brbutton" action="toggle '@$denonbrowserinfo'" visibility="browser_window 'folders' ? false : var '$browseroptions' ? false : var 'denonbrowserview' 1 ? true : var '@$denonsmalldeck' 0">
+				<pos x="15" y="800-85-100-20-90-[SETPOS]"/>
+				<size width="110" height="80"/>
+				<icon x="1099" y="167" width="14" height="38" coloroff="#606060" colorselected="#eeeeee"/>
+			</button>
+			
+			<button class="brbutton" action="toggle '$browseroptions'" visibility="var 'denonbrowserview' 1">
+				<pos x="15" y="800-85-100-20-[SETPOS]"/>
+				<size width="110" height="80"/>
+				<icon x="433" y="161" width="43" height="44" coloroff="#606060" colorselected="#eeeeee"/>
+			</button>
+			
+			<panel name="fontbuttons" x="15" y="50" visibility="var 'denonbrowserview' 1 ? var '$browseroptions'">
+				<button action="font_size -1">
+					<pos x="+0" y="+10"/>
+					<size width="110" height="80"/>
+					<off color="#242424" border_size="2" border="#000000"/>
+					<down color="#404040" border_size="2" border="#aaaaaa"/>
+					<text fontsize="30" align="center" color="#606060" text="A-"/>
+					<textdown fontsize="30" align="center" color="#eeeeee" text="A-"/>
+				</button>
+				<button action="font_size +1">
+					<pos x="+0" y="+110"/>
+					<size width="110" height="80"/>
+					<off color="#242424" border_size="2" border="#000000"/>
+					<down color="#404040" border_size="2" border="#aaaaaa"/>
+					<text fontsize="30" align="center" color="#606060" text="A+"/>
+					<textdown fontsize="30" align="center" color="#eeeeee" text="A+"/>
+				</button>
+				
+				<button action="var '@$denonpadding' 2 ? set '@$denonpadding' 1 : var '@$denonpadding' 1 ? set '@$denonpadding' 0 : nothing" query="off">
+					<pos x="+0" y="+260"/>
+					<size width="110" height="80"/>
+					<off color="#242424" border_size="2" border="#000000"/>
+					<down color="#404040" border_size="2" border="#aaaaaa"/>
+					<icon x="212" y="235" width="36" height="38" coloroff="#707070" colordown="#eeeeee"/>
+				</button>
+				<button action="var '@$denonpadding' 0 ? set '@$denonpadding' 1 : var '@$denonpadding' 1 ? set '@$denonpadding' 2 : nothing" query="off">
+					<pos x="+0" y="+260+100"/>
+					<size width="110" height="80"/>
+					<off color="#242424" border_size="2" border="#000000"/>
+					<down color="#404040" border_size="2" border="#aaaaaa"/>
+					<icon x="212" y="284" width="36" height="38" coloroff="#707070" colordown="#eeeeee"/>
+				</button>
+			</panel>
+			
+			<panel name="foldersmixed" visibility="browser_window 'folders'">
+				<visual >
+					<pos x="145" y="70"/>
+					<size width="1280-145-145" height="5"/>
+					<off color="#000000"/>
+				</visual>
+				<visual >
+					<pos x="1280-140-5" y="0"/>
+					<size width="5" height="[BRHEIGHT]"/>
+					<off color="#000000"/>
+				</visual>
+				<visual >
+					<pos x="145+990-400-5" y="70"/>
+					<size width="5" height="[BRHEIGHT]-70"/>
+					<off color="#000000"/>
+				</visual>
+				
+				<textzone>
+					<pos x="145+10" y="0"/>
+					<size width="200" height="70"/>
+					<text fontsize="30" align="left" color="#909090" text="FOLDERS"/>
+				</textzone>
+				<button class="brbutton" action="var '@$denonlistappend' 1 ? playlist_load 'append' : playlist_load">
+					<pos x="1280-140+15" y="30"/>
+					<size width="110" height="100"/>
+					<icon x="341" y="234" width="54" height="41" coloroff="#606060" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="var '@$denonlistappend' 1 ? sidelist_load 'append' : sidelist_load">
+					<pos x="1280-140+15" y="30+120"/>
+					<size width="110" height="100"/>
+					<icon x="341" y="297" width="54" height="38" coloroff="#606060" colorselected="#eeeeee"/>
+				</button>
+				<button class="brbutton" action="var '@$denonlistappend' 1 ? karaoke_load 'append' : karaoke_load">
+					<pos x="1280-140+15" y="30+120+120"/>
+					<size width="110" height="100"/>
+					<icon x="341" y="346" width="54" height="36" coloroff="#606060" colorselected="#eeeeee"/>
+				</button>
+				
+
+				<folderlist class="denonbrowser" foldersearch="no" lineheight="1.2" visibility="var '@$denonpadding' 0">
+					<pos x="145" y="5+70"/>
+					<size width="990-400-5" height="[BRHEIGHT]-75"/>
+				</folderlist>
+				<folderlist class="denonbrowser" foldersearch="no" lineheight="1.4" visibility="var '@$denonpadding' 1">
+					<pos x="145" y="5+70"/>
+					<size width="990-400-5" height="[BRHEIGHT]-75"/>
+				</folderlist>
+				<folderlist class="denonbrowser" foldersearch="no" lineheight="1.6" visibility="var '@$denonpadding' 2">
+					<pos x="145" y="5+70"/>
+					<size width="990-400-5" height="[BRHEIGHT]-75"/>
+				</folderlist>
+				
+				<filelist class="denonbrowser" lineheight="1.2" visibility="var '@$denonpadding' 0">
+					<pos x="145+990-400" y="5+70"/>
+					<size width="400" height="[BRHEIGHT]-75"/>
+				</filelist>
+				<filelist class="denonbrowser" lineheight="1.4" visibility="var '@$denonpadding' 1">
+					<pos x="145+990-400" y="5+70"/>
+					<size width="400" height="[BRHEIGHT]-75"/>
+				</filelist>
+				<filelist class="denonbrowser" lineheight="1.6" visibility="var '@$denonpadding' 2">
+					<pos x="145+990-400" y="5+70"/>
+					<size width="400" height="[BRHEIGHT]-75"/>
+				</filelist>
+
+				
+
+			</panel>
+			
+			<panel name="songs" visibility="browser_window 'songs'">
+				<visual >
+					<pos x="145" y="90"/>
+					<size width="1280-145" height="5"/>
+					<off color="#000000"/>
+				</visual>
+				<textzone>
+					<pos x="145+5" y="0"/>
+					<size width="350" height="90"/>
+					<text fontsize="34" align="left" color="#909090" action="get_browsed_folder"/>
+				</textzone>
+				<browsertoolbar>
+					<pos x="145+350+10" y="0"/>
+					<size width="1280-145-350-10" height="90"/>
+					<colors background="#000000" cursor="#FF0000" border="#404040" >
+						<toolbars background="#101010"  />
+					</colors>
+					<fonttoolbar size="6"/>
+					<fontsearch size="8"/>
+				</browsertoolbar>
+				
+				<panel visibility="var '@$denonbrowserinfo' 0">
+
+					<filelist class="denonbrowser" lineheight="1.2" visibility="var '@$denonpadding' 0">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145" height="[BRHEIGHT]-95"/>
+					</filelist>
+					<filelist class="denonbrowser" lineheight="1.4" visibility="var '@$denonpadding' 1">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145" height="[BRHEIGHT]-95"/>
+					</filelist>
+					<filelist class="denonbrowser" lineheight="1.6" visibility="var '@$denonpadding' 2">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145" height="[BRHEIGHT]-95"/>
+					</filelist>
+
+				</panel>
+				
+				<panel visibility="var '@$denonbrowserinfo' 1">
+					<filelist class="denonbrowser" lineheight="1.2" visibility="var '@$denonpadding' 0">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+					</filelist>
+
+					<filelist class="denonbrowser" lineheight="1.4" visibility="var '@$denonpadding' 1">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+					</filelist>
+					<filelist class="denonbrowser" lineheight="1.6" visibility="var '@$denonpadding' 2">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+					</filelist>
+					
+					<browserinfo class="denonbrowser" >
+						<pos x="1280-300" y="5+90"/>
+						<size width="300" height="[BRHEIGHT]-95"/>
+					</browserinfo>
+
+				</panel>
+
+			</panel>
+
+			<panel name="sideview" visibility="browser_window 'sideview'">
+				<visual >
+					<pos x="145" y="90"/>
+					<size width="1280-145" height="5"/>
+					<off color="#000000"/>
+				</visual>
+				<panel visibility="var '@$denonbrowserinfo' 0">
+					<panel visibility="var '@$denonpadding' 0">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.2" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<panel visibility="var '@$denonpadding' 1">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.4" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<panel visibility="var '@$denonpadding' 2">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.6" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<sampler class="denonbrowser" visibility="sideview 'sampler' ? sideview_triggerpad">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145" height="[BRHEIGHT]-95"/>
+					</sampler>
+				</panel>
+				<panel visibility="var '@$denonbrowserinfo' 1">
+					<panel visibility="var '@$denonpadding' 0">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.2" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<panel visibility="var '@$denonpadding' 1">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.4" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<panel visibility="var '@$denonpadding' 2">
+						<filelist class="denonbrowser" source="sideview" lineheight="1.6" visibility="sideview 'sampler' ? sideview_triggerpad ? no : yes : yes">
+							<pos x="145" y="5+90"/>
+							<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+						</filelist>
+					</panel>
+					<sampler class="denonbrowser" visibility="sideview 'sampler' ? sideview_triggerpad">
+						<pos x="145" y="5+90"/>
+						<size width="1280-145-300" height="[BRHEIGHT]-95"/>
+					</sampler>
+					<browserinfo class="denonbrowser">
+						<pos x="145+1280-145-300" y="5+90"/>
+						<size width="300" height="[BRHEIGHT]-95"/>
+					</browserinfo>
+				</panel>
+				
+
+			
+			
+				<panel name="automix" visibility="sideview 'automix'">
+					
+					<button action="nothing">
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'automix'" width="70" height="70" coloroff="#606060" />
+						<off color="#1A1A1A"/>
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="200" height="90"/>
+						<text fontsize="32" align="left" color="#909090" text="AUTOMIX"/>
+					</textzone>
+					
+					<textzone visibility="not automix">
+						<pos x="430" y="0"/>
+						<size width="400" height="90"/>
+						<text fontsize="26" align="left" color="#707070" format="Total time : `get_playlist_time`"/>
+					</textzone>
+					<textzone visibility="automix">
+						<pos x="430" y="0"/>
+						<size width="400" height="90"/>
+						<text fontsize="26" align="left" color="#707070" format="Time Remaining : `get_playlist_time`"/>
+					</textzone>
+
+					<button action="playlist_options">
+						<pos x="1280-20-80" y="5"/>
+						<size width="80" height="80"/>
+						<icon x="208" y="101" width="28" height="28" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+					</button>
+					<button action="automix">
+						<pos x="1280-20-80-80-20" y="5"/>
+						<size width="80" height="80"/>
+						<icon sysicon="automix" width="56" height="56" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#05635D" border_size="2" border="#606060"/>
+					</button>
+				</panel>
+
+				<panel name="sidelist" visibility="sideview 'sidelist'">
+					<button>
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'sidelist'" width="70" height="70" coloroff="#606060" />
+						<off color="#1A1A1A"/>
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="200" height="90"/>
+						<text fontsize="32" align="left" color="#909090" text="SIDELIST"/>
+					</textzone>
+					<button action="sidelist_options">
+						<pos x="1280-20-80" y="5"/>
+						<size width="80" height="80"/>
+						<icon x="208" y="101" width="28" height="28" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+					</button>
+				</panel>
+
+				<panel name="karoke" visibility="sideview 'karaoke'">
+					<button action="nothing">
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'karaoke'" width="70" height="70" coloroff="#606060" />
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="200" height="90"/>
+						<text fontsize="32" align="left" color="#909090" text="KARAOKE"/>
+					</textzone>
+					
+					<button action="karaoke_options">
+						<pos x="1280-20-80" y="5"/>
+						<size width="80" height="80"/>
+						<icon x="208" y="101" width="28" height="28" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+					</button>
+					<button action="karaoke">
+						<pos x="1280-20-80-80-20" y="5"/>
+						<size width="80" height="80"/>
+						<icon sysicon="karaoke" width="56" height="56" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#05635D" border_size="2" border="#606060"/>
+					</button>
+				</panel>
+				
+				<panel name="remx" visibility="sideview 'remixes'">
+					<button action="nothing">
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'remixes'" width="70" height="70" coloroff="#606060" />
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="400" height="90"/>
+						<text fontsize="32" align="left" color="#909090" text="ALTERNATIVE REMIXES"/>
+					</textzone>
+					
+					<button action="sidereco_options">
+						<pos x="1280-20-80" y="5"/>
+						<size width="80" height="80"/>
+						<icon x="208" y="101" width="28" height="28" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+					</button>
+				</panel>
+				
+				<panel name="sampler" visibility="sideview 'sampler'">
+					<button action="nothing">
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'sampler'" width="70" height="70" coloroff="#606060" />
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="200" height="90"/>
+						<text fontsize="32" align="left" color="#909090" text="SAMPLER"/>
+					</textzone>
+					<button action="sampler_bank">
+						<pos x="145+10+90+200+30" y="10"/>
+						<size width="430" height="74"/>
+						<off color="#101010" border_size="2" border="#303030"/>
+						<text fontsize="30" color="#909090" align="center" action="get_sampler_bank"/>
+					</button>
+					
+					
+					<button action="sampler_mode +1">
+						<pos x="1280-100-100-100" y="5"/>
+						<size width="80" height="80"/>
+						<icon sysicon="sampler_mode" width="56" height="56" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#05635D" border_size="2" border="#606060"/>
+					</button>
+					<button action="sideview_triggerpad">
+						<pos x="1280-100-100" y="5"/>
+						<size width="80" height="80"/>
+						<icon sysicon="sideview_triggerpad" width="56" height="56" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+						<on color="#303030" border_size="2" border="#505050"/>
+					</button>
+					<button action="sampler_options">
+						<pos x="1280-100" y="5"/>
+						<size width="80" height="80"/>
+						<icon x="208" y="101" width="28" height="28" coloroff="#606060" colorselected="#eeeeee"/>
+						<off color="#1A1A1A" border_size="2" border="#000000"/>
+					</button>
+				
+					
+				</panel>
+
+				<panel visibility="sideview 'sampler' ? false : sideview 'automix' ? false : sideview 'sidelist' ? false : sideview 'karaoke' ? false : sideview 'remixes' ? false : true">
+					<button action="nothing">
+						<pos x="145+10" y="5"/>
+						<size width="80" height="80"/>
+						<off color="#101010" />
+						<icon sysicon="sideview 'clone'" width="70" height="70" coloroff="#606060" />
+					</button>
+					<textzone>
+						<pos x="145+10+90" y="0"/>
+						<size width="400" height="90"/>
+						<text fontsize="32" align="left" color="#909090" action="sideview_title"/>
+					</textzone>
+				</panel>
+					
+			</panel>
+			
+
+
+		
+		</define>
+			
+		<define class="poweroff" x="0" y="0" >
+			
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="800"/>
+				<off color="#000000"/>
+			</visual>
+			<visual>
+				<pos x="+200" y="+200"/>
+				<size width="1280-400" height="800-430"/>
+				<off color="#252525"/>
+			</visual>
+			<textzone >
+				<pos x="+200" y="+240"/>
+				<size width="1280-400" height="80"/>
+				<text fontsize="46" color="#eeeeee" align="center" text="Power Off The Player ?" />
+			</textzone>
+
+			<button action="set &apos;denonpower&apos; 0">
+				<pos x="+200+120" y="+390"/>
+				<size width="230" height="90"/>
+				<off color="#404040"/>
+				<text fontsize="34" color="#eeeeee" align="center" localize="true" text="CANCEL" />
+			</button>
+			<button action="set &apos;denonpower&apos; 0 &amp; controllerscreen_action powerdown">
+				<pos x="+200+120+240+200-30" y="+390"/>
+				<size width="230" height="90"/>
+				<off color="#404040"/>
+				<text fontsize="34" color="#eeeeee" align="center" localize="true" text="POWER OFF" />
+			</button>
+		
+		</define>
+	
+		<define class="exitusb" x="0" y="0">
+				
+			<visual >
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="800"/>
+				<off color="#000000"/>
+			</visual>
+			<visual>
+				<pos x="+200" y="+200"/>
+				<size width="1280-400" height="800-430"/>
+				<off color="#252525"/>
+			</visual>
+			<textzone >
+				<pos x="+200" y="+240"/>
+				<size width="1280-400" height="80"/>
+				<text fontsize="46" color="#eeeeee" align="center" text="Restart in Standalone mode ?" />
+			</textzone>
+
+			<button action="set &apos;denonsource&apos; 0">
+				<pos x="+200+120" y="+390"/>
+				<size width="230" height="90"/>
+				<off color="#404040"/>
+				<text fontsize="34" color="#eeeeee" align="center" localize="true" text="CANCEL" />
+			</button>
+			<button action="set &apos;denonsource&apos; 0 &amp; controllerscreen_action standalone">
+				<pos x="+200+120+240+200-30" y="+390"/>
+				<size width="230" height="90"/>
+				<off color="#404040"/>
+				<text fontsize="34" color="#eeeeee" align="center" localize="true" text="RESTART" />
+			</button>
+		</define>
+	
+	
+		<define class="loadsec" x="300" y="200">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="1280-600" height="280"/>
+				<off color="#252525"/>
+			</visual>
+			<textzone >
+				<pos x="+0" y="+40"/>
+				<size width="1280-600" height="80"/>
+				<text fontsize="28" color="#eeeeee" align="center" localize="true" format="A song is already playing on this deck.\nAre you use you want to stop it?" />
+			</textzone>
+
+			<button action="browser_enter">
+				<pos x="+93" y="+140"/>
+				<size width="200" height="80"/>
+				<off color="#404040"/>
+				<text fontsize="30" color="#eeeeee" align="center" localize="OK" text="OK" />
+			</button>
+			<button action="browser_folder">
+				<pos x="+93+200+93" y="+140"/>
+				<size width="200" height="80"/>
+				<off color="#404040"/>
+				<text fontsize="30" color="#eeeeee" align="center" localize="Cancel" text="Cancel" />
+			</button>
+		</define>
+	
+		<define class="dassign" x="0" y="0">
+				
+			<!-- <visual >
+				<pos x="+0" y="+0"/>
+				<size width="1280" height="800"/>
+				<off color="#90000000"/>
+			</visual>
+			-->
+			<button action="nothing">
+				<pos x="+200" y="+200"/>
+				<size width="1280-400" height="800-430"/>
+				<off color="#252525"/>
+			</button>
+			<textzone>
+				<pos x="+200" y="+240"/>
+				<size width="1280-400" height="80"/>
+				<text fontsize="40" color="#eeeeee" align="center" text="Select a Deck to Control" />
+			</textzone>
+			<panel visibility="get_decks & param_equal 4 ? true : false">
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 1 assign_controller">
+					<pos x="+200+130" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="A" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 2 assign_controller">
+					<pos x="+200+130+160" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="B" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 3 assign_controller">
+					<pos x="+200+130+160+160" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="C" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 4 assign_controller">
+					<pos x="+200+130+160+160+160" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="D" />
+				</button>
+				<visual type="color" source="deck 1 get_deck_color 'absolute'">
+					<pos x="+200+130+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 2 get_deck_color 'absolute'">
+					<pos x="+200+130+160+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 3 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 4 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+160+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+			</panel>
+			<panel visibility="get_decks & param_equal 4 ? false : true">
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 1 assign_controller">
+					<pos x="+200+130+160" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="A" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$deckassign' 1 & deck 2 assign_controller">
+					<pos x="+200+130+160+160" y="+390"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="B" />
+				</button>
+				<visual type="color" source="deck 1 get_deck_color 'absolute'">
+					<pos x="+200+130+160+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 2 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+10" y="+390+100"/>
+					<size width="100" height="5"/>
+				</visual>
+			</panel>
+			
+			
+		</define>
+
+		<define class="dsubassign" placeholders="*subdeck">
+				
+			<button action="nothing">
+				<pos x="+200" y="+25"/>
+				<size width="1280-400" height="200"/>
+				<off color="#252525"/>
+			</button>
+			<textzone >
+				<pos x="+200" y="+25"/>
+				<size width="1280-400" height="60"/>
+				<text fontsize="34" color="#eeeeee" align="center" text="Select a Deck to Display as Sub-deck" />
+			</textzone>
+			
+			<panel visibility="get_decks & param_equal 4 ? true : false">
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 1 & controllervar '$decksubassign[SUBDECK]' 0">
+					<pos x="+200+130" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="A" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 2 & controllervar '$decksubassign[SUBDECK]'' 0">
+					<pos x="+200+130+160" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="B" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 3 & controllervar '$decksubassign[SUBDECK]' 0">
+					<pos x="+200+130+160+160" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="C" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 4 & controllervar '$decksubassign[SUBDECK]' 0">
+					<pos x="+200+130+160+160+160" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="D" />
+				</button>
+				<visual type="color" source="deck 1 get_deck_color 'absolute'">
+					<pos x="+200+130+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 2 get_deck_color 'absolute'">
+					<pos x="+200+130+160+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 3 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 4 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+160+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+			</panel>
+			<panel visibility="get_decks & param_equal 4 ? false : true">
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 1 & controllervar '$decksubassign[SUBDECK]' 0">
+					<pos x="+200+130+160" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="A" />
+				</button>
+				<button action="controllerscreen_deck & controllervar '$subdeck[SUBDECK]' 2 & controllervar '$decksubassign[SUBDECK]' 0">
+					<pos x="+200+130+160+160" y="+85"/>
+					<size width="120" height="120"/>
+					<off color="#303030"/>
+					<text fontsize="34" color="#eeeeee" align="center" localize="true" text="B" />
+				</button>
+				<visual type="color" source="deck 1 get_deck_color 'absolute'">
+					<pos x="+200+130+160+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+				<visual type="color" source="deck 2 get_deck_color 'absolute'">
+					<pos x="+200+130+160+160+10" y="+85+100"/>
+					<size width="100" height="5"/>
+				</visual>
+			</panel>
+			
+			
+		</define>
+	
+
+		<define class="deckfullsub" placeholders="*mod">
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 0" mod="[MOD]" class="decksubempty" x="+0" y="+0" />
+
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 1">
+				<deck deck="1">
+					<panel mod="[MOD]" class="decksub" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 2">
+				<deck deck="2">
+					<panel mod="[MOD]" class="decksub" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 3">
+				<deck deck="3">
+					<panel mod="[MOD]" class="decksub" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 4">
+				<deck deck="4">
+					<panel mod="[MOD]" class="decksub" x="+0" y="+0" />
+				</deck>
+			</panel>
+		</define>
+
+		<define class="minidecksubpanel" placeholders="*mod">
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 0" mod="[MOD]" class="minidecksubempty" x="+0" y="+0" />
+
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 1">
+				<deck deck="1">
+					<panel class="minideck" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 2">
+				<deck deck="2">
+					<panel class="minideck" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 3">
+				<deck deck="3">
+					<panel class="minideck" x="+0" y="+0" />
+				</deck>
+			</panel>
+			<panel visibility="controllerscreen_deck & controllervar '$subdeck[MOD]' 4">
+				<deck deck="4">
+					<panel  class="minideck" x="+0" y="+0" />
+				</deck>
+			</panel>
+		</define>
+		
+
+		<define class="usbmode" >
+			<panel name="deckbrview" x="0" y="0" visibility="controllerscreen_deck & controllervar '$settingsview' 0">
+				<panel visibility="var '@$denondualdeck' 0">
+					<panel visibility="var 'denonbrowserview' 0">
+						
+						<panel class="deckfull" x="0" y="0" />
+						<panel visibility="var '@$denonsmalldeck' 0">
+							<panel class="scratch" sheight="270" mheight="90" x="0" y="385+2"/>
+							<menu class="scratchmenu" x="0" y="385+2-10"/>
+							<panel class="wavezoombuttons" x="0" y="385+75" visibility="var 'wavezoom'"/>
+							<panel class="beatsbar" x="1110" y="385+2"/>
+							<panel class="deckpads" x="0" y="503+40-5+125"/>
+						</panel>
+						<panel visibility="var '@$denonsmalldeck' 1">
+							<panel class="scratch" sheight="110" mheight="40" x="0" y="385+2"/>
+							<menu class="scratchmenu" x="0" y="385+2-10" mheight="110"/>
+							<panel class="beatsbar2" x="1110" y="385+2"/>
+							<panel class="wavezoombuttons" x="0" y="385+5" visibility="var 'wavezoom'"/>
+							<panel class="deckpads" x="0" y="503+40-5-40"/>
+							<panel class="sampcustview" x="0" y="638"/>
+						</panel>
+					</panel>
+					<panel visibility="var 'denonbrowserview' 1">
+						<panel class="browserview" brheight="695" />
+						<panel class="minideck" x="0" y="700" />
+					</panel>
+				</panel>
+				
+				<panel visibility="var '@$denondualdeck' 1">
+
+						<panel visibility="var 'denonbrowserview' 0">
+							<panel class="decksubmain" x="0" y="0" />
+							<panel class="subdeckpads" x="0" y="260" />
+							<panel visibility="var '@$denonsmalldeck' 0">
+								<panel class="scratchsubmain" sheight="74" x="0" y="385+2-55" visibility="var '@$wave2master' 0"/>
+								<panel class="scratchsubdeck" sheight="74" mod="2" x="0" y="543-72-55" visibility="var '@$wave2master' 0"/>
+								<panel class="scratchsubmain" sheight="54" x="0" y="385+2-55" visibility="var '@$wave2master' 1"/>
+								<panel class="scratchsubdeck" sheight="54" mod="2" x="0" y="543-72-55+20" visibility="var '@$wave2master' 1"/>
+								<panel class="scratchsubmaster" sheight="40" x="0" y="543-72-55+20-42" visibility="var '@$wave2master' 1"/>
+								
+								<menu class="scratchmenu2" mheight="155" x="0" y="385+2-55" />
+								<panel class="wavezoombuttons" x="0" y="385+2-55+45-20" visibility="var 'wavezoom'"/>
+								<panel class="beatsbar3" x="1110" y="385+2-55"/>
+							</panel>
+							<panel visibility="var '@$denonsmalldeck' 1">
+								<panel class="sampcustview2" x="0" y="385+2-55-10"/>
+								<panel class="custombuts2" x="1280-415" y="385+2-55-10"/>
+								<panel class="custombutsub" mod="2" x="1280-415" y="385+2-55-10+80"/>
+							</panel>
+							<panel class="deckfullsub" mod="2" x="0" y="543-55"/>
+							<panel class="subdeckpadspanel" mod="2" x="0" y="800-55" />
+						</panel>
+						<panel visibility="var 'denonbrowserview' 1">
+							<panel class="browserview" setpos="90" brheight="695-100" />
+							<panel class="minideck" x="0" y="600" />
+							<panel class="minidecksubpanel" mod="2" x="0" y="700" />
+						</panel>
+
+					
+		
+				</panel>
+
+				<panel visibility="var '@$denondualdeck' 2">
+					
+					<panel visibility="var 'denonbrowserview' 0">
+						<panel class="deckfullsub" mod="1" x="0" y="0"/>
+						<panel class="subdeckpadspanel" mod="1" x="0" y="260" />
+						<panel visibility="var '@$denonsmalldeck' 0">
+							<panel class="scratchsubdeck" sheight="74" mod="1" x="0" y="385+2-55" visibility="var '@$wave2master' 0"/>
+							<panel class="scratchsubdeck" sheight="74" mod="2" x="0" y="543-72-55" visibility="var '@$wave2master' 0"/>
+							<panel class="scratchsubdeck" sheight="54" mod="1" x="0" y="385+2-55" visibility="var '@$wave2master' 1"/>
+							<panel class="scratchsubdeck" sheight="54" mod="2" x="0" y="543-72-55+20" visibility="var '@$wave2master' 1"/>
+							<panel class="scratchsubmaster" sheight="40" x="0" y="543-72-55+20-42" visibility="var '@$wave2master' 1"/>
+							
+							<menu class="scratchmenu2" mheight="155" x="0" y="385+2-55" />
+							<panel class="wavezoombuttons" x="0" y="385+2-55+45-20" visibility="var 'wavezoom'"/>
+							<panel class="beatsbar4" x="1110" y="385+2-55"/>
+						</panel>
+						<panel visibility="var '@$denonsmalldeck' 1">
+							<panel class="sampcustview2" x="0" y="385+2-55-10"/>
+							<panel class="custombutsub" mod="1" x="1280-415" y="385+2-55-10"/>
+							<panel class="custombutsub" mod="2" x="1280-415" y="385+2-55-10+80"/>
+						</panel>
+						<panel class="deckfullsub" mod="2" x="0" y="543-55"/>
+						<panel class="subdeckpadspanel" mod="2" x="0" y="800-55" />
+					</panel>
+					<panel visibility="var 'denonbrowserview' 1">
+						<panel class="browserview" setpos="90" brheight="695-100" />
+						<panel class="minidecksubpanel" mod="1" x="0" y="600" />
+						<panel class="minidecksubpanel" mod="2" x="0" y="700" />
+					</panel>
+				
+				
+				</panel>
+
+
+			</panel>
+
+			<panel class="settingview" x="0" y="0" visibility="controllerscreen_deck & controllervar '$settingsview' 1"/>
+
+		</define>
+	</group>
+
+	<!-- Initial Skin Background-->
+	<visual>
+		<pos x="0" y="0"/>
+		<size width="1280" height="800"/>
+		<off color="#000000"/>
+	</visual>
+	
+
+		<panel visibility="controllerscreen_deck 1">
+			<deck deck="1">
+				<panel class="usbmode" visibility="var 'denonsource' 0 ? var 'denonpower' 0"/>
+				<panel class="poweroff" x="0" y="0" visibility="var 'denonpower' 1"/>
+				<panel class="exitusb" x="0" y="0" visibility="var 'denonsource' 1"/>
+				<panel class="loadsec" visibility="load_security_shown"/>
+			</deck>
+		</panel>
+		<panel visibility="controllerscreen_deck 2">
+			<deck deck="2">
+				<panel class="usbmode" visibility="var 'denonsource' 0 ? var 'denonpower' 0"/>
+				<panel class="poweroff" x="0" y="0" visibility="var 'denonpower' 1"/>
+				<panel class="exitusb" x="0" y="0" visibility="var 'denonsource' 1"/>
+				<panel class="loadsec" visibility="load_security_shown"/>
+			</deck>
+		</panel>
+		<panel visibility="controllerscreen_deck 3">
+			<deck deck="3">
+				<panel class="usbmode" visibility="var 'denonsource' 0 ? var 'denonpower' 0"/>
+				<panel class="poweroff" x="0" y="0" visibility="var 'denonpower' 1"/>
+				<panel class="exitusb" x="0" y="0" visibility="var 'denonsource' 1"/>
+				<panel class="loadsec" visibility="load_security_shown"/>
+			</deck>
+		</panel>
+		<panel visibility="controllerscreen_deck 4">
+			<deck deck="4">
+				<panel class="usbmode" visibility="var 'denonsource' 0 ? var 'denonpower' 0"/>
+				<panel class="poweroff" x="0" y="0" visibility="var 'denonpower' 1"/>
+				<panel class="exitusb" x="0" y="0" visibility="var 'denonsource' 1"/>
+				<panel class="loadsec" visibility="load_security_shown"/>
+			</deck>
+		</panel>
+
+	<panel class="dassign" visibility="controllerscreen_deck & controllervar '$deckassign' 1 ? false : true"/>
+	<panel class="dsubassign" x="0" y="30" subdeck="1" visibility="controllerscreen_deck & controllervar '$decksubassign1' 1 ? true : false"/>
+	<panel class="dsubassign" x="0" y="543" subdeck="2" visibility="controllerscreen_deck & controllervar '$decksubassign2' 1 ? true : false"/>
+
+</skin>
+
+

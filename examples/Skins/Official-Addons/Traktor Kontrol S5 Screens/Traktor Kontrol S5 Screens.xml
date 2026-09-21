@@ -1,0 +1,935 @@
+﻿<skin name="Traktor Kontrol S5 Screens" version="830" width="960" height="272" hidden="true" breakline="271" nbdecks="4" comment="Special Skin for Traktor S5 Screens" author="Atomix Productions">
+<copyright>©2022 - Atomix Productions</copyright>
+
+	<define color="scratch1" value="#0085f4" deck="1"/>
+	<define color="scratch2" value="#0085f4" deck="1"/>
+	<define color="scratch1" value="#ff0013" deck="2"/> 
+	<define color="scratch2" value="#ff0013" deck="2"/>
+	<define color="scratch1" value="#00ffba" deck="3"/>
+	<define color="scratch2" value="#00ffba" deck="3"/> 
+	<define color="scratch1" value="#f94c00" deck="4"/>
+	<define color="scratch2" value="#f94c00" deck="4"/>
+	
+	<define color="deckcolor" value="#156c89" deck="1"/>
+	<define color="deckcolor" value="#ac2f37" deck="2"/>
+	<define color="deckcolor" value="#0d7264" deck="3"/>
+	<define color="deckcolor" value="#a54d30" deck="4"/>
+			
+
+	<define color="deckcolorbright" value="#1e7b96" deck="1"/>
+	<define color="deckcolorbright" value="#b73841" deck="2"/>
+	<define color="deckcolorbright" value="#108473" deck="3"/>
+	<define color="deckcolorbright" value="#b05b39" deck="4"/>
+	<define color="deckcolordark" value="#0d5269" deck="1"/>
+	<define color="deckcolordark" value="#8e1e25" deck="2"/>
+	<define color="deckcolordark" value="#0b544a" deck="3"/>
+	<define color="deckcolordark" value="#84341a" deck="4"/>
+	
+	<define color="buton" value="#156c89" deck="1"/>
+	<define color="buton" value="#ac2f37" deck="2"/>
+	<define color="buton" value="#0d7264" deck="3"/>
+	<define color="buton" value="#a54d30" deck="4"/>
+			
+	<define color="needle" value="#d1d1d1"/>
+	<define color="artist" value="#d1d1d1"/> 
+	<define color="feat" value="#a6a6a6"/> 
+	<define color="title" value="#dadada"/>
+	<define color="remix" value="#9b9b9b"/>
+	<define color="bordercolor" value="#1b1b1b"/>
+	<define color="textdarkdark" value="#666666"/>
+	<define color="textdarker" value="#555555"/>
+	<define color="textdark" value="#808080"/>
+	<define color="textoff3" value="#9b9b9b"/>
+	<define color="textoff2" value="#a6a6a6"/>
+	<define color="textoff" value="#c6c6c6"/>
+	<define color="textover" value="#d1d1d1"/>
+	<define color="texton" value="#d4d4d4"/>
+	<define color="textbright" value="#e8e8e8"/>
+	<define color="textbrowser" value="#d4d4d4"/> 
+	<define color="textselected" value="#a6a6a6"/>
+
+	<define color="butoff" value="#050505"/>
+	
+	<define color="padbuttonselected" value="#17313b" deck="1"/> 
+	<define color="padbuttonselected" value="#53181e" deck="2"/>
+	<define color="padbuttonselected" value="#16322f" deck="3"/> 
+	<define color="padbuttonselected" value="#4a271d" deck="4"/>
+			
+
+
+<define class="scrwave" placeholders="*sheight=120" orientation="horizontal" color="scratch1" color2="scratch2">
+	<size width="480" height="[SHEIGHT]-24"/>
+	<grid size="1" mainsize="4" height="8" pos="-10" maincolor="deckcolor" color="darkgray" mirrored="true" shapepos="-10" shapemirrored="down"/>
+	<gridlines width="1" color="darkgray" transparency="0.5"/>
+	<cue y="-12" height="15">
+		<mask x="78" y="62" width="15" height="15"/>
+		<text dx="+12" dy="-2" weight="" fontsize="13" color="texton"/>
+	</cue>
+	<overlay>
+		<pos x="+240" y="-12"/>
+		<size width="1" height="[SHEIGHT]" />
+		<background color="needle" shape="square" />
+	</overlay>
+</define>
+
+<define class="fxbutton" placeholders="textaction">
+	<size width="100" height="30"/>
+	<off color="butoff" shape="square" border="bordercolor" border_size="1"/>
+	<on color="buton" shape="square" border="bordercolor" border_size="1"/>
+	<text color="textoff3" colorselected="white" dx="5" width="100-10" fontsize="12" align="center" action="[TEXTACTION]" />
+</define>
+
+<define class="fxfader" placeholders="*slot,*sl=1">
+	<visual>
+		<pos x="+0" y="+5"/>
+		<size width="100" height="18"/>
+		<off color="#000000" border="#303030" border_size="1"/>
+	</visual>
+
+	<slider action="effect_slider [SLOT] [SL]" visibility="effect_active [SLOT]" orientation="horizontal" disabled="not effect_has_slider [SLOT] [SL]" frommiddle="get_effect_slider_default [SLOT] [SL] 0.5">
+		<pos x="+3" y="+8"/>
+		<size width="100-6" height="18-6"/>
+		<off color="#000000" />
+		<on color="buton" />
+		<fader shape="square" width="2" height="18" color="#909090"/>
+	</slider>
+	
+	<slider action="effect_slider [SLOT] [SL]" visibility="not effect_active [SLOT]" orientation="horizontal" disabled="not effect_has_slider [SLOT] [SL]" frommiddle="get_effect_slider_default [SLOT] [SL] 0.5">
+		<pos x="+3" y="+8"/>
+		<size width="100-6" height="18-6"/>
+		<off color="#000000" />
+		<on color="#303030" />
+		<fader shape="square" width="2" height="18" color="#909090"/>
+	</slider>
+	
+	<textzone >
+		<pos x="+5" y="+5+20"/>
+		<size width="45" height="20"/>
+		<text fontsize="12" color="title" weight="bold" align="left" action="get_effect_slider_shortname [SLOT] [SL]" />
+	</textzone>
+	<textzone >
+		<pos x="+50" y="+5+20"/>
+		<size width="45" height="20"/>
+		<text fontsize="12" color="title" weight="bold" align="right" action="get_effect_slider_text [SLOT] [SL]" />
+	</textzone>
+</define>
+
+<define class="samfader" placeholders="*slot">
+	<visual>
+		<pos x="+0" y="+5"/>
+		<size width="100" height="18"/>
+		<off color="#000000" border="#303030" border_size="1"/>
+	</visual>
+	
+	<slider action="sampler_group_volume [SLOT]" disabled="not sampler_has_group [SLOT]" orientation="horizontal"  >
+		<pos x="+3" y="+8"/>
+		<size width="100-6" height="18-6"/>
+		<off color="#000000" />
+		<on color="#303030" />
+		<fader shape="square" width="2" height="18" color="#909090"/>
+	</slider>
+	
+	<textzone >
+		<pos x="+3" y="+5+20"/>
+		<size width="45" height="20"/>
+		<text fontsize="12" color="title" weight="bold" align="left" action="sampler_group_name [SLOT] & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+50" y="+5+20"/>
+		<size width="45" height="20"/>
+		<text fontsize="12" color="title" weight="bold" align="right" action="get_text &quot;`sampler_group_volume [SLOT] & param_multiply 100 & param_cast 'integer'`%&quot;" />
+	</textzone>
+</define>
+
+
+<define class="fxsliders">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="480" height="55"/>
+		<off color="#101010"/>
+	</visual>
+	<panel visibility="not shift">
+		<panel class="fxfader" x="+10" y="+5" slot="1" sl="1"/>
+		<panel class="fxfader" x="+10+120" y="+5" slot="2" sl="1"/>
+		<panel class="fxfader" x="+10+120+120" y="+5" slot="3" sl="1"/>
+		<panel class="fxfader" x="+10+120+120+120" y="+5" slot="4" sl="1"/>
+	</panel>
+	<panel visibility="shift">
+		<panel class="fxfader" x="+10" y="+5" slot="1" sl="2"/>
+		<panel class="fxfader" x="+10+120" y="+5" slot="2" sl="2"/>
+		<panel class="fxfader" x="+10+120+120" y="+5" slot="3" sl="2"/>
+		<panel class="fxfader" x="+10+120+120+120" y="+5" slot="4" sl="2"/>
+	</panel>
+
+	
+</define>
+
+<define class="bpmview">
+	<square color="#0C0C0C" border="2" border_color="#303030"  >
+		<pos x="+0" y="+0"/>
+		<size width="250" height="150"/>
+	</square>
+	
+	<textzone>
+		<pos x="+0" y="+10"/>
+		<size width="250" height="25"/>
+		<text fontsize="24" align="center" weight="bold" color="#606060" text="BPM"/>
+	</textzone>
+	
+	<textzone>
+		<pos x="+0" y="+40"/>
+		<size width="250" height="50"/>
+		<text fontsize="36" align="center" weight="bold" color="white" format="%Pbpmex"/>
+	</textzone>
+	<textzone>
+		<pos x="+0" y="+150-50"/>
+		<size width="250" height="20"/>
+		<text fontsize="10" align="center" color="#606060" text="Push BACK to smoothly reset Tempo"/>
+	</textzone>
+	<textzone>
+		<pos x="+0" y="+150-30"/>
+		<size width="250" height="20"/>
+		<text fontsize="10" align="center" color="#606060" text="Push BROWSE to reset Tempo"/>
+	</textzone>
+
+	
+</define>
+
+<define class="loopview">
+	<visual source="loop">
+		<pos x="+0" y="+0"/>
+		<size width="80" height="80"/>
+		<off shape="circle" color="#000000" border="#909090" border_size="2"/>
+		<on shape="circle" color="#000000" border="#28ED00" border_size="2"/>
+	</visual>
+	<button action="loop">
+		<pos x="+0" y="+0"/>
+		<size width="80" height="80"/>
+		<text fontsize="26" align="center" weight="bold" color="#909090" colorselected="#28ED00" format="%loop"/>
+	</button>
+</define>
+
+<define class="keyview">
+	<square color="#0C0C0C" border="2" border_color="#303030"  >
+		<pos x="+0" y="+0"/>
+		<size width="250" height="150"/>
+	</square>
+	
+	<textzone>
+		<pos x="+0" y="+10"/>
+		<size width="250" height="25"/>
+		<text fontsize="24" align="center" weight="bold" color="#606060" text="KEY"/>
+	</textzone>
+	
+	<button action="key_match_button">
+		<pos x="+0" y="+40-10"/>
+		<size width="80" height="30"/>
+		<text fontsize="15" align="center" weight="bold" color="#404040" colorselected="white" text="MATCH"/>
+	</button>
+	<button action="key_lock">
+		<pos x="+0" y="+40+21"/>
+		<size width="80" height="30"/>
+		<text fontsize="15" align="center" weight="bold" color="#404040" colorselected="orange" text="LOCK"/>
+	</button>
+	
+	<textzone>
+		<pos x="+250-80" y="+37"/>
+		<size width="80" height="50"/>
+		<text fontsize="20" align="center" weight="bold" color="#808080" action="get_key_modifier"/>
+	</textzone>
+	<textzone>
+		<pos x="+80" y="+37"/>
+		<size width="90" height="50"/>
+		<text fontsize="36" align="center" weight="bold" color="`get_key_color`" action="get_key"/>
+	</textzone>
+	<textzone>
+		<pos x="+0" y="+150-60"/>
+		<size width="250" height="15"/>
+		<text fontsize="10" align="center" color="#606060" text="Push BACK to reset Key"/>
+	</textzone>
+	<textzone>
+		<pos x="+0" y="+150-60+16"/>
+		<size width="250" height="15"/>
+		<text fontsize="10" align="center" color="#606060" text="Push BROWSE to match Key"/>
+	</textzone>
+	<textzone>
+		<pos x="+0" y="+150-60+32"/>
+		<size width="250" height="15"/>
+		<text fontsize="10" align="center" color="#606060" text="Push SHIFT+BROWSE to turn KEYLOCK On/Off"/>
+	</textzone>
+
+	
+</define>
+
+<define class="fxslots">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="480" height="40"/>
+		<off color="#101010"/>
+	</visual>
+			
+	<button class="fxbutton" x="+10" y="+5" action="effect_active" textaction="get_effect_name 1 & param_uppercase"/>
+	<button class="fxbutton" x="+10+120" y="+5" action="effect_active 2" textaction="get_effect_name 2 & param_uppercase"/>
+	<button class="fxbutton" x="+10+120+120" y="+5" action="effect_active 3" textaction="get_effect_name 3 & param_uppercase"/>
+	<button class="fxbutton" x="+10+120+120+120" y="+5" action="effect_active 4" textaction="get_effect_name 4 & param_uppercase"/>
+</define>
+
+<define class="fxsels" placeholders="*slot">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="110" height="25"/>
+		<off color="#202020"/>
+	</visual>
+	<textzone >
+		<pos x="+5" y="+0"/>
+		<size width="100" height="25"/>
+		<text fontsize="12" color="white" weight="bold" align="left" text="FX [SLOT]" />
+	</textzone>
+	
+	<textzone >
+		<pos x="+5" y="+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] -3 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] -2 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] -1 & param_uppercase" />
+	</textzone>
+	<visual>
+		<pos x="+0" y="+30+30+30+30"/>
+		<size width="110" height="30"/>
+		<off color="#303030"/>
+	</visual>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="white" weight="bold" align="left" action="get_effect_name [SLOT] & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] +1 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] +2 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] +3 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" action="get_effect_name [SLOT] +4 & param_uppercase" />
+	</textzone>
+
+</define>	
+<define class="fxselsoff" placeholders="*slot">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="110" height="25"/>
+		<off color="#101010"/>
+	</visual>
+	<textzone >
+		<pos x="+5" y="+0"/>
+		<size width="100" height="25"/>
+		<text fontsize="12" color="textdark" weight="bold" align="left" text="FX [SLOT]" />
+	</textzone>
+	
+	<textzone >
+		<pos x="+5" y="+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] -3 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] -2 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] -1 & param_uppercase" />
+	</textzone>
+	<visual>
+		<pos x="+0" y="+30+30+30+30"/>
+		<size width="110" height="30"/>
+		<off color="#202020"/>
+	</visual>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="#bbbbbb" weight="bold" align="left" action="get_effect_name [SLOT] & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] +1 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] +2 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] +3 & param_uppercase" />
+	</textzone>
+	<textzone >
+		<pos x="+5" y="+30+30+30+30+30+30+30+30"/>
+		<size width="100" height="30"/>
+		<text fontsize="12" color="textdarker" weight="bold" align="left" action="get_effect_name [SLOT] +4 & param_uppercase" />
+	</textzone>
+
+</define>	
+
+<define class="scroptions">
+	<button>
+		<pos x="+0" y="+0"/>
+		<size width="25" height="60"/>
+		<off color="#202020"/>
+		<text fontsize="12" orientation="vertical" align="center" color="white" text="BPM"/>
+	</button>
+	<button>
+		<pos x="+0" y="+75"/>
+		<size width="25" height="60"/>
+		<off color="#202020"/>
+		<text fontsize="12" orientation="vertical" align="center" color="white" text="KEY"/>
+	</button>
+	<button>
+		<pos x="+480-25" y="+0"/>
+		<size width="25" height="60"/>
+		<off color="#202020"/>
+		<text fontsize="12"  align="center" color="white" text="-"/>
+	</button>
+
+	<button>
+		<pos x="+480-25" y="+75"/>
+		<size width="25" height="60"/>
+		<off color="#202020"/>
+		<text fontsize="12" align="center" color="white" text="+"/>
+	</button>
+</define>
+
+
+<define class="deckinfo">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="480" height="55"/>
+		<off color="#0C0C0C"/>
+	</visual>
+	<line x="+0" y="+0" width="480" height="1" color="#303030" />
+	<button action="nothing">
+		<pos x="+480-25" y="+0"/>
+		<size width="25" height="55"/>
+		<off color="deckcolordark"/>
+		<text fontsize="20" color="white" weight="bold" align="center" action="get_deck_letter" />
+	</button>
+	<cover>
+		<pos x="+0" y="+2"/>
+		<size width="50" height="50"/>
+	</cover>
+	<textzone group="horizontal" scroll="no">
+		<pos x="+50+5" y="+0"/>
+		<size width="480-50-150-12-30" height="25"/>
+		<text fontsize="18" color="title"  action="get_title_before_remix" />
+		<text fontsize="18" color="remix" action="get_remix_after_title" />
+	</textzone>
+	<textzone group="horizontal" scroll="no">
+		<pos x="+50+5" y="+25"/>
+		<size width="480-50-150-12-30" height="25"/>
+		<text fontsize="15" color="artist" action="get_artist_before_feat" />
+		<text fontsize="15" color="feat" action="get_featuring_after_artist"/>
+	</textzone>
+	
+	<textzone>
+		<pos x="+480-85-30" y="+0"/>
+		<size width="80" height="25"/>
+		<text fontsize="18" align="right" color="deckcolorbright" format="%Pbpmex"/>
+	</textzone>
+	<textzone>
+		<pos x="+480-150+15-45" y="+0"/>
+		<size width="80" height="25"/>
+		<text fontsize="18" align="right" color="white" action="get_time"/>
+	</textzone>
+	<textzone >
+		<pos x="+480-55-30" y="+28"/>
+		<size width="50" height="20"/>
+		<text fontsize="18" color="`get_key_color`" weight="bold" align="center" action="get_key"/>
+	</textzone>
+	
+	<button action="loop">
+		<pos x="+480-150+2-4" y="+27+9-4"/>
+		<size width="20" height="20"/>
+		<icon x="236" y="57" width="16" height="19" coloroff="#909090" colorselected="#28ED00"/>
+	</button>
+
+	<button action="loop">
+		<pos x="+480-150+17" y="+27+2"/>
+		<size width="40" height="25"/>
+		<text fontsize="18" align="center" color="#909090" colorselected="#28ED00" format="%loop"/>
+	</button>
+			
+</define>
+
+<define class="deckinfoshort">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="480" height="25"/>
+		<off color="#0C0C0C"/>
+	</visual>
+	<line x="+0" y="+0" width="480" height="2" color="#808080"/>
+	
+	<button action="nothing">
+		<pos x="+480-25" y="+2"/>
+		<size width="25" height="25"/>
+		<off color="deckcolordark"/>
+		<text fontsize="20" color="white" weight="bold" align="center" action="get_deck_letter" />
+	</button>
+	<cover>
+		<pos x="+0" y="+2"/>
+		<size width="50" height="25"/>
+	</cover>
+	<textzone group="horizontal" scroll="no">
+		<pos x="+50+5" y="+2"/>
+		<size width="480-50-150-12-30" height="25"/>
+		<text fontsize="18" color="title"  action="get_title_before_remix" />
+		<text fontsize="18" color="remix" action="get_remix_after_title" />
+	</textzone>
+	
+	<textzone>
+		<pos x="+480-85-30" y="+2"/>
+		<size width="80" height="25"/>
+		<text fontsize="18" align="right" color="deckcolorbright" format="%Pbpmex"/>
+	</textzone>
+	<textzone>
+		<pos x="+480-150+15-45" y="+2"/>
+		<size width="80" height="25"/>
+		<text fontsize="18" align="right" color="white" action="get_time"/>
+	</textzone>
+		
+</define>
+
+<define class="deck">
+	<panel visibility="var 's5fxselect' 0">
+		<panel class="fxslots" x="+0" y="+0"/>
+		<panel class="deckinfo" x="+0" y="+40" visibility="var 's5fxtouch' 0"/>
+		<panel class="fxsliders" x="+0" y="+40" visibility="not var_equal 's5fxtouch' 0"/>
+		
+		<songpos class="songpos" x="+5" y="+55+5+40"/>
+		
+		<line x="+0" y="+55+1+40" width="480" height="1" color="#303030" />
+	
+
+		<line x="+0" y="+100+1+40" width="480" height="1" color="#303030" />
+		
+		<scratchwave class="scrwave" x="+0" y="+100+5+12+40" sheight="120" visibility="var '$deckview' 0"/>
+		<scratchwave class="scrwave" x="+0" y="+100+5+12+40" sheight="55" visibility="var '$deckview' 1"/>
+
+		<panel class="bpmview" x="+140" y="+100" visibility="var 's5bpmview' 1 ? true : false"/>
+		<panel class="keyview" x="+140" y="+100" visibility="var 's5bpmview' 2 ? true : false"/>
+		<panel class="loopview" x="+200" y="+160" visibility="toggle 's5loopselect' &amp; fadeout 1500ms 500ms"/>
+		<panel class="scroptions" x="+0" y="+70" visibility="var 'screenoptions' ? true : false"/>
+
+	</panel>
+	
+	<panel visibility="var 's5fxselect' 1">
+		<panel class="fxselsoff" x="+0" y="+0" slot="1" visibility="var 's5fxslot' 1 ? false : true"/>
+		<panel class="fxsels" x="+0" y="+0" slot="1" visibility="var 's5fxslot' 1"/>
+		
+		<panel class="fxsels" x="+120" y="+0" slot="2" visibility="var 's5fxslot' 2"/>
+		<panel class="fxselsoff" x="+120" y="+0" slot="2" visibility="var 's5fxslot' 2 ? false : true"/>
+		
+		<panel class="fxsels" x="+120+120" y="+0" slot="3" visibility="var 's5fxslot' 3"/>
+		<panel class="fxselsoff" x="+120+120" y="+0" slot="3" visibility="var 's5fxslot' 3 ? false : true"/>
+		
+		<panel class="fxsels" x="+120+120+120" y="+0" slot="4" visibility="var 's5fxslot' 4"/>
+		<panel class="fxselsoff" x="+120+120+120" y="+0" slot="4" visibility="var 's5fxslot' 4 ? false : true"/>
+
+	</panel>
+</define>
+
+<define class="songpos" orientation="horizontal" waveform="yes">
+	<size width="480-10" height="40"/>
+	<wave>
+		<size height="40-16"/>
+		<pos y="+8"/>
+	</wave>
+	<cues colored="yes" shade="0.1" shadesize="2" dy="0">
+		<size width="12" height="12"/>
+		<clipmask x="31" y="63"/>
+	</cues>
+	<loops dy="0" shade="0">
+		<size width="15" height="15"/>
+		<clipmask x="53" y="63"/>
+	</loops>
+</define>
+
+<define class="browserfolderline" placeholders="*line">
+	<visual visibility="get_browsed_folder_selection_index 8 & param_equal [LINE] ? true : false">
+		<pos x="+0" y="+0"/>
+		<size width="480" height="28"/>
+		<off color="#303030"/>
+	</visual>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 0 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_browsed_folder [LINE] 8" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 1 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '    `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 2 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '        `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 3 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '            `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 4 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 5 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                    `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 6 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                        `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 7 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                            `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 8 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                                `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 9 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                                    `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+	<textzone visibility="get_browsed_folder_tab [LINE] 8 & param_equal 10 ? true : false">
+		<pos x="+5" y="+0"/>
+		<size width="400" height="28"/>
+		<text fontsize="14" color="white" action="get_text '                                        `get_browsed_folder [LINE] 8`'" />
+	</textzone>
+
+	<line x="+0" y="+29" width="480" height="1" color="#202020" />
+</define>
+
+<define class="browserline" placeholders="*line">
+	<visual visibility="get_browsed_selection_index 7 & param_equal [LINE] ? true : false">
+		<pos x="+0" y="+0"/>
+		<size width="470" height="28"/>
+		<off color="#303030"/>
+	</visual>
+	
+	
+	<cover source="browser [LINE] 7" visibility="get_browsed_song [LINE] 7 'LoadedOn' & param_equal '' ? get_browsed_song [LINE] 7 'already played' ? false : true : false">
+		<pos x="+5" y="+2"/>
+		<size width="25" height="25"/>
+	</cover>
+
+	<visual visibility="get_browsed_song [LINE] 7 'LoadedOn' & param_equal '' ? false : true">
+		<pos x="+5" y="+2"/>
+		<size width="25" height="25"/>
+		<off color="#000000" border="white" border_size="1"/>
+	</visual>
+	<textzone visibility="get_browsed_song [LINE] 7 'LoadedOn' & param_equal '' ? false : true">
+		<pos x="+5" y="+2"/>
+		<size width="25" height="25"/>
+		<text fontsize="14" align="center" color="white" action="get_browsed_song [LINE] 7 'LoadedOn'" />
+	</textzone>
+
+	
+	<button action="nothing" visibility="get_browsed_song [LINE] 7 'already played' ? get_browsed_song [LINE] 7 'LoadedOn' & param_equal '' ? true : false">
+		<pos x="+5" y="+2"/>
+		<size width="27" height="27"/>
+		<off color="transparent" />
+		<text fontsize="14" align="center" color="green" text="✔️" />
+	</button>
+	
+	
+	<textzone>
+		<pos x="+5+28" y="+0"/>
+		<size width="170-14" height="28"/>
+		<text fontsize="14" color="`get_browsed_color [LINE] 7 'white'`" action="get_browsed_artist [LINE] 7" />
+	</textzone>
+	<textzone>
+		<pos x="+5+28+170-14" y="+0"/>
+		<size width="170-14" height="28"/>
+		<text fontsize="14" color="`get_browsed_color [LINE] 7 'white'`" action="get_browsed_title [LINE] 7" />
+	</textzone>
+	<textzone>
+		<pos x="+480-130" y="+0"/>
+		<size width="55" height="28"/>
+		<text fontsize="14" color="`get_browsed_color [LINE] 7 'white'`" align="right" action="get_browsed_song [LINE] 7 'bpm'" />
+	</textzone>
+	
+	<textzone visibility="setting &apos;TRAKTORS5-BrowserKeyField&apos; &apos;Value&apos; ? true : false">
+		<pos x="+480-70" y="+0"/>
+		<size width="55" height="28"/>
+		<text fontsize="14" color="`get_browsed_song [LINE] 7 'keycolor'`" align="right" action="get_browsed_song [LINE] 7 'key'" />
+	</textzone>
+	<textzone visibility="setting &apos;TRAKTORS5-BrowserKeyField&apos; &apos;Difference&apos; ? true : false">
+		<pos x="+480-70" y="+0"/>
+		<size width="55" height="28"/>
+		<text fontsize="14" color="`get_browsed_song [LINE] 7 'keycolor'`" align="right" action="get_browsed_song [LINE] 7 'Key Difference'" />
+	</textzone>
+	<line x="+0" y="+29" width="470" height="1" color="#202020" />
+</define>
+
+<define class="browserheaders">
+	<visual>
+		<pos x="+0" y="+0"/>
+		<size width="480" height="30"/>
+		<off color="#101010"/>
+	</visual>
+	
+	<textzone>
+		<pos x="+5+28+25" y="+0"/>
+		<size width="130" height="29"/>
+		<text fontsize="12" color="white" text="ARTIST" />
+	</textzone>
+	<button action="nothing" visibility="browser_sort '-artist'">
+		<pos x="+5+28" y="+0+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowdown" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	<button action="nothing" visibility="browser_sort '+artist'">
+		<pos x="+5+28" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowup" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	
+	<textzone>
+		<pos x="+5+14+175+28" y="+0"/>
+		<size width="130" height="29"/>
+		<text fontsize="12" color="white" text="TITLE" />
+	</textzone>
+	<button action="nothing" visibility="browser_sort '-title'">
+		<pos x="+5+14+175" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowdown" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	<button action="nothing" visibility="browser_sort '+title'">
+		<pos x="+5+14+175" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowup" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	
+	<textzone>
+		<pos x="+480-130" y="+0"/>
+		<size width="55" height="29"/>
+		<text fontsize="12" align="right" color="white" text="BPM" />
+	</textzone>
+	<button action="nothing" visibility="browser_sort '-bpm'">
+		<pos x="+480-130+3" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowdown" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	<button action="nothing" visibility="browser_sort '+bpm'">
+		<pos x="+480-130+3" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowup" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	<textzone>
+		<pos x="+480-70" y="+0"/>
+		<size width="55" height="29"/>
+		<text fontsize="12" align="right" color="white" text="KEY" />
+	</textzone>
+	<button action="nothing" visibility="browser_sort '-key'">
+		<pos x="+480-70+5" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowdown" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+	<button action="nothing" visibility="browser_sort '+key'">
+		<pos x="+480-70+5" y="+4"/>
+		<size width="20" height="20"/>
+		<off color="101010"/>
+		<icon sysicon="arrowup" width="20" height="20" coloroff="#aaaaaa" />
+	</button>
+
+</define>
+	
+<define class="browserview">
+	<panel visibility="browser_window 'folders' ? false : true">
+		<visual>
+			<pos x="+0" y="+0"/>
+			<size width="480" height="30"/>
+			<off color="#000000"/>
+		</visual>
+		<textzone>
+			<pos x="+5" y="+0"/>
+			<size width="300" height="29"/>
+			<text fontsize="12" color="white" action="browser_window 'sideview' ? sideview_title & param_uppercase : get_browsed_header & param_uppercase" />
+		</textzone>
+		<textzone visibility="prelisten ? false : true">
+			<pos x="+5+300+5" y="+0"/>
+			<size width="100" height="29"/>
+			<text fontsize="12" color="white" action="get_text '`file_count` files'" />
+		</textzone>
+		
+		<prelisten visibility="prelisten">
+			<pos x="+5+300+5" y="+0"/>
+			<size width="160" height="29"/>
+			<colors background="#1F1F1F" border="#7A7A7A" selected="#136024" cursor="#18A639" button="#CBCBCB" buttonbackground="#5C5C5C" buttonselected="#18A639" />
+		</prelisten>
+	
+		<panel class="browserheaders" x="+0" y="+30"/>
+		
+		<visual>
+			<pos x="+480-10" y="+60"/>
+			<size width="10" height="272-60"/>
+			<off shape="square" border="#505050" border_size="1" color="black"/>
+		</visual>
+		<slider action="param_multiply `get_browsed_scrollpos` `get_browsed_scrollsize & param_add -7 & param_1_x`" direction="down" orientation="vertical" visibility="get_browsed_scrollsize">
+			<pos x="+480-10+2" y="+62"/>
+			<size width="10-4" height="272-60-4"/>
+			<fader color="#505050" width="6" height="20"/>
+		</slider>
+		<panel class="browserline" x="+0" y="+30+30" line="1"/>
+		<panel class="browserline" x="+0" y="+30+30+30" line="2"/>
+		<panel class="browserline" x="+0" y="+30+30+30+30" line="3"/>
+		<panel class="browserline" x="+0" y="+30+30+30+30+30" line="4"/>
+		<panel class="browserline" x="+0" y="+30+30+30+30+30+30" line="5"/>
+		<panel class="browserline" x="+0" y="+30+30+30+30+30+30+30" line="6"/>
+		<panel class="browserline" x="+0" y="+30+30+30+30+30+30+30+30" line="7"/>
+	</panel>
+	
+
+		<folderlist lineheight="1.5" foldersearch="no" visibility="browser_window 'folders'">
+			<pos x="+0" y="+0"/>
+			<size width="480" height="272"/>
+			<font size="16" />
+		</folderlist>
+		<!--
+		<panel class="browserfolderline" x="+0" y="+0" line="1"/>
+		<panel class="browserfolderline" x="+0" y="+30" line="2"/>
+		<panel class="browserfolderline" x="+0" y="+30+30" line="3"/>
+		<panel class="browserfolderline" x="+0" y="+30+30+30" line="4"/>
+		<panel class="browserfolderline" x="+0" y="+30+30+30+30" line="5"/>
+		<panel class="browserfolderline" x="+0" y="+30+30+30+30+30" line="6"/>
+		<panel class="browserfolderline" x="+0" y="+30+30+30+30+30+30" line="7"/>
+		<panel class="browserfolderline" x="+0" y="+30+30+30+30+30+30+30" line="8"/>
+		-->
+
+	
+	
+
+
+</define>
+
+<panel name="nos5settings" visibility="var_equal '$s5settings' 0">
+	<group name="Left" x="0" y="0">
+		<visual>
+			<pos x="+0" y="+0"/>
+			<size width="480" height="272"/>
+			<off color="#000000"/>
+		</visual>
+		
+		<panel visibility="deck left var 's5browser' 0">
+			<panel visibility="deck 1 leftdeck">
+				<deck deck="3">
+					<panel class="deckinfoshort" x="+0" y="230-30" visibility="var '$deckview' 1"/>
+					<songpos class="songpos" x="+5" y="272-40-2" visibility="var '$deckview' 1"/>
+				</deck>
+				<deck deck="1">
+					<panel class="deck" x="+0" y="+0"/>
+				</deck>
+				
+			</panel>
+			<panel visibility="deck 3 leftdeck">
+				<deck deck="1">
+					<panel class="deckinfoshort" x="+0" y="230-30" visibility="var '$deckview' 1"/>
+					<songpos class="songpos" x="+5" y="272-40-2" visibility="var '$deckview' 1"/>
+				</deck>
+				<deck deck="3">
+					<panel class="deck" x="+0" y="+0"/>
+				</deck>
+				
+			</panel>
+		</panel>
+
+		<panel class="browserview" x="+0" y="+0" visibility="deck left var 's5browser' 1"/>
+
+	</group>
+
+	<group name="Right" x="+480" y="0">
+		<visual>
+			<pos x="+0" y="+0"/>
+			<size width="480" height="272"/>
+			<off color="#000000"/>
+		</visual>
+
+			<panel visibility="deck right var 's5browser' 0">
+				<panel visibility="deck 2 rightdeck">
+					<deck deck="4">
+						<panel class="deckinfoshort" x="+0" y="230-30" visibility="var '$deckview' 1"/>
+						<songpos class="songpos" x="+5" y="272-40-2" visibility="var '$deckview' 1"/>
+					</deck>
+					<deck deck="2">
+						<panel class="deck" x="+0" y="+0"/>
+					</deck>
+					
+				</panel>
+				<panel visibility="deck 4 rightdeck">
+					<deck deck="2">
+						<panel class="deckinfoshort" x="+0" y="230-30" visibility="var '$deckview' 1"/>
+						<songpos class="songpos" x="+5" y="272-40-2" visibility="var '$deckview' 1"/>
+					</deck>
+					<deck deck="4">
+						<panel class="deck" x="+0" y="+0"/>
+					</deck>
+					
+				</panel>
+			</panel>
+
+			<panel class="browserview" x="+0" y="+0" visibility="deck right var 's5browser' 1"/>
+	</group>
+</panel>
+
+<panel name="s5settings" visibility="var_equal '$s5settings' 1">
+	<visual>
+		<pos x="0" y="0"/>
+		<size width="480" height="272"/>
+		<off color="#000010"/>
+	</visual>
+	<visual>
+		<pos x="+480" y="0"/>
+		<size width="480" height="272"/>
+		<off color="#000010"/>
+	</visual>
+</panel>
+
+</skin>

@@ -1,0 +1,230 @@
+<Skin name="Traktor X1 MK3 Screens" comment="Version: 1.0" date="2024/01/09" author="Atomix Productions" preview="X1MK3PV.png" version="850" width="128" height="320" nbdecks="4" hidden="true">
+<copyright>©2024 Atomix Productions</copyright>
+==== CLASS DEFINITIONS ====
+<group name="definitions">
+	<font name="Arial"/>
+	<define class="vis_TrackProgress" type="linear" orientation="horizontal" direction="right" smooth="false" source="loaded ? song_pos : constant 0.0">
+		<off shape="square" radius="0" border_size="1" border="white" color="black"/>
+		<on shape="square" radius="0" border_size="1" border="white" color="white"/>
+	</define>
+	<define class="txt_TI_Title" placeholders="fontsize=16">
+		<text scroll="no" align="left" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_title"/>
+		<tooltip />
+	</define>
+	<define class="txt_TI_Time" placeholders="fontsize=28">
+		<text scroll="no" align="left" fontsize="[FONTSIZE]" color="white" backcolor="black" action="display_time 'remain' ? get_text &quot;-`get_time_min & param_cast '00'`:`get_time_sec & param_cast '00'`&quot; : get_text &quot;`get_time_min & param_cast '00'`:`get_time_sec & param_cast '00'`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="bt_TI_Loop" action="loop" placeholders="fontsize=28" >
+		<up radius="0" color="black"/>
+		<selected radius="0" color="white"/>
+		<text fontsize="[FONTSIZE]" align="center" backcolor="black" color="white" format="%loop"/>
+		<textselected fontsize="[FONTSIZE]" align="center" weight="bold" backcolor="white" color="black" format="%loop"/>
+		<tooltip />
+	</define>
+	<define class="bt_TI_LoopSmall" action="loop" placeholders="fontsize=24" >
+		<up radius="0" color="black"/>
+		<selected radius="0" color="white"/>
+		<text fontsize="[FONTSIZE]" align="center" backcolor="black" color="white" format="%loop"/>
+		<textselected fontsize="[FONTSIZE]" align="center" weight="bold" backcolor="white" color="black" format="%loop"/>
+		<tooltip />
+	</define>
+	<define class="bt_TI_LoopBig" action="loop" placeholders="fontsize=32" >
+		<up radius="0" color="black"/>
+		<selected radius="0" color="white"/>
+		<text fontsize="[FONTSIZE]" align="center" backcolor="black" color="white" format="%loop"/>
+		<textselected fontsize="[FONTSIZE]" align="center" weight="bold" backcolor="white" color="black" format="%loop"/>
+		<tooltip />
+	</define>
+	<define class="txt_TI_Loop" placeholders="fontsize=16">
+		<text scroll="no" align="left" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'LOOP'"/>
+		<tooltip />
+	</define>
+	<define class="txt_TI_BeatJump" placeholders="fontsize=16">
+		<text scroll="no" align="left" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'BEATJUMP'"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'X1MK3LastKnob' 0 ? high_label : var_equal 'X1MK3LastKnob' 1 ? mid_label : var_equal 'X1MK3LastKnob' 2 ? low_label : var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos; ? get_text 'VOLUME' : get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQHighVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_high` `eq_high_slider` ? get_text &quot;▲ `eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_high` `eq_high_slider` ? get_text &quot;▼ `eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQMidVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_mid` `eq_mid_slider` ? get_text &quot;▲ `eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_mid` `eq_mid_slider` ? get_text &quot;▼ `eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQLowVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_low` `eq_low_slider` ? get_text &quot;▲ `eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_low` `eq_low_slider` ? get_text &quot;▼ `eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_VolumeVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `level` `volume_slider` ? get_text &quot;▲ `level & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `level` `volume_slider` ? get_text &quot;▼ `level & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`level & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_FilterVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `filter` `filter_slider` ? get_text &quot;▲ `filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `filter` `filter_slider` ? get_text &quot;▼ `filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	
+	<define class="txt_FX_MultiFXSlotUsed" placeholders="fontsize=18">
+		<text scroll="no" align="left" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'X1MK3LastKnob' 0 ? get_text &apos;1&apos; : var_equal 'X1MK3LastKnob' 1 ? get_text &apos;2&apos; : var_equal 'X1MK3LastKnob' 2 ? get_text &apos;3&apos; : var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos; ? get_text 'VOLUME' : get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_MultiFXName" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'X1MK3LastKnob' 0 ? get_effect_name 1 & param_uppercase : var_equal 'X1MK3LastKnob' 1 ? get_effect_name 2 & param_uppercase : var_equal 'X1MK3LastKnob' 2 ? get_effect_name 3 & param_uppercase : var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos; ? get_text 'VOLUME' : get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_MultiFXLabel" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'X1MK3LastKnob' 0 ? shift ? get_effect_slider_shortname 1 2 : get_effect_slider_shortname 1 1 : var_equal 'X1MK3LastKnob' 1 ? shift ? get_effect_slider_shortname 2 2 : get_effect_slider_shortname 2 1 : var_equal 'X1MK3LastKnob' 2 ? shift ? get_effect_slider_shortname 3 2 : get_effect_slider_shortname 3 1 : var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos; ? get_text 'VOLUME' : get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_SingleFXName" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_effect_name 1 & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_SingleFXLabel" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'X1MK3LastKnob' 0 ? shift ? get_effect_slider_shortname 1 4 : get_effect_slider_shortname 1 1 : var_equal 'X1MK3LastKnob' 1 ? shift ? get_effect_slider_shortname 1 5 : get_effect_slider_shortname 1 2 : var_equal 'X1MK3LastKnob' 2 ? shift ? get_effect_slider_shortname 1 6 : get_effect_slider_shortname 1 3 : var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos; ? get_text 'VOLUME' : get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FX1Slider1Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 1 2` `effect_slider_slider 1 2` ? get_text &quot;▲ `get_effect_slider_text 1 2`&quot; : param_bigger `effect_slider 1 2` `effect_slider_slider 1 2` ? get_text &quot;▼ `get_effect_slider_text 1 2`&quot; : get_text &quot;`get_effect_slider_text 1 2`&quot; : param_smaller `effect_slider 1 1` `effect_slider_slider 1 1` ? get_text &quot;▲ `get_effect_slider_text 1 1`&quot; : param_bigger `effect_slider 1 1` `effect_slider_slider 1 1` ? get_text &quot;▼ `get_effect_slider_text 1 1`&quot; : get_text &quot;`get_effect_slider_text 1 1`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FX2Slider1Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 2 2` `effect_slider_slider 2 2` ? get_text &quot;▲ `get_effect_slider_text 2 2`&quot; : param_bigger `effect_slider 2 2` `effect_slider_slider 2 2` ? get_text &quot;▼ `get_effect_slider_text 2 2`&quot; : get_text &quot;`get_effect_slider_text 2 2`&quot; : param_smaller `effect_slider 2 1` `effect_slider_slider 2 1` ? get_text &quot;▲ `get_effect_slider_text 2 1`&quot; : param_bigger `effect_slider 2 1` `effect_slider_slider 2 1` ? get_text &quot;▼ `get_effect_slider_text 2 1`&quot; : get_text &quot;`get_effect_slider_text 2 1`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FX3Slider1Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 3 2` `effect_slider_slider 3 2` ? get_text &quot;▲ `get_effect_slider_text 3 2`&quot; : param_bigger `effect_slider 3 2` `effect_slider_slider 3 2` ? get_text &quot;▼ `get_effect_slider_text 3 2`&quot; : get_text &quot;`get_effect_slider_text 3 2`&quot; : param_smaller `effect_slider 3 1` `effect_slider_slider 3 1` ? get_text &quot;▲ `get_effect_slider_text 3 1`&quot; : param_bigger `effect_slider 3 1` `effect_slider_slider 3 1` ? get_text &quot;▼ `get_effect_slider_text 3 1`&quot; : get_text &quot;`get_effect_slider_text 3 1`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FXSingleSlider1Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 1 4` `effect_slider_slider 1 4` ? get_text &quot;▲ `get_effect_slider_text 1 4`&quot; : param_bigger `effect_slider 1 4` `effect_slider_slider 1 4` ? get_text &quot;▼ `get_effect_slider_text 1 4`&quot; : get_text &quot;`get_effect_slider_text 1 4`&quot; : param_smaller `effect_slider 1 1` `effect_slider_slider 1 1` ? get_text &quot;▲ `get_effect_slider_text 1 1`&quot; : param_bigger `effect_slider 1 1` `effect_slider_slider 1 1` ? get_text &quot;▼ `get_effect_slider_text 1 1`&quot; : get_text &quot;`get_effect_slider_text 1 1`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FXSingleSlider2Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 1 5` `effect_slider_slider 1 5` ? get_text &quot;▲ `get_effect_slider_text 1 5`&quot; : param_bigger `effect_slider 1 5` `effect_slider_slider 1 5` ? get_text &quot;▼ `get_effect_slider_text 1 5`&quot; : get_text &quot;`get_effect_slider_text 1 5`&quot; : param_smaller `effect_slider 1 2` `effect_slider_slider 1 2` ? get_text &quot;▲ `get_effect_slider_text 1 2`&quot; : param_bigger `effect_slider 1 2` `effect_slider_slider 1 2` ? get_text &quot;▼ `get_effect_slider_text 1 2`&quot; : get_text &quot;`get_effect_slider_text 1 2`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FXSingleSlider3Val" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="shift ? param_smaller `effect_slider 1 6` `effect_slider_slider 1 6` ? get_text &quot;▲ `get_effect_slider_text 1 6`&quot; : param_bigger `effect_slider 1 6` `effect_slider_slider 1 6` ? get_text &quot;▼ `get_effect_slider_text 1 6`&quot; : get_text &quot;`get_effect_slider_text 1 6`&quot; : param_smaller `effect_slider 1 3` `effect_slider_slider 1 3` ? get_text &quot;▲ `get_effect_slider_text 1 3`&quot; : param_bigger `effect_slider 1 3` `effect_slider_slider 1 3` ? get_text &quot;▼ `get_effect_slider_text 1 3`&quot; : get_text &quot;`get_effect_slider_text 1 3`&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_FilterLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_effect_name 'colorfx' & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="pnl_DI_Info">
+		<panel name="Track Info" visible="var_equal 'X1MK3LoopEnc' 0">
+			<textzone class="txt_TI_Title" x="+0" y="+0" width="128" height="18" visibility="loaded"/>
+			<textzone class="txt_TI_Time" x="+0" y="+20" width="82" height="32" visibility="loaded"/>
+			<button class="bt_TI_Loop" x="+82" y="+20+3" width="46" height="32-6" visibility="param_bigger 0.0625 loop_length"/>
+			<button class="bt_TI_LoopSmall" x="+82" y="+20+3" width="46" height="32-6" visibility="param_smaller 0.125 loop_length"/>
+		</panel>
+		<panel name="Loop Display" visible="not var_equal 'X1MK3LoopEnc' 0">
+			<textzone class="txt_TI_Loop" x="+0" y="+0" width="128" height="18" visibility="shift ? false : true"/>
+			<textzone class="txt_TI_BeatJump" x="+0" y="+0" width="128" height="18" visibility="shift ? true : false"/>
+			<button class="bt_TI_LoopBig" x="+0" y="+20" width="64" height="32"/>
+		</panel>
+		<visual class="vis_TrackProgress" x="+0" y="+64-8" width="128" height="8"/>
+	</define>
+	<define class="pnl_MI_DeckMixerInfo">
+		<textzone class="txt_MI_EQLabel" x="+0" y="+2" width="128" height="30" />
+		<textzone class="txt_MI_EQHighVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'X1MK3LastKnob' 0"/>
+		<textzone class="txt_MI_EQMidVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'X1MK3LastKnob' 1"/>
+		<textzone class="txt_MI_EQLowVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'X1MK3LastKnob' 2"/>
+		<textzone class="txt_MI_VolumeVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Volume&apos;"/>
+		<textzone class="txt_MI_FilterVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'X1MK3LastKnob' 3 ? setting &apos;TRAKTORX1MK3-FourthMixerKnob&apos; &apos;Filter&apos;"/>
+	</define>
+	<define class="vis_VUMeter" type="linear" orientation="vertical" direction="up" smooth="false" source="get_level" granularity="6">
+		<off shape="square" radius="0" border_size="1" border="white" color="black"/>
+		<on shape="square" radius="0" border_size="1" border="white" color="white"/>
+	</define>
+	<define class="txt_MI_MixerLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'MIXER'"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_EffectsLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'EFFECTS'"/>
+		<tooltip />
+	</define>
+	<define class="txt_FX_EffectMode" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="effect_3slots_layout ? get_text 'MULTI' : get_text 'SINGLE'"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_DeckLabel" placeholders="fontsize=32">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_deck"/>
+		<tooltip />
+	</define>
+	<define class="pnl_MI_MasterMixerInfo">
+		<textzone class="txt_MI_MixerLabel" x="+0" y="+0" width="128" height="22" />
+		<deck deck="left"><textzone class="txt_MI_DeckLabel" x="+0" y="+24" width="24" height="64-24"/></deck>
+		<deck deck="right"><textzone class="txt_MI_DeckLabel" x="+128-24" y="+24" width="24" height="64-24"/></deck>
+		<deck deck="3"><visual class="vis_VUMeter" x="+64-8-2-8-4" y="+24" width="8" height="64-24"/></deck>
+		<deck deck="1"><visual class="vis_VUMeter" x="+64-8-2" y="+24" width="8" height="64-24"/></deck>
+		<deck deck="2"><visual class="vis_VUMeter" x="+64+2" y="+24" width="8" height="64-24"/></deck>
+		<deck deck="4"><visual class="vis_VUMeter" x="+64+2+8+4" y="+24" width="8" height="64-24"/></deck>
+	</define>
+	<define class="pnl_FX_DeckFXInfo">
+		<panel name="3Slots" visible="var_equal 'X1MK3LastKnob' 3 ? off : effect_3slots_layout">
+			<textzone class="txt_FX_MultiFXSlotUsed" x="+0" y="+2" width="12" height="30" />
+			<textzone class="txt_FX_MultiFXName" x="+12" y="+2" width="128-12" height="30" />
+			<textzone class="txt_FX_MultiFXLabel" x="+0" y="+32" width="64" height="30"/>
+			<textzone class="txt_FX_FX1Slider1Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 0"/>
+			<textzone class="txt_FX_FX2Slider1Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 1"/>
+			<textzone class="txt_FX_FX3Slider1Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 2"/>
+		</panel>
+		<panel name="SingleSlot" visible="var_equal 'X1MK3LastKnob' 3 ? off : effect_3slots_layout ? off : on">
+			<textzone class="txt_FX_SingleFXName" x="+0" y="+2" width="128" height="30" />
+			<textzone class="txt_FX_SingleFXLabel" x="+0" y="+32" width="64" height="30"/>
+			<textzone class="txt_FX_FXSingleSlider1Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 0"/>
+			<textzone class="txt_FX_FXSingleSlider2Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 1"/>
+			<textzone class="txt_FX_FXSingleSlider3Val" x="+64" y="+32" width="64" height="30" visibility="var_equal 'X1MK3LastKnob' 2"/>
+		</panel>
+		<panel name="Filter" visible="var_equal 'X1MK3LastKnob' 3">
+			<textzone class="txt_FX_FilterLabel" x="+0" y="+2" width="128" height="30" />
+			<textzone class="txt_MI_FilterVal" x="+0" y="+32" width="128" height="30"/>
+		</panel>
+	</define>
+	<define class="pnl_FX_MasterFXInfo">
+		<textzone class="txt_FX_EffectsLabel" x="+0" y="+0" width="128" height="22" />
+		<deck deck="left"><textzone class="txt_MI_DeckLabel" x="+0" y="+24" width="24" height="64-24"/></deck>
+		<deck deck="right"><textzone class="txt_MI_DeckLabel" x="+128-24" y="+24" width="24" height="64-24"/></deck>
+		<textzone class="txt_FX_EffectMode" x="+24" y="+24" width="128-48" height="64-24" />
+	</define>
+</group>
+==== SKIN BACKGROUND ====
+<visual canstretch="true" x="0" y="0" width="128" height="320">
+	<off shape="square" color="black"/>
+</visual>
+==== SCREENS ====
+<group x="+0" y="+0" width="128" height="64" name="SCR_TOP_LEFT">
+	<deck deck="left">
+		<panel class="pnl_MI_DeckMixerInfo" visible="var_equal '@$NIX1MK3Mode' 0"/>
+		<panel class="pnl_FX_DeckFXInfo" visible="var_equal '@$NIX1MK3Mode' 1"/>
+	</deck>
+</group>
+<group x="+0" y="+64" width="128" height="64" name="SCR_TOP_CENTER">
+	<panel class="pnl_MI_MasterMixerInfo" visible="var_equal '@$NIX1MK3Mode' 0"/>
+	<panel class="pnl_FX_MasterFXInfo" visible="var_equal '@$NIX1MK3Mode' 1"/>
+</group>
+<group x="+0" y="+128" width="128" height="64" name="SCR_TOP_RIGHT">
+	<deck deck="right">
+		<panel class="pnl_MI_DeckMixerInfo" visible="var_equal '@$NIX1MK3Mode' 0"/>
+		<panel class="pnl_FX_DeckFXInfo" visible="var_equal '@$NIX1MK3Mode' 1"/>
+	</deck>
+</group>
+<group x="+0" y="+192" width="128" height="64" name="SCR_BTM_LEFT">
+	<deck deck="left">
+		<panel class="pnl_DI_Info"/>
+	</deck>
+</group>
+<group x="+0" y="+256" width="128" height="64" name="SCR_BTM_RIGHT">
+	<deck deck="right">
+		<panel class="pnl_DI_Info"/>
+	</deck>
+</group>
+</skin>

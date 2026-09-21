@@ -1,0 +1,738 @@
+<Skin name="Numark iDJLiveII" version="8" preview="skinpreview.png" author="Atomix Productions" comment="Numark iDJLiveII skin" nbdecks="2" width="1600" height="900">
+<copyright>- (c)2014 - Atomix Productions -</copyright>
+
+************************************************************
+  Top Part (close open config etc) 
+************************************************************
+
+<logo os="mac">
+ 	 <size width="80" height="17"/>
+ 	 <pos x="1499" y="7"/>
+</logo>
+<logo os="pc">
+ 	 <size width="80" height="17"/>
+ 	 <pos x="22" y="7"/>
+</logo>
+<grabzone>
+  	<size width="1593" height="28"/>
+  	<pos x="1" y="1"/>
+</grabzone>
+
+<button  os="pc" action="settings" visible="force">
+	<size width="75" height="24"/>
+	<pos x="1306" y="1"/>
+	<over x="1306" y="906"/>	
+	<selected x="1306" y="906"/>
+	<down x="1306" y="906"/>
+	<up x="990" y="906"/>
+</button>
+<button  os="mac" action="settings" visible="force">
+	<size width="53" height="21"/>
+	<pos x="145" y="5"/>
+	<over x="555" y="909"/>	
+	<selected x="555" y="909"/>
+	<down x="555" y="909"/>
+	<up x="145" y="909"/>
+</button>
+
+<textzone>
+	<pos x="1078" y="4"/>
+	<size width="100" height="22"/>
+	<text font="LCD" size="23" align="center" weight="bold" color="#d1d3d4" format="%fullhour"/>
+	<text2 font="LCD" size="23" align="center" weight="bold" color="#d1d3d4" format="%hour12"/>
+</textzone>
+<visual type="linear" source="get cpu" orientation="horizontal">
+	<size width="160" height="11"/>
+	<pos x="377" y="11"/>
+	<down x="+0" y="+900"/>	
+</visual>
+
+ --- Minimize ---
+ <button os="mac" action="minimize" visible="force">
+	<pos x="49" y="4"/>
+	<size width="22" height="23"/>
+	<over x="248" y="906"/>
+	<down x="248" y="906"/>
+	<up x="49" y="906"/>
+</button>
+ <button os="pc" action="minimize" visible="force">
+	<pos x="1458" y="1"/>
+	<size width="37" height="24"/>
+	<over x="+0" y="906"/>
+	<down x="+0" y="906"/>
+	<up x="1142" y="906"/>
+</button>
+--- Maximize ---
+<button os="mac" action="maximize" rightclick="maximize off" visible="force">
+	<pos x="74" y="4"/>
+	<size width="22" height="23"/>
+	<over x="273" y="906"/>
+	<down x="273" y="906"/>
+	<up x="75" y="906"/>
+</button>
+<button os="pc" action="maximize" rightclick="maximize off" visible="force">
+	<pos x="1494" y="1"/>
+	<size width="35" height="24"/>
+	<over x="+0" y="906"/>
+	<down x="+0" y="906"/>
+	<up x="1178" y="906"/>
+</button>
+--- Close ---
+<button os="mac" action="close" visible="force">
+	<pos x="25" y="4"/>
+	<size width="22" height="23"/>
+	<over x="224" y="906"/>
+	<down x="224" y="906"/>
+	<up x="25" y="906"/>
+</button>
+<button os="pc" action="close" visible="force">
+	<pos x="1528" y="1"/>
+	<size width="52" height="24"/>
+	<over x="+0" y="906"/>
+	<down x="+0" y="906"/>
+	<up x="1212" y="906"/>
+</button>
+
+BEATKEEPER
+------------------------------------------------------------
+
+<button action="deck 1 goto_bar 1">
+	<size width="28" height="9"/>
+	<pos x="738" y="6"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 1 goto_bar 2">
+	<size width="28" height="9"/>
+	<pos x="771" y="6"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 1 goto_bar 3">
+	<size width="28" height="9"/>
+	<pos x="804" y="6"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 1 goto_bar 4">
+	<size width="28" height="9"/>
+	<pos x="837" y="6"/>
+	<selected x="+0" y="+900"/>
+</button>
+
+<button action="deck 2 goto_bar 1">
+	<size width="28" height="9"/>
+	<pos x="738" y="18"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 2 goto_bar 2">
+	<size width="28" height="9"/>
+	<pos x="771" y="18"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 2 goto_bar 3">
+	<size width="28" height="9"/>
+	<pos x="804" y="18"/>
+	<selected x="+0" y="+900"/>
+</button>
+<button action="deck 2 goto_bar 4">
+	<size width="28" height="9"/>
+	<pos x="837" y="18"/>
+	<selected x="+0" y="+900"/>
+</button>
+
+<button action="deck 1 songpos_remain 30000ms ? blink 300ms & deck 1 select : deck 1 select ">
+	<Tooltip>DECK SELECT</Tooltip>
+ 	 <size width="21" height="16"/>
+ 	 <pos x="709" y="7"/>
+  	<up x="+0" y="+0"/>
+ 	 <selected x="+0" y="+900" />
+</button> 
+<button action="deck 2 songpos_remain 30000ms ? blink 300ms & deck 2 select : deck 2 select ">
+ 	<Tooltip>DECK SELECT</Tooltip>
+	<size width="21" height="16"/>
+ 	 <pos x="874" y="7"/>
+  	<up x="+0" y="+0"/>
+  	<selected x="+0" y="+900" />
+</button> 
+
+
+
+************************************************************
+  BROWSER
+************************************************************
+	<browser>
+		<size width="1589" height="366" />
+		<pos x="6" y="520"/>
+	</browser>	
+<tooltip font="arial" size="15" color="#FFFFFF" back="#000000" shortcut="#808080" />
+
+************************************************************
+  RHYTHM WAVE
+************************************************************
+***************** RHYTHM PANNELS *************************
+<pannel name="ritmoover"  group="RITMOS" visible="yes">
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="94"/>
+	  <down x="+0" y="+0"/>
+</pannel>
+<pannel name="ritmosep"  group="RITMOS" visible="no">
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="94"/>
+	  <down x="+0" y="+0"/>
+</pannel>
+<pannel name="ritmowave"  group="RITMOS" visible="no">
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="94"/>
+	  <down x="+0" y="+0"/>
+</pannel>
+
+------RHYTHM PANNELS BUTTONS ----
+
+<button action="skin_pannel 'ritmoover' on">
+	<Tooltip>Change the Rhythm View</Tooltip>
+	<pos x="1538" y="47"/>
+	<size width="23" height="19"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+900"/>
+</button>
+<button action="skin_panel 'ritmosep' on">
+	<Tooltip>Change the Rhythm View</Tooltip>
+	<pos x="1538" y="87"/>
+	<size width="23" height="19"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+900"/>
+</button>
+<button action="skin_panel 'ritmowave' on">
+	<Tooltip>Change the Rhythm View</Tooltip>
+	<pos x="1538" y="67"/>
+	<size width="23" height="19"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+900"/>
+</button>
+
+<slider action="zoom" orientation="vertical" dblclick="reset" rightclick="temporary" direction="down">
+	<size width="14" height="68"/>
+	<pos x="43" y="45"/>
+	<fader>
+		<size width="7" height="9"/>
+		<pos x="45" y="2116"/>
+	</fader>
+</slider>
+----rhythm overlap--------
+<rhythmzone panel="ritmoover" fade="200" >
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="94"/>
+	<colors
+		 chan1_active="#28acff"  chan1="#007ca9"
+ 		chan2_active="#ed1c24"	 chan2="#7d0607"	
+	/>
+	<rhythm y="32" height="75"/>
+  	<grid height="6" width="7" mainwidth="14">
+    		<pos y1="109" y2="117"/>
+  	</grid>
+	<cue y="32" height="20">
+		<mask x="521" y="2164" width="23" height="20"/>
+		<text dx="18" dy="0" font="arial" size="15"/>
+	</cue>
+</rhythmzone>
+
+<rhythmzone panel="ritmowave" mirror="yes" fade="200" >
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="94"/>
+	<colors
+		 chan1_active="#28acff"  chan1="#007ca9"
+ 		chan2_active="#ed1c24"	 chan2="#7d0607"	
+	/>
+	<rhythm y="32" height="75"/>
+  	<grid height="6" width="7" mainwidth="14">
+    		<pos y1="109" y2="117"/>
+  	</grid>
+	<cue y="32" height="20">
+		<mask x="521" y="2164" width="23" height="20"/>
+		<text dx="18" dy="0" font="arial" size="15"/>
+	</cue>
+</rhythmzone>
+
+<rhythmzone panel="ritmosep" fade="200" >
+	  <pos x="69" y="32"/>
+	  <size width="1464" height="38"/>
+	<colors
+		 chan1_active="#28acff"  chan1="#28acff"
+ 		chan2_active="black"	 chan2="black"	
+	/>
+	<rhythm y="32" height="38"/>
+	<cue y="32" height="20">
+		<mask x="521" y="2164" width="23" height="20"/>
+		<text dx="18" dy="0" font="arial" size="15"/>
+	</cue>
+</rhythmzone>
+<rhythmzone panel="ritmosep" fade="200" >
+	  <pos x="69" y="70"/>
+	  <size width="1464" height="38"/>
+	<colors
+		 chan1_active="black"  chan1="black"
+ 		chan2_active="#ed1c24"	 chan2="#ed1c24"	
+	/>
+	<rhythm y="70" height="38"/>
+	<cue y="70" height="20">
+		<mask x="521" y="2164" width="23" height="20"/>
+		<text dx="18" dy="0" font="arial" size="15"/>
+	</cue>
+</rhythmzone>
+<rhythmzone panel="ritmosep" fade="200">
+	  <pos x="69" y="109"/>
+	  <size width="1464" height="15"/>
+	<colors
+		 chan1_active="#28acff"  chan1="#28acff"
+ 		chan2_active="#ed1c24"	 chan2="#ed1c24"	
+	/>
+	<rhythm y="109" height="0"/>
+  	<grid height="6" width="7" mainwidth="14">
+    		<pos y1="109" y2="117"/>
+  	</grid>
+</rhythmzone>
+
+************************************************************
+  DECK A
+************************************************************
+<dropzone deck="1">
+	<size width="668" height="363"/>
+	<pos x="21" y="137"/>
+</dropzone>
+SONG POSITION 
+--------------------------------------------------------------------
+<songpos deck="1" orientation="horizontal" waveform="yes">
+	<size width="453" height="32"/>
+	<pos x="125" y="184"/>
+	<cues>
+	  <size width="3" height="33"/>
+	  <up x="105" y="2019"/>
+	  <over x="154" y="2019"/>
+	</cues>
+</songpos>
+
+
+---------Textzones ---------
+
+  <textzone deck="1">
+  	 <size width="655" height="26" geterrormessage="true"/>
+   	<pos x="29" y="148"></pos>
+   	<text3 font="arial" size="25" color="#FFFFFF" weight="bold" align="center" Format="%Author - %Title" scroll="no"/>
+  	 <text4 font="arial" size="25" color="#FFFFFF" weight="bold" align="center" format="%Author - %Title" scroll="yes"/>
+   	<text font="arial" size="25" color="#28acff" weight="bold" align="center" format="%Author - %Title" scroll="no"/>
+   	<text2 font="arial" size="25" color="#28acff" weight="bold" align="center" format="%Author - %Title" scroll="yes"/>
+  </textzone>
+
+<textzone deck="1">
+	<pos x="29" y="184"/>
+	<size width="94" height="28"/>
+	<text font="arial" size="28" color="#908f8d" weight="bold" align="center" format="%Pspent"/>
+	<text2 font="arial" size="28" color="#FFFFFF" weight="bold" align="center" format="%Pspent"/>
+	<text3 font="arial" size="28" color="#28acff" weight="bold" align="center" format="%Pspent"/>
+</textzone>
+<textzone deck="1">
+	<pos x="582" y="184"/>
+	<size width="94" height="28"/>
+	<text2 font="arial" size="28" color="#908f8d"  weight="bold" align="center" format="%Pleft"/>
+	<text font="arial" size="28" color="#FFFFFF" weight="bold" align="center" format="%Pleft"/>
+	<text3 font="arial" size="28" color="#28acff" weight="bold" align="center" format="%Pleft"/>
+</textzone>
+<button action="deck 1 beat_tap" rightclick="deck 1 edit_bpm">
+	<Tooltip>MANUAL BEAT TAP / rightclick BPM EDIT</Tooltip>
+	<pos x="405" y="246"/>
+	<size width="77" height="40"/>
+	<up x="+0" y="+0"/>
+	<OVER x="+0" y="+900"/>
+	<text dx="2" dy="6" font="arial" width="71" size="23" color="#28acff" align="center" weight="bold" format="%Pbpmex"/>
+</button>
+
+<button action="deck 1 sync" >
+	<pos x="401" y="292"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1297"/>
+</button>
+<button action="deck 1 loaded ? deck 1 play ? on & deck 1 play_pause : deck 1 cue ? off & deck 1 play_pause : blink & deck 1 play_pause" rightclick=" deck 1 reverse while_pressed">
+	<Tooltip>Play Pause / Rightclick to play in reverse</tooltip>
+	<pos x="401" y="424"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+<button action="deck 1 cue_stop" rightclick="deck 1 unload">
+<Tooltip>Cue Stop / Rightclick to Unload</tooltip>
+	<pos x="401" y="379"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+<button action="deck 1 hot_cue 1">
+	<pos x="401" y="334"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+
+<button action="deck 1 pitch_bend +5% 500ms" >
+	<pos x="330" y="231"/>
+ 	 <size width="33" height="33"/>
+  	 <down x="+0" y="+899"/>
+	 <selected x="+0" y="+899"/>
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="deck 1 pitch_bend -5% 500ms" >
+	<pos x="330" y="267"/>
+ 	 <size width="33" height="33"/>
+  	 <down x="+0" y="+899"/>
+	 <selected x="+0" y="+899"/>
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="deck 1 pitch_reset" dblclick="deck 1 pitch 100%" rightclick="deck 1 pitch 100%">
+	<Tooltip>PITCH SMOOTH RESET - RightClick PITCH RESET</Tooltip>
+	<pos x="487" y="253"/>
+	<size width="25" height="26"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="1546"/>
+	<down x="+0" y="+899"/>
+</button>
+
+<button action="pitch_range" value="-1" rightclick="-2">
+	<size width="77" height="18"/>
+	<pos x="405" y="226"/>
+	<up x="+0" y="+0"/>
+	<text font="ARIAL" size="17" color="#999999" weight="bold" align="center" format="%pitchrange%%"/>
+</button>
+
+----JOG---
+<visual>
+	<tooltip></tooltip>
+	<size width="243" height="243"/>
+	<pos x="82" y="236"/>
+	<off x="381" y="2378"/>
+</visual>	
+<visual type="rotation" source="deck 1 get rotation">
+	<Tooltip></tooltip>
+	<size width="243" height="243"/>
+	<pos x="82" y="236"/>
+	<on x="82" y="2378"/>
+</visual>
+<scratch deck="1">
+	<size width="243" height="243"/>
+	<pos x="82" y="236"/>
+	<mousemask x="82" y="2110"/>
+</scratch>
+
+
+
+
+
+************************************************************
+  DECK B #FF0101
+************************************************************
+<dropzone deck="2">
+	<size width="668" height="363"/>
+	<pos x="914" y="137"/>
+</dropzone>
+SONG POSITION 
+--------------------------------------------------------------------
+<songpos deck="2" orientation="horizontal" waveform="yes">
+	<size width="453" height="32"/>
+	<pos x="1019" y="184"/>
+	<cues>
+	  <size width="2" height="33"/>
+	  <up x="105" y="2019"/>
+	  <over x="154" y="2019"/>
+	</cues>
+</songpos>
+
+
+---------Textzones ---------
+  <textzone deck="2">
+  	 <size width="655" height="26" geterrormessage="true"/>
+   	<pos x="923" y="148"></pos>
+   	<text3 font="arial" size="25" color="#FFFFFF" weight="bold" align="center" Format="%Author - %Title" scroll="no"/>
+  	 <text4 font="arial" size="25" color="#FFFFFF" weight="bold" align="center" format="%Author - %Title" scroll="yes"/>
+   	<text font="arial" size="25" color="#FF0101" weight="bold" align="center" format="%Author - %Title" scroll="no"/>
+   	<text2 font="arial" size="25" color="#FF0101" weight="bold" align="center" format="%Author - %Title" scroll="yes"/>
+  </textzone>
+
+<textzone deck="2">
+	<pos x="923" y="184"/>
+	<size width="94" height="28"/>
+	<text font="arial" size="28" color="#908f8d" weight="bold" align="center" format="%Pspent"/>
+	<text2 font="arial" size="28" color="#FFFFFF" weight="bold" align="center" format="%Pspent"/>
+	<text3 font="arial" size="28" color="#FF0101" weight="bold" align="center" format="%Pspent"/>
+</textzone>
+<textzone deck="2">
+	<pos x="1476" y="184"/>
+	<size width="94" height="28"/>
+	<text2 font="arial" size="28" color="#908f8d"  weight="bold" align="center" format="%Pleft"/>
+	<text font="arial" size="28" color="#FFFFFF" weight="bold" align="center" format="%Pleft"/>
+	<text3 font="arial" size="28" color="#FF0101" weight="bold" align="center" format="%Pleft"/>
+</textzone>
+<button action="deck 2 beat_tap" rightclick="deck 2 edit_bpm">
+	<Tooltip>MANUAL BEAT TAP / rightclick BPM EDIT</Tooltip>
+	<pos x="1121" y="246"/>
+	<size width="77" height="40"/>
+	<up x="+0" y="+0"/>
+	<OVER x="+0" y="+900"/>
+	<text dx="2" dy="6" font="arial" width="71" size="23" color="#FF0101" align="center" weight="bold" format="%Pbpmex"/>
+</button>
+
+
+<button action="deck 2 sync" >
+	<pos x="1116" y="292"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1297"/>
+</button>
+<button action="deck 2 loaded ? deck 2 play ? on & deck 2 play_pause : deck 2 cue ? off & deck 2 play_pause : blink & deck 2 play_pause" rightclick=" deck 2 reverse while_pressed">
+	<Tooltip>Play Pause / Rightclick to play in reverse</tooltip>
+	<pos x="1116" y="424"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+<button action="deck 2 cue_stop" rightclick="deck 2 unload">
+<Tooltip>Cue Stop / Rightclick to Unload</tooltip>
+	<pos x="1116" y="379"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+<button action="deck 2 hot_cue 1">
+	<pos x="1116" y="334"/>
+	<size width="86" height="39"/>
+	<up x="+0" y="+0"/>
+	<down x="+0" y="+900"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="+1298"/>
+</button>
+
+<button action="deck 2 pitch_bend +5% 500ms" >
+	<pos x="1239" y="231"/>
+ 	 <size width="33" height="33"/>
+  	 <down x="+0" y="+899"/>
+	 <selected x="+0" y="+899"/>
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="deck 2 pitch_bend -5% 500ms" >
+	<pos x="1239" y="267"/>
+ 	 <size width="33" height="33"/>
+  	 <down x="+0" y="+899"/>
+	 <selected x="+0" y="+899"/>
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="deck 2 pitch_reset" dblclick="deck 2 pitch 100%" rightclick="deck 2 pitch 100%">
+	<Tooltip>PITCH SMOOTH RESET - RightClick PITCH RESET</Tooltip>
+	<pos x="1203" y="253"/>
+	<size width="25" height="26"/>
+	<selected x="+0" y="+900"/>
+	<over x="+0" y="1546"/>
+	<down x="+0" y="+899"/>
+</button>
+<button action="pitch_range" value="-1" rightclick="-2">
+	<size width="77" height="18"/>
+	<pos x="1121" y="226"/>
+	<up x="+0" y="+0"/>
+	<text font="ARIAL" size="17" color="#999999" weight="bold" align="center" format="%pitchrange%%"/>
+</button>
+
+
+
+
+<visual>
+	<tooltip></tooltip>
+	<size width="243" height="243"/>
+	<pos x="1278" y="236"/>
+	<off x="381" y="2378"/>
+</visual>	
+<visual type="rotation" source="deck 2 get rotation">
+	<Tooltip></tooltip>
+	<size width="243" height="243"/>
+	<pos x="1278" y="236"/>
+	<on x="82" y="2378"/>
+</visual>
+<scratch deck="2">
+	<size width="243" height="243"/>
+	<pos x="1278" y="236"/>
+	<mousemask x="82" y="2110"/>
+</scratch>
+
+------------------ MIXER ------------------------------------------
+
+<slider  action="deck 1 eq_high" orientation="round" dblclick="deck 1 eq_high 50%" rightclick="deck 1 eq_high 0% ? deck 1 eq_high 50% : deck 1 eq_high 0%">
+	<pos x="646" y="241"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2674" nb="31" smooth="true"/>
+	</fader>
+</slider>
+<slider action="deck 1 eq_mid" orientation="round" dblclick="deck 1 eq_mid 50%" rightclick="deck 1 eq_mid 0% ? deck 1 eq_mid 50% : deck 1 eq_mid 0%">
+	<pos x="646" y="314"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2674" nb="31" smooth="true"/>
+	</fader>
+</slider>
+<slider action="deck 1 eq_low" orientation="round" dblclick="deck 1 eq_low 50%" rightclick="deck 1 eq_low 0% ? deck 1 eq_low 50% : deck 1 eq_low 0%">
+	<pos x="646" y="388"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2674" nb="31" smooth="true"/>
+	</fader>
+</slider>
+
+<slider action="deck 2 eq_high" orientation="round" dblclick="deck 2 eq_high 50%" rightclick="deck 2 eq_high 0% ? deck 2 eq_high 50% : deck 2 eq_high 0%">
+	<pos x="914" y="241"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2729" nb="31" smooth="true"/>
+	</fader>
+</slider>	
+<slider action="deck 2 eq_mid" orientation="round" dblclick="deck 2 eq_mid 50%" rightclick="deck 2 eq_mid 0% ? deck 2 eq_mid 50% : deck 2 eq_mid 0%">
+	<pos x="914" y="314"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2729" nb="31" smooth="true"/>
+	</fader>
+</slider>
+<slider action="deck 2 eq_low" orientation="round" dblclick="deck 2 eq_low 50%" rightclick="deck 2 eq_low 0% ? deck 2 eq_low 50% : deck 2 eq_low 0%">
+	<pos x="914" y="388"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2729" nb="31" smooth="true"/>
+	</fader>
+</slider>
+
+ <scratchwave deck="1" orientation="vertical" length="1500">
+  	<pos x="711" y="173"/>
+  	<size width="42" height="238"/>
+  	<down x="+0" y="+900"/>
+  	<up x="+0" y="+0"/>
+ </scratchwave>
+  <scratchwave deck="2" orientation="vertical" length="1500">
+ 	<pos x="852" y="173"/>
+  	<size width="42" height="238"/>
+  	<down x="+0" y="+900"/>
+  	<up x="+0" y="+0"/>
+ </scratchwave>
+ 
+ <visual chan="1" source="deck 1 get level_left" type="linear" orientation="vertical" direction="up">
+	<size width="14" height="162"/>
+	<pos x="594" y="268"/>
+	<down x="+0" y="+900"/>	
+</visual>
+<visual chan="1" source="deck 1 get level_right" type="linear" orientation="vertical" direction="up">
+	<size width="14" height="162"/>
+	<pos x="609" y="268"/>
+	<down x="+0" y="+900"/>	
+</visual>
+ <visual chan="2" source="deck 2 get level_left" type="linear" orientation="vertical" direction="up">
+	<size width="14" height="162"/>
+	<pos x="979" y="268"/>
+	<down x="+0" y="+900"/>	
+</visual>
+<visual chan="2" source="deck 2 get level_right" type="linear" orientation="vertical" direction="up">
+	<size width="14" height="162"/>
+	<pos x="994" y="268"/>
+	<down x="+0" y="+900"/>	
+</visual>
+
+<button action="deck 1 songpos_remain 30000ms ? blink 300ms & deck 1 select : deck 1 select ">
+  	<size width="52" height="40"/>
+ 	 <pos x="35" y="234"/>
+  	<up x="+0" y="+0"/>
+  	<selected x="+0" y="+900" />
+  	 <down x="+0" y="+899" />
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="deck 2 songpos_remain 30000ms ? blink 300ms & deck 2 select : deck 2 select ">
+  	<size width="52" height="40"/>
+ 	 <pos x="1516" y="234"/>
+  	<up x="+0" y="+0"/>
+  	<selected x="+0" y="+900" />
+  	 <down x="+0" y="+899" />
+	 <over x="+0" y="+1298"/>
+</button>
+<button action="holding ? deck 1 wheel_mode 'search' & deck 2 wheel_mode 'search' & deck 1 vinyl_mode 0 & deck 2 vinyl_mode 0 : deck 1 wheel_mode 'jog' & deck 2 wheel_mode 'jog' & deck 1 vinyl_mode & deck 2 vinyl_mode">
+  	<Tooltip>VINYL MODE / Holding Search Mode</Tooltip>
+	<size width="26" height="26"/>
+ 	 <pos x="788" y="335"/>
+</button>
+<button action="wheel_mode 'search' ? blink & nothing : vinyl_mode">
+  	<size width="26" height="26"/>
+ 	 <pos x="788" y="335"/>
+  	<up x="+0" y="+0"/>
+  	<selected x="+0" y="+900" />
+  	 <down x="+0" y="+899" />
+	 <over x="+0" y="+1298"/>
+	 <mousemask x="387" y="2109"/>
+</button>
+ 
+<slider action="deck 1 level" orientation="vertical" dblclick="reset" rightclick="temporary">
+	<size width="42" height="154"/>
+	<pos x="529" y="280"/>
+	<up x="+0" y="+0"/>
+	<selected x="+0" y="+900"/>
+	<fader>
+		<size width="35" height="21"/>
+		<pos x="849" y="1577"/>
+	</fader>
+</slider>
+<slider action="deck 2 level" orientation="vertical" dblclick="reset" rightclick="temporary">
+	<size width="42" height="154"/>
+	<pos x="1031" y="280"/>
+	<up x="+0" y="+0"/>
+	<selected x="+0" y="+900"/>
+	<fader>
+		<size width="35" height="21"/>
+		<pos x="849" y="1577"/>
+	</fader>
+</slider>
+
+<slider action="crossfader" orientation="horizontal" dblclick="crossfader 50%" rightclick="temporary">
+	<pos x="738" y="428"/>
+	<size width="128" height="53"/>
+		<selected x="+0" y="+0"/>
+	<up x="+0" y="+900"/>
+	<fader>
+	  	<pos x="787" y="1727"/>
+		<size width="21" height="45"/>
+	</fader>
+</slider>
+
+<slider action="master_volume" orientation="round" dblclick="master_volume 100%" >
+	<pos x="780" y="217"/>
+	<size width="41" height="41"/>
+	<clipmask x="1360" y="2674"/>
+	<fader>
+		<pos x="71" y="2793" nb="31" smooth="true"/>
+	</fader>
+</slider>
+
+
+</Skin>
+
+
+
+
+

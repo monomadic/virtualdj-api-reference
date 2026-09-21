@@ -1,0 +1,4244 @@
+<Skin name="VirtualDJ 2018" version="8" width="1920" height="1080" breakline="1070-5" breakline2="1070" nbdecks="2" touchscreenmode="true" comment="VirtualDJ 2018 default skin - Tablet Mode" image="tablet.png" author="Atomix Productions" preview="skinpreviewt.png">
+  <copyright>(c)2019 - Atomix Productions</copyright>
+  
+<tooltip size="16" color="#000000" back="#fbf9e0" shortcut="#58595b" />
+<font name="Arial" />
+
+<!-- DEFINES -->
+<group name="classdefines">
+	<group name="buttons">
+
+		<define class="triggerpad" classdeck="left">
+			<button >
+				<pos x="+0" y="+0"/>
+				<size height="124" width="124"/>
+				<off x="748" y="2180"/>
+				<down x="1012" y="2180"/>
+				<on x="1012" y="2180"/>
+				<over x="880" y="2180"/>
+				<text size="20" width="124-10" dx="5" color="#ffffff" align="center"/>
+			</button>
+			<visual >
+				<pos x="+98" y="+5"/>
+				<size width="20" height="20"/>
+				<off x="953" y="2152"/>
+			</visual>
+			<visual type="color" >
+				<pos x="+98" y="+5"/>
+				<size width="20" height="20"/>
+				<mask x="1003" y="2152"/>
+			</visual>
+		</define>
+
+		<define class="triggerpad" classdeck="right">
+			<button >
+				<pos x="+0" y="+0"/>
+				<size height="124" width="124"/>
+				<off x="748" y="2180"/>
+				<down x="1012" y="2310"/>
+				<on x="1012" y="2310"/>
+				<over x="880" y="2310"/>
+				<text size="20" width="124-10" dx="5" color="#ffffff" align="center"/>
+			</button>
+			<visual >
+				<pos x="+98" y="+5"/>
+				<size width="20" height="20"/>
+				<off x="953" y="2152"/>
+			</visual>
+			<visual type="color" >
+				<pos x="+98" y="+5"/>
+				<size width="20" height="20"/>
+				<mask x="1003" y="2152"/>
+			</visual>
+		</define>
+		
+
+	  <define class="triggerpad_orange"  >
+		  <size height="124" width="124"/>
+		  <up x="748" y="2180"/>
+		  <down x="876" y="2571"/>
+		  <on x="876" y="2571"/>
+		  <over x="747" y="2571"/>
+		  <text size="20" width="124-10" dx="5" color="#ffffff" align="center"/>
+	  </define>
+
+	  	<define class="size1button" classdeck="left">
+		  <size width="100" height="43"/>  
+		  <up x="2" y="1083"/>
+		  <down x="2" y="1128"/>
+		  <over x="2" y="1218"/>
+		  <text size="18" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size1button" classdeck="right" >
+		  <size width="100" height="43"/>  
+		  <up x="2" y="1083"/>
+		  <down x="2" y="1173"/>
+		  <over x="2" y="1263"/>
+		  <text size="18" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+
+		<define class="hotcue_button" classdeck="left">
+			<button >
+				<pos x="+0" y="+0"/>
+				<size width="84" height="47"/>  
+				<off x="104" y="1083"/>
+				<on x="104" y="1132"/>
+				<down x="104" y="1132"/>
+				<over x="104" y="1230"/>
+				<text size="16" width="74" dx="5" weight="bold" color="#e1e1e1" align="center"  />
+			</button>
+			<visual >
+				<pos x="+68" y="+4"/>
+				<size width="12" height="12"/>
+				<off x="787" y="2154"/>
+			</visual>
+			<visual type="color" >
+				<pos x="+68" y="+4"/>
+				<size width="12" height="12"/>
+				<mask x="837" y="2154"/>
+			</visual>
+		</define>
+		<define class="hotcue_button" classdeck="right">
+			<button >
+				<pos x="+0" y="+0"/>
+				<size width="84" height="47"/>  
+				<off x="104" y="1083"/>
+				<on x="104" y="1181"/>
+				<down x="104" y="1181"/>
+				<over x="104" y="1279"/>
+				<text size="16" width="74" dx="5" weight="bold" color="#e1e1e1" align="center"  />
+			</button>
+			<visual >
+				<pos x="+68" y="+4"/>
+				<size width="12" height="12"/>
+				<off x="787" y="2154"/>
+			</visual>
+			<visual type="color" >
+				<pos x="+68" y="+4"/>
+				<size width="12" height="12"/>
+				<mask x="837" y="2154"/>
+			</visual>
+		</define>		
+
+		<define class="size2button" classdeck="left" >
+			<size width="84" height="47"/>  
+			<off x="104" y="1083"/>
+			<on x="104" y="1132"/>
+			<down x="104" y="1132"/>
+			<over x="104" y="1230"/>
+			<text size="16" width="74" dx="5" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size2button" classdeck="right" >
+		  <size width="84" height="47"/>  
+		  <off x="104" y="1083"/>
+		   <on x="104" y="1181"/>
+		  <down x="104" y="1181"/>
+		  <over x="104" y="1279"/>
+		  <text size="16" width="74" dx="5" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size2button_orange" >
+		  <size width="84" height="47"/>   
+		  <off x="104" y="1083"/>
+		  <down x="804" y="1941"/>
+		  <on x="804" y="1941"/>
+		  <over x="714" y="1941"/>
+		  <text size="16" width="74" dx="5" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		
+		<define class="size3button" classdeck="left">
+		  <size width="65" height="45"/>   
+		  <up x="2" y="1330"/>
+		  <down x="138" y="1330"/>
+		  <over x="70" y="1330"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size3button" classdeck="right" >
+		  <size width="65" height="45"/>   
+		  <up x="2" y="1330"/>
+		  <down x="70" y="1379"/>
+		  <over x="2" y="1379"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+
+		<define class="size3button_orange" >
+		  <size width="65" height="45"/>   
+		  <off x="2" y="1330"/>
+		  <down x="138" y="1428"/>
+		  <on x="138" y="1428"/>
+		  <over x="138" y="1379"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size4button_orange">
+		  <size width="59" height="37"/>   
+		  <up x="254" y="1083"/>
+		  <down x="254" y="1122"/>
+		  <over x="254" y="1161"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"  />
+		</define>
+		<define class="size4button_touch">
+		  <size width="59" height="37"/>   
+		  <on x="254" y="1083"/>
+		  <off x="254" y="1199"/>
+		  <over x="254" y="1161"/>
+		</define>
+
+		<define class="pitch_reset" action="pitch_reset" dblclick="pitch 100%" rightclick="pitch 100%">
+			<tooltip_localized>pitch_reset_tooltip</tooltip_localized>
+			<size width="35" height="30"/>
+			<pos x="-41" y="+167"/>
+			<down x="606" y="1280"/>
+			<over x="+0" y="+0"/>
+			<up x="+0" y="+0"/>
+		</define>
+		<define class="loopbutton" classdeck="left">
+		  <size width="85" height="47"/>
+		  <down x="259" y="1340"/>
+		  <on x="259" y="1340"/>
+		  <over x="259" y="1290"/>
+		  <off x="259" y="1239"/>
+		  <text dx="0" dy="0" width="85" size="24" color="#FFFFFF" align="center" format="%loop" scroll="no"/>
+		</define>
+		<define class="loopbutton" classdeck="right">
+		  <size width="85" height="47"/>
+		  <on x="346" y="1340"/>
+		  <down x="346" y="1340"/>
+		  <over x="346" y="1290"/>
+		  <off x="259" y="1239"/>
+		  <text dx="0" dy="0" width="85" size="24" color="#FFFFFF" align="center" format="%loop" scroll="no"/>
+		</define>
+
+		<define class="tap" classdeck="left" action="beat_tap" rightclick="edit_bpm">
+		  <tooltip_localized>tap_beat_tooltip</tooltip_localized>
+		  <pos x="+450" y="+5"/>
+		  <size width="59" height="37"/>
+		  <on x="191" y="1122"/>
+		  <off x="191" y="1083"/>
+		  <over x="191" y="1200"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center" localized="TAP"/>
+		</define>
+		<define class="tap" classdeck="right" action="beat_tap" rightclick="edit_bpm">
+		  <tooltip_localized>tap_beat_tooltip</tooltip_localized>
+		  <pos x="+450" y="+5"/>
+		  <size width="59" height="37"/>
+		  <on x="191" y="1161"/>
+		  <off x="191" y="1083"/>
+		  <over x="191" y="1239"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center" localized="TAP"/>
+		</define>
+
+		<define class="jogbutton" classdeck="left" >
+		  <pos x="+0" y="+0"/>
+		  <size width="59" height="37"/>
+		  <on x="191" y="1122"/>
+		  <off x="191" y="1083"/>
+		  <over x="191" y="1200"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="jogbutton" classdeck="right" >
+		  <pos x="+0" y="+0"/>
+		  <size width="59" height="37"/>
+		  <on x="191" y="1161"/>
+		  <off x="191" y="1083"/>
+		  <over x="191" y="1239"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center" />
+		</define>
+
+		<define class="squarebutton" classdeck="left">
+		  <pos x="+0" y="+0"/>
+		  <size width="48" height="47"/>
+		  <on x="207" y="1388"/>
+		  <off x="207" y="1288"/>
+		  <over x="207" y="1338"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="squarebutton" classdeck="right" >
+		  <pos x="+0" y="+0"/>
+		  <size width="48" height="47"/>
+		  <on x="207" y="1488"/>
+		  <off x="207" y="1288"/>
+		  <over x="207" y="1438"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="squarebutton_orange">
+		  <pos x="+0" y="+0"/>
+		  <size width="48" height="47"/>
+		  <on x="156" y="1488"/>
+		  <off x="207" y="1288"/>
+		  <over x="105" y="1488"/>
+		  <text size="14" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+
+		<define class="minus" classdeck="left">
+			<size width="34" height="33"/>
+			 <down x="434" y="1332"/>
+			<up x="434" y="1252"/>
+			<over x="434" y="1292"/>
+		</define>
+		<define class="minus" classdeck="right" >
+			<size width="34" height="33"/>
+			 <down x="516" y="1332"/>
+		  <up x="516" y="1252"/>
+		  <over x="516" y="1292"/>
+		</define>
+		<define class="plus" classdeck="left">
+			<size width="34" height="33"/>
+			 <down x="474" y="1332"/>
+			<up x="474" y="1252"/>
+			<over x="474" y="1292"/>
+		</define>
+		<define class="plus" classdeck="right" >
+			<size width="34" height="33"/>
+			 <down x="556" y="1332"/>
+		  <up x="556" y="1252"/>
+		  <over x="556" y="1292"/>
+		</define>
+		<define class="smart">
+			<size width="24" height="24"/>
+			<down x="376" y="1204"/>
+			<on x="376" y="1204"/>
+			<over x="376" y="1204"/>
+			<off x="320" y="1204"/>
+		</define>
+				
+		<define class="fx_name" classdeck="left" >
+		  <size width="166" height="33"/>
+		  <on x="259" y="1464"/>
+		  <off x="259" y="1392"/>
+		  <over x="259" y="1428"/>
+		  <text size="17" color="#ffffff" align="center" scroll="yes"/>
+		</define>
+		<define class="fx_name" classdeck="right" >
+		  <size width="166" height="33"/>
+		  <on x="460" y="1405"/>
+		  <off x="259" y="1392"/>
+		  <over x="460" y="1369"/>
+		  <text size="17" color="#ffffff" align="center" scroll="yes"/>
+		</define>
+		<define class="fx_select" classdeck="left" >
+		  <size width="30" height="33"/>
+		  <on x="259+196-30" y="1464"/>
+		  <off x="259+196-30" y="1392"/>
+		  <over x="259+196-30" y="1428"/>
+		</define>
+		<define class="fx_select" classdeck="right" >
+		  <size width="30" height="33"/>
+		  <on x="460+196-30" y="1405"/>
+		  <off x="259+196-30" y="1392"/>
+		  <over x="460+196-30" y="1369"/>
+		</define>
+		<define class="fx_name_master" >
+		  <size width="166" height="33"/>
+		  <on x="460" y="1477"/>
+		  <off x="259" y="1392"/>
+		  <over x="460" y="1441"/>
+		  <text size="17" color="#ffffff" align="center" scroll="yes"/>
+		</define>
+		<define class="fx_select_master">
+		  <size width="30" height="33"/>
+		  <on x="460+196-30" y="1477"/>
+		  <off x="259+196-30" y="1392"/>
+		  <over x="460+196-30" y="1441"/>
+		</define>
+
+		<define class="sidemenu_top">
+			<size width="58" height="124"/>
+			<down x="1850" y="1083"/>
+		</define>
+		<define class="sidemenu_bottom">
+		  <size width="58" height="140"/>
+		  <down x="1782" y="1083"/>
+		</define>
+		<define class="zoom_button">
+		  <size width="21" height="21"/>
+		  <up x="512" y="1172"/>
+		  <over x="536" y="1172"/>
+		  <down x="559" y="1172"/>
+		  <text size="14" weight="bold" color="#ffffff" align="center"/>
+		</define>
+
+		</group>  
+
+	<group name="knobs">
+		<define class="inner_knob" orientation="round" tooltip="" >
+		  <size width="47" height="47"/>
+		  <down x="613" y="1874"/>
+		  <up x="613" y="1874"/>
+		 <fader anglemin="-150" anglemax="+150">
+		   <size width="47" height="47"/>
+		   <pos x="561" y="1874"/>
+		 </fader>
+		</define>
+		<define class="knobcircle_orange" orientation="circle" relative="no" rightclick="temporary">
+		  <circle direction="cw" anglemin="-150" anglemax="150" />
+		  <size width="163" height="163"/>
+		  <on x="1239" y="1937"/>
+		  <off x="1239" y="1414"/>
+		</define>
+		<define class="knobcircletest" classdeck="left">
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-150" anglemax="150"/>
+				  <size width="163" height="163"/>
+				  <on x="1239" y="1584"/>
+				  <off x="1239" y="1414"/>
+				<mousemask x="1239" y="1414"/>
+			</slider>
+			<textzone>
+				<pos x="+32" y="+65"/>
+				  <size width="100" height="20"/>
+				  <text size="19" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+			<textzone>
+				<pos x="+32" y="+86"/>
+				  <size width="100" height="20"/>
+				  <text size="17" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+		</define>
+		<define class="knobcircletest" classdeck="right">
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-150" anglemax="150"/>
+				  <size width="163" height="163"/>
+				  <on x="1239" y="1757"/>
+				  <off x="1239" y="1414"/>
+				<mousemask x="1239" y="1414"/>
+			</slider>
+			<textzone>
+				<pos x="+32" y="+65"/>
+				  <size width="100" height="20"/>
+				  <text size="19" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+			<textzone>
+				<pos x="+32" y="+86"/>
+				  <size width="100" height="20"/>
+				  <text size="17" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+		</define>
+		<define class="knobcircletest_orange" >
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-150" anglemax="150"/>
+				  <size width="163" height="163"/>
+				  <on x="1239" y="1936"/>
+				  <off x="1239" y="1414"/>
+				<mousemask x="1239" y="1414"/>
+			</slider>
+			<textzone>
+				<pos x="+32" y="+65"/>
+				  <size width="100" height="20"/>
+				  <text size="19" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+			<textzone>
+				<pos x="+32" y="+86"/>
+				  <size width="100" height="20"/>
+				  <text size="17" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+		</define>
+		<define class="small_knobcircle" classdeck="left" orientation="circle" relative="no" rightclick="temporary" >
+		  <circle direction="cw" anglemin="-150" anglemax="150" frommiddle="true" />
+		  <size width="69" height="69"/>
+		  <off x="685" y="1863"/>
+		 <on x="765" y="1863"/>
+		</define>
+		<define class="small_knobcircle" classdeck="right" orientation="circle" relative="no" rightclick="temporary" >
+		  <circle direction="cw" anglemin="-150" anglemax="150" frommiddle="true" />
+		  <size width="69" height="69"/>
+		  <off x="685" y="1863"/>
+		 <on x="845" y="1863"/>
+		</define>
+	</group>
+	
+	<group name="sliders">
+		<define class="bigslider" tooltip="" direction="up" orientation="vertical" classdeck="left">
+			<size width="69" height="310"/>
+			<off x="80" y="1540"/>
+			<on  x="229" y="1540"/>
+			<fader>
+			  <size width="105" height="29"/>
+			  <pos x="261" y="1503"/>
+			</fader>
+		</define>
+		<define class="bigslider" tooltip="" direction="up" orientation="vertical" classdeck="right">
+			<size width="69" height="310"/>
+			<off x="5" y="1540"/>
+			<on  x="154" y="1540"/>
+			<fader>
+			  <size width="105" height="29"/>
+			  <pos x="261" y="1503"/>
+			</fader>
+		</define>
+		<define class="bigslider_orange" tooltip="" direction="up" orientation="vertical">
+			<size width="69" height="310"/>
+			<off x="594" y="1540"/>
+			<on  x="1061" y="2450"/>
+			<fader>
+			  <size width="105" height="29"/>
+			  <pos x="261" y="1503"/>
+			</fader>
+		</define>
+		<define class="smallslider_orange" tooltip="" direction="up" orientation="vertical">
+			<size width="40" height="182"/>
+			<on x="502" y="1858"/>
+			<off  x="398" y="1540"/>
+			<fader>
+			  <size width="55" height="15"/>
+			  <pos x="372" y="1509"/>
+			</fader>
+		</define>
+		<define class="smallslider_orange_vertical" direction="up" orientation="horizontal" >
+			<size width="182" height="42"/>
+			<on x="9" y="1969"/>
+			<off  x="9" y="1872"/>
+			<fader>
+			  <size width="15" height="55"/>
+			  <pos x="203" y="1858"/>
+			</fader>
+		</define>
+
+		<define class="smallslider" direction="up" orientation="vertical" classdeck="left">
+			<size width="40" height="182"/>
+			<on x="398" y="1726"/>
+			<off  x="398" y="1540"/>
+			<fader>
+			  <size width="55" height="15"/>
+			  <pos x="372" y="1509"/>
+			</fader>
+		</define>
+		<define class="smallslider" direction="up" orientation="vertical" classdeck="right">
+			<size width="40" height="182"/>
+			<on x="447" y="1857"/>
+			<off  x="398" y="1540"/>
+			<fader>
+			  <size width="55" height="15"/>
+			  <pos x="372" y="1509"/>
+			</fader>
+		  </define>
+
+		<define class="pitchslider" classdeck="left" action="pitch" rightclick="temporary" direction="down" orientation="vertical"  dblclick="pitch_reset" >
+			<size width="44" height="243"/>
+			<pos x="+9" y="+62"/>
+			<off x="757" y="1151"/>
+			<on  x="983" y="1151"/>
+			<fader>
+			  <size width="49" height="35"/>
+			  <pos x="645" y="1281"/>
+			</fader>
+		</define>
+		<define class="pitchslider" classdeck="right" action="pitch" rightclick="temporary" direction="down" orientation="vertical"  dblclick="pitch_reset" >
+			<size width="44" height="243"/>
+			<pos x="+9" y="+62"/>
+			<off x="870" y="1151"/>
+			<on  x="1097" y="1151"/> 
+			<fader>
+			  <size width="49" height="35"/>
+			  <pos x="645" y="1281"/>
+			</fader>
+		</define>
+
+	</group> 
+
+	<group name="videoview">
+		<define class="videoview">
+		  <size width="364" height="204"/>
+			<up x="681" y="1471"/>
+			<down x="681" y="1471"/>
+		</define>
+	</group> 
+
+	<group name="texts">
+		<define class="fxparam_text">
+		  <size width="69" height="16"/>
+		  <text size="16" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="knob_text">
+		  <size width="69" height="11"/>
+		  <text size="16" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="knobcircle_text">
+		  <size width="100" height="20"/>
+		  <text size="19" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="knobcircle_text_param">
+		  <size width="100" height="20"/>
+		  <text size="17" weight="bold" color="#E1E1E1" align="center"/>
+		</define>
+		<define class="title">
+			<size width="320" height="25"/>
+			<pos x="+3" y="+5"/>
+			<up x="+0" y="+0"/>
+			<text size="25" color="#E1E1E1" weight="bold" action="get_title_before_remix"/>
+			<text size="25" color="#909090" weight="bold" action="get_remix_after_title"/>
+		</define>
+		<define class="author">
+			<size width="320" height="22"/>
+			<pos x="+3" y="+11+22"/>
+			<up x="+0" y="+0"/>
+			<text size="22" color="#32b4ff" weight="bold" action="get_artist_before_feat"/>
+			<text2 size="22" color="#909090" weight="bold" action="get_featuring_after_artist"/>
+		</define>
+		<define class="bpm" action="edit_bpm">
+		  <size width="90" height="30"/>
+		  <pos x="+10+315" y="+5"/>
+		  <up x="+0" y="+0"/>
+		  <text size="30" color="#32b4ff" align="right" weight="bold" format="%Pbpmex"/>
+		</define>
+		<define class="bpm_tag">
+		  <size width="26" height="11"/>
+		  <pos x="+10+320+85" y="+1+15"/>
+		  <up x="+0" y="+0"/>
+		  <text size="14" color="#908F8D" align="right" weight="bold" localized="BPM"/>
+		</define>
+		<define class="key_tag">
+		  <pos x="+10+320+87-25" y="+5+15+20"/>
+		  <size width="31" height="15"/>
+		  <text size="13" color="#908F8D" align="left" weight="bold" localized="KEY"/>
+		</define>
+		<define class="key_text" action="setting 'keyDisplay'">
+		  <pos x="+10+320+89" y="+5+15+20"/>
+		  <size width="31" height="15"/>
+		  <text size="15" color="#E1E1E1" align="left" weight="bold" action="get_key"/>
+		</define>
+		<define class="gain_tag" visibility="not loaded">
+		  <pos x="+10+320+87-25-25-25" y="+5+15+20"/>
+		  <size width="31" height="15"/>
+		  <text size="13" color="#908F8D" align="left" weight="bold" localized="GAIN"/>
+		</define>
+		<define class="gain_text" visibility="loaded" >
+		  <pos x="+10+320+87-25-25-25" y="+5+15+20"/>
+		  <size width="40" height="15"/>
+		  <text size="15" color="#E1E1E1" align="left" weight="bold" format="%Plevel dB"/>
+		</define>
+		 <define class="pitchpercentage">
+			  <size width="45" height="17"/>
+			  <pos x="+9" y="+20"/>
+			  <text size="20" color="#FFFFFF" align="center" weight="bold" format="%Ppitch"/>
+		  </define>
+		<define class="smalltext">
+			<size width="60" height="15"/>
+			<text size="15" color="#ededed" align="center" weight="bold" />
+		</define>
+	</group>
+	
+	<group name="waves">	
+		<define class="songpos" classdeck="left" colorPlayed="#00a5e4" colorBass="#00567a" colorMed="#00a5e4" colorHigh="#7fc8e9">
+		  <size width="510" height="38"/>
+		  <pos x="+8" y="+72"/>
+			<cues>
+			  <size width="9" height="38"/>
+			  <up x="605" y="1321"/>
+			  <down x="620" y="1321"/>
+			  <over x="620" y="1321"/>
+			</cues>
+		</define>
+		<define class="songpos" classdeck="right" colorPlayed="#e4000d" colorBass="#7a0005" colorMed="#e4000d" colorHigh="#e97f81">
+		  <size width="510" height="38"/>
+		  <pos x="+8" y="+72"/>
+			<cues>
+			  <size width="9" height="38"/>
+			  <up x="605" y="1321"/>
+			  <down x="620" y="1321"/>
+			  <over x="620" y="1321"/>
+			</cues>
+		</define>
+		<define class="songpos_orange" colorPlayed="#e48300" colorBass="#7a4700" colorMed="#e48300" colorHigh="#e9c07f">
+			<cues>
+			  <size width="9" height="38"/>
+			  <up x="605" y="1321"/>
+			  <down x="620" y="1321"/>
+			  <over x="620" y="1321"/>
+			</cues>
+		</define>
+		<define class="scratchwave" orientation="vertical">
+			<size width="90" height="428" />
+			<pos x="+11" y="+8"/>
+			<grid mirrored="yes" pos="-2" background="no" backgroundshaded="no" height="6" size="3" mainsize="5"  />
+			<cue y="-2" height="12">
+				<text dx="15" dy="-1" size="14" />
+				<mask width="12" height="42" x="942" y="1372"/>
+			</cue>
+		  <overlay>
+			<size width="96" height="2"/>
+			<pos x="-3" y="+214"/>
+			<background x="690" y="1684"/>
+		  </overlay>
+		</define>
+	</group>
+
+	<group name="visuals">
+		<define class="bottom_half_split">
+		  <size width="4" height="421"/>
+		  <pos x="960" y="649"/>
+		  <off x="1168" y="1428"/>
+		</define>
+		<define class="scratchwave_bg">
+			<size width="99" height="432" />
+			<off x="1053" y="1425"/>
+		</define>
+		
+		<define type="color" class="cuecolor" >
+			<tooltip></tooltip>
+			<size width="46" height="4"/>  
+		</define>
+
+	</group>
+
+	<group name="jogs">
+		<define class="jogmini" >
+			<size width="91" height="91"/>
+			<pos x="+0" y="+0"/>
+			<off x="1188" y="2723"/>
+		</define>
+		<define class="jogcirclemini" classdeck="left" type="circle" source="get_position" >
+			<tooltip></tooltip>
+			<size width="91" height="91"/>
+			<pos x="+0" y="+0"/>
+			<on x="1188+110+110" y="2723"/>
+			<mousemask x="1188+110+110" y="2723"/>
+		</define>
+		<define class="jogcirclemini" classdeck="right" type="circle" source="get_position" >
+			<tooltip></tooltip>
+			<size width="91" height="91"/>
+			<pos x="+0" y="+0"/>
+			<on x="1188+110+110+110" y="2723"/>
+			<mousemask x="1188+110+110+110" y="2723"/>
+		</define>
+		<define class="jogspinnermini" type="rotation" source="get rotation">
+			<tooltip></tooltip>
+			<size width="91" height="91"/>
+			<pos x="+0" y="+0"/>
+			<down x="1188+110" y="2723"/>
+		</define>
+		
+		<define class="jogcircle" classdeck="left" orientation="circle" waveform="no">
+			<tooltip></tooltip>
+			<size width="285" height="285"/>
+			<pos x="+0" y="+0"/>
+		  <on x="1481" y="1688"/>
+		  <mousemask x="1481" y="1688"/>
+		</define>
+		<define class="jogcircle" classdeck="right" orientation="circle" waveform="no">
+			<tooltip></tooltip>
+			<size width="285" height="285"/>
+			<pos x="+0" y="+0"/>
+		  <on x="1481" y="1392"/>
+		  <mousemask x="1481" y="1392"/>
+		</define>
+		<define class="jogwheel" >
+			<size width="285" height="285"/>
+			<pos x="+0" y="+0"/>
+			<off x="1482" y="1096"/>
+		</define>
+		<define class="spinner" type="rotation" source="get rotation">
+			<tooltip></tooltip>
+			<size width="285" height="285"/>
+			<pos x="-1" y="+0"/>
+			<down x="1183" y="1096"/>
+		</define>
+		<define class="scratchjog">
+			<tooltip_localized>scratch_nudge_tooltip</tooltip_localized>
+			<size width="284" height="284"/>
+			<pos x="+0" y="+0"/>
+			<mousemask x="1482" y="1096"/>
+		</define>
+	</group>
+
+	<group name="beatsphase">
+		<define class="gotobutton" classdeck="left">
+			<size width="56" height="11"/>
+			<down x="444" y="1084"/>
+			<over x="444" y="1084"/>
+		</define>
+		<define class="gotobutton" classdeck="right">
+			<size width="56" height="11"/>
+			<down x="444" y="1084+16"/>
+			<over x="444" y="1084+16"/>
+		</define>
+	</group>	
+</group>
+
+
+<!-- TOP -->
+<group name="topbar">
+	<group name="grabzones">
+		<grabzone>
+		<size width="1920" height="48"/>
+		<pos x="0" y="0"/>
+		</grabzone>
+		<grabzone>
+		<size width="15" height="1080"/>
+		<pos x="0" y="0"/>
+		</grabzone>
+		<grabzone>
+		<size width="1920" height="15"/>
+		<pos x="0" y="1080-15"/>
+		</grabzone>
+		<grabzone>
+		<size width="15" height="1080"/>
+		<pos x="1920-15" y="0"/>
+		</grabzone>
+	</group>
+
+	<group name="beatbars">
+		<deck deck="left">
+			<button class="gotobutton" action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+				<tooltip_localized>Downbeat</tooltip_localized>
+				<pos x="836" y="15"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 2" leftclick="goto -2" rightclick="goto_bar 2">
+				<tooltip_localized>Beat_2</tooltip_localized>
+				<pos x="836+64" y="15"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+				<tooltip_localized>Beat_3</tooltip_localized>
+				<pos x="836+64+64" y="15"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+				<tooltip_localized>Beat_4</tooltip_localized>
+				<pos x="836+64+64+64" y="15"/>
+			</button>
+		</deck>
+		<deck deck="right">
+			<button class="gotobutton" action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+				<tooltip_localized>Downbeat</tooltip_localized>
+				<pos x="836" y="15+17"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 2" leftclick="goto -2" rightclick="goto_bar 2">
+				<tooltip_localized>Beat_2</tooltip_localized>
+				<pos x="836+64" y="15+17"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+				<tooltip_localized>Beat_3</tooltip_localized>
+				<pos x="836+64+64" y="15+17"/>
+			</button>
+			<button class="gotobutton" action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+				<tooltip_localized>Beat_4</tooltip_localized>
+				<pos x="836+64+64+64" y="15+17"/>
+			</button>
+		</deck>
+
+		<deck deck="left" >
+			<visual source="get_beat_counter" type="circle">
+				<tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+				<size width="30" height="30"/>
+				<pos x="818-25" y="15"/>
+				<off x="1544" y="1998"/>
+				<on  x="1576" y="1998"/>
+			</visual>
+			<textzone>
+				<tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+				  <pos x="818+7-25" y="15+7"/>
+				  <size width="16" height="16"/>
+				  <text size="15" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+			</textzone>
+			<button action="goto -4">
+				<tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+				<size width="30" height="30"/>
+				<pos x="818-25" y="15"/>
+			</button>
+		</deck>
+		<deck deck="right" >
+		  <visual source="get_beat_counter" type="circle">
+		  <tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+			<size width="30" height="30"/>
+			<pos x="1075+25" y="15"/>
+			<off x="1544" y="1998"/>
+			<on  x="1672" y="1998"/>
+		  </visual>
+		  <textzone>
+			<tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+			  <pos x="1075+6+25" y="15+7"/>
+			  <size width="16" height="16"/>
+			  <text size="15" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+		  </textzone>
+			<button action="goto -4">
+				<tooltip_localized>Phrase_indicator_tooltip</tooltip_localized>
+			  <pos x="1075+25" y="15"/>
+				<size width="30" height="30"/>
+			</button>
+		</deck>
+	</group>
+
+	<group name="cornertime">
+		<deck deck="left">
+			<button action="select">
+				<Tooltip_localized>select_left_deck</Tooltip_localized>
+			  <size width="44" height="44"/>
+			  <pos x="17" y="81"/>
+			  <off x="+0" y="+0"/>
+			  <on x="648" y="1171"/>
+			</button>
+			<textzone>
+			  <size width="44" height="40"/>
+			  <pos x="17" y="81"/>
+			  <up x="+0" y="+0"/>
+			  <text size="40" color="#C1C0C0" align="center" dy="3" weight="bold" action="get_deck_letter"/>
+			</textzone>
+			<textzone action="display_time">
+				<pos x="17+44+20" y="+75"/>
+				<size width="108" height="19"/>
+				<text size="15" color="#908F8D" align="left" weight="bold" action="display_time &amp; param_uppercase"/>
+			</textzone>
+			<textzone action="display_time">
+				<pos x="17+44+20" y="+75+20"/>
+				<size width="108" height="36"/>
+				<text size="36" color="#00ABEB" align="left" weight="bold" action="get_time"/>
+			</textzone>
+		</deck>
+		<deck deck="right">
+
+			<button action="select">
+				<Tooltip_localized>select_right_deck</Tooltip_localized>
+			  <size width="44" height="44"/>
+			  <pos x="1858" y="81"/>
+			  <off x="+0" y="+0"/>
+			  <on x="648" y="1229"/>
+			</button>
+			<textzone>
+			  <size width="44" height="40"/>
+			  <pos x="1858" y="81"/>
+			  <up x="+0" y="+0"/>
+			  <text size="40" color="#C1C0C0" align="center" dy="3" weight="bold" action="get_deck_letter"/>
+			</textzone>
+
+			<textzone action="display_time">
+				<pos x="1858-110" y="+75"/>
+				<size width="108" height="19"/>
+				<text size="15" color="#908F8D" align="left" weight="bold" action="display_time &amp; param_uppercase"/>
+			</textzone>
+			<textzone action="display_time">
+				<pos x="1858-110" y="+75+20"/>
+				<size width="108" height="36"/>
+				<text size="36" color="#ed1c24" align="left" weight="bold" action="get_time"/>
+			</textzone>
+
+		</deck>
+	</group>
+
+	<group name="cpu">
+		<textzone>
+		  <pos x="265" y="20"/>
+		  <size width="45" height="20"/>
+		  <text size="15" color="#ededed" align="center" weight="bold" localized="CPU"/>
+		</textzone>
+		<visual source="get cpu" type="linear" orientation="horizontal">
+		  <tooltip_localized>cpu_tooltip</tooltip_localized>
+		  <size width="62" height="24"/>
+		  <pos x="318" y="17"/>
+		  <down x="625" y="1136"/>
+		  <up x="+0" y="+0"/>
+		</visual>
+	</group>
+
+	<group name="clock" x="406" y="12">
+	  <textzone>
+		<tooltip_localized>clock_tooltip</tooltip_localized>
+		<size width="86" height="34"/>
+		<pos x="+0" y="+0"/>
+		<text size="20" color="#ededed" align="center" format="%fullhour"/>
+		<text2 size="20" color="#ededed" align="center" format="%counter"/>
+	  </textzone>
+	</group>
+
+	<group name="PCapplicationbuttons">
+		<logo >
+		  <size width="175" height="43"/>
+		  <pos x="11" y="8"/>
+		</logo>
+		  <button action="close">
+			<tooltip_localized>close_tooltip</tooltip_localized>
+			<size width="35" height="35"/>
+			<pos x="1873" y="12"/>
+			<selected x="399" y="1086"/>
+			<up x="399" y="1084"/>
+			<over x="399" y="1124"/>
+			<down x="399" y="1163"/>
+		  </button>
+		  <button action="maximize 'fullscreen' ? on &amp; maximize 'windowed' : off &amp; maximize 'fullscreen'" rightclick="maximize off">
+			<tooltip_localized>maximize_tooltip</tooltip_localized>
+			<size width="35" height="35"/>
+			<pos x="1814" y="12"/>
+			<up x="319" y="1084"/>
+			<over x="319" y="1124"/>
+			<down x="319" y="1163"/>
+		  </button>
+		  <button action="minimize">
+			<tooltip_localized>minimize_tooltip</tooltip_localized>
+			<size width="35" height="35"/>
+			<pos x="1759" y="12"/>
+			 <up x="359" y="1084"/>
+			<over x="359" y="1124"/>
+			<down x="359" y="1163"/>
+		  </button>
+		<button action="settings" class="size4button_orange">
+			<tooltip_localized>settings_tooltip</tooltip_localized>
+			<pos x="1650" y="10"/>
+			<icon x="1869" y="1915" height="25" width="26" dx="0" dy="0" />
+		</button>
+	</group>
+	
+	<group name="touchmode">
+	  <textzone>
+		<pos x="589-15-50-9" y="20"/>
+		<size width="55" height="20"/>
+		<text size="15" color="#ededed" align="center" weight="bold" localized="LAYOUT"/>
+	  </textzone>
+	  <button action="load_skin ':2 Decks'" class="size4button_touch" query="on">
+		<tooltip_localized>mouse_mode_tooltip</tooltip_localized>
+		<pos x="589-15" y="11"/>
+		<icon x="1868" y="2040" height="18" width="31" dx="0" dy="0" />
+	  </button>
+	</group>
+
+	<menu class="size4button_orange">
+		<tooltip_localized>Waveform_select_tooltip</tooltip_localized>
+		<pos x="667" y="11"/>
+		<item localized="default_wave" action="setting skinWaveformType 0" check="setting skinWaveformType 0" />
+		<item localized="inverted_wave" action="setting skinWaveformType 2" check="setting skinWaveformType 2" />
+		<item localized="horizontal_scratch_wave" action="setting skinWaveformType 1" check="setting skinWaveformType 1"/>
+		<item localized="show_gridlines" action="skin_panel 'extragridlines' on ? skin_panel 'extragridlines' off : skin_panel 'extragridlines' on" check="skin_panel 'extragridlines'" />
+
+		<icon x="1870" y="1855" height="27" width="26" dx="1" dy="0" />
+	</menu>
+	<textzone>
+		<pos x="1170" y="20"/>
+		<size width="55" height="20"/>
+		<text size="15" color="#ededed" align="center" weight="bold" localized="BROWSER"/>
+	  </textzone>
+	<button action="browser_zoom" class="size4button_touch" query="not browser_zoom">
+		<tooltip_localized>browser_zoom_tooltip</tooltip_localized>
+		<pos x="1233" y="11"/>
+		<icon sysicon="browser_zoom" height="42" width="42"/>
+	  </button>
+
+
+	<group name="vumeter_master">
+		<textzone>
+			<pos x="+1443-70" y="20"/>
+			<size width="55" height="20"/>
+			<text size="15" color="#ededed" weight="bold" align="center" localized="MASTER"/>
+		</textzone>
+		<visual source="get_vu_meter_left 'master'" type="linear" orientation="horizontal">
+			<pos x="+1443" y="+16"/>
+			<size width="155" height="10"/>
+			<on x="453" y="1137"/>
+		</visual>
+		<visual source="get_vu_meter_right 'master'" type="linear" orientation="horizontal">
+			<pos x="+1443" y="+30"/>
+			<size width="155" height="10"/>
+			<on x="453" y="1137"/>
+		</visual>
+		<visual type="transparent" source="get_limiter">
+			<pos x="+1443-100" y="+22"/>
+			<tooltip_localized>Limiter_tooltip</tooltip_localized>
+			<size width="17" height="17"/>
+			<off x="444" y="1174"/>
+			<on x="484" y="1174"/>
+		</visual>
+	</group>
+
+	<group name="covers">
+		<cover deck="left">
+		  <size width="87" height="89"/>
+		  <pos x="183" y="59"/>
+		</cover>
+		<cover deck="right">
+		  <size width="87" height="89"/>
+		  <pos x="1647" y="59"/>
+		</cover>
+	</group>
+
+</group>
+
+<!-- WAVEFORMS -->
+<group name="waves">
+	<group name="waveslider" x="285" y="63">
+		<slider action="zoom" rightclick="temporary" dblclick="reset" orientation="vertical">
+		  <pos x="+0" y="+0"/>
+		  <size width="13" height="80"/>
+		  <off x="143" y="2317"/>
+		  <on x="143" y="2317"/>
+			<fader>
+			  <size width="13" height="11"/>
+			  <pos x="700" y="1685"/>
+			</fader>
+		</slider>
+	</group>
+	<group name="wavebuttons" x="1615" y="62">
+		<button class="zoom_button" action="zoom 'save'">
+		  <pos x="+0" y="+0"/>
+		  <text text="S"/>
+		</button>
+		<button class="zoom_button" action="zoom 'default'">
+		  <pos x="+0" y="+30"/>
+		  <text text="D"/>
+		</button>
+		<button class="zoom_button" action="zoom 'recall'">
+		  <pos x="+0" y="+60"/>
+		  <text text="R"/>
+		</button>
+	</group>
+	<group name="waveform" x="313" y="60">
+		 <panel name="defaultwave" visibility="setting skinWaveformType 0" >
+			<rhythmzone mirror="false" upsidedown="false" fade="200">
+				<size width="1295" height="90"/>
+				<pos x="+0" y="+0"/> 
+				<colors deck1="#007097" deck2="#8c0709" deck1_active="#009fd2" deck2_active="#cd0f10" />
+				<rhythm y="+0" height="73"/>
+				<grid height="6" width="6" maxwidth="10">
+					<pos y1="+75" y2="+82"/>
+				</grid>
+				<cue y="+0" height="89">
+					<text dx="8" dy="0" size="16" weight="bold" />
+					<mask width="14" height="92" x="659" y="1371"/>
+				</cue>
+				<overlay>
+					<size width="2" height="89"/>
+					<pos x="959" y="+0"/>
+					<background x="685" y="1682"/>
+				</overlay>
+			</rhythmzone>
+		</panel>
+
+	  <panel name="mirrorwave" visibility="setting skinWaveformType 2" >
+			<rhythmzone mirror="true" upsidedown="false" fade="200">
+				<size width="1295" height="90"/>
+				<pos x="+0" y="+0"/> 
+				<colors deck1="#007097" deck2="#8c0709" deck1_active="#009fd2" deck2_active="#cd0f10" />
+				<rhythm y="+0" height="73"/>
+				<grid height="6" width="6" maxwidth="10">
+					<pos y1="+75" y2="+82"/>
+				</grid>
+				<cue y="+0" height="89">
+					<text dx="8" dy="0" size="16" weight="bold" />
+					<mask width="14" height="92" x="659" y="1371"/>
+				</cue>
+				<overlay>
+					<size width="2" height="89"/>
+					<pos x="959" y="+0"/>
+					<background x="685" y="1682"/>
+				</overlay>
+			</rhythmzone>
+	  </panel>
+		  
+		<panel name="horizontal_scratch_active" visibility="setting skinWaveformType 1" >
+			<visual type="color" source="constant 'black'">
+				<tooltip></tooltip>
+			  <pos x="+0" y="+0"/>
+			  <size width="1292" height="92"/>
+			</visual>
+			<scratchwave deck="left" orientation="horizontal">
+				<size width="1292" height="41"/>
+				<pos x="+0" y="+0"/> 
+				<grid mirrored="yes" pos="-2" background="no" backgroundshaded="no" height="6" size="3" mainsize="5"  />
+				<cue y="+0" height="41">
+					<text dx="15" dy="-1" size="14" />
+					<mask width="14" height="41" x="659" y="1371"/>
+				</cue>
+				<overlay>
+				  <size width="2" height="45"/>
+				  <pos x="959" y="+0"/>
+				  <background x="685" y="1682"/>
+				</overlay>
+			</scratchwave>
+
+			<scratchwave deck="right" orientation="horizontal">
+				<size width="1292" height="41"/>
+				<pos x="+0" y="+45"/> 
+				<grid mirrored="yes" pos="-2" background="no" backgroundshaded="no" height="6" size="3" mainsize="5"  />
+				<cue y="+0" height="41">
+					<text dx="15" dy="-1" size="14" />
+					<mask width="14" height="41" x="659" y="1371"/>
+				</cue>
+				<overlay>
+				  <size width="2" height="45"/>
+				  <pos x="959" y="+0"/>
+				  <background x="685" y="1682"/>
+				</overlay>
+			</scratchwave>
+
+		</panel>
+		
+		 <panel name="extragridlines" group="grids" visible="no" >
+			<rhythmzone mirror="false" upsidedown="false" fade="200" visibility="not skin_panel 'horizontal_scratch_active'">
+				<size width="1295" height="90"/>
+				<pos x="+0" y="+0"/> 
+			  <colors
+				deck1="#007097" deck1_active="#007097" deck1_left="#007097" 
+				deck2="#8c0709" deck2_active="#8c0709" deck2_right="#8c0709"  
+				/>
+			  <rhythm y="+0" height="1"/>
+			  <grid height="92" width="1" maxwidth="1">
+				<pos y1="+0" y2="+0" />
+			  </grid>
+			</rhythmzone>
+		</panel> 
+	  
+	</group>
+</group>
+
+<!-- NORMAL BROWSER -->
+<panel name="normalbrowser" visibility="not browser_zoom">
+<!-- DECKS -->
+<group name="deckleft">
+	<deck deck="left">
+
+		<group name="sidemenu" x="9" y="149">
+			<button class="sidemenu_top" action="skin_pannel 'left_cues' on" rightclick="edit_poi">
+				<tooltip_localized>Hotcues_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+0"/>
+				<icon x="1853" y="1387" height="32" dx="0" dy="-10" />
+				<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="CUES"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'left_loops' on">
+				<tooltip_localized>Loops_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+124+2"/>
+				<icon x="1853" y="1514" height="32" dx="0" dy="-10" />
+				<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="LOOPS"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'left_custom' on">
+				<tooltip_localized>CustomButtons_panel_tooltip</tooltip_localized>			
+				<pos x="+0" y="+124+2+124+2"/>
+				<icon x="1853" y="1636" height="32" dx="0" dy="-12"  />
+				<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" localized="User_panel"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'left_scratch' on">
+				<tooltip_localized>Scratchwave_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+124+2+124+2+124+2+1"/>
+				<icon x="1853" y="1760" height="32" dx="0" dy="-12"  />
+				<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" localized="Wave_panel"/>
+			</button>	
+		</group>
+
+		<group name="deckpanels" x="69" y="150">
+
+			<panel name="left_cues" group="leftdeckpanels" visible="yes">
+				<panel class="hotcue_button" x="+15" y="+20" >
+					<button action="hot_cue 1" rightclick="delete_cue 1">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="1"/>
+					</button>
+					<visual visibility="cue_color 1 ? true : false"></visual>
+					<visual visibility="cue_color 1 ? true : false" source="cue_color 1"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70" >
+					<button action="hot_cue 2" rightclick="delete_cue 2">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="2"/>
+					</button>
+					<visual visibility="cue_color 2 ? true : false"></visual>
+					<visual visibility="cue_color 2 ? true : false" source="cue_color 2"></visual>
+				</panel>
+
+				<panel class="hotcue_button" x="+15" y="+20+70+70" >
+					<button action="hot_cue 3" rightclick="delete_cue 3">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="3"/>
+					</button>
+					<visual visibility="cue_color 3 ? true : false"></visual>
+					<visual visibility="cue_color 3 ? true : false" source="cue_color 3"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70" >
+					<button action="hot_cue 4" rightclick="delete_cue 4">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="4"/>
+					</button>
+					<visual visibility="cue_color 4 ? true : false"></visual>
+					<visual visibility="cue_color 4 ? true : false" source="cue_color 4"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70+70" >
+					<button action="hot_cue 5" rightclick="delete_cue 5">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="5"/>
+					</button>
+					<visual visibility="cue_color 5 ? true : false"></visual>
+					<visual visibility="cue_color 5 ? true : false" source="cue_color 5"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70+70+70" >
+					<button action="hot_cue 6" rightclick="delete_cue 6">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="6"/>
+					</button>
+					<visual visibility="cue_color 6 ? true : false"></visual>
+					<visual visibility="cue_color 6 ? true : false" source="cue_color 6"></visual>
+				</panel>
+
+			  <button class="smart" action="smart_cue">
+				<tooltip_localized>smart_cues_tooltip</tooltip_localized>
+				<pos x="+15+28" y="+20+70+70+70+70+70+70"/>
+			  </button>
+				<textzone class="smalltext">
+				  <pos x="+15+28-7-10" y="+20+70+70+70+70+70+70+30"/>
+				  <text localized="SNAP"/>
+			  </textzone>
+
+			</panel>
+
+			<panel name="left_loops" group="leftdeckpanels" visible="no" >
+
+			  <button class="squarebutton" action="sampler_rec" rightclick="sampler_options" dlbclick="sampler_abort_rec">
+				<tooltip_localized>loop_record_tooltip</tooltip_localized>
+				<pos x="+32" y="+28"/>
+				<text localized="REC"/>
+			  </button>
+
+			  <button class="squarebutton" action="loop_double"  >
+				<tooltip_localized>loop_double_tooltip</tooltip_localized>
+				<pos x="+32" y="+120"/>
+				 <icon x="363" y="1261" height="19" width="19" dx="0" dy="0"  />
+			  </button>
+			  <button class="squarebutton" action="loop_half"  >
+				<tooltip_localized>loop_half_tooltip</tooltip_localized>
+				<pos x="+32" y="+250"/>
+				 <icon x="393" y="1263" height="19" width="19" dx="0" dy="0"  />
+			  </button>
+
+				<button class="loopbutton" action="loop" rightclick="temporary">
+				  <pos x="+13" y="+185"/>
+				</button>
+
+			  <button class="smart" action="loop_roll_mode">
+				  <tooltip_localized>loop_roll_tooltip</tooltip_localized>
+				<pos x="+15+28" y="+270+50"/>
+			  </button>
+				<textzone class="smalltext">
+				  <pos x="+15+28-7-10" y="+270+50+30"/>
+				  <text localized="ROLL"/>
+			  </textzone>
+
+			   <button class="size2button" action="loop_in">
+				<tooltip_localized>loop_in_tooltip</tooltip_localized>
+				<pos x="+15" y="+377"/>
+				<text localized="Loop_In_Short"/>
+			  </button>
+
+			   <button class="size2button" action="loop_out">
+				<tooltip_localized>loop_out_tooltip</tooltip_localized>
+				<pos x="+15" y="+441"/>
+				<text localized="Loop_Out_Short"/>
+			  </button>
+
+			</panel>
+
+			<panel name="left_custom" group="leftdeckpanels" visible="no" >
+
+			  <button class="size2button" action="custom_button 1" rightclick="custom_button_edit 1">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20"/>
+				<text action="custom_button_name 1" />
+			  </button>
+
+			  <button class="size2button" action="custom_button 2" rightclick="custom_button_edit 2">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70"/>
+				<text action="custom_button_name 2" />
+			  </button>
+
+			  <button class="size2button" action="custom_button 3" rightclick="custom_button_edit 3">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70+70"/>
+				<text action="custom_button_name 3" />
+			  </button>
+
+				<button class="size2button" action="custom_button 4" rightclick="custom_button_edit 4">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70+70+70"/>
+				<text action="custom_button_name 4" />
+			  </button>
+
+
+			  <slider class="smallslider" action="custom_button 5" rightclick="custom_button_edit 5"  tooltip_localized="smart_knob_tooltip" dblclick="custom_button_edit 5" >
+				<pos x="+35" y="+20+70+70+70+70"/>
+			  </slider>
+
+			</panel>
+
+			<panel name="left_scratch" group="leftdeckpanels" visible="no">
+
+				<visual class="scratchwave_bg">
+					<pos x="+7" y="+7"/>
+				</visual>
+				<scratchwave class="scratchwave"></scratchwave>
+				<button class="plus" action="zoom_vertical +2%">
+					<pos x="+19+34+8" y="+452"/>
+				</button>
+				<button class="minus" action="zoom_vertical -2%">
+					<pos x="+19" y="+452"/>
+				</button>
+
+
+			</panel>
+
+		</group>
+
+		<group name="deck" x="184" y="150">
+
+			<dropzone >
+			  <pos x="+0" y="+0" />
+			  <size width="528" height="498"/>
+			</dropzone>
+
+			<group name="jog" x="+82" y="+139">
+			  <visual class="jogwheel"></visual>
+			  <visual class="spinner"></visual>
+			  <songpos class="jogcircle" orientation="circle"></songpos>
+			  <scratch class="scratchjog"></scratch>
+			</group>
+
+			<songpos class="songpos"></songpos>
+
+			<group name="tracktitle" x="+5" y="+5" >
+				<textzone class="title" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="author" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="bpm"></textzone>
+				<textzone class="bpm_tag"></textzone>
+				<button class="tap"></button>
+				<textzone class="key_tag"></textzone>
+				<textzone class="key_text"></textzone>
+				<textzone class="gain_tag"></textzone>
+				<textzone class="gain_text"></textzone>
+
+			 </group>
+
+			<group name="jogbuttons">
+			  <button class="jogbutton" action="slip_mode ? blink &amp; slip_mode : off &amp; slip_mode">
+				<tooltip_localized>slip_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175-50"/>
+				<text localized="SLIP"/>
+			  </button>
+			  <button class="jogbutton" action="vinyl_mode &amp;&amp; off" visibility="vinyl_mode ? false : true">
+				<tooltip_localized>vinyl_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175"/>
+				<text text="CD"/>
+			  </button>
+			  <button class="jogbutton" action="vinyl_mode &amp;&amp; off" visibility="vinyl_mode">
+				<tooltip_localized>vinyl_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175"/>
+				<text localized="VINYL"/>
+			  </button>
+			  <button class="jogbutton" action="key_lock" rightclick="match_key">
+				<tooltip_localized>key_lock_tooltip</tooltip_localized>
+				<pos x="+378" y="+175-50"/>
+				<text localized="KEY"/>
+			  </button>
+			</group>
+
+			<group name="transbox" x="+13" y="+446">
+
+				<button action="cue_button" class="size1button">
+					<tooltip_localized>cue_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<text action="cue_button"/>
+				</button>
+				<button action="stop_button" class="size1button" rightclick="holding 500ms ? unload : goto_first_beat">
+					<tooltip_localized>stop_tooltip</tooltip_localized>
+					<pos x="+106" y="+0"/>
+					<icon sysicon="stop_button"  width="35" height="35" />
+				</button>
+				<button action="play_button" class="size1button">
+					<tooltip_localized>play_tooltip</tooltip_localized>
+					<pos x="+106+106" y="+0"/>
+					<icon sysicon="play_button"  width="35" height="35" />
+				</button>
+				<button action="sync" class="size1button">
+					<tooltip_localized>sync_tooltip</tooltip_localized>
+					<pos x="+106+106+106" y="+0"/>
+					<text localized="SYNC"/>
+				</button>
+			</group>
+
+			<group name="pitch" x="+451" y="+117">
+
+				<textzone class="pitchpercentage"></textzone>
+				<slider class="pitchslider"></slider>
+				<button class="pitch_reset"><pos x="-39" /></button>
+
+				<button class="minus" action="pitch_bend -2% 500ms" rightclick="pitch_bend -5% 500ms">
+					<pos x="-7" y="+335"/>
+				</button>
+				<button class="plus" action="pitch_bend +2% 500ms" rightclick="pitch_bend +5% 500ms">
+					<pos x="+33" y="+335"/>
+				</button>
+
+			</group>
+
+
+		</group>
+
+	</deck>
+</group>
+
+<group name="deckright">
+	<deck deck="right">
+
+		<group name="sidemenu" x="1851" y="149">
+			<button class="sidemenu_top" action="skin_pannel 'right_cues' on" rightclick="edit_poi">
+				<tooltip_localized>Hotcues_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+0"/>
+				<icon x="1853" y="1387" height="32" dx="0" dy="-10" />
+				<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="CUES"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'right_loops' on">
+				<tooltip_localized>Loops_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+124+2"/>
+				<icon x="1853" y="1514" height="32" dx="0" dy="-10" />
+				<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="LOOPS"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'right_custom' on">
+				<tooltip_localized>CustomButtons_panel_tooltip</tooltip_localized>			
+				<pos x="+0" y="+124+2+124+2"/>
+				<icon x="1853" y="1636" height="32" dx="0" dy="-12"  />
+				<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" localized="User_panel"/>
+			</button>	
+			<button class="sidemenu_top" action="skin_pannel 'right_scratch' on">
+				<tooltip_localized>Scratchwave_panel_tooltip</tooltip_localized>
+				<pos x="+0" y="+124+2+124+2+124+2+1"/>
+				<icon x="1853" y="1760" height="32" dx="0" dy="-12"  />
+				<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" localized="Wave_panel"/>
+			</button>	
+		</group>
+
+		<group name="deckpanels" x="1737" y="150">
+
+			<panel name="right_cues" group="rightdeckpanels" visible="yes">
+
+			  <panel class="hotcue_button" x="+15" y="+20" >
+					<button action="hot_cue 1" rightclick="delete_cue 1">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="1"/>
+					</button>
+					<visual visibility="cue_color 1 ? true : false"></visual>
+					<visual visibility="cue_color 1 ? true : false" source="cue_color 1"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70" >
+					<button action="hot_cue 2" rightclick="delete_cue 2">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="2"/>
+					</button>
+					<visual visibility="cue_color 2 ? true : false"></visual>
+					<visual visibility="cue_color 2 ? true : false" source="cue_color 2"></visual>
+				</panel>
+
+				<panel class="hotcue_button" x="+15" y="+20+70+70" >
+					<button action="hot_cue 3" rightclick="delete_cue 3">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="3"/>
+					</button>
+					<visual visibility="cue_color 3 ? true : false"></visual>
+					<visual visibility="cue_color 3 ? true : false" source="cue_color 3"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70" >
+					<button action="hot_cue 4" rightclick="delete_cue 4">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="4"/>
+					</button>
+					<visual visibility="cue_color 4 ? true : false"></visual>
+					<visual visibility="cue_color 4 ? true : false" source="cue_color 4"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70+70" >
+					<button action="hot_cue 5" rightclick="delete_cue 5">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="5"/>
+					</button>
+					<visual visibility="cue_color 5 ? true : false"></visual>
+					<visual visibility="cue_color 5 ? true : false" source="cue_color 5"></visual>
+				</panel>
+				<panel class="hotcue_button" x="+15" y="+20+70+70+70+70+70" >
+					<button action="hot_cue 6" rightclick="delete_cue 6">
+						<tooltip_localized>hotcue_delete_tooltip</tooltip_localized>
+						<text text="6"/>
+					</button>
+					<visual visibility="cue_color 6 ? true : false"></visual>
+					<visual visibility="cue_color 6 ? true : false" source="cue_color 6"></visual>
+				</panel>
+
+			  <button class="smart" action="smart_cue">
+				<tooltip_localized>smart_cues_tooltip</tooltip_localized>
+				<pos x="+15+28" y="+20+70+70+70+70+70+70"/>
+			  </button>
+				<textzone class="smalltext">
+				  <pos x="+15+28-7-10" y="+20+70+70+70+70+70+70+30"/>
+				  <text localized="SNAP"/>
+			  </textzone>
+
+			</panel>
+
+			<panel name="right_loops" group="rightdeckpanels" visible="no" >
+
+			  <button class="squarebutton" action="sampler_rec" rightclick="sampler_options" dlbclick="sampler_abort_rec">
+				<tooltip_localized>loop_record_tooltip</tooltip_localized>
+				<pos x="+32" y="+28"/>
+				<text localized="REC"/>
+			  </button>
+
+			  <button class="squarebutton" action="loop_double"  >
+				<tooltip_localized>loop_double_tooltip</tooltip_localized>
+				<pos x="+32" y="+120"/>
+				 <icon x="363" y="1261" height="19" width="19" dx="0" dy="0"  />
+			  </button>
+			  <button class="squarebutton" action="loop_half"  >
+				<tooltip_localized>loop_half_tooltip</tooltip_localized>
+				<pos x="+32" y="+250"/>
+				 <icon x="393" y="1263" height="19" width="19" dx="0" dy="0"  />
+			  </button>
+
+				<button class="loopbutton" action="loop" rightclick="temporary">
+				  <pos x="+13" y="+185"/>
+				</button>
+
+			  <button class="smart" action="loop_roll_mode">
+				  <tooltip_localized>loop_roll_tooltip</tooltip_localized>
+				<pos x="+15+28" y="+270+50"/>
+			  </button>
+				<textzone class="smalltext">
+				  <pos x="+15+28-7-10" y="+270+50+30"/>
+				  <text localized="ROLL"/>
+			  </textzone>
+
+			   <button class="size2button" action="loop_in">
+				<tooltip_localized>loop_in_tooltip</tooltip_localized>
+				<pos x="+15" y="+377"/>
+				<text localized="Loop_In_Short"/>
+			  </button>
+
+			   <button class="size2button" action="loop_out">
+				<tooltip_localized>loop_out_tooltip</tooltip_localized>
+				<pos x="+15" y="+441"/>
+				<text localized="Loop_Out_Short"/>
+			  </button>
+
+			</panel>
+
+			<panel name="right_custom" group="rightdeckpanels" visible="no" >
+
+			  <button class="size2button" action="custom_button 1" rightclick="custom_button_edit 1">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20"/>
+				<text action="custom_button_name 1" />
+			  </button>
+
+			  <button class="size2button" action="custom_button 2" rightclick="custom_button_edit 2">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70"/>
+				<text action="custom_button_name 2" />
+			  </button>
+
+			  <button class="size2button" action="custom_button 3" rightclick="custom_button_edit 3">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70+70"/>
+				<text action="custom_button_name 3" />
+			  </button>
+
+				<button class="size2button" action="custom_button 4" rightclick="custom_button_edit 4">
+				<tooltip_localized>user_custom_button_tooltip</tooltip_localized>
+				<pos x="+15" y="+20+70+70+70"/>
+				<text action="custom_button_name 4" />
+			  </button>
+
+
+			  <slider class="smallslider" action="custom_button 5" rightclick="custom_button_edit 5"  tooltip_localized="smart_knob_tooltip" dblclick="custom_button_edit 5" >
+				<pos x="+35" y="+20+70+70+70+70"/>
+			  </slider>
+
+			</panel>
+
+			<panel name="right_scratch" group="rightdeckpanels" visible="no">
+
+				<visual class="scratchwave_bg">
+					<pos x="+7" y="+7"/>
+				</visual>
+				<scratchwave class="scratchwave"></scratchwave>
+				<button class="plus" action="zoom_vertical +2%">
+					<pos x="+19+34+8" y="+452"/>
+				</button>
+				<button class="minus" action="zoom_vertical -2%">
+					<pos x="+19" y="+452"/>
+				</button>
+
+
+			</panel>
+
+		</group>
+
+		<group name="deck" x="1212" y="150">
+
+			<dropzone >
+			  <pos x="+0" y="+0" />
+			  <size width="528" height="498"/>
+			</dropzone>
+
+			<group name="jog" x="+82" y="+139">
+			  <visual class="jogwheel"></visual>
+			  <visual class="spinner"></visual>
+			  <songpos class="jogcircle" orientation="circle"></songpos>
+			  <scratch class="scratchjog"></scratch>
+			</group>
+
+			<songpos class="songpos"></songpos>
+
+			<group name="tracktitle" x="+5" y="+5" >
+				<textzone class="title" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="author" group="horizontal" scroll="yes" click="scroll"><text color="#ff0006"/></textzone>
+				<textzone class="bpm"><text color="#ff0006"/></textzone>
+				<textzone class="bpm_tag"></textzone>
+				<button class="tap"></button>
+				<textzone class="key_tag"></textzone>
+				<textzone class="key_text"></textzone>
+				<textzone class="gain_tag"></textzone>
+				<textzone class="gain_text"></textzone>
+
+			 </group>
+
+			<group name="jogbuttons">
+			  <button class="jogbutton" action="slip_mode ? blink &amp; slip_mode : off &amp; slip_mode">
+				<tooltip_localized>slip_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175-50"/>
+				<text localized="SLIP"/>
+			  </button>
+			  <button class="jogbutton" action="vinyl_mode &amp;&amp; off" visibility="vinyl_mode ? false : true">
+				<tooltip_localized>vinyl_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175"/>
+				<text text="CD"/>
+			  </button>
+			  <button class="jogbutton" action="vinyl_mode &amp;&amp; off" visibility="vinyl_mode">
+				<tooltip_localized>vinyl_mode_tooltip</tooltip_localized>
+				<pos x="+5" y="+175"/>
+				<text localized="VINYL"/>
+			  </button>
+			  <button class="jogbutton" action="key_lock" rightclick="match_key">
+				<tooltip_localized>key_lock_tooltip</tooltip_localized>
+				<pos x="+378" y="+175-50"/>
+				<text localized="KEY"/>
+			  </button>
+			</group>
+
+
+			<group name="transbox" x="+13" y="+446">
+
+				<button action="cue_button" class="size1button">
+					<tooltip_localized>cue_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<text action="cue_button"/>
+				</button>
+				<button action="stop_button" class="size1button" rightclick="holding 500ms ? unload : goto_first_beat">
+					<tooltip_localized>stop_tooltip</tooltip_localized>
+					<pos x="+106" y="+0"/>
+					<icon sysicon="stop_button"  width="35" height="35" />
+				</button>
+				<button action="play_button" class="size1button">
+					<tooltip_localized>play_tooltip</tooltip_localized>
+					<pos x="+106+106" y="+0"/>
+					<icon sysicon="play_button"  width="35" height="35" />
+				</button>
+				<button action="sync" class="size1button">
+					<tooltip_localized>sync_tooltip</tooltip_localized>
+					<pos x="+106+106+106" y="+0"/>
+					<text localized="SYNC"/>
+				</button>
+			</group>
+
+			<group name="pitch" x="+451" y="+117">
+
+				<textzone class="pitchpercentage"></textzone>
+				<slider class="pitchslider"></slider>
+				<button class="pitch_reset"><pos x="-39" /></button>
+
+				<button class="minus" action="pitch_bend -2% 500ms" rightclick="pitch_bend -5% 500ms">
+					<pos x="-7" y="+335"/>
+				</button>
+				<button class="plus" action="pitch_bend +2% 500ms" rightclick="pitch_bend +5% 500ms">
+					<pos x="+33" y="+335"/>
+				</button>
+
+			</group>
+
+
+		</group>
+
+	</deck>
+</group>
+
+<!-- BOTTOM PANELS -->
+<group name="bottompanels" x="69" y="649">
+
+	<group name="menu_left" x="-60" y="+0">
+
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_browser' on">
+	  <pos x="+0" y="+0"/>
+		<icon x="1793" y="1386" height="32" dx="2" dy="-10" />
+		<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="Files_panel"/>
+	  </button> 
+
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_eq' on">
+		<pos x="+0" y="+140+1"/>
+		<icon x="1793" y="1510" height="32" dx="2" dy="-10" />
+		<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="Eq_panel"/>
+	  </button> 
+
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_fx' on">
+		<pos x="+0" y="+140+1+140"/>
+		<size height="116"/>
+		<icon x="1793" y="1636" height="32" dx="2" dy="-10" />
+		<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="Fx_panel"/>
+	  </button> 
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_fx' on">
+		<pos x="+0" y="+140+1+140+116"/>
+	  <size height="8"/>
+	  
+	  </button> 
+	  
+	</group>
+	<group name="menu_right" x="+1784" y="+0">
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_video' on">
+	  <pos x="+0" y="+0"/>
+		<icon x="1793" y="1715" height="32" dx="3" dy="-10" />
+		<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="VIDEO"/>
+	  </button> 
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_pads' on">
+	  <pos x="+0" y="+140+1"/>
+	  <icon x="1793" y="1970" height="32" dx="3" dy="-10" />
+	  <text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="PADS"/>
+	  </button> 
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_master' on">
+	  <pos x="+0" y="+140+1+140"/>
+	  <size height="116"/>
+		<icon x="1795" y="1853" height="24" dx="2" dy="-10" />
+		<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="MASTER"/>
+	  </button> 
+	  <button class="sidemenu_bottom" action="skin_panel 'bottom_master' on">
+	  <pos x="+0" y="+140+1+140+116"/>
+	  <size height="8"/>
+		
+	  </button> 
+	</group>
+
+	<panel name="bottom_browser" group="bottompanels" visible="yes">
+
+		<browser showzoom="true" coverflow="false">
+			<size width="1782" height="420"/>
+			<pos x="+0" y="+0"/>
+		</browser>
+
+	</panel>
+
+	<panel name="bottom_eq" group="bottompanels" visible="no" >
+		<visual class="bottom_half_split"></visual>
+
+		<deck deck="left">
+
+		  <button class="size2button" action="off &amp; toggle $eq_left" visibility="var $eq_left">
+			<tooltip_localized>switch_eq_view_tooltip</tooltip_localized>
+			<pos x="+45" y="+40"/>
+			<text localized="SLIDERS"/>
+		  </button>
+		<button class="size2button" action="off &amp; toggle $eq_left" visibility="var $eq_left ? false : true">
+			<tooltip_localized>switch_eq_view_tooltip</tooltip_localized>
+			<pos x="+45" y="+40"/>
+			<text localized="CIRCLES"/>
+		  </button>
+			<panel name="left_eq_circles" visible="var $eq_left 1">
+			<pos x="+165" y="+44"/>
+				<visual >
+				  <pos x="+0" y="+186"/>
+				  <size height="165" width="711"/>
+				  <off x="3" y="2143"/>
+				</visual>
+				<group name="filter" x="+5" y="+0">
+				
+					<panel class="knobcircletest" visibility="var 'filter_temp' 0">
+						<slider action="filter" rightclick="filter 0% ? filter 50% : filter 0%" dblclick="filter 50%" tooltip_localized="filter_tooltip" frommiddle="true" />
+						<textzone><text action="filter_label" /></textzone>
+						<textzone><text action="filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'filter_temp' 1">
+						<slider action="filter while_pressed" rightclick="filter 0% ? filter 50% : filter 0%" dblclick="filter 50%" tooltip_localized="filter_tooltip" frommiddle="true"/>
+						<textzone><text action="filter_label" /></textzone>
+						<textzone><text action="filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; filter 50%" dblclick="filter 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'filter_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+			</group>
+
+				<group name="eqlow" x="+5+180+180+180" y="+0">
+					<panel class="knobcircletest" visibility="var 'eqlow_temp' 0">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" tooltip_localized="eq_low_tooltip" frommiddle="true" />
+						<textzone><text localized="LOW" /></textzone>
+						<textzone><text action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqlow_temp' 1">
+						<slider action="eq_low while_pressed" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" tooltip_localized="eq_low_tooltip" frommiddle="true"/>
+						<textzone><text localized="LOW" /></textzone>
+						<textzone><text action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_low 50%" dblclick="eq_low 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqlow_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+
+				</group>
+
+				<group name="eqmid" x="+5+180+180" y="+0">
+					<panel class="knobcircletest" visibility="var 'eqmid_temp' 0">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" tooltip_localized="eq_mid_tooltip" frommiddle="true" />
+						<textzone><text localized="MID" /></textzone>
+						<textzone><text action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqmid_temp' 1">
+						<slider action="eq_mid while_pressed" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" tooltip_localized="eq_mid_tooltip" frommiddle="true"/>
+						<textzone><text localized="MID" /></textzone>
+						<textzone><text action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_mid 50%" dblclick="eq_mid 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqmid_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+
+				</group>
+
+				<group name="eqhigh" x="+5+180" y="+0">
+					<panel class="knobcircletest" visibility="var 'eqhigh_temp' 0">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" tooltip_localized="eq_high_tooltip" frommiddle="true" />
+						<textzone><text localized="HIGH" /></textzone>
+						<textzone><text action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqhigh_temp' 1">
+						<slider action="eq_high while_pressed" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" tooltip_localized="eq_high_tooltip" frommiddle="true"/>
+						<textzone><text localized="HIGH" /></textzone>
+						<textzone><text action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_high 50%" dblclick="eq_high 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqhigh_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+				</group>
+
+			</panel>
+
+			<panel name="left_eq_sliders" visible="var $eq_left 0">
+			 <pos x="+225" y="+0"/>
+
+				<visual>
+				  <pos x="+0" y="+16"/>
+				  <size height="391" width="120"/>
+				  <off x="3" y="2315"/>
+				</visual>
+				
+				<group name="filter" x="+25" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+25"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="FILTER"/>
+					</textzone>
+					<slider class="bigslider" action="filter" dblclick="filter 50%" rightclick="filter 0% ? filter 50% : filter 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <text size="20" color="#ffffff" align="center" action="filter &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+
+					<visual >
+					  <pos x="+188" y="+16"/>
+					  <size height="391" width="407"/>
+					  <off x="191" y="2315"/>
+					</visual>
+				</group>
+
+				<group name="eqlow" x="+486-242+138+138" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+25"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="LOW"/>
+					</textzone>
+
+					<slider class="bigslider" action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <up x="" y=""/>
+					  <text size="20" color="#ffffff" align="center" action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+				
+				<group name="eqmid" x="+486-242+138" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+25"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="MID"/>
+					</textzone>
+
+					<slider class="bigslider" action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <text size="20" color="#ffffff" align="center" action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+				
+				<group name="eqhigh" x="+486-242" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+25"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="HIGH"/>
+					</textzone>
+
+					<slider class="bigslider" action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <text size="20" color="#ffffff" align="center" action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+			</panel>
+
+
+			<group name="gains" x="+28" y="+131">
+				<visual >
+				  <tooltip></tooltip>
+				  <pos x="+0" y="+0"/>
+				  <size height="264" width="117"/>
+				  <off x="604" y="2315"/>
+				</visual>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+29" y="+9"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" localized="GAIN"/>
+				</textzone>
+				<slider class="smallslider" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" relative="no">
+					<pos x="+29+10" y="+9+25"/>
+				</slider>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+29" y="+9+182+45"/>
+				  <text size="17" color="#ffffff" align="center" format="%Plevel dB"/>
+				</textzone>
+			</group>
+			
+		</deck>
+
+		<deck deck="right">
+
+			<button class="size2button" action="off &amp; toggle $eq_right" visibility="var $eq_right">
+			<tooltip_localized>switch_eq_view_tooltip</tooltip_localized>
+			<pos x="+510+1145" y="+40"/>
+			<text localized="SLIDERS"/>
+		  </button>
+		<button class="size2button" action="off &amp; toggle $eq_right" visibility="var $eq_right ? false : true">
+			<tooltip_localized>switch_eq_view_tooltip</tooltip_localized>
+			<pos x="+510+1145" y="+40"/>
+			<text localized="CIRCLES"/>
+		  </button>
+
+			<panel name="right_eq_circles" visible="var $eq_right 1">
+			  <pos x="+744" y="+0"/>
+
+				<visual >
+				  <pos x="+167" y="+230"/>
+				  <size height="165" width="711"/>
+				  <off x="3" y="2143"/>
+				</visual>
+				<group name="filter" x="+170+180+180+180" y="+44">
+					<panel class="knobcircletest" visibility="var 'filter_temp' 0">
+						<slider action="filter" rightclick="filter 0% ? filter 50% : filter 0%" dblclick="filter 50%" tooltip_localized="filter_tooltip" frommiddle="true" />
+						<textzone><text action="filter_label" /></textzone>
+						<textzone><text action="filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'filter_temp' 1">
+						<slider action="filter while_pressed" rightclick="filter 0% ? filter 50% : filter 0%" dblclick="filter 50%" tooltip_localized="filter_tooltip" frommiddle="true"/>
+						<textzone><text action="filter_label" /></textzone>
+						<textzone><text action="filter &amp; param_add -0.50 &amp; param_cast 'percentage' &amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; filter 50%" dblclick="filter 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'filter_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+				</group>
+
+				<group name="eqlow" x="+170+180+180" y="+44">
+					<panel class="knobcircletest" visibility="var 'eqlow_temp' 0">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" tooltip_localized="eq_low_tooltip" frommiddle="true" />
+						<textzone><text localized="LOW" /></textzone>
+						<textzone><text action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqlow_temp' 1">
+						<slider action="eq_low while_pressed" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" tooltip_localized="eq_low_tooltip" frommiddle="true"/>
+						<textzone><text localized="LOW" /></textzone>
+						<textzone><text action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_low 50%" dblclick="eq_low 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqlow_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+				</group>
+
+				<group name="eqmid" x="+170+180" y="+44">
+					<panel class="knobcircletest" visibility="var 'eqmid_temp' 0">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" tooltip_localized="eq_mid_tooltip" frommiddle="true" />
+						<textzone><text localized="MID" /></textzone>
+						<textzone><text action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqmid_temp' 1">
+						<slider action="eq_mid while_pressed" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" tooltip_localized="eq_mid_tooltip" frommiddle="true"/>
+						<textzone><text localized="MID" /></textzone>
+						<textzone><text action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_mid 50%" dblclick="eq_mid 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqmid_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+				</group>
+				
+				<group name="eqhigh" x="+170" y="+44">
+					<panel class="knobcircletest" visibility="var 'eqhigh_temp' 0">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" tooltip_localized="eq_high_tooltip" frommiddle="true" />
+						<textzone><text localized="HIGH" /></textzone>
+						<textzone><text action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<panel class="knobcircletest" visibility="var 'eqhigh_temp' 1">
+						<slider action="eq_high while_pressed" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" tooltip_localized="eq_high_tooltip" frommiddle="true"/>
+						<textzone><text localized="HIGH" /></textzone>
+						<textzone><text action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/></textzone>
+					</panel>
+					<button class="size2button" action="off &amp; eq_high 50%" dblclick="eq_high 50%">
+						<tooltip_localized>reset_tooltip</tooltip_localized>
+						<pos x="+38" y="+206"/>
+						<text localized="RESET" />
+					</button>
+					<button class="size2button" action="toggle 'eqhigh_temp'" >
+						<tooltip_localized>temporary_tooltip</tooltip_localized>
+						<pos x="+38" y="+206+80"/>
+						<text localized="TEMP" />
+					</button>
+				</group>
+
+			</panel>
+
+			<panel id="right_eq_sliders" visibility="var $eq_right 0">
+			  <pos x="+510" y="+0"/>
+
+				<visual >
+				  <pos x="+461-31" y="+16"/>
+				  <size height="391" width="407"/>
+				  <off x="191" y="2315"/>
+				</visual>
+				<visual>
+				  <pos x="+461+138+138+193-26" y="+16"/>
+				  <size height="391" width="120"/>
+				  <off x="3" y="2315"/>
+				</visual>
+				
+				<group name="eqhigh" x="+461" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60-35"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="HIGH"/>
+					</textzone>
+					<slider class="bigslider" action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <up x="" y=""/>
+					  <text size="20" color="#ffffff" align="center" action="eq_high &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+				
+				<group name="eqmid" x="+461+138" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60-35"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="MID"/>
+					</textzone>
+					<slider class="bigslider" action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <up x="" y=""/>
+					  <text size="20" color="#ffffff" align="center" action="eq_mid &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+				
+				<group name="eqlow" x="+461+138+138" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60-35"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="LOW"/>
+					</textzone>
+					<slider class="bigslider" action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <up x="" y=""/>
+					  <text size="20" color="#ffffff" align="center" action="eq_low &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+
+				<group name="filter" x="+461+138+138+193" y="+0">
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60-35"/>
+					  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="FILTER"/>
+					</textzone>
+					<slider class="bigslider" action="filter" dblclick="filter 50%" rightclick="filter 0% ? filter 50% : filter 0%">
+						<pos x="+0" y="+60"/>
+					</slider>
+					<textzone>
+					  <size width="69" height="18"/>
+					  <pos x="+0" y="+60+310+15"/>
+					  <up x="" y=""/>
+					  <text size="20" color="#ffffff" align="center" action="filter &amp;&amp; param_add -0.50 &amp;&amp; param_cast 'percentage' &amp;&amp; param_multiply 2"/>
+					</textzone>
+				</group>
+
+			</panel>
+
+			<group name="gains" x="+1640" y="+131">
+				<visual >
+				  <tooltip></tooltip>
+				  <pos x="+0" y="+0"/>
+				  <size height="264" width="117"/>
+				  <off x="604" y="2315"/>
+				</visual>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+29" y="+9"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" localized="GAIN"/>
+				</textzone>
+				<slider class="smallslider" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" relative="no">
+					<pos x="+29+10" y="+9+25"/>
+				</slider>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+29" y="+9+182+45"/>
+				  <text size="17" color="#ffffff" align="center" format="%Plevel dB"/>
+				</textzone>
+			</group>
+
+		</deck>
+
+	</panel>
+
+	<panel name="bottom_fx" group="bottompanels" visible="no" >
+
+		<group name="left_fx">
+			<deck deck="left">
+
+				<visual >
+				  <pos x="+27" y="+16"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+
+				<button class="size2button" action="off &amp; toggle $fx_left" visibility="var '$fx_left'">
+					<tooltip_localized>fxparam_xypad_tooltip</tooltip_localized>
+					<pos x="+95" y="+350"/>
+					<text localized="CIRCLES"/>
+				</button>
+				<button class="size2button" action="off &amp; toggle $fx_left" visibility="var '$fx_left' ? false : true">
+					<tooltip_localized>fxparam_xypad_tooltip</tooltip_localized>
+					<pos x="+95" y="+350"/>
+					<text text="YX PAD"/>
+				</button>
+
+				<group name="left_fx_buttons" x="+0" y="+0">
+					<button class="fx_name" action="effect_active" >
+					  <pos x="+41" y="+41"/>
+					  <text action="get effect_name" />
+					</button>
+					<button class="fx_select" action="effect_select">
+					  <pos x="+207" y="+41"/>
+					</button>
+
+					<button class="size3button" action="effect active" rightclick="temporary">
+					  <tooltip_localized>fx_active_tooltip</tooltip_localized>
+					  <pos x="+106" y="+90"/>
+					  <text localized="ON"/>
+					</button>
+
+					<button class="squarebutton" action="effect select +1">
+						<pos x="+41" y="+90"/>
+					  <text size="22" text="▼"/>
+					  </button>
+					<button class="squarebutton" action="effect select -1">
+						<pos x="+190" y="+90"/>
+					  <text size="22" text="▲"/>
+					  </button>
+
+					<button class="size2button" action="effect_button 1" disabled="not effect_has_button 1" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154"/>
+						<text action="get_effect_button_name 1 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 2" disabled="not effect_has_button 2" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41+112" y="+154"/>
+						<text action="get_effect_button_name 2 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 3" disabled="not effect_has_button 3" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154+62"/>
+						<text action="get_effect_button_name 3 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 4" disabled="not effect_has_button 4" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41+112" y="+154+62"/>
+						<text action="get_effect_button_name 4 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 5" disabled="not effect_has_button 5" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154+62+62"/>
+						<text action="get_effect_button_name 5 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 6" disabled="not effect_has_button 6" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41+112" y="+154+62+62"/>
+						<text action="get_effect_button_name 6 &amp; param_uppercase"/>
+					</button>
+				</group>
+
+				<panel id="left_fx_yx" visibility="var $fx_left 1 ? true : false">
+					<group name="fxparemeters" x="+280" y="+65">
+						<textzone class="fxparam_text"  >
+							<pos x="+0" y="-30"/>
+							<text text="FX PRM"/>
+						</textzone>
+						<textzone class="fxparam_text"  >
+							<pos x="+110" y="-30"/>
+							<text localized="AXIS"/>
+						</textzone>
+						
+						<textzone class="fxparam_text" visibility="effect_has_slider 1" >
+							<pos x="+0" y="+13"/>
+							<text action="get effect_slider_name 1"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 2" >
+							<pos x="+0" y="+13+55"/>
+							<text action="get effect_slider_name 2"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 3" >
+							<pos x="+0" y="+13+55+55"/>
+							<text action="get effect_slider_name 3"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 4" >
+							<pos x="+0" y="+13+55+55+55"/>
+							<text action="get effect_slider_name 4"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 5" >
+							<pos x="+0" y="+13+55+55+55+55"/>
+							<text action="get effect_slider_name 5"/>
+						</textzone>
+
+						
+						<button class="squarebutton" action="set 'fxsliderX' 0" visibility="effect_has_slider 1" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+0"/>
+							<text size="22" text="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 1" visibility="effect_has_slider 1" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+0"/>
+							<text size="22" text="Y"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderX' 1" visibility="effect_has_slider 2" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55"/>
+							<text size="22" text="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 0" visibility="effect_has_slider 2" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55"/>
+							<text size="22" text="Y"/>
+						</button>
+						  
+						<button class="squarebutton" action="set 'fxsliderX' 2" visibility="effect_has_slider 3" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55"/>
+							<text size="22" text="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 2" visibility="effect_has_slider 3" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55"/>
+							<text size="22" text="Y"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderX' 3" visibility="effect_has_slider 4" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55+55"/>
+							<text size="22" text="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 3" visibility="effect_has_slider 4" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55+55"/>
+							<text size="22" text="Y"/>
+						</button>
+						  
+						 <button class="squarebutton" action="set 'fxsliderX' 4" visibility="effect_has_slider 5" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55+55+55"/>
+							<text size="22" text="X"/>
+						 </button>
+						 <button class="squarebutton" action="set 'fxsliderY' 4" visibility="effect_has_slider 5" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55+55+55"/>
+							<text size="22" text="Y"/>
+						  </button>
+
+
+						<button class="size2button" action="toggle 'fxtemp'" >
+							<tooltip>Enable Temporary Effect Trigger</tooltip>
+							<pos x="+100" y="+285"/>
+							<text localized="TEMP"/>
+						</button>
+					 </group>
+					  
+					<group name="fxXY" x="+500" y="+41">
+						<textzone class="fxparam_text" >
+							<pos x="+125" y="+350"/>
+							<size width="120"/>
+							<text format="`var 'fxsliderX' 0 ? get_effect_slider_name 1 : var 'fxsliderX' 1 ? get_effect_slider_name 2 : var 'fxsliderX' 2 ? get_effect_slider_name 3 : var 'fxsliderX' 3 ? get_effect_slider_name 4 : var 'fxsliderX' 4 ? get_effect_slider_name 5 : get_effect_slider_name 6` - `var 'fxsliderX' 0 ? get_effect_slider_text 1 : var 'fxsliderX' 1 ? get_effect_slider_text 2 : var 'fxsliderX' 2 ? get_effect_slider_text 3 : var 'fxsliderX' 3 ? get_effect_slider_text 4 : var 'fxsliderX' 4 ? get_effect_slider_text 5 : get_effect_slider_text 6` "/>
+						</textzone>
+						<textzone class="fxparam_text" orientation="vertical" >
+							<pos x="-4" y="+100"/>
+							<size height="120" width="16"/>
+							<text format="`var 'fxsliderY' 1 ? get_effect_slider_name 1 : var 'fxsliderY' 0 ? get_effect_slider_name 2 : var 'fxsliderY' 2 ? get_effect_slider_name 3 : var 'fxsliderY' 3 ? get_effect_slider_name 4 : var 'fxsliderY' 4 ? get_effect_slider_name 5 : get_effect_slider_name 6` - `var 'fxsliderY' 1 ? get_effect_slider_text 1 : var 'fxsliderY' 0 ? get_effect_slider_text 2 : var 'fxsliderY' 2 ? get_effect_slider_text 3 : var 'fxsliderY' 3 ? get_effect_slider_text 4 : var 'fxsliderY' 4 ? get_effect_slider_text 5 : get_effect_slider_text 6` "/>
+						</textzone>
+						<textzone class="fxparam_text">
+							<pos x="+0" y="+348"/>
+							<size width="10"/>
+							<text text="0"/>
+						</textzone>		
+						<textzone class="fxparam_text">
+							<pos x="-10" y="+0"/>
+							<size width="20"/>
+							<text text="100"/>
+						</textzone>	
+						<textzone class="fxparam_text">
+							<pos x="+340" y="+348"/>
+							<size width="20"/>
+							<text text="100"/>
+						</textzone>	
+						<visual >
+							 <pos x="+17" y="+0"/>
+							<size width="339" height="339"/>
+							 <off x="6" y="2725"/>
+						</visual>							
+						
+						<slider action="var 'fxsliderY' 1 ? effect_slider 1 : var 'fxsliderY' 0 ? effect_slider 2 : var 'fxsliderY' 2 ? effect_slider 3 : var 'fxsliderY' 3 ? effect_slider 4 : var 'fxsliderY' 4 ? effect_slider 5 : var 'fxsliderY' 5 ? effect_slider 6 : nothing" direction="up" orientation="vertical">
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>				 
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<on x="712" y="2725"/>
+							<off x="712" y="2725"/>
+							<fader>
+								<size width="339" height="4"/>
+								<pos x="5" y="2717"/>
+							</fader>
+							
+						</slider>
+												
+						<slider action="var 'fxsliderX' 0 ? effect_slider 1 : var 'fxsliderX' 1 ? effect_slider 2 : var 'fxsliderX' 2 ? effect_slider 3 : var 'fxsliderX' 3 ? effect_slider 4 : var 'fxsliderX' 4 ? effect_slider 5 : var 'fxsliderX' 5 ? effect_slider 6 : nothing" direction="right" orientation="horizontal" >
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>					 
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<fader>
+								<size width="4" height="339"/>
+								<pos x="359" y="2725"/>
+							</fader>
+							<fader>
+								<size width="339" height="4"/>
+								<pos x="5" y="2717"/>
+							</fader>
+							
+						</slider>
+						
+						<slider action="var 'fxtemp' ? var 'fxsliderX' 0 ? effect_slider_active 1 : var 'fxsliderX' 1 ? effect_slider_active 2 : var 'fxsliderX' 2 ? effect_slider_active 3 : var 'fxsliderX' 3 ? effect_slider_active 4 : var 'fxsliderX' 4 ? effect_slider_active 5 : var 'fxsliderX' 5 ? effect_slider_active 6 : nothing : var 'fxsliderX' 0 ? effect_slider 1 : var 'fxsliderX' 1 ? effect_slider 2 : var 'fxsliderX' 2 ? effect_slider 3 : var 'fxsliderX' 3 ? effect_slider 4 : var 'fxsliderX' 4 ? effect_slider 5 : var 'fxsliderX' 5 ? effect_slider 6 : nothing" action2="var 'fxsliderY' 1 ? effect_slider 1 : var 'fxsliderY' 0 ? effect_slider 2 : var 'fxsliderY' 2 ? effect_slider 3 : var 'fxsliderY' 3 ? effect_slider 4 : var 'fxsliderY' 4 ? effect_slider 5 : var 'fxsliderY' 5 ? effect_slider 6 : nothing" direction="right" direction2="up" orientation="2d" >
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<on x="712" y="2725"/>
+							<off x="712" y="2725"/>
+							<fader>
+								<size width="0" height="0"/>
+								<pos x="5" y="2717"/>
+							 </fader>
+						</slider>
+						
+					</group>
+
+				</panel>
+
+				<pannel id="left_fx_circles" visibility="var $fx_left 0 ? true : false">
+					<group name="fxslider1" x="+301" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 1" dblclick="effect_slider_reset 1" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 1"/>
+							<textzone><text action="get_effect_slider_name 1 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 1"><text action="get_effect_slider_text 1"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider2" x="+301+180" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 2" dblclick="effect_slider_reset 2" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 2"/>
+							<textzone><text action="get_effect_slider_name 2 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 2"><text action="get_effect_slider_text 2"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider3" x="+301+180+180" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 3" dblclick="effect_slider_reset 3" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 3"/>
+							<textzone><text action="get_effect_slider_name 3 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 3"><text action="get_effect_slider_text 3"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider4" x="+301" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 4" dblclick="effect_slider_reset 4" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 4"/>
+							<textzone><text action="get_effect_slider_name 4 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 4"><text action="get_effect_slider_text 4"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider5" x="+301+180" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 5" dblclick="effect_slider_reset 5" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 5"/>
+							<textzone><text action="get_effect_slider_name 5 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 5"><text action="get_effect_slider_text 5"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider6" x="+301+180+180" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 6" dblclick="effect_slider_reset 6" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 6"/>
+							<textzone><text action="get_effect_slider_name 6 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 6"><text action="get_effect_slider_text 6"/></textzone>
+						</panel>
+					</group>
+				</pannel>
+
+
+			</deck>
+		</group>
+
+
+		<group name="right_fx">
+			<deck deck="right">
+				<visual >
+				  <pos x="+27+1500" y="+16"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+
+			
+				<button class="size2button" action="off &amp; toggle $fx_right" visibility="var '$fx_right'">
+					<tooltip_localized>fxparam_xypad_tooltip</tooltip_localized>
+					<pos x="+1500+100" y="+350"/>
+					<text localized="CIRCLES"/>
+				</button>
+				<button class="size2button" action="off &amp; toggle $fx_right" visibility="var '$fx_right' ? false : true">
+					<tooltip_localized>fxparam_xypad_tooltip</tooltip_localized>
+					<pos x="+1500+100" y="+350"/>
+					<text text="YX PAD"/>
+				</button>
+
+				<group name="right_fx_buttons" x="+1500" y="+0">
+					<button class="fx_name" action="effect_active">
+					  <pos x="+41" y="+41"/>
+					  <text action="get effect_name" />
+					</button>
+					<button class="fx_select" action="effect_select">
+					  <pos x="+207" y="+41"/>
+					</button>
+					<button class="size3button" action="effect active" rightclick="temporary">
+					  <tooltip_localized>fx_active_tooltip</tooltip_localized>
+					  <pos x="+106" y="+90"/>
+					  <text localized="ON"/>
+					</button>
+					<button class="squarebutton" action="effect select +1">
+						<pos x="+41" y="+90"/>
+					  <text size="22" text="▼"/>
+					</button>
+					<button class="squarebutton" action="effect select -1">
+						<pos x="+190" y="+90"/>
+					  <text size="22" text="▲"/>
+					</button>
+
+					<button class="size2button" action="effect_button 1" disabled="not effect_has_button 1" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154"/>
+						<text action="get_effect_button_name 1 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 2" disabled="not effect_has_button 2" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41+112" y="+154"/>
+						<text action="get_effect_button_name 2 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 3" disabled="not effect_has_button 3" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154+62"/>
+						<text action="get_effect_button_name 3 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 4" disabled="not effect_has_button 4" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41+112" y="+154+62"/>
+						<text action="get_effect_button_name 4 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button" action="effect_button 5" disabled="not effect_has_button 5" >
+						<tooltip_localized>fxbutton_tooltip</tooltip_localized>
+						<pos x="+41" y="+154+62+62"/>
+						<text action="get_effect_button_name 5 &amp; param_uppercase"/>
+					</button>
+				</group>
+
+				<panel name="right_fx_yx" visibility="var $fx_right 1 ? true : false">
+					<group name="fxparemeters" x="+1305" y="+65">
+						<textzone class="fxparam_text"  >
+							<pos x="+0" y="-30"/>
+							<text text="FX PRM"/>
+						</textzone>
+						<textzone class="fxparam_text"  >
+							<pos x="+110" y="-30"/>
+							<text localized="AXIS"/>
+						</textzone>
+						
+						<textzone class="fxparam_text" visibility="effect_has_slider 1" >
+							<pos x="+0" y="+13"/>
+							<text action="get effect_slider_name 1"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 2" >
+							<pos x="+0" y="+13+55"/>
+							<text action="get effect_slider_name 2"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 3" >
+							<pos x="+0" y="+13+55+55"/>
+							<text action="get effect_slider_name 3"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 4" >
+							<pos x="+0" y="+13+55+55+55"/>
+							<text action="get effect_slider_name 4"/>
+						</textzone>
+						<textzone class="fxparam_text" visibility="effect_has_slider 5" >
+							<pos x="+0" y="+13+55+55+55+55"/>
+							<text action="get effect_slider_name 5"/>
+						</textzone>
+						
+						<button class="squarebutton" action="set 'fxsliderX' 0" visibility="effect_has_slider 1" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+0"/>
+							<text size="22" format="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 1" visibility="effect_has_slider 1" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+0"/>
+							<text size="22" format="Y"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderX' 1" visibility="effect_has_slider 2" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55"/>
+							<text size="22" format="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 0" visibility="effect_has_slider 2" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55"/>
+							<text size="22" format="Y"/>
+						</button>
+						  
+						<button class="squarebutton" action="set 'fxsliderX' 2" visibility="effect_has_slider 3" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55"/>
+							<text size="22" format="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 2" visibility="effect_has_slider 3" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55"/>
+							<text size="22" format="Y"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderX' 3" visibility="effect_has_slider 4" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55+55"/>
+							<text size="22" format="X"/>
+						</button>
+						<button class="squarebutton" action="set 'fxsliderY' 3" visibility="effect_has_slider 4" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55+55"/>
+							<text size="22" format="Y"/>
+						</button>
+						  
+						 <button class="squarebutton" action="set 'fxsliderX' 4" visibility="effect_has_slider 5" >
+							<tooltip_localized>assign_Xaxis_tooltip</tooltip_localized>
+							<pos x="+90" y="+55+55+55+55"/>
+							<text size="22" format="X"/>
+						 </button>
+						 <button class="squarebutton" action="set 'fxsliderY' 4" visibility="effect_has_slider 5" >
+							<tooltip_localized>assign_Yaxis_tooltip</tooltip_localized>
+							<pos x="+90+55" y="+55+55+55+55"/>
+							<text size="22" format="Y"/>
+						  </button>
+						<button class="size2button" action="toggle 'fxtemp'" >
+							<tooltip>Enable Temporary Effect Trigger</tooltip>
+							<pos x="+100" y="+285"/>
+							<text localized="TEMP"/>
+						</button>
+					 </group>
+					  
+					<group name="fxXY" x="+925" y="+41">
+						<textzone class="fxparam_text" >
+							<pos x="+125" y="+350"/>
+							<size width="120"/>
+							<text format="`var 'fxsliderX' 0 ? get_effect_slider_name 1 : var 'fxsliderX' 1 ? get_effect_slider_name 2 : var 'fxsliderX' 2 ? get_effect_slider_name 3 : var 'fxsliderX' 3 ? get_effect_slider_name 4 : var 'fxsliderX' 4 ? get_effect_slider_name 5 : get_effect_slider_name 6` - `var 'fxsliderX' 0 ? get_effect_slider_text 1 : var 'fxsliderX' 1 ? get_effect_slider_text 2 : var 'fxsliderX' 2 ? get_effect_slider_text 3 : var 'fxsliderX' 3 ? get_effect_slider_text 4 : var 'fxsliderX' 4 ? get_effect_slider_text 5 : get_effect_slider_text 6` "/>
+						</textzone>
+						<textzone class="fxparam_text" orientation="vertical" >
+							<pos x="-4" y="+100"/>
+							<size height="120" width="16"/>
+							<text format="`var 'fxsliderY' 1 ? get_effect_slider_name 1 : var 'fxsliderY' 0 ? get_effect_slider_name 2 : var 'fxsliderY' 2 ? get_effect_slider_name 3 : var 'fxsliderY' 3 ? get_effect_slider_name 4 : var 'fxsliderY' 4 ? get_effect_slider_name 5 : get_effect_slider_name 6` - `var 'fxsliderY' 1 ? get_effect_slider_text 1 : var 'fxsliderY' 0 ? get_effect_slider_text 2 : var 'fxsliderY' 2 ? get_effect_slider_text 3 : var 'fxsliderY' 3 ? get_effect_slider_text 4 : var 'fxsliderY' 4 ? get_effect_slider_text 5 : get_effect_slider_text 6` "/>
+						</textzone>
+						<textzone class="fxparam_text">
+							<pos x="+0" y="+348"/>
+							<size width="10"/>
+							<text text="0"/>
+						</textzone>		
+						<textzone class="fxparam_text">
+							<pos x="-10" y="+0"/>
+							<size width="20"/>
+							<text text="100"/>
+						</textzone>	
+						<textzone class="fxparam_text">
+							<pos x="+340" y="+348"/>
+							<size width="20"/>
+							<text text="100"/>
+						</textzone>	
+						<visual >
+							 <pos x="+17" y="+0"/>
+							<size width="339" height="339"/>
+							 <off x="368" y="2725"/>
+						</visual>	
+
+						<slider action="var 'fxsliderY' 1 ? effect_slider 1 : var 'fxsliderY' 0 ? effect_slider 2 : var 'fxsliderY' 2 ? effect_slider 3 : var 'fxsliderY' 3 ? effect_slider 4 : var 'fxsliderY' 4 ? effect_slider 5 : var 'fxsliderY' 5 ? effect_slider 6 : nothing" direction="up" orientation="vertical">
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>				 
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<on x="712" y="2725"/>
+							<off x="712" y="2725"/>
+							<fader>
+								<size width="339" height="4"/>
+								<pos x="367" y="2717"/>
+							</fader>
+							
+						</slider>
+												
+						<slider action="var 'fxsliderX' 0 ? effect_slider 1 : var 'fxsliderX' 1 ? effect_slider 2 : var 'fxsliderX' 2 ? effect_slider 3 : var 'fxsliderX' 3 ? effect_slider 4 : var 'fxsliderX' 4 ? effect_slider 5 : var 'fxsliderX' 5 ? effect_slider 6 : nothing" direction="right" orientation="horizontal" >
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>					 
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<fader>
+								<size width="4" height="339"/>
+								<pos x="349" y="2725"/>
+							</fader>
+							<fader>
+								<size width="4" height="339"/>
+								<pos x="349" y="2725"/>
+							</fader>
+							
+						</slider>
+						
+						<slider action="var 'fxtemp' ? var 'fxsliderX' 0 ? effect_slider_active 1 : var 'fxsliderX' 1 ? effect_slider_active 2 : var 'fxsliderX' 2 ? effect_slider_active 3 : var 'fxsliderX' 3 ? effect_slider_active 4 : var 'fxsliderX' 4 ? effect_slider_active 5 : var 'fxsliderX' 5 ? effect_slider_active 6 : nothing : var 'fxsliderX' 0 ? effect_slider 1 : var 'fxsliderX' 1 ? effect_slider 2 : var 'fxsliderX' 2 ? effect_slider 3 : var 'fxsliderX' 3 ? effect_slider 4 : var 'fxsliderX' 4 ? effect_slider 5 : var 'fxsliderX' 5 ? effect_slider 6 : nothing" action2="var 'fxsliderY' 1 ? effect_slider 1 : var 'fxsliderY' 0 ? effect_slider 2 : var 'fxsliderY' 2 ? effect_slider 3 : var 'fxsliderY' 3 ? effect_slider 4 : var 'fxsliderY' 4 ? effect_slider 5 : var 'fxsliderY' 5 ? effect_slider 6 : nothing" direction="right" direction2="up" orientation="2d" >
+							<tooltip_localized>fxparam_tooltip</tooltip_localized>
+							<size width="339" height="339"/>
+							<pos x="+17" y="+0"/>
+							<on x="712" y="2725"/>
+							<off x="712" y="2725"/>
+							<fader>
+								<size width="0" height="0"/>
+								<pos x="5" y="2717"/>
+							 </fader>
+						</slider>
+
+
+
+
+					</group>
+
+				</panel>
+
+				<panel id="right_fx_circles" visibility="var $fx_right 0 ? true : false">
+					<pos x="+655" y="+0"/>
+
+					<group name="fxslider1" x="+301" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 1" dblclick="effect_slider_reset 1" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 1"/>
+							<textzone><text action="get_effect_slider_name 1 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 1"><text action="get_effect_slider_text 1"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider2" x="+301+180" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 2" dblclick="effect_slider_reset 2" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 2"/>
+							<textzone><text action="get_effect_slider_name 2 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 2"><text action="get_effect_slider_text 2"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider3" x="+301+180+180" y="+42">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 3" dblclick="effect_slider_reset 3" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 3"/>
+							<textzone><text action="get_effect_slider_name 3 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 3"><text action="get_effect_slider_text 3"/></textzone>
+						</panel>
+					</group>
+					
+					<group name="fxslider4" x="+301" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 4" dblclick="effect_slider_reset 4" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 4"/>
+							<textzone><text action="get_effect_slider_name 4 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 4"><text action="get_effect_slider_text 4"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider5" x="+301+180" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 5" dblclick="effect_slider_reset 5" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 5"/>
+							<textzone><text action="get_effect_slider_name 5 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 5"><text action="get_effect_slider_text 5"/></textzone>
+						</panel>
+					</group>
+					<group name="fxslider6" x="+301+180+180" y="+232">
+						<panel class="knobcircletest">
+							<slider action="effect_slider 6" dblclick="effect_slider_reset 6" tooltip_localized="fxparam_tooltip" disabled="not effect_has_slider 6"/>
+							<textzone><text action="get_effect_slider_name 6 &amp;&amp; param_uppercase" /></textzone>
+							<textzone visibility="effect_has_slider 6"><text action="get_effect_slider_text 6"/></textzone>
+						</panel>
+					</group>
+
+				</panel>
+
+			</deck>
+		</group>
+
+
+		<visual class="bottom_half_split"></visual>
+	</panel>
+
+	<panel name="bottom_video" group="bottompanels" visible="no" >
+
+		<group name="videowindows">
+			<video class="videoview" source="channel" chan="left">
+			  <pos x="+331" y="+17"/>
+			</video>	
+			<video class="videoview" source="master">
+			  <pos x="+712" y="+17"/>
+			</video>
+			<video class="videoview" source="channel" chan="right">
+			  <pos x="+1094" y="+17"/>
+			</video>
+
+			<button action="video" rightclick="video on">
+			  <size width="363" height="204"/>
+			  <pos x="+712" y="+17"/>
+			</button>
+			<button action="deck left video_transition" dblclick="video_crossfader 0%" rightclick="video_crossfader 0% while_pressed">
+			  <size width="363" height="204"/>
+			  <pos x="+331" y="+17"/>
+			</button>
+			<button  action="deck right video_transition" dblclick="video_crossfader 100%" rightclick="video_crossfader 100% while_pressed">
+			  <size width="363" height="204"/>
+			 <pos x="+1094" y="+17"/>
+			</button>	
+		</group>
+
+
+		<group name="master_videofx">
+			<deck deck="master">
+
+			<visual >
+				<pos x="+328" y="+230"/>
+				<size width="1129" height="92"/>
+				<off x="1" y="2045"/>
+			</visual>
+
+			<button class="squarebutton_orange" action="video_fx_select +1">
+				<tooltip_localized>next_videofx_tooltip</tooltip_localized>
+				<pos x="+549" y="+255"/>
+				<text size="22" text="▼"/>
+			</button>
+			<button class="squarebutton_orange" action="video_fx_select -1">
+				<tooltip_localized>previous_videofx_tooltip</tooltip_localized>
+				<pos x="+549+68" y="+255"/>
+				 <text size="22" text="▲"/>
+			</button>
+			<button class="fx_name_master" action="video_fx">
+				<tooltip_localized>videofx_tooltip</tooltip_localized>
+				<pos x="+685" y="+263"/>
+				<text action="get_effect_name 'video'"/>
+			</button>
+			<button class="fx_select_master" action="video_fx_select">
+				<tooltip_localized>select_videofx_tooltip</tooltip_localized>
+				<pos x="+685-41+207" y="+263"/>
+			</button>
+
+			<button class="fx_name_master">
+				<tooltip_localized>transition_tooltip</tooltip_localized>
+				<pos x="+898" y="+263"/>
+				<text action="get_videotrans_name"/>
+			</button>
+			<button class="fx_select_master" action="video_transition_select">
+				<tooltip_localized>select_transition_tooltip</tooltip_localized>
+				<pos x="+898-41+207" y="+263"/>
+			</button>
+			<button class="squarebutton_orange" action="video_transition_select +1">
+				<tooltip_localized>next_transition_tooltip</tooltip_localized>
+				<pos x="+1122" y="+255"/>
+				<text size="22" text="▼"/>
+			</button>
+			<button class="squarebutton_orange" action="video_transition_select -1">
+				<tooltip_localized>previous_transition_tooltip</tooltip_localized>
+				<pos x="+1122+68" y="+255"/>
+				<text size="22" text="▲"/>
+			</button>
+
+			<slider class="smallslider_orange_vertical" action="video_fx_slider 1" relative="no" disabled="not effect_has_slider 'video' 1" >
+				<pos x="+339" y="+258"/>
+			</slider>
+			<slider class="smallslider_orange_vertical" action="video_transition_slider 1" relative="no" disabled="not effect_has_slider 'transition' 1" >
+				<pos x="+1251" y="+258"/>
+			</slider>
+
+			</deck>
+		</group>	
+
+		<group name="videocrossfader">
+			<slider action="video_crossfader" rightclick="temporary" dblclick="video_crossfader 50%" orientation="horizontal">
+			  <size width="306" height="60"/>
+			  <pos x="+730" y="+343"/>
+			  <selected x="679" y="1437" width="306" height="12"/>
+			  <up x="679" y="1437" width="306" height="12"/>
+				<fader>
+				  <size width="25" height="60"/>
+				  <pos x="690" y="1690"/>
+				</fader>
+			</slider>
+
+			<button action="video_crossfader_link">
+			  <tooltip_localized>link_video_crossfade_tooltip</tooltip_localized>
+			  <size width="25" height="25"/>
+			  <pos x="+1064" y="+361"/>
+			  <down x="348" y="1204"/>
+			  <on x="348" y="1204"/>
+			  <over x="348" y="1204"/>
+			  <off x="320" y="1204"/>
+			</button>
+			<textzone>
+			<pos x="+1064+30-5" y="+361+5"/>
+			  <size width="60" height="16"/>
+			  <text size="16" color="#ededed" weight="bold" align="center" localized="LINK"/>
+			</textzone>
+
+			<button action="video_crossfader_auto">
+			  <tooltip_localized>auto_video_crossfade_tooltip</tooltip_localized>
+			  <size width="25" height="25"/>
+			  <pos x="+675" y="+361"/>
+			  <down x="348" y="1204"/>
+			  <on x="348" y="1204"/>
+			  <over x="348" y="1204"/>
+			  <off x="320" y="1204"/>
+			</button>
+			<textzone>
+				<pos x="+675-65" y="+361+5"/>
+			  <size width="60" height="16"/>
+			  <text size="16" color="#ededed" weight="bold" align="center" localized="AUTO"/>
+			</textzone>
+		</group>
+
+		<group name="deckvideofx" x="+0" y="+0">
+
+			 <deck deck="left">
+				<visual >
+				  <pos x="+27" y="+16"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+				<button class="fx_name" action="video_fx">
+				  <pos x="+41" y="+41"/>
+				  <text action="get effect_name 'video'" />
+				</button>
+				<button class="fx_select" action="video_fx_select">
+				  <pos x="+207" y="+41"/>
+				</button>
+
+				<button class="size3button" action="video_fx" rightclick="temporary">
+				  <tooltip_localized>fx_active_tooltip</tooltip_localized>
+				  <pos x="+106" y="+90"/>
+				  <text localized="ON"/>
+				</button>
+
+				  <button class="squarebutton" action="video_fx_select +1">
+					<pos x="+41" y="+90"/>
+				  <text size="22" text="▼"/>
+				  </button>
+				  <button class="squarebutton" action="video_fx_select -1">
+					<pos x="+190" y="+90"/>
+				  <text size="22" text="▲"/>
+				  </button>
+	
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 1"/>
+				</textzone>
+
+				<slider class="smallslider" action="video_fx_slider 1" relative="no" disabled="not effect_has_slider 'video' 1" >
+					<pos x="+41" y="+180"/>
+					</slider>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 1"/>
+				</textzone>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 2"/>
+				</textzone>
+
+				<slider class="smallslider" action="video_fx_slider 2" relative="no" disabled="not effect_has_slider 'video' 2" >
+					<pos x="+41+79" y="+180"/>
+				</slider>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 2"/>
+				</textzone>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79+79" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 3"/>
+				</textzone>
+
+				<slider class="smallslider" action="video_fx_slider 3" relative="no" disabled="not effect_has_slider 'video' 3" >
+					<pos x="+41+79+79" y="+180"/>
+				</slider>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79+79" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 3"/>
+				</textzone>
+			</deck>
+		</group>
+
+		<group name="deckvideofx" x="+1500" y="+0">
+			 <deck deck="right">
+				<visual>
+					  <pos x="+27" y="+16"/>
+					  <size height="391" width="225"/>
+					  <off x="1145" y="2181"/>
+				</visual>
+				<button class="fx_name" action="video_fx">
+				  <pos x="+41" y="+41"/>
+				  <text action="get effect_name 'video'" />
+				</button>
+				<button class="fx_select" action="video_fx_select">
+				  <pos x="+207" y="+41"/>
+				</button>
+
+				<button class="size3button" action="video_fx active" rightclick="temporary">
+				  <tooltip_localized>fx_active_tooltip</tooltip_localized>
+				  <pos x="+106" y="+90"/>
+				  <text localized="ON"/>
+				</button>
+
+				  <button class="squarebutton" action="video_fx_select +1">
+					<pos x="+41" y="+90"/>
+				  <text size="22" text="▼"/>
+				  </button>
+				  <button class="squarebutton" action="video_fx_select -1">
+					<pos x="+190" y="+90"/>
+				  <text size="22" text="▲"/>
+				  </button>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 1"/>
+				</textzone>
+
+					<slider class="smallslider" action="video_fx_slider 1" relative="no" disabled="not effect_has_slider 'video' 1" >
+						<pos x="+41" y="+180"/>
+					</slider>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 1"/>
+				</textzone>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 2"/>
+				</textzone>
+
+				<slider class="smallslider" action="video_fx_slider 2" relative="no" disabled="not effect_has_slider 'video' 2" >
+					<pos x="+41+79" y="+180"/>
+				</slider>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 2"/>
+				</textzone>
+
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79+79" y="+180-25"/>
+				  <text size="17" color="#E1E1E1" align="center" weight="bold" action="get_video_fx_slider_label 3"/>
+				</textzone>
+
+				<slider class="smallslider" action="video_fx_slider 3" relative="no" disabled="not effect_has_slider 'video' 3" >
+					<pos x="+41+79+79" y="+180"/>
+				</slider>
+				<textzone>
+				  <size width="60" height="18"/>
+				  <pos x="+31+79+79" y="+150+182+40"/>
+				  <up x="" y=""/>
+				  <text size="17" color="#ffffff" align="center" action="get_video_fx_slider_label 3"/>
+				</textzone>
+			</deck>
+		</group>
+
+	</panel>
+
+	<panel name="bottom_pads" group="bottompanels" visible="no" >
+
+
+	
+		<panel name="largepads" visibility="var '$showsampler' 0">
+			<group name="pads_left" x="+290" y="+76">
+				<deck deck="left">
+					<panel class="triggerpad" x="+0" y="+0">
+						<button action="pad 1"><text action="pad 1"/></button>
+						<visual visibility="pad_color 1 ? true"></visual>
+						<visual source="pad_color 1" visibility="pad_color 1 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150" y="+0">
+						<button action="pad 2"><text action="pad 2"/></button>
+						<visual visibility="pad_color 2 ? true"></visual>
+						<visual source="pad_color 2" visibility="pad_color 2 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150" y="+0">
+						<button action="pad 3"><text action="pad 3"/></button>
+						<visual visibility="pad_color 3 ? true"></visual>
+						<visual source="pad_color 3" visibility="pad_color 3 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150+150" y="+0">
+						<button action="pad 4"><text action="pad 4"/></button>
+						<visual visibility="pad_color 4 ? true"></visual>
+						<visual source="pad_color 4" visibility="pad_color 4 ? true"></visual>
+					</panel>
+					
+					<panel class="triggerpad" x="+0" y="+150">
+						<button action="pad 5"><text action="pad 5"/></button>
+						<visual visibility="pad_color 5 ? true"></visual>
+						<visual source="pad_color 5" visibility="pad_color 5 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150" y="+150">
+						<button action="pad 6"><text action="pad 6"/></button>
+						<visual visibility="pad_color 6 ? true"></visual>
+						<visual source="pad_color 6" visibility="pad_color 6 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150" y="+150">
+						<button action="pad 7"><text action="pad 7"/></button>
+						<visual visibility="pad_color 7 ? true"></visual>
+						<visual source="pad_color 7" visibility="pad_color 7 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150+150" y="+150">
+						<button action="pad 8"><text action="pad 8"/></button>
+						<visual visibility="pad_color 8 ? true"></visual>
+						<visual source="pad_color 8" visibility="pad_color 8 ? true"></visual>
+					</panel>
+
+				</deck>
+			  </group>
+
+			<group name="pads_right" x="+290+630" y="+76">
+				<deck deck="right">
+					<panel class="triggerpad" x="+0" y="+0">
+						<button action="pad 1"><text action="pad 1"/></button>
+						<visual visibility="pad_color 1 ? true"></visual>
+						<visual source="pad_color 1" visibility="pad_color 1 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150" y="+0">
+						<button action="pad 2"><text action="pad 2"/></button>
+						<visual visibility="pad_color 2 ? true"></visual>
+						<visual source="pad_color 2" visibility="pad_color 2 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150" y="+0">
+						<button action="pad 3"><text action="pad 3"/></button>
+						<visual visibility="pad_color 3 ? true"></visual>
+						<visual source="pad_color 3" visibility="pad_color 3 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150+150" y="+0">
+						<button action="pad 4"><text action="pad 4"/></button>
+						<visual visibility="pad_color 4 ? true"></visual>
+						<visual source="pad_color 4" visibility="pad_color 4 ? true"></visual>
+					</panel>
+					
+					<panel class="triggerpad" x="+0" y="+150">
+						<button action="pad 5"><text action="pad 5"/></button>
+						<visual visibility="pad_color 5 ? true"></visual>
+						<visual source="pad_color 5" visibility="pad_color 5 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150" y="+150">
+						<button action="pad 6"><text action="pad 6"/></button>
+						<visual visibility="pad_color 6 ? true"></visual>
+						<visual source="pad_color 6" visibility="pad_color 6 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150" y="+150">
+						<button action="pad 7"><text action="pad 7"/></button>
+						<visual visibility="pad_color 7 ? true"></visual>
+						<visual source="pad_color 7" visibility="pad_color 7 ? true"></visual>
+					</panel>
+					<panel class="triggerpad" x="+0+150+150+150" y="+150">
+						<button action="pad 8"><text action="pad 8"/></button>
+						<visual visibility="pad_color 8 ? true"></visual>
+						<visual source="pad_color 8" visibility="pad_color 8 ? true"></visual>
+					</panel>
+
+				</deck>
+			  </group>
+
+			 <group name="padparams_left" x="+39" y="+25">
+				<visual >
+				  <pos x="+27-39" y="+16-25"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+				<deck deck="left">
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+1" y="+1"/>
+						<text size="22" align="center" action="pad_page &amp; param_uppercase"/>
+					</textzone>
+					<button class="size3button" action="pad_page" >
+						<tooltip_localized>select_pad_page_tooltip</tooltip_localized>
+					  <pos x="+67" y="+33"/>
+					  <text format="PAGE"/>
+					</button>
+
+					<button class="squarebutton" action="pad_page -1" query="off">
+						<tooltip_localized>previous_pad_page_tooltip</tooltip_localized>
+						<pos x="+2" y="+32"/>
+						<text size="22" text="◄"/>
+					</button>
+					<button class="squarebutton" action="pad_page +1" query="off">
+						<tooltip_localized>next_pad_page_tooltip</tooltip_localized>
+						<pos x="+151" y="+32"/>
+						<text size="22" text="►"/>
+					</button>
+					<button class="size2button" action="shift" >
+						<pos x="+2+55" y="+97"/>
+						<text format="SHIFT"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+165"/>
+						<text size="20" align="center" format="PARAMETERS"/>
+					</textzone>
+					<button class="size2button" action="pad_param -1"  query="off" visibility="pad_has_param 1">
+						<tooltip_localized>Pad_param1_minus_tooltip</tooltip_localized>
+						<pos x="+3+10" y="+195"/>
+						<text format="◄"/>
+					</button>
+					<button class="size2button" action="pad_param +1"  query="off" visibility="pad_has_param 1">
+						<tooltip_localized>Pad_param1_plus_tooltip</tooltip_localized>
+						<pos x="+3+100" y="+195"/>
+						<text format="►"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+245"/>
+						<text size="16" align="center" action="pad_param &amp; param_uppercase"/>
+					</textzone>
+					
+					<button class="size2button" action="pad_param2 -1"  query="off" visibility="pad_has_param 2">
+						<tooltip_localized>Pad_param2_minus_tooltip</tooltip_localized>
+						<pos x="+3+10" y="+195+90"/>
+						<text format="◄"/>
+					</button>
+					<button class="size2button" action="pad_param2 +1"  query="off"  visibility="pad_has_param 2">
+						<tooltip_localized>Pad_param2_plus_tooltip</tooltip_localized>
+						<pos x="+3+100" y="+195+90"/>
+						<text format="►"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+245+90"/>
+						<text size="16" align="center" action="pad_param2 &amp; param_uppercase"/>
+					</textzone>
+				</deck>
+
+			</group>
+
+			<group name="padparams_right" x="+1527+12" y="+25">
+				<visual >
+				  <pos x="-39+27" y="+16-25"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+				<deck deck="right">
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+1" y="+1"/>
+						<text size="22" align="center" action="pad_page &amp; param_uppercase"/>
+					</textzone>
+					<button class="size3button" action="pad_page" >
+						<tooltip_localized>select_pad_page_tooltip</tooltip_localized>
+					  <pos x="+67" y="+33"/>
+					  <text format="PAGE"/>
+					</button>
+
+					<button class="squarebutton" action="pad_page -1">
+						<tooltip_localized>previous_pad_page_tooltip</tooltip_localized>
+						<pos x="+2" y="+32"/>
+						<text size="22" text="◄"/>
+					</button>
+					<button class="squarebutton" action="pad_page +1">
+						<tooltip_localized>next_pad_page_tooltip</tooltip_localized>
+						<pos x="+151" y="+32"/>
+						<text size="22" text="►"/>
+					</button>
+					<button class="size2button" action="shift" >
+						<pos x="+2+55" y="+97"/>
+						<text format="SHIFT"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+165"/>
+						<text size="20" align="center" format="PARAMETERS"/>
+					</textzone>
+					<button class="size2button" action="pad_param -1"  query="off" visibility="pad_has_param 1">
+						<tooltip_localized>Pad_param1_minus_tooltip</tooltip_localized>
+						<pos x="+3+10" y="+195"/>
+						<text format="◄"/>
+					</button>
+					<button class="size2button" action="pad_param +1"  query="off" visibility="pad_has_param 1">
+						<tooltip_localized>Pad_param1_plus_tooltip</tooltip_localized>
+						<pos x="+3+100" y="+195"/>
+						<text format="►"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+245"/>
+						<text size="16" align="center" action="pad_param &amp; param_uppercase"/>
+					</textzone>
+					
+					<button class="size2button" action="pad_param2 -1"  query="off" visibility="pad_has_param 2">
+						<tooltip_localized>Pad_param2_minus_tooltip</tooltip_localized>
+						<pos x="+3+10" y="+195+90"/>
+						<text format="◄"/>
+					</button>
+					<button class="size2button" action="pad_param2 +1"  query="off" visibility="pad_has_param 2">
+						<tooltip_localized>Pad_param2_plus_tooltip</tooltip_localized>
+						<pos x="+3+100" y="+195+90"/>
+						<text format="►"/>
+					</button>
+					<textzone>
+						<size width="195" height="25"/>
+						<pos x="+3" y="+245+90"/>
+						<text size="16" align="center" action="pad_param2 &amp; param_uppercase"/>
+					</textzone>
+				</deck>
+
+			</group>
+
+			<visual class="bottom_half_split"></visual>
+		</panel>
+		
+		<button class="size2button_orange" action="toggle '$showsampler'">
+			<tooltip_localized>sampler_pads_tooltip</tooltip_localized>
+			<pos x="+850" y="+7"/>
+			<text localized="SAMPLER"/>
+		</button>
+		
+		<panel name="samplercontrol" visibility="var '$showsampler' 1">
+			<group name="samplerview" x="+65" y="+65">
+				<visual type="color" source="constant '#101010'" >
+					<size width="1144+250" height="392-50" />	
+					<pos x="+0" y="+0"/>
+				</visual>	
+				<sampler >
+					<size width="1134+250" height="382-50" />	
+					<pos x="+5" y="+5"/>
+				</sampler>
+			</group>
+			
+			<group name="samplercontrols" x="+1537" y="+25">
+				<visual >
+				  <pos x="-39+29" y="+16-25"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+				<button class="fx_name_master" action="sampler_bank">
+					<pos x="+3" y="+41"/>
+					<text action="get_sampler_bank" />
+				</button>
+				<button class="fx_select_master" action="sampler_bank">
+					<pos x="+162+5" y="+41"/>
+				</button>
+				<textzone>
+					  <size width="195" height="25"/>
+					  <pos x="+3" y="+1"/>
+					  <text size="20" align="center" localized="SAMPLER_BANK"/>
+				</textzone>
+				<button class="squarebutton_orange" action="var $samplerstop ? sampler_stop 'all' &amp;&amp; sampler_bank +1 : sampler_bank +1">
+					<tooltip_localized>sampler_next_bank_tooltip</tooltip_localized>
+					<pos x="+3" y="+93"/>
+					<text size="22" text="▼"/>
+				</button>
+				<button class="squarebutton_orange" action="var $samplerstop ? sampler_stop 'all' &amp;&amp; sampler_bank -1 : sampler_bank -1">
+					<tooltip_localized>sampler_previous_bank_tooltip</tooltip_localized>
+					<pos x="+150+3" y="+93"/>
+					<text size="22" text="▲"/>
+				</button>
+				 <textzone>
+				  <size width="195" height="25"/>
+				  <pos x="+3" y="+285-25-110"/>
+				  <text size="15" align="center" localized="SAMPLER_VOLUME"/>
+				</textzone>
+				<slider class="smallslider_orange_vertical" action="sampler_volume" relative="no">
+					  <pos x="+5+4" y="+285-110"/>
+				</slider>
+				<button class="size2button_orange" action="sampler_mode 'on/off'" >
+					<pos x="+3" y="+305-60"/>
+					<text size="17" text="On/off"/>
+				</button>
+				<button class="size2button_orange" action="sampler_mode 'hold'" >
+					<pos x="+3+115" y="+305-60"/>
+					<text size="17" text="Hold"/>
+				</button>
+				<button class="size2button_orange" action="sampler_mode 'stutter'" >
+					<pos x="+3" y="+305"/>
+					<text size="17" text="Stutter"/>
+				</button>
+				<button class="size2button_orange" action="sampler_mode 'unmute'" >
+					<pos x="+3+115" y="+305"/>
+					<text size="17" text="Unmute"/>
+				</button>
+			</group>
+		</panel>
+		
+	</panel>
+
+	<panel name="bottom_master" group="bottompanels" visible="no" >
+
+		<group name="masterfx" x="+20">
+
+			<deck deck="master">
+
+				<visual>
+				  <pos x="+27" y="+16"/>
+				  <size height="391" width="225"/>
+				  <off x="1145" y="2181"/>
+				</visual>
+
+				 <textzone>
+				  <size width="195" height="25"/>
+				  <pos x="+41" y="+50"/>
+				  <text size="20" align="center" weight="bold" localized="MASTER_EFFECT"/>
+				</textzone>
+
+				<button class="fx_name_master" action="effect active">
+				  <pos x="+41" y="+41+50"/>
+				  <text action="deck master get effect_name"/>
+				</button>
+				<button class="fx_select_master" action="effect_select">
+				  <pos x="+207" y="+41+50"/>
+				</button>
+
+				<button class="size3button_orange" action="effect active" rightclick="temporary" tooltip_localized="fx_active_tooltip">
+				  <pos x="+106" y="+90+50"/>
+				  <text localized="ON"/>
+				</button>
+
+				  <button class="squarebutton_orange" action="effect select +1">
+					<pos x="+41" y="+90+50"/>
+				  <text size="22" text="▼"/>
+				  </button>
+				  <button class="squarebutton_orange" action="effect select -1">
+					<pos x="+190" y="+90+50"/>
+				  <text size="22" text="▲"/>
+				  </button>
+
+				<button class="size2button_orange" action="effect_button 1" disabled="not effect_has_button 1" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41" y="+154+50"/>
+					<text action="get_effect_button_name 1 &amp; param_uppercase"/>
+				</button>
+				<button class="size2button_orange" action="effect_button 2" disabled="not effect_has_button 2" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41+112" y="+154+50"/>
+					<text action="get_effect_button_name 2 &amp; param_uppercase"/>
+				</button>
+				--
+				<button class="size2button_orange" action="effect_button 3" disabled="not effect_has_button 3" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41" y="+154+62+50"/>
+					<text action="get_effect_button_name 3 &amp; param_uppercase"/>
+				</button>
+				<button class="size2button_orange" action="effect_button 4" disabled="not effect_has_button 4" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41+112" y="+154+62+50"/>
+					<text action="get_effect_button_name 4 &amp; param_uppercase"/>
+				</button>
+				--
+				<button class="size2button_orange" action="effect_button 5" disabled="not effect_has_button 5" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41" y="+154+62+62+50"/>
+					<text action="get_effect_button_name 5 &amp; param_uppercase"/>
+					</button>
+					<button class="size2button_orange" action="effect_button 6" disabled="not effect_has_button 6" tooltip_localized="fxbutton_tooltip">
+					<pos x="+41+112" y="+154+62+62+50"/>
+					<text action="get_effect_button_name 6 &amp; param_uppercase"/>
+				</button>
+
+
+				<panel class="knobcircletest_orange">
+					<pos x="+353" y="+45"/>
+				
+					<slider action="effect_slider 1" dblclick="effect_slider_reset 1" tooltip_localized="fx_param1" disabled="not effect_has_slider 1"/>
+					<textzone><text action="get_effect_slider_name 1 &amp;&amp; param_uppercase" /></textzone>
+					<textzone visibility="effect_has_slider 1"><text action="get_effect_slider_text 1"/></textzone>
+				</panel>
+				<panel class="knobcircletest_orange">
+					<pos x="+353" y="+45+180"/>
+				
+					<slider action="effect_slider 2" dblclick="effect_slider_reset 2" tooltip_localized="fx_param1" disabled="not effect_has_slider 2"/>
+					<textzone><text action="get_effect_slider_name 2 &amp; param_uppercase" /></textzone>
+					<textzone visibility="effect_has_slider 2"><text action="get_effect_slider_text 2"/></textzone>
+				</panel>
+
+
+			</deck>
+		</group>
+
+		<group name="middlemaster">  
+		 
+		  <visual >
+			<pos x="+641" y="+15"/>
+			<size height="393" width="504"/>
+			<off x="1373" y="2181"/>
+		  </visual>
+
+			<group name="headphone_volume">
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+800" y="+60-30"/>
+				  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="VOL"/>
+				</textzone>
+				<slider class="bigslider_orange" action="headphone_volume" dblclick="headphone_volume 100% ? headphone_volume 20% : headphone_volume 100%" rightclick="headphone_volume 100% ? headphone_volume 20% : headphone_volume 100%" disabled="not get_hasheadphones" tooltip_localized="headphones_volume_tooltip">
+					<pos x="+800" y="+60"/>
+				</slider>
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+800" y="+60+310+12"/>
+				  <text size="20" color="#ffffff" align="center" action="headphone_volume &amp; param_cast 'percentage'"/>
+				</textzone>
+			</group>
+
+			<group name="headhphone_mix">
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+917" y="+60-30"/>
+				  <text size="20" color="#E1E1E1" align="center" weight="bold" localized="MIX"/>
+				</textzone>
+				<slider class="bigslider_orange" action="headphone_mix" dblclick="headphone_mix 0% ? headphone_mix 100% : headphone_mix 0%" rightclick="headphone_mix 0% ? headphone_mix 100% : headphone_mix 0%" disabled="not get_hasheadphones" tooltip_localized="headphones_mix_tooltip">
+					<pos x="+917" y="+60"/>
+				</slider>
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+917" y="+60+310+12"/>
+				  <text size="20" color="#ffffff" align="center" action="headphone_mix &amp; param_cast 'percentage'"/>
+				</textzone>
+			</group>
+
+			<group name="mastervolume">
+				  <slider class="smallslider_orange" action="master_volume" rightclick="master_volume 100% ? master_volume 20% : master_volume 100%" tooltip_localized="master_volume_tooltip" >
+					<pos x="+682" y="+60"/>
+				  </slider>
+				  <textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+682-14" y="+60-30"/>
+				  <text size="20" color="#ffffff" align="center" localized="MASTER"/>
+				</textzone>
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+682-14" y="+60+180+12"/>
+				  <text size="16" color="#ffffff" align="center" action="master_volume &amp; param_cast 'percentage'"/>
+				</textzone>
+
+				<button class="size3button_orange" action="master_volume 0" tooltip_localized="mute_master_tooltip">
+				  <pos x="+682-12" y="+60+180+45"/>
+				  <text localized="MUTE"/>
+				</button>
+
+				<button class="size3button_orange" action="sampler_rec 'master'" tooltip="RECORD TO SAMPLE\n Record the master output into a new sample file">
+				  <pos x="+682-12" y="+60+180+105"/>
+				  <text localized="REC"/>
+				</button>
+
+			</group>
+
+			<group name="micvolume">
+				  <slider class="smallslider_orange" action="mic_volume" rightclick="mic_volume 100% ? mic_volume 20% : mic_volume 100%" tooltip_localized="mic_volume_tooltip" disabled="not get_hasmic">
+					<pos x="+1065" y="+60"/>
+				  </slider>
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+1065-14" y="+60-30"/>
+				  <text size="20" color="#ffffff" align="center" localized="MIC"/>
+				</textzone>
+				<textzone>
+				  <size width="69" height="18"/>
+				  <pos x="+1065-14" y="+60+180+12"/>
+				  <text size="16" color="#ffffff" align="center" action="mic_volume &amp; param_cast 'percentage'"/>
+				</textzone>
+
+				<button class="size3button_orange" action="mic" tooltip_localized="mic_on_tooltip">
+				  <pos x="+1065-12" y="+60+180+45"/>
+				  <text localized="ON"/>
+				</button>
+
+				<button class="size3button_orange" action="sampler_rec 'mic'" tooltip_localized="record_to_sample_mic_tooltip">
+				  <pos x="+1065-12" y="+60+180+105"/>
+				  <text localized="REC"/>
+				</button>
+
+			</group>
+		</group>
+
+		<group name="broadcast" x="+1206" y="+10">
+			   
+			  <textzone>
+				<pos x="+0" y="+35"/>
+				<size width="515" height="22"/>
+				<text size="20" color="#E1E1E1" align="center" weight="bold" localized="broadcast_mix"/>
+			  </textzone>
+
+			  <visual x="+0" y="+74">
+				<size width="515" height="120"/>
+				<off x="1140" y="2584"/>
+			  </visual>
+
+			  <textzone>
+				<pos x="+0" y="+74+5"/>
+				<size width="510" height="115"/>
+				<text size="18" dx="5" color="#E1E1E1" align="center" action="broadcast_message 'full'"/>
+			  </textzone>
+
+			  <button class="size2button_orange" action="broadcast" tooltip_localized="broadcast_mix_tooltip">
+			  <pos x="+90" y="+240"/>
+			  <text localized="BCAST"/>
+			  </button>
+
+			  <button class="size2button_orange" action="record" tooltip_localized="record_mix_tooltip">
+			  <pos x="+90+128" y="+240"/>
+			  <text localized="REC"/>
+			  </button>
+
+			  <button class="size2button_orange" action="record_config" tooltip_localized="record_settings_tooltip">
+			  <pos x="+90+128+128" y="+240"/>
+			  <text localized="FILE"/>
+			  </button>
+
+
+		</group>
+
+	</panel>
+
+</group>
+
+<!-- AUDIO MIXER -->
+<group name="audiomixer" x="712" y="207">
+
+	<deck deck="left">
+		<button action="pfl" class="size3button" dblclick="select" rightclick="select">
+		  <pos x="+135" y="+298"/>
+		  <icon x="413" y="1210" height="22" width="24" dx="1" dy="0"/>
+		</button>
+		<slider action="level" rightclick="temporary" orientation="vertical">
+		  <size width="49" height="170"/>
+		  <pos x="+143" y="+115"/>
+		  <on x="1206" y="1608" width="11" height="170"/>
+		  <fader>
+			<size width="49" height="36"/>
+			<pos x="644" y="1280"/>
+		  </fader>
+		</slider>
+		<group name="Vumeters" x="+218" y="+40">
+			<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+			  <size width="10" height="249"/>
+			  <pos x="+0" y="+0"/>
+			  <down x="1173" y="1915"/>
+			</visual>
+
+			<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+			  <size width="10" height="249"/>
+			  <pos x="+13" y="+0"/>
+			  <down x="1173" y="1915"/>
+			</visual>
+		</group>
+		<group name="gain" x="+24+108" y="+0">
+
+			<slider class="small_knobcircle" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" orientation="circle" relative="no">
+			  <tooltip_localized>gain_tooltip</tooltip_localized>
+			  <pos x="+0" y="+20"/>
+			</slider>
+			<slider class="inner_knob" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" relative="no">
+			  <tooltip_localized>gain_tooltip</tooltip_localized>
+			  <pos x="+11" y="+20+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+20+63"/>
+			  <text localized="GAIN" />
+			</textzone>
+		</group>
+		<group name="eq" x="+24" y="+20">
+
+			<slider class="small_knobcircle" action="eq_high" rightclick="eq_high 50%" dblclick="eq_high 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+0" y="+0"/>
+			</slider>
+			<slider class="inner_knob" action="eq_high" rightclick="eq_high 50%" dblclick="eq_high 50%" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63"/>
+			  <text localized="HIGH" />
+			</textzone>
+
+			<slider class="small_knobcircle" action="eq_mid" rightclick="eq_mid 50%" dblclick="eq_mid 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_mid_tooltip</tooltip_localized>
+			  <pos x="+0" y="+95"/>
+			</slider>
+			<slider class="inner_knob" action="eq_mid" rightclick="eq_mid 50%" dblclick="eq_mid 50%" relative="no">
+			  <tooltip_localized>eq_mid_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11+95"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63+95"/>
+			  <text localized="MID" />
+			</textzone>
+
+			<slider class="small_knobcircle" action="eq_low" rightclick="eq_low 50%" dblclick="eq_low 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+0" y="+95+95"/>
+			</slider>
+			<slider class="inner_knob" action="eq_low" rightclick="eq_low 50%" dblclick="eq_low 50%" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11+95+95"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63+95+95"/>
+			  <text localized="LOW" />
+			</textzone>
+		</group>
+		<group name="filter" x="+24" y="+20+95+95+110">
+			<slider class="small_knobcircle" action="filter" rightclick="filter 50%" dblclick="filter 50%" orientation="circle" relative="no">
+			  <tooltip_localized>filter_tooltip</tooltip_localized>
+			  <pos x="+0" y="+0"/>
+			</slider>
+			<slider class="inner_knob" action="filter" rightclick="filter 50%" dblclick="filter 50%" relative="no">
+			  <tooltip_localized>filter_tooltip</tooltip_localized>
+			  <pos x="+0+11" y="+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63"/>
+			  <text action="filter_label" />
+			</textzone>
+		</group>
+	</deck>
+
+	<deck deck="right">
+		<button action="pfl" class="size3button" dblclick="select" rightclick="select">
+		  <pos x="+135+165" y="+298"/>
+		  <icon x="413" y="1210" height="22" width="24" dx="1" dy="0"/>
+		</button>
+		<slider action="level" rightclick="temporary" orientation="vertical">
+		  <size width="49" height="170"/>
+		  <pos x="+307" y="+115"/>
+		  <on x="1206" y="1792" width="11" height="170"/>
+		  <fader>
+			<size width="49" height="36"/>
+			<pos x="644" y="1280"/>
+		  </fader>
+		</slider>
+		<group name="Vumeters" x="+256" y="+40">
+			<visual source="get_level_left" type="linear" orientation="vertical" direction="up">
+			  <size width="10" height="249"/>
+			  <pos x="+0" y="+0"/>
+			  <down x="1143" y="1915"/>
+			</visual>
+
+			<visual source="get_level_right" type="linear" orientation="vertical" direction="up">
+			  <size width="11" height="249"/>
+			  <pos x="+14" y="+0"/>
+			  <down x="1143" y="1915"/>
+			</visual>
+		</group>
+		<group name="gain" x="+24+108+164" y="+0">
+
+			<slider class="small_knobcircle" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" orientation="circle" relative="no">
+			  <tooltip_localized>gain_tooltip</tooltip_localized>
+			  <pos x="+0" y="+20"/>
+			</slider>
+			<slider class="inner_knob" action="gain" rightclick="gain 0% ? gain 50% : gain 0%" dblclick="gain 50%" relative="no">
+			  <tooltip_localized>gain_tooltip</tooltip_localized>
+			  <pos x="+11" y="+20+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+20+63"/>
+			  <text localized="GAIN" />
+			</textzone>
+		</group>
+		<group name="eq" x="+24+381" y="+20">
+
+			<slider class="small_knobcircle" action="eq_high" rightclick="eq_high 50%" dblclick="eq_high 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_high_tooltip</tooltip_localized>
+			  <pos x="+0" y="+0"/>
+			</slider>
+			<slider class="inner_knob" action="eq_high" rightclick="eq_high 50%" dblclick="eq_high 50%" relative="no">
+			  <tooltip_localized>eq_high_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63"/>
+			  <text localized="HIGH" />
+			</textzone>
+
+			<slider class="small_knobcircle" action="eq_mid" rightclick="eq_mid 50%" dblclick="eq_mid 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_mid_tooltip</tooltip_localized>
+			  <pos x="+0" y="+95"/>
+			</slider>
+			<slider class="inner_knob" action="eq_mid" rightclick="eq_mid 50%" dblclick="eq_mid 50%" relative="no">
+			  <tooltip_localized>eq_mid_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11+95"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63+95"/>
+			  <text localized="MID" />
+			</textzone>
+
+			<slider class="small_knobcircle" action="eq_low" rightclick="eq_low 50%" dblclick="eq_low 50%" orientation="circle" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+0" y="+95+95"/>
+			</slider>
+			<slider class="inner_knob" action="eq_low" rightclick="eq_low 50%" dblclick="eq_low 50%" relative="no">
+			  <tooltip_localized>eq_low_tooltip</tooltip_localized>
+			  <pos x="+11" y="+11+95+95"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63+95+95"/>
+			  <text localized="LOW" />
+			</textzone>
+		</group>
+		<group name="filter" x="+24+381" y="+20+95+95+110">
+			<slider class="small_knobcircle" action="filter" rightclick="filter 50%" dblclick="filter 50%" orientation="circle" relative="no">
+			  <tooltip_localized>filter_tooltip</tooltip_localized>
+			  <pos x="+0" y="+0"/>
+			</slider>
+			<slider class="inner_knob" action="filter" rightclick="filter 50%" dblclick="filter 50%" relative="no">
+			  <tooltip_localized>filter_tooltip</tooltip_localized>
+			  <pos x="+0+11" y="+11"/>
+			</slider>
+			<textzone class="knob_text">
+			  <pos x="+0" y="+63"/>
+			  <text action="filter_label" />
+			</textzone>
+		</group>
+	</deck>
+
+	<slider action="crossfader" rightclick="temporary" dblclick="crossfader 50%" orientation="horizontal">
+	  <size width="236" height="56"/>
+	  <pos x="+131" y="+369"/>
+	  <up x="950" y="1876" width="236" height="11"/>
+	  <selected x="950" y="1900" width="236" height="11"/>
+		<fader>
+		  <size width="32" height="56"/>
+		  <pos x="55" y="1476"/>
+		</fader>
+	</slider>
+
+	<group name="sandbox">
+		<songpos deck="sandbox" orientation="" class="songpos_orange">
+		  <size width="360" height="32"/>
+		  <pos x="722" y="161"/>
+		</songpos>
+		<button action="sandbox" visibility="can_sandbox ? false : true">
+		  <pos x="1091" y="157"/>
+		  <size width="113" height="38"/>
+		  <off x="1015" y="1940"/>
+		  <over x="1015" y="1940"/>
+		  <on x="1015" y="1940"/>
+		  <text size="16" dx="35" weight="bold" color="#777777" localized="SANDBOX" />
+		</button>
+		<button action="sandbox" visibility="can_sandbox ? true : false">
+		  <pos x="1091" y="157"/>
+		  <size width="113" height="38"/>
+		   <off x="+0" y="+0"/>
+		  <over x="895" y="1983"/>
+		   <on x="1015" y="1983"/>
+		   <text size="16" dx="35" weight="bold" color="#999999" localized="SANDBOX" />
+		   <textselected size="16" dx="35" weight="bold" color="black" localized="SANDBOX" />
+		   <textover size="16" dx="35" weight="bold" color="#AAAAAA" localized="SANDBOX" />
+		</button>
+	</group>
+
+</group>
+
+</panel>
+
+<!-- BIG BROWSER -->
+<panel name="bigbrowser" visibility="browser_zoom">
+
+<group name="deckleft">
+	<deck deck="left">
+		<panel name="minijog_left" group="minisides_left" x="9" y="149" visible="yes">
+			<button class="sidemenu_top" action="skin_panel 'miniloop_left' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon x="1853" y="1760" height="32" dx="0" dy="-12"  />
+					<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" text="JOG"/>
+			</button>
+			
+			<group name="jog" x="+70" y="+15">
+			  <visual class="jogmini"></visual>
+			  <visual class="jogspinnermini"></visual>
+			  <visual class="jogcirclemini" ></visual>
+			</group>
+		</panel>
+		<panel name="miniloop_left" group="minisides_left" x="9" y="149" visible="no">
+			<button class="sidemenu_top" action="skin_panel 'minivideo_left' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon x="1853" y="1514" height="32" dx="0" dy="-10" />
+					<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="LOOPS"/>
+			</button>
+			<group name="loopsmini" x="+60" y="-1">
+				<button class="squarebutton" action="loop_double"  >
+					<tooltip_localized>loop_double_tooltip</tooltip_localized>
+					<pos x="+7+49" y="+63"/>
+					<text size="22" text="►"/>
+				</button>
+				<button class="squarebutton" action="loop_half"  >
+					<tooltip_localized>loop_half_tooltip</tooltip_localized>
+					<pos x="+7" y="+63"/>
+					<text size="22" text="◄"/>
+				</button>
+				<button class="loopbutton" action="loop" rightclick="temporary">
+					<pos x="+13" y="+10"/>
+				</button>
+			</group>
+		</panel>
+		<panel name="minivideo_left" group="minisides_left" x="9" y="149" visible="no">
+			<button class="sidemenu_top" action="skin_panel 'minijog_left' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="9" y="149"/>
+					<icon x="1793" y="1715" height="32" dx="3" dy="-10" />
+					<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="VIDEO"/>
+			</button>
+			<group name="videomini" x="+55" y="-1">
+				<visual>
+					<pos x="+7" y="+26" width="108"  height="67"/>
+					<off x="890" y="2494"/>
+				</visual>
+				<video source="deck" >
+					<pos x="+7+3" y="+26+3" width="108-6"  height="67-6"/>
+				</video>
+			</group>
+		</panel>
+		
+		
+		<group name="deck" x="184" y="150">
+
+			<dropzone >
+			  <pos x="-105" y="+0" />
+			  <size width="528+262-70" height="110"/>
+			</dropzone>
+
+			<songpos class="songpos"></songpos>
+
+			<group name="tracktitle" x="+5" y="+5" >
+				<textzone class="title" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="author" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="bpm"></textzone>
+				<textzone class="bpm_tag"></textzone>
+				<button class="tap"></button>
+				<textzone class="key_tag"></textzone>
+				<textzone class="key_text"></textzone>
+				<textzone class="gain_tag"></textzone>
+				<textzone class="gain_text"></textzone>
+
+			 </group>
+
+
+			<group name="transbox" x="+537" y="+10">
+				<visual type="color" source="constant '#4F4F4F'">
+					<tooltip></tooltip>
+					<pos x="-9" y="-8" width="161-76" height="114"/>
+				</visual>
+				<button action="stop_button" class="size3button" rightclick="holding 500ms ? unload : goto_first_beat">
+					<tooltip_localized>stop_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon sysicon="stop_button"  width="35" height="35" />
+				</button>
+				<button action="play_button" class="size3button">
+					<tooltip_localized>play_tooltip</tooltip_localized>
+					<pos x="+0" y="+52"/>
+					<icon sysicon="play_button"  width="35" height="35" />
+				</button>
+			</group>
+
+
+
+		</group>
+
+	</deck>
+</group>
+
+<group name="deckright">
+	<deck deck="right">
+		<panel name="minijog_right" group="minisides_right" x="1853" y="149" visible="yes">
+			<button class="sidemenu_top" action="skin_panel 'miniloop_right' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon x="1853" y="1760" height="32" dx="0" dy="-12"  />
+					<text dy="28" size="15" weight="bold" align="center" color="#CCCCCC" text="JOG"/>
+			</button>
+			
+			<group name="jog" x="-104" y="+15">
+			  <visual class="jogmini"></visual>
+			  <visual class="jogspinnermini"></visual>
+			  <visual class="jogcirclemini" ></visual>
+			</group>
+		</panel>
+		<panel name="miniloop_right" group="minisides_right" x="1853" y="149" visible="no">
+			<button class="sidemenu_top" action="skin_panel 'minivideo_right' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon x="1853" y="1514" height="32" dx="0" dy="-10" />
+					<text dy="27" size="15" weight="bold" align="center" color="#CCCCCC" localized="LOOPS"/>
+			</button>
+			<group name="loopsmini" x="-114" y="-1">
+				<button class="squarebutton" action="loop_double"  >
+					<tooltip_localized>loop_double_tooltip</tooltip_localized>
+					<pos x="+7+49" y="+63"/>
+					<text size="22" text="►"/>
+				</button>
+				<button class="squarebutton" action="loop_half"  >
+					<tooltip_localized>loop_half_tooltip</tooltip_localized>
+					<pos x="+7" y="+63"/>
+					<text size="22" text="◄"/>
+				</button>
+				<button class="loopbutton" action="loop" rightclick="temporary">
+					<pos x="+13" y="+10"/>
+				</button>
+			</group>
+		</panel>
+		<panel name="minivideo_right" group="minisides_right" x="1853" y="149" visible="no">
+			<button class="sidemenu_top" action="skin_panel 'minijog_right' on">
+					<tooltip_localized>minijog_panel_tooltip</tooltip_localized>
+					<pos x="+0" y="149"/>
+					<icon x="1793" y="1715" height="32" dx="3" dy="-10" />
+					<text dy="30" size="15" weight="bold" align="center" color="#CCCCCC" localized="VIDEO"/>
+			</button>
+			<group name="videomini" x="-119" y="-1">
+				<visual>
+					<pos x="+7" y="+26" width="108"  height="67"/>
+					<off x="890" y="2494"/>
+				</visual>
+				<video source="deck" >
+					<pos x="+7+3" y="+26+3" width="108-6"  height="67-6"/>
+				</video>
+			</group>
+		</panel>
+	
+		<group name="deck" x="1212" y="150">
+			<dropzone >
+			  <pos x="-280+120+70" y="+0" />
+			  <size width="528+262-70" height="110"/>
+			</dropzone>
+
+			<songpos class="songpos"></songpos>
+
+			<group name="tracktitle" x="+5" y="+5" >
+				<textzone class="title" group="horizontal" scroll="yes" click="scroll"></textzone>
+				<textzone class="author" group="horizontal" scroll="yes" click="scroll"><text color="#ff0006"/></textzone>
+				<textzone class="bpm"><text color="#ff0006"/></textzone>
+				<textzone class="bpm_tag"></textzone>
+				<button class="tap"></button>
+				<textzone class="key_tag"></textzone>
+				<textzone class="key_text"></textzone>
+				<textzone class="gain_tag"></textzone>
+				<textzone class="gain_text"></textzone>
+
+			 </group>
+
+			<group name="transbox" x="-155+76" y="+10">
+				<visual type="color" source="constant '#4F4F4F'">
+					<tooltip></tooltip>
+					<pos x="-9" y="-8" width="161-76" height="114"/>
+				</visual>
+				<button action="stop_button" class="size3button" rightclick="holding 500ms ? unload : goto_first_beat">
+					<tooltip_localized>stop_tooltip</tooltip_localized>
+					<pos x="+0" y="+0"/>
+					<icon sysicon="stop_button"  width="35" height="35" />
+				</button>
+				<button action="play_button" class="size3button">
+					<tooltip_localized>play_tooltip</tooltip_localized>
+					<pos x="+0" y="+52"/>
+					<icon sysicon="play_button"  width="35" height="35" />
+				</button>
+
+			</group>
+
+
+		</group>
+
+	</deck>
+</group>
+
+	<group name="minimixer" x="873" y="150">
+		<visual type="color" source="constant '#404040'">
+			<tooltip></tooltip>
+			<pos x="+0-76" y="+2" width="175+76+76" height="114"/>
+		</visual>
+		<visual type="color" source="constant 'black'">
+			<tooltip></tooltip>
+			<pos x="+175-1+76" y="+2" width="2" height="114"/>
+		</visual>
+		<visual type="color" source="constant 'black'">
+			<tooltip></tooltip>
+			<pos x="+0-76" y="+2" width="2" height="114"/>
+		</visual>
+		<visual >
+			<tooltip></tooltip>
+			<pos x="-70" y="+3" width="315" height="108"/>
+			<off x="1192" y="2833"/>
+		</visual>
+		<visual >
+			<tooltip></tooltip>
+			<pos x="+1+64" y="+5" width="21" height="107"/>
+			<off x="1025" y="2449"/>
+		</visual>
+		<visual source="deck left get_level" type="linear" orientation="vertical" direction="up">
+			<size width="11" height="94"/>
+			<pos x="+5+64" y="+9"/>
+			<down x="1172" y="1913"/>
+		</visual>
+		<visual >
+			<tooltip></tooltip>
+			<pos x="+0+88" y="+5" width="21" height="107"/>
+			<off x="1025" y="2449"/>
+		</visual>
+		<visual source="deck right get_level" type="linear" orientation="vertical" direction="up">
+			<size width="11" height="94"/>
+			<pos x="+4+88" y="+9"/>
+			<down x="1142" y="1913"/>
+		</visual>
+		
+		<slider class="small_knobcircle" deck="left" action="level" orientation="circle" >
+			<circle frommiddle="false"/>
+			<pos x="+0-9" y="+25"/>
+		</slider>
+		<slider class="inner_knob" deck="left" action="level" frommiddle="false">
+			<pos x="+11-9" y="+25+11"/>
+		</slider>
+		<textzone class="knob_text">
+			<pos x="+0-9" y="+21+63"/>
+			<text localized="VOL" />
+		</textzone>
+		
+		<slider class="small_knobcircle" deck="right" action="level" orientation="circle" >
+			<circle frommiddle="false"/>
+			<pos x="+0-9+121" y="+25"/>
+		</slider>
+		<slider class="inner_knob" deck="right" action="level" >
+			<pos x="+11-9+121" y="+25+11"/>
+		</slider>
+		<textzone class="knob_text">
+			<pos x="+0-9+121" y="+21+63"/>
+			<text localized="VOL" />
+		</textzone>
+			
+		<button class="squarebutton" deck="left" action="pfl"  >
+			<pos x="+10-74" y="+38"/>
+			 <icon x="412" y="1210" height="22" width="25" />
+		</button>
+		<button class="squarebutton" deck="right" action="pfl"  >
+			<pos x="+9+107+74" y="+38"/>
+			 <icon x="412" y="1210" height="22" width="25" />
+		</button>
+		
+		
+	</group>
+	<browser showzoom="true" coverflow="false">
+		<size width="1782+118" height="420+384"/>
+		<pos x="10" y="649-384"/>
+	</browser>
+</panel>
+</Skin>

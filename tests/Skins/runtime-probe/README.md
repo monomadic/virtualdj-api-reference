@@ -32,8 +32,20 @@ Results are recorded in the tracker's runtime-skin section.
 | `visibility-condition.xml` | starred placeholder inside a `visibility=""` condition | yes — this is the one that answered it |
 | `placeholder-condition.xml` | first condition attempt, via `<group class="...">` | **CRASHES** |
 | `condition-starred.xml` | second condition attempt, still via `<group class="...">` | **CRASHES** |
+| `waveform-scratchwave.xml` | does `<scratchwave>` instantiate in a plugin panel | yes — both `deck="left"` and `deck="1"` drew |
+| `waveform-family.xml` | `<rhythmzone>` and `<songpos>` in the same surface | yes — both drew |
+| `waveform-control.xml` | negative control: the same file, element misspelled | yes — rects empty, parse continued |
+| `waveform-size-cond-true.xml` | stacked `<size condition="">`, condition true | yes — renders the conditional size (30) |
+| `waveform-size-cond-false.xml` | the same with the condition false | yes — falls through to the fallback (90) |
 
 Each canary carries a row that must always render ("0 control") and, where a
 condition is involved, a row that must *not* render. That way "nothing appeared"
 is distinguishable from "the panel never opened", and an ignored condition is
 distinguishable from an evaluated one.
+
+## Captures
+
+The `waveform-*.png` files beside these fixtures are the panel crops each run
+produced, cited from [Skin Waveforms](../../../docs/Skin%20Waveforms.md)
+§Testing this family. They are 640x400 crops of a full-screen capture, taken with
+VirtualDJ raised and deck 1 loaded.

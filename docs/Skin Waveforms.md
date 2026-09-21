@@ -7,6 +7,31 @@ Evidence base:
 - The six official wiki pages (`Skin Rhythmzone.html`, `Skin Scratchwave.html`, `Skin BlockWave.html`, `Skin BeatTunnel.html`, `Skin songpos.html`, `Skin scratch.html`), all linked from the official Skin SDK index and all live as of 2026-07-12. Source: `Official`.
 - All 15 built-in skin XML files copied into this repo (`examples/Skins/Built-In/Desktop/*.xml`, `examples/Skins/Built-In/Lite/Lite.xml`, `examples/Skins/Built-In/Remote/*.xml`) plus `examples/Skins/SDK Example - Custom Browser Skin/skin.xml`. Source: `Built-in skin` / `Published skin` (SDK example).
 
+## Read this much
+
+Two unrelated mechanisms draw a deck waveform, and every built-in skin uses the
+second: `<visual type="waveform">` is the simple one, `<rhythmzone>` (multi-deck
+rhythm wave) and `<scratchwave>` (per-deck scrolling wave, beat grid, cue markers,
+nudge/scratch) are the real ones. `<songpos>` is the whole-track overview,
+`<scratch>` the jog wheel. `<blockwave>` and `<beattunnel>` are documented but
+ship in nothing here. Children are shared: `<pos>`, `<size>`, `<grid>`,
+`<gridlines>`, `<cue>`, `<overlay>` — with `<grid>` taking a *different* attribute
+set under `<scratchwave>` than under `<rhythmzone>`.
+
+## Contents
+
+| Section | What is in it |
+| --- | --- |
+| [The Two Waveform Mechanisms](#the-two-waveform-mechanisms) | Which mechanism to use, and the usage counts behind that |
+| [`<rhythmzone>`](#rhythmzone) | Attributes, then its `<rhythm>` / `<colors>` / `<grid>` / `<gridlines>` / `<cue>` / `<overlay>` children, then a full example |
+| [`<scratchwave>`](#scratchwave) | Attributes, its own `<grid>` form, stacked `<size condition="">`, full example |
+| [`<songpos>`](#songpos) | Whole-track overview and the `class=` define-template pattern shipped skins use |
+| [`<scratch>`](#scratch) | Jog wheel, `<mousecircle>` |
+| [`<blockwave>`](#blockwave) / [`<beattunnel>`](#beattunnel) | Official-only; no local usage to cross-check |
+| [Related Elements That Are Not Part of This Family](#related-elements-that-are-not-part-of-this-family) | What looks like a waveform element but is not |
+| [Testing this family](#testing-this-family) | The plugin-panel fixture channel, its captures, and how to run one |
+| [Open Questions](#open-questions) | Unresolved; each now has a fixture channel |
+
 Every attribute row below carries a source label. Attributes that appear only on the official page and never in shipped XML are marked `Official (not observed locally)`. Attributes that appear only in shipped XML are marked `Built-in skin`. Semantics this repo derived rather than read are marked `Inference`.
 
 ## The Two Waveform Mechanisms
@@ -181,7 +206,22 @@ Per-deck scrolling scratch waveform. Source: `Official`, `Built-in skin` (62 ins
 | `nudge` | `yes`\|`no`\|`vinylmode` | Mouse behavior: nudge the song or scratch | `Official`; `Built-in skin` (`nudge="vinylmode"` in 4 Remote skin instances, e.g. `examples/Skins/Built-In/Remote/16x9T.xml` ~line 1712) |
 | `visibility` | bool or VDJScript | Conditional visibility | `Built-in skin` (6 instances) |
 
-**Children:** `<pos>`, `<size>`, `<grid>`, `<gridlines>` (see rhythmzone section above), `<cue>` (see above), `<overlay>` (see above). Source: `Official`, `Built-in skin`. Pro.xml also stacks multiple `<size ... condition="..."/>` children so the wave resizes per layout condition (Pro.xml ~lines 5822-5823). Source: `Built-in skin`.
+**Children:** `<pos>`, `<size>`, `<grid>`, `<gridlines>` (see rhythmzone section above), `<cue>` (see above), `<overlay>` (see above). Source: `Official`, `Built-in skin`.
+
+### Stacked `<size condition="">` — the first matching size wins
+
+Shipped skins give `<scratchwave>` more than one `<size>`, each but the last carrying a `condition=""`, so the wave resizes per layout (Pro.xml ~lines 5822-5823). Source: `Built-in skin`.
+
+**Confirmed** (`Local test`, build 18.0.9642 arm64, 2026-09-20, plugin-panel surface): the condition is genuinely evaluated, and the first `<size>` whose condition passes is the one applied. A trailing `<size>` with no condition is the fallback.
+
+| Fixture | First `<size>` | Condition | Rendered height |
+| --- | --- | --- | --- |
+| [waveform-size-cond-true.xml](../tests/Skins/runtime-probe/waveform-size-cond-true.xml) | `height="30"` | `param_equal 'yes' 'yes'` → true | **30** — the conditional size ([capture](../tests/Skins/runtime-probe/waveform-size-cond-true.png)) |
+| [waveform-size-cond-false.xml](../tests/Skins/runtime-probe/waveform-size-cond-false.xml) | `height="30"` | `param_equal 'no' 'yes'` → false | **90** — the unconditional fallback ([capture](../tests/Skins/runtime-probe/waveform-size-cond-false.png)) |
+
+Both fixtures are identical apart from the condition, so the two heights separate "the condition was evaluated" from "the first size always wins". Heights were measured off the captures by counting waveform pixel rows rather than judged by eye — 46 px against 139 px, a 3.02 ratio against the declared 3.0 — and both runs reproduced with the variant order reversed.
+
+Surface caveat: this is the plugin-panel surface. A full deck skin is expected to agree but has not been run.
 
 ### `<grid>` (child of scratchwave)
 
@@ -388,9 +428,53 @@ Source: `Official`.
 
 ---
 
+## Testing this family
+
+**This family renders in a plugin panel, so it has a cheap fixture channel.**
+`Local test`, build 18.0.9642 (arm64), 2026-09-20: `<scratchwave>`, `<rhythmzone>`
+and `<songpos>` were each served to the `VDJIntrospectSkin` runtime-skin panel and
+each drew real deck data — waveform, cue markers, gridlines, the whole-track
+overview.
+
+| Fixture | Served | Result |
+| --- | --- | --- |
+| [waveform-scratchwave.xml](../tests/Skins/runtime-probe/waveform-scratchwave.xml) | two `<scratchwave>`, `deck="left"` and `deck="1"` | both drew ([capture](../tests/Skins/runtime-probe/waveform-scratchwave.png)) |
+| [waveform-family.xml](../tests/Skins/runtime-probe/waveform-family.xml) | `<rhythmzone>` + `<songpos>` | both drew ([capture](../tests/Skins/runtime-probe/waveform-family.png)) |
+| [waveform-control.xml](../tests/Skins/runtime-probe/waveform-control.xml) | the same file with the element name misspelled `<zzscratchwave>` | rects stayed empty ([capture](../tests/Skins/runtime-probe/waveform-control.png)) |
+
+The misspelled control is what makes the positives attributable: an unrecognised
+element is silently dropped and the parse continues, so "a waveform appeared"
+belongs to the element name and not to the panel. Every fixture also carries a
+`0 control` row that must render and a `3 tail` row that renders only if the
+parser reached the end of the file.
+
+Running one:
+
+```sh
+just plugin-skin-prepare tests/Skins/runtime-probe/waveform-scratchwave.xml
+just plugin-skin-reload     # close + re-open the panel
+just plugin-skin-log        # confirm VirtualDJ re-read the XML
+```
+
+The panel needs a track on the deck to draw anything, and it opens with
+`deck 1 effect_show_gui 'VDJIntrospectSkin'` — the **bundle** filename, not the
+`PluginName` the plugin declares.
+
+**Correction (2026-09-20).** This section replaces a claim, carried here and in
+the tracker since 2026-08-22, that the family was "not reachable through the
+runtime-skin plugin loop" because "a plugin panel has no deck to bind a
+`<scratchwave>` to". No fixture had ever served a waveform element to that panel;
+the claim was inference under a `Local test` label, and the same 2026-08-22 run
+had already rendered `` `get_deck` `` as `deck=1` in that surface. `<scratchwave>`
+also takes an explicit `deck=""` attribute in 62 of 62 shipped instances. The
+panel is a real fixture for this family.
+
 ## Open Questions
 
-Unresolved items; do not treat any of these as documented behavior.
+Unresolved items; do not treat any of these as documented behavior. Every one of
+them is now *reachable*: the plugin-panel loop renders this family, so these need
+a fixture run rather than a fixture that does not exist. See
+[Testing this family](#testing-this-family).
 
 1. **`chanX` vs `deckN` color naming.** The official rhythmzone prose names the `<colors>` attributes `chanX*` but its own example and all shipped XML use `deckN*`. Both may be accepted, or `chanX` may be stale wiki text. Needs local test.
 2. **Semantics of `deckN_left` / `deckN_right`.** Names are official, usage is real (Pro.xml, Performance.xml 4-deck), but neither source explains when the `_left`/`_right` color is applied (crossfader side? screen side?). The odd/even pairing in Pro.xml suggests screen side, but that is `Inference` only.
@@ -404,7 +488,6 @@ Unresolved items; do not treat any of these as documented behavior.
 10. **Stem colors (`colorVocal` etc.) on scratchwave/songpos.** Official (2021+), zero local usage — the built-in skins presumably get stem coloring from app settings rather than skin XML. Unverified.
 11. **`<blockwave>` / `<beattunnel>` behavior.** Official pages only; the 2018 video skins that used blockwave are not among this repo's copies, so nothing has been cross-checked.
 12. **`<rhythmzone center="">`** — official only, never used in shipped XML.
-13. **`<size condition="...">` stacking** inside scratchwave (Pro.xml ~lines 5822-5823): the first matching conditional size appears to win, consistent with the repo's conditional-structure notes in [Skin SDK](Skin%20SDK.md) §Conditional Structure vs Visibility, but this specific element's behavior is untested. **Not reachable through the runtime-skin plugin loop** (`Local test`, 2026-08-22): that loop renders a plugin *panel*, which has no deck to bind a `<scratchwave>` to, so the waveform family cannot be instantiated there at all. `condition=""` itself was confirmed to evaluate in that surface — the untested part is specifically the stacking rule on this element, and settling it needs a real deck skin as the fixture.
 
 ---
 

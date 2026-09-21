@@ -10,7 +10,7 @@ Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
 ## H4 boolean effect consumer — 2026-09-17
 
-**Partial**, HTTP build 18.0.9628, `parser_effect_boolean`: four unloaded stopped
+**Partial**, HTTP build 18.0.9642, `parser_effect_boolean`: four unloaded stopped
 decks, Phaser already selected in deck 1 slot 1, off/on activation baselines,
 independent `deck 1 effect_active 1` readback and verified restoration. The
 [H4 run report](Runtime%20Argument%20Grammar%20Tests.md#phaser-activation-observations-http-build-1809628)
@@ -22,7 +22,7 @@ per-verb conclusions belong to `just verb effect_active`.
 
 ## H4 incoming parameter consumer — 2026-09-17
 
-**Partial**, HTTP build 18.0.9628, four unloaded stopped decks, `parser_zoom_levels`
+**Partial**, HTTP build 18.0.9642, four unloaded stopped decks, `parser_zoom_levels`
 at `0.25`/`0.65`, independent zoom readback and verified restoration. The
 [run report](Runtime%20Argument%20Grammar%20Tests.md#incoming-parameter-selection-2026-09-17)
 links failed query/direct-chain fixtures, aborted writes, and the completed pipeline
@@ -34,7 +34,7 @@ per-verb conclusion.
 
 ## H4 pair-reader consumers — 2026-09-18
 
-**Partial**, HTTP build 18.0.9628, read-only `parser_constants` fixture, asymmetric
+**Partial**, HTTP build 18.0.9642, read-only `parser_constants` fixture, asymmetric
 `param_multiply` operands in both positions, repeated reads and independent
 confirmation. The [run report](Runtime%20Argument%20Grammar%20Tests.md#pair-reader-consumers-2026-09-18)
 links exact scripts, shaped controls and frozen failed predictions. Numeric/raw-action
@@ -1070,12 +1070,54 @@ app.
 
 #### What this channel cannot answer
 
-The panel is a plugin surface, not a deck. `<scratchwave>`, `<songpos>`,
-`<rhythmzone>` and the rest of the waveform family have no deck to bind to here,
-so the stacked-`<size condition="">` question at
-[Skin Waveforms](Skin%20Waveforms.md) §Open Questions is **not reachable through
-this instrument** and stays open. That is a bounded negative, not a failure: it
-names the fixture the question actually needs, which is a real skin.
+*(Superseded 2026-09-20 — see the next section. This paragraph claimed the
+waveform family could not be instantiated here. It was never tested.)*
+
+#### The waveform family does render here — the 2026-08-22 negative was wrong
+
+Build 18.0.9642 (arm64), 2026-09-20, plugin-panel surface, deck 1 loaded.
+
+The 2026-08-22 run recorded that `<scratchwave>`, `<songpos>` and `<rhythmzone>`
+"have no deck to bind to here", and [Skin Waveforms](Skin%20Waveforms.md) carried
+that as a `Local test` negative closing its stacked-`<size condition="">`
+question. **No fixture had ever served a waveform element to the panel.** The
+claim was inference wearing an evidence label, and two things in the repo already
+contradicted it: the same 2026-08-22 run rendered `` `get_deck` `` as `deck=1` in
+this surface, and `<scratchwave>` carries an explicit `deck=""` attribute in 62 of
+62 shipped instances.
+
+| Fixture | Served | Result |
+| --- | --- | --- |
+| `waveform-scratchwave.xml` | two `<scratchwave>`, `deck="left"` and `deck="1"` | both drew waveform, cue markers, gridlines |
+| `waveform-family.xml` | `<rhythmzone>` + `<songpos>` | both drew |
+| `waveform-control.xml` | same file, element misspelled `<zzscratchwave>` | rects empty, parse continued |
+
+Captures are beside the fixtures in `tests/Skins/runtime-probe/`. The misspelled
+control is what makes the positives attributable; each fixture also carries a
+`0 control` row that must render and a `3 tail` row that renders only if the
+parser reached the end.
+
+With the surface established, the stacked-`<size condition="">` question it was
+blocking was run in the same session and settled — first matching size wins, the
+condition genuinely evaluated, measured off the captures at 46 px against 139 px
+for a declared 30 against 90, reproduced with the variant order reversed. Result
+and fixtures: [Skin Waveforms](Skin%20Waveforms.md) §Stacked `<size condition="">`.
+
+Build-stamp note: the app self-updated mid-session. `just doctor` read
+18.0.9628 before the relaunch this run needed, `Cache/changelog.txt` was rewritten
+to `VDJ:BUILD 9642` at 11:27 local, and the process that served these fixtures
+started at 11:29:40 from the replaced bundle, which `just doctor` now reads as
+18.0.9642. Anchor a stamp on the bundle *after* a restart, not on the reading the
+session opened with.
+
+Three operational facts for anyone repeating this. The panel opens with
+`deck 1 effect_show_gui 'VDJIntrospectSkin'` — the **bundle filename**, not the
+`PluginName` the plugin declares (`effect_select` with either spelling returned
+`false` and selected nothing). And the plugin must be rebuilt and installed
+(`tools/plugin/build.sh --skin --install`) with VirtualDJ restarted afterwards;
+before that, `effect_show_gui` returned `true` while `OnGetUserInterface` was
+never called — the channel's own return value said nothing, exactly as
+[Evidence Standards](Evidence%20Standards.md) warns.
 
 ## Corpus Parse Regression, Full Corpus
 

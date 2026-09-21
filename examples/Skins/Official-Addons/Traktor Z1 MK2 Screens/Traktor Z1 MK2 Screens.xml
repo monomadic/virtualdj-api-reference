@@ -1,0 +1,115 @@
+<Skin name="Traktor Z1 MK2 Screens" comment="Version: 1.0" date="2024/11/25" author="Atomix Productions" preview="Z1MK2PV.png" version="850" width="128" height="320" nbdecks="4" hidden="true">
+<copyright>©2024 Atomix Productions</copyright>
+==== CLASS DEFINITIONS ====
+<group name="definitions">
+	<font name="Arial"/>
+	<define class="txt_MI_EQLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="var_equal 'Z1MK2LastKnob' 0 ? get_text 'VOL' : var_equal 'Z1MK2LastKnob' 1 ? get_text 'GAIN' : var_equal 'Z1MK2LastKnob' 2 ? high_label : var_equal 'Z1MK2LastKnob' 3 ? mid_label : var_equal 'Z1MK2LastKnob' 4 ? low_label : var_equal 'Z1MK2LastKnob' 5 ? get_effect_name &apos;colorfx&apos; & param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_GainLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'GAIN'"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQHighLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="high_label"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQMidLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="mid_label"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQLowLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="low_label"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_FilterLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_effect_name &apos;colorfx&apos; &amp; param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_VolumeLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_text 'VOLUME'"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_GainVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="loaded ? param_smaller `gain` `gain_slider` ? get_text &quot;▲ %Plevel db&quot; : param_bigger `gain` `gain_slider` ? get_text &quot;▼ %Plevel db&quot; : get_text &quot;%Plevel db&quot; : get_text &quot;--&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQHighVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_high` `eq_high_slider` ? get_text &quot;▲ `eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_high` `eq_high_slider` ? get_text &quot;▼ `eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_high & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQMidVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_mid` `eq_mid_slider` ? get_text &quot;▲ `eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_mid` `eq_mid_slider` ? get_text &quot;▼ `eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_mid & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_EQLowVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `eq_low` `eq_low_slider` ? get_text &quot;▲ `eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `eq_low` `eq_low_slider` ? get_text &quot;▼ `eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`eq_low & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_FilterVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `filter` `filter_slider` ? get_text &quot;▲ `filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `filter` `filter_slider` ? get_text &quot;▼ `filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`filter & param_multiply 2 & param_add -1 & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_VolumeVal" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="param_smaller `level` `volume_slider` ? get_text &quot;▲ `level & param_cast percent & param_cast int & param_cast '00'`%&quot; : param_bigger `level` `volume_slider` ? get_text &quot;▼ `level & param_cast percent & param_cast int & param_cast '00'`%&quot; : get_text &quot;`level & param_cast percent & param_cast int & param_cast '00'`%&quot;"/>
+		<tooltip />
+	</define>
+	<define class="pnl_MI_DeckMixerInfo">
+		<textzone class="txt_MI_VolumeLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2DisplayEQ' 0 ? on : var_equal 'Z1MK2LastKnob' 0" />
+		<textzone class="txt_MI_GainLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 1 ? not var_equal 'Z1MK2DisplayEQ' 0" />
+		<textzone class="txt_MI_EQHighLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 2 ? not var_equal 'Z1MK2DisplayEQ' 0" />
+		<textzone class="txt_MI_EQMidLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 3 ? not var_equal 'Z1MK2DisplayEQ' 0" />
+		<textzone class="txt_MI_EQLowLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 4 ? not var_equal 'Z1MK2DisplayEQ' 0" />
+		<textzone class="txt_MI_FilterLabel" x="+0" y="+2" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 5 ? not var_equal 'Z1MK2DisplayEQ' 0" />
+		<textzone class="txt_MI_VolumeVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2DisplayEQ' 0 ? on : var_equal 'Z1MK2LastKnob' 0"/>
+		<textzone class="txt_MI_GainVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 1 ? not var_equal 'Z1MK2DisplayEQ' 0"/>
+		<textzone class="txt_MI_EQHighVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 2 ? not var_equal 'Z1MK2DisplayEQ' 0"/>
+		<textzone class="txt_MI_EQMidVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 3 ? not var_equal 'Z1MK2DisplayEQ' 0"/>
+		<textzone class="txt_MI_EQLowVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 4 ? not var_equal 'Z1MK2DisplayEQ' 0"/>
+		<textzone class="txt_MI_FilterVal" x="+0" y="+32" width="128" height="30" visibility="var_equal 'Z1MK2LastKnob' 5 ? not var_equal 'Z1MK2DisplayEQ' 0"/>
+	</define>
+	
+	<define class="vis_VUMeterL" type="linear" orientation="horizontal" direction="right" smooth="false" source="get_level_left" granularity="8">
+		<off shape="square" radius="0" border_size="1" border="white" color="black"/>
+		<on shape="square" radius="0" border_size="1" border="white" color="white"/>
+	</define>
+	<define class="vis_VUMeterR" type="linear" orientation="horizontal" direction="right" smooth="false" source="get_level_right" granularity="8">
+		<off shape="square" radius="0" border_size="1" border="white" color="black"/>
+		<on shape="square" radius="0" border_size="1" border="white" color="white"/>
+	</define>
+	<define class="txt_MI_DeckLabel" placeholders="fontsize=22">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_deck"/>
+		<tooltip />
+	</define>
+	<define class="txt_MI_ColorFXLabel" placeholders="fontsize=18">
+		<text scroll="no" align="center" fontsize="[FONTSIZE]" color="white" backcolor="black" action="get_effect_name 'colorfx' &amp; param_cast &apos;text&apos; 8 &amp; param_uppercase"/>
+		<tooltip />
+	</define>
+	<define class="pnl_MI_MasterMixerInfo">
+		<visual class="vis_VUMeterL" x="+32" y="+2" width="64" height="6"/>
+		<visual class="vis_VUMeterR" x="+32" y="+2+8" width="64" height="6"/>
+		<deck deck="left"><textzone class="txt_MI_DeckLabel" x="+0" y="+24" width="14" height="64-24"/></deck>
+		<deck deck="right"><textzone class="txt_MI_DeckLabel" x="+128-14" y="+24" width="14" height="64-24"/></deck>
+		<textzone class="txt_MI_ColorFXLabel" x="+16" y="+24" width="128-32" height="64-24" />
+	</define>
+</group>
+==== SKIN BACKGROUND ====
+<visual canstretch="true" x="0" y="0" width="128" height="320">
+	<off shape="square" color="black"/>
+</visual>
+==== SCREENS ====
+<group x="+0" y="+0" width="128" height="64" name="SCR_LEFT">
+	<deck deck="left">
+		<panel class="pnl_MI_DeckMixerInfo"/>
+	</deck>
+</group>
+<group x="+0" y="+64" width="128" height="64" name="SCR_CENTER">
+	<panel class="pnl_MI_MasterMixerInfo"/>
+</group>
+<group x="+0" y="+128" width="128" height="64" name="SCR_RIGHT">
+	<deck deck="right">
+		<panel class="pnl_MI_DeckMixerInfo" />
+	</deck>
+</group>
+</skin>

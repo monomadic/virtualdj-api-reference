@@ -1,0 +1,1107 @@
+﻿<Skin name="VirtualDJ 2018" version="8" width="1920" height="1080" nbdecks="2" comment="VirtualDJ 2018 default skin - Welcome view" image="2-6 Decks.png" author="Atomix Productions" preview="skinprevieww.png">
+  <copyright>(c)2018 - Atomix Productions</copyright>
+
+<group name="class_defines">
+
+	<font name="Arial" />
+
+	<tooltip size="14" color="#000000" back="#fbf9e0" shortcut="#58595b" />
+
+	<group name="songpos">
+
+		<define class="songpos" classdeck="left" colorPlayed="#00a5e4" colorBass="#00567a" colorMed="#00a5e4" colorHigh="#7fc8e9" >
+			<cues>
+				<size width="7" height="31"/>
+				<down x="911" y="1373"/>
+				<over x="864" y="1373"/>
+				<clipmask x="836" y="1389"/>
+			</cues>
+		</define>
+		<define class="songpos" classdeck="right" colorPlayed="#e4000d" colorBass="#7a0005" colorMed="#e4000d" colorHigh="#e97f81" >
+			<cues>
+				<size width="7" height="31"/>
+				<down x="911" y="1373"/>
+				<over x="864" y="1373"/>
+				<clipmask x="836" y="1389"/>
+			</cues>
+		</define>
+
+	</group>
+	
+	<group name="colors">
+		<define class="textcolorline1" classdeck="left" >
+			<text color="#00b8ff" />
+		</define>
+		<define class="textcolorline2" classdeck="left" >
+			<text color="#00b8ff" />
+			<text2 color="#00b8ff" />
+		</define>
+		<define class="textcolorline3" classdeck="left" >
+			<text color="#00b8ff" />
+			<text2 color="#00b8ff" />
+			<text3 color="#00b8ff" />
+		</define>
+		<define class="textcolorline1" classdeck="right" >
+			<text color="#ff0000" />
+		</define>
+		<define class="textcolorline2" classdeck="right" >
+			<text color="#ff0000" />
+			<text2 color="#ff0000" />
+		</define>
+		<define class="textcolorline3" classdeck="right" >
+			<text color="#ff0000" />
+			<text2 color="#ff0000" />
+			<text3 color="#ff0000" />
+		</define>
+	</group>
+
+	<group name="buttons">
+
+		<define class="deckbutton" classdeck="left">
+			<size width="71" height="32"/>
+			<up x="146" y="1596"/>
+			<over x="146" y="1631"/>
+			<down x="146" y="1666"/>
+			<selected x="146" y="1666"/>
+			<text size="16" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deckbutton" classdeck="right">
+			<size width="71" height="32"/>
+			<up x="146" y="1596"/>
+			<over x="146" y="1701"/>
+			<down x="146" y="1736"/>
+			<selected x="146" y="1736"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		
+		<define class="headphones" classdeck="left" action="pfl" >
+			<size width="48" height="28"/>
+			<off x="422" y="1448"/>
+			<over x="473" y="1448"/>
+			<selected x="524" y="1448"/>
+			<icon x="558" y="1423" height="17" width="17" >
+				<selected x="581" y="1423" height="17" width="17" />
+			</icon>
+		</define>
+		<define class="headphones" classdeck="right" action="pfl" >
+			<size width="48" height="28"/>
+			<off x="422" y="1448"/>
+			<over x="575" y="1448"/>
+			<selected x="626" y="1448"/>
+			<icon x="558" y="1423" height="17" width="17" >
+				<selected x="581" y="1423" height="17" width="17" />
+			</icon>
+		</define>
+
+		<define class="beat_bar" classdeck="left">
+		  <size width="46" height="9"/>
+		  <off x="496" y="1115"/>
+		  <over x="496" y="1087"/>
+		  <down x="496" y="1087"/>
+		  <selected x="496" y="1101"/>
+		  <downselected x="496" y="1101"/>
+		  <overselected x="496" y="1101"/>
+		</define>
+		<define class="beat_bar" classdeck="right">
+		  <size width="46" height="9"/>
+		  <off x="548" y="1115"/>
+		  <over x="548" y="1087"/>
+		  <down x="548" y="1087"/>
+		  <selected x="548" y="1101"/>
+		  <downselected x="548" y="1101"/>
+		  <overselected x="548" y="1101"/>
+		</define>
+	</group>
+	
+	<group name="sliders">
+
+		
+		<define class="volume_level" classdeck="left" action="level" rightclick="temporary" orientation="vertical">
+			<size width="43" height="157"/>
+			<off x="975" y="1197"/>
+			<on x="1804" y="1246"/>
+			<fader>
+				<size width="42" height="24"/>
+				<pos x="918" y="1121"/>
+			</fader>
+		</define>
+
+		<define class="volume_level" classdeck="right" action="level" rightclick="temporary" orientation="vertical">
+			<size width="43" height="157"/>
+			<off x="975" y="1197"/>
+			<on x="1865" y="1246"/>
+			<fader>
+				<size width="42" height="24"/>
+				<pos x="918" y="1121"/>
+			</fader>
+		</define>
+	  
+	</group>
+	
+	<group name="panels">
+	
+		<define class="knob" classdeck="left">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+				<size width="47" height="47"/>
+				<on x="1521" y="1201"/>
+				<off x="1521" y="1201"/>
+				<mousemask x="1521" y="1201"/>
+				<fader anglemin="-135" anglemax="+135">
+					<size width="47" height="47"/>
+					<pos x="1734" y="1201"/>
+				</fader>
+			</slider>
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+				<circle direction="cw" anglemin="-135" anglemax="135"/>
+				<size width="47" height="47"/>
+				<off x="1521" y="1297"/>
+				<on x="1571" y="1201"/>
+				<mousemask x="1571" y="1297"/>
+			</slider>
+			<textzone>
+				<pos x="+0" y="+41"/>
+			  <size width="47" height="11"/>
+			  <text size="13" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+		</define>
+		<define class="knob" classdeck="right">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+			  <size width="47" height="47"/>
+			  <on x="1521" y="1201"/>
+			  <off x="1521" y="1201"/>
+			  <mousemask x="1521" y="1201"/>
+			  <fader anglemin="-135" anglemax="+135">
+				<size width="47" height="47"/>
+				<pos x="1734" y="1201"/>
+			  </fader>
+			</slider>
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-135" anglemax="135"/>
+			  <size width="47" height="47"/>
+			  <off x="1521" y="1297"/>
+			  <on x="1621" y="1201"/>
+			  <mousemask x="1571" y="1297"/>
+			</slider>
+			<textzone>
+				<pos x="+0" y="+41"/>
+			  <size width="47" height="11"/>
+			  <text size="13" weight="bold" color="#E1E1E1" align="center"/>
+			</textzone>
+		</define>
+
+
+		<define class="knobk" classdeck="left">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+			  <size width="47" height="47"/>
+			  <on x="1521" y="1201"/>
+			  <off x="1521" y="1201"/>
+			  <mousemask x="1521" y="1201"/>
+			  <fader anglemin="-135" anglemax="+135">
+				<size width="47" height="47"/>
+				<pos x="1734" y="1201"/>
+			  </fader>
+			</slider>
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-135" anglemax="135"/>
+			  <size width="47" height="47"/>
+			  <off x="1521" y="1297"/>
+			  <on x="1571" y="1201"/>
+			  <mousemask x="1571" y="1297"/>
+			</slider>
+			<button>
+				<pos x="+0" y="+41"/>
+				<size width="47" height="11"/>
+				<text size="13" weight="bold" color="#E1E1E1" align="center"/>
+				<textselected size="13" weight="bold" color="red" align="center"/>
+			</button>
+		</define>
+		<define class="knobk" classdeck="right">
+			<slider orientation="round">
+				<pos x="+0" y="+0"/>
+			  <size width="47" height="47"/>
+			  <on x="1521" y="1201"/>
+			  <off x="1521" y="1201"/>
+			  <mousemask x="1521" y="1201"/>
+			  <fader anglemin="-135" anglemax="+135">
+				<size width="47" height="47"/>
+				<pos x="1734" y="1201"/>
+			  </fader>
+			</slider>
+			<slider orientation="circle" relative="no" rightclick="temporary">
+				<pos x="+0" y="+0"/>
+			  <circle direction="cw" anglemin="-135" anglemax="135"/>
+			  <size width="47" height="47"/>
+			  <off x="1521" y="1297"/>
+			  <on x="1621" y="1201"/>
+			  <mousemask x="1571" y="1297"/>
+			</slider>
+			<button>
+				<pos x="+0" y="+41"/>
+				<size width="47" height="11"/>
+				<text size="13" weight="bold" color="#E1E1E1" align="center"/>
+				<textselected size="13" weight="bold" color="red" align="center"/>
+			</button>
+		</define>
+
+
+		
+	</group>
+	
+	<group name="visuals">
+
+
+		<define class="vumeter" classdeck="left" type="linear" orientation="vertical" direction="up">
+			<size width="11" height="251"/>
+			<off x="1032" y="1143"/>
+			<on x="1168" y="1143"/>
+		</define>
+		<define class="vumeter" classdeck="right" type="linear" orientation="vertical" direction="up">
+			<size width="11" height="251"/>
+			<off x="1032" y="1143"/>
+			<on x="1204" y="1143"/>
+		</define>
+		
+
+		<define class="vert_topline" >
+			<size width="3" height="92"/>
+			<off x="661" y="1478"/>
+		</define>
+
+	</group>
+
+</group>
+
+<group name="grabzone">  
+  <grabzone>
+    <pos x="0" y="0"/>
+    <size width="1920" height="48"/>
+  </grabzone>
+  <grabzone>
+    <pos x="0" y="0"/>
+    <size width="15" height="1080"/>
+  </grabzone>
+  <grabzone>
+    <pos x="0" y="1080-15"/>
+    <size width="1920" height="15"/>
+  </grabzone>
+  <grabzone>
+    <pos x="1920-15" y="0"/>
+    <size width="15" height="1080"/>
+  </grabzone>
+</group>
+
+<group name="topbar">
+	<logo os="pc">
+		<pos x="11" y="6"/>
+		<size width="135" height="33"/>
+	</logo>
+	<logo os="mac">
+		<pos x="1920-11-135" y="6"/>
+		<size width="135" height="33"/>
+	</logo>
+
+	<group name="beat_matcher" x="818" y="8">
+	 	<group name="phrase" x="+0" y="+0">
+			<deck deck="left">
+				<visual source="get_beat_counter" type="circle">
+					<pos x="+0" y="+0"/>
+					<size width="30" height="30"/>
+					<off x="1749" y="1576"/>
+					<on  x="1781" y="1576"/>
+				</visual>
+				<textzone>
+					<pos x="+7" y="+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<pos x="+0" y="+0"/>
+					<size width="30" height="30"/>
+				</button>
+			</deck>
+	 	</group>
+
+		<group name="beatbar" x="+40" y="+4">
+			<deck deck="left">
+				<button class="beat_bar" query="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<pos x="+0" y="+0"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<pos x="+53" y="+0"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<pos x="+53+53" y="+0"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<pos x="+53+53+53" y="+0"/>
+				</button>
+			</deck>
+			<deck deck="right">
+				<button class="beat_bar" query="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<pos x="+0" y="+14"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<pos x="+53" y="+14"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<pos x="+53+53" y="+14"/>
+				</button>
+				<button class="beat_bar" query="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<pos x="+53+53+53" y="+14"/>
+				</button>
+			</deck>
+		</group>
+
+		<group name="phrase" x="+257" y="+0">
+			<deck deck="right">
+				<visual source="get_beat_counter" type="circle">
+					<pos x="+0" y="+0"/>
+					<size width="30" height="30"/>
+					<off x="1749" y="1576"/>
+					<on  x="1876" y="1576"/>
+				</visual>
+				<textzone>
+					<pos x="+7" y="+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<pos x="+0" y="+0"/>
+					<size width="30" height="30"/>
+				</button>
+			</deck>  	
+	 	</group>
+	</group>
+ 
+	<group name="vumeter" x="1278" y="7">
+		<panel visibility="get_hasmaster">
+			<textzone>
+				<pos x="+0" y="+9"/>
+				<size width="50" height="14"/>
+				<text size="13" color="#aaaaaa" align="right" text="MASTER" localize="true"/>
+			</textzone>
+			<visual>
+				<pos x="+60" y="+0"/>
+				<size width="147" height="33"/>
+				<off x="221" y="1475"/>
+			</visual> 
+			<visual source="get_vu_meter_left 'master'" type="linear" orientation="horizontal">
+				<pos x="+65" y="+5"/>
+				<size width="135" height="10"/>
+				<on x="1053" y="1090"/>
+			</visual>
+			<visual source="get_vu_meter_right 'master'" type="linear" orientation="horizontal">
+				<pos x="+65" y="+5+12"/>
+				<size width="135" height="10"/>
+				<on x="1053" y="1090"/>
+			</visual>
+		</panel>
+		<visual type="transparent" source="get_limiter">
+			<pos x="+222" y="+9"/>
+			<size width="14" height="14"/>
+			<off x="655" y="1148"/>
+			<on x="670" y="1148"/>
+		</visual>
+		<textzone>
+			<pos x="+222+16" y="+9"/>
+			<size width="56" height="14"/>
+			<text size="13" color="#aaaaaa" align="center" text="LIMITER" localize="true"/>
+		</textzone>
+	</group>
+
+	<group name="applicationbuttons">
+		<button os="pc" action="settings">
+			<pos x="1683" y="9"/>
+			<size width="43" height="26"/>
+			<up x="599" y="1086"/>
+			<over x="645" y="1086"/>
+			<down x="691" y="1086"/>
+			<selected x="691" y="1086"/>
+		</button>
+		<button os="pc" action="minimize">
+			<pos x="1816" y="10"/>
+			<size width="26" height="25"/>
+			<off x="780" y="1086"/>
+			<over x="880" y="1086"/>
+			<on x="980" y="1086"/>
+		</button>
+		<button os="pc" action="maximize" rightclick="maximize off">
+			<pos x="1849" y="10"/>
+			<size width="26" height="25"/>
+			<off x="746" y="1086"/>
+			<over x="846" y="1086"/>
+			<on x="946" y="1086"/>
+		</button>
+		<button os="pc" action="close">
+			<pos x="1883" y="10"/>
+			<size width="26" height="25"/>
+			<up x="813" y="1086"/>
+			<over x="913" y="1086"/>
+			<down x="1013" y="1086"/>
+			<selected x="1013" y="1086"/>
+		</button>
+
+		<button os="mac" action="close">
+			<pos x="11" y="10"/>
+			<size width="26" height="25"/>
+			<up x="813" y="1086"/>
+			<over x="913" y="1086"/>
+			<down x="1013" y="1086"/>
+			<selected x="1013" y="1086"/>
+		</button>
+		<button os="mac" action="minimize">
+			<pos x="46" y="10"/>
+			<size width="26" height="25"/>
+			<off x="780" y="1086"/>
+			<over x="880" y="1086"/>
+			<on x="980" y="1086"/>
+		</button>
+		<button os="mac" action="maximize" rightclick="maximize off">
+			<pos x="81" y="10"/>
+			<size width="26" height="25"/>
+			<off x="746" y="1086"/>
+			<over x="846" y="1086"/>
+			<on x="946" y="1086"/>
+		</button>
+		<button os="mac" action="settings">
+			<pos x="132" y="9"/>
+			<size width="43" height="26"/>
+			<up x="599" y="1086"/>
+			<over x="645" y="1086"/>
+			<down x="691" y="1086"/>
+			<selected x="691" y="1086"/>
+		</button>
+	</group>
+
+</group>
+
+<group name="waveform" x="144" y="47">
+
+	<rhythmzone mirror="false" upsidedown="false" fade="200" deck1="left" deck2="right">
+	  <pos x="+0" y="+0"/>
+	  <size width="1632" height="92"/>
+	  <colors deck1="#007097" deck2="#8c0709" deck1_active="#009fd2" deck2_active="#cd0f10" />
+	  <rhythm y="+0" height="75"/>
+	  <grid height="6" width="6" maxwidth="10">
+		<pos y1="+79" y2="+85"/>
+	  </grid>
+	  <cue y="+0" height="92">
+		<text dx="15" dy="-1" size="14" />
+		<mask width="12" height="92" x="942" y="1372"/>
+	  </cue>
+	  <overlay>
+		<size width="2" height="91"/>
+		<pos x="959" y="47"/>
+		<background x="1" y="1163"/>
+	  </overlay>
+	</rhythmzone>
+
+	<visual class="vert_topline" >
+		<pos x="-35" y="+0"/>
+	</visual>
+	<visual class="vert_topline" >
+		<pos x="1784+28" y="+0"/>
+	</visual>
+	
+</group>
+
+<group name="selectbuttons" >
+	<button action="deck left select">
+		<pos x="34" y="67"/>
+		<size width="48" height="48"/>
+		<off x="825" y="1264"/>
+		<selected x="876" y="1264"/>
+		<over x="825" y="1314"/>
+		<text size="40" color="#bbbbbb" align="center" weight="bold" text="A"/>
+		<textselected size="40" color="#ffffff" align="center" weight="bold" text="A"/>
+		<textover size="40" color="#cccccc" align="center" weight="bold" text="A"/>
+	</button>
+	<button action="deck right select">
+		<pos x="1832" y="67"/>
+		<size width="48" height="48"/>
+		<off x="825" y="1264"/>
+		<selected x="875" y="1314"/>
+		<over x="825" y="1314"/>
+		<text size="40" color="#bbbbbb" align="center" weight="bold" text="B"/>
+		<textselected size="40" color="#ffffff" align="center" weight="bold" text="B"/>
+		<textover size="40" color="#cccccc" align="center" weight="bold" text="B"/>
+	</button>
+</group>
+
+<group name="sidemessage">
+	<textzone action="load_skin ':2 Decks'">
+		  <pos x="20" y="235"/>
+		  <size width="340" height="320"/>
+		  <text size="20" color="#808080" overcolor="#D0D0D0" align="center" weight="bold" format="%{ChangeWelcomeSkin}"/>
+	</textzone>
+	<textzone action="load_skin ':2 Decks'">
+		<pos x="1559" y="235"/>
+		<size width="340" height="320"/>
+		<text size="20" color="#808080" overcolor="#D0D0D0" align="center" weight="bold" format="%{ChangeWelcomeSkin}"/>
+	</textzone>
+</group>
+		
+<group name="leftdeck" x="17" y="144">
+	<deck deck="left">
+
+		<group name="cover" x="+0" y="+0">
+			<visual>
+			  <pos x="+0" y="+0"/>
+			  <size width="92" height="93"/>
+			  <off x="357" y="1512"/>
+			</visual>
+			
+			<cover x="+0+2" y="+2">
+				<size width="86" height="87"/>
+			</cover>
+		</group>
+		
+		<group name="deckinfo" x="+93" y="+0">
+			<visual>
+			  <pos x="+0" y="+0"/>
+			  <size width="488" height="93"/>
+			  <off x="980" y="1556"/>
+			</visual>
+			<textzone group="horizontal" scroll="yes" click="scroll">
+				<pos x="+3" y="+5"/>
+				<size width="481" height="24"/>
+				<text size="23" color="#E1E1E1" weight="bold" action="get_title_before_remix"/>
+				<text size="23" color="#808080" weight="bold" action="get_remix_after_title"/>
+			</textzone>
+			<textzone class="textcolorline2" group="horizontal" scroll="yes" click="scroll">
+				<pos x="+3" y="+5+24"/>
+				<size width="481" height="23"/>
+				<text size="22" weight="bold" action="get_artist_before_feat"/>
+				<text size="22" color="#808080" weight="bold" action="get_featuring_after_artist"/>
+			</textzone>
+			<songpos class="songpos">
+				<pos x="+2" y="+59"/>
+				<size width="484" height="31"/>
+			</songpos>
+		</group>
+		
+		<group name="bpmtimes" x="+583" y="+0">
+			<visual>
+			  <pos x="+0" y="+0"/>
+			  <size width="157" height="93"/>
+			  <off x="1468" y="1556"/>
+			</visual>
+			<textzone action="edit_bpm" class="textcolorline1">
+			  <pos x="+26" y="+4"/>
+			  <size width="80" height="30"/>
+			  <text size="30" align="right" weight="bold" format="%Pbpmex"/>
+			</textzone>
+			<textzone>
+			  <pos x="+4" y="+18"/>
+			  <size width="27" height="12"/>
+			  <text size="12" color="#908F8D" weight="bold" align="left" text="BPM" localize="true"/>
+			</textzone>
+
+			<button action="beat_tap" rightclick="edit_bpm">
+			  <pos x="+110" y="+5"/>
+			  <size width="43" height="29"/>
+			  <on x="447" y="1088"/>
+			  <off x="399" y="1088"/>
+			  <over x="399" y="1120"/>
+			  <text size="14" weight="bold" color="#cccccc" align="center" text="TAP" localize="true"/>
+			  <textdown size="14" weight="bold" color="#ffffff" align="center" text="TAP" localize="true"/>
+			</button>
+
+			<textzone>
+			  <pos x="+4" y="+39"/>
+			  <size width="32" height="15"/>
+			  <text size="12" color="#908F8D" weight="bold" align="left" text="GAIN" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline1" visibility="loaded">
+			  <pos x="+4+29" y="+38"/>
+			  <size width="43" height="15"/>
+			  <text size="15" align="right" weight="bold" action="get_level 'db'"/>
+			</textzone>
+
+			<textzone>
+			  <pos x="+82" y="+39"/>
+			  <size width="29" height="15"/>
+			  <text size="12" color="#908F8D" weight="bold" align="left" text="KEY" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline3">
+			  <pos x="+81+28" y="+38"/>
+			  <size width="32" height="15"/>
+			  <text size="15" align="left" weight="bold" action="get_harmonic"/>
+			  <text2 size="15" align="left" weight="bold" action="get_key"/>
+			  <text3 size="15" align="left" weight="bold" action="get_key_modifier"/>
+			</textzone>
+
+		
+			<textzone action="display_time 'elapsed,remain'" >
+				<pos x="+5" y="+56"/>
+				<size width="72" height="14"/>
+				<text size="12" align="left" color="#908F8D" weight="bold" action="display_time &amp; param_uppercase"/>
+			</textzone>
+			<textzone action="display_time 'elapsed,remain'" class="textcolorline1">
+				<pos x="+5" y="+69"/>
+				<size width="72" height="22"/>
+				<text size="22" align="left" weight="bold" action="get_time"/>
+			</textzone>
+			<textzone >
+				<pos x="+89" y="+56"/>
+				<size width="72" height="14"/>
+				<text size="12" color="#908F8D" align="left" weight="bold" text="TOTAL" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline1">
+				<pos x="+89" y="+69"/>
+				<size width="72" height="22"/>
+				<text size="22" align="left" weight="bold" action="get_time 'total'"/>
+			</textzone>
+
+		</group>
+
+		<group name="jogwheel" x="+158-30+289" y="+131">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="198" height="198"/>
+				<off x="1311" y="1772"/>
+			</visual>
+
+			<visual type="rotation" source="get rotation">
+				<Tooltip></Tooltip>
+				<pos x="+0" y="+1"/>
+				<size width="198" height="198"/>
+				<on x="911" y="1772"/>
+			</visual>
+
+			<visual type="circle" source="get position">
+				<Tooltip></Tooltip>
+				<pos x="+0" y="+0"/>
+				<size width="198" height="198"/>
+				<on x="1521" y="1772"/>
+			</visual>
+
+			<scratch>
+				<pos x="+0" y="+0"/>
+				<size width="198" height="198"/>
+				<mousemask x="1311" y="1772"/>
+			</scratch>
+		</group>
+
+		<group name="transport" x="+74-30+319" y="+372">
+			<button class="deckbutton" action="cue_button">
+				<pos x="+0" y="+0"/>
+				<text action="cue_button"/>
+			</button>
+			<button class="deckbutton" action="stop_button" rightclick="holding 500ms ? unload : goto_first_beat">
+				<pos x="+77" y="+0"/>
+				<icon sysicon="stop_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton" action="play_button">
+				<pos x="+77+77" y="+0"/>
+				<icon sysicon="play_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton" action="sync">
+				<pos x="+77+77+77" y="+0"/>
+				<text text="SYNC" localize="true"/>
+			</button>
+		</group>
+		
+		<group name="pitch" x="+463+222" y="+99">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="54" height="233"/>
+				<off x="649" y="1172"/>
+			</visual>
+			
+
+			<textzone>
+				<pos x="+8" y="+15"/>
+				<size width="36" height="17"/>
+				<text size="16" color="#FFFFFF" align="center" weight="bold" format="%Ppitch"/>
+			</textzone>
+
+			<slider action="pitch" rightclick="temporary" direction="down" orientation="vertical">
+			  <pos x="+9" y="+46"/>
+			  <size width="36" height="171"/>
+			  <on x="603" y="1218"/>
+			  <off x="658" y="1218"/>
+			  <fader>
+				<size width="36" height="27"/>
+				<pos x="653" y="1115"/>
+			  </fader>
+			</slider>
+			
+	
+
+		</group>
+
+		<dropzone>
+		  <pos x="+0" y="+0"/>
+		  <size width="740" height="410"/>
+		</dropzone>
+
+	</deck>
+</group>
+
+<group name="rightdeck" x="1163" y="144">
+	<deck deck="right"> 
+
+		<group name="cover" x="+645+5" y="+0">
+			<visual>
+			  <pos x="+0" y="+0"/>
+			  <size width="92" height="93"/>
+			  <off x="357" y="1512"/>
+			</visual>
+			
+			<cover x="+0+2" y="+2">
+				<size width="86" height="87"/>
+			</cover>
+		</group>
+		
+		<group name="deckinfo" x="+160" y="+0">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="488" height="93"/>
+				<off x="980" y="1556"/>
+			</visual>
+			<textzone group="horizontal" scroll="yes" click="scroll" align="right">
+				<pos x="+3" y="+5"/>
+				<size width="481" height="24"/>
+				<text size="23" color="#E1E1E1" weight="bold" action="get_title_before_remix"/>
+				<text size="23" color="#808080" weight="bold" action="get_remix_after_title"/>
+			</textzone>
+			<textzone class="textcolorline2" group="horizontal" scroll="yes" click="scroll">
+				<pos x="+3" y="+5+24"/>
+				<size width="481" height="23"/>
+				<text size="22" weight="bold" action="get_artist_before_feat"/>
+				<text size="22" color="#808080" weight="bold" action="get_featuring_after_artist"/>
+			</textzone>
+			<songpos class="songpos">
+				<pos x="+2" y="+59"/>
+				<size width="484" height="31"/>
+			</songpos>
+		</group>
+			
+		<group name="bpmtimes" x="+0" y="+0">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="157" height="93"/>
+				<off x="1468" y="1556"/>
+			</visual>
+			<textzone action="edit_bpm" class="textcolorline1">
+				<pos x="+4+43" y="+4"/>
+				<size width="80" height="30"/>
+				<text size="30" align="right" weight="bold" format="%Pbpmex"/>
+			</textzone>
+			<textzone>
+				<pos x="+79+46" y="+18"/>
+				<size width="27" height="12"/>
+				<text size="12" color="#908F8D" weight="bold" align="right" text="BPM" localize="true"/>
+			</textzone>
+
+			<button action="beat_tap" rightclick="edit_bpm">
+				<pos x="+3" y="+5"/>
+				<size width="43" height="29"/>
+				<on x="447" y="1152"/>
+				<off x="399" y="1088"/>
+				<over x="447" y="1120"/>
+				<text size="14" weight="bold" color="#cccccc" align="center" text="TAP" localize="true"/>
+				<textdown size="14" weight="bold" color="#ffffff" align="center" text="TAP" localize="true"/>
+			</button>
+
+
+			<textzone>
+			  <pos x="+81" y="+39"/>
+			  <size width="32" height="15"/>
+			  <text size="12" color="#908F8D" weight="bold" align="left" text="GAIN" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline1" visibility="loaded">
+			  <pos x="+81+29" y="+38"/>
+			  <size width="43" height="15"/>
+			  <text size="15" align="right" weight="bold" action="get_level 'db'"/>
+			</textzone>
+
+			<textzone>
+			  <pos x="+22" y="+39"/>
+			  <size width="27" height="15"/>
+			  <text size="12" color="#908F8D" weight="bold" align="left" text="KEY" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline3">
+			  <pos x="+22+27" y="+38"/>
+			  <size width="32" height="15"/>
+			  <text size="15" align="left" weight="bold" action="get_harmonic"/>
+			  <text2 size="15" align="left" weight="bold" action="get_key"/>
+			  <text3 size="15" align="left" weight="bold" action="get_key_modifier"/>
+			</textzone>
+	
+			<textzone action="display_time 'elapsed,remain'" >
+				<pos x="+89" y="+56"/>
+				<size width="70" height="14"/>
+				<text size="12" align="left" color="#908F8D" weight="bold" action="display_time &amp; param_uppercase"/>
+			</textzone>
+			<textzone action="display_time 'elapsed,remain'" class="textcolorline1">
+				<pos x="+89" y="+69"/>
+				<size width="70" height="22"/>
+				<text size="22" align="left" weight="bold" action="get_time"/>
+			</textzone>
+			<textzone >
+				<pos x="+5" y="+56"/>
+				<size width="80" height="14"/>
+				<text size="12" color="#908F8D" align="left" weight="bold" text="TOTAL" localize="true"/>
+			</textzone>
+			<textzone class="textcolorline1">
+				<pos x="+5" y="+69"/>
+				<size width="80" height="22"/>
+				<text size="22" align="left" weight="bold" action="get_time 'total'"/>
+			</textzone>
+
+
+		</group>
+		
+		<group name="jogwheel" x="+125" y="+131">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="198" height="198"/>
+				<off x="1311" y="1772"/>
+			</visual>
+
+			<visual type="rotation" source="get rotation">
+				<Tooltip></Tooltip>
+				<pos x="+0" y="+1"/>
+				<size width="198" height="198"/>
+				<on x="1111" y="1772"/>
+			</visual>
+
+			<visual type="circle" source="get position">
+				<Tooltip></Tooltip>
+				<pos x="+0" y="+0"/>
+			  <size width="198" height="198"/>
+			  <on x="1721" y="1772"/>
+			</visual>
+
+			<scratch>
+				<pos x="+0" y="+0"/>
+				<size width="198" height="198"/>
+				<mousemask x="1311" y="1772"/>
+			</scratch>
+		</group>
+
+		<group name="transport" x="+71" y="+372">
+			<button class="deckbutton" action="cue_button">
+				<pos x="+0" y="+0"/>
+				<text action="cue_button"/>
+				</button>
+			<button class="deckbutton" action="stop_button" rightclick="holding 500ms ? unload : goto_first_beat">
+				<pos x="+77" y="+0"/>
+				<icon sysicon="stop_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton" action="play_button">
+				<pos x="+77+77" y="+0"/>
+				<icon sysicon="play_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton" action="sync">
+				<pos x="+77+77+77" y="+0"/>
+				<text text="SYNC" localize="true"/>
+			</button>
+		</group>
+		
+		<group name="pitch" x="+0" y="+99">
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="54" height="233"/>
+				<off x="759" y="1172"/>
+			</visual>
+			
+
+			<textzone>
+				<pos x="+8" y="+15"/>
+				<size width="36" height="17"/>
+				<text size="16" color="#FFFFFF" align="center" weight="bold" format="%Ppitch"/>
+			</textzone>
+
+			<slider action="pitch" rightclick="temporary" direction="down" orientation="vertical">
+			  <pos x="+9" y="+46"/>
+			  <size width="36" height="171"/>
+			  <on x="713" y="1218"/>
+			  <off x="768" y="1218"/>
+			  <fader>
+				<size width="36" height="27"/>
+				<pos x="653" y="1115"/>
+			  </fader>
+			</slider>
+			
+			
+		</group>
+
+		<dropzone>
+		  <pos x="+0" y="+0"/>
+		  <size width="740" height="410"/>
+		</dropzone>
+    
+	</deck>
+</group>
+
+<group name="mixer" x="764" y="139+60">
+
+	<visual>
+	  <pos x="+98" y="-2"/>
+	  <size width="197" height="287"/>
+	  <off x="963" y="1117"/>
+	</visual>
+	
+	<group name="eqs" x="+25" y="+13">
+		<deck deck="left">
+			<group name="knob" x="+0" y="+0">
+				<panel class="knobk">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" />
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_high" ><tooltip></tooltip><text text="HIGH" localize="true"/><textselected text="HIGH" localize="true"/></button>
+				</panel>
+			</group>
+			<group name="knob" x="+0" y="+60">
+				<panel class="knobk">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" />
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_mid" ><tooltip></tooltip><text text="MID" localize="true"/><textselected text="MID" localize="true"/></button>
+				</panel>
+			</group>
+			<group name="knob" x="+0" y="+60+60">
+				<panel class="knobk">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" />
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_low" ><tooltip></tooltip><text text="LOW" localize="true"/><textselected text="LOW" localize="true"/></button>
+				</panel>
+			</group>
+			<group name="knob" x="+0" y="+60+60+80">
+				<panel class="knob">
+					<slider action="filter" dblclick="filter 50%" rightclick="temporary" />
+					<slider action="filter" dblclick="filter 50%" rightclick="temporary" frommiddle="true"/>
+					<textzone><text action="filter_label"/></textzone>
+				</panel>
+			</group>
+		</deck>
+	</group>
+
+	<group name="volume" x="+106" y="+13">
+		<deck deck="left">
+			<panel class="knob" x="+0" y="+0">
+				<slider action="gain" dblclick="gain 50%" rightclick="match_gain" />
+				<slider action="gain" dblclick="gain 50%" rightclick="match_gain" frommiddle="true"/>
+				<textzone><text text="GAIN" localize="true"/></textzone>
+			</panel>
+			<slider class="volume_level" x="+3" y="+65"/>
+			<button class="headphones" x="-1" y="+234"/>
+		</deck>
+	</group>
+
+	<group name="vumeter" x="+168" y="+24">
+		<menu>
+			<pos x="+0" y="+0"/>
+			<size width="23" height="251"/>
+			<item text="Show vu meter" action="skin_panel 'vu_output' on" check="skin_panel 'vu_output'" />
+			<item text="Show output levels" action="skin_panel 'vu_meter' on" check="skin_panel 'vu_meter'" />
+		</menu>
+		<menu>
+			<pos x="+34" y="+0"/>
+			<size width="23" height="251"/>
+			<item text="Show vu meter" action="skin_panel 'vu_output' on" check="skin_panel 'vu_output'" />
+			<item text="Show output levels" action="skin_panel 'vu_meter' on" check="skin_panel 'vu_meter'" />
+		</menu>
+		<panel name="vu_meter" group="vu_levels" visible="no">
+			<visual class="vumeter" deck="left" source="get_vu_meter_left">
+			  <pos x="+0" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="left" source="get_vu_meter_right">
+			  <pos x="+12" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="right" source="get_vu_meter_left">
+				<pos x="+34" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="right" source="get_vu_meter_right">
+				<pos x="+34+12" y="+0"/>
+			</visual>
+		</panel>
+		<panel name="vu_output" group="vu_levels" visible="yes">
+			<visual class="vumeter" deck="left" source="get_level_left">
+			  <pos x="+0" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="left" source="get_level_right">
+			  <pos x="+12" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="right" source="get_level_left">
+			  <pos x="+34" y="+0"/>
+			</visual>
+			<visual class="vumeter" deck="right" source="get_level_right">
+			  <pos x="+34+12" y="+0"/>
+			</visual>
+		</panel>
+	</group>
+
+	<group name="volume" x="+238" y="+13">
+		<deck deck="right">
+			<panel class="knob" x="+0" y="+0">
+				<slider action="gain" dblclick="gain 50%" rightclick="match_gain" />
+				<slider action="gain" dblclick="gain 50%" rightclick="match_gain" frommiddle="true"/>
+				<textzone><text text="GAIN" localize="true"/></textzone>
+			</panel>
+			<slider class="volume_level" x="+3" y="+65"/>
+			<button class="headphones" x="-1" y="+234"/>
+		</deck>
+	</group>
+
+	<group name="eqs" x="+321" y="+13">
+		<deck deck="right">
+			<group name="knob" x="+0" y="+0">
+				<panel class="knobk">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" />
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_high" ><tooltip></tooltip><text text="HIGH" localize="true"/><textselected text="HIGH" localize="true"/></button>
+				</panel>
+			</group>
+			<group name="knob" x="+0" y="+60">
+				<panel class="knobk">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" />
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_mid" ><tooltip></tooltip><text text="MID" localize="true"/><textselected text="MID" localize="true"/></button>
+				</panel>
+			</group>
+			<group name="knob" x="+0" y="+60+60">
+				<panel class="knobk">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" />
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%" frommiddle="true"/>
+					<button action="nothing" query="eq_kill_low" ><tooltip></tooltip><text text="LOW" localize="true"/><textselected text="LOW" localize="true"/></button>
+				</panel>
+			</group>
+
+			<group name="knob" x="+0" y="+60+60+80">
+				<panel class="knob">
+					<slider action="filter" dblclick="filter 50%" rightclick="temporary" />
+					<slider action="filter" dblclick="filter 50%" rightclick="temporary" frommiddle="true"/>
+					<textzone><text action="filter_label"/></textzone>
+				</panel>
+			</group>
+		</deck>
+	</group>
+			
+	
+	<slider action="crossfader" rightclick="temporary" dblclick="crossfader 50%" orientation="horizontal">
+		<pos x="+97" y="139+355"/>
+		<size width="199" height="53"/>
+		<selected x="1315" y="1171"/>
+		<up x="1315" y="1115"/>
+		<fader>
+			<size width="24" height="40"/>
+			<pos x="1287" y="1121"/>
+		</fader>
+	</slider>
+	
+</group>
+
+<browser toolbar="false" effects="false" sideview="false" nobackground="true">
+	<pos x="12" y="560"/>
+	<size width="1897" height="508"/>
+</browser>
+
+</Skin>

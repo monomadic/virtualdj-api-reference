@@ -1,0 +1,41 @@
+<!-- Canary: can the waveform family be instantiated in a plugin panel at all?
+     Skin Waveforms Open Question 13 asserted it cannot, on the stated ground that
+     "a plugin panel has no deck to bind a <scratchwave> to". That ground was never
+     tested: no fixture under tests/Skins/ had ever served a waveform element here,
+     and the same run that recorded the claim also rendered `get_deck` as deck=1.
+
+     Two scratchwaves, because shipped skins only ever write deck="left"/"right"
+     (62/62 instances) while the panel itself is opened on deck 1:
+       row 1  deck="left"   the attested spelling
+       row 2  deck="1"      the numeric spelling
+     Colours are literal hex, not palette names like "scratch1", because a plugin
+     panel has no skin palette to resolve a name against.
+
+     Controls: "0 control" must always render, or the panel never opened and the
+     run says nothing. "3 tail" renders only if the parser survived the unknown
+     elements above it — that separates "element ignored" from "XML rejected".
+     Compare against waveform-control.xml, which is this file with the element
+     name misspelled and nothing else changed. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="4"/>
+        <text font="arial" size="11" weight="bold" color="#FFFFFF" align="left" format="0 control ZZCONTROL"/>
+    </textzone>
+
+    <zzscratchwave deck="left" orientation="horizontal" color="#00CCFF" color2="#FF8800">
+        <pos x="8" y="22"/>
+        <size width="204" height="60"/>
+    </zzscratchwave>
+
+    <zzscratchwave deck="1" orientation="horizontal" color="#00FF88" color2="#FF3366">
+        <pos x="8" y="94"/>
+        <size width="204" height="60"/>
+    </zzscratchwave>
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="170"/>
+        <text font="arial" size="11" weight="bold" color="#FFFF00" align="left" format="3 tail (parser survived)"/>
+    </textzone>
+
+</Skin>

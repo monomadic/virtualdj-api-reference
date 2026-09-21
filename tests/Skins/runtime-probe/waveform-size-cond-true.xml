@@ -1,0 +1,27 @@
+<!-- Canary: Skin Waveforms Open Question 13 - stacked <size condition=""> inside
+     <scratchwave>. Shipped form (Pro.xml ~5822): a conditional <size> followed by
+     an unconditional one as the fallback. Two runs discriminate:
+       -cond-true   condition is TRUE  -> thin (height 30) if the conditional wins
+       -cond-false  condition is FALSE -> tall (height 90), the fallback
+     If both runs render the same height the condition is not being evaluated;
+     if true->30 and false->90 the first matching size wins and the rest are skipped.
+     Height is the observable because the tail label at y=170 is a fixed ruler. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="4"/>
+        <text font="arial" size="11" weight="bold" color="#FFFFFF" align="left" format="0 control SIZE-COND true"/>
+    </textzone>
+
+    <scratchwave deck="1" orientation="horizontal">
+        <pos x="8" y="22"/>
+        <size width="204" height="30" condition="param_equal 'yes' 'yes'"/>
+        <size width="204" height="90"/>
+    </scratchwave>
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="170"/>
+        <text font="arial" size="11" weight="bold" color="#FFFF00" align="left" format="3 tail (parser survived)"/>
+    </textzone>
+
+</Skin>

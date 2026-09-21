@@ -7,6 +7,7 @@ This folder contains local skin references, build-system demos, and copied built
 | Path | Status | Notes |
 | --- | --- | --- |
 | [Built-In/](Built-In/) | Built-in (official) | App-bundle desktop, Lite, Remote, and small plugin UI skins copied from VirtualDJ `8.5.9307` / bundle `18.0.9336`. Use as semi-official executable examples. |
+| [Official-Addons/](Official-Addons/) | Published (official) | Atomix-published add-on skins (controller screens, controller layouts, VirtualDJ 8 Old Default, Remote 8 Default) copied from the local install, with add-on ids and zip hashes. |
 | [SDK Example - Custom Browser Skin/](SDK%20Example%20-%20Custom%20Browser%20Skin/) | Official example | Atomix-authored (`author="Atomix Productions"` in the file) SDK-style browser skin example. |
 | [ModularSkeleton/](ModularSkeleton/) | Canonical, **unofficial** | Minimal modular skin scaffold authored for this repo, not vendor content. Use this for build-time XInclude, class defines, named colors, and installable flattened output. Kept in place (not quarantined) because it is heavily referenced across the docs — see below. |
 | [GraveRaver/](GraveRaver/) | Build demo, **unofficial** | Intentionally minimal XInclude build demo authored for this repo, not a polished skin design reference and not vendor content. Kept in place (not quarantined) because it is heavily referenced across the docs — see below. |

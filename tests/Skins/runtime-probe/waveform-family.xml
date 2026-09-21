@@ -1,0 +1,30 @@
+<!-- Canary: the rest of the waveform family in a plugin panel, after
+     waveform-scratchwave.xml showed <scratchwave> renders here.
+     Row 1 <rhythmzone> (the two-deck rhythm view), row 2 <songpos> (the
+     whole-track overview). Same controls as the scratchwave canary: "0 control"
+     proves the panel opened, "3 tail" proves the parser reached the end.
+     waveform-control.xml is the shared negative control — with the element names
+     misspelled, both rects stay empty. -->
+<Skin name="VDJIntrospectSkin" version="8" width="220" height="200">
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="4"/>
+        <text font="arial" size="11" weight="bold" color="#FFFFFF" align="left" format="0 control FAMILY"/>
+    </textzone>
+
+    <rhythmzone mirror="false" upsidedown="false" fade="200" deck1="left" deck2="right">
+        <pos x="8" y="22"/>
+        <size width="204" height="60"/>
+    </rhythmzone>
+
+    <songpos deck="left">
+        <pos x="8" y="94"/>
+        <size width="204" height="60"/>
+    </songpos>
+
+    <textzone>
+        <size width="204" height="14"/><pos x="8" y="170"/>
+        <text font="arial" size="11" weight="bold" color="#FFFF00" align="left" format="3 tail (parser survived)"/>
+    </textzone>
+
+</Skin>

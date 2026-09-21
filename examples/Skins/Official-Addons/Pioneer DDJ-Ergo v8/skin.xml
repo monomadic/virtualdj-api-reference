@@ -1,0 +1,4761 @@
+<Skin name="Pioneer DDJ-Ergo" version="8" author="Atomix Productions" comment="Pioneer DDJ-Ergo LE ver 8 skin" preview="skinpreview.png" width="1440" height="900" nbdecks="4">
+<copyright>- (c)2015 - Atomix Productions -</copyright>
+
+<group name="defines">
+
+	<font name="arial" />
+	<tooltip size="14" color="#000000" back="#fbf9e0" shortcut="#58595b" />
+
+	<group name="colors">
+			<define class="textcolorline1" classdeck="1" >
+				<text color="#28acff" />
+			</define>
+			<define class="textcolorline12" classdeck="1" >
+				<text color="#28acff" />
+				<text2 color="#28acff" />
+			</define>
+			<define class="textcolorline1" classdeck="3" >
+				<text color="#18fe27" />
+			</define>
+			<define class="textcolorline12" classdeck="3" >
+				<text color="#18fe27" />
+				<text2 color="#18fe27" />
+			</define>
+			<define class="textcolorline1" classdeck="2" >
+				<text color="#ed1c24" />
+			</define>
+			<define class="textcolorline12" classdeck="2" >
+				<text color="#ed1c24" />
+				<text2 color="#ed1c24" />
+			</define>
+			<define class="textcolorline1" classdeck="4" >
+				<text color="#F09B18" />
+			</define>
+			<define class="textcolorline12" classdeck="4" >
+				<text color="#F09B18" />
+				<text2 color="#F09B18" />
+			</define>
+			
+	</group>
+
+	<group name="songpos">
+		<define class="songpos" classdeck="1" colorPlayed="#00a5e4" colorBass="#00567a" colorMed="#00a5e4" colorHigh="#7fc8e9" >
+		  <size width="570" height="27"/>
+			<cues>
+			  <size width="11" height="27"/>
+			  <up x="1107" y="1391"/>
+			  <clipmask x="1059" y="1392" width="11" height="27" />
+			  <over x="1125" y="1391"/>
+			  <down x="1143" y="1391"/>
+			</cues>
+		</define>
+		<define class="songpos" classdeck="2" colorPlayed="#e4000d" colorBass="#7a0005" colorMed="#e4000d" colorHigh="#e97f81" >
+		  <size width="570" height="27"/>
+			<cues>
+			  <size width="11" height="27"/>
+			  <up x="1107" y="1391"/>
+			  <clipmask x="1059" y="1392" width="11" height="27" />
+			  <over x="1125" y="1391"/>
+			  <down x="1143" y="1391"/>
+			</cues>
+		</define>
+		<define class="songpos" classdeck="3" colorPlayed="#23c034" colorBass="#007a19" colorMed="#23c034" colorHigh="#7fe997" >
+			<size width="570" height="27"/>
+			<cues>
+			  <size width="11" height="27"/>
+			  <up x="1107" y="1391"/>
+			  <clipmask x="1059" y="1392" width="11" height="27" />
+			  <over x="1125" y="1391"/>
+			  <down x="1143" y="1391"/>
+			</cues>
+		</define>
+		<define class="songpos" classdeck="4" colorPlayed="#e48300" colorBass="#7a4700" colorMed="#e48300" colorHigh="#e9c07f" >
+		  <size width="570" height="27"/>
+			<cues>
+			  <size width="11" height="27"/>
+			  <up x="1107" y="1391"/>
+			  <clipmask x="1059" y="1392" width="11" height="27" />
+			  <over x="1125" y="1391"/>
+			  <down x="1143" y="1391"/>
+			</cues>
+		</define>
+	</group>
+
+	
+	<group name="deckbuttons">
+
+		<define class="button1">
+			<size width="33" height="18"/>
+			<on x="56" y="1136"/>
+			<off x="19" y="1136" />
+			<over x="93" y="1136" />
+		</define>
+		<define class="button2">
+			<size width="33" height="18"/>
+			<on x="56" y="1158"/>
+			<off x="19" y="1158" />
+			<over x="93" y="1158" />
+		</define>
+		<define class="button3">
+			<size width="33" height="18"/>
+			<on x="56" y="1181"/>
+			<off x="19" y="1181" />
+			<over x="93" y="1181" />
+		</define>
+		<define class="button4">
+			<size width="33" height="18"/>
+			<on x="56" y="1205"/>
+			<off x="19" y="1205" />
+			<over x="93" y="1205" />
+		</define>
+		<define class="buttonplay">
+			<size width="33" height="18"/>
+			<on x="56" y="1110"/>
+			<down x="56" y="1110"/>
+			<off x="19" y="1110" />
+			<over x="93" y="1110" />
+		</define>
+		<define class="buttonrev">
+			<size width="33" height="18"/>
+			<on x="56" y="1230"/>
+			<down x="56" y="1230"/>
+			<off x="19" y="1230" />
+			<over x="93" y="1230" />
+		</define>
+		<define class="buttonon">
+			<size width="33" height="18"/>
+			<on x="56" y="1085"/>
+			<off x="19" y="1085" />
+			<over x="93" y="1085" />
+		</define>
+		<define class="playbutton" action="play_pause" query="pause ? blink 1000ms : var 'cueON' ? blink 1000ms : on" rightclick="reverse">
+			<tooltip>Play / Rightclick to play in reverse</tooltip>
+			<size width="48" height="48"/>
+			<off x="26" y="1300"/>
+			<on x="78" y="1300"/>
+			<down x="78" y="1300"/>
+			<over x="131" y="1300"/>
+		</define>
+		<define class="cuebutton" action="cue_stop" query="loaded ? cue ? on : play ? on : blink 500ms">
+			<tooltip>Cue Stop</tooltip>
+			<size width="39" height="39"/>
+			<off x="31" y="1253"/>
+			<on x="83" y="1253"/>
+			<down x="83" y="1253"/>
+			<over x="136" y="1253"/>
+		</define>	
+		<define class="syncbutton" action="sync" query="var 'syncON'" rightclick="beat_tap">
+			<tooltip>Sync / Rightclick to beat tap</tooltip>
+			<size width="32" height="18"/>
+			<off x="140" y="1197"/>
+			<down x="220" y="1197"/>
+			<on x="220" y="1197"/>
+			<over x="180" y="1197"/>
+		</define>
+		<define class="box" >
+			<size width="88" height="19"/>
+			<on x="240" y="1146"/>
+			<over x="340" y="1146"/>
+			<off x="140" y="1146"/>
+			<down x="240" y="1146"/>
+			<text dx="4" width="80" size="14" color="#C5C6C6" align="center" />
+			<textselected dx="4" width="80" size="14" color="#ffffff" align="center" />
+		</define>
+	
+		<define class="loopbox" action="loop" rightclick="temporary">
+			<tooltip>Loop</tooltip>
+			<size width="34" height="20"/>
+			<off x="164" y="1115"/>
+			<on x="264" y="1115" /> 
+			<down x="264" y="1115"/>
+			<over x="364" y="1115"/>
+			<text dx="3" width="28" font="arial" size="16" color="WHITE"  align="center" weight="bold" format="%loop" scroll="yes"/>
+		</define>
+
+		<define class="loopround" >
+			<size width="20" height="20"/>
+			<off x="141" y="1086"/>
+			<over x="161" y="1086"/>
+			<on x="181" y="1086"/>
+			<down x="181" y="1086"/>
+		</define>
+		<define class="arrowleft">
+			<size width="23" height="20"/>
+			<off x="141" y="1115"/>
+			<down x="241" y="1115"/>
+			<over x="341" y="1115"/>
+			<on x="241" y="1115"/>
+		</define>
+		<define class="arrowright">
+			<size width="23" height="20"/>
+			<off x="198" y="1115"/>
+			<down x="298" y="1115"/>
+			<over x="398" y="1115"/>
+			<on x="298" y="1115"/>
+		</define>
+		<define class="lock">
+			<size width="14" height="16"/>
+			<off x="214" y="1088"/>
+			<on x="274" y="1088"/>
+			<over x="234" y="1088"/>
+		</define>
+
+		<define class="zero">
+			<size width="13" height="12"/>
+			<off x="345" y="1085"/>
+			<on x="385" y="1085"/>
+			<down x="385" y="1085"/>
+			<over x="365" y="1085"/>
+		</define>
+
+		<define class="bpm" action="beat_tap" rightclick="edit_bpm">
+			<size width="34" height="18"/>
+			<Tooltip>Click to TAP/Rightclick EDIT BPM</Tooltip>
+			<off x="409" y="1022"/>
+			<down x="499" y="1022"/>
+			<over x="454" y="1022"/>
+		</define>
+		<define class="select" action="select" classdeck="1">
+			<size width="21" height="21"/>
+			<on x="301" y="1020"/>
+			<off x="251" y="1020"/>
+			<over x="276" y="1020"/>
+		</define>	
+		<define class="select" action="select" classdeck="2">
+			<size width="21" height="21"/>
+			<on x="376" y="1020"/>
+			<off x="326" y="1020"/>
+			<over x="351" y="1020"/>
+		</define>	
+		<define class="select" action="select" classdeck="3">
+			<size width="21" height="21"/>
+			<on x="301" y="1048"/>
+			<off x="251" y="1048"/>
+			<over x="276" y="1048"/>
+		</define>	
+		<define class="select" action="select" classdeck="4">
+			<size width="21" height="21"/>
+			<on x="376" y="1048"/>
+			<off x="326" y="1048"/>
+			<over x="351" y="1048"/>
+		</define>	
+
+		<define class="aux" action="linein" >
+			<size width="32" height="23"/>
+			<over x="1025" y="1187"/>
+			<off x="990" y="1187"/>
+			 <on x="1060" y="1187"/>
+		</define>
+		<define class="rec" action="linein_rec" >
+			<size width="31" height="23"/>
+			<over x="1131" y="1187"/>
+			<off x="1096" y="1187"/>
+			 <on x="1166" y="1187"/>
+		</define>
+	
+		<define class="sidebutton" action="leftdeck & select" classdeck="3">
+			<size width="38" height="21"/>
+			<on x="867" y="1026"/>
+			<off x="867" y="1086"/>
+			<over x="867" y="1056"/>
+		</define>
+		<define class="sidebutton" action="leftdeck & select" classdeck="1">
+			<size width="38" height="21"/>
+			<on x="917" y="1026"/>
+			<off x="917" y="1086"/>
+			<over x="917" y="1056"/>
+		</define>
+		<define class="sidebutton" action="rightdeck & select" classdeck="2">
+			<size width="38" height="21"/>
+			<on x="967" y="1026"/>
+			<off x="967" y="1086"/>
+			<over x="967" y="1056"/>
+		</define>
+		<define class="sidebutton" action="rightdeck & select" classdeck="4">
+			<size width="38" height="21"/>
+			<on x="1017" y="1026"/>
+			<off x="1017" y="1086"/>
+			<over x="1017" y="1056"/>
+		</define>
+		<define class="masterdeck" action="masterdeck" >
+			<size width="50" height="13"/>
+			<text size="14" align="left" color="#908f8d" weight="bold" format="MASTER"/>
+			<textover size="14" align="left" color="white" weight="bold" format="MASTER"/>
+			<textselected size="14" align="left" color="#FFAE1A" weight="bold" format="MASTER"/>
+		</define>	
+
+		<define class="minicue" action="cue_stop" classdeck="1">
+			<size width="37" height="22"/>
+			<off x="1067" y="1024"/>
+			<on x="1157" y="1024"/>
+			<over x="1112" y="1024"/>
+		</define>
+		<define class="minicue" action="cue_stop" classdeck="2">
+			<size width="37" height="22"/>
+			<off x="1067" y="1024"/>
+			<on x="1202" y="1024"/>
+			<over x="1247" y="1024"/>
+		</define>
+		<define class="minicue" action="cue_stop" classdeck="3">
+			<size width="37" height="22"/>
+			<off x="1067" y="1024"/>
+			<on x="1337" y="1024"/>
+			<over x="1292" y="1024"/>
+		</define>
+		<define class="minicue" action="cue_stop" classdeck="4">
+			<size width="37" height="22"/>
+			<off x="1067" y="1024"/>
+			<on x="1382" y="1024"/>
+			<over x="1382" y="1114"/>
+		</define>
+		
+		
+		<define class="miniplay" action="play_pause" classdeck="1" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1054"/>
+			<on x="1157" y="1054"/>
+			<over x="1112" y="1054"/>
+		</define>
+		<define class="miniplay" action="play_pause" classdeck="2" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1054"/>
+			<on x="1202" y="1054"/>
+			<over x="1247" y="1054"/>
+		</define>
+		<define class="miniplay" action="play_pause" classdeck="3" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1054"/>
+			<on x="1337" y="1054"/>
+			<over x="1292" y="1054"/>
+		</define>
+		<define class="miniplay" action="play_pause" classdeck="4" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1054"/>
+			<on x="1382" y="1054"/>
+			<over x="1382" y="1144"/>
+		</define>
+		
+		<define class="minisync" action="sync" classdeck="1" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1084"/>
+			<on x="1157" y="1084"/>
+			<over x="1112" y="1084"/>
+		</define>	
+		<define class="minisync" action="sync" classdeck="2" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1084"/>
+			<on x="1202" y="1084"/>
+			<over x="1247" y="1084"/>
+		</define>	
+		<define class="minisync" action="sync" classdeck="3" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1084"/>
+			<on x="1337" y="1084"/>
+			<over x="1292" y="1084"/>
+		</define>	
+		<define class="minisync" action="sync" classdeck="4" >
+			<size width="37" height="22"/>
+			<off x="1067" y="1084"/>
+			<on x="1382" y="1084"/>
+			<over x="1382" y="1174"/>
+		</define>
+
+		<define class="pfl" action="pfl" >
+			<size width="37" height="22"/>
+			<off x="267" y="1342"/>
+			<on x="297" y="1342"/>
+			<over x="327" y="1342"/>
+		</define>	
+
+		<define class="roundbutton">
+			<size width="15" height="15"/>
+			<off x="451" y="980"/>
+			<on x="486" y="980"/>
+			<over x="469" y="980"/>
+		</define>		
+	</group>
+
+	<group name="mixerbuttons">
+		<define class="pfl" action="pfl" >
+			<size width="25" height="22"/>
+			<off x="267" y="1342"/>
+			<on x="297" y="1342"/>
+			<over x="327" y="1342"/>
+		</define>
+		<define class="cfdisable" action="crossfader_curve 'disabled'">
+		  <size width="35" height="19"/>
+		  <off x="251" y="1269"/>
+		  <on x="251" y="1292" />
+		   <over x="251" y="1315" />
+		</define>
+		<define class="cffull" action="crossfader_curve 'full'">
+		  <size width="35" height="19"/>
+		  <off x="296" y="1269"/>
+		  <on x="296" y="1292" />
+		   <over x="296" y="1315" />
+		</define>
+		<define class="cfscratch"  action="crossfader_curve 'scratch'">
+		  <size width="35" height="19"/>
+		  <off x="342" y="1269"/>
+		  <on x="342" y="1292" />
+		   <over x="342" y="1315" />
+		</define>
+		
+		<define class="videobox">
+			<size width="90" height="20"/>
+			<on x="250" y="1224"/>
+			<over x="142" y="1224"/>
+			<off x="346" y="1224"/>
+			<down x="250" y="1224"/>
+			<mouserect x="+0" y="+0" width="75" height="20" />
+			<text dx="4" width="68" font="ARIAL" size="15" color="#ffffff" align="center" scroll="yes"/>
+		</define>
+
+		<define class="mfxbox">
+			<size width="90" height="20"/>
+			<on x="346" y="1200"/>
+			<over x="346" y="1180"/>
+			<off x="346" y="1224"/>
+			<down x="346" y="1200"/>
+			<mouserect x="+0" y="+0" width="75" height="20" />
+			<text dx="4" width="68" font="ARIAL" size="15" color="#ffffff" align="center" scroll="yes"/>
+		</define>
+		
+		<define class="cross1" >
+			<size width="20" height="20"/>
+			<off x="131" y="956"/>
+			<on x="181" y="956"/>
+			<over x="231" y="956"/>
+		</define>
+		<define class="cross2" >
+			<size width="20" height="20"/>
+			<off x="151" y="956"/>
+			<on x="201" y="956"/>
+			<over x="251" y="956"/>
+		</define>
+		<define class="cross3" >
+			<size width="20" height="20"/>
+			<off x="131" y="977"/>
+			<on x="181" y="977"/>
+			<over x="231" y="977"/>
+		</define>
+		<define class="cross4" >
+			<size width="20" height="20"/>
+			<off x="151" y="977"/>
+			<on x="201" y="977"/>
+			<over x="251" y="977"/>
+		</define>
+		
+		<define class="mixerbut" >
+			<size width="37" height="21"/>
+			<off x="225" y="911"/>
+			<on x="313" y="911"/>
+			<down x="313" y="911"/>
+			<over x="269" y="911"/>
+			<text size="13" weight="bold" color="black" align="center" />
+		</define>
+		
+	</group>	
+	
+	<group name="sliders">
+		<define class="pitch" action="pitch" orientation="vertical" direction="down" dblclick="pitch 100%" rightclick="temporary" >
+			<size width="30" height="163"/>
+			<off x="506" y="1108"/>
+			<on x="456" y="1108"/>
+			<fader>
+				<size width="25" height="27"/>
+				<pos x="514" y="1058"/>
+			</fader>
+			<reset value="50"/>
+		</define>	
+		
+		<define class="levelon" classdeck="1" action="level" orientation="vertical" dblclick="reset" rightclick="temporary">
+			<size width="40" height="107"/>
+			<off x="1091" y="1239"/>
+			<on x="991" y="1239"/>
+			<fader>
+				<size width="35" height="16"/>
+				<pos x="850" y="1644"/>
+			</fader>
+		</define>
+		<define class="levelon" classdeck="2" action="level" orientation="vertical" dblclick="reset" rightclick="temporary">
+			<size width="40" height="107"/>
+			<off x="1091" y="1239"/>
+			<on x="1041" y="1239"/>
+			<fader>
+				<size width="35" height="16"/>
+				<pos x="850" y="1644"/>
+			</fader>
+		</define>
+		<define class="levelon" classdeck="3" action="level" orientation="vertical" dblclick="reset" rightclick="temporary">
+			<size width="40" height="107"/>
+			<off x="1091" y="1239"/>
+			<on x="891" y="1239"/>
+			<fader>
+				<size width="35" height="16"/>
+				<pos x="850" y="1644"/>
+			</fader>
+		</define>
+		<define class="levelon" classdeck="4" action="level" orientation="vertical" dblclick="reset" rightclick="temporary">
+			<size width="40" height="107"/>
+			<off x="1091" y="1239"/>
+			<on x="941" y="1239"/>
+			<fader>
+				<size width="35" height="16"/>
+				<pos x="850" y="1644"/>
+			</fader>
+		</define>
+		<define class="leveloff" action="level" orientation="vertical" dblclick="reset" rightclick="temporary">
+			<size width="40" height="107"/>
+			<off x="1091" y="1239"/>
+			<on x="1091" y="1239"/>
+			<fader>
+				<size width="35" height="16"/>
+				<pos x="850" y="1644"/>
+			</fader>
+		</define>
+		
+		<define class="cf" action="crossfader" orientation="horizontal" dblclick="crossfader 50%" rightclick="temporary">
+			<off x="463" y="1332"/>
+			<on x="643" y="1332"/>
+			<size width="147" height="40"/>
+			<fader>
+			  <pos x="863" y="1665"/>
+				<size width="15" height="34"/>
+			</fader>
+		</define>
+		<define class="vf" action="video_crossfader" orientation="horizontal" dblclick="video_crossfader 50%" rightclick="temporary">
+			<off x="463" y="1332"/>
+			<on x="643" y="1332"/>
+			<size width="147" height="40"/>
+			<fader>
+			  <pos x="863" y="1665"/>
+				<size width="15" height="34"/>
+			</fader>
+		</define>
+	</group>
+	
+	<define class="jog" >
+		<visual source="loaded">
+			<tooltip></tooltip>
+			<pos x="-1" y="+0"/>
+			<size width="168" height="168"/>
+			<off x="33" y="1402"/>
+			<on x="33" y="1602"/>
+		</visual>
+		<visual type="rotation" source="get rotation">
+			<pos x="+18" y="+17"/>
+			<size width="130" height="130"/>
+			<on x="52" y="1819"/>
+		</visual>
+		<scratch >
+			<size width="135" height="135"/>
+			<pos x="+16" y="+15"/>
+			<mousemask x="50" y="2017"/>
+		</scratch>
+	</define>
+	<group name="knobs">
+		<define class="knob" >
+			<slider orientation="round">
+				<pos x="+0" y="+15"/>
+			  <size width="30" height="30"/>
+			  <down x="266" y="1445"/>
+			  <up x="266" y="1445"/>
+			  <mousemask x="266" y="1445"/>
+			 <fader anglemin="-150" anglemax="+150">
+			   <size width="30" height="30"/>
+			   <pos x="316" y="1445"/>
+			 </fader>
+			 </slider>
+			<textzone>
+				<pos x="-10" y="+0"/>
+			  <size width="50" height="13"/>
+			  <text size="13" weight="bold" color="#9D9E9E" align="center"/>
+			</textzone>
+		</define>
+		
+		<define class="knobl" >
+			<slider orientation="round">
+				<pos x="+0" y="+15"/>
+			  <size width="30" height="30"/>
+			  <down x="266" y="1445"/>
+			  <up x="266" y="1445"/>
+			  <mousemask x="266" y="1445"/>
+			 <fader anglemin="-150" anglemax="+150">
+			   <size width="30" height="30"/>
+			   <pos x="316" y="1445"/>
+			 </fader>
+			 </slider>
+			<textzone>
+				<pos x="-15" y="+0"/>
+			  <size width="60" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center"/>
+			</textzone>
+		</define>
+		
+		<define class="knob2l" >
+			<slider orientation="round">
+				<pos x="+0" y="+30"/>
+			  <size width="30" height="30"/>
+			  <down x="266" y="1445"/>
+			  <up x="266" y="1445"/>
+			  <mousemask x="266" y="1445"/>
+			 <fader anglemin="-150" anglemax="+150">
+			   <size width="30" height="30"/>
+			   <pos x="316" y="1445"/>
+			 </fader>
+			 </slider>
+			<textzone>
+				<pos x="-15" y="+0"/>
+			  <size width="60" height="28"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center"/>
+			</textzone>
+		</define>
+		
+		<define class="knobsm" >
+			<slider orientation="round">
+				<pos x="+0" y="+14"/>
+				<size width="26" height="26"/>
+				<down x="268" y="1495"/>
+				<up x="268" y="1495"/>
+				<mousemask x="268" y="1495"/>
+				<fader anglemin="-150" anglemax="+150">
+					<size width="26" height="26"/>
+					<pos x="308" y="1495"/>
+				</fader>
+			 </slider>
+			<textzone>
+				<pos x="-12" y="+0"/>
+				<size width="50" height="14"/>
+				<text size="14" weight="bold" color="#9D9E9E" align="center"/>
+			</textzone>
+		</define>
+		
+	</group>
+
+	<group name="visuals">	
+		<define class="samplpos" type="linear" source="sampler position" orientation="horizontal">
+			<size width="88" height="8"/>
+			<off x="140" y="1173"/>
+			<on x="240" y="1173"/>
+		</define>
+		<define class="lvl" source="get level" type="linear" orientation="vertical" direction="up" classdeck="1" >
+			<size width="12" height="191"/>
+			<off x="625" y="1058"/>
+			<on x="604" y="1058"/>	
+		</define>
+		<define class="lvl" source="get level" type="linear" orientation="vertical" direction="up" classdeck="2" >
+			<size width="12" height="191"/>
+			<off x="625" y="1058"/>
+			<on x="814" y="1058"/>	
+		</define>
+		<define class="lvl" source="get level" type="linear" orientation="vertical" direction="up" classdeck="3" >
+			<size width="12" height="191"/>
+			<off x="625" y="1058"/>
+			<on x="774" y="1058"/>	
+		</define>
+		<define class="lvl" source="get level" type="linear" orientation="vertical" direction="up" classdeck="4" >
+			<size width="12" height="191"/>
+			<off x="625" y="1058"/>
+			<on x="744" y="1058"/>	
+		</define>
+
+		<define class="lvl4on" source="get level" type="linear" orientation="vertical" direction="up" classdeck="1" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="783" y="1405"/>	
+		</define>
+		<define class="lvl4on" source="get level" type="linear" orientation="vertical" direction="up" classdeck="2" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="843" y="1405"/>	
+		</define>
+		<define class="lvl4on" source="get level" type="linear" orientation="vertical" direction="up" classdeck="3" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="743" y="1405"/>	
+		</define>
+		<define class="lvl4on" source="get level" type="linear" orientation="vertical" direction="up" classdeck="4" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="883" y="1405"/>	
+		</define>
+		<define class="lvl4off" source="get level" type="linear" orientation="vertical" direction="up" classdeck="1" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="803" y="1405"/>	
+		</define>
+		<define class="lvl4off" source="get level" type="linear" orientation="vertical" direction="up" classdeck="2" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="823" y="1405"/>	
+		</define>
+		<define class="lvl4off" source="get level" type="linear" orientation="vertical" direction="up" classdeck="3" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="763" y="1405"/>	
+		</define>
+		<define class="lvl4off" source="get level" type="linear" orientation="vertical" direction="up" classdeck="4" >
+			<size width="6" height="191"/>
+			<off x="722" y="1058"/>
+			<on x="863" y="1405"/>	
+		</define>
+		
+	</group>
+</group>
+
+
+<group name="topbar">
+  <logo os="pc">
+    <pos x="11" y="5"/>
+    <size width="88" height="22"/>
+  </logo>
+  <logo os="mac">
+    <pos x="1440-105" y="5"/>
+    <size width="88" height="22"/>
+  </logo>
+
+    <group name="clock" x="160" y="7">
+		<visual>
+		  <pos x="+0" y="+0"/>
+		  <size width="56+10" height="18"/>
+		  <off x="17" y="2867"/>
+		</visual>
+		<textzone>
+		  <pos x="+5" y="+2"/>
+		  <size width="56" height="15"/>
+		  <tooltip>CLOCK\n Click to toggle between 24hour clock and am/pm</tooltip>
+		  <text size="15" color="#aaaaaa" align="center" weight="bold" format="%fullhour"/>
+		  <text2 size="15" color="#aaaaaa" align="center" weight="bold" format="%hour12"/>
+		  <text3 size="15" color="#aaaaaa" align="center" weight="bold" format="%counter"/>
+		</textzone>
+  </group>
+   
+
+  <group name="cpu" x="240" y="7">
+    <textzone>
+      <pos x="+0" y="+2"/>
+      <size width="25" height="16"/>
+      <text size="13" color="#aaaaaa" weight="bold" align="center" format="CPU"/>
+    </textzone>
+	<visual >
+      <pos x="+30" y="+0"/>
+      <size width="38" height="20"/>
+      <off x="443" y="932"/>
+    </visual>
+    <visual source="get cpu" type="linear" orientation="horizontal">
+      <pos x="+33" y="+0"/>
+      <size width="31" height="20"/>
+      <tooltip>System CPU use (all software running right now)</tooltip>
+      <off x="446" y="932"/>
+      <on x="446" y="952"/>
+    </visual>
+  </group>
+
+  <panel name="beat_matcher" x="578" y="1" visible="skin_panel '4decks' on">
+
+		<group name="beatbar" x="+40+38" y="+0">
+			<deck deck="1">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+0" y="+0"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1677"/>
+					<over x="463" y="1677"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33" y="+0"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1677"/>
+					<over x="463" y="1677"/>
+					</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33" y="+0"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1677"/>
+					<over x="463" y="1677"/>
+					</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33+33" y="+0"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1677"/>
+					<over x="463" y="1677"/>
+				</button>
+			</deck>
+			<deck deck="3">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+0" y="+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1687"/>
+					<over x="463" y="1687"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33" y="+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1687"/>
+					<over x="463" y="1687"/>
+					</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33" y="+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1687"/>
+					<over x="463" y="1687"/>
+					</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33+33" y="+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1687"/>
+					<over x="463" y="1687"/>
+				</button>
+			</deck>
+			<deck deck="2">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+0" y="+7+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1697"/>
+					<over x="463" y="1697"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33" y="+7+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1697"/>
+					<over x="463" y="1697"/>
+					</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33" y="+7+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1697"/>
+					<over x="463" y="1697"/>
+					</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="6"/>
+					<pos x="+33+33+33" y="+7+7"/>
+					<off x="463" y="1717"/>
+					<on x="463" y="1697"/>
+					<over x="463" y="1697"/>
+				</button>
+			</deck>
+			<deck deck="4">	
+			<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+				<tooltip>Downbeat</tooltip>
+				<size width="28" height="6"/>
+				<pos x="+0" y="+7+7+7"/>
+				<off x="463" y="1717"/>
+				<on x="463" y="1707"/>
+				<over x="463" y="1707"/>
+			</button>
+			<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+				<tooltip>Beat 2</tooltip>
+				<size width="28" height="6"/>
+				<pos x="+33" y="+7+7+7"/>
+				<off x="463" y="1717"/>
+				<on x="463" y="1707"/>
+				<over x="463" y="1707"/>
+				</button>
+			<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+				<tooltip>Beat 3</tooltip>
+				<size width="28" height="6"/>
+				<pos x="+33+33" y="+7+7+7"/>
+				<off x="463" y="1717"/>
+				<on x="463" y="1707"/>
+				<over x="463" y="1707"/>
+				</button>
+			<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+				<tooltip>Beat 4</tooltip>
+				<size width="28" height="6"/>
+				<pos x="+33+33+33" y="+7+7+7"/>
+				<off x="463" y="1717"/>
+				<on x="463" y="1707"/>
+				<over x="463" y="1707"/>
+			</button>
+		</deck>
+		</group>
+		
+		<panel name="beatphase1" x="+38" y="+0" >
+			<deck deck="1" >
+				<visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+				  <off x="1027" y="1126"/>
+				  <on  x="867" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase3" x="+0" y="+0" >
+			<deck deck="3" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+				  <off x="1027" y="1126"/>
+				  <on  x="947" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase2" x="+187+34" y="+0" >
+			<deck deck="2" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+					<off x="1027" y="1126"/>
+					<on x="907" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase4" x="+187+34+38" y="+0" >
+			<deck deck="4" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+					<off x="1027" y="1126"/>
+					<on x="987" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+	</panel>
+
+  <panel name="beat_matcher" x="578" y="1" visible="skin_panel '2decks' on">
+
+		<panel name="beatbar1" x="+40+38" y="+3" visible="deck 1 leftdeck">
+			<deck deck="1">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+0" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1641"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1641"/>
+				</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1641"/>
+				</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1641"/>
+				</button>
+			</deck>
+		</panel>
+		<panel name="beatbar3" x="+40+38" y="+3" visible="deck 3 leftdeck">
+			<deck deck="3">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+0" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1671"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1671"/>
+				</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1671"/>
+				</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1671"/>
+				</button>
+			</deck>
+		</panel>
+		<panel name="beatbar2" x="+40+38" y="+16" visible="deck 2 rightdeck">
+			<deck deck="2">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+0" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1656"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1656"/>
+					</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1656"/>
+					</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1656"/>
+				</button>
+			</deck>
+		</panel>
+		<panel name="beatbar4" x="+40+38" y="+16" visible="deck 4 rightdeck">
+			<deck deck="4">	
+				<button action="goto_bar 1" leftclick="goto -1" rightclick="goto_bar 1">
+					<tooltip>Downbeat</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+0" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1686"/>
+				</button>
+				<button action="goto_bar 2" leftclick="goto -1" rightclick="goto_bar 2">
+					<tooltip>Beat 2</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1686"/>
+				</button>
+				<button action="goto_bar 3" leftclick="goto +1" rightclick="goto_bar 3">
+					<tooltip>Beat 3</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1686"/>
+				</button>
+				<button action="goto_bar 4" leftclick="goto +1" rightclick="goto_bar 4">
+					<tooltip>Beat 4</tooltip>
+					<size width="28" height="8"/>
+					<pos x="+33+33+33" y="+0"/>
+					<off x="493" y="1701"/>
+					<down x="493" y="1686"/>
+				</button>
+			</deck>
+		</panel>
+
+		
+		<panel name="beatphase1" x="+38" y="+0" visible="deck 1 leftdeck">
+			<deck deck="1" >
+				<visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+				  <off x="1027" y="1126"/>
+				  <on  x="867" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase3" x="+38" y="+0" visible="deck 3 leftdeck">
+			<deck deck="3" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+				  <off x="1027" y="1126"/>
+				  <on  x="947" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase2" x="+187+34" y="+0" visible="deck 2 rightdeck">
+			<deck deck="2" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+					<off x="1027" y="1126"/>
+					<on x="907" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+		<panel name="beatphase4" x="+187+34" y="+0" visible="deck 4 rightdeck">
+			<deck deck="4" >
+			  <visual source="get_beat_counter" type="circle">
+				<tooltip>Phrase indicator</tooltip>
+				  <size width="28" height="28"/>
+				  <pos x="+0" y="+1"/>
+					<off x="1027" y="1126"/>
+					<on x="987" y="1126"/>
+				</visual>
+				<textzone>
+					<tooltip>Phrase indicator</tooltip>
+					<pos x="+6" y="+1+7"/>
+					<size width="16" height="16"/>
+					<text size="14" color="#aaaaaa" align="center" weight="bold" action="get_beat_counter"/>
+				</textzone>
+				<button action="goto -4">
+					<tooltip>Phrase indicator</tooltip>
+					<size width="28" height="28"/>
+					<pos x="+0" y="+1"/>
+				</button>
+			</deck>
+		</panel>
+		
+	</panel>
+	
+      <textzone>
+        <pos x="340" y="10"/>
+        <size width="40" height="13"/>
+        <text size="13" weight="bold" color="#aaaaaa" align="center" format="WAVE"/>
+      </textzone>
+	<menu>
+		<tooltip>CHOOSE WAVEFORM \n Select waveform layout</tooltip>
+		<size width="37" height="22"/>
+		<pos x="380" y="5"/>
+		<off x="225" y="910"/>
+		<on x="313" y="910"/>
+		<over x="269" y="910"/>
+		<icon x="170" y="911" width="21" height="18" />
+		<item text="Overlap Waves" action="skin_pannel 'default2' on & skin_pannel 'default4' on" check="skin_panel '2decks' on ? skin_pannel 'default2' on ? true : false : skin_panel '4decks' on ? skin_pannel 'default4' on ? true : false" />
+		<item text="Mirrored Waves" action="skin_pannel 'mirror2' on & skin_pannel 'mirror4' on" check="skin_panel '2decks' on ? skin_pannel 'mirror2' on ? true : false : skin_panel '4decks' on ? skin_pannel 'mirror4' on ? true : false" />
+		<item text="Up-Down Waves" action="skin_pannel 'separate2' on & skin_pannel 'separate4' on" check="skin_panel '2decks' on ? skin_pannel 'separate2' on ? true : false : skin_panel '4decks' on ? skin_pannel 'separate4' on ? true : false" />
+
+	</menu>
+	
+	 <textzone>
+        <pos x="460" y="10"/>
+        <size width="60" height="13"/>
+        <text size="13" weight="bold" color="#aaaaaa" align="center" format="BROWSER"/>
+      </textzone>
+	
+	<button action="skin_panelgroup 'zoom' +1" query="skin_panel 'browserzoom' on">
+		<tooltip>BROWSER ZOOM VIEW</tooltip>
+		<size width="37" height="22"/>
+		<pos x="520" y="5"/>
+		<off x="225" y="910"/>
+		<on x="313" y="910"/>
+		<over x="269" y="910"/>
+		<icon x="193" y="912" width="21" height="18" />
+	</button>	
+
+	<group name="vumeter" x="900" y="4">
+	  <textzone>
+		<pos x="+0" y="+6"/>
+		<size width="55" height="13"/>
+		<text size="13" weight="bold" color="#aaaaaa" align="left" format="MASTER"/>
+	  </textzone>
+	  <visual>
+		<pos x="+50" y="+0"/>
+		<size width="110" height="23"/>
+		<off x="779" y="935"/>
+	  </visual> 
+	   <visual source="get_vu_meter 'master'" type="linear" orientation="horizontal">
+		<pos x="+55" y="+3"/>
+		<size width="102" height="16"/>
+		<off x="783" y="937"/>
+		<on x="783" y="914"/>
+	  </visual>
+		<visual type="transparent" source="get_limiter">
+		  <pos x="+185" y="+6"/>
+		  <tooltip>Limiter</tooltip>
+		  <size width="12" height="13"/>
+		  <off x="483" y="956"/>
+		  <on x="495" y="956"/>
+		</visual>
+		<textzone>
+		  <pos x="+152+3" y="+6"/>
+		  <size width="35" height="13"/>
+		  <text size="13" weight="bold" color="#aaaaaa" align="center" format="LIM"/>
+		</textzone>
+  </group>
+
+  <button os="pc" action="settings">
+    <pos x="1273" y="5"/>
+    <size width="33" height="21"/>
+    <tooltip>SETTINGS\n Change configurations for VirtualDJ</tooltip>
+    <off x="442" y="910"/>
+    <over x="476" y="910"/>
+    <down x="510" y="910"/>
+    <on x="510" y="910"/>
+  </button>
+  <button os="pc" action="minimize">
+    <pos x="1360" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>MINIMIZE\n Minimize the software</tooltip>
+    <off x="577" y="910"/>
+    <over x="652" y="910"/>
+    <on x="727" y="910"/>
+  </button>
+  <button os="pc" action="maximize" rightclick="maximize off">
+    <pos x="1385" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>MAXIMIZE\n Toggle between large view, full screen view</tooltip>
+    <off x="552" y="910"/>
+    <over x="627" y="910"/>
+    <on x="702" y="910"/>
+  </button>
+  <button os="pc" action="close">
+    <pos x="1410" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>CLOSE\n Close VirtualDJ</tooltip>
+    <off x="602" y="910"/>
+    <over x="677" y="910"/>
+    <down x="752" y="910"/>
+    <selected x="752" y="910"/>
+  </button>
+
+  <button os="mac" action="settings">
+    <pos x="100" y="5"/>
+    <size width="33" height="21"/>
+    <tooltip>SETTINGS\n Change configurations for VirtualDJ</tooltip>
+    <off x="442" y="910"/>
+    <over x="476" y="910"/>
+    <down x="510" y="910"/>
+    <on x="510" y="910"/>
+  </button>
+  <button os="mac" action="minimize">
+    <pos x="10+50" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>MINIMIZE\n Minimize the software</tooltip>
+    <off x="577" y="910"/>
+    <over x="652" y="910"/>
+    <on x="727" y="910"/>
+  </button>
+  <button os="mac" action="maximize" rightclick="maximize off">
+    <pos x="10+25" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>MAXIMIZE\n Toggle between large view, full screen view</tooltip>
+    <off x="552" y="910"/>
+    <over x="627" y="910"/>
+    <on x="702" y="910"/>
+  </button>
+  <button os="mac" action="close">
+    <pos x="10" y="6"/>
+    <size width="23" height="23"/>
+    <tooltip>CLOSE\n Close VirtualDJ</tooltip>
+    <off x="602" y="910"/>
+    <over x="677" y="910"/>
+    <down x="752" y="910"/>
+    <selected x="752" y="910"/>
+  </button>
+
+	<button action="skin_panel '4decks' on ? skin_panel '2decks' on : skin_panel '4decks' on">
+		<Tooltip>Toggles between 2deck & 4deck mode</Tooltip>
+		<pos x="1170" y="5"/>
+		<size width="67" height="24"/>
+		<off x="998" y="944"/>
+		<over x="918" y="944"/>
+		<down x="918" y="944"/>
+	</button>
+
+</group>
+
+<panel name="decks" group="zoom" visible="yes">
+
+	<group name="wavess">
+
+		<button action="zoom 'save'" >
+		  <size width="15" height="15"/>
+		  <pos x="1396" y="39"/>
+		  <up x="722" y="953"/>
+		  <down x="738" y="953"/>
+		  <over x="738" y="953"/>
+		   <text size="14" weight="bold" color="#ffffff" align="center" format="S"/>
+		</button>
+		<button action="zoom 'default' &amp; zoom_scratch 'default'">
+		 <size width="15" height="15"/>
+		  <pos x="1396" y="60"/>
+		 <up x="722" y="953"/>
+		  <down x="738" y="953"/>
+		  <over x="738" y="953"/>
+		   <text size="14" weight="bold" color="#ffffff" align="center" format="D"/>
+		</button>
+		<button action="zoom 'recall'">
+		  <size width="15" height="15"/>
+		  <pos x="1396" y="80"/>
+		  <up x="722" y="953"/>
+		  <down x="738" y="953"/>
+		  <over x="738" y="953"/>
+		   <text size="14"  weight="bold" color="#ffffff" align="center" format="R"/>
+		</button>
+		<slider action="zoom" rightclick="temporary" dblclick="reset" orientation="vertical">
+		  <size width="13" height="52"/>
+		  <pos x="29" y="43"/>
+			<fader>
+			  <size width="5" height="6"/>
+			  <pos x="1035" y="1396"/>
+			</fader>
+		</slider>
+	 
+	</group>
+	<panel name="2decks" group="nbdecks" visible="yes">
+
+	<group name="ritms">
+		<panel name="default2" group="waveform2" visible="yes" >
+			<rhythmzone fade="100" >
+				<size width="1350" height="75"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="black" chan1_active="#28ACFF" chan1_left="#779FB9"
+					chan2="black" chan2_active="#FE1818"   chan2_right="#B77578"
+					chan3="black" chan3_active="#18fe27"  chan3_left="#75B97B"
+					chan4="black" chan4_active="#ffc935" chan4_right="#B9AA75"
+				/>
+				<rhythm y="31" height="63"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="96" y2="100" y3="96" y4="100"/>
+				</grid>
+				<cue y="31" height="63">
+					<mask x="1008" y="1399" width="18" height="63"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+		</panel>  
+		
+		<panel name="mirror2" group="waveform2" visible="no" >
+			<rhythmzone mirror="true" fade="100">
+				<size width="1350" height="96"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="black" chan1_active="#28ACFF" chan1_left="#779FB9"
+					chan2="black" chan2_active="#FE1818"   chan2_right="#B77578"
+					chan3="black" chan3_active="#18fe27"  chan3_left="#75B97B"
+					chan4="black" chan4_active="#ffc935" chan4_right="#B9AA75"
+				/>
+				<rhythm y="31" height="63"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="96" y2="100" y3="96" y4="100"/>
+				</grid>
+				<cue y="31" height="63">
+					<mask x="1008" y="1399" width="18" height="63"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+		</panel>
+
+		<panel name="separate2" group="waveform2" visible="no" >
+			<rhythmzone fade="100" >
+				<size width="1350" height="31"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="black" chan1_left="#28ACFF" chan1_right="#28ACFF"
+					chan3="black" chan3_left="#18fe27" chan3_right="#18fe27"
+				/>
+				<rhythm y="31" height="31"/>
+				<cue y="31" height="31">
+					<mask x="1008" y="1399" width="18" height="31"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone fade="100" >
+				<size width="1350" height="31"/>
+				<pos x="46" y="63"/>
+				<colors
+					chan2="black" chan2_left="#FE1818" chan2_right="#FE1818"
+					chan4="black" chan4_left="#ffc935" chan4_right="#ffc935"
+				/>
+				<rhythm y="63" height="31"/>
+				<cue y="63" height="31">
+					<mask x="1008" y="1399" width="18" height="31"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone fade="100">
+				<size width="1350" height="9"/>
+				<pos x="46" y="96"/>
+				<colors
+					 chan1="black" chan1_left="#28ACFF" chan1_right="#28ACFF"
+					chan2="black" chan2_left="#FE1818" chan2_right="#FE1818"
+					chan3="black" chan3_left="#18fe27" chan3_right="#18fe27"
+					chan4="black" chan4_left="#ffc935" chan4_right="#ffc935"
+				/>
+				<rhythm y="96" height="0"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="96" y2="100" y3="96" y4="100"/>
+				</grid>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+		</panel>
+	</group>
+
+	
+		<browser >
+			<size width="1436" height="393+21" />
+			<pos x="2" y="506-25"/>
+		</browser>
+
+		<panel name="left2deck1" x="8" y="120" visible="deck 1 leftdeck">
+			<deck deck="1">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" deck="3" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" ><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+		
+		<panel name="left2deck3" x="8" y="120" visible="deck 3 leftdeck">
+			<deck deck="3">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" deck="1"><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		<panel name="right2deck2" x="8+845" y="120" visible="deck 2 rightdeck">
+			<deck deck="2">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" deck="4"><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		<panel name="right2deck4" x="8+845" y="120" visible="deck 4 rightdeck">
+			<deck deck="4">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" deck="2"><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" ><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		<button action="skin_panel 'audiomixer' on & skin_panel 'audiomixer4' on">
+			<pos x="587" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1140" y="933"/>
+			<on x="1140" y="975"/>
+			<over x="1140" y="954"/>
+			<text dx="21" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MIXER"/>
+			<textover dx="21" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MIXER"/>
+			<textselected dx="21" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="MIXER"/>
+		</button>	
+		<button action="skin_panel 'videomixer' on & skin_panel 'videomixer4' on">
+			<pos x="587+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1212" y="933"/>
+			<on x="1212" y="975"/>
+			<over x="1212" y="954"/>
+			<text dx="19" size="12" weight="bold" width="42" align="center" color="#908f8d" format="VIDEO"/>
+			<textover dx="19" size="12" weight="bold" width="42" align="center" color="#908f8d" format="VIDEO"/>
+			<textselected dx="19" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="VIDEO"/>
+
+		</button>	
+		<button action="skin_panel 'scratchmixer' on & skin_panel 'scratchmixer4' on">
+			<pos x="587+66+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1285" y="933"/>
+			<on x="1285" y="975"/>
+			<over x="1285" y="954"/>
+			<text dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="SCRATCH"/>
+			<textover dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="SCRATCH"/>
+			<textselected dx="20" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="SCRATCH"/>
+
+		</button>	
+		<button action="skin_panel 'mastermixer' on & skin_panel 'mastermixer4' on">
+			<pos x="587+66+66+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1360" y="933"/>
+			<on x="1360" y="975"/>
+			<over x="1360" y="954"/>
+			<text dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MASTER"/>
+			<textover dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MASTER"/>
+			<textselected dx="20" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="MASTER"/>
+
+		</button>	
+		
+		<panel name="audiomixer" group="mixer" visible="yes" >
+
+			<panel name="mixleft1" visible="deck 1 leftdeck">
+				<deck deck="1">
+					<panel class="knobl" x="632" y="171-15">
+						<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+						</slider>
+						<textzone><text format="GAIN"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="221-15">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						</slider>
+						<textzone><text format="HI"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="271-15">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						</slider>
+						<textzone><text format="MID"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="322-15">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						</slider>
+						<textzone><text format="LOW"/></textzone>
+					</panel>		
+					<visual>
+						<size width="17" height="196"/>
+						<pos x="601" y="156"/>
+						<off x="621" y="1056"/>	
+					</visual>
+					
+					<visual class="lvl">
+						<pos x="604" y="158"/>
+					</visual>
+					<button class="pfl">
+						<size width="24" height="25"/>
+						 <pos x="677" y="262"/>
+					</button>
+					<slider class="levelon">
+						<pos x="670" y="291"/>
+					</slider>
+				</deck>
+			</panel>
+
+			<panel name="mixleft3" visible="deck 3 leftdeck">
+				<deck deck="3">
+					<panel class="knobl" x="632" y="171-15">
+						<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+						</slider>
+						<textzone><text format="GAIN"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="221-15">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						</slider>
+						<textzone><text format="HI"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="271-15">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						</slider>
+						<textzone><text format="MID"/></textzone>
+					</panel>
+					<panel class="knobl" x="632" y="322-15">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						</slider>
+						<textzone><text format="LOW"/></textzone>
+					</panel>		
+					<visual>
+						<size width="17" height="196"/>
+						<pos x="601" y="156"/>
+						<off x="621" y="1056"/>	
+					</visual>
+					
+					<visual class="lvl">
+						<pos x="604" y="158"/>
+					</visual>
+					<button class="pfl">
+						<size width="24" height="25"/>
+						 <pos x="677" y="262"/>
+					</button>
+					<slider class="levelon">
+						<pos x="670" y="291"/>
+					</slider>
+				</deck>
+			</panel>
+			
+			<panel name="mixright2" visible="deck 2 rightdeck">
+				<deck deck="2">
+					<panel class="knobl" x="775" y="171-15">
+						<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+						</slider>
+						<textzone><text format="GAIN"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="221-15">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						</slider>
+						<textzone><text format="HI"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="271-15">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						</slider>
+						<textzone><text format="MID"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="322-15">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						</slider>
+						<textzone><text format="LOW"/></textzone>
+					</panel>		
+					<visual>
+						<size width="17" height="196"/>
+						<pos x="811" y="156"/>
+						<off x="621" y="1056"/>	
+					</visual>
+					
+					<visual class="lvl">
+						<pos x="814" y="158"/>
+					</visual>
+					<button class="pfl">
+						<size width="24" height="25"/>
+						 <pos x="731" y="262"/>
+					</button>
+					<slider class="levelon">
+						<pos x="725" y="291"/>
+					</slider>
+				</deck>
+				
+			</panel>
+
+			<panel name="mixright2" visible="deck 4 rightdeck">
+				<deck deck="4">
+					<panel class="knobl" x="775" y="171-15">
+						<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+						</slider>
+						<textzone><text format="GAIN"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="221-15">
+						<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+						</slider>
+						<textzone><text format="HI"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="271-15">
+						<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+						</slider>
+						<textzone><text format="MID"/></textzone>
+					</panel>
+					<panel class="knobl" x="775" y="322-15">
+						<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+						</slider>
+						<textzone><text format="LOW"/></textzone>
+					</panel>		
+					<visual>
+						<size width="17" height="196"/>
+						<pos x="811" y="156"/>
+						<off x="621" y="1056"/>	
+					</visual>
+					
+					<visual class="lvl">
+						<pos x="814" y="158"/>
+					</visual>
+					<button class="pfl">
+						<size width="24" height="25"/>
+						 <pos x="731" y="262"/>
+					</button>
+					<slider class="levelon">
+						<pos x="725" y="291"/>
+					</slider>
+				</deck>
+				
+			</panel>
+
+			<slider class="cf">
+				<pos x="644" y="431"/>
+			</slider>
+			<button class="cfdisable"><pos x="653" y="407"/></button>
+			<button class="cffull"><pos x="698" y="407"/></button>
+			<button class="cfscratch"><pos x="744" y="407"/></button>
+
+			<visual>
+				<size width="21" height="23"/>
+				<pos x="709" y="144"/>
+				<off x="707" y="1024"/>	
+			</visual>
+			<panel class="knobsm" x="705" y="232-15">
+				<slider action="headphone_volume" orientation="round" dblclick="headphone_volume 100%" >
+				</slider>
+				<textzone><text format="VOL"/></textzone>
+			</panel>
+			<panel class="knobsm" x="705" y="185-15">
+				<slider action="headphone_mix" orientation="round" dblclick="headphone_mix 0%" >
+				</slider>
+				<textzone><text format="MIX"/></textzone>
+			</panel>
+			
+			
+		</panel>
+		
+		<panel name="videomixer" group="mixer" visible="no" >
+
+			<visual>
+				<pos x="595" y="151" />
+				<size width="249" height="208"/>
+				<off x="452" y="1415"/>
+			</visual>
+			<video source="master">
+			  <pos x="597" y="153"/>
+			  <size width="244" height="130"/>
+			  <off x="454" y="1417"/>
+			</video>
+
+			<video source="channel" chan="left">
+				<pos x="597" y="287"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+			<video source="channel" chan="right">
+				<pos x="721" y="287"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+
+			<textzone>
+				<pos x="620" y="363"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="TRANSITION"/>
+			</textzone>	
+			<textzone>
+				<pos x="725" y="363"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="VIDEO FX"/>
+			</textzone>	
+			
+	
+			<button class="videobox" action="video_transition" rightclick="temporary">
+				<pos x="609" y="376"/>
+				<text format="%videotransition" />
+			</button>
+			<button class="videobox" action="video_fx" rightclick="temporary">
+				<pos x="717" y="376"/>
+				<text format="%videofx" />
+			</button>
+			<button action="video_transition_select">
+				<pos x="682" y="376"/>
+				<size width="17" height="20"/>
+			</button>
+			<button action="video_fx_select">
+				<pos x="791" y="376"/>
+				<size width="17" height="20"/>
+			</button>
+			<panel class="knob" x="815" y="374-15">
+				<slider action="video_fx_slider"></slider>
+				<textzone><text action="deck master get_effect_slider_label 'video' 1"/></textzone>
+			</panel>
+
+			<textzone>
+				<pos x="583" y="414"/>
+				<size width="40" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="AUTO"/>
+			</textzone>	
+			<textzone>
+				<pos x="815" y="414"/>
+				<size width="40" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="LINK"/>
+			</textzone>	
+			<button class="roundbutton" action="video_crossfader_auto" >
+				<tooltip>Auto Video Crossfader mode\nWhen enabled, the Video crossfader will be auto-positioned\nbased on the currently playing deck</tooltip>
+				<pos x="596" y="429"/>
+			</button>
+			<button class="roundbutton" action="video_crossfader_link" >
+				<tooltip>Link Video Crossfader to the Audio Crossfader\nWhen enabled, the Video crossfader will follow\nthe position of the Audio Crossfader</tooltip>
+				<pos x="828" y="429"/>
+			</button>
+
+
+			<panel name="vcf" group="cfs" visible="yes">
+				<button action="skin_panel 'acf' on">
+					<pos x="655" y="410"/>
+					<size width="120" height="12"/>
+					<text size="12" weight="bold" color="#9D9E9E" align="center" format="VIDEO CROSSFADER"/>
+					<textover size="12" weight="bold" color="white" align="center" format="VIDEO CROSSFADER"/>
+				</button>
+				<slider class="vf">
+					<pos x="644" y="431"/>
+				</slider>			
+			</panel>
+			<panel name="acf" group="cfs" visible="no">
+				<button action="skin_panel 'vcf' on">
+					<pos x="655" y="410"/>
+					<size width="120" height="12"/>
+					<text size="12" weight="bold" color="#9D9E9E" align="center" format="AUDIO CROSSFADER"/>
+					<textover size="12" weight="bold" color="white" align="center" format="AUDIO CROSSFADER"/>
+				</button>	
+				<slider class="cf">
+					<pos x="644" y="431"/>
+				</slider>
+			</panel>
+			
+		</panel>
+
+		<panel name="scratchmixer" group="mixer" visible="no" >
+			<visual>
+				<pos x="591" y="155" />
+				<size width="72" height="307"/>
+				<off x="1295" y="1413"/>
+			</visual>
+			 <scratchwave deck="1" orientation="vertical" length="1500" visibility="deck 1 leftdeck" >
+				<pos x="593" y="158"/>
+				<size width="68" height="303"/>
+				 <overlay>
+					<pos x="593" y="158" width="68" height="303"/>
+					<background x="1197" y="1415"/>
+				</overlay>
+			 </scratchwave>
+			 <scratchwave deck="3" orientation="vertical" length="1500" visibility="deck 3 leftdeck" >
+				<pos x="593" y="158"/>
+				<size width="68" height="303"/>
+				 <overlay>
+					<pos x="593" y="158" width="68" height="303"/>
+					<background x="1197" y="1415"/>
+				</overlay>
+			 </scratchwave>	
+			 <visual>
+				<pos x="775" y="155" />
+				<size width="72" height="307"/>
+				<off x="1295" y="1413"/>
+			</visual>
+			 <scratchwave deck="2" orientation="vertical" length="1500" visibility="deck 2 rightdeck" >
+				<pos x="777" y="158"/>
+				<size width="68" height="303"/>
+				 <overlay>
+					<pos x="777" y="158" width="68" height="303"/>
+					<background x="1197" y="1415"/>
+				</overlay>
+			 </scratchwave>
+			 <scratchwave deck="4" orientation="vertical" length="1500" visibility="deck 4 rightdeck" >
+				<pos x="777" y="158"/>
+				<size width="68" height="303"/>
+				 <overlay>
+					<pos x="777" y="158" width="68" height="303"/>
+					<background x="1197" y="1415"/>
+				</overlay>
+			 </scratchwave>	 
+		
+			<deck deck="left">
+				<panel class="knobl" x="386+291" y="159">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<button class="roundbutton"  action="smart_scratch">
+					<pos x="383+291" y="3072-2652"/>
+				</button>
+				<button class="roundbutton"  action="beatlock">
+					<pos x="383+291" y="3095-2652"/>
+				</button>
+			</deck>
+			<deck deck="right">
+				<panel class="knobl" x="439+291" y="159">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<button class="roundbutton"  action="smart_scratch">
+					<pos x="459+290" y="3072-2652"/>
+				</button>
+				<button class="roundbutton"  action="beatlock">
+					<pos x="459+290" y="3095-2652"/>
+				</button>
+			</deck>
+			<textzone>
+				<pos x="685" y="415"/>
+				<size width="70" height="25"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="SMART\nSCRATCH"/>
+			</textzone>
+			<textzone>
+				<pos x="685" y="445"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="BEATLOCK"/>
+			</textzone>
+			<button class="buttonrev" action="deck right clone_deck leftdeck" >
+					<pos x="683" y="2946-2652"></pos>
+			</button>
+			<button class="buttonplay" action="deck left clone_deck rightdeck" >
+					<pos x="720" y="2946-2652"></pos>
+			</button>			
+			<textzone>
+				<pos x="685" y="275"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="CLONE"/>
+			</textzone>
+		</panel>
+		
+		<panel name="mastermixer" group="mixer" visible="no" >
+
+			<group name="sandbox" x="590" y="147">
+				<visual>
+					<pos x="-7" y="+22"/>
+					<size width="270" height="4"/>
+					<off x="491" y="2140"/>
+				</visual>
+				<visual>
+					<pos x="+0" y="+0"/>
+					<size width="190" height="18"/>
+					<off x="892" y="911"/>
+				</visual>
+				<songpos deck="sandbox">
+				  <pos x="+1" y="+1"/>
+				  <size width="188" height="16"/>
+				</songpos>
+				<button action="sandbox" visibility="can_sandbox ? false : true">
+				  <pos x="+192" y="+0"/>
+				  <size width="66" height="18"/>
+				  <off x="1322" y="911"/>
+				</button>
+				<button action="sandbox" visibility="can_sandbox ? true : false">
+				  <pos x="+192" y="+0"/>
+				  <size width="66" height="18"/>
+				  <off x="1112" y="911"/>
+				  <over x="1182" y="911"/>
+				  <on x="1251" y="911"/>
+				</button>
+			</group>
+
+		<group name="masterv" x="590" y="180">			
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="52" height="205"/>
+				<off x="842" y="1812"/>
+			</visual>
+			<panel class="knob" x="+12" y="+10">
+				<slider action="master_volume" dblclick="master_volume 100%" >
+				</slider>
+				<textzone><text format="MASTER"/></textzone>
+			</panel>
+			<button x="+9" y="+65" class="mixerbut" action="on" tooltip="LIMITER"><text format="ON"/></button>
+			<button x="+9" y="+90" class="mixerbut" action="sampler_rec 'master'" tooltip="RECORD TO SAMPLE\n Record the master output into a new sample file"><text format="REC"/></button>
+			  
+			 <visual source="get_vu_meter 'master'" type="linear" orientation="vertical" direction="up">
+			    <pos x="+23" y="+122"/>
+			    <size width="11" height="76"/>
+			    <off x="625" y="955"/>
+			    <on x="647" y="955"/>
+			</visual>
+			
+		</group>
+		<group name="micv" x="793" y="180">			
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="52" height="205"/>
+				<off x="842" y="1812"/>
+			</visual>
+			<panel class="knob" x="+12" y="+10">
+				<slider action="mic_volume" dblclick="mic_volume 100%" >
+				</slider>
+				<textzone><text format="MIC"/></textzone>
+			</panel>
+			<button x="+9" y="+65" class="mixerbut" action="mic" tooltip="MIC ON"><text format="ON"/></button>
+			<button x="+9" y="+90" class="mixerbut" action="sampler_rec 'mic'" tooltip="RECORD TO SAMPLE\n Record the Mic output into a new sample file"><text format="REC"/></button>
+			  
+			<visual source="get_vu_meter 'mic'" type="linear" orientation="vertical" direction="up">
+		      <pos x="+23" y="+122"/>
+		      <size width="11" height="76"/>
+			    <off x="625" y="955"/>
+			    <on x="647" y="955"/>
+		    </visual>
+			
+		</group>
+		
+		<group name="headp" x="664" y="190">			
+			<visual>
+				<size width="21" height="23"/>
+				<pos x="+45" y="+5"/>
+				<off x="707" y="1024"/>	
+			</visual>
+			<panel class="knob" x="+0" y="+0">
+				<slider action="headphone_volume" orientation="round" dblclick="headphone_volume 100%" >
+				</slider>
+				<textzone><text format="VOL"/></textzone>
+			</panel>
+			<panel class="knob" x="+85" y="+0">
+				<slider action="headphone_mix" orientation="round" dblclick="headphone_mix 0%" >
+				</slider>
+				<textzone><text format="MIX"/></textzone>
+			</panel>
+			<visual>
+				<pos x="-23" y="+53"/>
+				<size width="152" height="4"/>
+				<off x="491" y="2140"/>
+			</visual>
+		</group>
+
+		<group name="mfx" x="664" y="250">
+			<textzone>
+				<pos x="+10" y="+5"/>
+				<size width="90" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="MASTER EFFECT"/>
+			</textzone>			
+			<button class="mfxbox" action="deck master effect_active" rightclick="temporary">
+				<pos x="+10" y="+25"/>
+				<text action="deck master get_effect_name" />
+			</button>
+			<button action="deck master effect_select">
+				<pos x="+10+75" y="+25"/>
+				<size width="17" height="20"/>
+			</button>
+			<panel class="knob" x="+10" y="+50">
+				<slider action="deck master effect slider 1" >
+					<tooltip>Effect Parametr 1</tooltip>
+				</slider>
+				<textzone>
+					<text action="deck master get_effect_slider_label 1"/>
+				</textzone>
+			</panel>
+			<panel class="knob" x="+60" y="+50">
+				<slider action="deck master effect slider 2" >
+					<tooltip>Effect Parametr 2</tooltip>
+				</slider>
+				<textzone>
+					<text action="deck master get_effect_slider_label 2"/>
+				</textzone>
+			</panel>
+			<visual>
+				<pos x="-23" y="+98"/>
+				<size width="152" height="4"/>
+				<off x="491" y="2140"/>
+			</visual>
+		</group>
+
+		<group name="rec" x="615" y="370">
+			<textzone>
+				<pos x="+30" y="+0"/>
+				<size width="140" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" action="get lemode ? get_text 'RECORD MIX' : get_text 'RECORD/BROADCAST MIX'"/>
+			</textzone>	
+			<visual>
+				<pos x="+20" y="+20"/>
+				<size width="170" height="79"/>
+				<off x="857" y="2866"/>
+			</visual>
+			<textzone>
+			  <pos x="+20+4" y="+24"/>
+			  <size width="162" height="71"/>
+			  <text size="13" color="#aaaaaa" align="center" action="broadcast_message 'full'"/>
+			</textzone>
+			<button class="mixerbut" x="-20" y="+25" action="broadcast" tooltip="Broadcast Mix" visibility="not get lemode"><text format="BCST"/></button>
+			<button class="mixerbut" x="-20" y="+49" action="record" tooltip="Record Mix"><text format="REC"/></button>
+			<button class="mixerbut" x="-20" y="+78" action="record_config" tooltip="Edit record settings" visibility="not get lemode"><text format="FILE"/></button>
+			<visual source="record_vu" type="linear" orientation="vertical" direction="up">
+			  <pos x="+202" y="+27"/>
+			  <size width="12" height="59"/>
+			  <off x="603" y="972"/>
+			  <on x="587" y="972"/>
+			</visual>
+
+		</group>
+		
+		</panel>
+	</panel>
+
+	<panel name="4decks" group="nbdecks" visible="no">
+
+	<group name="ritms">		
+		<panel name="default4" group="waveform4" visible="yes" >
+
+			<rhythmzone fade="100">
+				<size width="1350" height="74"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="#779FB9"  chan1_active="#28ACFF"
+					chan2="#B77578"  chan2_active="#FE1818"
+					chan3="#75B97B"  chan3_active="#18fe27"
+					chan4="#B9AA75"  chan4_active="#ffc935"
+				/>
+				<rhythm y="31" height="56"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="88" y2="92" y3="96" y4="100"/>
+				</grid>
+				<cue y="31" height="56">
+					<mask x="1008" y="1399" width="18" height="56"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+	
+		</panel>
+
+		<panel name="mirror4" group="waveform4" visible="no" >		
+			<rhythmzone mirror="true" fade="100">
+				<size width="1350" height="28"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="#779FB9" chan1_left="#28ACFF"
+					chan3="#75B97B" chan3_left="#18fe27"
+				/>
+				<rhythm y="31" height="28"/>
+				<cue y="31" height="28">
+					<mask x="1008" y="1399" width="18" height="28"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone mirror="true" fade="100" >
+				<size width="1350" height="28"/>
+				<pos x="46" y="31+28"/>
+				<colors
+					chan2="#B77578" chan2_right="#FE1818"	
+					chan4="#B9AA75" chan4_right="#ffc935"
+				/>
+				<rhythm y="59" height="28"/>
+				<cue y="59" height="28">
+					<mask x="1008" y="1399" width="18" height="28"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone mirror="true" fade="100" >
+				<size width="1350" height="17"/>
+				<pos x="46" y="88"/>
+				<colors
+					chan1="#779FB9"  chan1_left="#28ACFF"
+					chan2="#B77578" chan2_right="#FE1818"
+					chan3="#75B97B" chan3_left="#18fe27"
+					chan4="#B9AA75" chan4_right="#ffc935"
+				/>
+				<rhythm y="88" height="0"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="88" y2="92" y3="96" y4="100"/>
+				</grid>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+		</panel>
+
+		<panel name="separate4" group="waveform4" visible="no" >		
+			<rhythmzone fade="100">
+				<size width="1350" height="28"/>
+				<pos x="46" y="31"/>
+				<colors
+					chan1="#779FB9" chan1_left="#28ACFF"
+					chan3="#75B97B" chan3_left="#18fe27"
+				/>
+				<rhythm y="31" height="28"/>
+				<cue y="31" height="28">
+					<mask x="1008" y="1399" width="18" height="28"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone fade="100" >
+				<size width="1350" height="28"/>
+				<pos x="46" y="31+28"/>
+				<colors
+					chan2="#B77578" chan2_right="#FE1818"	
+					chan4="#B9AA75" chan4_right="#ffc935"
+				/>
+				<rhythm y="59" height="28"/>
+				<cue y="59" height="28">
+					<mask x="1008" y="1399" width="18" height="28"/>
+					<text dx="21" dy="0" font="arial" size="15"/>
+				</cue>
+			</rhythmzone>
+
+			<rhythmzone fade="100" >
+				<size width="1350" height="17"/>
+				<pos x="46" y="88"/>
+				<colors
+					chan1="#779FB9"  chan1_left="#28ACFF"
+					chan2="#B77578" chan2_right="#FE1818"
+					chan3="#75B97B" chan3_left="#18fe27"
+					chan4="#B9AA75" chan4_right="#ffc935"
+				/>
+				<rhythm y="88" height="0"/>
+				<grid height="4" width="4" mainwidth="8">
+						<pos y1="88" y2="92" y3="96" y4="100"/>
+				</grid>
+				<overlay>
+					<pos x="720" y="31" width="4" height="75"/>
+					<background x="929" y="1403"/>
+				</overlay>
+			</rhythmzone>
+		</panel>
+
+	</group>
+
+
+		<browser >
+			<size width="1436" height="272+21" />
+			<pos x="2" y="627-25"/>
+		</browser>	
+
+		<visual >
+			<size width="1435" height="149" />
+			<pos x="3" y="465"/>
+			<off x="3" y="2852"/>
+		</visual>	
+		
+		<panel name="left4deck1" x="8" y="120" visible="deck 1 leftdeck">
+			<deck deck="1">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" deck="3" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" ><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+		
+		<panel name="left4deck3" x="8" y="120" visible="deck 3 leftdeck">
+			<deck deck="3">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" deck="1"><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		<panel name="right4deck2" x="8+845" y="120" visible="deck 2 rightdeck">
+			<deck deck="2">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" ><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" deck="4"><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		<panel name="right4deck4" x="8+845" y="120" visible="deck 4 rightdeck">
+			<deck deck="4">
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="sidebutton" deck="2"><pos x="+453" y="+39"/></button>
+				<button class="sidebutton" ><pos x="+528" y="+39"/></button>
+
+				<button class="aux" ><pos x="+380" y="+39"/></button>
+				<button class="rec" ><pos x="+411" y="+39"/></button>
+			</deck>
+		</panel>
+
+		
+		<panel name="leftdowndeck1" x="8" y="120+364" visible="deck 3 leftdeck">
+			<deck deck="1">
+
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+				<visual >
+					<pos x="+3" y="+82"/>
+					<size width="570" height="27"/>
+					<off x="236" y="1734"/>
+				</visual>
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="aux" ><pos x="+375" y="+48"/></button>
+				<button class="rec" ><pos x="+406" y="+48"/></button>
+
+				
+				<button class="minicue" ><pos x="+453" y="+48"/></button>
+				<button class="miniplay" ><pos x="+490" y="+48"/></button>
+				<button class="minisync" ><pos x="+528" y="+48"/></button>
+
+			</deck>
+			
+		</panel>
+		
+		<panel name="leftdowndeck3" x="8" y="120+364" visible="deck 1 leftdeck">
+			<deck deck="3">
+
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+				<visual >
+					<pos x="+3" y="+82"/>
+					<size width="570" height="27"/>
+					<off x="236" y="1734"/>
+				</visual>
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="aux" ><pos x="+375" y="+48"/></button>
+				<button class="rec" ><pos x="+406" y="+48"/></button>
+
+				
+				<button class="minicue" ><pos x="+453" y="+48"/></button>
+				<button class="miniplay" ><pos x="+490" y="+48"/></button>
+				<button class="minisync" ><pos x="+528" y="+48"/></button>
+
+			</deck>
+			
+		</panel>
+		
+		<panel name="rightdowndeck2" x="8+846" y="120+364" visible="deck 4 rightdeck">
+			<deck deck="2">
+
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="aux" ><pos x="+375" y="+48"/></button>
+				<button class="rec" ><pos x="+406" y="+48"/></button>
+
+				
+				<button class="minicue" ><pos x="+453" y="+48"/></button>
+				<button class="miniplay" ><pos x="+490" y="+48"/></button>
+				<button class="minisync" ><pos x="+528" y="+48"/></button>
+
+			</deck>
+			
+		</panel>
+		
+		<panel name="rightdowndeck4" x="8+846" y="120+364" visible="deck 2 rightdeck">
+			<deck deck="4">
+
+				<songpos class="songpos" >
+					<pos x="+3" y="+82"/>
+				</songpos>
+
+				<dropzone >
+				  <pos x="+0" y="-6"/>
+				  <size width="580" height="117"/>
+				</dropzone>
+
+				<cover visibility="var '@$hidecover' 0">
+					<pos x="+5" y="+0"/>
+					<size width="45" height="45"/>
+				</cover>
+
+					
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360" height="22" />
+					  <pos x="+9" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 1">
+					   <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360" height="20" />
+					  <pos x="+9" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				  
+				  <textzone rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					<Tooltip>Track's Artist\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					  <size width="360-42" height="22" />
+					  <pos x="+9+42" y="+0"></pos>
+					  <text size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="no"/>
+					 <text2 size="22" color="#FFFFFF" weight="bold" format="%Author" scroll="yes"/>
+				  </textzone>
+				  <textzone class="textcolorline12" rightclick="toggle '@$hidecover'" visibility="var '@$hidecover' 0">
+					  <Tooltip>Track's Title\nClick to Enable/Disable Scrolling\nRight-click to Show/Hide Cover</Tooltip>
+					   <size width="360-42" height="20" />
+					  <pos x="+9+42" y="+21"></pos>
+					 <text size="20" weight="bold" format="%Title" scroll="no"/>
+					 <text2 size="20" weight="bold" format="%Title" scroll="yes"/>
+				  </textzone>
+				<textzone >
+					<pos x="+9" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="ELAPSED %Pspent"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+47"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="REMAIN %Pleft"/>
+				</textzone>
+				<textzone >
+					<pos x="+9" y="+60"/>
+					<size width="113" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="GAIN %PleveldB"/>
+				</textzone>
+				<textzone >
+					<pos x="+150" y="+60"/>
+					<size width="56" height="12"/>
+					<text size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pkey"/>
+					<text2 size="15" color="#908f8d" weight="bold" align="left" format="KEY %Pcamelot"/>
+				</textzone>
+				<textzone >
+					<pos x="+285" y="+60"/>
+					<size width="90" height="12"/>
+					<text size="15" color="#FFFFFF" weight="bold" align="left" format="PITCH %Ppitch"/>
+				</textzone>
+				  
+				<button class="bpm">
+					<pos x="+532" y="+6"/>
+				</button>
+				<textzone >
+					<pos x="+453" y="+4"/>
+					<size width="68" height="20"/>
+					<text size="24" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+				</textzone>
+
+				<button class="select" ><pos x="+431" y="+5"/></button>
+
+				<button class="masterdeck" ><pos x="+380" y="+10"/></button>
+
+				<button class="aux" ><pos x="+375" y="+48"/></button>
+				<button class="rec" ><pos x="+406" y="+48"/></button>
+
+				
+				<button class="minicue" ><pos x="+453" y="+48"/></button>
+				<button class="miniplay" ><pos x="+490" y="+48"/></button>
+				<button class="minisync" ><pos x="+528" y="+48"/></button>
+
+			</deck>
+			
+		</panel>
+		
+		<button action="skin_panel 'audiomixer4' on & skin_panel 'audiomixer' on">
+			<pos x="587" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1140" y="933"/>
+			<on x="1140" y="975"/>
+			<over x="1140" y="954"/>
+			<text dx="21" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MIXER"/>
+			<textover dx="21" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MIXER"/>
+			<textselected dx="21" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="MIXER"/>
+		</button>	
+		<button action="skin_panel 'videomixer4' on & skin_panel 'videomixer' on">
+			<pos x="587+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1212" y="933"/>
+			<on x="1212" y="975"/>
+			<over x="1212" y="954"/>
+			<text dx="19" size="12" weight="bold" width="42" align="center" color="#908f8d" format="VIDEO"/>
+			<textover dx="19" size="12" weight="bold" width="42" align="center" color="#908f8d" format="VIDEO"/>
+			<textselected dx="19" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="VIDEO"/>
+
+		</button>	
+		<button action="skin_panel 'scratchmixer4' on & skin_panel 'scratchmixer' on">
+			<pos x="587+66+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1285" y="933"/>
+			<on x="1285" y="975"/>
+			<over x="1285" y="954"/>
+			<text dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="SCRATCH"/>
+			<textover dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="SCRATCH"/>
+			<textselected dx="20" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="SCRATCH"/>
+
+		</button>	
+		<button action="skin_panel 'mastermixer4' on & skin_panel 'mastermixer' on">
+			<pos x="587+66+66+66" y="119"/>
+			<size width="65" height="19"/>
+			<off x="1360" y="933"/>
+			<on x="1360" y="975"/>
+			<over x="1360" y="954"/>
+			<text dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MASTER"/>
+			<textover dx="20" size="12" weight="bold" width="42" align="center" color="#908f8d" format="MASTER"/>
+			<textselected dx="20" size="12" weight="bold" width="42" align="center" color="#EBECEC" format="MASTER"/>
+
+		</button>	
+
+		<panel name="audiomixer4" group="mixer4" visible="yes" >
+
+			<deck deck="1">
+				<panel class="knobl" x="667" y="152">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<panel class="knobl" x="667" y="203">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+					</slider>
+					<textzone><text format="HI"/></textzone>
+				</panel>
+				<panel class="knobl" x="667" y="253">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+					</slider>
+					<textzone><text format="MID"/></textzone>
+				</panel>
+				<panel class="knobl" x="667" y="304">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+					</slider>
+					<textzone><text format="LOW"/></textzone>
+				</panel>
+				<button class="pfl"><pos x="671" y="3416-3056"/></button>
+				<slider class="levelon" visibility="leftdeck">
+					<pos x="663" y="3447-3056"/>
+				</slider>
+				<slider class="leveloff" visibility="not leftdeck">
+					<pos x="663" y="3447-3056"/>
+				</slider>
+				<visual>
+					<pos x="655" y="154" width="11" height="196"/>
+					<off x="721" y="1403"/>
+				</visual>
+				<visual class="lvl4on" visibility="leftdeck">
+					<pos x="657" y="156"/>
+				</visual>
+				<visual class="lvl4off" visibility="not leftdeck">
+					<pos x="657" y="156"/>
+				</visual>
+			</deck>
+			<deck deck="2">
+				<panel class="knobl" x="741" y="152">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<panel class="knobl" x="741" y="203">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+					</slider>
+					<textzone><text format="HI"/></textzone>
+				</panel>
+				<panel class="knobl" x="741" y="253">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+					</slider>
+					<textzone><text format="MID"/></textzone>
+				</panel>
+				<panel class="knobl" x="741" y="304">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+					</slider>
+					<textzone><text format="LOW"/></textzone>
+				</panel>
+				<button class="pfl"><pos x="745" y="3416-3056"/></button>
+				<slider class="levelon" visibility="rightdeck">
+					<pos x="736" y="3447-3056"/>
+				</slider>
+				<slider class="leveloff" visibility="not rightdeck">
+					<pos x="736" y="3447-3056"/>
+				</slider>
+				<visual>
+					<pos x="771" y="154" width="11" height="196"/>
+					<off x="721" y="1403"/>
+				</visual>
+				<visual class="lvl4on" visibility="rightdeck">
+					<pos x="773" y="156"/>
+				</visual>
+				<visual class="lvl4off" visibility="not rightdeck">
+					<pos x="773" y="156"/>
+				</visual>
+			</deck>
+			<deck deck="3">
+				<panel class="knobl" x="614" y="152">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<panel class="knobl" x="614" y="203">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+					</slider>
+					<textzone><text format="HI"/></textzone>
+				</panel>
+				<panel class="knobl" x="614" y="253">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+					</slider>
+					<textzone><text format="MID"/></textzone>
+				</panel>
+				<panel class="knobl" x="614" y="304">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+					</slider>
+					<textzone><text format="LOW"/></textzone>
+				</panel>
+				<button class="pfl"><pos x="617" y="3416-3056"/></button>
+				<slider class="levelon" visibility="leftdeck">
+					<pos x="610" y="3447-3056"/>
+				</slider>
+				<slider class="leveloff" visibility="not leftdeck">
+					<pos x="610" y="3447-3056"/>
+				</slider>
+				<visual>
+					<pos x="602" y="154" width="11" height="196"/>
+					<off x="721" y="1403"/>
+				</visual>
+				<visual class="lvl4on" visibility="leftdeck">
+					<pos x="604" y="156"/>
+				</visual>
+				<visual class="lvl4off" visibility="not leftdeck">
+					<pos x="604" y="156"/>
+				</visual>
+			</deck>
+			<deck deck="4">
+				<panel class="knobl" x="798" y="152">
+					<slider action="gain" dblclick="gain 50%" rightclick="match_gain">
+					</slider>
+					<textzone><text format="GAIN"/></textzone>
+				</panel>
+				<panel class="knobl" x="798" y="203">
+					<slider action="eq_high" dblclick="eq_high 50%" rightclick="eq_high 0% ? eq_high 50% : eq_high 0%">
+					</slider>
+					<textzone><text format="HI"/></textzone>
+				</panel>
+				<panel class="knobl" x="798" y="253">
+					<slider action="eq_mid" dblclick="eq_mid 50%" rightclick="eq_mid 0% ? eq_mid 50% : eq_mid 0%">
+					</slider>
+					<textzone><text format="MID"/></textzone>
+				</panel>
+				<panel class="knobl" x="798" y="304">
+					<slider action="eq_low" dblclick="eq_low 50%" rightclick="eq_low 0% ? eq_low 50% : eq_low 0%">
+					</slider>
+					<textzone><text format="LOW"/></textzone>
+				</panel>
+				<button class="pfl"><pos x="802" y="3416-3056"/></button>
+				<slider class="levelon" visibility="rightdeck">
+					<pos x="794" y="3447-3056"/>
+				</slider>
+				<slider class="leveloff" visibility="not rightdeck">
+					<pos x="794" y="3447-3056"/>
+				</slider>	
+				<visual>
+					<pos x="829" y="154" width="11" height="196"/>
+					<off x="721" y="1403"/>
+				</visual>
+				<visual class="lvl4on" visibility="rightdeck">
+					<pos x="831" y="156"/>
+				</visual>
+				<visual class="lvl4off" visibility="not rightdeck">
+					<pos x="831" y="156"/>
+				</visual>				
+			</deck>			
+
+			<visual>
+				<size width="21" height="23"/>
+				<pos x="709" y="144"/>
+				<off x="707" y="1024"/>	
+			</visual>
+			<panel class="knobsm" x="705" y="232-15">
+				<slider action="headphone_volume" orientation="round" dblclick="headphone_volume 100%" >
+				</slider>
+				<textzone><text format="VOL"/></textzone>
+			</panel>
+			<panel class="knobsm" x="705" y="185-15">
+				<slider action="headphone_mix" orientation="round" dblclick="headphone_mix 0%" >
+				</slider>
+				<textzone><text format="MIX"/></textzone>
+			</panel>
+
+
+			<slider class="cf">
+				<pos x="644" y="3588-3056"/>
+			</slider>
+			<button class="cfdisable"><pos x="653" y="3561-3056"/></button>
+			<button class="cffull"><pos x="698" y="3561-3056"/></button>
+			<button class="cfscratch"><pos x="744" y="3561-3056"/></button>
+
+			<button class="cross1" action="deck 1 leftcross" >
+				<pos x="603" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 leftcross" >
+				<pos x="623" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 leftcross" >
+				<pos x="603" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 leftcross" >
+				<pos x="623" y="3608-3056"/>
+			</button>
+
+			<button class="cross1" action="deck 1 rightcross" >
+				<pos x="603+197" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 rightcross" >
+				<pos x="623+197" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 rightcross" >
+				<pos x="603+197" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 rightcross" >
+				<pos x="623+197" y="3608-3056"/>
+			</button>		
+			
+		</panel>
+
+		<panel name="videomixer4" group="mixer4" visible="no" >
+			<visual>
+				<pos x="595" y="151" />
+				<size width="249" height="208"/>
+				<off x="452" y="1415"/>
+			</visual>
+			<visual>
+				<pos x="595" y="151+220" />
+				<size width="249" height="75"/>
+				<off x="452" y="1550"/>
+			</visual>
+			<video source="master">
+			  <pos x="597" y="153"/>
+			  <size width="244" height="130"/>
+			  <off x="454" y="1417"/>
+			</video>
+
+			<video source="channel" chan="left">
+				<pos x="597" y="287"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+			<video source="channel" chan="right">
+				<pos x="721" y="287"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+
+			<video source="channel" chan="1" visibility="deck 3 leftdeck">
+				<pos x="597" y="373"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+			<video source="channel" chan="2" visibility="deck 4 rightdeck">
+				<pos x="721" y="373"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+			<video source="channel" chan="31" visibility="deck 1 leftdeck">
+				<pos x="597" y="373"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+			<video source="channel" chan="4" visibility="deck 2 rightdeck">
+				<pos x="721" y="373"/>
+				 <size width="119" height="69"/>
+				<up x="454" y="1552"/>
+			</video>
+
+
+			<textzone>
+				<pos x="620" y="363+88"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="TRANSITION"/>
+			</textzone>	
+			<textzone>
+				<pos x="725" y="363+88"/>
+				<size width="70" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="VIDEO FX"/>
+			</textzone>			
+			<button class="videobox" action="video_transition" rightclick="temporary">
+				<pos x="609" y="376+88"/>
+				<text format="%videotransition" />
+			</button>
+			<button class="videobox" action="video_fx" rightclick="temporary">
+				<pos x="717" y="376+88"/>
+				<text format="%videofx" />
+			</button>
+			<button action="video_transition_select">
+				<pos x="682" y="376+88"/>
+				<size width="17" height="20"/>
+			</button>
+			<button action="video_fx_select">
+				<pos x="791" y="376+88"/>
+				<size width="17" height="20"/>
+			</button>
+			<panel class="knob" x="815" y="374-15+88">
+				<slider action="video_fx_slider"></slider>
+				<textzone><text action="deck master get_effect_slider_label 'video' 1"/></textzone>
+			</panel>
+
+			<textzone>
+				<pos x="583" y="414+80"/>
+				<size width="40" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="AUTO"/>
+			</textzone>	
+			<textzone>
+				<pos x="815" y="414+80"/>
+				<size width="40" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="LINK"/>
+			</textzone>	
+			<button class="roundbutton" action="video_crossfader_auto" >
+				<tooltip>Auto Video Crossfader mode\nWhen enabled, the Video crossfader will be auto-positioned\nbased on the currently playing deck</tooltip>
+				<pos x="596" y="429+80"/>
+			</button>
+			<button class="roundbutton" action="video_crossfader_link" >
+				<tooltip>Link Video Crossfader to the Audio Crossfader\nWhen enabled, the Video crossfader will follow\nthe position of the Audio Crossfader</tooltip>
+				<pos x="828" y="429+80"/>
+			</button>
+
+			<panel name="vcf" group="cfs" visible="yes">
+				<button action="skin_panel 'acf' on">
+					<pos x="655" y="410+95"/>
+					<size width="120" height="12"/>
+					<text size="12" weight="bold" color="#9D9E9E" align="center" format="VIDEO CROSSFADER"/>
+					<textover size="12" weight="bold" color="white" align="center" format="VIDEO CROSSFADER"/>
+				</button>
+				<slider class="vf">
+					<pos x="644" y="3588-3056"/>
+				</slider>
+				<button class="cross1" action="deck 1 leftvideo" rightclick="leftvideo 'auto'">
+					<Tooltip>Rightclick to set left video in auto mode</tooltip>
+					<pos x="603" y="3589-3056"/>
+				</button>
+				<button class="cross2" action="deck 2 leftvideo" rightclick="leftvideo 'auto'">
+					<Tooltip>Rightclick to set left video in auto mode</tooltip>
+					<pos x="623" y="3589-3056"/>
+				</button>
+				<button class="cross3" action="deck 3 leftvideo" rightclick="leftvideo 'auto'">
+					<Tooltip>Rightclick to set left video in auto mode</tooltip>
+					<pos x="603" y="3608-3056"/>
+				</button>
+				<button class="cross4" action="deck 4 leftvideo" rightclick="leftvideo 'auto'">
+					<Tooltip>Rightclick to set left video in auto mode</tooltip>
+					<pos x="623" y="3608-3056"/>
+				</button>
+
+				<button class="cross1" action="deck 1 rightvideo" rightclick="rightvideo 'auto'">
+					<Tooltip>Rightclick to set right video in auto mode</tooltip>
+					<pos x="603+197" y="3589-3056"/>
+				</button>
+				<button class="cross2" action="deck 2 rightvideo" rightclick="rightvideo 'auto'">
+					<Tooltip>Rightclick to set right video in auto mode</tooltip>
+					<pos x="623+197" y="3589-3056"/>
+				</button>
+				<button class="cross3" action="deck 3 rightvideo" rightclick="rightvideo 'auto'">
+					<Tooltip>Rightclick to set right video in auto mode</tooltip>
+					<pos x="603+197" y="3608-3056"/>
+				</button>
+				<button class="cross4" action="deck 4 rightvideo" rightclick="rightvideo 'auto'">
+					<Tooltip>Rightclick to set right video in auto mode</tooltip>
+					<pos x="623+197" y="3608-3056"/>
+				</button>				
+			</panel>
+			<panel name="acf" group="cfs" visible="no">
+				<button action="skin_panel 'vcf' on">
+					<pos x="655" y="410+95"/>
+					<size width="120" height="12"/>
+					<text size="12" weight="bold" color="#9D9E9E" align="center" format="AUDIO CROSSFADER"/>
+					<textover size="12" weight="bold" color="white" align="center" format="AUDIO CROSSFADER"/>
+				</button>	
+				<slider class="cf">
+					<pos x="644" y="3588-3056"/>
+				</slider>
+				<button class="cross1" action="deck 1 leftcross" >
+					<pos x="603" y="3589-3056"/>
+				</button>
+				<button class="cross2" action="deck 2 leftcross" >
+					<pos x="623" y="3589-3056"/>
+				</button>
+				<button class="cross3" action="deck 3 leftcross" >
+					<pos x="603" y="3608-3056"/>
+				</button>
+				<button class="cross4" action="deck 4 leftcross" >
+					<pos x="623" y="3608-3056"/>
+				</button>
+
+				<button class="cross1" action="deck 1 rightcross" >
+					<pos x="603+197" y="3589-3056"/>
+				</button>
+				<button class="cross2" action="deck 2 rightcross" >
+					<pos x="623+197" y="3589-3056"/>
+				</button>
+				<button class="cross3" action="deck 3 rightcross" >
+					<pos x="603+197" y="3608-3056"/>
+				</button>
+				<button class="cross4" action="deck 4 rightcross" >
+					<pos x="623+197" y="3608-3056"/>
+				</button>	
+			</panel>
+			
+		</panel>
+			
+		<panel name="scratchmixer4" group="mixer4" visible="no" >
+
+			<panel class="knobl" x="673" y="156">
+				<slider action="deck 1 gain" dblclick="deck 1 gain 50%" rightclick="deck 1 match_gain">
+				</slider>
+				<textzone><text format="GAIN"/></textzone>
+			</panel>
+			<panel class="knobl" x="737" y="156">
+				<slider action="deck 2 gain" dblclick="deck 2 gain 50%" rightclick="deck 2 match_gain">
+				</slider>
+				<textzone><text format="GAIN"/></textzone>
+			</panel>
+			<panel class="knobl" x="607" y="156">
+				<slider action="deck 3 gain" dblclick="deck 3 gain 50%" rightclick="deck 3 match_gain">
+				</slider>
+				<textzone><text format="GAIN"/></textzone>
+			</panel>
+			<panel class="knobl" x="803" y="156">
+				<slider action="deck 4 gain" dblclick="deck 4 gain 50%" rightclick="deck 4 match_gain">
+				</slider>
+				<textzone><text format="GAIN"/></textzone>
+			</panel>
+			
+			<visual>
+				<pos x="657" y="207" />
+				<size width="64" height="291"/>
+				<off x="489" y="1796"/>
+			</visual>
+			 <scratchwave deck="1" orientation="vertical" >
+				<pos x="659" y="209"/>
+				<size width="59" height="285"/>
+				 <overlay>
+					<pos x="+0" y="+0" width="59" height="285"/>
+					<background x="591" y="1798"/>
+				</overlay>
+			 </scratchwave>
+			<visual visibility="deck 3 leftdeck">
+				<pos x="659" y="209" />
+				<size width="59" height="285"/>
+				<off x="691" y="1798"/>
+			</visual>
+
+			<visual>
+				<pos x="590" y="207" />
+				<size width="64" height="291"/>
+				<off x="489" y="1796"/>
+			</visual>
+			 <scratchwave deck="3" orientation="vertical" >
+				<pos x="592" y="209"/>
+				<size width="59" height="285"/>
+				 <overlay>
+					<pos x="+0" y="+0" width="59" height="285"/>
+					<background x="591" y="1798"/>
+				</overlay>
+			 </scratchwave>
+			<visual visibility="deck 1 leftdeck">
+				<pos x="592" y="209" />
+				<size width="59" height="285"/>
+				<off x="691" y="1798"/>
+			</visual>
+
+			<visual>
+				<pos x="721" y="207" />
+				<size width="64" height="291"/>
+				<off x="489" y="1796"/>
+			</visual>
+			 <scratchwave deck="2" orientation="vertical" >
+				<pos x="723" y="209"/>
+				<size width="59" height="285"/>
+				 <overlay>
+					<pos x="+0" y="+0" width="59" height="285"/>
+					<background x="591" y="1798"/>
+				</overlay>
+			 </scratchwave>
+			<visual visibility="deck 4 rightdeck">
+				<pos x="723" y="209" />
+				<size width="59" height="285"/>
+				<off x="691" y="1798"/>
+			</visual>
+		
+			<visual>
+				<pos x="787" y="207" />
+				<size width="64" height="291"/>
+				<off x="489" y="1796"/>
+			</visual>
+			 <scratchwave deck="4" orientation="vertical" >
+				<pos x="789" y="209"/>
+				<size width="59" height="285"/>
+				 <overlay>
+					<pos x="+0" y="+0" width="59" height="285"/>
+					<background x="591" y="1798"/>
+				</overlay>
+			 </scratchwave>
+			<visual visibility="deck 2 rightdeck">
+				<pos x="789" y="209" />
+				<size width="59" height="285"/>
+				<off x="691" y="1798"/>
+			</visual>
+
+			<slider class="cf">
+				<pos x="644" y="3588-3056"/>
+			</slider>
+			<button class="cfdisable"><pos x="653" y="3561-3056"/></button>
+			<button class="cffull"><pos x="698" y="3561-3056"/></button>
+			<button class="cfscratch"><pos x="744" y="3561-3056"/></button>
+
+			<button class="cross1" action="deck 1 leftcross" >
+				<pos x="603" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 leftcross" >
+				<pos x="623" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 leftcross" >
+				<pos x="603" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 leftcross" >
+				<pos x="623" y="3608-3056"/>
+			</button>
+
+			<button class="cross1" action="deck 1 rightcross" >
+				<pos x="603+197" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 rightcross" >
+				<pos x="623+197" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 rightcross" >
+				<pos x="603+197" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 rightcross" >
+				<pos x="623+197" y="3608-3056"/>
+			</button>
+			
+		</panel>
+			
+		<panel name="mastermixer4" group="mixer4" visible="no" >
+
+			<group name="sandbox" x="590" y="147">
+				<visual>
+					<pos x="-7" y="+22"/>
+					<size width="270" height="4"/>
+					<off x="491" y="2140"/>
+				</visual>
+				<visual>
+					<pos x="+0" y="+0"/>
+					<size width="190" height="18"/>
+					<off x="892" y="911"/>
+				</visual>
+				<songpos deck="sandbox">
+				  <pos x="+1" y="+1"/>
+				  <size width="188" height="16"/>
+				</songpos>
+				<button action="sandbox" visibility="can_sandbox ? false : true">
+				  <pos x="+192" y="+0"/>
+				  <size width="66" height="18"/>
+				  <off x="1322" y="911"/>
+				</button>
+				<button action="sandbox" visibility="can_sandbox ? true : false">
+				  <pos x="+192" y="+0"/>
+				  <size width="66" height="18"/>
+				  <off x="1112" y="911"/>
+				  <over x="1182" y="911"/>
+				  <on x="1251" y="911"/>
+				</button>
+			</group>
+
+		<group name="masterv" x="590" y="180">			
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="52" height="210"/>
+				<off x="842" y="1812"/>
+			</visual>
+			<panel class="knob" x="+12" y="+10">
+				<slider action="master_volume" dblclick="master_volume 100%" >
+				</slider>
+				<textzone><text format="MASTER"/></textzone>
+			</panel>
+			<button x="+9" y="+67" class="mixerbut" action="on" tooltip="LIMITER"><text format="ON"/></button>
+			<button x="+9" y="+95" class="mixerbut" action="sampler_rec 'master'" tooltip="RECORD TO SAMPLE\n Record the master output into a new sample file"><text format="REC"/></button>
+			  
+			 <visual source="get_vu_meter 'master'" type="linear" orientation="vertical" direction="up">
+			    <pos x="+23" y="+127"/>
+			    <size width="11" height="76"/>
+			    <off x="625" y="955"/>
+			    <on x="647" y="955"/>
+			</visual>
+			
+		</group>
+		<group name="micv" x="793" y="180">			
+			<visual>
+				<pos x="+0" y="+0"/>
+				<size width="52" height="210"/>
+				<off x="842" y="1812"/>
+			</visual>
+			<panel class="knob" x="+12" y="+10">
+				<slider action="mic_volume" dblclick="mic_volume 100%" >
+				</slider>
+				<textzone><text format="MIC"/></textzone>
+			</panel>
+			<button x="+9" y="+67" class="mixerbut" action="mic" tooltip="MIC ON"><text format="ON"/></button>
+			<button x="+9" y="+95" class="mixerbut" action="sampler_rec 'mic'" tooltip="RECORD TO SAMPLE\n Record the Mic output into a new sample file"><text format="REC"/></button>
+			  
+			<visual source="get_vu_meter 'mic'" type="linear" orientation="vertical" direction="up">
+		      <pos x="+23" y="+127"/>
+		      <size width="11" height="76"/>
+			    <off x="625" y="955"/>
+			    <on x="647" y="955"/>
+		    </visual>
+			
+		</group>
+		
+		<group name="headp" x="664" y="190">			
+			<visual>
+				<size width="21" height="23"/>
+				<pos x="+45" y="+5"/>
+				<off x="707" y="1024"/>	
+			</visual>
+			<panel class="knob" x="+0" y="+0">
+				<slider action="headphone_volume" orientation="round" dblclick="headphone_volume 100%" >
+				</slider>
+				<textzone><text format="VOL"/></textzone>
+			</panel>
+			<panel class="knob" x="+85" y="+0">
+				<slider action="headphone_mix" orientation="round" dblclick="headphone_mix 0%" >
+				</slider>
+				<textzone><text format="MIX"/></textzone>
+			</panel>
+			<visual>
+				<pos x="-23" y="+53"/>
+				<size width="152" height="4"/>
+				<off x="491" y="2140"/>
+			</visual>
+		</group>
+
+		<group name="mfx" x="664" y="250">
+			<textzone>
+				<pos x="+10" y="+5"/>
+				<size width="90" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" format="MASTER EFFECT"/>
+			</textzone>			
+			<button class="mfxbox" action="deck master effect_active" rightclick="temporary">
+				<pos x="+10" y="+25"/>
+				<text action="deck master get_effect_name" />
+			</button>
+			<button action="deck master effect_select">
+				<pos x="+10+75" y="+25"/>
+				<size width="17" height="20"/>
+			</button>
+			<panel class="knob" x="+10" y="+50">
+				<slider action="deck master effect slider 1" >
+					<tooltip>Effect Parametr 1</tooltip>
+				</slider>
+				<textzone>
+					<text action="deck master get_effect_slider_label 1"/>
+				</textzone>
+			</panel>
+			<panel class="knob" x="+60" y="+50">
+				<slider action="deck master effect slider 2" >
+					<tooltip>Effect Parametr 2</tooltip>
+				</slider>
+				<textzone>
+					<text action="deck master get_effect_slider_label 2"/>
+				</textzone>
+			</panel>
+			<visual>
+				<pos x="-23" y="+98"/>
+				<size width="152" height="4"/>
+				<off x="491" y="2140"/>
+			</visual>
+		</group>
+		<group name="rec" x="615" y="380">
+			<textzone>
+				<pos x="+30" y="+0"/>
+				<size width="140" height="12"/>
+				<text size="12" weight="bold" color="#9D9E9E" align="center" action="get lemode ? get_text 'RECORD MIX' : get_text 'RECORD/BROADCAST MIX'"/>
+			</textzone>	
+			<visual>
+				<pos x="+20" y="+20"/>
+				<size width="170" height="84"/>
+				<off x="857" y="2866"/>
+			</visual>
+			<textzone>
+			  <pos x="+20+4" y="+24"/>
+			  <size width="162" height="76"/>
+			  <text size="13" color="#aaaaaa" align="center" action="broadcast_message 'full'"/>
+			</textzone>
+			<button class="mixerbut" x="-20" y="+25" action="broadcast" tooltip="Broadcast Mix" visibility="not get lemode"><text format="BCST"/></button>
+			<button class="mixerbut" x="-20" y="+49" action="record" tooltip="Record Mix"><text format="REC"/></button>
+			<button class="mixerbut" x="-20" y="+78" action="record_config" tooltip="Edit record settings" visibility="not get lemode"><text format="FILE"/></button>
+			<visual source="record_vu" type="linear" orientation="vertical" direction="up">
+			  <pos x="+202" y="+27"/>
+			  <size width="12" height="59"/>
+			  <off x="603" y="972"/>
+			  <on x="587" y="972"/>
+			</visual>
+
+		</group>
+
+			<slider class="cf">
+				<pos x="644" y="3588-3056"/>
+			</slider>
+			<button class="cfdisable"><pos x="653" y="3561-3056"/></button>
+			<button class="cffull"><pos x="698" y="3561-3056"/></button>
+			<button class="cfscratch"><pos x="744" y="3561-3056"/></button>
+
+			<button class="cross1" action="deck 1 leftcross" >
+				<pos x="603" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 leftcross" >
+				<pos x="623" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 leftcross" >
+				<pos x="603" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 leftcross" >
+				<pos x="623" y="3608-3056"/>
+			</button>
+
+			<button class="cross1" action="deck 1 rightcross" >
+				<pos x="603+197" y="3589-3056"/>
+			</button>
+			<button class="cross2" action="deck 2 rightcross" >
+				<pos x="623+197" y="3589-3056"/>
+			</button>
+			<button class="cross3" action="deck 3 rightcross" >
+				<pos x="603+197" y="3608-3056"/>
+			</button>
+			<button class="cross4" action="deck 4 rightcross" >
+				<pos x="623+197" y="3608-3056"/>
+			</button>
+			
+		</panel>
+	</panel>
+
+
+
+	<deck deck="left">
+		 <dropzone >
+			<pos x="10" y="232"/>
+			<size width="570" height="242"/>
+		</dropzone>
+		
+		<group name="contrlpan" x="313" y="275">	
+			<button class="playbutton" >
+				<pos x="+12" y="+141"/> 
+			</button>
+			<button class="cuebutton">
+				<pos x="+0" y="+95"/> 
+			</button>
+		
+			<panel class="jog" x="+42" y="+0">
+				<visual ></visual>
+				<visual ></visual>
+				<scratch ></scratch>
+			</panel>
+		</group>
+		
+		<group name="hotcues" x="25" y="252">
+			<textzone>
+				<pos x="+53" y="+173"/>
+			  <size width="60" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center" format="HOTCUE"/>
+			</textzone>
+					
+			<button class="button1" action="hot_cue 1" rightclick="delete_cue 1">
+				<pos x="+0" y="+191"/>
+			</button>
+			<button class="button2" action="hot_cue 2" rightclick="delete_cue 2">
+				<pos x="+43" y="+191"/>
+			</button>
+			<button class="button3" action="hot_cue 3" rightclick="delete_cue 3">
+				<pos x="+86" y="+191"/>
+			</button>
+			<button class="button4" action="hot_cue 4" rightclick="delete_cue 4">
+				<pos x="+129" y="+191"/>
+			</button>
+		</group>
+		<group name="samples" x="25" y="254">
+			<textzone>
+				<pos x="+53" y="+112"/>
+			  <size width="60" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center" format="SAMPLER"/>
+			</textzone>
+			<textzone>
+				<pos x="+135" y="+112"/>
+			  <size width="30" height="13"/>
+			  <text size="13" weight="bold" color="#9D9E9E" align="center" format="REC"/>
+			</textzone>
+			<button action="sampler_rec">
+			  <pos x="+165" y="+110"/>
+			  <tooltip>Record this deck\nto a new Sampler</tooltip>
+			  <size width="15" height="15"/>
+			  <off x="451" y="980"/>
+				<on x="486" y="980"/>
+				<over x="469" y="980"/>
+			</button>
+		
+			<button class="buttonplay" action="sampler_pad 1 '1x4x2'" rightclick="sampler_stop 1 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+0" y="+129"/>
+			</button>
+			<textzone >
+				<pos x="-3" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 1 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 2 '1x4x2'" rightclick="sampler_stop 2 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+43" y="+129"/>
+			</button>
+			<textzone  >
+				<pos x="+40" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 2 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 3 '1x4x2'" rightclick="sampler_stop 3 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+86" y="+129"/>
+			</button>
+			<textzone  >
+				<pos x="+84" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 3 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 4 '1x4x2'" rightclick="sampler_stop 4 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+128" y="+129"/>
+			</button>
+			<textzone >
+				<pos x="+126" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 4 '1x4x2'" scroll="no"/>
+			</textzone>
+		</group>
+		<group name="effects" x="25" y="250">			
+			<panel class="knob" x="+7" y="+0">
+				<slider action="effect_select" >
+					<tooltip>Effect Select</tooltip>
+				</slider>
+				<textzone>
+					<text format="SELECT"/>
+				</textzone>
+			</panel>
+		
+			<panel class="knob" x="+49" y="+0">
+				<slider action="effect slider 1" >
+					<tooltip>Effect Parametr 1</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 1"/>
+				</textzone>
+			</panel>
+				<panel class="knob" x="+92" y="+0">
+				<slider action="effect slider 2" >
+					<tooltip>Effect Parametr 2</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 2"/>
+				</textzone>
+			</panel>
+				<panel class="knob" x="+137" y="+0">
+				<slider action="effect slider 3" >
+					<tooltip>Effect Parametr 3</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 3"/>
+				</textzone>
+			</panel>
+	
+			<button class="button1" action="effect button 1" >
+				<pos x="+43" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+37" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 1 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>
+			<button class="button2" action="effect button 2" >
+				<pos x="+86" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+80" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 2 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>
+			<button class="button3" action="effect button 3" >
+				<pos x="+129" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+123" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 3 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>			
+			<button class="box" action="effect active" rightclick="effect select">
+				<Tooltip>Rightclick to select FX</tooltip>
+				<pos x="+36" y="+51"/>
+				<text format="%maineffect"/>
+				<textselected format="%maineffect"/>
+			</button>
+			<button class="buttonon" action="effect active" >
+				<pos x="+0" y="+85"/>
+			</button>
+		
+		</group>
+		
+		<group name="panel2" x="211" y="235">	
+			<button class="box" action="sampler_pad" rightclick="sampler select">
+				<Tooltip>Rightclick to select Sampler</Tooltip>
+				<pos x="+0" y="+186"/>
+				<text format="%mainsample" scroll="no"/>
+				<textselected format="%mainsample" scroll="no"/>
+			</button>	
+			<visual class="samplpos" >
+				<pos x="+1" y="+212"/>
+			</visual>
+
+			<panel class="knob2l" x="+29" y="+125">
+				<slider action="sampler_volume_nogroup"  >
+				</slider>
+				<textzone><text format="SAMPLER\nVOL"/></textzone>
+			</panel>
+		
+			<panel class="knobl" x="+29" y="+0">
+				<slider action="filter" dblclick="filter 50%" >
+				</slider>
+				<textzone><text action="filter_label"/></textzone>
+			</panel>
+			<panel class="knobl" x="+29" y="+58">
+				<slider action="key" dblclick="key 0" >
+				</slider>
+				<textzone><text format="KEY"/></textzone>
+			</panel>
+		
+		</group>
+
+		<group name="looppan" x="312" y="235">	
+
+			<textzone>
+				<pos x="+0" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="AUTO"/>
+			</textzone>
+			<button class="roundbutton" action="smart_loop" >
+				<tooltip>Auto-Smart Loop mode\nWhen a manual loop is applied, VirtuaLDJ will snap\nto the nearest available size in beats (seamless looping)</tooltip>
+				<pos x="+31" y="+1"/>
+			</button>
+			<textzone>
+				<pos x="+55" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="ROLL"/>
+			</textzone>
+			<button class="roundbutton" action="loop_roll_mode" >
+				<tooltip>Loop Roll Mode\nWhen enabled, Loops will apply temporary\nand the track will resume to the position\nit would have been if the loop was never triggered</tooltip>
+				<pos x="+85" y="+1"/>
+			</button>
+			
+			<textzone>
+				<pos x="+105" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="BACK"/>
+			</textzone>
+			<button class="roundbutton" action="loop_back" >
+				<tooltip>Loop Back Mode\nWhen enabled, triggered Auto-Loops will end\nat the current position</tooltip>
+				<pos x="+105+31" y="+1"/>
+			</button>
+			
+			<button class="loopbox" >
+				<tooltip>Loop</tooltip>
+				<pos x="+23" y="+19"/>
+			</button>
+			<textzone>
+				<pos x="+4" y="+52"/>
+			  <size width="70" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="left" format="IN    OUT"/>
+			</textzone>
+			<button class="loopround" action="pioneer_loop_in" rightclick="reloop">
+				<pos x="+0" y="+65"/>
+			</button>
+			<button class="loopround" action="pioneer_loop_out" rightclick="reloop_exit">
+				<pos x="+28" y="+65"/>
+			</button>
+			<button class="arrowleft" action="loop_half" >
+				<pos x="+0" y="+19"/>
+			</button>
+			<button class="arrowright" action="loop_double">
+				<pos x="+58" y="+19"/>
+			</button>
+		</group>
+
+		<group name="pitchpan" x="526" y="235">	
+			<slider class="pitch" >
+				<pos x="+0" y="+37"/>
+			</slider>
+			<button class="zero" action="pitch_reset">
+				<pos x="+39" y="+113"/>
+			</button>
+			<button action="pitch_range" value="+1" rightclick="-2">
+				<pos x="-2" y="+23"/>
+				<size width="30" height="14"/>
+				<text dx="0" dy="0" width="30" size="14" color="white" align="center" format="%pitchrange%%"/>
+			</button>
+			<button class="roundbutton" action="key_lock" >
+				<tooltip>Master Tempo</tooltip>
+				<pos x="+38" y="+2"/>
+			</button>
+			<textzone>
+				<pos x="-22" y="+3"/>
+			  <size width="70" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="left" format="KEYLOCK"/>
+			</textzone>
+			<button class="syncbutton">
+				<pos x="-1" y="+210"/> 
+			</button>
+		</group>
+
+
+	</deck>
+
+	<deck deck="right">
+		 <dropzone >
+			<pos x="855" y="232"/>
+			<size width="570" height="242"/>
+		</dropzone>
+		
+		<group name="contrlpan" x="313+550" y="275">	
+			<button class="playbutton" >
+				<pos x="+12" y="+141"/> 
+			</button>
+			<button class="cuebutton">
+				<pos x="+0" y="+95"/> 
+			</button>
+		
+			<panel class="jog" x="+42" y="+0">
+				<visual ></visual>
+				<visual ></visual>
+				<scratch ></scratch>
+			</panel>
+		</group>
+
+		<group name="hotcues" x="25+1222" y="252">
+			<textzone>
+				<pos x="+53" y="+173"/>
+			  <size width="60" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center" format="HOTCUE"/>
+			</textzone>
+					
+			<button class="button1" action="hot_cue 1" rightclick="delete_cue 1">
+				<pos x="+0" y="+191"/>
+			</button>
+			<button class="button2" action="hot_cue 2" rightclick="delete_cue 2">
+				<pos x="+43" y="+191"/>
+			</button>
+			<button class="button3" action="hot_cue 3" rightclick="delete_cue 3">
+				<pos x="+86" y="+191"/>
+			</button>
+			<button class="button4" action="hot_cue 4" rightclick="delete_cue 4">
+				<pos x="+129" y="+191"/>
+			</button>
+		</group>
+		<group name="samples" x="25+1222" y="254">
+			<textzone>
+				<pos x="+53" y="+112"/>
+			  <size width="60" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="center" format="SAMPLER"/>
+			</textzone>
+			<textzone>
+				<pos x="+135" y="+112"/>
+			  <size width="30" height="13"/>
+			  <text size="13" weight="bold" color="#9D9E9E" align="center" format="REC"/>
+			</textzone>
+			<button action="sampler_rec">
+			  <pos x="+165" y="+110"/>
+			  <tooltip>Record this deck\nto a new Sampler</tooltip>
+			  <size width="15" height="15"/>
+			  <off x="451" y="980"/>
+				<on x="486" y="980"/>
+				<over x="469" y="980"/>
+			</button>
+		
+			<button class="buttonplay" action="sampler_pad 1 '1x4x2'" rightclick="sampler_stop 1 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+0" y="+129"/>
+			</button>
+			<textzone >
+				<pos x="-3" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 1 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 2 '1x4x2'" rightclick="sampler_stop 2 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+43" y="+129"/>
+			</button>
+			<textzone  >
+				<pos x="+40" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 2 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 3 '1x4x2'" rightclick="sampler_stop 3 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+86" y="+129"/>
+			</button>
+			<textzone  >
+				<pos x="+84" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 3 '1x4x2'" scroll="no"/>
+			</textzone>
+			<button class="buttonplay" action="sampler_pad 4 '1x4x2'" rightclick="sampler_stop 4 '1x4x2'">
+				<tooltip>Sample</tooltip>
+				<pos x="+128" y="+129"/>
+			</button>
+			<textzone >
+				<pos x="+126" y="+148"/>
+				<size width="38" height="14"/>
+				<text size="14" color="white" align="center" action="get sample_slot_name 4 '1x4x2'" scroll="no"/>
+			</textzone>
+		</group>
+		<group name="effects" x="25+1222" y="250">			
+			<panel class="knob" x="+7" y="+0">
+				<slider action="effect_select" >
+					<tooltip>Effect Select</tooltip>
+				</slider>
+				<textzone>
+					<text format="SELECT"/>
+				</textzone>
+			</panel>
+		
+			<panel class="knob" x="+49" y="+0">
+				<slider action="effect slider 1" >
+					<tooltip>Effect Parametr 1</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 1"/>
+				</textzone>
+			</panel>
+				<panel class="knob" x="+92" y="+0">
+				<slider action="effect slider 2" >
+					<tooltip>Effect Parametr 2</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 2"/>
+				</textzone>
+			</panel>
+				<panel class="knob" x="+137" y="+0">
+				<slider action="effect slider 3" >
+					<tooltip>Effect Parametr 3</tooltip>
+				</slider>
+				<textzone>
+					<text action="get_effect_slider_label 3"/>
+				</textzone>
+			</panel>
+	
+			<button class="button1" action="effect button 1" >
+				<pos x="+43" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+36" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 1 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>
+			<button class="button2" action="effect button 2" >
+				<pos x="+86" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+79" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 2 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>
+			<button class="button3" action="effect button 3" >
+				<pos x="+129" y="+85"/>
+			</button>
+			<textzone>
+				<pos x="+121" y="+71"/>
+				<size width="48" height="13"/>
+				<text size="11" align="center" color="#aaaaaa" weight="bold" action="get_effect_button_name 3 & param_cast 'text' 6 & param_uppercase"/>
+			</textzone>			
+			<button class="box" action="effect active" rightclick="effect select">
+				<Tooltip>Rightclick to select FX</tooltip>
+				<pos x="+36" y="+51"/>
+				<text format="%maineffect"/>
+				<textselected format="%maineffect"/>
+			</button>
+			<button class="buttonon" action="effect active" >
+				<pos x="+0" y="+85"/>
+			</button>
+		
+		</group>
+	
+	
+		
+		<group name="panel2" x="211+925" y="235">	
+			<button class="box" action="sampler_pad" rightclick="sampler select">
+				<Tooltip>Rightclick to select Sampler</Tooltip>
+				<pos x="+0" y="+186"/>
+				<text format="%mainsample" scroll="no"/>
+				<textselected format="%mainsample" scroll="no"/>
+			</button>	
+			<visual class="samplpos" >
+				<pos x="+1" y="+212"/>
+			</visual>
+
+			<panel class="knob2l" x="+29" y="+125">
+				<slider action="sampler_volume_nogroup"  >
+				</slider>
+				<textzone><text format="SAMPLER\nVOL"/></textzone>
+			</panel>
+		
+			<panel class="knobl" x="+29" y="+0">
+				<slider action="filter" dblclick="filter 50%" >
+				</slider>
+				<textzone><text action="filter_label"/></textzone>
+			</panel>
+			<panel class="knobl" x="+29" y="+58">
+				<slider action="key" dblclick="key 0" >
+				</slider>
+				<textzone><text format="KEY"/></textzone>
+			</panel>
+		
+		</group>
+
+		<group name="looppan" x="312+550" y="235">	
+			<textzone>
+				<pos x="+0" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="AUTO"/>
+			</textzone>
+			<button class="roundbutton" action="smart_loop" >
+				<tooltip>Auto-Smart Loop mode\nWhen a manual loop is applied, VirtuaLDJ will snap\nto the nearest available size in beats (seamless looping)</tooltip>
+				<pos x="+31" y="+1"/>
+			</button>
+			<textzone>
+				<pos x="+55" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="ROLL"/>
+			</textzone>
+			<button class="roundbutton" action="loop_roll_mode" >
+				<tooltip>Loop Roll Mode\nWhen enabled, Loops will apply temporary\nand the track will resume to the position\nit would have been if the loop was never triggered</tooltip>
+				<pos x="+85" y="+1"/>
+			</button>
+			
+			<textzone>
+				<pos x="+105" y="+2"/>
+				<size width="40" height="13"/>
+				<text size="13" weight="bold" color="#9D9E9E" align="left" format="BACK"/>
+			</textzone>
+			<button class="roundbutton" action="loop_back" >
+				<tooltip>Loop Back Mode\nWhen enabled, triggered Auto-Loops will end\nat the current position</tooltip>
+				<pos x="+105+31" y="+1"/>
+			</button>
+			
+			<button class="loopbox" >
+				<tooltip>Loop</tooltip>
+				<pos x="+23" y="+19"/>
+			</button>
+			<textzone>
+				<pos x="+4" y="+52"/>
+			  <size width="70" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="left" format="IN    OUT"/>
+			</textzone>
+			<button class="loopround" action="pioneer_loop_in" rightclick="reloop">
+				<pos x="+0" y="+65"/>
+			</button>
+			<button class="loopround" action="pioneer_loop_out" rightclick="reloop_exit">
+				<pos x="+28" y="+65"/>
+			</button>
+			<button class="arrowleft" action="loop_half" >
+				<pos x="+0" y="+19"/>
+			</button>
+			<button class="arrowright" action="loop_double">
+				<pos x="+58" y="+19"/>
+			</button>
+		</group>
+
+		<group name="pitchpan" x="526+550" y="235">	
+			<slider class="pitch" >
+				<pos x="+0" y="+37"/>
+			</slider>
+			<button class="zero" action="pitch_reset">
+				<pos x="+39" y="+113"/>
+			</button>
+			<button action="pitch_range" value="+1" rightclick="-2">
+				<pos x="-2" y="+23"/>
+				<size width="30" height="14"/>
+				<text dx="0" dy="0" width="30" size="14" color="white" align="center" format="%pitchrange%%"/>
+			</button>
+			<button class="roundbutton" action="key_lock" >
+				<tooltip>Master Tempo</tooltip>
+				<pos x="+38" y="+2"/>
+			</button>
+			<textzone>
+				<pos x="-22" y="+3"/>
+			  <size width="70" height="14"/>
+			  <text size="14" weight="bold" color="#9D9E9E" align="left" format="KEYLOCK"/>
+			</textzone>
+			<button class="syncbutton">
+				<pos x="-1" y="+210"/> 
+			</button>
+		</group>
+
+
+	</deck>
+
+
+</panel>
+
+<panel name="browserzoom" group="zoom" visible="no">
+
+	<browser >
+		<size width="1436" height="393+21+451" />
+		<pos x="2" y="506-25-451"/>
+	</browser>
+	
+	
+</panel>
+</Skin>

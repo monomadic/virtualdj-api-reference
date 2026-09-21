@@ -1,0 +1,607 @@
+<Skin name="Default - Right Deck" version="7" width="1004" height="768">
+<copyright>Atomix Production</copyright>
+
+Play, Loop etc
+--------------------------------
+
+
+
+<button action="deck left loop_button">
+  <size width="56" height="33"/>
+  <pos x="254" y="353"/>
+  <selected x="254" y="1125"/>
+  <down x="254" y="1125"/>
+</button>
+<button action="deck right loop_button">
+  <size width="56" height="33"/>
+  <pos x="934" y="353"/>
+  <selected x="934" y="1125"/>
+  <down x="934" y="1125"/>
+</button>
+
+<button action="deck left cue_button">
+  <size width="46" height="30"/>
+  <pos x="38" y="354"/>
+  <selected x="38" y="1126"/>
+  <down x="38" y="1126"/>
+</button>
+<button action="deck left pause_stop">
+  <size width="46" height="30"/>
+  <pos x="85" y="354"/>
+  <selected x="85" y="1126"/>
+  <down x="85" y="1126"/>
+</button>
+<button action="deck left play_stutter">
+  <size width="51" height="30"/>
+  <pos x="132" y="354"/>
+  <selected x="132" y="1126"/>
+  <down x="132" y="1126"/>
+</button>
+<button action="deck left sync">
+  <size width="46" height="30"/>
+  <pos x="184" y="354"/>
+  <down x="184" y="1126"/>
+  <up x="+0" y="+0" />
+<selected x="+0" y="+0" />
+</button>
+
+<button action="deck right cue_button">
+  <size width="46" height="30"/>
+  <pos x="38+699-19" y="354"/>
+  <selected x="38+699-19" y="1126"/>
+  <down x="38+699-19" y="1126"/>
+</button>
+<button action="deck right pause_stop">
+  <size width="46" height="30"/>
+  <pos x="85+699-19" y="354"/>
+  <selected x="85+699-19" y="1126"/>
+  <down x="85+699-19" y="1126"/>
+</button>
+<button action="deck right play_stutter">
+  <size width="51" height="30"/>
+  <pos x="132+699-19" y="354"/>
+  <selected x="132+699-19" y="1126"/>
+  <down x="132+699-19" y="1126"/>
+</button>
+<button action="deck right sync">
+  <size width="46" height="30"/>
+  <pos x="184+699-19" y="354"/>
+  <up x="+0" y="+0" />
+<selected x="+0" y="+0" />
+  <down x="184+699-19" y="1126"/>
+</button>
+
+
+
+Tekst
+------
+<textzone deck="left">
+  <size width="227" height="20" geterrormessage="true"/>
+  <pos x="16" y="12"/>
+  <text font="ARIAL GREEK" size="18" color="#FFFFFF" weight="bold" format="%Author"/>
+  <text2 font="ARIAL GREEK" size="18" color="#FFFFFF" weight="bold" scroll="yes" format="%Author"/>
+</textzone>
+<textzone deck="left">
+  <size width="250" height="21" geterrormessage="true"/>
+  <pos x="16" y="36"/>
+  <text font="ARIAL GREEK" size="16" color="#D1D3D4" weight="bold" format="%Title"/>
+  <text2 font="ARIAL GREEK" size="16" color="#D1D3D4" weight="bold" scroll="yes" format="%Title"/>
+</textzone>
+<textzone deck="left">
+  <size width="60" height="20"/>
+  <pos x="252" y="12"/>
+  <text font="ARIAL GREEK" size="18" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+</textzone>
+
+
+<textzone deck="right">
+  <size width="227" height="20" geterrormessage="true"/>
+  <pos x="16+699-19" y="12"/>
+  <text font="ARIAL GREEK" size="18" color="#FFFFFF" weight="bold" format="%Author"/>
+  <text2 font="ARIAL GREEK" size="18" color="#FFFFFF" weight="bold" scroll="yes" format="%Author"/>
+</textzone>
+<textzone deck="right">
+  <size width="250" height="21" geterrormessage="true"/>
+  <pos x="16+699-19" y="36"/>
+  <text font="ARIAL GREEK" size="16" color="#D1D3D4" weight="bold" format="%Title"/>
+  <text2 font="ARIAL GREEK" size="16" color="#D1D3D4" weight="bold" scroll="yes" format="%Title"/>
+</textzone>
+<textzone deck="right">
+  <size width="60" height="20"/>
+  <pos x="252+699-19" y="12"/>
+  <text font="ARIAL GREEK" size="18" color="#FFFFFF" align="center" weight="bold" format="%Pbpmex"/>
+</textzone>
+
+Pitch
+------
+<slider action="deck left pitch" value="50" rightclick="temporary" dblclick="deck left pitch 100%" orientation="vertical" direction="down">
+  <size width="31" height="160"/>
+  <pos x="268" y="137"/>
+<fader>
+  <size width="31" height="14"/>
+  <pos x="214" y="1094"/>
+</fader>
+</slider>
+
+<slider action="deck right pitch" value="50" rightclick="temporary" dblclick="deck right pitch 100%" orientation="vertical" direction="down">
+  <size width="31" height="160"/>
+  <pos x="268+699-19" y="137"/>
+<fader>
+  <size width="31" height="14"/>
+  <pos x="214" y="1094"/>
+</fader>
+</slider>
+
+Scratch
+-----
+<scratch deck="left">
+  <size width="215" height="215"/>
+  <pos x="26" y="123"/>
+</scratch>
+<visual source="deck left get rotation" type="rotation">
+  <size width="188" height="188"/>
+  <pos x="41" y="136"/>
+  <clipmask x="720" y="908"/>
+</visual>
+
+<scratch deck="right">
+  <size width="215" height="215"/>
+  <pos x="26+699-19" y="123"/>
+</scratch>
+<visual source="deck right get rotation" type="rotation">
+  <size width="188" height="188"/>
+  <pos x="41+699-19" y="136"/>
+  <clipmask x="720" y="908"/>
+</visual>
+
+songpos
+---
+<songpos deck="left" orientation="horizontal" waveform="no">
+  <size width="295" height="29"/>
+  <pos x="15" y="70"/>
+  <volume x="16" y="842"/>
+
+  <selected x="16" y="809"/>
+
+</songpos>
+<songpos deck="right" orientation="horizontal" waveform="no">
+  <size width="295" height="29"/>
+  <pos x="15+699-19" y="70"/>
+  <volume x="16+699-19" y="842"/>
+  <selected x="16+699-19" y="809"/>
+</songpos>
+
+Browser text
+--- 
+<textzone>
+  <size width="189" height="15"/>
+  <pos x="407" y="450"/>
+  <text font="ARIAL GREEK" size="15" color="#000000" align="left" weight="bold" format="`get browsed_song &quot;author&quot;`"/>
+</textzone>
+
+<textzone>
+  <size width="189" height="16"/>
+  <pos x="407" y="450+16"/>
+  <text font="ARIAL GREEK" size="15" color="#000000" align="left" weight="bold" format="`get browsed_song &quot;title&quot;`"/>
+</textzone>
+
+
+<textzone>
+  <size width="71" height="16"/>
+  <pos x="407" y="450+16+16"/>
+  <text font="ARIAL GREEK" size="15" color="#000000" align="left" weight="bold" format="`get browsed_song &quot;length&quot;` "/>
+</textzone>
+
+<textzone>
+  <size width="71" height="16"/>
+  <pos x="523" y="450+16+16"/>
+  <text font="ARIAL GREEK" size="15" color="#000000" align="right" weight="bold" format="`get browsed_song &quot;bpm&quot;`"/>
+</textzone>
+
+<textzone>
+  <size width="189" height="16"/>
+  <pos x="407" y="497"/>
+  <text font="ARIAL GREEK" size="15" color="#000000" align="left" weight="bold" format="`get browsed_folder`"/>
+</textzone>
+
+ 
+Browser
+------
+<button action="browser_scroll -1">
+  <size width="40" height="40"/>
+  <pos x="353" y="459"/>
+  <selected x="353" y="1232"/>
+  <down x="353" y="1232"/>
+</button>
+<button action="browser_scroll +1">
+  <size width="40" height="40"/>
+  <pos x="611" y="459"/>
+  <selected x="611" y="1231"/>
+  <down x="611" y="1231"/>
+</button>
+
+<button action="deck left load">
+  <size width="95" height="37"/>
+  <pos x="401" y="527"/>
+  <selected x="401" y="1299"/>
+  <down x="401" y="1299"/>
+</button>
+
+<button action="deck right load">
+  <size width="95" height="37"/>
+  <pos x="510" y="527"/>
+  <selected x="510" y="1299"/>
+  <down x="510" y="1299"/>
+</button>
+
+<button action="browser_folder">
+  <size width="95" height="37"/>
+  <pos x="401" y="569"/>
+  <selected x="401" y="1341"/>
+  <down x="401" y="1341"/>
+</button>
+
+<button action="browser_enter">
+  <size width="95" height="37"/>
+  <pos x="510" y="569"/>
+  <selected  x="510" y="1341"/>
+  <down x="510" y="1341"/>
+</button>
+
+Automix
+----
+mix_now
+<button action="mix_now">
+  <size width="217" height="39"/>
+  <pos x="395" y="618"/>
+  <selected x="395" y="1391"/>
+  <down x="395" y="1391"/>
+</button>
+<button action="playlist_add">
+  <size width="217" height="39"/>
+  <pos x="395" y="665"/>
+  <selected x="395" y="1438"/>
+  <down x="395" y="1438"/>
+</button>
+<button action="automix">
+  <size width="217" height="39"/>
+  <pos x="395" y="713"/>
+  <selected x="395" y="1486"/>
+  <down x="395" y="1486"/>
+</button>
+
+
+MIXER
+-----------------------------------------------
+Beatbars
+------
+<button action="deck left goto_bar 1">
+  <size width="28" height="8"/>
+  <pos x="448-10" y="43"/>
+  <selected x="448-10" y="815"/>
+</button>
+<button action="deck left goto_bar 2">
+  <size width="28" height="8"/>
+  <pos x="448+34-10" y="43"/>
+  <selected x="448-10" y="815"/>
+</button>
+<button action="deck left goto_bar 3">
+  <size width="28" height="8"/>
+  <pos x="448+34+34-10" y="43"/>
+  <selected x="448-10" y="815"/>
+</button>
+<button action="deck left goto_bar 4">
+  <size width="28" height="8"/>
+  <pos x="448+34+34+33-10" y="43"/>
+  <selected x="448-10" y="815"/>
+</button>
+
+
+<button action="deck right goto_bar 1">
+  <size width="28" height="8"/>
+  <pos x="448-10" y="55"/>
+  <selected x="448-10" y="827"/>
+</button>
+<button action="deck right goto_bar 2">
+  <size width="28" height="8"/>
+  <pos x="448+34-10" y="55"/>
+  <selected x="448-10" y="827"/>
+</button>
+<button action="deck right goto_bar 3">
+  <size width="28" height="8"/>
+  <pos x="448+34+34-10" y="55"/>
+  <selected x="448-10" y="827"/>
+</button>
+<button action="deck right goto_bar 4">
+  <size width="28" height="8"/>
+  <pos x="448+34+34+33-10" y="55"/>
+  <selected x="448-10" y="827"/>
+</button>
+
+Sync
+----
+<button action="deck left sync">
+  <size width="55" height="33"/>
+  <pos x="373-10" y="37"/>
+  <selected x="+0" y="+0"/>
+  <down x="373-10" y="809"/>
+  <up x="+0" y="+0"/>
+</button>
+
+<button action="deck right sync">
+  <size width="55" height="33"/>
+  <pos x="597-10" y="37"/>
+  <selected x="+0" y="+0"/>
+  <down x="597-10" y="809"/>
+  <up x="+0" y="+0"/>
+</button>
+
+Volume
+---
+<slider action="deck left level" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="44" height="140"/>
+  <pos x="448-10" y="145"/>
+<fader>
+  <size width="44" height="16"/>
+  <pos x="448-10" y="940"/>
+</fader>
+</slider>
+<slider action="deck right level" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="44" height="140"/>
+  <pos x="535-10" y="145"/>
+<fader>
+  <size width="44" height="16"/>
+  <pos x="534-10" y="930"/>
+</fader>
+</slider>
+
+Crossfader
+--------------------
+<slider action="crossfader" rightclick="temporary" dblclick="crossfader 50%" orientation="horizontal">
+  <size width="206" height="56"/>
+  <pos x="410-10" y="319"/>
+<fader>
+  <size width="24" height="56"/>
+  <pos x="503-10" y="1091"/>
+</fader>
+</slider>
+
+VU Meter
+----
+<visual source="deck left get level_left" type="linear" deck="left" orientation="vertical" direction="up">
+  <size width="11" height="150"/>
+  <pos x="396-10" y="133"/>
+  <down x="396-10" y="905"/>
+</visual>
+<visual source="deck left get level_right" type="linear" deck="left" orientation="vertical" direction="up">
+  <size width="11" height="150"/>
+  <pos x="408-10" y="133"/>
+  <down x="396-10" y="905"/>
+</visual>
+
+<visual source="deck right get level_left" type="linear" deck="right" orientation="vertical" direction="up">
+  <size width="11" height="150"/>
+  <pos x="612-10" y="133"/>
+  <down x="612-10" y="905"/>
+</visual>
+<visual source="deck right get level_left" type="linear" deck="right" orientation="vertical" direction="up">
+  <size width="11" height="150"/>
+  <pos x="624-10" y="133"/>
+  <down x="612-10" y="905"/>
+</visual>
+
+FX
+----
+<button action="deck left effect active on">
+  <size width="56" height="32"/>
+  <pos x="20" y="665"/>
+  <selected x="20" y="1437"/>
+  <down x="20" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck left filter 50%">
+  <size width="56" height="32"/>
+  <pos x="94" y="665"/>
+  <selected x="+0" y="+0"/>
+  <down x="94" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck right effect active on">
+  <size width="56" height="32"/>
+  <pos x="173" y="665"/>
+  <selected x="20" y="1437"/>
+  <down x="20" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck right filter 50%">
+  <size width="56" height="32"/>
+  <pos x="247" y="665"/>
+  <selected x="+0" y="+0"/>
+  <down x="94" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+
+<button action="deck left effect active off">
+  <size width="56" height="32"/>
+  <pos x="20" y="709"/>
+  <selected x="+0" y="+0"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+
+<button action="deck right effect active off">
+  <size width="56" height="32"/>
+  <pos x="173" y="709"/>
+  <selected x="+0" y="+0"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+
+
+SAMPLER
+-------------------------------------
+<button action="sampler 1 play_stop &amp; sampler select 1">
+  <size width="56" height="32"/>
+  <pos x="704" y="665"/>
+  <selected x="704" y="1437"/>
+  <down  x="704" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 2 play_stop &amp; sampler select 2">
+  <size width="56" height="32"/>
+  <pos x="778" y="665"/>
+  <selected x="704" y="1437"/>
+  <down x="704" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 3 play_stop &amp; sampler select 3">
+  <size width="56" height="32"/>
+  <pos x="852" y="665"/>
+  <selected x="704" y="1437"/>
+  <down x="704" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 4 play_stop &amp; sampler select 4">
+  <size width="56" height="32"/>
+  <pos x="926" y="665"/>
+  <selected x="704" y="1437"/>
+  <down x="704" y="1437"/>
+  <up x="+0" y="+0"/>
+</button>
+
+
+Sample rec
+-------------------
+<button action="deck left sampler 1 rec">
+  <size width="56" height="32"/>
+  <pos x="704" y="709"/>
+  <selected x="20" y="1481"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck left sampler 2 rec">
+  <size width="56" height="32"/>
+  <pos x="778" y="709"/>
+  <selected x="20" y="1481"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck right sampler 3 rec">
+  <size width="56" height="32"/>
+  <pos x="852" y="709"/>
+  <selected x="20" y="1481"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="deck right sampler 4 rec">
+  <size width="56" height="32"/>
+  <pos x="926" y="709"/>
+  <selected x="20" y="1481"/>
+  <down x="20" y="1481"/>
+  <up x="+0" y="+0"/>
+</button>
+
+Sample Loop 
+-------------------------------
+
+<button action="sampler 1 loop">
+  <size width="61" height="37"/>
+  <pos x="695" y="443"/>
+  <selected x="695" y="1215"/>
+  <down x="695" y="1215"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 2 loop">
+  <size width="61" height="37"/>
+  <pos x="773" y="443"/>
+  <selected x="695" y="1215"/>
+  <down x="695" y="1215"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 3 loop">
+  <size width="61" height="37"/>
+  <pos x="849" y="443"/>
+  <selected x="695" y="1215"/>
+  <down x="695" y="1215"/>
+  <up x="+0" y="+0"/>
+</button>
+<button action="sampler 4 loop">
+  <size width="61" height="37"/>
+  <pos x="927" y="443"/>
+  <selected x="695" y="1215"/>
+  <down x="695" y="1215"/>
+  <up x="+0" y="+0"/>
+</button>
+
+FX SLIDERS
+---
+<slider action="deck left effect slider 1 " rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="37-10" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="deck left filter" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="114-10" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="deck right effect slider 1" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="187-10" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="deck right filter" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="264-10" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+
+
+Sample Volume 
+---
+<slider action="sampler 1 volume" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="715-9" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="sampler 2 volume" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="792-9" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="sampler 3 volume" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="865-9" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+<slider action="sampler 4 volume" rightclick="temporary" dblclick="reset" orientation="vertical">
+  <size width="41" height="137"/>
+  <pos x="942-9" y="507"/>
+<fader>
+  <size width="40" height="11"/>
+  <pos x="706" y="1287"/>
+</fader>
+</slider>
+
+</Skin>

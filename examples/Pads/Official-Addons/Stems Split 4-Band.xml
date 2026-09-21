@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page name="stems split 4B">
+	<pad1 name="VOCAL" color="color &apos;blue&apos;" autodim="query" query="stem_pad &apos;vocal&apos;">var &apos;@$stemsTrigger&apos; ? stem_pad &apos;vocal&apos; : only_stem &apos;vocal&apos; &amp; only_stem &apos;vocal&apos; ? only_stem &apos;instru&apos; off &amp; only_stem &apos;rhythm&apos; off &amp; only_stem &apos;bass&apos; off : nothing</pad1>
+	<pad2 name="MELODY" color="color &apos;green&apos;" autodim="query" query="stem_pad &apos;instru&apos;">var &apos;@$stemsTrigger&apos; ? stem_pad &apos;instru&apos; : only_stem &apos;instru&apos; &amp; only_stem &apos;instru&apos; ? only_stem &apos;vocal&apos; off &amp; only_stem &apos;rhythm&apos; off &amp; only_stem &apos;bass&apos; off : nothing</pad2>
+	<pad3 name="BASS" color="color &apos;violet&apos;" autodim="query" query="stem_pad &apos;bass&apos;">var &apos;@$stemsTrigger&apos; ? stem_pad &apos;bass&apos; : only_stem &apos;bass&apos; &amp; only_stem &apos;bass&apos; ? only_stem &apos;instru&apos; off &amp; only_stem &apos;vocal&apos; off &amp; only_stem &apos;rhythm&apos; off : nothing</pad3>
+	<pad4 name="DRUMS" color="color &apos;red&apos;" autodim="query" query="stem_pad &apos;rhythm&apos;">var &apos;@$stemsTrigger&apos; ? stem_pad &apos;rhythm&apos; : only_stem &apos;rhythm&apos; &amp; only_stem &apos;rhythm&apos; ? only_stem &apos;instru&apos; off &amp; only_stem &apos;vocal&apos; off &amp; only_stem &apos;bass&apos; off : nothing</pad4>
+	<pad5 name="SPLIT" color="color &apos;orange&apos;">stems_split &apos;vocal&apos;</pad5>
+	<pad6 name="SPLIT" color="color &apos;orange&apos;">stems_split &apos;instru&apos;</pad6>
+	<pad7 name="SPLIT" color="color &apos;orange&apos;">stems_split &apos;bass&apos;</pad7>
+	<pad8 name="SPLIT" color="color &apos;orange&apos;">stems_split &apos;rhythm&apos;</pad8>
+	<shift_pad1 name="VOCAL" color="color &apos;blue&apos;" autodim="query">stem_pad isolate &apos;vocal&apos;</shift_pad1>
+	<shift_pad2 name="MELODY" color="color &apos;green&apos;" autodim="query">stem_pad isolate &apos;instru&apos;</shift_pad2>
+	<shift_pad3 name="BASS" color="color &apos;violet&apos;" autodim="query">stem_pad isolate &apos;bass&apos;</shift_pad3>
+	<shift_pad4 name="DRUMS" color="color &apos;red&apos;" autodim="query">stem_pad isolate &apos;Rhythm&apos;</shift_pad4>
+	<param1 name="`stems_split_unlink ? get_text &apos;UN-LINKED&apos; : get_text &apos;LINKED&apos;`">stems_split_unlink</param1>
+	<menu>Split Decks &gt;&gt; Left Right +[setting &apos;stemsSplitLeftright&apos; on]
+Split Decks &gt;&gt; Up Down +[setting &apos;stemsSplitLeftright&apos; off]
+-
+Stems Trigger &gt;&gt; Mute +[set &apos;@$stemsTrigger&apos; 1]
+Stems Trigger &gt;&gt; Solo +[set &apos;@$stemsTrigger&apos; 0]</menu>
+	<shift_pad7 />
+</page>

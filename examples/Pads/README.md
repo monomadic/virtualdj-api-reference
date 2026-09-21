@@ -12,6 +12,7 @@ Format reference: [Pad Page XML](../../docs/Pad%20Page%20XML.md) — container s
 | --- | --- |
 | Canonical | Preferred copyable reference pattern for docs and new examples. **No page currently holds this status.** |
 | Built-in | Copied as-is from VirtualDJ's application bundle; treat as semi-official executable examples, not curated copy/paste patterns. |
+| Published | Atomix-published add-on page from the VirtualDJ catalog, copied from the local install — see [Official-Addons/](Official-Addons/). Same standing as Built-in. |
 | Quarantined | Personal/local working or superseded page (formerly `Working`/`Legacy`); real usage evidence, not official or curated — see [Quarantine/](Quarantine/). |
 
 ## Reference Pages

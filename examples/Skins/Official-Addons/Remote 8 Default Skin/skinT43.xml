@@ -1,0 +1,1921 @@
+<Skin name="VirtualDJ 8 - Remote Tablet Skin" version="8" width="1024" height="768" nbdecks="2" >
+<copyright>(c)2015 - Atomix Productions</copyright>
+
+<group name="class_defines">
+
+	<font name="Arial" />
+
+	<group name="songpos">
+		<define class="songpos" colorPlayed="#00a5e4" colorBass="#00567a" colorMed="#00a5e4" colorHigh="#7fc8e9" classdeck="left">
+			<size width="480" height="32"/>
+			<cues>
+			  <size width="11" height="32"/>
+			  <up x="376" y="1777"/>
+			  <clipmask x="360" y="1777"/>
+			</cues>
+		</define>
+		<define class="songpos" colorPlayed="#e4000d" colorBass="#7a0005" colorMed="#e4000d" colorHigh="#e97f81" classdeck="right">
+			<size width="480" height="32"/>
+			<cues>
+			  <size width="11" height="32"/>
+			  <up x="376" y="1777"/>
+			  <clipmask x="360" y="1777"/>
+			</cues>
+		</define>
+	</group>
+
+	<group name="buttons">
+
+		<define class="pan_button" >
+		  <size width="83" height="55"/>
+		  <off x="823" y="1855"/>
+		  <on x="726" y="1855"/>
+		</define>
+		<define class="deckbutton" classdeck="left">
+		  <size width="88" height="38"/>
+		  <off x="245" y="776"/>
+		  <on x="335" y="776"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deckbutton" classdeck="right">
+		  <size width="88" height="38"/>
+		  <off x="245" y="776"/>
+		  <on x="426" y="776"/>
+		  <text size="16" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deck_button" classdeck="left">
+			<size width="53" height="33"/>
+			<off x="518" y="776"/>
+			<on x="578" y="776"/>
+			<text size="13" color="#d3d3d3" align="center" weight="bold" />
+		</define>
+		<define class="deck_button" classdeck="right">
+			<size width="53" height="33"/>
+			<off x="518" y="776"/>
+			<on x="578" y="816"/>
+			<text size="13" color="#d3d3d3" align="center" weight="bold" />
+		</define>
+		<define class="deck_button2" classdeck="left">
+			<size width="53" height="44"/>
+			<off x="20" y="1643"/>
+			<on x="80" y="1643"/>
+			<text size="15" color="#d3d3d3" align="center" weight="bold" />
+		</define>
+		<define class="deck_button2" classdeck="right">
+			<size width="53" height="44"/>
+			<off x="20" y="1643"/>
+			<on x="80" y="1696"/>
+			<text size="15" color="#d3d3d3" align="center" weight="bold" />
+		</define>
+		<define class="deckbutton_large" classdeck="left">
+			<size width="79" height="52"/>
+			<off x="209" y="1642"/>
+			<on x="290" y="1642"/>
+			<text size="18" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deckbutton_large" classdeck="right">
+			<size width="79" height="52"/>
+			<off x="209" y="1642"/>
+			<on x="372" y="1642"/>
+			<text size="18" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deckbutton_gray" >
+			<size width="79" height="52"/>
+			<off x="209" y="1642"/>
+			<on x="209" y="1698"/>
+			<text size="18" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		<define class="deckbutton_gray_wide" >
+			<size width="74" height="37"/>
+			<off x="245" y="776"/>
+			<on x="245" y="816"/>
+			<text size="18" weight="bold" color="#e1e1e1" align="center"/>
+		</define>
+		
+		<define class="deckbutton_gray_small" >
+			<size width="53" height="33"/>
+			<off x="518" y="776"/>
+			<on x="518" y="816"/>
+			<text size="13" color="#d3d3d3" align="center" weight="bold" />
+		</define>
+		<define class="pad" classdeck="left">
+		  <size width="65" height="65"/>
+		  <on x="8+140" y="912"/>
+		  <off x="8" y="912"/>
+		  <text weight="bold" align="center" size="20" color="#E1E1E1" />
+		</define>
+		<define class="pad" classdeck="right">
+		  <size width="65" height="65"/>
+		  <on x="8+280" y="912"/>
+		  <off x="8" y="912"/>
+		  <text weight="bold" align="center" size="20" color="#E1E1E1" />
+		</define>
+
+		<define class="keyround" classdeck="left">
+			<size width="40" height="40"/>
+			<on x="85" y="1595"/>
+			<off x="26" y="1595"/>
+		</define>
+		<define class="keyround" classdeck="right">
+			<size width="40" height="40"/>
+			<on x="141" y="1595"/>
+			<off x="26" y="1595"/>
+		</define>
+		<define class="vinylbutton" classdeck="left">
+			<size width="40" height="40"/>
+			<on x="366" y="1595"/>
+			<off x="457" y="1595"/>
+		</define>
+		<define class="vinylbutton" classdeck="right">
+			<size width="40" height="40"/>
+			<on x="412" y="1595"/>
+			<off x="457" y="1595"/>
+		</define>
+		<define class="slipbutton" classdeck="left">
+			<size width="40" height="40"/>
+			<on x="537" y="1641"/>
+			<off x="537" y="1598"/>
+		</define>
+		<define class="slipbutton" classdeck="right">
+			<size width="40" height="40"/>
+			<on x="537" y="1687"/>
+			<off x="537" y="1598"/>
+		</define>
+		<define class="plus" classdeck="left">
+		  <size width="28" height="28"/>
+		  <up x="366" y="856"/>
+		  <down x="366+60" y="856"/>
+		</define>
+		<define class="minus" classdeck="left">
+		  <size width="28" height="28"/>
+		  <up x="336" y="856"/>
+		  <down x="336+60" y="856"/>
+		</define>
+		<define class="lock" classdeck="left">
+		  <size width="40" height="40"/>
+			<on x="261" y="1595"/>
+			<off x="202" y="1595"/>
+		</define>
+
+		<define class="plus" classdeck="right">
+		  <size width="28" height="28"/>
+		  <up x="366" y="856"/>
+		  <down x="366+60+60+60" y="856"/>
+		</define>
+		<define class="minus" classdeck="right">
+		  <size width="28" height="28"/>
+		  <up x="336" y="856"/>
+		  <down x="336+60+60+60" y="856"/>
+		</define>
+		<define class="lock" classdeck="right">
+		  <size width="40" height="40"/>
+			<on x="317" y="1595"/>
+			<off x="202" y="1595"/>
+		</define>
+
+		<define class="deck_circle" >
+			<size width="29" height="29"/>
+			<off x="493" y="889"/>
+			<on x="493+31+31" y="889"/>
+		</define>
+	
+
+
+
+
+		<define class="deck_select" classdeck="left" action="select">
+			<size width="81" height="81"/>
+			<off x="540" y="1240"/>
+			<on x="719" y="1240"/>
+		</define>
+		<define class="deck_select" classdeck="right" action="select">
+			<size width="81" height="81"/>
+			<off x="540" y="1240"/>
+			<on x="631" y="1240"/>
+		</define>
+
+	</group> 
+
+	<group name="visuals">
+
+		<define class="vumeter" classdeck="left" type="linear" orientation="vertical" direction="up">
+		  <size width="13" height="253"/>
+		  <off x="555" y="1852"/>
+		  <on x="610" y="1852"/>
+		</define>
+		<define class="vumeter" classdeck="right" type="linear" orientation="vertical" direction="up">
+		  <size width="13" height="253"/>
+		  <off x="555" y="1852"/>
+		  <on x="644" y="1852"/>
+		</define>
+		<define class="vumetermaster" classdeck="right" type="linear" orientation="vertical" direction="up">
+		  <size width="13" height="253"/>
+		  <off x="555" y="1852"/>
+		  <on x="670" y="1852"/>
+		</define>
+
+	</group>
+
+	<group name="panels">
+		<define class="samplerpad" >
+			<visual type="color">
+				<pos x="+0" y="+0"/>
+				<size width="135" height="120"/>
+			</visual>
+			<visual type="color" >
+				<pos x="+42" y="+90"/>
+				<size width="50" height="4"/>
+			</visual>
+			<visual type="linear" orientation="horizontal" defaultValue="0">
+				<pos x="+22" y="+20"/>
+				<size width="87" height="10"/>
+				<off x="584" y="1758"/>
+				<on x="584" y="1773"/>
+			</visual>
+			<button >
+				<pos x="+0" y="+0"/>
+				<size width="135" height="120"/>
+			</button>
+			<textzone>
+				<pos x="+0" y="+30"/>
+				<size width="135" height="70"/>
+				<text size="20" align="center" weight="bold"/>
+			</textzone>
+		</define>
+		
+		<define class="rmtquickloop" classdeck="left">
+		  <button action="loop_half">
+			<pos x="+0" y="+0"/>
+			<size width="47" height="47"/>
+			<off x="164" y="2129"/>
+			<on x="164" y="2185"/>
+		  </button>
+		  <button action="loop" rightclick="temporary">
+			<pos x="+47" y="+0"/>
+			<size width="69" height="47"/>
+			<off x="164+47" y="2129"/>
+			<on x="164+47" y="2185"/>
+			<text size="22" color="#FFFFFF" align="center" weight="bold" format="%loop" scroll="no"/>
+		  </button>
+		  <button action="loop_double">
+			<pos x="+116" y="+0"/>
+			<size width="47" height="47"/>
+			<off x="164+116" y="2129"/>
+			<on x="164+116" y="2185"/>
+		  </button>
+		</define>
+		
+		<define class="rmtquickloop" classdeck="right">
+		  <button action="loop_half">
+			<pos x="+0" y="+0"/>
+			<size width="47" height="47"/>
+			<off x="164" y="2129"/>
+			<on x="164" y="2244"/>
+		  </button>
+		  <button action="loop" rightclick="temporary">
+			<pos x="+47" y="+0"/>
+			<size width="69" height="47"/>
+			<off x="164+47" y="2129"/>
+			<on x="164+47" y="2244"/>
+			<text size="22" color="#FFFFFF" align="center" weight="bold" format="%loop" scroll="no"/>
+		  </button>
+		  <button action="loop_double">
+			<pos x="+116" y="+0"/>
+			<size width="47" height="47"/>
+			<off x="164+116" y="2129"/>
+			<on x="164+116" y="2244"/>
+		  </button>
+		</define>
+			
+	</group>
+	
+	<group name="sliders">
+		<define class="eqslider" direction="down" orientation="vertical">
+			<size width="50" height="184"/>
+			<off x="891" y="1047"/>
+			<on x="891" y="1047"/>
+			<fader>
+				<size width="39" height="26"/>
+				<pos x="895" y="1012"/>
+			</fader>
+		</define>
+		<define class="fxslider" orientation="horizontal" direction="right" >
+			<size width="183" height="41"/>
+			<off x="787" y="2194"/>
+			<on x="787" y="2194"/>
+			<fader>
+				<size width="26" height="35"/>
+				<pos x="746" y="2200"/>
+			 </fader>
+		</define>
+					
+	</group>
+
+	<define class="deck_text">
+		<size width="50" height="15"/>
+		<text size="13" color="#d3d3d3" align="center" weight="bold" format="nothing"/>
+	</define>
+	<define class="minicues_text">
+	  <size width="80" height="16"/>
+	  <text size="16" color="#C5C6C6" align="center" scroll="no"/>
+	</define>
+
+</group>
+
+<panel name="rm_ritm" group="rm_ritmos" visible="yes">
+    <rhythmzone mirror="false" center="512" upsidedown="false" fade="100">
+      <pos x="134" y="12"/>
+      <size width="755" height="90"/>
+      <colors deck1="#007097" deck2="#8c0709" deck1_active="#009fd2" deck2_active="#cd0f10" />
+      <rhythm y="+0" height="79"/>
+      <grid height="5" width="4" maxwidth="8">
+        <pos y1="+80" y2="+85"/>
+      </grid>
+      <cue y="+0" height="79">
+        <text dx="15" dy="-1" size="14" />
+        <mask width="14" height="85" x="398" y="1776"/>
+      </cue>
+      <overlay>
+        <size width="2" height="90"/>
+        <pos x="511" y="12"/>
+        <background x="873" y="779"/>
+      </overlay>
+    </rhythmzone>
+</panel>
+<panel name="rm_scrt" group="rm_ritmos" visible="no">
+    <scratchwave deck="left" orientation="horizontal">
+		<pos x="134" y="12"/>
+		<size width="755" height="45"/>
+		<overlay>
+			<size width="2" height="45"/>
+			<pos x="511" y="12"/>
+			<background x="873" y="779"/>
+		</overlay>
+    </scratchwave>
+	<scratchwave deck="right" orientation="horizontal">
+		<pos x="134" y="12+45"/>
+		<size width="755" height="45"/>
+	    <overlay>
+			<size width="2" height="45"/>
+			<pos x="511" y="12+45"/>
+			<background x="873" y="779"/>
+		</overlay>
+    </scratchwave>
+</panel>
+<button action="skin_panelgroup 'rm_ritmos' +1">
+	<pos x="499" y="105" width="26" height="20"/>
+	<off x="499" y="105"/>
+	<on x="499" y="105"/>
+</button>	
+
+		<group name="panbuttonsinit" x="0" y="11+90+119+8" >
+			<button class="pan_button" action="nothing">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117" height="33" width="35"/>
+			</button>	
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980" y="1209" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90+90" y="+0"/>
+				<icon x="971" y="1769" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981" y="1365" height="43" width="38"/>
+			</button>
+			
+		</group>
+		<group name="panbuttonsinit2" x="10+570" y="11+90+119+8" >
+			<button class="pan_button" action="nothing">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117" height="33" width="35"/>
+			</button>
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980" y="1209" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90+90" y="+0"/>
+				<icon x="971" y="1769" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="nothing">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981" y="1365" height="43" width="38"/>
+			</button>	
+
+		</group>
+
+		
+	<!-- DECK A -->
+<deck deck="left">
+			
+	<group name="timea" x="19" y="17" >
+		<button action="select">
+			<pos x="+0" y="-3"/>
+			<size width="108" height="38"/>
+			<text dx="50" size="30" width="50" color="#C5C6C6" align="center" weight="bold" format="A"/>
+			<textselected dx="50" size="30" width="50" color="#3CB7F0" align="center" weight="bold" format="A"/>
+		</button>
+		<button action="display_time 'elapsed,remain' +1">
+			<pos x="+8" y="+37"/>
+			<size width="100" height="15"/>
+			<text size="15" color="#B2B3B3" align="center" weight="bold" action="display_time & param_uppercase"/>
+		</button>
+		<button action="display_time 'elapsed,remain'" query="songpos_remain 30000ms ? blink : off">
+			<pos x="+8" y="+51"/>
+			<size width="85" height="34"/>
+			<text size="32" color="#FFFFFF" weight="bold" align="right" scroll="no" action="get_time"/>
+			<textselected size="32" color="#9D9E9E" weight="bold" align="right" scroll="no" action="get_time"/>
+		</button>
+	</group>
+
+	<group name="rmt_decka" x="10" y="11+90" >
+			
+		<group name="deckinfo" x="+0" y="+8">
+			<cover >
+				<pos x="+10" y="+10"/>
+				<size width="55" height="55"/>
+			</cover>
+			
+			<textzone visibility="automix">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="22" color="#FFFFFF" weight="bold" align="left" scroll="no" action="get_text 'Now : `get_artist_title`'"/>
+			</textzone>
+			<textzone visibility="automix ? false : get_loaded_song 'remix' & param_equal '' ? false : true">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="22" color="#FFFFFF" weight="bold" align="left" scroll="no" action="get_text '`get_title` (`get_loaded_song &quot;remix&quot;`)'"/>
+			</textzone>
+			<textzone visibility="automix ? false : get_loaded_song 'remix' & param_equal '' ? true : false">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#FFFFFF" weight="bold" align="left" scroll="no" action="loaded ? get_title : get_text 'Load a track from Library'"/>
+			</textzone>
+			
+			<textzone visibility="automix">
+				<pos x="+10+60" y="+40"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#9D9E9E" weight="bold" align="left" scroll="no" action="get_text 'Next : `get_automix_song &quot;artist&quot;` - `get_automix_song &quot;title&quot;`'"/>
+			</textzone>
+			<textzone visibility="automix ? false : true">
+				<pos x="+10+60" y="+40"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#9D9E9E" weight="bold" align="left" scroll="no" action="get_artist"/>
+			</textzone>
+			
+			<textzone>
+				<pos x="+10+60+315" y="+12"/>
+				<size width="100" height="15"/>
+				<text size="15" color="#B2B3B3" align="right" weight="bold" format="BPM"/>
+			</textzone>
+			<textzone>
+				<pos x="+10+60+315" y="+27"/>
+				<size width="100" height="40"/>
+				<text size="32" color="#25AFFF" weight="bold" align="right" scroll="no" format="%Pbpmex"/>
+			</textzone>
+			<songpos class="songpos" >
+				<pos x="+9" y="183"/>
+			</songpos>
+		</group>
+
+		<group name="transporta" x="+0" y="+573" >
+			<button class="deckbutton_large" action="cue_button">
+				<pos x="+28" y="+0"/>
+				<text action="cue_button"/>
+			</button>
+			 <button class="deckbutton_large" action="stop_button" >
+			  <pos x="+28+91" y="+0"/>
+				<icon sysicon="stop_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton_large" action="play_button">
+				<pos x="+28+91+91" y="+0"/>
+				<icon sysicon="play_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton_large" action="sync">
+				<pos x="+28+91+91+91" y="+0"/>
+				<text format="SYNC"/>
+			</button>
+		</group>
+
+		<group name="panbuttons" x="-10" y="+119+8" >
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_eq' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_eq' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_eq' on" visibility="eq_reset">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117" height="33" width="35"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_eq' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_eq' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_eq' on" visibility="eq_reset ? false : true">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117+833" height="33" width="35"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_fx' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_fx' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_fx' on" visibility="effect_active ? false : true">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980" y="1209" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_fx' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_fx' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_fx' on"  visibility="effect_active">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980" y="1209+893" height="43" width="38"/>
+			</button>	
+			
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_hc' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_hc' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_hc' on">
+				<pos x="+45+90+90" y="+0"/>
+				<icon x="971" y="1769" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_lp' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_lp' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_lp' on" visibility="loop ? false : true">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981" y="1365" height="43" width="38"/>
+			</button>
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_lp' on ? skin_panel 'rmt_deka' on : skin_panel 'rmt_lp' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_lp' on" visibility="loop">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981-82" y="1365+596" height="43" width="38"/>
+			</button>
+			
+			<button class="pan_button" action="skin_panelgroup 'rmt_masterpans' +1" query="skin_panel 'rmt_sam' on">
+				<pos x="+19+90+90+90+90+47" y="+0"/>
+				<icon x="981" y="1454" height="25" width="41"/>
+			</button>	
+			<button class="pan_button" action="browser" >
+				<pos x="+19+90+90+90+90+134" y="+0"/>
+				<icon x="981" y="1037" height="32" width="36"/>
+			</button>				
+		</group>
+
+	</group>		
+
+</deck>
+
+<!-- DECK B -->
+<deck deck="right">
+		
+	<group name="timeb" x="896" y="17" >
+		<button action="select">
+			<pos x="+0" y="-3"/>
+			<size width="108" height="38"/>
+			<text dx="50" size="30" width="50" color="#C5C6C6" align="center" weight="bold" format="B"/>
+			<textselected dx="50" size="30" width="50" color="#FF0006" align="center" weight="bold" format="B"/>
+		</button>
+		<button action="display_time 'elapsed,remain' +1">
+			<pos x="+8" y="+37"/>
+			<size width="100" height="15"/>
+			<text size="15" color="#B2B3B3" align="center" weight="bold" action="display_time & param_uppercase"/>
+		</button>
+		<button action="display_time 'elapsed,remain'" query="songpos_remain 30000ms ? blink : off">
+			<pos x="+8" y="+51"/>
+			<size width="85" height="34"/>
+			<text size="32" color="#FFFFFF" weight="bold" align="right" scroll="no" action="get_time"/>
+			<textselected size="32" color="#9D9E9E" weight="bold" align="right" scroll="no" action="get_time"/>
+		</button>
+	</group>
+
+	<group name="deckb" x="10" y="11+90" >
+
+		<group name="deckinfo" x="+0+505" y="+8">
+			<cover >
+				<pos x="+10" y="+10"/>
+				<size width="55" height="55"/>
+			</cover>
+			<textzone visibility="automix">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="22" color="#FFFFFF" weight="bold" align="left" scroll="no" action="get_text 'Now : `get_artist_title`'"/>
+			</textzone>
+			<textzone visibility="automix ? false : get_loaded_song 'remix' & param_equal '' ? false : true">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="22" color="#FFFFFF" weight="bold" align="left" scroll="no" action="get_text '`get_title` (`get_loaded_song &quot;remix&quot;`)'"/>
+			</textzone>
+			<textzone visibility="automix ? false : get_loaded_song 'remix' & param_equal '' ? true : false">
+				<pos x="+10+60" y="+12"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#FFFFFF" weight="bold" align="left" scroll="no" action="loaded ? get_title : get_text 'Load a track from Library'"/>
+			</textzone>
+			
+			<textzone visibility="automix">
+				<pos x="+10+60" y="+40"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#9D9E9E" weight="bold" align="left" scroll="no" action="get_text 'Next : `get_automix_song &quot;artist&quot;` - `get_automix_song &quot;title&quot;`'"/>
+			</textzone>
+			<textzone visibility="automix ? false : true">
+				<pos x="+10+60" y="+40"/>
+				<size width="300" height="22"/>
+				<text size="20" color="#9D9E9E" weight="bold" align="left" scroll="no" action="get_artist"/>
+			</textzone>
+			<textzone>
+				<pos x="+10+60+315" y="+12"/>
+				<size width="100" height="15"/>
+				<text size="15" color="#B2B3B3" align="right" weight="bold" format="BPM"/>
+			</textzone>
+			<textzone>
+				<pos x="+10+60+315" y="+27"/>
+				<size width="100" height="40"/>
+				<text size="32" color="red" weight="bold" align="right" scroll="no" format="%Pbpmex"/>
+			</textzone>
+			<songpos class="songpos" >
+				<pos x="+9" y="183"/>
+			</songpos>
+		</group>
+		
+		<group name="transportb" x="+593" y="+573" >
+			<button class="deckbutton_large" action="cue_button">
+				<pos x="+28" y="+0"/>
+				<text action="cue_button"/>
+			</button>
+			 <button class="deckbutton_large" action="stop_button" >
+		      <pos x="+28+91" y="+0"/>
+			    <icon sysicon="stop_button" width="32" height="32" />
+    		</button>
+			<button class="deckbutton_large" action="play_button">
+				<pos x="+28+91+91" y="+0"/>
+				<icon sysicon="play_button" width="32" height="32" />
+			</button>
+			<button class="deckbutton_large" action="sync">
+				<pos x="+28+91+91+91" y="+0"/>
+				<text format="SYNC"/>
+			</button>
+		</group>
+		
+		<group name="panbuttons" x="+570" y="+119+8" >
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_eq2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_eq2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_eq2' on" visibility="eq_reset">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117" height="33" width="35"/>
+			</button>
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_eq2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_eq2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_eq2' on" visibility="eq_reset ? false : true">
+				<pos x="+45" y="+0"/>
+				<icon x="978" y="1117+833+84" height="33" width="35"/>
+			</button>				
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_fx2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_fx2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_fx2' on" visibility="effect_active ? false : true">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980" y="1209" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_fx2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_fx2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_fx2' on"  visibility="effect_active">
+				<pos x="+45+90" y="+0"/>
+				<icon x="980-70" y="1209+893" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_hc2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_hc2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_hc2' on">
+				<pos x="+45+90+90" y="+0"/>
+				<icon x="971" y="1769" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_lp2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_lp2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_lp2' on" visibility="loop ? false : true">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981" y="1365" height="43" width="38"/>
+			</button>	
+			<button class="pan_button" action="skin_panel 'rmt_subp' on & skin_panel 'rmt_lp2' on ? skin_panel 'rmt_dekb' on : skin_panel 'rmt_lp2' on" query="skin_panel 'rmt_sam' on ? false : skin_panel 'rmt_lp2' on" visibility="loop">
+				<pos x="+45+90+90+90" y="+0"/>
+				<icon x="981-82" y="1365+596+72" height="43" width="38"/>
+			</button>
+
+		</group>
+
+	</group>
+	
+</deck>
+
+	<!--DECK PANELS -->
+<panel name="rmt_subp" group="rmt_masterpans" visible="true">
+	<deck deck="left">
+		<panel name="rmt_deka" group="rmt_deckpans" x="20" y="289" visible="true">
+			<group name="pitcha" x="20" y="101+195+8">
+				<visual >
+					<pos x="+5" y="+10"/>
+					  <size width="78" height="298"/>
+					  <off x="441" y="1843"/>
+				</visual> 
+				
+				<visual >
+					<pos x="+12" y="+70"/>
+					<size width="59" height="183"/>
+					<off x="956" y="814"/>
+				</visual>
+				<button class="keyround" action="key_lock">
+					<pos x="+84" y="+24"/>
+				</button>
+				<button class="vinylbutton" action="vinyl_mode">
+					<pos x="+84+260" y="+24"/>
+				</button>
+				<button class="lock" action="pitch_lock">
+					<pos x="+84" y="+250"/>
+				</button>
+				<button class="slipbutton" action="slip_mode" >
+					<pos x="+84+260" y="+250"/>
+				</button>		
+				<button action="pitch_reset" query="loaded ? pitch_reset ? blink : get_pitch_zero 1% ? off : on : off">
+					<pos x="+12" y="+28"/>
+					<size width="66" height="34"/>
+					<text size="18" color="#FFFFFF" align="center" weight="bold" format="%Ppitch %"/>
+					<textselected size="18" color="#3CB7F0" align="center" weight="bold" format="%Ppitch %"/>
+				</button>
+				<slider action="pitch" rightclick="temporary" dblclick="pitch 100%"  direction="down" orientation="vertical">
+				  <pos x="+12+27" y="+70"/>
+				  <size width="8" height="183"/>
+				  <on x="885" y="814"/>
+				  <off x="900" y="814"/>
+				  <fader>
+					<size width="46" height="25"/>
+					<pos x="644" y="853"/>
+				  </fader>
+				</slider>
+
+				<button class="minus" action="pitch_bend -2% 500ms" rightclick="pitch_bend -5% 500ms">
+					<pos x="+10" y="+266"/>
+				</button>
+				
+				<button class="plus" action="pitch_bend +2% 500ms" rightclick="pitch_bend +5% 500ms">
+					<pos x="+10+35" y="+266" />
+				</button>
+			</group>
+
+			<group name="joga" x="136-24" y="101+210+8">
+
+				<visual >
+					<pos x="+0" y="+0"/>
+					  <size width="290" height="290"/>
+					  <off x="301" y="1008"/>
+				</visual> 
+
+				<visual type="rotation" source="get rotation">
+					<Tooltip></Tooltip>
+					<pos x="+0" y="+0"/>
+					  <size width="290" height="290"/>
+					  <on x="7" y="1008"/>
+				</visual>
+				<visual type="circle" source="get position">
+					<Tooltip></Tooltip>
+					<pos x="+0" y="+0"/>
+				  <size width="290" height="290"/>
+					<on x="594" y="1008"/>
+				</visual>
+				<scratch >
+					<pos x="+0" y="+0"/>
+					 <size width="290" height="290"/>
+					 <mousemask x="301" y="1008"/>
+				</scratch>
+			</group>	
+			
+		</panel>
+
+		<panel name="rmt_eq" group="rmt_deckpans" x="15" y="289" visible="false">
+			<textzone>
+				<pos x="+40-15" y="+25" width="50" height="18"/>
+				<text size="18" weight="bold" align="center" color="white" format="FILTER"/>
+			</textzone>
+			<button action="eq_low 0% ? eq_low 50% : eq_low 0%" query="eq_low 0%">
+				<pos x="+60+50" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="LOW"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="LOW"/>
+			</button>
+			<button action="eq_mid 0% ? eq_mid 50% : eq_mid 0%" query="eq_mid 0%">
+				<pos x="+60+50+70" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="MID"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="MID"/>
+			</button>
+			<button action="eq_high 0% ? eq_high 50% : eq_high 0%" query="eq_high 0%">
+				<pos x="+60+50+70+70" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="HIGH"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="HIGH"/>
+			</button>
+			<textzone>
+				<pos x="+60+50+70+70+80" y="+25" width="50" height="18"/>
+				<text size="18" weight="bold" align="center" color="white" format="GAIN"/>
+			</textzone>
+			
+			<textzone>
+				<pos x="+42-15" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="filter 50% ? get_text '50%' : filter_label"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_low & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_mid & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70+70" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_high & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70+70+80" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" format="%Plevel dB"/>
+			</textzone>
+			
+			<slider class="eqslider" action="filter" dblclick="filter 50%"  direction="up" orientation="vertical">
+				<pos x="+40-15" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_low" dblclick="eq_low 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_mid" dblclick="eq_mid 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_high" dblclick="eq_high 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70+70" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="gain" dblclick="gain 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70+70+80" y="+65"/>
+			</slider>
+			
+			<button class="deck_button" action="filter 50%" query="filter 50% ? off : on">
+				<pos x="+37-15" y="+305"/>
+				<text format="RESET"/>
+			</button>		
+			<button class="deck_button" action="eq_reset" query="eq_reset ? off : on">
+				<pos x="+175" y="+305"/>
+				<text format="RESET"/>
+			</button>
+			<button class="deck_button" action="gain 50%" query="gain 50% ? off : on">
+				<pos x="+175+150" y="+305"/>
+				<text format="ZERO"/>
+			</button>
+
+		</panel>	
+
+		<panel name="rmt_fx" group="rmt_deckpans" x="20" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="EFFECTS"/>
+			</textzone>
+			
+			<button class="deck_button" action="var 'rmt_fxtemp' ? effect_active while_pressed : effect_active" >
+				<pos x="+35" y="+55"/>
+				<text format="FX"/>
+			</button>
+			<button action="var 'rmt_fxtemp' ? effect_active while_pressed : effect_active">
+				<pos x="+35+55" y="+55" width="150" height="33"/>
+				<off x="37" y="117"/>
+				<on x="37" y="117"/>
+				<text size="18" weight="bold" align="center" color="#D9DADA" action="get_effect_name & param_uppercase"/>
+				<textselected size="18" weight="bold" align="center" color="#64C3FA" action="get_effect_name & param_uppercase"/>
+			</button>		
+			<button class="deck_button" action="effect_select +1" >
+				<pos x="+263" y="+55"/>
+				<text format=""/>
+				<icon x="499" y="1655" height="24" width="28" dx="0" dy="0" />
+			</button>	
+			<button class="deck_button" action="effect_select -1" >
+				<pos x="+327" y="+55"/>
+				<text format=""/>
+				<icon x="499" y="1700" height="24" width="28" dx="0" dy="0" />
+			</button>	
+
+			<panel x="+0" y="+25" visibility="effect_select 'Slicer'">
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 1 'hold' : slicer 1" >
+					<pos x="+44" y="+80"/>
+					<text format="1"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 2 'hold' : slicer 2" >
+					<pos x="+44+80" y="+80"/>
+					<text format="2"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 3 'hold' : slicer 3" >
+					<pos x="+44+80+80" y="+80"/>
+					<text format="3"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 4 'hold' : slicer 4" >
+					<pos x="+44+80+80+80" y="+80"/>
+					<text format="4"/>
+				</button>
+
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 5 'hold' : slicer 5" >
+					<pos x="+44" y="+80+90"/>
+					<text format="5"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 6 'hold' : slicer 6" >
+					<pos x="+44+80" y="+80+90"/>
+					<text format="6"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 7 'hold' : slicer 7" >
+					<pos x="+44+80+80" y="+80+90"/>
+					<text format="7"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 8 'hold' : slicer 8" >
+					<pos x="+44+80+80+80" y="+80+90"/>
+					<text format="8"/>
+				</button>
+				
+				<button class="deck_button2" action="slicer 'step' -1" >
+					<pos x="+44" y="+275"/>
+					<icon x="472" y="1657" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'step' +1" >
+					<pos x="+44+60" y="+275"/>
+					<icon x="472" y="1702" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'length' -1" >
+					<pos x="+172" y="+275"/>
+					<icon x="472" y="1657" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'length' +1" >
+					<pos x="+172+60" y="+275"/>
+					<icon x="472" y="1702" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="toggle 'rmt_slicehold'" >
+					<pos x="+296" y="+275"/>
+					<text format="HOLD"/>
+				</button>
+				<textzone class="deck_text">
+					<pos x="+44" y="+250"/>
+					<size width="106" height="16"/>
+					<text size="15" action="get_text 'STEP : `get_effect_slider_text 1`'"/>
+				</textzone>
+				<textzone class="deck_text">
+					<pos x="+172" y="+250"/>
+					<size width="106" height="16"/>
+					<text size="15" action="get_text 'LEN : `get_effect_slider_text 2`'"/>
+				</textzone>			
+			</panel>
+			<panel x="+30" y="-20" visibility="effect_select 'Slicer' ? false : true">
+					<visual >
+						<pos x="+70" y="+130"/>
+						<size width="211" height="198"/>
+						<off x="120" y="1862"/>
+					</visual>
+					<textzone orientation="vertical" visibility="effect_has_slider 2">
+						<pos x="+35" y="+140" width="20" height="200"/>
+						<text size="18" weight="bold" align="center" color="white" action="get_text '`get_effect_slider_name 2 & param_uppercase` - `get_effect_slider_text 2`'"/>
+					</textzone>
+					<textzone visibility="effect_has_slider 1">
+						<pos x="+70" y="+140+200" width="210" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" action="get_text '`get_effect_slider_name 1 & param_uppercase` - `get_effect_slider_text 1`'"/>
+					</textzone>
+					<panel visible="effect_has_slider 1">
+						<slider action="effect_slider 1" orientation="horizontal" direction="right" >
+							<pos x="+70" y="+130"/>
+							<size width="211" height="198"/>
+							<off x="278" y="1308"/>
+							<on x="278" y="1308"/>
+							<fader>
+								<size width="3" height="198"/>
+								<pos x="78" y="1862"/>
+							 </fader>
+						</slider>
+					</panel>
+					<panel visible="effect_has_slider 2">
+						<slider action="effect_slider 2" visibility="effect_has_slider 1" direction="up" orientation="vertical" >
+							<pos x="+70" y="+130"/>
+							<size width="211" height="198"/>
+							<off x="278" y="1308"/>
+							<on x="278" y="1308"/>
+							<fader>
+								<size width="211" height="3"/>
+								<pos x="122" y="2077"/>
+							 </fader>
+						</slider>
+					</panel>	
+			
+					<slider action="var 'rmt_slider1lock' ? nothing : var 'rmt_fxtemp' ? effect_slider_active 1 : effect_slider 1" action2="var 'rmt_slider2lock' ? nothing : var 'rmt_fxtemp' ? effect_slider_active 2 : effect_slider 2" direction="right" direction2="up" orientation="2d" >
+						<pos x="+70" y="+130"/>
+						<size width="211" height="198"/>
+						<fader>
+							<size width="0" height="0"/>
+							<pos x="517" y="1756"/>
+						 </fader>
+					</slider>
+
+					<button class="lock" visibility="effect_has_slider 2" action="toggle 'rmt_slider2lock'">
+						<pos x="-14" y="+121"/>
+					</button>
+					<button class="lock" visibility="effect_has_slider 1" action="toggle 'rmt_slider1lock'">
+						<pos x="+70+240" y="+140+188"/>
+					</button>
+					<textzone >
+						<pos x="+45" y="+140+200" width="20" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="0"/>
+					</textzone>	
+					<textzone >
+						<pos x="+70+190" y="+140+200" width="40" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="PR.1"/>
+					</textzone>	
+					<textzone >
+						<pos x="+28" y="+132" width="40" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="PR.2"/>
+					</textzone>	
+					<button class="deck_button" action="toggle 'rmt_fxtemp'" >
+						<pos x="+295" y="+218"/>
+						<text format="TEMP"/>
+					</button>						
+			</panel>
+
+		</panel>
+		
+		<panel name="rmt_hc" group="rmt_deckpans" x="20" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="HOTCUES"/>
+			</textzone>
+		
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 1 & set 'rmt_delcue' 0 : hot_cue 1" query="var 'rmt_delcue' ? hot_cue 1 ? blink : off : hot_cue 1">
+				<pos x="+44" y="+80"/>
+				<text format="1"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 2 & set 'rmt_delcue' 0 : hot_cue 2" query="var 'rmt_delcue' ? hot_cue 2 ? blink : off : hot_cue 2">
+				<pos x="+44+80" y="+80"/>
+				<text format="2"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 3 & set 'rmt_delcue' 0 : hot_cue 3" query="var 'rmt_delcue' ? hot_cue 3 ? blink : off : hot_cue 3">
+				<pos x="+44+80+80" y="+80"/>
+				<text format="3"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 4 & set 'rmt_delcue' 0 : hot_cue 4" query="var 'rmt_delcue' ? hot_cue 4 ? blink : off : hot_cue 4">
+				<pos x="+44+80+80+80" y="+80"/>
+				<text format="4"/>
+			</button>
+
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 5 & set 'rmt_delcue' 0 : hot_cue 5" query="var 'rmt_delcue' ? hot_cue 5 ? blink : off : hot_cue 5">
+				<pos x="+44" y="+80+95"/>
+				<text format="5"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 6 & set 'rmt_delcue' 0 : hot_cue 6" query="var 'rmt_delcue' ? hot_cue 6 ? blink : off : hot_cue 6">
+				<pos x="+44+80" y="+80+95"/>
+				<text format="6"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 7 & set 'rmt_delcue' 0 : hot_cue 7" query="var 'rmt_delcue' ? hot_cue 7 ? blink : off : hot_cue 7">
+				<pos x="+44+80+80" y="+80+95"/>
+				<text format="7"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 8 & set 'rmt_delcue' 0 : hot_cue 8" query="var 'rmt_delcue' ? hot_cue 8 ? blink : off : hot_cue 8">
+				<pos x="+44+80+80+80" y="+80+95"/>
+				<text format="8"/>
+			</button>
+
+			<panel name="rmt_displaycues_name" group="rmt_displaycues" visible="yes">
+				<textzone class="minicues_text" x="+40" y="+150"><text format="%Pnamecue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150"><text format="%Pnamecue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150"><text format="%Pnamecue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150"><text format="%Pnamecue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95"><text format="%Pnamecue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95"><text format="%Pnamecue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95"><text format="%Pnamecue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95"><text format="%Pnamecue8"/></textzone>
+			 </panel>
+			  <panel name="rmt_displaycues_time" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Pfromcue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Pfromcue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Pfromcue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Pfromcue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Pfromcue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Pfromcue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Pfromcue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Pfromcue8"/></textzone>
+			  </panel>
+			  <panel name="rmt_displaycues_beat" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Bfromcue1 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Bfromcue2 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Bfromcue3 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Bfromcue4 bt"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Bfromcue5 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Bfromcue6 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Bfromcue7 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Bfromcue8 bt"/></textzone>
+			  </panel>
+			  <panel name="rmt_displaycues_pos" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Pcue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Pcue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Pcue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Pcue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Pcue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Pcue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Pcue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Pcue8"/></textzone>
+			  </panel>
+
+			  <button class="deck_button2" action="skin_panelgroup 'rmt_displaycues' +1" >
+				<pos x="+70" y="+275"/>
+				<text format="INFO"/>
+			</button>	  
+			<button class="deck_button2" action="toggle 'rmt_delcue'" >
+				<pos x="+185" y="+275"/>
+				<text format="DEL"/>
+			</button>
+			<textzone class="deck_text">
+				<pos x="+270" y="+270"/>
+				<size width="106" height="16"/>
+				<text size="15" format="SNAP"/>
+			</textzone>
+			<button class="deck_circle" action="smart_cue" >
+				<pos x="+310" y="+293"/>
+			</button>
+			
+		</panel>	
+
+		<panel name="rmt_lp" group="rmt_deckpans" x="20" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="LOOP ROLL"/>
+			</textzone>
+			
+			<button class="pad" action="loop_roll 0.125" >
+				<pos x="+44" y="+70"/>
+				<text format="1/8"/>
+			</button>
+			<button class="pad" action="loop_roll 0.25" >
+				<pos x="+44+80" y="+70"/>
+				<text format="1/4"/>
+			</button>
+			<button class="pad" action="loop_roll 0.5" >
+				<pos x="+44+80+80" y="+70"/>
+				<text format="1/2"/>
+			</button>
+			<button class="pad" action="loop_roll 1" >
+				<pos x="+44+80+80+80" y="+70"/>
+				<text format="1"/>
+			</button>
+
+			<textzone>
+				<pos x="+155" y="+160" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="LOOP"/>
+			</textzone>
+			
+			<button class="deckbutton_large" action="loop_in" >
+				<pos x="+44+80-10" y="+194"/>
+				<text size="18" align="center"  format="IN"/>
+			</button>
+			<button class="deckbutton_large" action="loop_out" >
+				<pos x="+44+80+80" y="+194"/>
+				<text size="18"  align="center" format="OUT"/>
+			</button>
+			<button action="loop_back off" visibility="play">
+				<pos x="+44+80+80+80+20" y="+207" />
+				<size width="32" height="25"/>
+				<off x="740" y="1977"/>
+				<on x="740" y="2012"/>
+			</button>
+			<button action="loop_back on" visibility="play">
+				<pos x="+44+80-60" y="+207" />
+				<size width="32" height="25"/>
+				<off x="740" y="2058"/>
+				<on x="740" y="2089"/>
+			</button>
+				
+			<panel class="rmtquickloop" x="+44+80-5" y="+270"/>
+			<textzone class="deck_text">
+				<pos x="+280" y="+270"/>
+				<size width="106" height="16"/>
+				<text size="15" format="SMART"/>
+			</textzone>
+			<button class="deck_circle" action="smart_loop" >
+				<pos x="+320" y="+293"/>
+			</button>
+				
+		</panel>	
+
+	</deck>
+
+	<!-- DECK B -->
+	<deck deck="right">
+
+		<panel name="rmt_dekb" group="rmt_deckpans2" x="10" y="11+90+8" visible="true" >
+			<group name="pitchb" x="+8+898" y="+195">
+				<visual >
+					<pos x="+5" y="+10"/>
+					  <size width="78" height="298"/>
+					  <off x="441" y="1843"/>
+				</visual> 
+				<visual >
+					<pos x="+12" y="+70"/>
+					<size width="59" height="183"/>
+					<off x="956" y="814"/>
+				</visual>
+				<button class="keyround" action="key_lock">
+					<pos x="-35" y="+24"/>
+				</button>
+				<button class="vinylbutton" action="vinyl_mode">
+					<pos x="-35-260" y="+24"/>
+				</button>
+				<button class="lock" action="pitch_lock">
+					<pos x="-35" y="+250"/>
+				</button>
+				<button class="slipbutton" action="slip_mode" >
+					<pos x="-35-260" y="+250"/>
+				</button>
+				<button action="pitch_reset" query="loaded ? pitch_reset ? blink : get_pitch_zero 1% ? off : on : off">
+					<pos x="+12" y="+28"/>
+					<size width="66" height="34"/>
+					<text size="18" color="#FFFFFF" align="center" weight="bold" format="%Ppitch %"/>
+					<textselected size="18" color="#FF0006" align="center" weight="bold" format="%Ppitch %"/>
+				</button>
+				<slider action="pitch" rightclick="temporary" dblclick="pitch 100%"  direction="down" orientation="vertical">
+				  <pos x="+12+27" y="+70"/>
+				  <size width="8" height="183"/>
+				  <on x="915" y="814"/>
+				  <off x="929" y="814"/>
+				  <fader>
+					<size width="46" height="25"/>
+					<pos x="644" y="853"/>
+				  </fader>
+				</slider>
+
+				<button class="minus" action="pitch_bend -2% 500ms" rightclick="pitch_bend -5% 500ms">
+					<pos x="+10" y="+266"/>
+				</button>
+				
+				<button class="plus" action="pitch_bend +2% 500ms" rightclick="pitch_bend +5% 500ms">
+					<pos x="+10+35" y="+266" />
+				</button>
+			</group>
+
+			<group name="jogb" x="136+485" y="+210">
+
+				<visual>
+					<pos x="+0" y="+0"/>
+					  <size width="290" height="290"/>
+					  <off x="301" y="1008"/>
+				</visual> 
+				<visual type="rotation" source="get rotation">
+					<Tooltip></Tooltip>
+					<pos x="+0" y="+0"/>
+					  <size width="290" height="290"/>
+					  <on x="7" y="1008+293"/>
+				</visual>
+				<visual type="circle" source="get position">
+					<Tooltip></Tooltip>
+					<pos x="+0" y="+0"/>
+				  <size width="290" height="290"/>
+					<on x="594" y="1008+293"/>
+				</visual>
+				<scratch >
+					<pos x="+0" y="+0"/>
+					 <size width="290" height="290"/>
+					 <mousemask x="301" y="1008"/>
+				</scratch>
+			</group>	
+		</panel>
+
+		<panel name="rmt_eq2" group="rmt_deckpans2" x="601" y="289" visible="false">
+			<textzone>
+				<pos x="+40-15" y="+25" width="50" height="18"/>
+				<text size="18" weight="bold" align="center" color="white" format="FILTER"/>
+			</textzone>
+			<button action="eq_low 0% ? eq_low 50% : eq_low 0%" query="eq_low 0%">
+				<pos x="+60+50" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="LOW"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="LOW"/>
+			</button>
+			<button action="eq_mid 0% ? eq_mid 50% : eq_mid 0%" query="eq_mid 0%">
+				<pos x="+60+50+70" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="MID"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="MID"/>
+			</button>
+			<button action="eq_high 0% ? eq_high 50% : eq_high 0%" query="eq_high 0%">
+				<pos x="+60+50+70+70" y="+20" width="50" height="28"/>
+				<text size="18" weight="bold" align="center" color="white" format="HIGH"/>
+				<textselected size="18" weight="bold" align="center" color="red" format="HIGH"/>
+			</button>
+			<textzone>
+				<pos x="+60+50+70+70+80" y="+25" width="50" height="18"/>
+				<text size="18" weight="bold" align="center" color="white" format="GAIN"/>
+			</textzone>
+			
+			<textzone>
+				<pos x="+42-15" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="filter 50% ? get_text '50%' : filter_label"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_low & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_mid & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70+70" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" action="eq_high & param_cast 'percentage'"/>
+			</textzone>
+			<textzone>
+				<pos x="+65+50+70+70+80" y="+260" width="50" height="16"/>
+				<text size="16" weight="bold" align="center" color="white" format="%Plevel dB"/>
+			</textzone>
+			
+			<slider class="eqslider" action="filter" dblclick="filter 50%"  direction="up" orientation="vertical">
+				<pos x="+40-15" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_low" dblclick="eq_low 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_mid" dblclick="eq_mid 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="eq_high" dblclick="eq_high 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70+70" y="+65"/>
+			</slider>
+			<slider class="eqslider" action="gain" dblclick="gain 50%"  direction="up" orientation="vertical">
+				<pos x="+60+50+70+70+80" y="+65"/>
+			</slider>
+			
+			<button class="deck_button" action="filter 50%" query="filter 50% ? off : on">
+				<pos x="+37-15" y="+305"/>
+				<text format="RESET"/>
+			</button>		
+			<button class="deck_button" action="eq_reset" query="eq_reset ? off : on">
+				<pos x="+175" y="+305"/>
+				<text format="RESET"/>
+			</button>
+			<button class="deck_button" action="gain 50%" query="gain 50% ? off : on">
+				<pos x="+175+150" y="+305"/>
+				<text format="ZERO"/>
+			</button>
+
+		</panel>	
+
+		<panel name="rmt_fx2" group="rmt_deckpans2" x="606" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="EFFECTS"/>
+			</textzone>	
+
+			<button class="deck_button" action="var 'rmt_fxtemp' ? effect_active while_pressed : effect_active" >
+				<pos x="+35" y="+55"/>
+				<text format="FX"/>
+			</button>
+			<button action="var 'rmt_fxtemp' ? effect_active while_pressed : effect_active">
+				<pos x="+35+55" y="+55" width="150" height="33"/>
+				<off x="37" y="117"/>
+				<on x="37" y="117"/>
+				<text size="18" weight="bold" align="center" color="#D9DADA" action="get_effect_name & param_uppercase"/>
+				<textselected size="18" weight="bold" align="center" color="#EC6A6A" action="get_effect_name & param_uppercase"/>
+			</button>		
+			<button class="deck_button" action="effect_select +1" >
+				<pos x="+263" y="+55"/>
+				<text format=""/>
+				<icon x="499" y="1655" height="24" width="28" dx="0" dy="0" />
+			</button>	
+			<button class="deck_button" action="effect_select -1" >
+				<pos x="+327" y="+55"/>
+				<text format=""/>
+				<icon x="499" y="1700" height="24" width="28" dx="0" dy="0" />
+			</button>	
+
+			<panel x="+0" y="+25" visibility="effect_select 'Slicer'">
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 1 'hold' : slicer 1" >
+					<pos x="+44" y="+80"/>
+					<text format="1"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 2 'hold' : slicer 2" >
+					<pos x="+44+80" y="+80"/>
+					<text format="2"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 3 'hold' : slicer 3" >
+					<pos x="+44+80+80" y="+80"/>
+					<text format="3"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 4 'hold' : slicer 4" >
+					<pos x="+44+80+80+80" y="+80"/>
+					<text format="4"/>
+				</button>
+
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 5 'hold' : slicer 5" >
+					<pos x="+44" y="+80+90"/>
+					<text format="5"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 6 'hold' : slicer 6" >
+					<pos x="+44+80" y="+80+90"/>
+					<text format="6"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 7 'hold' : slicer 7" >
+					<pos x="+44+80+80" y="+80+90"/>
+					<text format="7"/>
+				</button>
+				<button class="pad" action="var 'rmt_slicehold' ? slicer 8 'hold' : slicer 8" >
+					<pos x="+44+80+80+80" y="+80+90"/>
+					<text format="8"/>
+				</button>
+				
+				<button class="deck_button2" action="slicer 'step' -1" >
+					<pos x="+44" y="+275"/>
+					<icon x="472" y="1657" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'step' +1" >
+					<pos x="+44+60" y="+275"/>
+					<icon x="472" y="1702" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'length' -1" >
+					<pos x="+172" y="+275"/>
+					<icon x="472" y="1657" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="slicer 'length' +1" >
+					<pos x="+172+60" y="+275"/>
+					<icon x="472" y="1702" width="18" height="20"/>
+				</button>
+				<button class="deck_button2" action="toggle 'rmt_slicehold'" >
+					<pos x="+296" y="+275"/>
+					<text format="HOLD"/>
+				</button>
+				<textzone class="deck_text">
+					<pos x="+44" y="+250"/>
+					<size width="106" height="16"/>
+					<text size="15" action="get_text 'STEP : `get_effect_slider_text 1`'"/>
+				</textzone>
+				<textzone class="deck_text">
+					<pos x="+172" y="+250"/>
+					<size width="106" height="16"/>
+					<text size="15" action="get_text 'LEN : `get_effect_slider_text 2`'"/>
+				</textzone>			
+			</panel>
+			<panel x="+30" y="-20" visibility="effect_select 'Slicer' ? false : true">
+					<visual >
+						<pos x="+70" y="+130"/>
+						<size width="211" height="198"/>
+						<off x="120" y="1862"/>
+					</visual>
+					<textzone orientation="vertical" visibility="effect_has_slider 2">
+						<pos x="+35" y="+140" width="20" height="200"/>
+						<text size="18" weight="bold" align="center" color="white" action="get_text '`get_effect_slider_name 2 & param_uppercase` - `get_effect_slider_text 2`'"/>
+					</textzone>
+					<textzone visibility="effect_has_slider 1">
+						<pos x="+70" y="+140+200" width="210" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" action="get_text '`get_effect_slider_name 1 & param_uppercase` - `get_effect_slider_text 1`'"/>
+					</textzone>
+					<panel visible="effect_has_slider 1">
+						<slider action="effect_slider 1" orientation="horizontal" direction="right" >
+							<pos x="+70" y="+130"/>
+							<size width="211" height="198"/>
+							<fader>
+								<size width="3" height="198"/>
+								<pos x="99" y="1862"/>
+							 </fader>
+						</slider>
+					</panel>
+					<panel visible="effect_has_slider 2">
+						<slider action="effect_slider 2" visibility="effect_has_slider 1" direction="up" orientation="vertical" >
+							<pos x="+70" y="+130"/>
+							<size width="211" height="198"/>
+							<fader>
+								<size width="211" height="3"/>
+								<pos x="122" y="2097"/>
+							 </fader>
+						</slider>
+					</panel>						
+					<slider action="var 'rmt_slider1lock' ? nothing : var 'rmt_fxtemp' ? effect_slider_active 1 : effect_slider 1" action2="var 'rmt_slider2lock' ? nothing : var 'rmt_fxtemp' ? effect_slider_active 2 : effect_slider 2" direction="right" direction2="up" orientation="2d" >
+						<pos x="+70" y="+130"/>
+						<size width="211" height="198"/>
+						<fader>
+							<size width="0" height="0"/>
+							<pos x="517" y="1756"/>
+						 </fader>
+					</slider>
+
+					<button class="lock" visibility="effect_has_slider 2" action="toggle 'rmt_slider2lock'">
+						<pos x="-14" y="+121"/>
+					</button>
+					<button class="lock" visibility="effect_has_slider 1" action="toggle 'rmt_slider1lock'">
+						<pos x="+70+240" y="+140+188"/>
+					</button>
+					
+					<textzone >
+						<pos x="+45" y="+140+200" width="20" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="0"/>
+					</textzone>	
+					<textzone >
+						<pos x="+70+190" y="+140+200" width="40" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="PR.1"/>
+					</textzone>	
+					<textzone >
+						<pos x="+28" y="+132" width="40" height="20"/>
+						<text size="18" weight="bold" align="center" color="white" format="PR.2"/>
+					</textzone>	
+					<button class="deck_button" action="toggle 'rmt_fxtemp'" >
+						<pos x="+295" y="+218"/>
+						<text format="TEMP"/>
+					</button>						
+			</panel>
+		</panel>
+		
+		<panel name="rmt_hc2" group="rmt_deckpans2" x="606" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="HOTCUES"/>
+			</textzone>
+		
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 1 & set 'rmt_delcue' 0 : hot_cue 1" query="var 'rmt_delcue' ? hot_cue 1 ? blink : off : hot_cue 1">
+				<pos x="+44" y="+80"/>
+				<text format="1"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 2 & set 'rmt_delcue' 0 : hot_cue 2" query="var 'rmt_delcue' ? hot_cue 2 ? blink : off : hot_cue 2">
+				<pos x="+44+80" y="+80"/>
+				<text format="2"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 3 & set 'rmt_delcue' 0 : hot_cue 3" query="var 'rmt_delcue' ? hot_cue 3 ? blink : off : hot_cue 3">
+				<pos x="+44+80+80" y="+80"/>
+				<text format="3"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 4 & set 'rmt_delcue' 0 : hot_cue 4" query="var 'rmt_delcue' ? hot_cue 4 ? blink : off : hot_cue 4">
+				<pos x="+44+80+80+80" y="+80"/>
+				<text format="4"/>
+			</button>
+
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 5 & set 'rmt_delcue' 0 : hot_cue 5" query="var 'rmt_delcue' ? hot_cue 5 ? blink : off : hot_cue 5">
+				<pos x="+44" y="+80+95"/>
+				<text format="5"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 6 & set 'rmt_delcue' 0 : hot_cue 6" query="var 'rmt_delcue' ? hot_cue 6 ? blink : off : hot_cue 6">
+				<pos x="+44+80" y="+80+95"/>
+				<text format="6"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 7 & set 'rmt_delcue' 0 : hot_cue 7" query="var 'rmt_delcue' ? hot_cue 7 ? blink : off : hot_cue 7">
+				<pos x="+44+80+80" y="+80+95"/>
+				<text format="7"/>
+			</button>
+			<button class="pad" action="var 'rmt_delcue' ? delete_cue 8 & set 'rmt_delcue' 0 : hot_cue 8" query="var 'rmt_delcue' ? hot_cue 8 ? blink : off : hot_cue 8">
+				<pos x="+44+80+80+80" y="+80+95"/>
+				<text format="8"/>
+			</button>
+
+			<panel name="rmt_displaycues_name" group="rmt_displaycues" visible="yes">
+				<textzone class="minicues_text" x="+40" y="+150"><text format="%Pnamecue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150"><text format="%Pnamecue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150"><text format="%Pnamecue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150"><text format="%Pnamecue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95"><text format="%Pnamecue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95"><text format="%Pnamecue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95"><text format="%Pnamecue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95"><text format="%Pnamecue8"/></textzone>
+			 </panel>
+			  <panel name="rmt_displaycues_time" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Pfromcue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Pfromcue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Pfromcue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Pfromcue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Pfromcue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Pfromcue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Pfromcue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Pfromcue8"/></textzone>
+			  </panel>
+			  <panel name="rmt_displaycues_beat" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Bfromcue1 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Bfromcue2 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Bfromcue3 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Bfromcue4 bt"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Bfromcue5 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Bfromcue6 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Bfromcue7 bt"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Bfromcue8 bt"/></textzone>
+			  </panel>
+			  <panel name="rmt_displaycues_pos" group="rmt_displaycues" visible="no">
+				<textzone class="minicues_text" x="+40" y="+150" visibility="has_cue 1"><text format="%Pcue1"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150" visibility="has_cue 2"><text format="%Pcue2"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150" visibility="has_cue 3"><text format="%Pcue3"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150" visibility="has_cue 4"><text format="%Pcue4"/></textzone>
+				<textzone class="minicues_text" x="+40" y="+150+95" visibility="has_cue 5"><text format="%Pcue5"/></textzone>
+				<textzone class="minicues_text" x="+40+80" y="+150+95" visibility="has_cue 6"><text format="%Pcue6"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80" y="+150+95" visibility="has_cue 7"><text format="%Pcue7"/></textzone>
+				<textzone class="minicues_text" x="+40+80+80+80" y="+150+95" visibility="has_cue 8"><text format="%Pcue8"/></textzone>
+			  </panel>
+
+			  <button class="deck_button2" action="skin_panelgroup 'rmt_displaycues' +1" >
+				<pos x="+70" y="+275"/>
+				<text format="INFO"/>
+			</button>	  
+			<button class="deck_button2" action="toggle 'rmt_delcue'" >
+				<pos x="+185" y="+275"/>
+				<text format="DEL"/>
+			</button>
+			<textzone class="deck_text">
+				<pos x="+270" y="+270"/>
+				<size width="106" height="16"/>
+				<text size="15" format="SNAP"/>
+			</textzone>
+			<button class="deck_circle" action="smart_cue" >
+				<pos x="+310" y="+293"/>
+			</button>
+			
+		</panel>	
+
+		<panel name="rmt_lp2" group="rmt_deckpans2" x="606" y="289" visible="false">
+			<textzone>
+				<pos x="+155" y="+25" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="LOOP ROLL"/>
+			</textzone>
+			
+			<button class="pad" action="loop_roll 0.125" >
+				<pos x="+44" y="+70"/>
+				<text format="1/8"/>
+			</button>
+			<button class="pad" action="loop_roll 0.25" >
+				<pos x="+44+80" y="+70"/>
+				<text format="1/4"/>
+			</button>
+			<button class="pad" action="loop_roll 0.5" >
+				<pos x="+44+80+80" y="+70"/>
+				<text format="1/2"/>
+			</button>
+			<button class="pad" action="loop_roll 1" >
+				<pos x="+44+80+80+80" y="+70"/>
+				<text format="1"/>
+			</button>
+
+			<textzone>
+				<pos x="+155" y="+160" width="90" height="30"/>
+				<text size="18" weight="bold" align="center" color="#dddddd" format="LOOP"/>
+			</textzone>
+			
+			<button class="deckbutton_large" action="loop_in" >
+				<pos x="+44+80-10" y="+194"/>
+				<text size="18" align="center"  format="IN"/>
+			</button>
+			<button class="deckbutton_large" action="loop_out" >
+				<pos x="+44+80+80" y="+194"/>
+				<text size="18"  align="center" format="OUT"/>
+			</button>
+			<button action="loop_back off" visibility="play">
+				<pos x="+44+80+80+80+20" y="+207" />
+				<size width="32" height="25"/>
+				<off x="740" y="1977"/>
+				<on x="740" y="2012"/>
+			</button>
+			<button action="loop_back on" visibility="play">
+				<pos x="+44+80-60" y="+207" />
+				<size width="32" height="25"/>
+				<off x="740" y="2058"/>
+				<on x="740" y="2089"/>
+			</button>
+				
+			<panel class="rmtquickloop" x="+44+80-5" y="+270"/>
+			<textzone class="deck_text">
+				<pos x="+280" y="+270"/>
+				<size width="106" height="16"/>
+				<text size="15" format="SMART"/>
+			</textzone>
+			<button class="deck_circle" action="smart_loop" >
+				<pos x="+320" y="+293"/>
+			</button>
+				
+		</panel>	
+
+	</deck>
+
+		<!--MIXER -->
+	<panel name="rmt_mastmixer" group="masdeckmixers" visible="false" >
+		<button action="skin_panel 'rmt_deckmixer' on" >
+			<pos x="497" y="291" width="30" height="51" />
+			<off x="973" y="1873"/>
+		</button>
+		<textzone class="deck_text">
+			<pos x="420" y="297"/>
+			<size width="66" height="16"/>
+			<text size="15" format="MASTER"/>
+		</textzone>
+		<textzone class="deck_text">
+			<pos x="536" y="297"/>
+			<size width="66" height="16"/>
+			<text size="15" format="MIC"/>
+		</textzone>
+		<slider action="master_volume" orientation="vertical">
+		  <pos x="422" y="330"/>
+		  <size width="66" height="252"/>
+		  <on x="886" y="1268"/>
+		  <off x="886" y="1268"/>
+			<fader>
+			  <size width="53" height="25"/>
+			  <pos x="892" y="1238"/>
+			</fader>
+		</slider>
+		<slider action="mic_volume" orientation="vertical">
+		  <pos x="534" y="330"/>
+		  <size width="66" height="252"/>
+		  <on x="886" y="1268"/>
+		  <off x="886" y="1268"/>
+			<fader>
+			  <size width="53" height="25"/>
+			  <pos x="892" y="1238"/>
+			</fader>
+		</slider>	
+		<visual class="vumetermaster" source="get_vu_meter_left 'master'">
+			<pos x="487" y="330"/>
+		</visual>
+		<visual class="vumetermaster" source="get_vu_meter_right 'master'">
+			<pos x="500" y="330"/>
+		</visual>
+	</panel>
+
+	<panel name="rmt_deckmixer" group="masdeckmixers" visible="true" >
+		<button action="skin_panel 'rmt_mastmixer' on" >
+			<pos x="497" y="291" width="30" height="35" />
+			<off x="973" y="1824"/>
+		</button>
+		<textzone class="deck_text">
+			<pos x="420" y="297"/>
+			<size width="66" height="16"/>
+			<text size="15" format="DECK A"/>
+		</textzone>
+		<textzone class="deck_text">
+			<pos x="536" y="297"/>
+			<size width="66" height="16"/>
+			<text size="15" format="DECK B"/>
+		</textzone>
+		<slider action="deck left level" orientation="vertical">
+		  <pos x="422" y="330"/>
+		  <size width="66" height="252"/>
+		  <on x="886" y="1268"/>
+		  <off x="886" y="1268"/>
+			<fader>
+			  <size width="53" height="25"/>
+			  <pos x="892" y="1238"/>
+			</fader>
+		</slider>
+		<slider action="deck right level" orientation="vertical">
+		  <pos x="534" y="330"/>
+		  <size width="66" height="252"/>
+		  <on x="886" y="1268"/>
+		  <off x="886" y="1268"/>
+			<fader>
+			  <size width="53" height="25"/>
+			  <pos x="892" y="1238"/>
+			</fader>
+		</slider>	
+
+		<visual class="vumeter" deck="left" source="get_level">
+			<pos x="490" y="330"/>
+		</visual>
+		<visual class="vumeter" deck="right" source="get_level">
+			<pos x="520" y="330"/>
+		</visual>
+	</panel>
+
+	<group name="rmt_automixes" >
+		<textzone visibility="automix">
+			<pos x="485-55" y="589"/>
+			<size width="170" height="16"/>
+			<text size="16" color="white" align="center" action="automix_skip ? get_text 'AUTO MIXING NEXT...' : get_text 'AUTOMIX REMAIN : `get_playlist_time`'"/>
+		</textzone>
+		<button action="mix_and_load_next" class="deckbutton_gray_wide" visibility="isok mix_and_load_next">
+			<pos x="485-18+7" y="610" />
+			<icon x="803+7" y="2027"/>
+		</button>
+		<button action="automix_skip" class="deckbutton_gray_wide" visibility="automix">
+			<pos x="485-18+7" y="610" />
+			<icon x="801+7" y="1964"/>
+		</button>
+	</group>
+		
+</panel>
+
+	<!--Sampler PANEL-->
+<panel name="rmt_sam" group="rmt_masterpans" x="19" y="288" visible="false" >
+	<visual type="color" source="constant '#353534'">
+		<pos x="+1" y="+10"/>
+		<size width="980" height="349"/>
+	</visual>
+	<visual type="color" source="constant 'black">
+		<pos x="+100" y="+10"/>
+		<size width="1" height="345"/>
+	</visual>
+		<visual type="color" source="constant '#505050'">
+		<pos x="+101" y="+10"/>
+		<size width="1" height="345"/>
+	</visual>
+	
+	<textzone>
+		<pos x="+23" y="+25" width="65" height="38"/>
+		<text size="16" weight="bold" align="center" color="#B2B3B3" format="SAMPLER\nVOLUME"/>
+	</textzone>	
+	<slider action="sampler_volume_master" orientation="vertical">
+	  <pos x="+28" y="+25+50"/>
+	  <size width="53" height="193"/>
+	  <on x="367" y="1922"/>
+	  <off x="367" y="1922"/>
+		<fader>
+		  <size width="53" height="25"/>
+		  <pos x="892" y="1238"/>
+		</fader>
+	</slider>	
+	<textzone>
+		<pos x="+23" y="+25+50+200" width="65" height="38"/>
+		<text size="16" weight="bold" align="center" color="#B2B3B3" action="sampler_volume_master & param_cast 'percentage'"/>
+	</textzone>	
+	
+	<textzone>
+		<pos x="+16+170" y="+312" width="55" height="18"/>
+		<text size="18" weight="bold" align="center" color="#B2B3B3" format="BANK"/>
+	</textzone>		
+	<button action="bs">
+		<pos x="+35+55+170" y="+305" width="190" height="33"/>
+		<off x="37" y="117"/>
+		<on x="37" y="117"/>
+		<text size="18" weight="bold" align="center" color="#D9DADA" action="get_sampler_bank"/>
+	</button>		
+	<button class="deckbutton_gray_small" action="sampler_bank -1" >
+		<pos x="+263+200" y="+305"/>
+		<text format=""/>
+		<icon x="499" y="1655" height="24" width="28" dx="0" dy="0" />
+	</button>	
+	<button class="deckbutton_gray_small" action="sampler_bank +1" >
+		<pos x="+327+200" y="+305"/>
+		<text format=""/>
+		<icon x="499" y="1700" height="24" width="28" dx="0" dy="0" />
+	</button>	
+	
+	<textzone>
+		<pos x="+460+220" y="+312" width="55" height="18"/>
+		<text size="18" weight="bold" align="center" color="#B2B3B3" format="MODE"/>
+	</textzone>	
+	<button class="deckbutton_gray_small" action="sampler_mode +1" >
+		<pos x="+530+220" y="+305"/>
+		<icon sysicon="sampler_mode" width="34" height="30"/>
+	</button>
+
+	<visual type="color" source="constant 'black">
+		<pos x="+113" y="+10+10"/>
+		<size width="852" height="265"/>
+	</visual>
+	
+	<panel class="samplerpad" x="+120" y="+30">
+		<visual source="sampler_pad 1 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 1 ? get_sample_color 1 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 1"></visual>
+		<button action="sampler_pad 1"></button>
+		<textzone><text action="get_sample_name 1"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135" y="+30">
+		<visual source="sampler_pad 2 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 2 ? get_sample_color 2 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 2"></visual>
+		<button action="sampler_pad 2"></button>
+		<textzone><text action="get_sample_name 2"/></textzone>
+	</panel>	
+		<panel class="samplerpad" x="+120+5+135+5+135" y="+30">
+		<visual source="sampler_pad 3 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 3 ? get_sample_color 3 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 3"></visual>
+		<button action="sampler_pad 3"></button>
+		<textzone><text action="get_sample_name 3"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135+5+135+5+135" y="+30">
+		<visual source="sampler_pad 4 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 4 ? get_sample_color 4 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 4"></visual>
+		<button action="sampler_pad 4"></button>
+		<textzone><text action="get_sample_name 4"/></textzone>
+	</panel>
+		<panel class="samplerpad" x="+120+5+135+5+135+5+135+5+135" y="+30">
+		<visual source="sampler_pad 5 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 5 ? get_sample_color 5 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 5"></visual>
+		<button action="sampler_pad 5"></button>
+		<textzone><text action="get_sample_name 5"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135+5+135+5+135+5+135+5+135" y="+30">
+		<visual source="sampler_pad 6 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 6 ? get_sample_color 6 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 6"></visual>
+		<button action="sampler_pad 6"></button>
+		<textzone><text action="get_sample_name 6"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120" y="+30+5+120">
+		<visual source="sampler_pad 7 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 7 ? get_sample_color 7 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 7"></visual>
+		<button action="sampler_pad 7"></button>
+		<textzone><text action="get_sample_name 7"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135" y="+30+5+120">
+		<visual source="sampler_pad 8 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 8 ? get_sample_color 8 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 8"></visual>
+		<button action="sampler_pad 8"></button>
+		<textzone><text action="get_sample_name 8"/></textzone>
+	</panel>	
+		<panel class="samplerpad" x="+120+5+135+5+135" y="+30+5+120">
+		<visual source="sampler_pad 9 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 9 ? get_sample_color 9 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 9"></visual>
+		<button action="sampler_pad 9"></button>
+		<textzone><text action="get_sample_name 9"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135+5+135+5+135" y="+30+5+120">
+		<visual source="sampler_pad 10 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 10 ? get_sample_color 10 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 10"></visual>
+		<button action="sampler_pad 10"></button>
+		<textzone><text action="get_sample_name 10"/></textzone>
+	</panel>
+		<panel class="samplerpad" x="+120+5+135+5+135+5+135+5+135" y="+30+5+120">
+		<visual source="sampler_pad 11 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 11 ? get_sample_color 11 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 11"></visual>
+		<button action="sampler_pad 11"></button>
+		<textzone><text action="get_sample_name 11"/></textzone>
+	</panel>
+	<panel class="samplerpad" x="+120+5+135+5+135+5+135+5+135+5+135" y="+30+5+120">
+		<visual source="sampler_pad 12 ? constant '#727271' : constant '#2B2A29'"></visual>
+		<visual source="sampler_loaded 12 ? get_sample_color 12 : constant '#2B2A29'"></visual>
+		<visual source="sampler_position 12"></visual>
+		<button action="sampler_pad 12"></button>
+		<textzone><text action="get_sample_name 12"/></textzone>
+	</panel>	
+</panel>
+
+<slider action="crossfader" rightclick="temporary" dblclick="crossfader 50%" orientation="horizontal">
+	<pos x="428" y="674"/>
+	<size width="175" height="51"/>
+	<on x="85" y="1765"/>
+	<off x="85" y="1765"/>
+	<fader>
+	  <size width="35" height="48"/>
+	  <pos x="31" y="1768"/>
+	</fader>
+</slider>
+
+
+</Skin>
