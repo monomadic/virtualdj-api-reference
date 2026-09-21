@@ -1,0 +1,8413 @@
+{
+  "schema_version": 2,
+  "element": "button",
+  "evidence_tier": 2,
+  "conditional_node_models": {
+    "path": "tests/skin-node-helpers-9644.json",
+    "sha256": "67dc108b229a6d86d60b3a52a99ea8997f114e76e934cdd70505c76c513040c5",
+    "models": {
+      "named_child": {
+        "role": "conditional_child_node",
+        "node_register": "x1",
+        "name_register": "x2"
+      },
+      "matching_sibling": {
+        "role": "matching_sibling_node",
+        "parent_register": "x1",
+        "node_register": "x2"
+      }
+    },
+    "scope": "Manually interpreted current-build instructions; exact binary and routine guards are mandatory before applying these models."
+  },
+  "source": {
+    "build": "18.0.9644",
+    "architecture": "arm64",
+    "binary_sha256": "f8cda97264a1b6211a889b808dfb6f06a9d4379afa0db0cf8e631b1a02c3eec3",
+    "evidence_tier": 2
+  },
+  "memory_anchor": {
+    "path": "tests/plugin-memory-9644.json",
+    "sha256": "fef4c7c0a6581c1fe5b0eb3ec2ddf6bf68ad38bf91c47fc5a6ab2b2df1269d54",
+    "image_uuid": "46743daaff0430269dab1cc69450155a",
+    "verification": {
+      "binary_sha256": "f8cda97264a1b6211a889b808dfb6f06a9d4379afa0db0cf8e631b1a02c3eec3",
+      "image_uuid_matches": true,
+      "build_matches": true,
+      "table_address_matches": true,
+      "all_name_id_flags_records_match": true,
+      "records": 1032,
+      "claim": "Loaded structured verb table reproduces same-build disk extraction; not independent behaviour proof."
+    },
+    "scope": "Existing live image identity only; no skin object was read in this run."
+  },
+  "factory_dispatch": [
+    {
+      "element": "button",
+      "comparison_pc": "0x10039693c",
+      "success_pc": "0x100396944",
+      "constructors": [
+        {
+          "class": "CSkinButton",
+          "vtable": "0x103ff41d0",
+          "store_pc": "0x1004e7274",
+          "constructor": "0x1004e71b8",
+          "call_pc": "0x10039695c"
+        }
+      ],
+      "traversal_exhausted": false,
+      "visited_instructions": 7,
+      "other_calls": [
+        "0x10385c9b0"
+      ]
+    }
+  ],
+  "constructor": "0x1004e71b8",
+  "root_binding": {
+    "method": "Factory x0 XML receiver forwarded to constructor x1; child lookups calibrate the XML role. Structural evidence, not a public ABI.",
+    "factory": "0x100396890",
+    "callsite": "0x10039695c",
+    "instructions": [
+      {
+        "pc": "0x100396890",
+        "mnemonic": "sub",
+        "operands": "sp, sp, #0x70"
+      },
+      {
+        "pc": "0x100396894",
+        "mnemonic": "stp",
+        "operands": "x26, x25, [sp, #0x20]"
+      },
+      {
+        "pc": "0x100396898",
+        "mnemonic": "stp",
+        "operands": "x24, x23, [sp, #0x30]"
+      },
+      {
+        "pc": "0x10039689c",
+        "mnemonic": "stp",
+        "operands": "x22, x21, [sp, #0x40]"
+      },
+      {
+        "pc": "0x1003968a0",
+        "mnemonic": "stp",
+        "operands": "x20, x19, [sp, #0x50]"
+      },
+      {
+        "pc": "0x1003968a4",
+        "mnemonic": "stp",
+        "operands": "x29, x30, [sp, #0x60]"
+      },
+      {
+        "pc": "0x1003968a8",
+        "mnemonic": "add",
+        "operands": "x29, sp, #0x60"
+      },
+      {
+        "pc": "0x1003968ac",
+        "mnemonic": "cbz",
+        "operands": "x0, #0x100396c0c"
+      },
+      {
+        "pc": "0x1003968b0",
+        "mnemonic": "mov",
+        "operands": "x21, x2"
+      },
+      {
+        "pc": "0x1003968b4",
+        "mnemonic": "mov",
+        "operands": "x20, x1"
+      },
+      {
+        "pc": "0x1003968b8",
+        "mnemonic": "mov",
+        "operands": "x19, x0"
+      },
+      {
+        "pc": "0x1003968bc",
+        "mnemonic": "adrp",
+        "operands": "x1, #0x103dc0000"
+      },
+      {
+        "pc": "0x1003968c0",
+        "mnemonic": "add",
+        "operands": "x1, x1, #0x3cc"
+      },
+      {
+        "pc": "0x1003968c4",
+        "mnemonic": "mov",
+        "operands": "w2, #2"
+      },
+      {
+        "pc": "0x1003968c8",
+        "mnemonic": "bl",
+        "operands": "#0x100456170"
+      },
+      {
+        "pc": "0x1003968cc",
+        "mnemonic": "cbz",
+        "operands": "w0, #0x100396924"
+      },
+      {
+        "pc": "0x1003968d0",
+        "mnemonic": "adrp",
+        "operands": "x1, #0x103dc0000"
+      },
+      {
+        "pc": "0x1003968d4",
+        "mnemonic": "add",
+        "operands": "x1, x1, #0x3cc"
+      },
+      {
+        "pc": "0x1003968d8",
+        "mnemonic": "mov",
+        "operands": "x0, x19"
+      },
+      {
+        "pc": "0x1003968dc",
+        "mnemonic": "mov",
+        "operands": "w2, #2"
+      },
+      {
+        "pc": "0x1003968e0",
+        "mnemonic": "bl",
+        "operands": "#0x1004561d4"
+      },
+      {
+        "pc": "0x1003968e4",
+        "mnemonic": "ldrsb",
+        "operands": "w8, [x0, #0x17]"
+      },
+      {
+        "pc": "0x1003968e8",
+        "mnemonic": "tbnz",
+        "operands": "w8, #0x1f, #0x1003968f8"
+      },
+      {
+        "pc": "0x1003968ec",
+        "mnemonic": "cmp",
+        "operands": "w8, #3"
+      },
+      {
+        "pc": "0x1003968f0",
+        "mnemonic": "b.eq",
+        "operands": "#0x100396908"
+      },
+      {
+        "pc": "0x1003968f4",
+        "mnemonic": "b",
+        "operands": "#0x100396c0c"
+      },
+      {
+        "pc": "0x1003968f8",
+        "mnemonic": "ldr",
+        "operands": "x8, [x0, #8]"
+      },
+      {
+        "pc": "0x1003968fc",
+        "mnemonic": "cmp",
+        "operands": "x8, #3"
+      },
+      {
+        "pc": "0x100396900",
+        "mnemonic": "b.ne",
+        "operands": "#0x100396c0c"
+      },
+      {
+        "pc": "0x100396904",
+        "mnemonic": "ldr",
+        "operands": "x0, [x0]"
+      },
+      {
+        "pc": "0x100396908",
+        "mnemonic": "ldrh",
+        "operands": "w8, [x0]"
+      },
+      {
+        "pc": "0x10039690c",
+        "mnemonic": "ldrb",
+        "operands": "w9, [x0, #2]"
+      },
+      {
+        "pc": "0x100396910",
+        "mnemonic": "mov",
+        "operands": "w10, #0x616d"
+      },
+      {
+        "pc": "0x100396914",
+        "mnemonic": "cmp",
+        "operands": "w8, w10"
+      },
+      {
+        "pc": "0x100396918",
+        "mnemonic": "mov",
+        "operands": "w8, #0x63"
+      },
+      {
+        "pc": "0x10039691c",
+        "mnemonic": "ccmp",
+        "operands": "w9, w8, #0, eq"
+      },
+      {
+        "pc": "0x100396920",
+        "mnemonic": "b.ne",
+        "operands": "#0x100396c0c"
+      },
+      {
+        "pc": "0x100396924",
+        "mnemonic": "mov",
+        "operands": "x0, x19"
+      },
+      {
+        "pc": "0x100396928",
+        "mnemonic": "bl",
+        "operands": "#0x100394ec8"
+      },
+      {
+        "pc": "0x10039692c",
+        "mnemonic": "cbz",
+        "operands": "w0, #0x100396c0c"
+      },
+      {
+        "pc": "0x100396930",
+        "mnemonic": "adrp",
+        "operands": "x1, #0x103dae000"
+      },
+      {
+        "pc": "0x100396934",
+        "mnemonic": "add",
+        "operands": "x1, x1, #0x199"
+      },
+      {
+        "pc": "0x100396938",
+        "mnemonic": "mov",
+        "operands": "x0, x19"
+      },
+      {
+        "pc": "0x10039693c",
+        "mnemonic": "bl",
+        "operands": "#0x100097af8"
+      },
+      {
+        "pc": "0x100396940",
+        "mnemonic": "cbz",
+        "operands": "w0, #0x100396964"
+      },
+      {
+        "pc": "0x100396944",
+        "mnemonic": "mov",
+        "operands": "w0, #0x330"
+      },
+      {
+        "pc": "0x100396948",
+        "mnemonic": "bl",
+        "operands": "#0x10385c9b0"
+      },
+      {
+        "pc": "0x10039694c",
+        "mnemonic": "mov",
+        "operands": "x22, x0"
+      },
+      {
+        "pc": "0x100396950",
+        "mnemonic": "mov",
+        "operands": "x1, x19"
+      },
+      {
+        "pc": "0x100396954",
+        "mnemonic": "mov",
+        "operands": "x2, x20"
+      },
+      {
+        "pc": "0x100396958",
+        "mnemonic": "mov",
+        "operands": "x3, x21"
+      },
+      {
+        "pc": "0x10039695c",
+        "mnemonic": "bl",
+        "operands": "#0x1004e9440"
+      },
+      {
+        "pc": "0x1004e9440",
+        "mnemonic": "b",
+        "operands": "#0x1004e71b8"
+      }
+    ]
+  },
+  "xml_reader_anchors": {
+    "0x100456170": {
+      "role": "attribute_presence",
+      "anchor": "clickthrough",
+      "call_pc": "0x1003955e0"
+    },
+    "0x100456cf4": {
+      "role": "attribute_value_comparison",
+      "anchor": "clickthrough",
+      "call_pc": "0x100395604"
+    },
+    "0x100456a14": {
+      "role": "attribute_boolean",
+      "anchor": "clickthrough",
+      "call_pc": "0x100395628"
+    },
+    "0x100456108": {
+      "role": "child_node",
+      "anchor": "mouserect",
+      "call_pc": "0x100395690"
+    },
+    "0x100456628": {
+      "role": "attribute_integer",
+      "anchor": "minwidth",
+      "call_pc": "0x1003952e0"
+    },
+    "0x1004561d4": {
+      "role": "attribute_string",
+      "anchor": "action2",
+      "call_pc": "0x1001a2360"
+    }
+  },
+  "routines": {
+    "0x1004e71b8": {
+      "end": "0x1004e8384",
+      "sha256": "d709b91739c096fd2350db0c9b874d50f5581cc4e87a96657210354598c5eb6e"
+    },
+    "0x10039505c": {
+      "end": "0x100395ab4",
+      "sha256": "3fba5ba9703ceaa402c99e7d87cb1494b1d462f49faa3285c9240fed2d93fbc5"
+    },
+    "0x100395c34": {
+      "end": "0x100396120",
+      "sha256": "5250f6d18df9a3bd8ffe41fd7b0f9c3eafe84bc4bbd7879e324b02a567a29fa7"
+    },
+    "0x100396758": {
+      "end": "0x1003967d4",
+      "sha256": "7d8de50325af7a52372a708307efdfac67462c528b6f21b678c2f2cda8c7371c"
+    },
+    "0x1004567c4": {
+      "end": "0x1004568f4",
+      "sha256": "34f5a6ee8ce30f793f354fc7e010be02361357bc615077e1c4229d9cdd7c1786"
+    },
+    "0x1004e9380": {
+      "end": "0x1004e9440",
+      "sha256": "a874699a2a0756213220fea1322e88e8de81b944eafcb9dad66fc6b5a5435c93"
+    },
+    "0x1006b56ec": {
+      "end": "0x1006b56f0",
+      "sha256": "26ca0d52d24d590fd2b126411ad1676122e6919e4bbb854b86f53a9b5b2e90e8"
+    },
+    "0x1006b4bdc": {
+      "end": "0x1006b56ec",
+      "sha256": "2c126b7bc9a5e0c003205ac9328b30c3c41cf69a12d48ed9ea4ab4be34d1c3de"
+    }
+  },
+  "reads": [
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e76a0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "down"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e76e8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "downselected"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e77e0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "icon"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e72f8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "mask"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7684",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "off"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7750",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "on"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7704",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "over"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e76b8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "over"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7450",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "overselected"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e77b0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "overselected"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e74b0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "selected"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7780",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "selected"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7480",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "up"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7734",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "coloroff"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e74e0",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "coloron"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7588",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "colorup"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7504",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7db4",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7994",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7c44",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "pressed"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e791c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "query"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7e8c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7a74",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "scroll"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7e20",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "sysicon"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7324",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "sysicon"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7528",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "value"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7f34",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7864",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7dcc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "disabled"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7810",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e79ac",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7c5c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "pressed"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7934",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "query"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7ea4",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7a8c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7f90",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "scroll"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7e38",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "sysicon"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7348",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "downx"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e741c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "downy"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7438",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "dx"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e73ac",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "dy"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e73c8",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "height"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7400",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "width"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e73e4",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 0,
+      "function": "0x1004e71b8",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "actiononover"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "button_constructor",
+      "pc": "0x1004e7efc",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100394f78",
+      "name_unresolved": false,
+      "names": [
+        "pos"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395120",
+      "receiver_unresolved": false,
+      "role": "conditional_child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100394f78",
+      "name_unresolved": false,
+      "names": [
+        "size"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x10039510c",
+      "receiver_unresolved": false,
+      "role": "conditional_child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "center"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395138",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395918",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "mousecircle"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395764",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "mousemask"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395858",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "mouserect"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395690",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "tooltip"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395380",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "tooltip"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395398",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "chan"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003950d4",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "clickthrough"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003955e0",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "deck"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003950b4",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "localized"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395478",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "tooltip"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395340",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "tooltipaction"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003953d8",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "chan",
+        "deck"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003950e8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "novisibility"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395558",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "tooltip"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395358",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "tooltipaction"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003953f0",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "visibility"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003954f8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "height"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395258",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "height"
+      ],
+      "node_paths": [
+        "/button/mouserect"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395734",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "height"
+      ],
+      "node_paths": [
+        "/button/pos"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003951d0",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "height"
+      ],
+      "node_paths": [
+        "/button/size"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395178",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "maxwidth"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395300",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "minwidth"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003952e0",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "r"
+      ],
+      "node_paths": [
+        "/button/mousecircle"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395814",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "width"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395238",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "width"
+      ],
+      "node_paths": [
+        "/button/mouserect"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395714",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "width"
+      ],
+      "node_paths": [
+        "/button/pos"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x1003951b0",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "width"
+      ],
+      "node_paths": [
+        "/button/size"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395158",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "canstretch"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395320",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "clickthrough"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395628",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x10039505c",
+      "getter": "0x100456cf4",
+      "name_unresolved": false,
+      "names": [
+        "clickthrough"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "shared_base_reader",
+      "pc": "0x100395604",
+      "receiver_unresolved": false,
+      "role": "attribute_value_comparison"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100394fe8",
+      "name_unresolved": false,
+      "names": [],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c7c",
+      "receiver_unresolved": false,
+      "role": "matching_sibling_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "clipmask"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100396060",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395c98",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "outterradius"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395fdc",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "gradient"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395e40",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "shape"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395ccc",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395d5c",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/down",
+        "/button/on"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/downselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/icon/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/icon/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/icon/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/over"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/overselected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100395c34",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "repeat"
+      ],
+      "node_paths": [
+        "/button/selected"
+      ],
+      "origin": "helper",
+      "pc": "0x100395db8",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 1,
+      "function": "0x100396758",
+      "getter": "0x1004561d4",
+      "name_unresolved": true,
+      "names": [],
+      "node_paths": [
+        "/button/icon"
+      ],
+      "origin": "helper",
+      "pc": "0x100396790",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 1,
+      "function": "0x1004e9380",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "text"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1004e93c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x1004e9380",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "textdown"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1004e93c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x1004e9380",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "textover"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1004e93c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 1,
+      "function": "0x1004e9380",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "textselected"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1004e93c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "background"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5124",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "background"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5124",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "background"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5124",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "background"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5124",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f60",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fc8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f60",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fc8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f60",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fc8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f60",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fc8",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50c0",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f44",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fac",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50a4",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f44",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fac",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50a4",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f44",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fac",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50a4",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f44",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4fac",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "colors"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b50a4",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5018",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b503c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b507c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5018",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b503c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b507c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5018",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b503c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b507c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5018",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b503c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "font"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b507c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "off"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4d78",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456108",
+      "name_unresolved": false,
+      "names": [
+        "up"
+      ],
+      "node_paths": [
+        "/button"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4d5c",
+      "receiver_unresolved": false,
+      "role": "child_node"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5198",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5198",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5198",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5198",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "border"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4dac",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4d94",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/text/font"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b508c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textdown/font"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b508c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textover/font"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b508c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "color"
+      ],
+      "node_paths": [
+        "/button/textselected/font"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b508c",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5390",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5390",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5390",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5390",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51ec",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51ec",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51ec",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51ec",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5304",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5304",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5304",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5304",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5278",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5278",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5278",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456170",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5278",
+      "receiver_unresolved": false,
+      "role": "attribute_presence"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51b0",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51b0",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51b0",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "action"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b51b0",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b53a8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b53a8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b53a8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "dblclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b53a8",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5204",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5204",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5204",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "leftclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5204",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b531c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b531c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b531c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "middleclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b531c",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "name"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5488",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "name"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5488",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "name"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5488",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "name"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5488",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "orientation"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5154",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "orientation"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5154",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "orientation"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5154",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "orientation"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5154",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5290",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5290",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5290",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x1004561d4",
+      "name_unresolved": false,
+      "names": [
+        "rightclick"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5290",
+      "receiver_unresolved": false,
+      "role": "attribute_string"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456628",
+      "name_unresolved": false,
+      "names": [
+        "border_size"
+      ],
+      "node_paths": [
+        "/button/off",
+        "/button/up"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4dc8",
+      "receiver_unresolved": false,
+      "role": "attribute_integer"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "resetcounter"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f1c",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "resetcounter"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f1c",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "resetcounter"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f1c",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456a14",
+      "name_unresolved": false,
+      "names": [
+        "resetcounter"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b4f1c",
+      "receiver_unresolved": false,
+      "role": "attribute_boolean"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456cf4",
+      "name_unresolved": false,
+      "names": [
+        "click"
+      ],
+      "node_paths": [
+        "/button/text"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5470",
+      "receiver_unresolved": false,
+      "role": "attribute_value_comparison"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456cf4",
+      "name_unresolved": false,
+      "names": [
+        "click"
+      ],
+      "node_paths": [
+        "/button/textdown"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5470",
+      "receiver_unresolved": false,
+      "role": "attribute_value_comparison"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456cf4",
+      "name_unresolved": false,
+      "names": [
+        "click"
+      ],
+      "node_paths": [
+        "/button/textover"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5470",
+      "receiver_unresolved": false,
+      "role": "attribute_value_comparison"
+    },
+    {
+      "depth": 3,
+      "function": "0x1006b4bdc",
+      "getter": "0x100456cf4",
+      "name_unresolved": false,
+      "names": [
+        "click"
+      ],
+      "node_paths": [
+        "/button/textselected"
+      ],
+      "origin": "helper",
+      "pc": "0x1006b5470",
+      "receiver_unresolved": false,
+      "role": "attribute_value_comparison"
+    }
+  ],
+  "helper_bindings": [
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "rightclick"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e7fdc",
+      "target": "0x1004567c4"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "text"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e8064",
+      "target": "0x1004e9380"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "textdown"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e8080",
+      "target": "0x1004e9380"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "textover"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e809c",
+      "target": "0x1004e9380"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "textselected"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e80b8",
+      "target": "0x1004e9380"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {
+        "x1": [
+          "value"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e7f6c",
+      "target": "0x1004567c4"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e72dc",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e755c",
+      "target": "0x100396758"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e75b4",
+      "target": "0x100396758"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e75ec",
+      "target": "0x100396758"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e7624",
+      "target": "0x100396758"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e765c",
+      "target": "0x100396758"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/down",
+          "/button/on"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e771c",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/downselected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e77f8",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x1004e7390",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/off",
+          "/button/up"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e7768",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/over"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e76d0",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/overselected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e77c8",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/selected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x1004e7798",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x1004e7468",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x1004e74c8",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e71b8",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x1004e7498",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93e4",
+      "target": "0x1006b56ec"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93e4",
+      "target": "0x1006b56ec"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93e4",
+      "target": "0x1006b56ec"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93e4",
+      "target": "0x1006b56ec"
+    },
+    {
+      "caller": "0x1006b56ec",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b56ec",
+      "target": "0x1006b4bdc"
+    },
+    {
+      "caller": "0x1006b56ec",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b56ec",
+      "target": "0x1006b4bdc"
+    },
+    {
+      "caller": "0x1006b56ec",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b56ec",
+      "target": "0x1006b4bdc"
+    },
+    {
+      "caller": "0x1006b56ec",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b56ec",
+      "target": "0x1006b4bdc"
+    }
+  ],
+  "frontier": [
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "panel"
+        ],
+        "x3": [
+          "pannel"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button"
+        ]
+      },
+      "pc": "0x10039564c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456254"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button"
+        ]
+      },
+      "pc": "0x10039543c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/center"
+        ]
+      },
+      "pc": "0x100395284",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/clipmask",
+          "/button/mousemask"
+        ]
+      },
+      "pc": "0x100395890",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/mousecircle"
+        ]
+      },
+      "pc": "0x10039579c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/mouserect"
+        ]
+      },
+      "pc": "0x1003956b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "x"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/pos"
+        ]
+      },
+      "pc": "0x1003951f8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "y"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button",
+          "/button/pos"
+        ]
+      },
+      "pc": "0x100395220",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "y"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/center"
+        ]
+      },
+      "pc": "0x1003952b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "y"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/clipmask",
+          "/button/mousemask"
+        ]
+      },
+      "pc": "0x1003958b4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "y"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/mousecircle"
+        ]
+      },
+      "pc": "0x1003957d8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {
+        "x1": [
+          "y"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/mouserect"
+        ]
+      },
+      "pc": "0x1003956e8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button"
+        ]
+      },
+      "pc": "0x1003950fc",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100611bd8"
+    },
+    {
+      "caller": "0x10039505c",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x100395498",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1002c8c40"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "height"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395fc4",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "highlight_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395f1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "innerradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100396024",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "outterradius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395ff8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "radius"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395d1c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "shadow_size"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395f78",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100456c20"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x1": [
+          "width"
+        ]
+      },
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395fa0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1004568f4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "backcolor"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395e08",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "border"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395d40",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395d00",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396120"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {
+        "x2": [
+          "color2"
+        ]
+      },
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395e28",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1003962ac"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/down",
+          "/button/on"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/down",
+          "/button/on"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/down/clipmask",
+          "/button/on/clipmask"
+        ],
+        "x1": [
+          "/button/down/clipmask",
+          "/button/on/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/downselected"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/downselected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/downselected/clipmask"
+        ],
+        "x1": [
+          "/button/downselected/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/clipmask"
+        ],
+        "x1": [
+          "/button/icon/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over"
+        ],
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/over/clipmask"
+        ],
+        "x1": [
+          "/button/icon/over/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected"
+        ],
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/overselected/clipmask"
+        ],
+        "x1": [
+          "/button/icon/overselected/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected"
+        ],
+        "x2": [
+          "/button/icon"
+        ],
+        "x3": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/icon/selected/clipmask"
+        ],
+        "x1": [
+          "/button/icon/selected/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/off",
+          "/button/up"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/off",
+          "/button/up"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/off/clipmask",
+          "/button/up/clipmask"
+        ],
+        "x1": [
+          "/button/off/clipmask",
+          "/button/up/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/over"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/over"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/over/clipmask"
+        ],
+        "x1": [
+          "/button/over/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/overselected"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/overselected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/overselected/clipmask"
+        ],
+        "x1": [
+          "/button/overselected/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/selected"
+        ],
+        "x2": [
+          "/button"
+        ],
+        "x3": [
+          "/button/selected"
+        ],
+        "x4": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395c6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100394ec8"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x0": [
+          "/button/selected/clipmask"
+        ],
+        "x1": [
+          "/button/selected/clipmask"
+        ]
+      },
+      "pc": "0x10039608c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/clipmask",
+          "/button/mask"
+        ]
+      },
+      "pc": "0x100395e6c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/down",
+          "/button/on"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/downselected"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/over"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/overselected"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/icon/selected"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/off",
+          "/button/up"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/over"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/overselected"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395d74",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395ab4"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395eec",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x100395c34",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/selected"
+        ]
+      },
+      "pc": "0x100395f48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {
+        "x0": [
+          "text"
+        ],
+        "x1": [
+          "text"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93b0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10385db5c"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {
+        "x0": [
+          "textdown"
+        ],
+        "x1": [
+          "textdown"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93b0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10385db5c"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {
+        "x0": [
+          "textover"
+        ],
+        "x1": [
+          "textover"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93b0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10385db5c"
+    },
+    {
+      "caller": "0x1004e9380",
+      "literal_arguments": {
+        "x0": [
+          "textselected"
+        ],
+        "x1": [
+          "textselected"
+        ]
+      },
+      "node_arguments": {
+        "x2": [
+          "/button"
+        ]
+      },
+      "pc": "0x1004e93b0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10385db5c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b4d48",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b4d30",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10052f0b0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text"
+        ]
+      },
+      "pc": "0x1006b4e0c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text"
+        ]
+      },
+      "pc": "0x1006b54b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text/color",
+          "/button/text/colors"
+        ]
+      },
+      "pc": "0x1006b4f88",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text/color",
+          "/button/text/colors"
+        ]
+      },
+      "pc": "0x1006b4ff0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text/color",
+          "/button/text/colors"
+        ]
+      },
+      "pc": "0x1006b50f0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/text/font"
+        ]
+      },
+      "pc": "0x1006b504c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b4d30",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10052f0b0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown"
+        ]
+      },
+      "pc": "0x1006b4e0c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown"
+        ]
+      },
+      "pc": "0x1006b54b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown/color",
+          "/button/textdown/colors"
+        ]
+      },
+      "pc": "0x1006b4f88",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown/color",
+          "/button/textdown/colors"
+        ]
+      },
+      "pc": "0x1006b4ff0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown/color",
+          "/button/textdown/colors"
+        ]
+      },
+      "pc": "0x1006b50f0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textdown/font"
+        ]
+      },
+      "pc": "0x1006b504c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b4d30",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10052f0b0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover"
+        ]
+      },
+      "pc": "0x1006b4e0c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover"
+        ]
+      },
+      "pc": "0x1006b54b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover/color",
+          "/button/textover/colors"
+        ]
+      },
+      "pc": "0x1006b4f88",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover/color",
+          "/button/textover/colors"
+        ]
+      },
+      "pc": "0x1006b4ff0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover/color",
+          "/button/textover/colors"
+        ]
+      },
+      "pc": "0x1006b50f0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textover/font"
+        ]
+      },
+      "pc": "0x1006b504c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected"
+        ],
+        "x3": [
+          "/button"
+        ]
+      },
+      "pc": "0x1006b4d30",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10052f0b0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected"
+        ]
+      },
+      "pc": "0x1006b4e0c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x10039505c"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected"
+        ]
+      },
+      "pc": "0x1006b54b8",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected/color",
+          "/button/textselected/colors"
+        ]
+      },
+      "pc": "0x1006b4f88",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected/color",
+          "/button/textselected/colors"
+        ]
+      },
+      "pc": "0x1006b4ff0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected/color",
+          "/button/textselected/colors"
+        ]
+      },
+      "pc": "0x1006b50f0",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100396434"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x1": [
+          "/button/textselected/font"
+        ]
+      },
+      "pc": "0x1006b504c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x1006b43c0"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/text"
+        ],
+        "x3": [
+          "/button/text/background"
+        ]
+      },
+      "pc": "0x1006b513c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/textdown"
+        ],
+        "x3": [
+          "/button/textdown/background"
+        ]
+      },
+      "pc": "0x1006b513c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/textover"
+        ],
+        "x3": [
+          "/button/textover/background"
+        ]
+      },
+      "pc": "0x1006b513c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395c34"
+    },
+    {
+      "caller": "0x1006b4bdc",
+      "literal_arguments": {},
+      "node_arguments": {
+        "x2": [
+          "/button/textselected"
+        ],
+        "x3": [
+          "/button/textselected/background"
+        ]
+      },
+      "pc": "0x1006b513c",
+      "reason": "scope/depth limit or indirect/external target",
+      "target": "0x100395c34"
+    }
+  ],
+  "limits": {
+    "call_depth": 3,
+    "contexts": 128,
+    "values_per_register": 8,
+    "scope": "Direct constructor callees; deeper traversal only for named button text-state child receivers."
+  },
+  "limitations": [
+    "Tier 2 possible read paths; branches are not proven feasible and no runtime support is established.",
+    "Only constructor-reachable direct calls carrying a tracked XML node, to the stated depth. Other lifecycle methods and indirect calls are not exhausted.",
+    "Stack spills, heap aliases and unmodeled helper return values lose provenance. Unknown paths stay unresolved.",
+    "Getter roles inherit structural anchor calibration, not an independently recovered XML API.",
+    "Child getters may return null; paths describe possible non-null receivers.",
+    "Conditional node models retain matching sibling paths, not individual node identity or condition feasibility; a listed path is not an exclusive owner.",
+    "No absent name is rejected. Template parameters remain open. Not an XSD or a complete schema."
+  ]
+}

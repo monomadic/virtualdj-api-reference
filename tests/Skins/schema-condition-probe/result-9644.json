@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "build": "18.0.9644",
+  "surface": "desktop skin button children",
+  "evidence_tier": 1,
+  "scope": "Two independent fixture loads in the same app session, with reversed phase and row click order.",
+  "fixture_hashes": {
+    "skin.xml": "fc3693d0a56c20f71a6d7e5c944158f241a273cc4341925ca1e484e43b292743",
+    "skin.png": "c948810b8334fa4ac2fa8815361c58edca6761d8d72f3a3bc01a19ecf6e8f332",
+    "preview.png": "14463ae23a76ee5bf605ad724e7340f04002d13e4f4f86adbc9d61881dc46e9f",
+    "cases.json": "6328fa2ec4ac3a6710106cecde3d397b7f0a2bc9ee75e5ef82cd8da1c1f60023"
+  },
+  "journal_sha256": "ffde1f81e2e869aca54f0ee2f779236d513a36c1fc630af7ca92618f4f68f62a",
+  "screenshots": {
+    "round-1.png": "57bc7a592c81ff3fb4c3a5ff016d4efd43a2701bfd40e48859e1021eacf2fee1",
+    "round-2.png": "87aa05d86deff562cc7f43f102355c147fa2086d362c3d07ca21ab7a7df49930"
+  },
+  "click_coordinates": {
+    "left_x": 440,
+    "right_x": 748,
+    "row_y": [
+      89,
+      159,
+      228,
+      298,
+      368,
+      437,
+      507,
+      577,
+      646
+    ]
+  },
+  "cases": [
+    {
+      "name": "pos-baseline",
+      "id": 1,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "pos-false-first",
+      "id": 2,
+      "click_results": {
+        "1": {
+          "left": "0",
+          "right": "1"
+        },
+        "2": {
+          "right": "1",
+          "left": "0"
+        }
+      }
+    },
+    {
+      "name": "pos-true-first",
+      "id": 3,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "pos-attr-control",
+      "id": 4,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "size-false-first",
+      "id": 5,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "1"
+        },
+        "2": {
+          "right": "1",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "size-attr-control",
+      "id": 6,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "up-false-first",
+      "id": 7,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "up-true-first",
+      "id": 8,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    },
+    {
+      "name": "up-attr-control",
+      "id": 9,
+      "click_results": {
+        "1": {
+          "left": "1",
+          "right": "0"
+        },
+        "2": {
+          "right": "0",
+          "left": "1"
+        }
+      }
+    }
+  ],
+  "restoration": {
+    "skin_and_decks_verified": true,
+    "probe_variables_reset": true,
+    "exact_variable_restoration": false,
+    "note": "Previously unset probe variables are left at zero; no deletion API is established.",
+    "installed_fixture_removed": true
+  },
+  "live_confirmed_attributes": {
+    "/button/pos": [
+      "condition"
+    ],
+    "/button/size": [
+      "condition"
+    ],
+    "/button/up": [
+      "condition"
+    ]
+  },
+  "limitations": [
+    "Observed conditional selection for these literal on/off cases only; not every condition expression or skin surface.",
+    "Position and size conclusions use independent HTTP hit flags after CUA clicks; up-state selection uses retained screenshots.",
+    "This does not establish precedence against outer attributes, dynamic reevaluation without reload, or every XML reader."
+  ],
+  "pixel_samples": {
+    "1": {
+      "dimensions": [
+        1229,
+        768
+      ],
+      "samples": {
+        "up-false-first": {
+          "xy": [
+            440,
+            507
+          ],
+          "rgb": [
+            32,
+            192,
+            96
+          ]
+        },
+        "up-true-first": {
+          "xy": [
+            440,
+            577
+          ],
+          "rgb": [
+            224,
+            48,
+            48
+          ]
+        },
+        "up-attr-control": {
+          "xy": [
+            440,
+            646
+          ],
+          "rgb": [
+            224,
+            48,
+            48
+          ]
+        }
+      }
+    },
+    "2": {
+      "dimensions": [
+        1229,
+        768
+      ],
+      "samples": {
+        "up-false-first": {
+          "xy": [
+            440,
+            507
+          ],
+          "rgb": [
+            32,
+            192,
+            96
+          ]
+        },
+        "up-true-first": {
+          "xy": [
+            440,
+            577
+          ],
+          "rgb": [
+            224,
+            48,
+            48
+          ]
+        },
+        "up-attr-control": {
+          "xy": [
+            440,
+            646
+          ],
+          "rgb": [
+            224,
+            48,
+            48
+          ]
+        }
+      }
+    }
+  }
+}

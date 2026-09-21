@@ -472,6 +472,7 @@ check:
     {{python}} tools/skin_relations.py --check
     {{python}} tools/test_skin_metadata.py
     {{python}} -m unittest discover -s tools -p test_skin_schema.py
+    {{python}} tools/skin_condition_evidence.py --check > /dev/null
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
     {{python}} tools/check_reference_status.py

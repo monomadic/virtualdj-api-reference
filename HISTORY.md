@@ -1317,3 +1317,18 @@ entry point. No skin behavior was promoted and no complete-schema claim was made
 conditional-node/helper gaps and the next discriminating fixture work. General class
 extraction now supports fresh output without requiring a historical app or overwriting
 older captures.
+
+### S5. Resolve conditional child ownership and test it live
+
+Status: Done
+
+Note: 2026-09-22, build 18.0.9644 arm64. Guarded current-build models now retain
+named child and same-name sibling paths through the conditional selectors.
+`just skin-schema button` uses the new capture and separately joins the scoped
+live result. The synthetic pos/size/up fixture separates false conditions from
+true/nonsense controls through click readbacks and saved screenshots, repeated
+after reload in reversed order. Original skin and empty/stopped decks were
+restored; installed fixture removed; initially unset test variables remain zero.
+[Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) and the linked fixture
+retain the exact limits and execution anomalies. Full schema completeness,
+outer/child precedence and additional XML getter families remain open.

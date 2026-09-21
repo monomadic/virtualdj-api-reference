@@ -330,7 +330,7 @@ def summary(name: str, limit: int) -> dict:
         schema = json.loads(schema_capture.read_text())
         pilot = {'build': schema['source']['build'], 'evidence_tier': schema['evidence_tier'],
                  'capture': str(schema_capture.relative_to(ROOT)), 'command': 'just skin-schema button',
-                 'note': 'Bounded node ownership: outer/shared/child reads and unresolved paths. Not confirmed support or a complete schema.'}
+                 'note': 'Bounded structural ownership and a scoped live conditional-child fixture. Not a complete schema.'}
 
     return {
         "element": name,

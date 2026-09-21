@@ -54,6 +54,26 @@ class OwnershipTests(unittest.TestCase):
         out = transfer(Instruction(0, 'bl', [imm(200)]), {'x0': NODE}, GETTERS)
         self.assertNotIn('x0', out)
 
+    def test_conditional_child_uses_explicit_argument_registers(self):
+        getters = {200: {'role': 'conditional_child_node', 'node_register': 'x1', 'name_register': 'x2'}}
+        out = transfer(Instruction(0, 'bl', [imm(200)]),
+                       {'x1': NODE, 'x2': frozenset({('constant', 1000)})}, getters, {1000: 'size'})
+        self.assertEqual(out['x0'], frozenset({('node', '/button/size')}))
+
+    def test_matching_sibling_requires_matching_parent(self):
+        getters = {200: {'role': 'matching_sibling_node', 'parent_register': 'x1', 'node_register': 'x2'}}
+        child = frozenset({('node', '/button/up')})
+        out = transfer(Instruction(0, 'bl', [imm(200)]), {'x1': NODE, 'x2': child}, getters)
+        self.assertEqual(out['x0'], child)
+        out = transfer(Instruction(0, 'bl', [imm(200)]), {'x1': frozenset({('node', '/other')}), 'x2': child}, getters)
+        self.assertNotIn('x0', out)
+
+    def test_matching_sibling_keeps_unknown_alternative(self):
+        getters = {200: {'role': 'matching_sibling_node', 'parent_register': 'x1', 'node_register': 'x2'}}
+        child = frozenset({('node', '/button/up')})
+        out = transfer(Instruction(0, 'bl', [imm(200)]), {'x1': NODE | UNKNOWN, 'x2': child}, getters)
+        self.assertEqual(out['x0'], child | UNKNOWN)
+
     def test_unknown_helper_return_cannot_inherit_receiver(self):
         out = transfer(Instruction(0, 'bl', [imm(300)]), {'x0': NODE}, GETTERS)
         self.assertNotIn('x0', out)
@@ -91,6 +111,26 @@ class OwnershipTests(unittest.TestCase):
 
 
 class CaptureTests(unittest.TestCase):
+    def test_conditional_capture_retains_baseline_and_resolves_paths(self):
+        from skin_schema import DEFAULT
+        data = json.loads(DEFAULT.read_text())
+        report = summary(data)
+        self.assertIn('width', report['owners']['/button/size']['attributes'])
+        self.assertIn('height', report['owners']['/button/pos']['attributes'])
+        self.assertIn('shape', report['owners']['/button/up']['attributes'])
+        self.assertTrue(data['conditional_node_models']['sha256'])
+
+    def test_helper_guards_reject_wrong_binary_and_changed_code(self):
+        import hashlib
+        from skin_node_helpers import verify_guards
+        data = {'binary_sha256': 'expected', 'routines': {'helper': {
+            'start': '0x100', 'end': '0x104', 'sha256': hashlib.sha256(b'code').hexdigest()}}}
+        verify_guards(data, 'expected', lambda fn: b'code')
+        with self.assertRaisesRegex(ValueError, 'different binary'):
+            verify_guards(data, 'other', lambda fn: b'code')
+        with self.assertRaisesRegex(ValueError, 'code guard failed'):
+            verify_guards(data, 'expected', lambda fn: b'xxxx')
+
     def test_recorded_ownership_keeps_children_separate(self):
         path = Path(__file__).resolve().parents[1] / 'tests/skin-schema-button-9644.json'
         data = json.loads(path.read_text())

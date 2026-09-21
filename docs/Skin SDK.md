@@ -523,6 +523,15 @@ Source: `Built-in skin` (`examples/Skins/Built-In/Remote/9x16P.xml`, `9x16T.xml`
 - `visibility=""` controls whether an existing element is displayed. Use it for live UI state that can change without rebuilding the skin, such as loop state, deck assignment, browser focus, or a panel that should appear and disappear.
 - `condition=""` selects whether an element, group, browser, or define variant participates in the loaded skin structure. Use it for mutually exclusive layout branches, conditional color/class definitions, conditional `<nbdecks>` entries, and other choices that are normally refreshed with `load_skin`.
 
+**Local test — 2026-09-22, build 18.0.9644 (arm64), desktop button children:**
+the [conditional-child fixture](../tests/Skins/schema-condition-probe/README.md)
+confirmed that `condition="off"` on the first `<pos>`, `<size>` or `<up>` selects
+the alternate same-name child. Hit readbacks and retained screenshots distinguish
+the outcomes from true-condition/nonsense-attribute controls, repeated after
+reload in reversed order. This fixture does not test dynamic reevaluation or
+outer-versus-child attribute precedence. The [schema recovery notes](Skin%20Schema%20Recovery.md)
+keep these live results separate from the broader structural candidate list.
+
 Operational rules:
 
 - `condition=""` takes a VDJScript action/query that returns true or false.

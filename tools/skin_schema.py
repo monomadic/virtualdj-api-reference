@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT = ROOT / 'tests/skin-schema-button-9644.json'
+DEFAULT = ROOT / 'tests/skin-schema-button-conditional-9644.json'
 UNKNOWN = frozenset({('unknown', '')})
 OVERFLOW = frozenset({('overflow', '')})
 
@@ -63,16 +63,29 @@ def transfer(insn, state, getters, strings=None):
         for n in range(19):
             result.pop('x' + str(n), None)
         target = op[0].imm if insn.mnemonic == 'bl' else None
-        if getters.get(target, {}).get('role') == 'child_node':
+        model = getters.get(target, {})
+        if model.get('role') in ('child_node', 'conditional_child_node'):
             strings = strings or {}
+            receiver = state.get(model.get('node_register', 'x0'), UNKNOWN)
+            name_values = state.get(model.get('name_register', 'x1'), UNKNOWN)
             names = frozenset(('literal', strings[v]) if k == 'constant' and v in strings
-                              else (k, v) for k, v in state.get('x1', UNKNOWN))
-            children = {('node', p + '/' + n) for p in node_paths(state.get('x0', UNKNOWN))
+                              else (k, v) for k, v in name_values)
+            children = {('node', p + '/' + n) for p in node_paths(receiver)
                         for k, n in names if k == 'literal'}
             if children:
-                if any(k != 'node' for k, _ in state.get('x0', UNKNOWN)) or any(k != 'literal' for k, _ in names):
+                if any(k != 'node' for k, _ in receiver) or any(k != 'literal' for k, _ in names):
                     children.add(('unknown', ''))
                 result['x0'] = frozenset(children)
+        elif model.get('role') == 'matching_sibling_node':
+            parents = state.get(model['parent_register'], UNKNOWN)
+            nodes = state.get(model['node_register'], UNKNOWN)
+            # Same-name sibling retains its XML path, but only under a proven parent.
+            paths = {('node', path) for path in node_paths(nodes)
+                     if path.rsplit('/', 1)[0] in node_paths(parents)}
+            if paths:
+                if any(k != 'node' for k, _ in parents | nodes) or len(paths) != len(node_paths(nodes)):
+                    paths.add(('unknown', ''))
+                result['x0'] = frozenset(paths)
     return result
 
 
@@ -137,6 +150,9 @@ def extract(app, memory_capture, structural=None):
         raise ValueError('button constructor is ambiguous')
     constructor = constructors.pop()
     getters = {int(k, 16): v for k, v in source['xml_reader_anchors'].items()}
+    from skin_node_helpers import models, MANIFEST
+    node_models, node_evidence = models(a)
+    getters.update(node_models)
     factory = int(source['factory']['function'], 16)
     factory_code = decoded(a, factory)
     factory_calls = analyze(factory_code, {'x0': frozenset({('node', '/button')})}, getters, a.img.strings)
@@ -144,7 +160,7 @@ def extract(app, memory_capture, structural=None):
     forwarding = [(i, target, state) for i, target, state in factory_calls if i.address in constructor_sites]
     if len(forwarding) != 1 or forwarding[0][2].get('x1') != frozenset({('node', '/button')}):
         raise ValueError('factory no longer forwards its XML receiver to constructor x1')
-    base_functions = {a.owner(int(g['call_pc'], 16)) for g in getters.values() if g['anchor'] == 'clickthrough'}
+    base_functions = {a.owner(int(g['call_pc'], 16)) for g in getters.values() if g.get('anchor') == 'clickthrough'}
     queue = deque([(constructor, {'x1': frozenset({('node', '/button')})}, 0)])
     seen, routines, reads, frontier, bindings = set(), {}, [], [], []
     while queue:
@@ -163,16 +179,19 @@ def extract(app, memory_capture, structural=None):
         calls = analyze(insns, initial, getters, a.img.strings)
         for i, target, state in calls:
             role = getters.get(target, {}).get('role')
-            names = sorted({a.img.strings[v] for k, v in state.get('x1', UNKNOWN)
+            model = getters.get(target, {})
+            name_values = state.get(model.get('name_register', 'x1'), UNKNOWN) if role != 'matching_sibling_node' else frozenset()
+            receiver = state.get(model.get('node_register', 'x0'), UNKNOWN)
+            names = sorted({a.img.strings[v] for k, v in name_values
                             if k == 'constant' and v in a.img.strings})
-            paths = node_paths(state.get('x0', UNKNOWN))
+            paths = node_paths(receiver)
             if role:
                 reads.append({'function': hex(fn), 'pc': hex(i.address), 'getter': hex(target),
                               'origin': 'shared_base_reader' if fn in base_functions else 'button_constructor' if fn == constructor else 'helper',
                               'role': role, 'names': names, 'node_paths': paths,
-                              'receiver_unresolved': any(k != 'node' for k, _ in state.get('x0', UNKNOWN)),
+                              'receiver_unresolved': any(k != 'node' for k, _ in receiver),
                               'name_unresolved': any(k != 'constant' or v not in a.img.strings
-                                                     for k, v in state.get('x1', UNKNOWN)),
+                                                     for k, v in name_values),
                               'depth': depth})
                 continue
             args = {r: v for r, v in state.items() if r in {'x'+str(n) for n in range(8)}
@@ -208,7 +227,9 @@ def extract(app, memory_capture, structural=None):
         if len(thunk_code) != 1 or thunk_code[0].mnemonic != 'b' or thunk_code[0].operands[0].imm != constructor:
             raise ValueError('constructor thunk changed')
         binding_code += thunk_code
-    return {'schema_version': 1, 'element': 'button', 'evidence_tier': 2,
+    return {'schema_version': 2, 'element': 'button', 'evidence_tier': 2,
+            'conditional_node_models': {'path': str(MANIFEST.relative_to(ROOT)), 'sha256': hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+                                        'models': node_evidence['models'], 'scope': node_evidence['scope']},
             'source': source['source'], 'memory_anchor': {'path': str(memory_capture.relative_to(ROOT)) if memory_capture.is_relative_to(ROOT) else str(memory_capture),
                 'sha256': hashlib.sha256(memory_capture.read_bytes()).hexdigest(),
                 'image_uuid': memory['image_uuid'], 'verification': verification,
@@ -227,22 +248,25 @@ def extract(app, memory_capture, structural=None):
                 'Stack spills, heap aliases and unmodeled helper return values lose provenance. Unknown paths stay unresolved.',
                 'Getter roles inherit structural anchor calibration, not an independently recovered XML API.',
                 'Child getters may return null; paths describe possible non-null receivers.',
-                'Conditional node replacement helpers can leave partial ownership unresolved; a listed path is not an exclusive owner.',
+                'Conditional node models retain matching sibling paths, not individual node identity or condition feasibility; a listed path is not an exclusive owner.',
                 'No absent name is rejected. Template parameters remain open. Not an XSD or a complete schema.']}
 
 
 def summary(data):
     owners = {}
     for read in data['reads']:
-        if read['role'] == 'child_node':
+        if read['role'] in ('child_node', 'conditional_child_node', 'matching_sibling_node'):
             continue
         for path in read['node_paths']:
             row = owners.setdefault(path, {'attributes': set(), 'partial_attributes': set()})
             row['partial_attributes' if read['receiver_unresolved'] or read['name_unresolved'] else 'attributes'].update(read['names'])
+    from skin_condition_evidence import live_summary, CAPTURE
+    live = live_summary(data['source']['build']) if CAPTURE.exists() else None
     return {'element': data['element'], 'build': data['source']['build'], 'tier': 2,
+            'live_evidence': live,
             'owners': {p: {k: sorted(v) for k, v in row.items()} for p, row in sorted(owners.items())},
             'shared_outer_attributes': sorted({name for r in data['reads'] if r['origin'] == 'shared_base_reader'
-                                              and '/button' in r['node_paths'] and r['role'] != 'child_node' for name in r['names']}),
+                                              and '/button' in r['node_paths'] and r['role'].startswith('attribute_') for name in r['names']}),
             'unresolved_reads': sum(r['receiver_unresolved'] or r['name_unresolved'] for r in data['reads']),
             'frontier_calls': len(data['frontier']), 'limitations': data['limitations']}
 
@@ -284,6 +308,9 @@ def main():
             if row['partial_attributes']:
                 print('  partial/ambiguous: ' + ', '.join(row['partial_attributes']))
         print('Shared outer reads: ' + ', '.join(report['shared_outer_attributes']))
+        if report['live_evidence']:
+            print('Live fixture (Tier 1): condition on /button/pos, /button/size, /button/up')
+            print('  ' + report['live_evidence']['capture'])
         print(f"Unresolved reads: {report['unresolved_reads']}; frontier calls: {report['frontier_calls']}")
         print('Possible reads only, not confirmed support. Unknown names are not rejected.')
     return 0
