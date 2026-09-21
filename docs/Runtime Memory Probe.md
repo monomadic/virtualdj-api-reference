@@ -238,3 +238,54 @@ recognition controls**. For `inaudible` behaviour, the next fixture must actuall
 separate audible from inaudible use while controlling timing; another idle sweep
 will not answer it. For broader discovery, apply the method to a verb whose
 consumer vocabulary is unresolved rather than repeating this settled list.
+
+## Shared time reader follow-up — build 18.0.9644 arm64
+
+[time-sign-consumer-9644.json](../tests/time-sign-consumer-9644.json) follows
+the current `ACTION_get_time_sign` query slot to its single direct callee.
+The wrapper at `0x1004f2a9c` calls the shared reader at `0x1004f268c`;
+the artifact preserves bounded instructions, literal callsites and helper hashes.
+This is **Tier 2 structural evidence**, not an argument or behaviour promotion.
+
+The shared reader contains literal comparison sites for `elapsed`, `remain`,
+`total`, `loopin`, `loopout`, `absolute`, `cue` and `to_lyrics`. Parameter zero
+is fetched into `x23`; `x24` points to its string storage. A later `absolute`
+comparison uses parameter one (`x22`). The `cue` helper requires at least three
+characters and compares the first three; the caller then passes the suffix to
+another routine. Thus `cue` is a **prefix-family lead**, not evidence that only
+the standalone token is accepted. Suffix grammar remains unresolved.
+
+Two structural details change the probe plan:
+
+- Deck-data checks branch to failure before parameters are read. An unloaded
+  deck therefore cannot discriminate this consumer's keywords, even with native
+  HRESULTs.
+- Unmatched first-position text reaches the same continuation as `elapsed`.
+  A positive elapsed-time sign is consequently a poor nonsense control. The
+  wrapper also has a zero-output branch, which remains a live-test lead.
+
+The read-only [empty-deck capture](../tests/time-sign-empty-9644.json), on live
+build 9644, returned HTTP `error:1` for every form listed in the capture, including
+both nonsense controls, in both rounds. Decks 1–4 were stopped and unloaded before
+and after. This establishes only the measured unavailable result in that fixture;
+it does not prove any tail invalid, nor recover the native HRESULT from HTTP.
+
+Reproduce the bounded extraction and empty control:
+
+```sh
+uv run --with capstone --python .venv/bin/python3 python tools/time_sign_consumer.py \
+  --check tests/time-sign-consumer-9644.json
+python tools/probe_time_sign_empty.py --output /tmp/time-sign-empty-new.json
+```
+
+The next discriminating fixture should use generated audio, remain stopped, and
+read zero and negative elapsed positions against positive remaining/total time,
+with two nonsense controls. Establish that the requested position actually took
+effect before interpreting sign results. Loop, cue-prefix and lyric-relative
+leads need separately prepared markers/content. Do not repeat the earlier
+positive-time sweep or promote static branches to supported syntax.
+
+For future agents, the tail queue's full JSON includes extensive helper evidence.
+Project only verb names, open tails and candidate fields when choosing work;
+open a selected record afterwards. A full queue dump consumes context without
+improving target selection.
