@@ -393,7 +393,8 @@ VirtualDJ 2026 bundle `18.0.9644`, macOS 26.6.2 arm64, 2026-09-22). A new bundle
 filename** (`get_effect_title 'RustTremolo'` answers; the declared `PluginName` "Rust Tremolo"
 does not). First `effect_select` triggers the real load — negotiation, `OnGetPluginInfo`,
 `OnLoad` — and the host instantiated the plugin twice. The instrument was the first
-**Rust-built** plugin ([rust/](../rust/), hand-laid Itanium vtables, no Atomix code): it loaded,
+**Rust-built** plugin ([monomadic/virtualdj-plugin](https://github.com/monomadic/virtualdj-plugin),
+hand-laid Itanium vtables, no Atomix code): it loaded,
 listed, ran its `OnStart`/`OnStop` lifecycle, and from inside `OnLoad` observed the typed-channel
 split directly — `GetStringInfo("get_version")` → `S_OK` + `"2026"` while
 `GetInfo("get_version")` → `E_INVALIDARG` with `0.0` written to the out-parameter anyway,
