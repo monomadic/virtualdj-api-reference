@@ -8,6 +8,10 @@ headers are `Official` (Tier 2 — official documentation, which this repo has c
 incomplete before), the on-disk observations are `Local observation` on VirtualDJ 2026
 (bundle `18.0.9482`, macOS arm64), and the binary findings are `Binary symbol table`.
 
+For the bounded host-memory experiment and its build/verification commands, see
+[Runtime Memory Probe](Runtime%20Memory%20Probe.md). It is separate from the query
+introspection plugin and does not establish parser or verb behaviour.
+
 ## Why this matters beyond writing plugins
 
 The HTTP control interface returns everything as text, so a query's real type has to be

@@ -5,6 +5,7 @@
 #   tools/plugin/build.sh --install  # build, then copy into VirtualDJ's plugin folder
 #   tools/plugin/build.sh --dsp      # the Sound Effect variant
 #   tools/plugin/build.sh --skin     # Sound Effect + custom skin interface
+#   tools/plugin/build.sh --memory   # bounded read-only host memory capture
 #
 # Needs the Atomix SDK headers, which this repo does not vendor. Put a copy under
 # vendor/ (see .gitignore and docs/Plugin SDK.md); any directory containing
@@ -17,6 +18,7 @@ set -eu -o pipefail
 REPO="${0:a:h:h:h}"
 NAME="VDJIntrospect"
 DEFINES=()
+SOURCE="$REPO/tools/plugin/VDJIntrospect.cpp"
 # --dsp builds the Sound Effect variant instead of the headless AutoStart probe.
 # It installs into SoundEffect/ so VirtualDJ files it under Extensions > Effects:
 # the Extensions list is organised by functional type, and a plugin that is no
@@ -34,6 +36,12 @@ fi
 if [[ " $* " == *" --skin "* ]]; then
     NAME="VDJIntrospectSkin"
     DEFINES=(-DVDJINTROSPECT_DSP -DVDJINTROSPECT_SKIN)
+    SUBDIR_DEFAULT="SoundEffect"
+fi
+if [[ " $* " == *" --memory "* ]]; then
+    NAME="VDJMemoryProbe"
+    DEFINES=(-DVDJINTROSPECT_DSP)
+    SOURCE="$REPO/tools/plugin/VDJMemoryProbe.cpp"
     SUBDIR_DEFAULT="SoundEffect"
 fi
 BUILD="$REPO/build"
@@ -76,7 +84,7 @@ clang++ \
     -I "$SDK" \
     "${DEFINES[@]}" \
     -framework CoreFoundation \
-    "$REPO/tools/plugin/VDJIntrospect.cpp" \
+    "$SOURCE" \
     -o "$BUNDLE/Contents/MacOS/$NAME"
 
 # Ad-hoc signature. VirtualDJ carries com.apple.security.cs.disable-library-validation,

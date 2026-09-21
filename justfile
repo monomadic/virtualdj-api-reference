@@ -765,3 +765,15 @@ probe-lyrics-binary *args:
 
 check-lyrics-cache:
     @{{python}} tools/test_lyrics_cache.py
+
+# Bounded live memory probe: separate passthrough effect, no general probe lists.
+plugin-memory-build *args:
+    tools/plugin/build.sh --memory {{args}}
+
+# Verify live image UUID, build, table address and every name/id/flags record.
+plugin-memory-check capture *args:
+    {{python}} tools/plugin_memory.py {{quote(capture)}} {{args}}
+
+plugin-memory-test:
+    clang++ -std=c++17 -arch arm64 -I vendor/vdj-sdk/audio-plugin-dsp-example-1 -framework CoreFoundation tools/plugin/test_memory.cpp -o /tmp/vdj-memory-test
+    /tmp/vdj-memory-test
