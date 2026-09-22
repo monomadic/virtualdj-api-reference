@@ -240,6 +240,9 @@ def skin_records(out: Path) -> list[dict]:
     from xmldb import load as load_inventory, rows
     from element_summary import doc_sections, doc_excerpt, reader_vocabulary, probes
     import skin_relations
+    from skin_attributes import load as load_contracts, attribute_rows
+
+    contracts = load_contracts()
 
     grouped = {}
     relation_data = skin_relations.load()
@@ -270,6 +273,7 @@ def skin_records(out: Path) -> list[dict]:
             "categories": {f: e["category"] for f, e in families.items()},
             "relationships": relations,
             "surfaces": list(families), "families": families,
+            "attributeRows": attribute_rows(name, attributes, contracts),
             "attributes": [{"name": a, "uses": n} for a, n in
                            sorted(attributes.items(), key=lambda item: (-item[1], item[0]))],
             "description": next((d["excerpt"] for d in sections if d["excerpt"]),

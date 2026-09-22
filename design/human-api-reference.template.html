@@ -155,6 +155,13 @@
     .skin-doc small { display: block; margin: 2px 0 6px; font: 500 12px var(--sans); color: var(--faint); }
     .skin-doc summary { cursor: pointer; color: var(--muted); font: 500 12px/1.6 var(--sans); }
     .skin-doc p { margin: 0; font: 500 14px/1.5 var(--sans); color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .attribute-table-wrap { overflow-x: auto; }
+    .attribute-table { width: 100%; border-collapse: collapse; text-align: left; font: 400 13px/1.55 var(--sans); }
+    .attribute-table th, .attribute-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .attribute-table th { color: var(--muted); font-weight: 600; }
+    .attribute-table td:first-child { font-family: var(--mono); white-space: nowrap; }
+    .attribute-table td:nth-child(2) { min-width: 150px; }
+    .attribute-table small { display: block; margin-top: 4px; color: var(--muted); font: 400 11px/1.5 var(--sans); }
     .attrs { display: flex; flex-wrap: wrap; gap: 6px; }
     .attrs span { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font: 400 12.5px var(--mono); }
     .attrs span b { margin-left: 6px; font-weight: 400; color: var(--faint); }
@@ -325,7 +332,7 @@
       const edges = r.relationships[direction].filter(e => state.family === "all" || e.family === state.family);
       return `<section class="block"><div class="block-head"><h2>${direction === "parents" ? "Parents" : "Children"}</h2><span>${edges.length} · vendor XML</span></div>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None recorded; support unknown.</p>'}</section>`;
     }).join("");
-    const attributes = r.attributes.map(a => `<span>${esc(a.name)}<b>${a.uses.toLocaleString()}</b></span>`).join("");
+    const attributes = r.attributeRows.map(a => `<tr><td>${esc(a.name)}<small>${a.uses ? `${a.uses.toLocaleString()} observed uses` : 'Reference candidate'}</small></td><td>${esc(a.value)}</td><td>${esc(a.description)}<small>${esc(a.status === 'reader_candidate' ? `Reader candidate · build ${a.build} · behavior unverified` : a.status === 'documented' ? 'Documentation summary' : 'Not yet documented')}</small><details><summary>Context and evidence</summary><small>${esc(a.context)}<br>${a.sources.map(esc).join('<br>') || 'Observed XML inventory; no value contract recorded.'}<br>Default: ${esc(a.default === null ? 'not recorded' : a.default)}<br>Constraints: ${esc(a.constraints === null ? 'not recorded' : a.constraints)}</small></details></td></tr>`).join("");
     const docs = r.docs.map(d => `<div class="skin-doc"><a href="${esc(d.url)}">${esc(d.heading)}</a><small>${esc(d.doc)}:${d.line}</small><p>${esc(d.excerpt)}</p></div>`).join("");
     const reader = r.reader || {};
     const readerText = !reader.available ? "Reader vocabulary unavailable." : reader.readers.length ?
@@ -338,7 +345,7 @@
       <p class="description">${esc(r.description)}</p>
       <div class="signal unverified"><div><div class="signal-head"><span class="dot"></span>${esc(r.statusLabel)}</div><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute. Parent and child links reflect literal vendor XML, not a complete support schema.</p></div></div>
       <section class="facts">${families}</section>
-      <section class="block"><div class="block-head"><h2>Attributes</h2><span>${r.attributes.length} · ordered by usage · includes template parameters, not a parser schema</span></div><div class="attrs">${attributes || '<div class="none-box">No attributes observed.</div>'}</div></section>
+      <section class="block"><div class="block-head"><h2>Attributes</h2><span>Values and descriptions from shared records · unknown rules stay explicit</span></div><div class="attribute-table-wrap"><table class="attribute-table"><thead><tr><th scope="col">Attribute</th><th scope="col">Value</th><th scope="col">Description</th></tr></thead><tbody>${attributes || '<tr><td colspan="3">No attribute records available.</td></tr>'}</tbody></table></div></section>
       ${relations}
       <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
       <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p class="signal" style="display:block">${esc(readerText)}</p></section>

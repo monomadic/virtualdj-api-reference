@@ -1386,6 +1386,11 @@ Display area for static or dynamic text.
 - `<text>` - Text elements (see below)
 
 **Text Element Attributes:**
+
+The generated attribute table is available with `just skin-attributes text` and
+in the built human reference. Its shared structured records retain unknowns,
+context and evidence; see [Attribute value records and generated tables](Skin%20Schema%20Recovery.md#attribute-value-records-and-generated-tables).
+
 - `font` - Font name (default: Arial)
 - `weight` - Font weight: `"bold"`, `"normal"`
 - `fontsize` - Size in pixels. `size` is also accepted as a synonym: built-in skins overwhelmingly use `fontsize=` (~1,600 uses vs 5), but `size=` appears in shipped skins and is `Local test` confirmed working (see `Skin Runtime Findings.md`). Prefer `fontsize` to match built-in convention.

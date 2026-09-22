@@ -423,3 +423,36 @@ The conditional helpers reproduce with `tools/skin_node_helpers.py --check` in
 the same capstone/numpy environment. `just check` also validates the live journal,
 fixture hashes and screenshot hashes. Pixel resampling is an optional Pillow
 check documented in the fixture README.
+
+## Attribute value records and generated tables
+
+[skin-attribute-contracts.json](skin-attribute-contracts.json) is the editable
+source for attribute value descriptions. Shared value types describe syntax or
+known enum members; definitions attach meaning, context, evidence, build and
+verification status; element mappings reference those definitions. Aliases reuse
+a definition. Distinct meanings, such as button and text `action`, stay separate.
+
+Run `just skin-attributes text` (or another tag) for an **Attribute | Value |
+Description** Markdown table on stdout; `--format=json` retains the full metadata.
+`just build-reference` embeds the same rows in the skin section of the human
+reference through `design/human-api-reference.template.html`. These tables are
+artifacts of the records: edit the source records, not the rendered table.
+
+The initial records cover reviewed text fields and button action/query fields.
+Other inventoried attributes remain visible with **Unknown** values. A null
+accepted-value set, default or constraint means **not recorded**, never that any
+value is accepted. Integer/boolean getter evidence does not establish numeric
+ranges, units, or every accepted spelling. Documentation summaries and static
+reader candidates remain Tier 2; neither is live behavior verification.
+
+Element mappings are lookup aids, not a closed schema or a promise that every
+parent context behaves identically. The reviewed text routes share definitions;
+the global `font` element and unreviewed routes do not inherit them. Context and
+evidence remain available in the JSON and expandable table details. Keep reader
+identity and parent/child structure in `just skin-structure`; add a distinct
+attribute definition when evidence establishes a context-specific difference.
+
+Next value work should add exact constraints and defaults only with cited
+parser evidence or discriminating live fixtures, preserving their build and
+node role. Continue breadth-first structural discovery independently of those
+behavior checks.

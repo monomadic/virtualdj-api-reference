@@ -830,3 +830,7 @@ skin-reader-audit *args:
 # Breadth-first structural entries with canonical shared readers; no behavior claim.
 skin-structure *args:
     @{{python}} tools/skin_structure.py {{args}}
+
+# Shared skin attribute contracts; Markdown is a stdout artifact, JSON retains evidence.
+skin-attributes element *args:
+    @{{python}} tools/skin_attributes.py {{quote(element)}} {{args}}

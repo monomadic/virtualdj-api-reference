@@ -6,6 +6,7 @@ from urllib.parse import unquote
 
 from render_reference import ROOT, TEMPLATE, skin_records
 from xmldb import load, rows
+from skin_attributes import attribute_rows, load as load_contracts, markdown
 
 
 class SkinReferenceTests(unittest.TestCase):
@@ -41,6 +42,33 @@ class SkinReferenceTests(unittest.TestCase):
                 path = (self.out.parent / unquote(doc['url'])).resolve()
                 self.assertEqual(path, ROOT / doc['doc'])
                 self.assertTrue(path.read_text().splitlines()[doc['line'] - 1].startswith('#'))
+
+    def test_attribute_contracts_share_aliases_without_conflating_context(self):
+        contracts = load_contracts()
+        text = {r['name']: r for r in attribute_rows('text', {}, contracts)}
+        button = {r['name']: r for r in attribute_rows('button', {}, contracts)}
+        for a, b in [('size', 'fontsize'), ('overcolor', 'colorover')]:
+            self.assertEqual(text[a]['contract_ref'], text[b]['contract_ref'])
+        self.assertNotEqual(text['action']['contract_ref'], button['action']['contract_ref'])
+        self.assertEqual(attribute_rows('font', {}, contracts), [])
+        self.assertEqual(attribute_rows('textoverselected', {}, contracts), [])
+        unknown = attribute_rows('font', {'unresolved': 1}, contracts)[0]
+        self.assertEqual(unknown['value'], 'Unknown')
+        self.assertIsNone(unknown['value_spec'])
+        self.assertIsNone(unknown['default'])
+        self.assertIsNone(unknown['constraints'])
+        self.assertIn(r'left \| center \| right', markdown(list(text.values())))
+
+    def test_attribute_table_projection_retains_observed_fields(self):
+        for record in self.records:
+            projected = {a['name']: a for a in record['attributeRows']}
+            for attribute in record['attributes']:
+                self.assertEqual(projected[attribute['name']]['uses'], attribute['uses'])
+        template = TEMPLATE.read_text()
+        for label in ('Attribute', 'Value', 'Description'):
+            self.assertIn('<th scope="col">' + label + '</th>', template)
+        for field in ('name', 'value', 'description', 'context'):
+            self.assertIn('esc(a.' + field + ')', template)
 
     def test_payload_placeholders_occur_once(self):
         template = TEMPLATE.read_text()

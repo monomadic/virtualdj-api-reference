@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "note": "Editable attribute contracts. Null default/constraints/accepted_values means not recorded, never unrestricted. Reader candidates are Tier 2; documented values do not imply live verification. Context assignments are editorial references, not a closed parser schema.",
+  "value_types": {
+    "integer": {
+      "kind": "integer",
+      "display": "Integer; range and units unverified",
+      "accepted_values": null
+    },
+    "boolean": {
+      "kind": "boolean",
+      "display": "Boolean; accepted spellings unverified",
+      "accepted_values": null
+    },
+    "color": {
+      "kind": "color",
+      "display": "Color value or expression; accepted forms depend on context",
+      "accepted_values": null
+    },
+    "string": {
+      "kind": "string",
+      "display": "Text string",
+      "accepted_values": null
+    },
+    "script": {
+      "kind": "vdjscript",
+      "display": "VDJScript",
+      "accepted_values": null
+    },
+    "align": {
+      "kind": "enum",
+      "accepted_values": [
+        "left",
+        "center",
+        "right"
+      ]
+    },
+    "valign": {
+      "kind": "enum",
+      "accepted_values": [
+        "top",
+        "center",
+        "bottom"
+      ]
+    },
+    "weight": {
+      "kind": "enum",
+      "accepted_values": [
+        "bold",
+        "normal"
+      ]
+    },
+    "fontsize": {
+      "kind": "number",
+      "display": "Font size in pixels",
+      "accepted_values": null
+    }
+  },
+  "definitions": {
+    "text.align": {
+      "value_ref": "align",
+      "description": "Horizontal text alignment.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.valign": {
+      "value_ref": "valign",
+      "description": "Vertical text alignment.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.format": {
+      "value_ref": "string",
+      "description": "Format string for dynamic text; format vocabulary is not yet captured here.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.font": {
+      "value_ref": "string",
+      "description": "Typeface name.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.weight": {
+      "value_ref": "weight",
+      "description": "Font weight.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.fontsize": {
+      "value_ref": "fontsize",
+      "description": "Font size; size is an alternative spelling of fontsize.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.text": {
+      "value_ref": "string",
+      "description": "Text content; may contain backtick-wrapped VDJScript expressions.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.action": {
+      "value_ref": "script",
+      "description": "Script associated with the text; execution or evaluation context depends on the owning element.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.width": {
+      "value_ref": "integer",
+      "description": "Text width; the reference describes it as the maximum width before wrapping. Exact range is unverified.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.height": {
+      "value_ref": "integer",
+      "description": "Read by the text reader; its effect on layout or clipping still needs a live test.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.multiline": {
+      "value_ref": "boolean",
+      "description": "Enables multiline text according to the reference; true is documented. Other accepted spellings are not established here.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.scroll": {
+      "value_ref": "boolean",
+      "description": "Read by the text reader; scrolling triggers and behavior remain unverified.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.dx": {
+      "value_ref": "integer",
+      "description": "Horizontal text offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.dy": {
+      "value_ref": "integer",
+      "description": "Vertical text offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.overdx": {
+      "value_ref": "integer",
+      "description": "Candidate horizontal hover offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.overdy": {
+      "value_ref": "integer",
+      "description": "Candidate vertical hover offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.downdx": {
+      "value_ref": "integer",
+      "description": "Candidate horizontal pressed-state offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.downdy": {
+      "value_ref": "integer",
+      "description": "Candidate vertical pressed-state offset. Units, sign handling and state behavior require verification.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.color": {
+      "value_ref": "color",
+      "description": "Text color.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "text.colordown": {
+      "value_ref": "color",
+      "description": "Candidate pressed-state text color.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.colorselected": {
+      "value_ref": "color",
+      "description": "Candidate selected-state text color.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.backcolor": {
+      "value_ref": "color",
+      "description": "Read by the text reader; background rendering behavior is unverified.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "text.hovercolor": {
+      "value_ref": "color",
+      "description": "Alternative hover-color keys accepted by the inspected reader. Precedence when both occur is unverified.",
+      "context": "Text child contexts; global skin font declarations are excluded.",
+      "status": "reader_candidate",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "tests/skin-text-attribute-review-9246.json"
+      ],
+      "build": "18.0.9246"
+    },
+    "button.action": {
+      "value_ref": "script",
+      "description": "Button action script.",
+      "context": "Outer button node; does not describe child text action handling.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    },
+    "button.query": {
+      "value_ref": "script",
+      "description": "Expression used to determine the button state.",
+      "context": "Outer button node.",
+      "status": "documented",
+      "default": null,
+      "constraints": null,
+      "sources": [
+        "docs/Skin SDK.md"
+      ],
+      "build": null
+    }
+  },
+  "elements": {
+    "text": {
+      "align": "text.align",
+      "valign": "text.valign",
+      "format": "text.format",
+      "font": "text.font",
+      "weight": "text.weight",
+      "fontsize": "text.fontsize",
+      "size": "text.fontsize",
+      "text": "text.text",
+      "action": "text.action",
+      "width": "text.width",
+      "height": "text.height",
+      "multiline": "text.multiline",
+      "scroll": "text.scroll",
+      "dx": "text.dx",
+      "dy": "text.dy",
+      "overdx": "text.overdx",
+      "overdy": "text.overdy",
+      "downdx": "text.downdx",
+      "downdy": "text.downdy",
+      "color": "text.color",
+      "colordown": "text.colordown",
+      "colorselected": "text.colorselected",
+      "backcolor": "text.backcolor",
+      "overcolor": "text.hovercolor",
+      "colorover": "text.hovercolor"
+    },
+    "textover": {
+      "align": "text.align",
+      "valign": "text.valign",
+      "format": "text.format",
+      "font": "text.font",
+      "weight": "text.weight",
+      "fontsize": "text.fontsize",
+      "size": "text.fontsize",
+      "text": "text.text",
+      "action": "text.action",
+      "width": "text.width",
+      "height": "text.height",
+      "multiline": "text.multiline",
+      "scroll": "text.scroll",
+      "dx": "text.dx",
+      "dy": "text.dy",
+      "overdx": "text.overdx",
+      "overdy": "text.overdy",
+      "downdx": "text.downdx",
+      "downdy": "text.downdy",
+      "color": "text.color",
+      "colordown": "text.colordown",
+      "colorselected": "text.colorselected",
+      "backcolor": "text.backcolor",
+      "overcolor": "text.hovercolor",
+      "colorover": "text.hovercolor"
+    },
+    "textdown": {
+      "align": "text.align",
+      "valign": "text.valign",
+      "format": "text.format",
+      "font": "text.font",
+      "weight": "text.weight",
+      "fontsize": "text.fontsize",
+      "size": "text.fontsize",
+      "text": "text.text",
+      "action": "text.action",
+      "width": "text.width",
+      "height": "text.height",
+      "multiline": "text.multiline",
+      "scroll": "text.scroll",
+      "dx": "text.dx",
+      "dy": "text.dy",
+      "overdx": "text.overdx",
+      "overdy": "text.overdy",
+      "downdx": "text.downdx",
+      "downdy": "text.downdy",
+      "color": "text.color",
+      "colordown": "text.colordown",
+      "colorselected": "text.colorselected",
+      "backcolor": "text.backcolor",
+      "overcolor": "text.hovercolor",
+      "colorover": "text.hovercolor"
+    },
+    "textselected": {
+      "align": "text.align",
+      "valign": "text.valign",
+      "format": "text.format",
+      "font": "text.font",
+      "weight": "text.weight",
+      "fontsize": "text.fontsize",
+      "size": "text.fontsize",
+      "text": "text.text",
+      "action": "text.action",
+      "width": "text.width",
+      "height": "text.height",
+      "multiline": "text.multiline",
+      "scroll": "text.scroll",
+      "dx": "text.dx",
+      "dy": "text.dy",
+      "overdx": "text.overdx",
+      "overdy": "text.overdy",
+      "downdx": "text.downdx",
+      "downdy": "text.downdy",
+      "color": "text.color",
+      "colordown": "text.colordown",
+      "colorselected": "text.colorselected",
+      "backcolor": "text.backcolor",
+      "overcolor": "text.hovercolor",
+      "colorover": "text.hovercolor"
+    },
+    "button": {
+      "action": "button.action",
+      "query": "button.query"
+    }
+  }
+}

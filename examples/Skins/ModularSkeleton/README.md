@@ -27,6 +27,16 @@ ModularSkeleton/
 The `build/skin.xml` in this repo is the already-flattened output, kept as a working reference.
 It was produced from a source tree using `xmllint --xinclude`.
 
+## Attribute reference
+
+From the repository root, use `just skin-attributes button` or
+`just skin-attributes text` for the generated Attribute / Value / Description
+table. `--format=json` includes context, evidence and unrecorded constraints.
+The source is [the shared attribute records](../../../docs/skin-attribute-contracts.json);
+see [the record guide](../../../docs/Skin%20Schema%20Recovery.md#attribute-value-records-and-generated-tables).
+Edit those records rather than maintaining a second table in this template.
+Unknown values and reader candidates are not verified authoring contracts.
+
 ## The class system
 
 `<define class="...">` declares a reusable shape/text template. Apply it with `class="..."` on any element.

@@ -1380,6 +1380,9 @@ argument role; window's separate initialization is unresolved. Next: resolve
 window initialization, then prioritize reusable reader calls that add outer
 attributes or direct child identities. Nested/font behavior work is deferred.
 The focused button captures remain evidence, not the breadth-first work queue.
+Attribute descriptions now live in `docs/skin-attribute-contracts.json`;
+`just skin-attributes <tag>` and the human reference render tables from those
+shared records, retaining unknown values and context/evidence metadata.
 
 ### S1. Render-Test The Element-Specific Skin Attributes
 
