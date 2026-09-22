@@ -131,7 +131,7 @@ def analyze(instructions, initial, getters, strings):
     return calls
 
 
-def extract(app, memory_capture, structural=None):
+def extract(app, memory_capture, structural=None, node_manifest=None, reader_audit=None):
     from extract_skin_classes import Analysis, decoded, generate
     from plugin_memory import verify
     binary = app / 'Contents/MacOS/VirtualDJ'
@@ -151,8 +151,16 @@ def extract(app, memory_capture, structural=None):
     constructor = constructors.pop()
     getters = {int(k, 16): v for k, v in source['xml_reader_anchors'].items()}
     from skin_node_helpers import models, MANIFEST
-    node_models, node_evidence = models(a)
+    node_manifest = node_manifest or MANIFEST
+    node_models, node_evidence = models(a, node_manifest)
     getters.update(node_models)
+    if reader_audit:
+        from skin_reader_audit import reader_models
+        audit = json.loads(reader_audit.read_text())
+        named = reader_models(audit, verification['binary_sha256'],
+                              lambda fn: b''.join(w.to_bytes(4, 'little') for _, w in a.words(fn)))
+        for fn, model in named.items():
+            getters.setdefault(fn, model)
     factory = int(source['factory']['function'], 16)
     factory_code = decoded(a, factory)
     factory_calls = analyze(factory_code, {'x0': frozenset({('node', '/button')})}, getters, a.img.strings)
@@ -228,7 +236,10 @@ def extract(app, memory_capture, structural=None):
             raise ValueError('constructor thunk changed')
         binding_code += thunk_code
     return {'schema_version': 2, 'element': 'button', 'evidence_tier': 2,
-            'conditional_node_models': {'path': str(MANIFEST.relative_to(ROOT)), 'sha256': hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+            **({'named_reader_audit': {'path': str(reader_audit.relative_to(ROOT)) if reader_audit.is_relative_to(ROOT) else str(reader_audit),
+                                      'sha256': hashlib.sha256(reader_audit.read_bytes()).hexdigest(),
+                                      'scope': 'Named const XML reader first-key arguments only; fallback and extra-name arguments remain open.'}} if reader_audit else {}),
+            'conditional_node_models': {'path': str(node_manifest.relative_to(ROOT)) if node_manifest.is_relative_to(ROOT) else str(node_manifest), 'sha256': hashlib.sha256(node_manifest.read_bytes()).hexdigest(),
                                         'models': node_evidence['models'], 'scope': node_evidence['scope']},
             'source': source['source'], 'memory_anchor': {'path': str(memory_capture.relative_to(ROOT)) if memory_capture.is_relative_to(ROOT) else str(memory_capture),
                 'sha256': hashlib.sha256(memory_capture.read_bytes()).hexdigest(),
@@ -238,7 +249,7 @@ def extract(app, memory_capture, structural=None):
             'root_binding': {'method': 'Factory x0 XML receiver forwarded to constructor x1; child lookups calibrate the XML role. Structural evidence, not a public ABI.',
                              'factory': hex(factory), 'callsite': hex(forwarding[0][0].address),
                              'instructions': [{'pc': hex(i.address), 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in binding_code]},
-            'xml_reader_anchors': source['xml_reader_anchors'], 'routines': routines,
+            'xml_reader_anchors': ({hex(k): v for k, v in getters.items()} if reader_audit else source['xml_reader_anchors']), 'routines': routines,
             'reads': unique(reads), 'helper_bindings': unique(bindings), 'frontier': unique(frontier),
             'limits': {'call_depth': 3, 'contexts': 128, 'values_per_register': 8,
                        'scope': 'Direct constructor callees; deeper traversal only for named button text-state child receivers.'},
@@ -278,6 +289,8 @@ def main():
     p.add_argument('--extract', action='store_true')
     p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     p.add_argument('--memory-capture', type=Path, default=ROOT / 'tests/plugin-memory-9644.json')
+    p.add_argument('--node-manifest', type=Path, help='explicit matching-build conditional-node models')
+    p.add_argument('--reader-audit', type=Path, help='optional matching-image named getter audit')
     p.add_argument('--structural-capture', type=Path, help='optional same-image structural extraction')
     p.add_argument('--output', type=Path)
     p.add_argument('--check', action='store_true', help='re-extract and compare every retained field')
@@ -289,7 +302,7 @@ def main():
         p.error('output already exists')
     if args.extract or args.check:
         source = json.loads(args.structural_capture.read_text()) if args.structural_capture else None
-        data = extract(args.app, args.memory_capture, source)
+        data = extract(args.app, args.memory_capture, source, args.node_manifest, args.reader_audit)
         if args.check and data != json.loads(args.capture.read_text()):
             raise ValueError('schema evidence drift')
         if args.output:

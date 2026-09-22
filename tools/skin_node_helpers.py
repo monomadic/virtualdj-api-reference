@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build-9644 guarded structural return models for conditional XML node selection."""
+"""Build-scoped guarded structural return models for conditional XML node selection."""
 import argparse
 import hashlib
 import json
@@ -18,22 +18,21 @@ def verify_guards(data, binary_hash, routine_bytes):
             raise ValueError('conditional-node code guard failed: ' + name)
 
 
-def models(analysis):
-    data = json.loads(MANIFEST.read_text())
+def models(analysis, manifest=MANIFEST):
+    data = json.loads(manifest.read_text())
     verify_guards(data, hashlib.sha256(analysis.img.data).hexdigest(),
                   lambda fn: b''.join(w.to_bytes(4, 'little') for _, w in analysis.words(fn)))
     return {int(data['routines'][name]['start'], 16): model for name, model in data['models'].items()}, data
 
 
-def record():
+def record(app=Path("/Applications/VirtualDJ.app"), memory_path=ROOT / "tests/plugin-memory-9644.json"):
     from extract_skin_classes import Analysis, decoded, literal_calls
     from plugin_memory import verify
-    app = Path('/Applications/VirtualDJ.app')
-    memory = json.loads((ROOT / 'tests/plugin-memory-9644.json').read_text())
+    memory = json.loads(memory_path.read_text())
     verification = verify(memory, app / 'Contents/MacOS/VirtualDJ')
     a = Analysis(app)
-    if memory['build'] != '18.0.9644' or hashlib.sha256(a.img.data).hexdigest() != verification['binary_sha256']:
-        raise ValueError('this bounded model is for build 9644 only')
+    if memory['build'] not in ('18.0.9644', '18.0.9246') or hashlib.sha256(a.img.data).hexdigest() != verification['binary_sha256']:
+        raise ValueError('unsupported build or changed binary')
     # Locate through current literal call sites, not historical addresses.
     base_owners = {a.owner(pc) for vm in a.img.by_text['clickthrough'] for pc in a.img.xrefs[vm]}
     if len(base_owners) != 1:
@@ -85,11 +84,14 @@ def record():
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
+    p.add_argument('--memory-capture', type=Path, default=ROOT / 'tests/plugin-memory-9644.json')
+    p.add_argument('--manifest', type=Path, default=MANIFEST)
     p.add_argument('--output', type=Path)
     p.add_argument('--check', action='store_true')
     args = p.parse_args()
-    result = record()
-    if args.check and result != json.loads(MANIFEST.read_text()):
+    result = record(args.app, args.memory_capture)
+    if args.check and result != json.loads(args.manifest.read_text()):
         raise ValueError('conditional-node evidence drift')
     if args.output:
         with args.output.open('x') as f:

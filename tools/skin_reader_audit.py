@@ -53,6 +53,23 @@ def button_constructor(a, symbols, targets):
             'scope': 'Constructor-only may-analysis. /button labels its CXMLNode* x1 argument from the named signature and arm64 member-call ABI. Factory forwarding is not re-proven here. Direct getChild returns extend paths. Shared helpers are retained in frontier, not traversed. Getter names describe candidates, not runtime support. Only the first name argument is tracked; fallback names and indirect reads remain open.'}
 
 
+def reader_models(audit, binary_hash, routine_bytes):
+    """First-key structural models; refuse another image or changed routine."""
+    if audit['source']['binary_sha256'] != binary_hash:
+        raise ValueError('named-reader audit belongs to a different binary')
+    result = {}
+    for address, row in audit['routines'].items():
+        if not row['xml_reader_candidate'] or row['symbol'].startswith('CXMLNode::getChild('):
+            continue
+        fn = int(address, 16)
+        raw = routine_bytes(fn)
+        if not row['bounded'] or hashlib.sha256(raw).hexdigest() != row['sha256']:
+            raise ValueError('named-reader code guard failed')
+        result[fn] = {'role': 'attribute_named_reader_candidate',
+                      'anchor': row['symbol'], 'node_register': 'x0', 'name_register': 'x1'}
+    return result
+
+
 def extract(app, memory_path):
     from extract_skin_classes import Analysis
     from extract_action_vtables import demangled, symbol_maps

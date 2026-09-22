@@ -1,5 +1,57 @@
 # Skin schema recovery
 
+## Expanded historical ownership — 2026-09-22, build 18.0.9246, arm64
+
+[The expanded capture](../tests/skin-schema-button-expanded-9246.json) replaces
+the constructor-only assumption with a verified structural binding: the factory
+at `0x10036abcc` forwards its XML receiver through the button branch to constructor
+`0x1004cb21c`. The capture retains dispatch, forwarding instructions and routine
+hashes. The earlier named-reader audit stays unchanged as its baseline.
+
+[Historical conditional-node evidence](../tests/skin-node-helpers-9246.json)
+separately records the named-child and matching-sibling selectors, their condition
+predicate and comparison helpers. Manual inspection of the historical instructions
+establishes the same possible non-null path models, guarded by this binary and
+these routines' hashes. The 9644 live fixture is **not** evidence of behavior on
+9246; the historical query intentionally reports no joined live evidence.
+
+The analyzer now accepts explicit build-matching node models and a named-reader
+audit. It rejects mismatched images and changed reader code, preserves the older
+anchor-calibrated roles, and adds first-key reads from the remaining named XML
+getter families. This resolves additional position, size and signed-number read
+paths without treating getter names as a complete behavioral/type contract.
+Fallback names and additional getter arguments remain outside that model.
+
+Queries:
+
+```sh
+just skin-schema button --capture tests/skin-schema-button-expanded-9246.json
+just skin-schema button --capture tests/skin-schema-button-expanded-9246.json --format=json
+```
+
+Reproduce with fresh factory discovery (no cached structural input):
+
+```sh
+uv run --with capstone --with numpy --python .venv/bin/python3 \
+  python tools/skin_schema.py --check \
+  --capture tests/skin-schema-button-expanded-9246.json \
+  --app '/Users/nom/src/virtualdj-api-reference-resources/unpacked/9246/vdj.pkg/Payload/VirtualDJ.app' \
+  --memory-capture tests/plugin-memory-9246.json \
+  --node-manifest tests/skin-node-helpers-9246.json \
+  --reader-audit tests/skin-reader-audit-9246.json
+```
+
+The helper evidence independently reproduces through `tools/skin_node_helpers.py
+--check` with the same `--app` and `--memory-capture`, plus `--manifest
+tests/skin-node-helpers-9246.json`. The original default 9644 extraction remains
+unchanged. No private functions are called by either extraction.
+
+Next target: the unresolved first-key name in `ISkinObject::getColorParam` at
+`0x10036aa94` arrives as a C++ string object, so the literal-pointer tracker cannot
+recover it. Track that narrowly before expanding depth. The capture's `frontier`
+still contains node-carrying calls outside scope, and lifecycle, template and
+indirect routes remain open. This is not a closed button schema.
+
 ## Named-reader audit — 2026-09-22, build 18.0.9246, arm64
 
 The active execution plan and resumption checkpoint are task **S6** in

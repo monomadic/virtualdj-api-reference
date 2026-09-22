@@ -1371,13 +1371,14 @@ Execution sequence:
    preserve build-specific results and compare later-build changes. Publish a
    strict schema only where closure evidence warrants it.
 
-Current checkpoint: step 1 complete; step 2 has a constructor-only 9246 baseline
-in `tests/skin-reader-audit-9246.json` (`just skin-reader-audit --button`). Named
-signed-number reads include `value` and `rightclick`; shared load/color/text
-helpers remain explicit in `button_constructor.frontier`. Next: establish the
-9246 factory binding and conditional-child models, then follow those shared
-helpers with the additional getter families. Do not reuse 9644 guards or repeat
-completed memory captures. Advance this checkpoint after each committed result.
+Current checkpoint: step 1 complete; step 2 now has verified factory forwarding,
+separate 9246 conditional-node guards and expanded shared-reader traversal in
+`tests/skin-schema-button-expanded-9246.json`. The original constructor-only
+audit remains the baseline. Next: recover the C++ string argument naming the
+color read at `0x10036aa94`, then triage the retained helper frontier before the
+step-3 closure audit. [Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md)
+contains reproduction commands and limits. Do not transfer 9644 live results or
+repeat completed memory captures. Advance this checkpoint after each commit.
 
 ### S1. Render-Test The Element-Specific Skin Attributes
 

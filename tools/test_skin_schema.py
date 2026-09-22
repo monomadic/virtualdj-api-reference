@@ -131,6 +131,30 @@ class CaptureTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'code guard failed'):
             verify_guards(data, 'expected', lambda fn: b'xxxx')
 
+    def test_named_readers_reject_wrong_build_and_modified_code(self):
+        import hashlib
+        from skin_reader_audit import reader_models
+        audit = {'source': {'binary_sha256': 'expected'}, 'routines': {'0x100': {
+            'xml_reader_candidate': True, 'symbol': 'CXMLNode::getSignedParam(...) const',
+            'bounded': True, 'sha256': hashlib.sha256(b'code').hexdigest()}}}
+        self.assertIn(256, reader_models(audit, 'expected', lambda fn: b'code'))
+        with self.assertRaisesRegex(ValueError, 'different binary'):
+            reader_models(audit, 'other', lambda fn: b'code')
+        with self.assertRaisesRegex(ValueError, 'code guard failed'):
+            reader_models(audit, 'expected', lambda fn: b'xxxx')
+
+    def test_historical_ownership_does_not_inherit_newer_live_evidence(self):
+        path = Path(__file__).resolve().parents[1] / 'tests/skin-schema-button-expanded-9246.json'
+        data = json.loads(path.read_text())
+        report = summary(data)
+        self.assertIsNone(report['live_evidence'])
+        self.assertIn('value', report['owners']['/button']['attributes'])
+        self.assertIn('x', report['owners']['/button/pos']['attributes'])
+        self.assertIn('width', report['owners']['/button/size']['attributes'])
+        self.assertTrue(data['root_binding']['instructions'])
+        self.assertTrue(data['named_reader_audit']['sha256'])
+        self.assertTrue(data['frontier'])
+
     def test_recorded_ownership_keeps_children_separate(self):
         path = Path(__file__).resolve().parents[1] / 'tests/skin-schema-button-9644.json'
         data = json.loads(path.read_text())
