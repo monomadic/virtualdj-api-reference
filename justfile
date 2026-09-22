@@ -472,6 +472,7 @@ check:
     {{python}} tools/skin_relations.py --check
     {{python}} tools/test_skin_metadata.py
     {{python}} -m unittest discover -s tools -p test_skin_schema.py
+    {{python}} -m unittest discover -s tools -p test_skin_structure.py
     {{python}} tools/skin_condition_evidence.py --check > /dev/null
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
@@ -825,3 +826,7 @@ time-sign-check:
 # Build-scoped named XML reader audit; queries need only stdlib.
 skin-reader-audit *args:
     @{{python}} tools/skin_reader_audit.py {{args}}
+
+# Breadth-first structural entries with canonical shared readers; no behavior claim.
+skin-structure *args:
+    @{{python}} tools/skin_structure.py {{args}}

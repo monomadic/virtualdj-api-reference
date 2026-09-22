@@ -1346,41 +1346,40 @@ verdict had silently deleted four confirmations.
 
 Status: Ready
 
-Note: User-directed continuation, 2026-09-22. Keep the button pilot as the
-calibration target; [Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md)
-holds evidence and limits. Build 9246 is running with updates disabled and its
-relocated-host memory capture is verified. Build 9644 remains the current-image
-comparison. Existing S1-S3 tasks retain their separate behavior-test scope.
+Note: User-directed breadth-first scope, 2026-09-23. The button pilot is now a
+calibration/reference capture, not a prerequisite for inventorying other elements.
+[Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) holds evidence and limits.
+Keep structure and rendering behavior separate. Existing S1-S3 retain their
+separate behavior-test scope.
 
-Objective: enumerate skin elements, supported attribute candidates and child
-ownership, with a build stamp, evidence route and explicit unresolved frontier.
-Vocabulary closure and behavior confirmation are separate milestones.
+Objective: enumerate element identities, own attribute candidates, direct child
+identities and parent evidence, using canonical shared readers plus explicit
+context bindings. A parent's structural entry does not require completing its
+children's behavior. A reused reader does not prove identical caller behavior.
 
 Execution sequence:
-1. Inventory the named 9246 XML readers and skin reader helpers, with exact code
-   hashes and direct call sites. Identify getter families absent from the pilot.
-2. Extend the button ownership analysis for those families. Carry unresolved
-   receiver/name alternatives; verify 9246 models independently of 9644 guards.
-3. Audit button closure: factory binding, shared base, child readers, text/drawing
-   helpers, indirect calls and template expansion. Every omitted route must remain
-   explicit; zero modeled unknowns does not establish complete vocabulary.
-4. Apply the calibrated method to the factory element set, then separately audit
-   non-factory nested elements and template-defined names. Export structured data
-   through existing query tools, not duplicated Markdown attribute tables.
-5. Use discriminating live fixtures for unresolved placement and selection rules;
-   preserve build-specific results and compare later-build changes. Publish a
-   strict schema only where closure evidence warrants it.
+1. Inventory factory elements and observed/nested identities; verify constructor
+   XML argument bindings. Keep shared reader definitions once, referenced by
+   aliases and caller contexts. Preserve unresolved initialization paths.
+2. Fill own-attribute and direct-child gaps across the inventory using shared
+   helpers; prioritize helpers reused by many elements. Record parent examples
+   separately from parser-accepted parent closure. Do not descend into detailed
+   child behavior to complete a parent entry.
+3. Audit structural closure per entry: relevant reader routes accounted for,
+   own attributes and direct children identified, parent scope/gaps explicit.
+   Mark structural completeness separately from behavior verification.
+4. Run targeted live fixtures only when they resolve an inventory ambiguity or
+   the user requests behavior verification. Keep templates, lifecycle routes
+   and build differences visible rather than assuming equivalence by tag name.
 
-Current checkpoint: step 1 complete; step 2 now follows guarded geometry,
-condition and `CTextObject` readers in `tests/skin-schema-button-text-geometry-9246.json`.
-Earlier captures remain preserved. The matching `-frontier-9246.json` review
-exposes `CFont` delegation alongside template/localization and remaining
-image/color contexts. Next: inspect font delegation and template/localization
-routes before step-3 closure; geometry receiver ambiguities and lifecycle
-coverage remain open. The internal `dontfindme` fallback is not an attribute claim.
-[Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) contains reproduction
-commands and limits. Do not transfer 9644 live results or repeat completed
-memory captures. Advance this checkpoint after each commit.
+Current checkpoint: first broad capture is `tests/skin-structure-9246.json`.
+Use `just skin-structure` for identities and status; `just skin-structure button`
+(or another tag) for own-attribute/direct-child projections and shared refs.
+Factory XML bindings cover ordinary constructors and edit/search's alternate
+argument role; window's separate initialization is unresolved. Next: resolve
+window initialization, then prioritize reusable reader calls that add outer
+attributes or direct child identities. Nested/font behavior work is deferred.
+The focused button captures remain evidence, not the breadth-first work queue.
 
 ### S1. Render-Test The Element-Specific Skin Attributes
 

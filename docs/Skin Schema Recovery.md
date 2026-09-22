@@ -1,5 +1,64 @@
 # Skin schema recovery
 
+## Breadth-first structure — 2026-09-23, build 18.0.9246, arm64
+
+The active S6 plan now inventories element structure before finishing descendant
+behavior. [The broad capture](../tests/skin-structure-9246.json) separates element
+identities from canonical reader definitions. Aliases reference the same reader
+record: `panel`, `group` and `pannel` share a constructor; `text` and `textzone`
+retain the same conditional constructor variants. That is structural reuse, not
+proof of identical runtime behavior.
+
+```sh
+just skin-structure
+just skin-structure button
+just skin-structure panel
+just skin-structure text
+```
+
+Each query projects own-attribute candidates and direct child identities from
+the constructor and shared base. The parameterized button text-child helper is
+defined once, with caller-specific name bindings. Descendant reads remain in
+reader records and are not merged into the outer element's attributes. Parent
+and child examples from vendor XML are separately labelled observations, not a
+complete accepted nesting schema. `parent_source_matches_capture` reports
+whether the queried vendor relations still match the extraction's source hash.
+
+Entries distinguish factory elements, reader-discovered child identities and
+observed-only XML identities. A tag with no recovered attributes is unknown,
+not attribute-free. The factory binding for `edit`/`search` uses x2 as established
+by its named signature and the factory's forwarding; `window` has a no-argument
+constructor and its separate initialization remains explicitly unresolved.
+Other helpers, templates and lifecycle routes remain recorded gaps. This first
+pass marks factory entries `partial_structure`; it is not a strict validator.
+
+**Context model:** a reader's node role identifies which argument is the XML
+node being read. Other arguments, defaults, inherited state and caller event
+handling can still differ. A nested tag name alone does not select the same
+reader as its factory entry. For example, the text child of a button is a
+separate binding route from the general factory's text/textzone variants. An
+enclosing panel may contribute state without changing the button's reader
+definition; contextual behavior must be demonstrated, not inferred from the
+shared definition. No runtime-equivalence claim is made for panel/button/text.
+
+A structurally complete parent entry requires its own attributes and direct
+children to be accounted for, plus explicit parent scope and remaining gaps.
+Its children's internal behavior can remain unverified. Detailed rendering
+results remain a separate layer, with shared facts referenced once and proven
+context differences recorded where they occur.
+
+Reproduce with fresh factory discovery and the pinned live-image anchors:
+
+```sh
+uv run --with capstone --with numpy --python .venv/bin/python3 \
+  python tools/skin_structure.py --check \
+  --app '/Users/nom/src/virtualdj-api-reference-resources/unpacked/9246/vdj.pkg/Payload/VirtualDJ.app'
+```
+
+Use `--output NEW_PATH` for a new capture. Queries require only stdlib; extraction
+also requires the disassembly dependencies. The text/geometry and earlier button
+captures below remain dated evidence, not the active breadth-first sequence.
+
 ## Text candidate review — 2026-09-23, build 18.0.9246, arm64
 
 [The focused review](../tests/skin-text-attribute-review-9246.json) checks the
