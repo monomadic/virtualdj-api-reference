@@ -1,5 +1,35 @@
 # Skin schema recovery
 
+## Text candidate review — 2026-09-23, build 18.0.9246, arm64
+
+[The focused review](../tests/skin-text-attribute-review-9246.json) checks the
+newly tracked `CTextObject` reads against their actual getter calls, the existing
+reference, and the local built-in skin subset. These are **new to this ownership
+analysis**, not collectively new VirtualDJ capabilities. `align`, `valign`,
+`format`, `width` and `multiline` already appear in the Skin SDK text-attribute
+section. Built-in XML also attests ordinary offsets and state colors. The review
+retains source hashes and representative token locations; an empty example list
+means no match in this subset, not unsupported behavior.
+
+The most useful remaining live-test candidates from this group are `height`,
+`scroll`, `overdx`/`overdy`, `downdx`/`downdy`, and `backcolor`. Their names reach
+the text reader; this review does not establish rendering effects, units,
+scrolling rules, clipping, precedence or dynamic reevaluation.
+
+**Extraction omission:** the hover-color call at `0x1006a95ec` supplies
+`overcolor` in x1 and `colorover` in x3 to `getParam2`. The inspected getter accepts
+either key while scanning the attribute list. The first-key-only schema capture
+therefore omits `colorover`; it must not be treated as a complete color vocabulary.
+This structural observation does not establish live precedence when both are set.
+The shipped examples in this review use `colorover`.
+
+The nested `/button/text/font` route is also present: the enclosing reader
+selects a `font` child and passes it to `CTextObject`, with an outer-text fallback
+route. This does not assign these attributes to the skin's global `<font>`
+definition. Text-state and nested-font placement remain separate live questions.
+No new rendering fixture was run for this review; all newly recorded evidence
+here is Tier 2.
+
 ## Text, geometry and conditions — 2026-09-23, build 18.0.9246, arm64
 
 [This capture](../tests/skin-schema-button-text-geometry-9246.json) extends the
