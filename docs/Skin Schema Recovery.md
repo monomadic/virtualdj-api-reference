@@ -1,5 +1,39 @@
 # Skin schema recovery
 
+## Text, geometry and conditions — 2026-09-23, build 18.0.9246, arm64
+
+[This capture](../tests/skin-schema-button-text-geometry-9246.json) extends the
+color checkpoint through `getRectangle`, `checkCondition` and the `CTextObject`
+constructor. [The follow manifest](../tests/skin-follow-readers-9246.json) pins
+their binary/routine hashes, reviewed XML argument registers and depth limit.
+Only the named readers gain this traversal; the default older captures remain
+reproducible. Conditional register selections in these readers preserve both
+alternatives, including unknowns. Unused node-looking argument registers are
+removed when entering an explicitly reviewed reader.
+
+The text-state and nested font paths gain possible reads for alignment,
+formatting, scrolling, dimensions, offsets and state colors. Drawing states
+gain condition reads. These remain **Tier 2 possible paths**, not a guarantee
+that each attribute affects rendering in every listed location. The geometry
+reader can use the supplied node or its nested `size` child; the analyzer retains
+those alternatives and unresolved receiver paths rather than claiming exclusive
+ownership. Broadening the traversal exposes more unresolved reads and does not
+establish a completeness percentage.
+
+Query with `just skin-schema button --capture
+tests/skin-schema-button-text-geometry-9246.json`. Reproduce using the historical
+expanded command below, with this `--capture`, the color manifest, and
+`--follow-manifest tests/skin-follow-readers-9246.json`. The artifact's
+`follow_models`, `reads`, `frontier` and `limits` retain the exact scope.
+
+[The refreshed frontier review](../tests/skin-schema-button-text-geometry-frontier-9246.json)
+retains localization/template routes and remaining image/color-action contexts.
+It also exposes the `CFont` constructor: its absence of direct XML getter calls
+does not close that route, because deeper and tail calls are outside the direct
+call count. Next, inspect font delegation and template/localization handling;
+keep the geometry ambiguities and lifecycle coverage separate from that work.
+No live skin state changed and no 9644 live result is attributed to 9246.
+
 ## Icon color keys and frontier review — 2026-09-22, build 18.0.9246, arm64
 
 [The color capture](../tests/skin-schema-button-color-9246.json) resolves the
@@ -35,8 +69,8 @@ this direct-call search. Neither case permits silently closing a route.
 Reproduce the review with `tools/skin_schema_frontier.py
 tests/skin-schema-button-color-9246.json --app HISTORICAL_APP --check
 tests/skin-schema-button-frontier-9246.json` using the project interpreter.
-The next bounded pass is shared geometry/condition reads and the `CTextObject`
-constructor, followed by template/localization analysis before button closure.
+The later text/geometry checkpoint above follows the shared geometry/condition
+reads and `CTextObject` constructor. Template/localization analysis remains open.
 Zero unresolved names inside this traversal would still not mean complete XML
 coverage; the review and lifecycle gaps remain separate.
 

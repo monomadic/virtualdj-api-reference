@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "source": {
+    "build": "18.0.9246",
+    "architecture": "arm64",
+    "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+    "evidence_tier": 2
+  },
+  "scope": "Reviewed node registers; follow only the condition predicate, rectangle reader and CTextObject constructor. Keep both CSEL alternatives in these routines. No closure or behavior claim.",
+  "max_depth": 6,
+  "targets": {
+    "0x10036917c": {
+      "symbol": "ISkinObject::checkCondition(CXMLNode*)",
+      "sha256": "24e4aea0a668d9c334a99c21f2c4ba0e673a99824aa4fd3f2571cce18444384e",
+      "node_register": "x0",
+      "receiver_evidence": "Entry tests x0 and forwards it directly to getParam(condition)."
+    },
+    "0x100369d94": {
+      "symbol": "ISkinObject::getRectangle(CXMLNode*, SRect const&)",
+      "sha256": "7e7dd478c438802898689e2af4cf835b6148680ae19499c689f6654f195103c8",
+      "node_register": "x1",
+      "receiver_evidence": "Entry saves x1 as x20; getChild(size) reads x20, and conditional selection retains the original node or its size child."
+    },
+    "0x1006a91ac": {
+      "symbol": "CTextObject::CTextObject(CXMLNode*, unsigned int)",
+      "sha256": "edf05a07c4c7f8be4f42f05ee39e8a71231943af7f231c127c53d6f477a03ff6",
+      "node_register": "x1",
+      "receiver_evidence": "Entry saves XML argument x1 as x21; subsequent XML getter calls forward x21 as x0."
+    }
+  },
+  "basis": {
+    "path": "tests/skin-schema-button-frontier-9246.json",
+    "sha256": "330e30953297f6822bf010ad600a0852237ea065bd1ee4f59d0d45c4d15589e4"
+  }
+}

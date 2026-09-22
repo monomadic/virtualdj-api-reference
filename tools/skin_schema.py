@@ -135,7 +135,24 @@ def analyze(instructions, initial, getters, strings, conditional_select=False):
     return calls
 
 
-def extract(app, memory_capture, structural=None, node_manifest=None, reader_audit=None, color_manifest=None):
+def follow_models_for(data, binary_hash, routine_bytes):
+    """Validate a bounded, manually reviewed traversal extension."""
+    if data['source']['binary_sha256'] != binary_hash:
+        raise ValueError('follow manifest belongs to another binary')
+    if not 1 <= data['max_depth'] <= 6:
+        raise ValueError('invalid follow depth')
+    result = {}
+    for address, model in data['targets'].items():
+        fn = int(address, 16)
+        if model['node_register'] not in {'x'+str(n) for n in range(8)}:
+            raise ValueError('invalid node argument register')
+        if hashlib.sha256(routine_bytes(fn)).hexdigest() != model['sha256']:
+            raise ValueError('follow routine code changed')
+        result[fn] = model
+    return result
+
+
+def extract(app, memory_capture, structural=None, node_manifest=None, reader_audit=None, color_manifest=None, follow_manifest=None):
     from extract_skin_classes import Analysis, decoded, generate
     from plugin_memory import verify
     binary = app / 'Contents/MacOS/VirtualDJ'
@@ -169,6 +186,11 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
     if color_manifest:
         from skin_color_helpers import bindings
         color_bindings, color_evidence = bindings(a, color_manifest)
+    follow_models = {}
+    if follow_manifest:
+        follow_evidence = json.loads(follow_manifest.read_text())
+        follow_models = follow_models_for(follow_evidence, verification['binary_sha256'],
+                                          lambda fn: b''.join(w.to_bytes(4, 'little') for _, w in a.words(fn)))
     factory = int(source['factory']['function'], 16)
     factory_code = decoded(a, factory)
     factory_calls = analyze(factory_code, {'x0': frozenset({('node', '/button')})}, getters, a.img.strings)
@@ -192,7 +214,7 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
         if sum(i.size for i in insns) != len(raw):
             raise ValueError('incomplete routine decoding')
         routines[hex(fn)] = {'end': hex(fn + len(raw)), 'sha256': hashlib.sha256(raw).hexdigest()}
-        calls = analyze(insns, initial, getters, a.img.strings)
+        calls = analyze(insns, initial, getters, a.img.strings, conditional_select=fn in follow_models)
         for i, target, state in calls:
             if i.address in color_bindings:
                 binding = color_bindings[i.address]
@@ -237,12 +259,17 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
                           ('text', 'textover', 'textdown', 'textselected', 'textoverselected')}
             follow = depth == 0 or (depth < 3 and any(
                 path in text_paths for values in args.values() for path in node_paths(values)))
-            if target in a.starts and follow:
+            explicit_follow = target in follow_models and depth < follow_evidence['max_depth']
+            if target in a.starts and (follow or explicit_follow):
                 bindings.append(binding)
                 # Carry constants too, so a helper's dynamic name argument can resolve.
                 inputs = {r: v for r, v in state.items() if r in {'x'+str(n) for n in range(8)}
                           and any(k == 'node' or (k == 'constant' and value in a.img.strings)
                                   for k, value in v)}
+                if explicit_follow:
+                    node_register = follow_models[target]['node_register']
+                    inputs = {r: v for r, v in inputs.items()
+                              if r == node_register or not node_paths(v)}
                 queue.append((target, inputs, depth + 1))
             else:
                 frontier.append(dict(binding, reason='scope/depth limit or indirect/external target'))
@@ -259,6 +286,9 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
             raise ValueError('constructor thunk changed')
         binding_code += thunk_code
     return {'schema_version': 2, 'element': 'button', 'evidence_tier': 2,
+            **({'follow_models': {'path': str(follow_manifest.relative_to(ROOT)) if follow_manifest.is_relative_to(ROOT) else str(follow_manifest),
+                                 'sha256': hashlib.sha256(follow_manifest.read_bytes()).hexdigest(),
+                                 **follow_evidence}} if follow_manifest else {}),
             **({'color_key_models': {'path': str(color_manifest.relative_to(ROOT)) if color_manifest.is_relative_to(ROOT) else str(color_manifest),
                                      'sha256': hashlib.sha256(color_manifest.read_bytes()).hexdigest(),
                                      'scope': color_evidence['interpretation']}} if color_manifest else {}),
@@ -277,8 +307,8 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
                              'instructions': [{'pc': hex(i.address), 'mnemonic': i.mnemonic, 'operands': i.op_str} for i in binding_code]},
             'xml_reader_anchors': ({hex(k): v for k, v in getters.items()} if reader_audit else source['xml_reader_anchors']), 'routines': routines,
             'reads': unique(reads), 'helper_bindings': unique(bindings), 'frontier': unique(frontier),
-            'limits': {'call_depth': 3, 'contexts': 128, 'values_per_register': 8,
-                       'scope': 'Direct constructor callees; deeper traversal only for named button text-state child receivers.'},
+            'limits': {'call_depth': follow_evidence['max_depth'] if follow_manifest else 3, 'contexts': 128, 'values_per_register': 8,
+                       'scope': 'Direct constructor callees; deeper traversal only for named button text-state child receivers.' + (' Additional named readers and their node registers are allowlisted in follow_models.' if follow_manifest else '')},
             'limitations': [
                 'Tier 2 possible read paths; branches are not proven feasible and no runtime support is established.',
                 'Only constructor-reachable direct calls carrying a tracked XML node, to the stated depth. Other lifecycle methods and indirect calls are not exhausted.',
@@ -316,6 +346,7 @@ def main():
     p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     p.add_argument('--memory-capture', type=Path, default=ROOT / 'tests/plugin-memory-9644.json')
     p.add_argument('--node-manifest', type=Path, help='explicit matching-build conditional-node models')
+    p.add_argument('--follow-manifest', type=Path, help='explicit hash-guarded additional reader traversal')
     p.add_argument('--color-manifest', type=Path, help='optional guarded constructor color-name bindings')
     p.add_argument('--reader-audit', type=Path, help='optional matching-image named getter audit')
     p.add_argument('--structural-capture', type=Path, help='optional same-image structural extraction')
@@ -329,7 +360,7 @@ def main():
         p.error('output already exists')
     if args.extract or args.check:
         source = json.loads(args.structural_capture.read_text()) if args.structural_capture else None
-        data = extract(args.app, args.memory_capture, source, args.node_manifest, args.reader_audit, args.color_manifest)
+        data = extract(args.app, args.memory_capture, source, args.node_manifest, args.reader_audit, args.color_manifest, args.follow_manifest)
         if args.check and data != json.loads(args.capture.read_text()):
             raise ValueError('schema evidence drift')
         if args.output:

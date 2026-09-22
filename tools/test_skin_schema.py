@@ -76,6 +76,33 @@ class OwnershipTests(unittest.TestCase):
         self.assertTrue(data['frontier'])
         self.assertIsNone(report['live_evidence'])
 
+    def test_follow_models_reject_image_code_and_depth_drift(self):
+        import hashlib
+        from skin_schema import follow_models_for
+        model = {'source': {'binary_sha256': 'expected'}, 'max_depth': 6,
+                 'targets': {'0x100': {'node_register': 'x1',
+                                      'sha256': hashlib.sha256(b'code').hexdigest()}}}
+        self.assertIn(256, follow_models_for(model, 'expected', lambda fn: b'code'))
+        with self.assertRaisesRegex(ValueError, 'another binary'):
+            follow_models_for(model, 'wrong', lambda fn: b'code')
+        with self.assertRaisesRegex(ValueError, 'code changed'):
+            follow_models_for(model, 'expected', lambda fn: b'xxxx')
+        model['max_depth'] = 7
+        with self.assertRaisesRegex(ValueError, 'depth'):
+            follow_models_for(model, 'expected', lambda fn: b'code')
+
+    def test_text_geometry_capture_keeps_ambiguous_size_paths(self):
+        path = Path(__file__).resolve().parents[1] / 'tests/skin-schema-button-text-geometry-9246.json'
+        data = json.loads(path.read_text())
+        report = summary(data)
+        self.assertIn('align', report['owners']['/button/text']['attributes'])
+        self.assertIn('multiline', report['owners']['/button/text/font']['attributes'])
+        self.assertIn('condition', report['owners']['/button/up']['attributes'])
+        self.assertIn('width', report['owners']['/button/up/size']['partial_attributes'])
+        self.assertGreater(report['unresolved_reads'], 0)
+        self.assertTrue(data['frontier'])
+        self.assertIsNone(report['live_evidence'])
+
     def test_conditional_child_uses_explicit_argument_registers(self):
         getters = {200: {'role': 'conditional_child_node', 'node_register': 'x1', 'name_register': 'x2'}}
         out = transfer(Instruction(0, 'bl', [imm(200)]),

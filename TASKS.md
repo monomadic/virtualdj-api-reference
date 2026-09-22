@@ -1371,12 +1371,13 @@ Execution sequence:
    preserve build-specific results and compare later-build changes. Publish a
    strict schema only where closure evidence warrants it.
 
-Current checkpoint: step 1 complete; step 2 has guarded icon color-key bindings
-in `tests/skin-schema-button-color-9246.json`, with the previous captures preserved.
-`tests/skin-schema-button-frontier-9246.json` names remaining targets and direct
-XML calls. Next: trace shared geometry/condition readers and the `CTextObject`
-constructor, then investigate template/localization routes before step-3 closure.
-The internal `dontfindme` fallback is not a supported-attribute claim.
+Current checkpoint: step 1 complete; step 2 now follows guarded geometry,
+condition and `CTextObject` readers in `tests/skin-schema-button-text-geometry-9246.json`.
+Earlier captures remain preserved. The matching `-frontier-9246.json` review
+exposes `CFont` delegation alongside template/localization and remaining
+image/color contexts. Next: inspect font delegation and template/localization
+routes before step-3 closure; geometry receiver ambiguities and lifecycle
+coverage remain open. The internal `dontfindme` fallback is not an attribute claim.
 [Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) contains reproduction
 commands and limits. Do not transfer 9644 live results or repeat completed
 memory captures. Advance this checkpoint after each commit.
