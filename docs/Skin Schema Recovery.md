@@ -1,5 +1,46 @@
 # Skin schema recovery
 
+## Named-reader audit — 2026-09-22, build 18.0.9246, arm64
+
+The active execution plan and resumption checkpoint are task **S6** in
+[TASKS.md](../TASKS.md). The objective remains element/attribute vocabulary and
+node ownership; runtime-access setup is complete. Historical and current-build
+evidence stay separate.
+
+[The named-reader audit](../tests/skin-reader-audit-9246.json) binds symbol names,
+routine hashes and direct skin call sites to the verified historical executable.
+It also applies the existing node tracker to the named XML button constructor,
+with its single-branch constructor alias explicitly retained. This is **Tier 2**.
+The constructor signature and arm64 ABI supply the initial node argument;
+this pass does not independently re-prove the factory's forwarding on 9246.
+
+Use `just skin-reader-audit getSigned` or `just skin-reader-audit getColor` for
+focused routine summaries. `just skin-reader-audit --button` returns the
+constructor's candidate reads and the node-carrying helper frontier as JSON.
+The source artifact retains methods with no observed direct skin calls too:
+zero is a limit of this call-site search, not an unused-reader verdict.
+
+The named signed-number reader is called with `value` and `rightclick` on the
+constructor's input node. Do not infer that every signed-number reader handles
+coordinates. Shared load, color and text routes remain outside this bounded
+constructor traversal. The audit tracks only the first name argument, so
+multi-name/fallback readers require separate work. It establishes neither
+runtime support nor a closed button schema.
+
+Reproduce with the exact historical app location (queries need only stdlib;
+extraction needs numpy, capstone and the system symbol tools):
+
+```sh
+uv run --with capstone --with numpy --python .venv/bin/python3 \
+  python tools/skin_reader_audit.py --check \
+  --app '/Users/nom/src/virtualdj-api-reference-resources/unpacked/9246/vdj.pkg/Payload/VirtualDJ.app'
+```
+
+For a new extraction use `--output NEW_PATH`; existing files are rejected.
+For agents, resume S6 step 2 from `button_constructor.frontier` and the named
+reader signatures. Do not rerun the memory-access experiment or treat the
+9644 conditional-node guard as applicable to 9246.
+
 ## Current result — conditional children, 2026-09-22
 
 `just skin-schema button` now uses the

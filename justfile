@@ -814,3 +814,7 @@ time-sign-check:
     {{python}} -m unittest discover -s tools -p test_time_sign_positions.py
     {{python}} tools/probe_time_sign_loaded.py --check tests/time-sign-loaded-9644.json
     {{python}} -m unittest discover -s tools -p test_time_sign_loaded.py
+
+# Build-scoped named XML reader audit; queries need only stdlib.
+skin-reader-audit *args:
+    @{{python}} tools/skin_reader_audit.py {{args}}

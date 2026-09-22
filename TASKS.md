@@ -1342,6 +1342,43 @@ to separate is not evidence of absence** — so a token recognized in any run st
 annotated `not_reproduced_in` when a later run's states could not show it. Taking the newer
 verdict had silently deleted four confirmations.
 
+### S6. Recover The Build-Scoped Skin XML Schema
+
+Status: Ready
+
+Note: User-directed continuation, 2026-09-22. Keep the button pilot as the
+calibration target; [Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md)
+holds evidence and limits. Build 9246 is running with updates disabled and its
+relocated-host memory capture is verified. Build 9644 remains the current-image
+comparison. Existing S1-S3 tasks retain their separate behavior-test scope.
+
+Objective: enumerate skin elements, supported attribute candidates and child
+ownership, with a build stamp, evidence route and explicit unresolved frontier.
+Vocabulary closure and behavior confirmation are separate milestones.
+
+Execution sequence:
+1. Inventory the named 9246 XML readers and skin reader helpers, with exact code
+   hashes and direct call sites. Identify getter families absent from the pilot.
+2. Extend the button ownership analysis for those families. Carry unresolved
+   receiver/name alternatives; verify 9246 models independently of 9644 guards.
+3. Audit button closure: factory binding, shared base, child readers, text/drawing
+   helpers, indirect calls and template expansion. Every omitted route must remain
+   explicit; zero modeled unknowns does not establish complete vocabulary.
+4. Apply the calibrated method to the factory element set, then separately audit
+   non-factory nested elements and template-defined names. Export structured data
+   through existing query tools, not duplicated Markdown attribute tables.
+5. Use discriminating live fixtures for unresolved placement and selection rules;
+   preserve build-specific results and compare later-build changes. Publish a
+   strict schema only where closure evidence warrants it.
+
+Current checkpoint: step 1 complete; step 2 has a constructor-only 9246 baseline
+in `tests/skin-reader-audit-9246.json` (`just skin-reader-audit --button`). Named
+signed-number reads include `value` and `rightclick`; shared load/color/text
+helpers remain explicit in `button_constructor.frontier`. Next: establish the
+9246 factory binding and conditional-child models, then follow those shared
+helpers with the additional getter families. Do not reuse 9644 guards or repeat
+completed memory captures. Advance this checkpoint after each committed result.
+
 ### S1. Render-Test The Element-Specific Skin Attributes
 
 Status: Ready
