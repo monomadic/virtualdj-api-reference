@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "build": "18.0.9246",
+  "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+  "evidence_tier": 2,
+  "routines": {
+    "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>::basic_string[abi:ne200100]<0>(char const*)": {
+      "start": "0x100003af0",
+      "end": "0x100003b94",
+      "sha256": "65fbb085278827c1ddb0fb8f6c3193fb5173ce6da4de96ac59656ae166898f10"
+    },
+    "ISkinObject::getColorParam(CXMLNode*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, unsigned int)": {
+      "start": "0x10036aa94",
+      "end": "0x10036ab10",
+      "sha256": "35de47b72978f08ea8b708fd9f3cd8878d1e310d6217bd33ec0e29d9f9bf33d4"
+    },
+    "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)": {
+      "start": "0x1004cb21c",
+      "end": "0x1004cc3fc",
+      "sha256": "2785814044b59e5d7eb826988f986bd071960bb700264bb05b1507d857ef77ea"
+    }
+  },
+  "bindings": [
+    {
+      "pc": "0x1004cb55c",
+      "caller": "0x1004cb21c",
+      "target": "0x10036aa94",
+      "string_constructor_pc": "0x1004cb548",
+      "node_register": "x1",
+      "names": [
+        "color",
+        "coloroff",
+        "colorup"
+      ],
+      "internal_fallback_literals": [
+        "dontfindme"
+      ],
+      "literal_addresses": {
+        "0x104074760": "color",
+        "0x1040aa7e5": "coloroff",
+        "0x1040aa7ee": "colorup",
+        "0x1040aa7f6": "dontfindme"
+      },
+      "binding_instructions": [
+        {
+          "pc": "0x1004cb544",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "pc": "0x1004cb548",
+          "mnemonic": "bl",
+          "operands": "#0x100003af0"
+        },
+        {
+          "pc": "0x1004cb54c",
+          "mnemonic": "mov",
+          "operands": "x2, sp"
+        },
+        {
+          "pc": "0x1004cb550",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "pc": "0x1004cb554",
+          "mnemonic": "mov",
+          "operands": "x1, x22"
+        },
+        {
+          "pc": "0x1004cb558",
+          "mnemonic": "mov",
+          "operands": "w3, #0"
+        },
+        {
+          "pc": "0x1004cb55c",
+          "mnemonic": "bl",
+          "operands": "#0x10036aa94"
+        }
+      ]
+    },
+    {
+      "pc": "0x1004cb5b4",
+      "caller": "0x1004cb21c",
+      "target": "0x10036aa94",
+      "string_constructor_pc": "0x1004cb5a0",
+      "node_register": "x1",
+      "names": [
+        "colordown",
+        "coloron"
+      ],
+      "internal_fallback_literals": [],
+      "literal_addresses": {
+        "0x1040aa801": "coloron",
+        "0x1040aa809": "colordown"
+      },
+      "binding_instructions": [
+        {
+          "pc": "0x1004cb59c",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "pc": "0x1004cb5a0",
+          "mnemonic": "bl",
+          "operands": "#0x100003af0"
+        },
+        {
+          "pc": "0x1004cb5a4",
+          "mnemonic": "ldr",
+          "operands": "w3, [x19, #0x2e0]"
+        },
+        {
+          "pc": "0x1004cb5a8",
+          "mnemonic": "mov",
+          "operands": "x2, sp"
+        },
+        {
+          "pc": "0x1004cb5ac",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "pc": "0x1004cb5b0",
+          "mnemonic": "mov",
+          "operands": "x1, x22"
+        },
+        {
+          "pc": "0x1004cb5b4",
+          "mnemonic": "bl",
+          "operands": "#0x10036aa94"
+        }
+      ]
+    },
+    {
+      "pc": "0x1004cb5ec",
+      "caller": "0x1004cb21c",
+      "target": "0x10036aa94",
+      "string_constructor_pc": "0x1004cb5d8",
+      "node_register": "x1",
+      "names": [
+        "colorover"
+      ],
+      "internal_fallback_literals": [],
+      "literal_addresses": {
+        "0x1040aa813": "colorover"
+      },
+      "binding_instructions": [
+        {
+          "pc": "0x1004cb5d4",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "pc": "0x1004cb5d8",
+          "mnemonic": "bl",
+          "operands": "#0x100003af0"
+        },
+        {
+          "pc": "0x1004cb5dc",
+          "mnemonic": "ldr",
+          "operands": "w3, [x19, #0x2e0]"
+        },
+        {
+          "pc": "0x1004cb5e0",
+          "mnemonic": "mov",
+          "operands": "x2, sp"
+        },
+        {
+          "pc": "0x1004cb5e4",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "pc": "0x1004cb5e8",
+          "mnemonic": "mov",
+          "operands": "x1, x22"
+        },
+        {
+          "pc": "0x1004cb5ec",
+          "mnemonic": "bl",
+          "operands": "#0x10036aa94"
+        }
+      ]
+    },
+    {
+      "pc": "0x1004cb624",
+      "caller": "0x1004cb21c",
+      "target": "0x10036aa94",
+      "string_constructor_pc": "0x1004cb610",
+      "node_register": "x1",
+      "names": [
+        "colorselected"
+      ],
+      "internal_fallback_literals": [],
+      "literal_addresses": {
+        "0x1040aa81d": "colorselected"
+      },
+      "binding_instructions": [
+        {
+          "pc": "0x1004cb60c",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "pc": "0x1004cb610",
+          "mnemonic": "bl",
+          "operands": "#0x100003af0"
+        },
+        {
+          "pc": "0x1004cb614",
+          "mnemonic": "ldr",
+          "operands": "w3, [x19, #0x2e0]"
+        },
+        {
+          "pc": "0x1004cb618",
+          "mnemonic": "mov",
+          "operands": "x2, sp"
+        },
+        {
+          "pc": "0x1004cb61c",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "pc": "0x1004cb620",
+          "mnemonic": "mov",
+          "operands": "x1, x22"
+        },
+        {
+          "pc": "0x1004cb624",
+          "mnemonic": "bl",
+          "operands": "#0x10036aa94"
+        }
+      ]
+    },
+    {
+      "pc": "0x1004cb65c",
+      "caller": "0x1004cb21c",
+      "target": "0x10036aa94",
+      "string_constructor_pc": "0x1004cb648",
+      "node_register": "x1",
+      "names": [
+        "coloroverselected"
+      ],
+      "internal_fallback_literals": [],
+      "literal_addresses": {
+        "0x1040aa82b": "coloroverselected"
+      },
+      "binding_instructions": [
+        {
+          "pc": "0x1004cb644",
+          "mnemonic": "mov",
+          "operands": "x0, sp"
+        },
+        {
+          "pc": "0x1004cb648",
+          "mnemonic": "bl",
+          "operands": "#0x100003af0"
+        },
+        {
+          "pc": "0x1004cb64c",
+          "mnemonic": "ldr",
+          "operands": "w3, [x19, #0x2ec]"
+        },
+        {
+          "pc": "0x1004cb650",
+          "mnemonic": "mov",
+          "operands": "x2, sp"
+        },
+        {
+          "pc": "0x1004cb654",
+          "mnemonic": "mov",
+          "operands": "x0, x19"
+        },
+        {
+          "pc": "0x1004cb658",
+          "mnemonic": "mov",
+          "operands": "x1, x22"
+        },
+        {
+          "pc": "0x1004cb65c",
+          "mnemonic": "bl",
+          "operands": "#0x10036aa94"
+        }
+      ]
+    }
+  ],
+  "interpretation": "Reviewed string constructor copies x1 into the string object at x0. These guarded straight-line sites construct at SP and pass that object as x2 to getColorParam, which reads the first XML key on node x1. CSEL unions alternatives without proving branch feasibility. dontfindme is retained separately as an internal fallback, not a supported attribute.",
+  "limitations": [
+    "Only these constructor call sites are modeled; no general stack or heap tracking.",
+    "Names are possible reader keys, not runtime behavior or precedence proof."
+  ]
+}

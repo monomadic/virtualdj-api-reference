@@ -1371,14 +1371,15 @@ Execution sequence:
    preserve build-specific results and compare later-build changes. Publish a
    strict schema only where closure evidence warrants it.
 
-Current checkpoint: step 1 complete; step 2 now has verified factory forwarding,
-separate 9246 conditional-node guards and expanded shared-reader traversal in
-`tests/skin-schema-button-expanded-9246.json`. The original constructor-only
-audit remains the baseline. Next: recover the C++ string argument naming the
-color read at `0x10036aa94`, then triage the retained helper frontier before the
-step-3 closure audit. [Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md)
-contains reproduction commands and limits. Do not transfer 9644 live results or
-repeat completed memory captures. Advance this checkpoint after each commit.
+Current checkpoint: step 1 complete; step 2 has guarded icon color-key bindings
+in `tests/skin-schema-button-color-9246.json`, with the previous captures preserved.
+`tests/skin-schema-button-frontier-9246.json` names remaining targets and direct
+XML calls. Next: trace shared geometry/condition readers and the `CTextObject`
+constructor, then investigate template/localization routes before step-3 closure.
+The internal `dontfindme` fallback is not a supported-attribute claim.
+[Skin Schema Recovery](docs/Skin%20Schema%20Recovery.md) contains reproduction
+commands and limits. Do not transfer 9644 live results or repeat completed
+memory captures. Advance this checkpoint after each commit.
 
 ### S1. Render-Test The Element-Specific Skin Attributes
 

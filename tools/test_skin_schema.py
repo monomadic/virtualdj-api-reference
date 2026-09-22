@@ -54,6 +54,28 @@ class OwnershipTests(unittest.TestCase):
         out = transfer(Instruction(0, 'bl', [imm(200)]), {'x0': NODE}, GETTERS)
         self.assertNotIn('x0', out)
 
+    def test_opt_in_conditional_select_keeps_both_names_and_unknowns(self):
+        ins = Instruction(0, 'csel', [reg('x1'), reg('x8'), reg('x9')], ['x1'])
+        first = frozenset({('constant', 1000)})
+        second = frozenset({('constant', 2000)})
+        out = transfer(ins, {'x8': first, 'x9': second}, {}, conditional_select=True)
+        self.assertEqual(out['x1'], first | second)
+        out = transfer(ins, {'x8': first}, {}, conditional_select=True)
+        self.assertEqual(out['x1'], first | UNKNOWN)
+        self.assertNotIn('x1', transfer(ins, {'x8': first, 'x9': second}, {}))
+
+    def test_color_keys_keep_internal_fallback_out_of_attributes(self):
+        path = Path(__file__).resolve().parents[1] / 'tests/skin-schema-button-color-9246.json'
+        data = json.loads(path.read_text())
+        report = summary(data)
+        self.assertIn('colordown', report['owners']['/button/icon']['attributes'])
+        self.assertIn('coloroverselected', report['owners']['/button/icon']['attributes'])
+        self.assertNotIn('coloroverselected', report['owners']['/button']['attributes'])
+        self.assertNotIn('dontfindme', report['owners']['/button/icon']['attributes'])
+        self.assertTrue(any('dontfindme' in r.get('internal_fallback_literals', []) for r in data['reads']))
+        self.assertTrue(data['frontier'])
+        self.assertIsNone(report['live_evidence'])
+
     def test_conditional_child_uses_explicit_argument_registers(self):
         getters = {200: {'role': 'conditional_child_node', 'node_register': 'x1', 'name_register': 'x2'}}
         out = transfer(Instruction(0, 'bl', [imm(200)]),

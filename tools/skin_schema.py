@@ -29,7 +29,7 @@ def node_paths(value):
     return sorted(v for kind, v in value if kind == 'node')
 
 
-def transfer(insn, state, getters, strings=None):
+def transfer(insn, state, getters, strings=None, conditional_select=False):
     """Transfer only understood 64-bit copies/constants; invalidate all other writes.
 
     No stack/heap alias model. Callee-saved registers survive calls; x0-x18 do not.
@@ -53,6 +53,10 @@ def transfer(insn, state, getters, strings=None):
         amount = op[2].imm << (shift.value if shift else 0)
         computed = frozenset(('constant', v + amount) if k == 'constant'
                              else ('unknown', '') for k, v in value(op[1]))
+    elif conditional_select and insn.mnemonic == 'csel' and len(op) == 3:
+        computed = value(op[1]) | value(op[2])
+        if len(computed) > 8 or any(k == 'overflow' for k, _ in computed):
+            computed = OVERFLOW
     _, writes = insn.regs_access()
     for r in writes:
         name = insn.reg_name(r)
@@ -89,7 +93,7 @@ def transfer(insn, state, getters, strings=None):
     return result
 
 
-def analyze(instructions, initial, getters, strings):
+def analyze(instructions, initial, getters, strings, conditional_select=False):
     """Monotone may-analysis. Follow both branch edges; never infer runtime reachability."""
     code = {i.address: i for i in instructions}
     if not code:
@@ -103,7 +107,7 @@ def analyze(instructions, initial, getters, strings):
             raise ValueError('control-flow budget exceeded')
         pc = todo.popleft()
         i, state = code[pc], dict(states[pc])
-        out = transfer(i, state, getters, strings)
+        out = transfer(i, state, getters, strings, conditional_select)
         if i.mnemonic in ('ret', 'br'):
             successors = []
         elif i.mnemonic == 'b':
@@ -131,7 +135,7 @@ def analyze(instructions, initial, getters, strings):
     return calls
 
 
-def extract(app, memory_capture, structural=None, node_manifest=None, reader_audit=None):
+def extract(app, memory_capture, structural=None, node_manifest=None, reader_audit=None, color_manifest=None):
     from extract_skin_classes import Analysis, decoded, generate
     from plugin_memory import verify
     binary = app / 'Contents/MacOS/VirtualDJ'
@@ -161,6 +165,10 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
                               lambda fn: b''.join(w.to_bytes(4, 'little') for _, w in a.words(fn)))
         for fn, model in named.items():
             getters.setdefault(fn, model)
+    color_bindings, used_color_bindings = {}, set()
+    if color_manifest:
+        from skin_color_helpers import bindings
+        color_bindings, color_evidence = bindings(a, color_manifest)
     factory = int(source['factory']['function'], 16)
     factory_code = decoded(a, factory)
     factory_calls = analyze(factory_code, {'x0': frozenset({('node', '/button')})}, getters, a.img.strings)
@@ -186,6 +194,19 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
         routines[hex(fn)] = {'end': hex(fn + len(raw)), 'sha256': hashlib.sha256(raw).hexdigest()}
         calls = analyze(insns, initial, getters, a.img.strings)
         for i, target, state in calls:
+            if i.address in color_bindings:
+                binding = color_bindings[i.address]
+                if hex(fn) != binding['caller'] or hex(target) != binding['target']:
+                    raise ValueError('color call-site binding mismatch')
+                receiver = state.get(binding['node_register'], UNKNOWN)
+                reads.append({'function': hex(fn), 'pc': hex(i.address), 'getter': hex(target),
+                              'origin': 'button_constructor', 'role': 'attribute_color_key_candidate',
+                              'names': binding['names'], 'node_paths': node_paths(receiver),
+                              'receiver_unresolved': any(k != 'node' for k, _ in receiver),
+                              'name_unresolved': False, 'depth': depth,
+                              'internal_fallback_literals': binding['internal_fallback_literals']})
+                used_color_bindings.add(i.address)
+                continue
             role = getters.get(target, {}).get('role')
             model = getters.get(target, {})
             name_values = state.get(model.get('name_register', 'x1'), UNKNOWN) if role != 'matching_sibling_node' else frozenset()
@@ -225,6 +246,8 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
                 queue.append((target, inputs, depth + 1))
             else:
                 frontier.append(dict(binding, reason='scope/depth limit or indirect/external target'))
+    if set(color_bindings) != used_color_bindings:
+        raise ValueError("color binding not reached by ownership analysis")
     def unique(rows):
         return [json.loads(s) for s in sorted({json.dumps(r, sort_keys=True) for r in rows})]
     # Retain exact code for the small binding proof, including the constructor thunk.
@@ -236,6 +259,9 @@ def extract(app, memory_capture, structural=None, node_manifest=None, reader_aud
             raise ValueError('constructor thunk changed')
         binding_code += thunk_code
     return {'schema_version': 2, 'element': 'button', 'evidence_tier': 2,
+            **({'color_key_models': {'path': str(color_manifest.relative_to(ROOT)) if color_manifest.is_relative_to(ROOT) else str(color_manifest),
+                                     'sha256': hashlib.sha256(color_manifest.read_bytes()).hexdigest(),
+                                     'scope': color_evidence['interpretation']}} if color_manifest else {}),
             **({'named_reader_audit': {'path': str(reader_audit.relative_to(ROOT)) if reader_audit.is_relative_to(ROOT) else str(reader_audit),
                                       'sha256': hashlib.sha256(reader_audit.read_bytes()).hexdigest(),
                                       'scope': 'Named const XML reader first-key arguments only; fallback and extra-name arguments remain open.'}} if reader_audit else {}),
@@ -290,6 +316,7 @@ def main():
     p.add_argument('--app', type=Path, default=Path('/Applications/VirtualDJ.app'))
     p.add_argument('--memory-capture', type=Path, default=ROOT / 'tests/plugin-memory-9644.json')
     p.add_argument('--node-manifest', type=Path, help='explicit matching-build conditional-node models')
+    p.add_argument('--color-manifest', type=Path, help='optional guarded constructor color-name bindings')
     p.add_argument('--reader-audit', type=Path, help='optional matching-image named getter audit')
     p.add_argument('--structural-capture', type=Path, help='optional same-image structural extraction')
     p.add_argument('--output', type=Path)
@@ -302,7 +329,7 @@ def main():
         p.error('output already exists')
     if args.extract or args.check:
         source = json.loads(args.structural_capture.read_text()) if args.structural_capture else None
-        data = extract(args.app, args.memory_capture, source, args.node_manifest, args.reader_audit)
+        data = extract(args.app, args.memory_capture, source, args.node_manifest, args.reader_audit, args.color_manifest)
         if args.check and data != json.loads(args.capture.read_text()):
             raise ValueError('schema evidence drift')
         if args.output:

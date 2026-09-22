@@ -1,5 +1,45 @@
 # Skin schema recovery
 
+## Icon color keys and frontier review — 2026-09-22, build 18.0.9246, arm64
+
+[The color capture](../tests/skin-schema-button-color-9246.json) resolves the
+previously unnamed color-helper reads on `/button/icon`. It uses
+[guarded call-site evidence](../tests/skin-color-helpers-9246.json): the button
+constructs a temporary C++ string at SP, passes the same object straight to the
+color helper, and that helper forwards its contents as an XML key. Exact caller,
+string-constructor and color-helper hashes guard the model. This does not add
+general stack/heap tracking or change the older extraction defaults.
+
+The additional possible keys include `colordown`, `colorover`, `colorselected`
+and `coloroverselected`. Conditional selections retain both possible names;
+branch feasibility, fallback precedence and rendering behavior are not proven.
+The literal `dontfindme` is retained in `internal_fallback_literals` as an
+internal fallback and excluded from the reported attributes. All findings here
+are Tier 2, and the previous expanded capture remains immutable.
+
+Query this checkpoint with `just skin-schema button --capture
+tests/skin-schema-button-color-9246.json`. Reproduce it using the expanded
+historical command below, changing `--capture` to this file and adding
+`--color-manifest tests/skin-color-helpers-9246.json`. The color evidence itself
+reproduces with `tools/skin_color_helpers.py --check --app HISTORICAL_APP` in the
+same capstone/numpy environment.
+
+[The frontier review](../tests/skin-schema-button-frontier-9246.json) groups the
+remaining incoming call contexts by target and retains named direct XML calls.
+It identifies localization, template application, rectangle/image readers,
+color-action readers and `CTextObject` as further investigation routes. Calls
+without direct XML reads remain visible: unused argument-register contents can
+produce an incoming node association, while indirect/deeper reads can escape
+this direct-call search. Neither case permits silently closing a route.
+
+Reproduce the review with `tools/skin_schema_frontier.py
+tests/skin-schema-button-color-9246.json --app HISTORICAL_APP --check
+tests/skin-schema-button-frontier-9246.json` using the project interpreter.
+The next bounded pass is shared geometry/condition reads and the `CTextObject`
+constructor, followed by template/localization analysis before button closure.
+Zero unresolved names inside this traversal would still not mean complete XML
+coverage; the review and lifecycle gaps remain separate.
+
 ## Expanded historical ownership — 2026-09-22, build 18.0.9246, arm64
 
 [The expanded capture](../tests/skin-schema-button-expanded-9246.json) replaces
@@ -46,9 +86,9 @@ The helper evidence independently reproduces through `tools/skin_node_helpers.py
 tests/skin-node-helpers-9246.json`. The original default 9644 extraction remains
 unchanged. No private functions are called by either extraction.
 
-Next target: the unresolved first-key name in `ISkinObject::getColorParam` at
+This expanded checkpoint left an unresolved first-key name in `ISkinObject::getColorParam` at
 `0x10036aa94` arrives as a C++ string object, so the literal-pointer tracker cannot
-recover it. Track that narrowly before expanding depth. The capture's `frontier`
+recover it. The later color-key checkpoint above addresses that gap. The capture's `frontier`
 still contains node-carrying calls outside scope, and lifecycle, template and
 indirect routes remain open. This is not a closed button schema.
 
@@ -89,8 +129,8 @@ uv run --with capstone --with numpy --python .venv/bin/python3 \
 ```
 
 For a new extraction use `--output NEW_PATH`; existing files are rejected.
-For agents, resume S6 step 2 from `button_constructor.frontier` and the named
-reader signatures. Do not rerun the memory-access experiment or treat the
+For agents inspecting this baseline, use `button_constructor.frontier` and the named
+reader signatures; use S6 for the current resumption point. Do not rerun the memory-access experiment or treat the
 9644 conditional-node guard as applicable to 9246.
 
 ## Current result — conditional children, 2026-09-22
