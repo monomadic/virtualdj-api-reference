@@ -411,3 +411,107 @@ This confirms memory-capture compatibility with this relocated build; it does no
 validate private parser calls or skin XML behaviour. Future historical captures
 should use `--binary` with the exact app executable instead of the collector's
 current-installation default.
+
+## Named tail-consumer pilot — 2026-09-22, build 18.0.9246, arm64
+
+**Result:** memory anchoring plus named consumer dataflow is a useful way to assess
+tail candidates. It is not a universal valid-argument oracle. The fresh
+[memory capture](../tests/tail-probe-9246-memory.json) matched the historical
+executable's UUID, build, verb-table address and every record. The
+[run journal](../tests/tail-probe-9246.json) brackets each plugin title query with
+a directory inventory, establishing that each produced a new capture in this run.
+The installed application was build 9644 while HTTP and the captured image were
+9246: use the actual executable passed to the verifier, not the default app path.
+
+The [consumer artifact](../tests/tail-consumers-9246.json) records exact routine
+bounds/hashes, named comparison call sites, possible parameter indices, unresolved
+receivers, and a direct-call inventory of parameter helpers. It follows both
+control-flow branches and traces `IAction::getParam(int)` results into parameter
+text or `SActionParam::isTxt` comparisons. Parameter indices are zero-based.
+This is **Tier 2 disk analysis anchored to live memory identity**, not a hook
+observing those instructions executing. The parameter accessor and string-member
+models remain structural ABI assumptions; no private routine is called.
+
+The useful calibration cases are:
+
+| Consumer | Structural result on build 9246 | Live result in this run |
+| --- | --- | --- |
+| `filter_label` | `name` and `clean` compare with parameter 0. `Skin`, `BASS`, and `FILTER` go to `CMessageEngine::getMessage`. The lowercase `filter` comparisons have unresolved receivers. | `clean` returned `OFF`; bare, `name`, both nonsense controls and the other tested strings returned `DELAY`, agreeing in both rounds. Only `clean` separated in this fixture. |
+| `is_using` | Feature comparisons trace to parameter 0; `inaudible` comparisons trace to parameters 1 and 2. Another `filter` comparison has an unresolved receiver. | The fixed native suite distinguishes first-position feature tokens from nonsense. First-position `inaudible` matches nonsense; the later-position modifier pairs remain indistinguishable in this fixture. |
+| `get_song_event` | `current`/`next` comparisons trace to parameter 0; `hasbeats`, `volume`, `volume_end`, and `remaining` to parameter 1. `getEvent()` also examines parameter 0. | Not re-probed: this pass recovers input provenance, not the full branching/fallback grammar or song-event behavior. |
+| `get_time_sign` | Its query delegates to named `ACTION_get_time::getTime(long long&, SActionParam*&)`. | Not re-probed: the shared consumer is explicitly retained as an unexpanded edge. An empty local literal list does not imply no tails. |
+
+The [native capture](../tests/tail-probe-9246-native.jsonl) uses the existing
+`VDJKeywordProbe` compiled suite. On this build, feature-token queries returned
+numeric `S_OK` and text `off`; nonsense returned numeric `E_NOTIMPL` and empty
+text with `S_FALSE`; the bare query returned numeric `E_INVALIDARG`. This supports
+recognition in the measured fixture, not activity/timing behavior. Both rounds
+agree within one capture; they are not independent application sessions.
+The preceding [initial attempt](../tests/tail-probe-9246-initial.json) completed
+both plugin captures but stopped before retaining HTTP label results because
+the runner's output allowlist omitted the built-in `DELAY`/`OFF` readings. Its
+captures remain under initial names. The corrected run completed.
+
+All four decks were stopped and unloaded before and after. No execute calls,
+effect selections, restart, private parser calls or heap scan were used.
+Hardware/account context was not inventoried. The observation does not establish
+that every other part of application state was unchanged. No verb-store status
+was promoted from these structural or recognition findings.
+
+### Other useful targets
+
+- **Exact public callback names.** The live callback addresses resolve to
+  `CPlugin::SendCommand`, `GetInfo`, `GetStringInfo`, `DeclareParameter` and
+  `GetSongBuffer`; `callback_symbols` retains the same-build mapping. This makes
+  future wrapper/context investigations easier without cross-build addresses.
+- **Typed and evaluated arguments.** The helper inventory exposes direct ACTION
+  callers of `getBoolParam`, `getFloatParam`, `getParamEval`, `getFloatParamEval`,
+  `SActionParam::toFloat`, `toString`, `toColor`, and the text-comparison templates.
+  These are useful routes for deciding which consumers need unit, expression or
+  coercion tests. Caller-site totals are queried with `--helpers`, not copied
+  into prose. Shared-base calls, indirect calls and inlining remain outside it.
+- **A tempting but unproven list API.** `getListParam(int, int&, char const*, int)`
+  is present, but the named ACTION direct-BL inventory finds no callers. Do not
+  assume it exposes a per-verb enumeration service. Inspect shared callers and
+  its list representation before considering a bounded private-call experiment.
+- **Parameter serialization.** Named `SActionParam::serialize` and `unserialize`
+  offer leads for typed round-trip fixtures. Names alone establish neither the
+  serialized format nor that it is safe to apply to arbitrary live objects.
+- **Editor assistance and scope.** `DLGActionWizard::updateList`, `updateHint`,
+  `getCurrentWord`, its `deckArguments` data symbol, and `IAction::setSource`
+  offer targeted routes for editor suggestions and source/deck binding. These
+  remain symbol leads; the current pilot does not claim to read their data or
+  establish their behavior.
+
+### Reuse and next experiment
+
+```sh
+just tail-consumers filter_label
+just tail-consumers is_using
+just tail-consumers get_song_event
+just tail-consumers get_time_sign
+just tail-consumers --helpers
+just tail-consumers --leads
+just tail-consumers-test
+```
+
+Queries use only the standard library. Re-extract with `tools/tail_consumers.py
+--binary /path/to/9246/VirtualDJ.app/Contents/MacOS/VirtualDJ --check` under the
+optional capstone environment used above. The default memory anchor is the fresh
+`tail-probe-9246-memory.json`. To repeat the read-only live calibration, use
+`tools/probe_tail_consumers.py --binary /path/to/9246/VirtualDJ.app/Contents/MacOS/VirtualDJ
+--output tests/tail-probe-9246-new.json`; it refuses existing outputs and requires
+stopped/unloaded decks. A cached or absent plugin that produces no new capture
+aborts rather than silently reusing old evidence.
+
+The default report is a short human-readable view; `--format=json` retains
+callsite, receiver, routine and uncertainty details for focused follow-up.
+
+The recommended next step is to extend this position-aware analysis through
+shared consumers, starting with `ACTION_get_time::getTime`, and carry every
+unexpanded call forward. Use the resulting input comparisons to select runtime
+fixtures. Keep localized output strings and unresolved internal comparisons out
+of any *confirmed* argument list, but do not globally disprove a token from this
+bounded pass. A runtime branch trace could resolve default-versus-recognized
+paths that return the same result, but would require a separate guarded instrument;
+the present memory plugin does not provide it.

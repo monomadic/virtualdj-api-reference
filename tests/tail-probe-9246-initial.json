@@ -1,0 +1,68 @@
+{
+  "captured_at": "2026-09-22T15:43:02.867197+00:00",
+  "build": "9246",
+  "before": {
+    "deck 1 play": "no",
+    "deck 1 loaded": "no",
+    "deck 2 play": "no",
+    "deck 2 loaded": "no",
+    "deck 3 play": "no",
+    "deck 3 loaded": "no",
+    "deck 4 play": "no",
+    "deck 4 loaded": "no"
+  },
+  "channel": "HTTP query + memory plugin + public SDK keyword plugin",
+  "execute_calls": [],
+  "triggers": [
+    {
+      "script": "get_effect_title 'VDJMemoryProbe'",
+      "result": "VDJMemoryProbe - Deck 1",
+      "new_capture_names": [
+        "memory-10318-1790091782.json"
+      ]
+    },
+    {
+      "script": "get_effect_title 'VDJKeywordProbe'",
+      "result": "VDJKeywordProbe - Deck 1",
+      "new_capture_names": [
+        "keywords-10318-1790091783-1.jsonl"
+      ]
+    }
+  ],
+  "results": [],
+  "context": "Decks 1-4 stopped and unloaded. Hardware/account not inventoried. No private parser calls.",
+  "screenshot_provenance": "Not applicable: HTTP responses and plugin-written captures.",
+  "memory_verification": {
+    "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+    "image_uuid_matches": true,
+    "build_matches": true,
+    "table_address_matches": true,
+    "all_name_id_flags_records_match": true,
+    "records": 1025,
+    "claim": "Loaded structured verb table reproduces same-build disk extraction; not independent behaviour proof."
+  },
+  "VDJMemoryProbe": {
+    "capture": "tests/tail-probe-9246-initial-memory.json",
+    "sha256": "7f1db78111d728768e3b85a41a83f4a2393c07b1d2935c5e219ad734c6f514e6",
+    "installed_plugin_sha256": "5cb730047129b44a99ecbd6f505aaa76df6c0e2d66a2eaf7722b3eed7af9dd50"
+  },
+  "native_suite_sha256": "f939d062a5f7bff3a919517434f13ba802a1e31ab511364de5876697263ad0ee",
+  "VDJKeywordProbe": {
+    "capture": "tests/tail-probe-9246-initial-native.jsonl",
+    "sha256": "27d6566a6137b7e17af0b7c75915f68fc7424936ee8016d012b24e20588795c3",
+    "installed_plugin_sha256": "99b0beafaef04533a5e030741b835a003ea39bf12dcc634107c612c0bc360606"
+  },
+  "complete": false,
+  "error": "unexpected label; not retained",
+  "after": {
+    "deck 1 play": "no",
+    "deck 1 loaded": "no",
+    "deck 2 play": "no",
+    "deck 2 loaded": "no",
+    "deck 3 play": "no",
+    "deck 3 loaded": "no",
+    "deck 4 play": "no",
+    "deck 4 loaded": "no"
+  },
+  "state_checks_match": true
+}

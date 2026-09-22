@@ -787,6 +787,13 @@ plugin-memory-test:
     clang++ -std=c++17 -arch arm64 -I vendor/vdj-sdk/audio-plugin-dsp-example-1 -framework CoreFoundation tools/plugin/test_memory.cpp -o /tmp/vdj-memory-test
     /tmp/vdj-memory-test
 
+# Named build-9246 argument-consumer pilot, anchored to the memory probe.
+tail-consumers *args:
+    @{{python}} tools/tail_consumers.py {{args}}
+
+tail-consumers-test:
+    @{{python}} -m unittest discover -s tools -p test_tail_consumers.py
+
 # Fixed-input, build-gated parser object experiment; never executes parsed scripts.
 plugin-parser-build *args:
     tools/plugin/build.sh --parser {{args}}
