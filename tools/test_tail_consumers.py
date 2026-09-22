@@ -4,13 +4,38 @@ import json
 from pathlib import Path
 import unittest
 
-from tail_consumers import flow
+from tail_consumers import flow, summary, comparison_kind
 from test_skin_schema import Instruction as I, imm, reg
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class TailTests(unittest.TestCase):
+    def test_prefix_comparison_is_not_exact(self):
+        self.assertEqual(comparison_kind('bool isLeftCIL<4ul>(...)'), 'prefix')
+        self.assertEqual(comparison_kind('strIsEqualCI(...)'), 'exact')
+        self.assertIsNone(comparison_kind('CMessageEngine::getMessage(...)'))
+
+    def test_shared_time_binding_preserves_positions_and_frontier(self):
+        data = json.loads((ROOT / 'tests/tail-consumers-shared-9246.json').read_text())
+        for verb in ('get_time_sign', 'get_time_hour', 'get_time_min', 'get_time_sec', 'get_time_ms', 'get_time_msf'):
+            report = summary(data, verb)
+            self.assertTrue(report['shared_bindings'])
+            self.assertTrue(all(b['action_receiver_preserved'] for b in report['shared_bindings']))
+            absolute = [s for s in report['sites'] if s['literal_arguments'].get('x1') == ['absolute']]
+            self.assertEqual([s['parameter_indices'] for s in absolute], [[0], [1]])
+            cue = [s for s in report['sites'] if s['literal_arguments'].get('x1') == ['cue']]
+            self.assertEqual(len(cue), 1)
+            self.assertEqual(cue[0]['match_kind'], 'prefix')
+            self.assertEqual(cue[0]['parameter_indices'], [0])
+            self.assertTrue(any(s['callee'] == 'SDBInfo::getCue(int)' and s['reason'] == 'unexpanded call' for s in report['frontier']))
+        self.assertFalse(summary(data, 'filter_label')['shared_bindings'])
+        self.assertFalse(any(s['literal_arguments'].get('x1') == ['elapsed'] for s in summary(data, 'filter_label')['sites']))
+        short = [s for s in summary(data, 'get_time')['sites'] if s['literal_arguments'].get('x1') == ['short']]
+        self.assertEqual(len(short), 1)
+        self.assertTrue(short[0]['receiver_unresolved'])
+        self.assertEqual(short[0]['parameter_indices'], [])
+
     def test_parameter_index_and_text_member(self):
         code = [I(0, 'mov', [reg('w1'), imm(2)], ['w1']),
                 I(4, 'bl', [imm(200)]),

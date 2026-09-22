@@ -515,3 +515,54 @@ of any *confirmed* argument list, but do not globally disprove a token from this
 bounded pass. A runtime branch trace could resolve default-versus-recognized
 paths that return the same result, but would require a separate guarded instrument;
 the present memory plugin does not provide it.
+
+## Shared time consumer — 2026-09-23, build 18.0.9246, arm64
+
+The [expanded artifact](../tests/tail-consumers-shared-9246.json) now follows
+`ACTION_get_time::getTime(long long&, SActionParam*&)`. The original
+`tail-consumers-9246.json` remains the initial pilot. HTTP still reported build
+9246 at the start of this continuation; extraction re-verifies the existing
+memory anchor against the matching disk executable. No new memory capture or
+behavior probe was needed for this structural extension.
+
+The named callers are `get_time`'s numeric and text queries and the query methods
+for `get_time_sign`, `get_time_hour`, `get_time_min`, `get_time_sec`, `get_time_ms`
+and `get_time_msf`. For each selected callsite, the dataflow check requires the
+action receiver to survive into the shared call; an unresolved binding aborts
+extraction. Reports include the shared comparisons only through those verified
+structural bindings. They do not copy the time reader's candidates into unrelated
+verb reports or claim that every wrapper exposes identical semantics.
+
+- Parameter 0 reaches exact comparisons for `elapsed`, `remain`, `total`,
+  `loopin`, `loopout`, `absolute` and `to_lyrics`.
+- Parameter 0 also reaches the named `isLeftCIL` prefix comparison with `cue`.
+  The report marks this as a prefix family rather than an exact token. The
+  subsequent suffix conversion and `SDBInfo::getCue(int)` call remain unexpanded;
+  accepted suffix grammar and cue fallback behavior are not established here.
+- Parameter 1 reaches another exact comparison with `absolute`. Finding the
+  same word in separate positions is retained as separate evidence, not merged
+  into a flat vocabulary.
+- `get_time`'s text wrapper compares `short` against a receiver whose provenance
+  the current analysis cannot recover. The shared reader returns a parameter
+  pointer through an output argument; stack/output-argument tracking is not
+  modeled. The report therefore leaves `short`'s position unresolved instead of
+  guessing a fixed argument index. Formatting strings are classified separately.
+
+This is Tier 2: same-build named code, bounded routine hashes and stored shared
+instructions, not observed runtime branch execution. Comparisons do not prove
+branch feasibility, keyword recognition or output behavior. Existing live time
+results above remain scoped to build 9644 and were not transplanted to 9246.
+
+`just tail-consumers get_time_sign` now shows the shared argument candidates;
+`just tail-consumers get_time` additionally shows the text-wrapper frontier.
+The other named time wrappers are accepted by the same command. The default
+capture is now `tail-consumers-shared-9246.json`; `--capture` can still read the
+original pilot. `just tail-consumers-test` checks shared bindings, parameter
+positions, prefix-versus-exact classification, unrelated-verb isolation, and the
+deliberately unresolved formatter receiver. Re-extraction with `--binary ...
+--check` reproduces the expanded artifact.
+
+Next: model the shared reader's output parameter and its conditional selection
+before assigning a position to `short`. Then choose a loaded synthetic fixture
+that distinguishes formatting and pitch-scaled versus absolute time. Repeating
+an unloaded time-query sweep would not settle either question.

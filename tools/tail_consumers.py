@@ -7,8 +7,18 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT = ROOT / 'tests/tail-consumers-9246.json'
-PILOT = ('is_using', 'filter_label', 'get_song_event', 'get_time_sign')
+DEFAULT = ROOT / 'tests/tail-consumers-shared-9246.json'
+PILOT = ('is_using', 'filter_label', 'get_song_event', 'get_time', 'get_time_sign',
+         'get_time_hour', 'get_time_min', 'get_time_sec', 'get_time_ms', 'get_time_msf')
+SHARED = 'ACTION_get_time::getTime(long long&, SActionParam*&)'
+
+
+def comparison_kind(symbol):
+    if symbol.startswith(('strIsEqualCI(', 'bool SActionParam::isTxt<')):
+        return 'exact'
+    if symbol.startswith('bool isLeftCIL<'):
+        return 'prefix'
+    return None
 
 
 def flow(instructions, get_param):
@@ -79,7 +89,8 @@ def extract(binary, memory_path):
             raise ValueError('symbol is not a bounded routine')
         return {'symbol': symbols.get(fn), 'end': hex(fn + len(raw)),
                 'sha256': hashlib.sha256(raw).hexdigest()}
-    routines, sites, frontier = {}, [], []
+    routines, sites, frontier, bindings = {}, [], [], []
+    shared = next(p for p, n in symbols.items() if n == SHARED)
     for fn, name in sorted(symbols.items()):
         if not any(name.startswith('ACTION_' + verb + '::') for verb in PILOT) or '::~' in name:
             continue
@@ -94,17 +105,22 @@ def extract(binary, memory_path):
                         for r, values in state.items() if r in ('x0', 'x1', 'x2', 'x3')}
             literals = {k: v for k, v in literals.items() if v}
             inputs = sorted([list(v) for v in state.get('x0', [])])
-            comparison = callee.startswith(('strIsEqualCI(', 'bool SActionParam::isTxt<'))
+            match_kind = comparison_kind(callee)
+            comparison = match_kind is not None
+            if target == shared:
+                bindings.append({'caller': hex(fn), 'pc': hex(i.address), 'target': hex(target),
+                                 'receiver': inputs,
+                                 'action_receiver_preserved': state.get('x0') == frozenset({('action', 0)})})
             if literals:
                 sites.append({'function': hex(fn), 'pc': hex(i.address), 'target': hex(target) if target else None,
                               'callee': callee or None, 'literal_arguments': literals,
-                              'comparison': comparison, 'receiver': inputs,
+                              'comparison': comparison, 'match_kind': match_kind, 'receiver': inputs,
                               'parameter_indices': sorted({v for k, v in state.get('x0', []) if k in ('param', 'param_text')}),
                               'receiver_unresolved': not inputs or any(k not in ('param', 'param_text') for k, v in inputs)})
             else:
                 frontier.append({'function': hex(fn), 'pc': hex(i.address), 'callee': callee or None,
                                  'target': hex(target) if target else None,
-                                 'reason': 'no resolved literal at comparison' if comparison else 'parameter read' if target == get_param else 'unexpanded call',
+                                 'reason': 'expanded shared consumer' if target == shared and state.get('x0') == frozenset({('action', 0)}) else 'no resolved literal at comparison' if comparison else 'parameter read' if target == get_param else 'unexpanded call',
                                  'registers': {k: sorted([list(v) for v in values]) for k, values in state.items() if k in ('x0', 'x1')}})
             if (comparison or target == get_param) and target in a.starts:
                 routines[hex(target)] = routine(target)
@@ -119,24 +135,33 @@ def extract(binary, memory_path):
                    if n.startswith(('SActionParam::serialize', 'SActionParam::unserialize', 'IAction::setSource',
                                     'IAction::create(', 'DLGActionWizard::update', 'DLGActionWizard::getCurrentWord'))
                    or n.endswith('::deckArguments')}
-    return {'schema': 1, 'source': {'build': memory['build'], 'arch': memory['arch'],
+    if not bindings or not all(b['action_receiver_preserved'] for b in bindings):
+        raise ValueError('shared time reader binding is unresolved')
+    return {'schema': 2, 'source': {'build': memory['build'], 'arch': memory['arch'],
             'image_uuid': memory['image_uuid'], 'binary_sha256': verification['binary_sha256'], 'evidence_tier': 2},
             'memory_anchor': {'capture_sha256': hashlib.sha256(memory_path.read_bytes()).hexdigest(), 'verification': verification},
             'callback_symbols': [{**r, 'symbol': symbols.get(int(r['unslid_address'], 16)) if r['unslid_address'] else None}
                                  for r in memory['callback_slots']],
             'routines': routines, 'literal_sites': sites, 'frontier': frontier,
+            'shared_bindings': bindings,
+            'shared_consumer': {'function': hex(shared), 'symbol': SHARED,
+                'instructions': [{'pc': hex(i.address), 'mnemonic': i.mnemonic, 'operands': i.op_str}
+                                 for i in decoded(a, shared)]},
             'parameter_helpers': callers, 'other_symbol_leads': interesting,
             'limitations': ['Named arm64 build-9246 routines only. This is disk analysis anchored to a verified live image, not traced execution.',
                 'getParam index and parameter +8 string model are structural ABI leads. No private function is called.',
                 'Both branch edges are followed; reachability is not proven. Stack spills, heap loads, inlining and unmodeled helper results lose provenance.',
-                'Only pilot ACTION class methods are analyzed for literals; shared base implementations are not recursively traversed.',
+                'Only selected ACTION class methods and the named shared getTime consumer are analyzed. Shared-call binding requires preserved action receiver; deeper calls remain unexpanded.',
                 'Helper caller inventory covers direct BL from named ACTION routines only; no callers does not mean unused.',
                 'A literal compared with an unresolved receiver may be an internal name rather than a script argument. No complete vocabulary or behavior claim.']}
 
 
 def summary(data, verb):
     functions = {p for p, r in data['routines'].items() if r['symbol'] and r['symbol'].startswith('ACTION_' + verb + '::')}
+    bindings = [b for b in data.get('shared_bindings', []) if b['caller'] in functions and b['action_receiver_preserved']]
+    functions.update(b['target'] for b in bindings)
     return {'source': data['source'], 'verb': verb,
+            'shared_bindings': bindings,
             'sites': [s for s in data['literal_sites'] if s['function'] in functions],
             'frontier': [s for s in data['frontier'] if s['function'] in functions], 'limitations': data['limitations']}
 
@@ -187,6 +212,8 @@ def main():
             role = ('parameter ' + '/'.join(map(str, site['parameter_indices']))
                     if site['comparison'] and not site['receiver_unresolved'] else
                     'unresolved comparison' if site['comparison'] else 'other literal use')
+            if site.get('match_kind') == 'prefix':
+                role += ' [prefix family; suffix grammar unresolved]'
             print(f"  {words:32} {role} ({site['pc']})")
         frontier = sorted({s['callee'] or s['target'] or 'indirect call' for s in result['frontier']
                            if s['reason'] == 'unexpanded call'})
