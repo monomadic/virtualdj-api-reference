@@ -1,0 +1,18 @@
+{
+  "build": "18.0.9246",
+  "arch": "arm64",
+  "capture": "tests/plugin-memory-9246.json",
+  "verification_date": "2026-09-22",
+  "channel": "HTTP query and in-process memory capture",
+  "binary": "/Users/nom/src/virtualdj-api-reference-resources/unpacked/9246/vdj.pkg/Payload/VirtualDJ.app/Contents/MacOS/VirtualDJ",
+  "queries": [
+    {"script": "get_effect_title 'VDJMemoryProbe'", "result": "VDJMemoryProbe - Deck 1"},
+    {"script": "deck 1 play", "result": "no", "timing": "after capture verification"},
+    {"script": "deck 2 play", "result": "no", "timing": "after capture verification"},
+    {"script": "deck 1 get_loaded_song", "result": "error:-2147024891", "timing": "after capture verification"},
+    {"script": "deck 2 get_loaded_song", "result": "error:-2147024891", "timing": "after capture verification"}
+  ],
+  "execute_calls": [],
+  "scope": "The relocated-host memory probe produced a build-9246 capture matching the historical executable. The title query responded and the capture was found afterward; no pre-query directory snapshot was taken, so this record does not prove that this particular query caused the capture. Both decks reported not playing afterward. Loaded-track queries returned errors; loaded-track state, hardware and account context were not established. No application-state restoration or complete state comparison is claimed.",
+  "screenshot_provenance": "Not applicable: evidence is HTTP responses and the plugin-written capture, not a UI observation."
+}

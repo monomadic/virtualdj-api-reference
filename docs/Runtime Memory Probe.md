@@ -400,3 +400,14 @@ not the embedded request journal. The focused coverage query now reads this
 capture. Do not repeat positive-midpoint sweeps or use `get_position` alone to
 reject negative elapsed. Next: prepare loopin/loopout markers, cue-prefix suffix
 fixtures, and lyric content for `to_lyrics` separately; these were out of scope.
+
+## Relocated historical host — 2026-09-22, build 18.0.9246, arm64
+
+The updated memory probe produced a [verified capture](../tests/plugin-memory-9246.json)
+from the unpacked historical app. Its image UUID, build, table address and all
+name/id/flags records matched that executable. The [HTTP observation record](../tests/plugin-memory-run-9246.json)
+retains the responding plugin title and the limits of the session-state checks.
+This confirms memory-capture compatibility with this relocated build; it does not
+validate private parser calls or skin XML behaviour. Future historical captures
+should use `--binary` with the exact app executable instead of the collector's
+current-installation default.
