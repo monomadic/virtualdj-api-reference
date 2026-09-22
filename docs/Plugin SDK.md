@@ -415,6 +415,14 @@ The skin-interface path is also confirmed language-agnostic (same session): the 
 bound backtick `format=""` expressions live, honored `visibility=""` gating, and re-asked on
 every panel open — matching the 2026-08-22 C++ findings in §Plugin user interfaces exactly.
 
+**A basic `AutoStart/` plugin can own its own AppKit UI** (`Local test`, same build,
+2026-09-22): a Rust basic plugin created a floating `NSWindow` from `OnLoad` (deferred to the
+main queue), polled deck state from its own thread through the host callbacks, and drove its
+window's visibility from a VDJScript variable (`set`/`get_var` round-trips through
+`SendCommand`/`GetInfo`), so pads and custom buttons reach it with `toggle '$nowplaying'`. The
+headless lifecycle is therefore no obstacle to plugin UI — the plugin just has to bring its
+own, and shared `$variables` work as the script-visible control surface for it.
+
 **Still open — the second path.** The bundled
 `beatport16_vdj.bundle` (an online-source plugin) exports 11,303 symbols and **none** is
 `DllGetClassObject`, nor does it contain any SDK GUID as raw bytes. Nor do those GUID byte
