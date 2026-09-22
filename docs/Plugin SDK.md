@@ -400,13 +400,20 @@ split directly — `GetStringInfo("get_version")` → `S_OK` + `"2026"` while
 `GetInfo("get_version")` → `E_INVALIDARG` with `0.0` written to the out-parameter anyway,
 corroborating both the two-channel model above and the HRESULT-is-the-answer rule.
 
-One observation from the same session, recorded because it cost an hour and is not understood:
-on the *first* launch after installing that freshly built bundle, VirtualDJ started with its
-plugin layer inert — no Network Control listener on port 80, no plugin loads, `go.txt` triggers
-unconsumed — while the app itself ran normally. Removing the bundle and relaunching was clean in
-~3 s; reinstalling the identical bundle and relaunching was *also* clean. Unreproduced, cause
-unknown (first-seen-binary system assessment is a suspect). Practical rule: after installing any
-new bundle, confirm the HTTP interface answers before reading anything else as signal.
+**The first launch after installing a new bundle binary starts with the plugin layer inert**
+(`Local test`, VirtualDJ 2026 bundle `18.0.9644`, 2026-09-22, observed twice — once per freshly
+built bundle): no Network Control listener on port 80, no plugin loads, `go.txt` triggers
+unconsumed, while the app itself runs normally. A plain second relaunch, the bundle still
+installed, comes up clean in ~3 s; nothing needs to be removed (the first occurrence's
+remove-then-reinstall dance worked only because it *was* a second launch). Cause unconfirmed —
+first-seen-binary system assessment fits the shape. Practical rule: after installing any new
+bundle, restart VirtualDJ twice, and confirm the HTTP interface answers before reading anything
+else as signal.
+
+The skin-interface path is also confirmed language-agnostic (same session): the Rust plugin's
+`OnGetUserInterface` returned `VDJINTERFACE_SKIN` buffers and VirtualDJ rendered the panel,
+bound backtick `format=""` expressions live, honored `visibility=""` gating, and re-asked on
+every panel open — matching the 2026-08-22 C++ findings in §Plugin user interfaces exactly.
 
 **Still open — the second path.** The bundled
 `beatport16_vdj.bundle` (an online-source plugin) exports 11,303 symbols and **none** is
