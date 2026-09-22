@@ -27,6 +27,17 @@ script; it does not run VDJIntrospect's general probe lists.
   The output path must not already exist. A verification mismatch must be
   investigated, not bypassed. A superseded capture keeps an `-initial` name.
 
+The memory plugin accepts a VirtualDJ app bundle at any installation path. It
+requires the main bundle identifier `com.atomixproductions.virtualdj`, verifies
+that the loaded main image is that bundle's executable (resolving symlinks), and
+retains the arm64 and bounded Mach-O checks. This identity check is not signature
+verification. For an alternate or historical app, pass its executable explicitly
+to `just plugin-memory-check CAPTURE --binary '/path/VirtualDJ.app/Contents/MacOS/VirtualDJ'`.
+The collector still rejects UUID, build, table-address or record mismatches.
+This path flexibility applies only to the read-only memory probe; it does not
+relax the separate private-parser probes' build guards. A successful compilation
+does not establish live compatibility with an untested historical build.
+
 ## What is read
 
 The plugin reads its own task with `mach_vm_read_overwrite`, which reports a failed

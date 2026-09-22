@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <limits.h>
 
 namespace {
 struct Section { uint64_t address=0, size=0; };
@@ -74,10 +75,23 @@ std::string Build() {
     for(char c:std::string(s)) if(!((c>='0'&&c<='9') || c=='.')) throw std::runtime_error("unexpected build format");
     return s;
 }
-void Capture(IVdjCallbacks8* cb) {
-    const char* image=_dyld_get_image_name(0);
-    if(!image || std::string(image)!="/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ")
+void CheckHost() {
+    auto bundle=CFBundleGetMainBundle();
+    auto identifier=CFBundleGetIdentifier(bundle);
+    if(!identifier || !CFEqual(identifier,CFSTR("com.atomixproductions.virtualdj")))
         throw std::runtime_error("not the expected VirtualDJ host");
+    auto url=CFBundleCopyExecutableURL(bundle);
+    UInt8 path[PATH_MAX]={};
+    bool havePath=url && CFURLGetFileSystemRepresentation(url,true,path,sizeof(path));
+    if(url) CFRelease(url);
+    const char* image=_dyld_get_image_name(0);
+    char bundlePath[PATH_MAX], imagePath[PATH_MAX];
+    if(!havePath || !image || !realpath(reinterpret_cast<const char*>(path),bundlePath) ||
+       !realpath(image,imagePath) || strcmp(bundlePath,imagePath))
+        throw std::runtime_error("main image does not match VirtualDJ bundle executable");
+}
+void Capture(IVdjCallbacks8* cb) {
+    CheckHost();
     auto header=_dyld_get_image_header(0);
     auto slide=_dyld_get_image_vmaddr_slide(0);
     auto h=Read(reinterpret_cast<uint64_t>(header),sizeof(mach_header_64));
@@ -139,7 +153,7 @@ void Capture(IVdjCallbacks8* cb) {
 class Probe: public IVdjPluginDsp8 {
     HRESULT VDJ_API OnGetPluginInfo(TVdjPluginInfo8* info) override {
         info->PluginName="VDJMemoryProbe"; info->Author="virtualdj-api-reference";
-        info->Description="Bounded read-only host verb-table capture"; info->Version="0.1";
+        info->Description="Bounded read-only host verb-table capture"; info->Version="0.2";
         info->Bitmap=nullptr; info->Flags=0; return S_OK;
     }
     HRESULT VDJ_API OnLoad() override {
