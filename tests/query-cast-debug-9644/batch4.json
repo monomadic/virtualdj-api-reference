@@ -1,0 +1,51 @@
+{
+  "build": "9644",
+  "batch": 4,
+  "cases": [
+    {
+      "name": "loaded-junk",
+      "script": "deck 1 zzcastalpha & param_cast & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot"
+    },
+    {
+      "name": "loaded-typo",
+      "script": "deck 1 getgenre & param_cast & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot"
+    },
+    {
+      "name": "loaded-cast",
+      "script": "deck 1 get_genre & param_cast & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot"
+    },
+    {
+      "name": "loaded-direct",
+      "script": "deck 1 get_genre & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot"
+    }
+  ],
+  "complete": true,
+  "before": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "after": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

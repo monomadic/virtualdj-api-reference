@@ -4,6 +4,15 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## Cast-mediated query recognition — 2026-09-24
+
+**Bounded pass**, build 18.0.9644, HTTP execute and retained desktop debug screenshots.
+[Genre query capture](../tests/query-cast-debug-9644/README.md): loaded deck 1 supplied
+text through bare `param_cast`, while direct debug, typo and nonsense forms supplied
+no parameter. Empty deck 2 supplied no parameter for valid and invalid forms alike.
+Opposite-order passes agreed; deck loaded/play states unchanged; no track operations.
+This is a state-dependent discriminator, not a general validity test.
+
 ## Arithmetic argument type continuation — 2026-09-24
 
 **Bounded pass**, build 18.0.9644, empty stopped decks, HTTP query/execute and saved

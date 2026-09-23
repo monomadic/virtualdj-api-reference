@@ -1,0 +1,126 @@
+{
+  "build": "18.0.9644",
+  "date": "2026-09-24",
+  "provenance": "Agent observed VirtualDJ desktop debug window after HTTP execute batches; exact scripts and state queries journaled; UI readback manually transcribed.",
+  "scope": "Loaded deck 1 versus empty deck 2 in the same live session; no unload/reload of the same deck, no track identity captured.",
+  "observations": [
+    {
+      "batch": 1,
+      "name": "loaded-direct",
+      "script": "deck 1 get_genre & debug",
+      "output": "No param",
+      "screenshot": "batch1.png"
+    },
+    {
+      "batch": 1,
+      "name": "loaded-cast",
+      "script": "deck 1 get_genre & param_cast & debug",
+      "output": "Text: Bass House",
+      "screenshot": "batch1.png"
+    },
+    {
+      "batch": 1,
+      "name": "loaded-typo",
+      "script": "deck 1 getgenre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch1.png"
+    },
+    {
+      "batch": 1,
+      "name": "loaded-junk",
+      "script": "deck 1 zzcastalpha & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch1.png"
+    },
+    {
+      "batch": 2,
+      "name": "empty-cast",
+      "script": "deck 2 get_genre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch2.png"
+    },
+    {
+      "batch": 2,
+      "name": "empty-typo",
+      "script": "deck 2 getgenre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch2.png"
+    },
+    {
+      "batch": 2,
+      "name": "empty-junk",
+      "script": "deck 2 zzcastalpha & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch2.png"
+    },
+    {
+      "batch": 2,
+      "name": "bad-selector",
+      "script": "deck spoon get_genre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch2.png"
+    },
+    {
+      "batch": 3,
+      "name": "bad-selector",
+      "script": "deck spoon get_genre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch3.png"
+    },
+    {
+      "batch": 3,
+      "name": "empty-junk",
+      "script": "deck 2 zzcastalpha & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch3.png"
+    },
+    {
+      "batch": 3,
+      "name": "empty-typo",
+      "script": "deck 2 getgenre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch3.png"
+    },
+    {
+      "batch": 3,
+      "name": "empty-cast",
+      "script": "deck 2 get_genre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch3.png"
+    },
+    {
+      "batch": 4,
+      "name": "loaded-junk",
+      "script": "deck 1 zzcastalpha & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch4.png"
+    },
+    {
+      "batch": 4,
+      "name": "loaded-typo",
+      "script": "deck 1 getgenre & param_cast & debug",
+      "output": "No param",
+      "screenshot": "batch4.png"
+    },
+    {
+      "batch": 4,
+      "name": "loaded-cast",
+      "script": "deck 1 get_genre & param_cast & debug",
+      "output": "Text: Bass House",
+      "screenshot": "batch4.png"
+    },
+    {
+      "batch": 4,
+      "name": "loaded-direct",
+      "script": "deck 1 get_genre & debug",
+      "output": "No param",
+      "screenshot": "batch4.png"
+    }
+  ],
+  "sha256": {
+    "batch3.png": "eed15089a2d4e4e48b7888267a6c33a7d8920937ae568230754561f2f9fcf22c",
+    "batch2.png": "c807cb882390768558296e3dbaff85db7151a7a35ac3894b6b5b71184ef9df99",
+    "batch1.png": "95236cfbeb3324a68eda43ccdec6e8b18bc145531ce03bff9755212367f742b0",
+    "batch4.png": "4ed61c63245099eada6dbbf526a743af8735df413d5897ab79104361e7e0a801"
+  }
+}

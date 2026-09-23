@@ -15,11 +15,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 41,
-    "Pass": 122,
-    "Untested": 866
+    "Pass": 123,
+    "Untested": 865
    },
    "documented": 772,
-   "tested_pass": 122,
+   "tested_pass": 123,
    "needs_test": 20,
    "blocked": 28,
    "active_incomplete": 3
@@ -6439,16 +6439,18 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_genre implements onQuery only -> Query; HTTP sweep classed it 'context-gated'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_genre implements onQuery only -> Query; HTTP sweep classed it 'context-gated'.",
+    "Build 18.0.9644, 2026-09-24, HTTP execute plus retained desktop UI screenshots tests/query-cast-debug-9644/batch1.png and batch4.png; observations.json and journals retain exact scripts/context. Loaded deck 1: get_genre followed by bare param_cast and debug delivered text; direct debug gave No param. Typo getgenre and nonsense zzcastalpha gave No param. Empty deck 2 gave No param for all three cast forms (batch2.png, batch3.png). Opposite-order passes agreed, loaded/play state unchanged. No extra-argument acceptance or same-deck unload/reload claim."
    ],
    "section": "Song Info",
    "description": "Genre tag",
    "example": "get_genre",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_harmonic": {
    "name": "get_harmonic",

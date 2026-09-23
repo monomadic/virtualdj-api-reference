@@ -98,6 +98,20 @@ observed output. This does not establish the behavior of relative first operands
 or other arithmetic verbs. Both numeric runs restored the temporary variables to
 zero and verified unchanged deck state. Native plugin HRESULTs were not measured.
 
+## Query-to-parameter bridge: loaded versus empty deck
+
+A subsequent [genre-query probe](../tests/query-cast-debug-9644/README.md) on build
+18.0.9644 reproduced the user's distinction with explicit deck scopes. On loaded
+deck 1, `get_genre & debug` produced `No param`, while adding bare `param_cast`
+produced text. The typo `getgenre` and nonsense `zzcastalpha` produced `No param`
+even with the cast. On empty deck 2, the valid query and both controls all produced
+`No param`. Opposite-order passes agreed; exact scripts, state, and debug screenshots
+are retained. No load/unload operation was performed.
+
+This demonstrates a state-dependent query-value probe, not a universal statement
+validator. Absence of an incoming parameter can mean missing query data, and direct
+`query & debug` can miss a value that the cast-mediated chain exposes.
+
 ## Reproduce
 
 ```sh
