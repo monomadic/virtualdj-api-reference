@@ -89,6 +89,7 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
 # attributes as controls — so counting them would corrupt the one thing this
 # inventory measures: what the shipped corpus actually writes.
 EXCLUDE = (
+    "tests/Skins/attribute-order-probe/",
     "tests/Skins/sibling-validity-probe/",
     "tests/Skins/element-validity-probe/",
     "tests/Skins/attribute-validity-probe/",

@@ -117,6 +117,21 @@ by the skin reader, then the script passed to its evaluator and that evaluator's
 outcome. This can distinguish an ignored XML attribute from a recognized
 attribute whose script evaluated false or failed, which pixels alone cannot do.
 
+### Unknown attributes do not stop the tested later valid attributes
+
+Follow-up on 2026-09-24, desktop build 18.0.9644, arm64:
+[attribute-order capture](../tests/Skins/attribute-order-probe/README.md).
+The text reader applied `color="#00FF00"` with either nonsense attribute before
+or after it; all text remained green. The button reader applied `visibility="off"`
+in both orders; those buttons remained hidden while an unconditional button drew.
+Both `zzinvalidalpha` and `zzinvalidbeta` were tested, with opposing nonsense
+values, against valid-only baselines. Reversed-row reloads agreed.
+
+Thus an unknown key did not terminate processing before the valid key in these
+readers. A valid attribute placed after a candidate is another fixture-health
+control, not evidence that the candidate was recognized. This does not establish
+ordering rules for duplicate keys, aliases or malformed XML.
+
 ## The native mechanism to instrument
 
 [The bounded capture](../tests/skin-validity-mechanism-9644-9246.json) retains image

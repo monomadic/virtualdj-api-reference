@@ -1,0 +1,82 @@
+{
+  "date": "2026-09-24",
+  "build": "18.0.9644",
+  "architecture": "arm64",
+  "surface": "desktop skin/text color and button visibility",
+  "channel": "HTTP fixture load/readback and CUA screenshots",
+  "rounds": 2,
+  "observations": [
+    {
+      "case": "color baseline",
+      "attributes": "color=\"#00FF00\"",
+      "both_rounds": "green text visible"
+    },
+    {
+      "case": "alpha then color",
+      "attributes": "zzinvalidalpha=\"#FF0000\" color=\"#00FF00\"",
+      "both_rounds": "green text visible"
+    },
+    {
+      "case": "color then alpha",
+      "attributes": "color=\"#00FF00\" zzinvalidalpha=\"#FF0000\"",
+      "both_rounds": "green text visible"
+    },
+    {
+      "case": "beta then color",
+      "attributes": "zzinvalidbeta=\"#FF0000\" color=\"#00FF00\"",
+      "both_rounds": "green text visible"
+    },
+    {
+      "case": "color then beta",
+      "attributes": "color=\"#00FF00\" zzinvalidbeta=\"#FF0000\"",
+      "both_rounds": "green text visible"
+    },
+    {
+      "case": "visibility baseline",
+      "attributes": "visibility=\"off\"",
+      "both_rounds": "button hidden"
+    },
+    {
+      "case": "alpha then visibility",
+      "attributes": "zzinvalidalpha=\"on\" visibility=\"off\"",
+      "both_rounds": "button hidden"
+    },
+    {
+      "case": "visibility then alpha",
+      "attributes": "visibility=\"off\" zzinvalidalpha=\"on\"",
+      "both_rounds": "button hidden"
+    },
+    {
+      "case": "beta then visibility",
+      "attributes": "zzinvalidbeta=\"on\" visibility=\"off\"",
+      "both_rounds": "button hidden"
+    },
+    {
+      "case": "visibility then beta",
+      "attributes": "visibility=\"off\" zzinvalidbeta=\"on\"",
+      "both_rounds": "button hidden"
+    }
+  ],
+  "positive_control": "Unconditional cyan button visible in both rounds",
+  "screenshot_provenance": "Live main VirtualDJ window captured with cua_repl; reversed rows and fresh revision labels on the second reload.",
+  "conclusion": "Unknown attribute names before or after valid color/visibility attributes did not prevent the valid attributes taking effect.",
+  "limitations": [
+    "Well-formed distinct attribute names; no malformed XML or duplicate-key test.",
+    "No general claim about every reader or surface.",
+    "Two reloads in one process."
+  ],
+  "restoration": {
+    "original_skin_verified": true,
+    "empty_stopped_decks_verified": true,
+    "fixture_uninstalled": true
+  },
+  "hashes": {
+    "preview.png": "14463ae23a76ee5bf605ad724e7340f04002d13e4f4f86adbc9d61881dc46e9f",
+    "round-2.xml": "c0c912d63448b218939f527eedce8a1ef0328cbf3d3a701bfa582309f8ed2207",
+    "round-2.png": "92d7b8c846d1d40614a6be034e9c53073e8989de17b9c04b83b2697dfe2e14d2",
+    "round-1.xml": "91edc6a0ab1bf91084b1293f374085375f6836857f9195ff44ba0f69036a3bc4",
+    "round-1.png": "93bf9264f9032c5ebb22221fd5203849f9afdbcc413775605c4e126e1289a289",
+    "run-9644.jsonl": "3201957b4173d88c76799860b07ff53a90a54e32e99fc175d8096286cbe0ab0e",
+    "skin.png": "c948810b8334fa4ac2fa8815361c58edca6761d8d72f3a3bc01a19ecf6e8f332"
+  }
+}
