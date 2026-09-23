@@ -113,6 +113,8 @@ Start here:
   Element×attribute usage data across built-in/curated skin, pad, samplerbank, video-skin, and mapper XML, cross-checked against the docs. Refresh with `just inventory`; query with `just get-xml-element <name>`, `just list-skin-elements --undocumented`, `just xml-stats`. Do not hand-edit and do not generate a Markdown copy. The `undocumented` count measures mentions of the elements shipped files happen to use — an element no shipped file writes cannot appear in it, and attributes and behavior contracts are out of scope — so `xml-stats` reports `reader_vocabulary_unused` beside it, the reader-vocabulary names from [`tools/extract_skin_readers.py`](../tools/extract_skin_readers.py) that no shipped file writes.
 
 - [Skin Element Discovery](Skin%20Element%20Discovery.md)
+- [Skin Element Validity](Skin%20Element%20Validity.md) — contextual recognition,
+  native instrumentation targets, and controlled element/attribute/script canaries.
   Editorial categories and provenance-preserving observed parent/child relationships. Query `just list-skin-categories`, `just element button --children`, or `just element text --parents`; regenerate nesting with `just skin-relations`. Observed nesting is not a supported-child schema.
 
 - [Skin Schema Recovery](Skin%20Schema%20Recovery.md)

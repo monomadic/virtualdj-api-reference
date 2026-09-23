@@ -1,5 +1,9 @@
 # Skin element categories and observed nesting
 
+For recognition versus rendering, native probe options and the controlled
+nested-child experiment, see [Skin Element Validity](Skin%20Element%20Validity.md).
+Child survival tests containers; it is not a general validity oracle.
+
 Start with `just list-skin-categories`, then filter by the returned category ID:
 
 ```sh

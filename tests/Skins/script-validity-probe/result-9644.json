@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-24",
+  "build": "18.0.9644",
+  "architecture": "arm64",
+  "surface": "desktop skin/button and text",
+  "channel": "HTTP fixture load/readback and CUA screenshots",
+  "rounds": 2,
+  "repeat": "Separate reloads in one process; original skin restored between; rows reversed and revision label changed.",
+  "visible_both_rounds": [
+    "button-baseline",
+    "button-nothing",
+    "button-invalid-alpha",
+    "button-invalid-beta",
+    "text-literal"
+  ],
+  "not_visible_both_rounds": [
+    "text-valid-empty",
+    "text-invalid-alpha",
+    "text-invalid-beta"
+  ],
+  "screenshot_provenance": "Live VirtualDJ main window, captured with cua_repl; synthetic content only.",
+  "restoration": {
+    "original_skin_verified": true,
+    "empty_stopped_decks_verified": true,
+    "fixture_uninstalled": true
+  },
+  "limitations": [
+    "No buttons clicked; no bound button action execution claim.",
+    "Visibility does not establish script validity or native error classification.",
+    "Only these expressions and element placements were tested; no timing or reevaluation contract."
+  ],
+  "hashes": {
+    "preview.png": "14463ae23a76ee5bf605ad724e7340f04002d13e4f4f86adbc9d61881dc46e9f",
+    "round-2.xml": "363b1afbbe2b75d825012cc844eb171d58101afd26ff256204de27314d5950e7",
+    "round-2.png": "a0e049e7fe727072479fd47c83b7e6ef269a42d7c7758d27278958b544f17443",
+    "round-1.xml": "c07dfaec6879877638b0445006f085b9c03846aa3eaa1ad5c636b978759b2d5f",
+    "round-1.png": "508e3f19687c151a3cba1f6b658e871004df9c9840e35f6036dfe0e5748b3414",
+    "run-9644.jsonl": "86d60c5ac566a3cf3952a21323d4f684c37e0620ab4ad13018168b6d89f7e109",
+    "skin.png": "c948810b8334fa4ac2fa8815361c58edca6761d8d72f3a3bc01a19ecf6e8f332"
+  }
+}

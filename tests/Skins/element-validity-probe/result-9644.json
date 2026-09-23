@@ -1,0 +1,91 @@
+{
+  "date": "2026-09-24",
+  "build": "18.0.9644",
+  "architecture": "arm64",
+  "surface": "desktop skin",
+  "channel": "HTTP load/readback plus CUA screenshots",
+  "process_identity": {
+    "http_listener_pid": 27727,
+    "executable": "/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ",
+    "verification": "lsof listener and executable mapping; bundle version from Info.plist"
+  },
+  "rounds": [
+    {
+      "round": 1,
+      "row_order": "forward",
+      "screenshot": "round-1.png",
+      "fixture": "round-1.xml"
+    },
+    {
+      "round": 2,
+      "row_order": "reversed",
+      "screenshot": "round-2.png",
+      "fixture": "round-2.xml"
+    }
+  ],
+  "observations": {
+    "bare": {
+      "child_visible_both_rounds": true,
+      "own_drawing": null,
+      "verdict": "positive child control"
+    },
+    "panel": {
+      "child_visible_both_rounds": true,
+      "own_drawing": null,
+      "verdict": "container behavior confirmed"
+    },
+    "group": {
+      "child_visible_both_rounds": true,
+      "own_drawing": null,
+      "verdict": "container behavior confirmed"
+    },
+    "pannel": {
+      "child_visible_both_rounds": true,
+      "own_drawing": null,
+      "verdict": "container behavior confirmed"
+    },
+    "zzinvalidalpha": {
+      "child_visible_both_rounds": false,
+      "own_drawing": null,
+      "verdict": "nonsense wrapper child not observed; not a universal rejection proof"
+    },
+    "zzinvalidbeta": {
+      "child_visible_both_rounds": false,
+      "own_drawing": null,
+      "verdict": "nonsense wrapper child not observed; not a universal rejection proof"
+    },
+    "button": {
+      "child_visible_both_rounds": false,
+      "own_drawing": "red rectangle",
+      "verdict": "valid leaf renders; nested child not observed"
+    },
+    "textzone": {
+      "child_visible_both_rounds": false,
+      "own_drawing": "yellow OWN TEXT",
+      "verdict": "valid leaf renders; nested child not observed"
+    }
+  },
+  "restoration": {
+    "original_skin_readback_verified": true,
+    "empty_stopped_decks_1_through_4_verified": true,
+    "test_installation_removed": true,
+    "journal": "run-9644.jsonl"
+  },
+  "screenshot_provenance": "Captured from live VirtualDJ via cua_repl; synthetic fixture only. Initial attempt had no fixture screenshot and is not rendering evidence.",
+  "limitations": [
+    "Two reloads in one process, not separate launches.",
+    "Child absence does not distinguish rejection, leaf ownership, clipping or a gated reader in general.",
+    "No private hook, debugger attachment or live skin heap capture was performed.",
+    "Plugin and Remote skin surfaces were not retested."
+  ],
+  "hashes": {
+    "preview.png": "14463ae23a76ee5bf605ad724e7340f04002d13e4f4f86adbc9d61881dc46e9f",
+    "round-2.xml": "4c0f2f8d9464ef2d04c63748d83daed12bc7594b9e0ee7560f7f3559ecefad67",
+    "round-2.png": "f0a3f403c0edc4939e563af290b2c80fdb9c9a2751a635ee2c9c8ab1ed513103",
+    "round-1.xml": "052000f74c157a6a5dc831306942c92d3734b9e320e53756945b6ebcfaa625cc",
+    "round-1.png": "b1673cd40e260735cd4e998175a8d26522030ac8fef78cd084ab517d3a163177",
+    "run-9644-initial.jsonl": "03f34e94f7ad5a50eb0bbf87ebce19b6844b49ca5a4eecaeb646a3d43e416297",
+    "run-9644.jsonl": "35e279822cf2a0e6f134060b13d7c631592ecd1b9d6853feb4157d18f5098101",
+    "skin.png": "c948810b8334fa4ac2fa8815361c58edca6761d8d72f3a3bc01a19ecf6e8f332"
+  }
+}

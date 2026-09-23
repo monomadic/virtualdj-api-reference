@@ -4,6 +4,21 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## Skin rendering as a recognition oracle — 2026-09-24
+
+**Partial**, desktop build 18.0.9644, arm64, empty stopped decks. The
+[report and captures](Skin%20Element%20Validity.md) compare nested objects,
+unknown attributes, `condition`, `visibility` and button/text `action` across
+reversed-order reloads with retained live screenshots. Valid false scripts and
+nonsense scripts both suppress condition/visibility drawing; a valid empty text
+query and nonsense text queries are all blank; invalid button action bindings
+do not suppress its rectangle. Nested-child survival distinguishes the tested
+containers but not all valid elements. No bound button action was clicked and
+no per-verb status was promoted. Original skin/deck readbacks and byte-checked
+fixture removal are in each journal. The initial element run lacked a fixture
+screenshot and remains separately labelled unconfirmed. The report identifies
+9246 symbol-backed/current-image native trace targets; no live hook was installed.
+
 ## H4 exact-script parser probes — 2026-09-12
 
 **Partial**, HTTP build 9598, named read-only `parser_constants` fixture. The [run report](Runtime%20Argument%20Grammar%20Tests.md) links exact scripts, repeated outputs, controls, deck/transport context, binary provenance and the uncompleted scope/editor cases. Confirmation and focused follow-up captures completed; the original capture is incomplete after the app exited during a deck-keyword pass. Causation is unproven. No per-verb statuses or normative grammar rules were promoted. The continuation adds zoom/beatlock/all-deck action comparisons with independent readback and verified restoration, selected-deck comparisons and raw whitespace probes. The report and captures preserve aborted attempts separately from completed runs. Next: close remaining consumer/lifetime/editor gaps using the recorded static frontier.
