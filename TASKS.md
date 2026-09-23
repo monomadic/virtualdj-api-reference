@@ -1635,6 +1635,66 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
+### S7. Read the Atomix add-on skins into the skin XML inventory
+
+Status: Ready
+
+Note: Opened 2026-09-24. The add-on trees (`examples/Skins/Official-Addons/`, 32 skins in 40
+XML files) reached the repo on 2026-09-21/22 and joined the **script** corpus in `bff50cd`, but
+the **XML vocabulary** side never read them: `tools/extract_xml_inventory.py` and
+`tools/skin_relations.py` both carry fixed glob lists naming only `examples/Skins/Built-In/`,
+the SDK browser example, this repo's own skeletons and `tests/Skins/`. So `just element`,
+`just list-skin-elements --undocumented` and the observed-nesting queries still answer from the
+bundle skins alone. This task closes that gap. It is desk work: no live instance needed.
+
+**Why it is worth a task rather than a one-line glob edit.** A first-pass comparison against
+the committed inventory's `skins` family found roughly 12 element names and about 226
+element/attribute pairs that no bundle file writes — led by `tooltip_localized` (214 uses),
+`filelist` (63), `pannel` (29), `panel@deckn`, `textselected@format`, `panel@brheight`,
+`down@nb`/`down@smooth`, `textzone@geterrormessage`. That figure is a rough scan, not a
+finding: some names may already be documented under another family, and `pannel` is probably
+the misspelling the repo has already recorded. Verify each before writing any of it down.
+
+The blast radius is the reason for care. Regenerating the inventory also moves
+`extract_skin_readers.py` (which diffs the inventory against the binary's reader vocabulary),
+`extract_skin_classes.py`, `skin-xml-relations.json`, `just topic`, and the undocumented-element
+and attribute lists the docs cite. A batch of genuinely new vendor vocabulary lands as new
+documentation gaps in [docs/Skin SDK.md](docs/Skin%20SDK.md), which is the point: the reason to
+read these files is that the controller *screen* skins and the 2018 default skin exercise
+browser, sideview and playlist surfaces no bundle skin does.
+
+Work, in order:
+
+1. **Decide the grading first, before any regeneration.** The add-ons are Tier 2 vendor
+   examples, same as `Built-in skin`, but they are catalog downloads rather than bundle
+   members, so `tools/check_bundle_copies.py` cannot hold them against a file the installed app
+   still ships. The script corpus answered this by giving them their own `addon` source; decide
+   whether the inventory and the relations report need the same separation, or whether a shared
+   `Published skin` label is enough. Record the decision where the tool declares its sources.
+2. **Add the roots and regenerate**, then read the diff rather than trusting the totals:
+   `python3 tools/extract_xml_inventory.py`, `just skin-relations`, and whatever
+   `just check` then reports stale — expect the reader and class artifacts to follow, the way
+   attested-tails and the action catalog followed the corpus change.
+3. **Triage the new names, one at a time.** For each: is it genuinely absent from the docs, or
+   present under another family or another spelling? `just element <tag>` and
+   `just grep-verb-docs` answer most of it. A name that only the add-ons write is the
+   interesting half — say so per name, with the file that writes it.
+4. **Route the real gaps into the docs.** Element-level gaps belong in
+   [docs/Skin SDK.md](docs/Skin%20SDK.md); attribute-level gaps that no doc explains are what
+   `just element --undocumented` is for, so leaving them listed is a legitimate outcome. Do not
+   infer semantics from a name: an attribute appearing in shipped XML is attested vocabulary,
+   never a tested behavior (Evidence Standards).
+5. **Keep the counts honest.** Inventory totals are derived artifacts, so name the command that
+   answers rather than writing the number into prose; a per-build observation gets a stamp.
+
+Start here:
+
+- `tools/extract_xml_inventory.py` — the `FAMILIES` glob list that excludes the add-ons
+- `tools/skin_relations.py` — the `SOURCES` tuple, same exclusion
+- [examples/Skins/Official-Addons/README.md](examples/Skins/Official-Addons/README.md) — provenance, add-on ids, zip hashes
+- `tools/extract_script_corpus.py` — how the same provenance question was settled for the script corpus (`addon` source)
+- [docs/Skin Element Discovery.md](docs/Skin%20Element%20Discovery.md) — how the element queries are meant to be used
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
