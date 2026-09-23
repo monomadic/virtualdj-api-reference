@@ -112,6 +112,17 @@ This demonstrates a state-dependent query-value probe, not a universal statement
 validator. Absence of an incoming parameter can mean missing query data, and direct
 `query & debug` can miss a value that the cast-mediated chain exposes.
 
+## Cast argument variants
+
+The [param_cast matrix](../tests/param-cast-types-9644/README.md) tests numeric and
+text synthetic sources on build 18.0.9644, through both HTTP query and execute/debug,
+in opposite-order passes. Named conversions can be distinguished by their output
+types, values and relative flag. But bare and nonsense cast names preserve a value
+through execute while failing with E_INVALIDARG through query. Formatting and text
+length also differ by source type and channel. Therefore neither query acceptance
+nor parameter presence alone defines execute argument validity. The linked matrix
+retains exact scripts, results, UI screenshots, and unresolved comparisons.
+
 ## Reproduce
 
 ```sh

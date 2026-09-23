@@ -4,6 +4,16 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## param_cast argument and source-type matrix — 2026-09-24
+
+**Bounded pass**, build 18.0.9644, synthetic numeric/text sources, HTTP query and
+execute with retained debug screenshots. [Cast matrix](../tests/param-cast-types-9644/README.md)
+separates conversions from nonsense controls where output type/value/flags change.
+Bare/nonsense casts pass a value through execute but query as E_INVALIDARG;
+formatting and text limits also show channel differences. Percentage, boolean and
+fractional-part behavior differ by source type. Forward/reverse passes agree and
+deck state is unchanged. Absolute remains undistinguished on the absolute input.
+
 ## Cast-mediated query recognition — 2026-09-24
 
 **Bounded pass**, build 18.0.9644, HTTP execute and retained desktop debug screenshots.

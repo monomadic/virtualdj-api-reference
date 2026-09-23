@@ -1,0 +1,92 @@
+{
+  "build": "9644",
+  "batch": 5,
+  "suite": "casts",
+  "cases": [
+    {
+      "name": "text-junk-beta",
+      "script": "get_text '1.75' & param_cast zzcastbeta & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast zzcastbeta",
+      "query_result": "error:-2147024809"
+    },
+    {
+      "name": "text-junk-alpha",
+      "script": "get_text '1.75' & param_cast zzcastalpha & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast zzcastalpha",
+      "query_result": "error:-2147024809"
+    },
+    {
+      "name": "text-text-limit",
+      "script": "get_text '1.75' & param_cast 'text' 3 & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast 'text' 3",
+      "query_result": "1.7"
+    },
+    {
+      "name": "text-format",
+      "script": "get_text '1.75' & param_cast '000' & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast '000'",
+      "query_result": "1.75"
+    },
+    {
+      "name": "text-absolute",
+      "script": "get_text '1.75' & param_cast absolute & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast absolute",
+      "query_result": "1.75"
+    },
+    {
+      "name": "text-relative",
+      "script": "get_text '1.75' & param_cast relative & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast relative",
+      "query_result": "1.75"
+    },
+    {
+      "name": "text-frac",
+      "script": "get_text '1.75' & param_cast frac & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast frac",
+      "query_result": "0"
+    },
+    {
+      "name": "text-int-trunc",
+      "script": "get_text '1.75' & param_cast int_trunc & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast int_trunc",
+      "query_result": "1"
+    }
+  ],
+  "complete": true,
+  "before": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "after": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

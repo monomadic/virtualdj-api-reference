@@ -434,6 +434,7 @@ lint-mappers *paths:
     {{python}} tools/lint_mappers.py "$@"
 
 check:
+    {{python}} tools/probe_query_cast_debug.py --check tests/param-cast-types-9644
     {{python}} tools/probe_argument_types.py --check tests/argument-types-multiply-9644/values-expanded.json
     {{python}} tools/probe_argument_types.py --check tests/argument-types-9644/values.json
     {{python}} tools/probe_statement_branches.py --check tests/statement-branches-9644.json

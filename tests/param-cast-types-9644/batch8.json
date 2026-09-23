@@ -1,0 +1,92 @@
+{
+  "build": "9644",
+  "batch": 8,
+  "suite": "casts",
+  "cases": [
+    {
+      "name": "number-text",
+      "script": "constant 1.75 & param_cast text & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast text",
+      "query_result": "1.75"
+    },
+    {
+      "name": "number-boolean",
+      "script": "constant 1.75 & param_cast boolean & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast boolean",
+      "query_result": "yes"
+    },
+    {
+      "name": "number-beats",
+      "script": "constant 1.75 & param_cast beats & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast beats",
+      "query_result": "1.75bt"
+    },
+    {
+      "name": "number-ms",
+      "script": "constant 1.75 & param_cast ms & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast ms",
+      "query_result": "2ms"
+    },
+    {
+      "name": "number-percentage",
+      "script": "constant 1.75 & param_cast percentage & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast percentage",
+      "query_result": "175%"
+    },
+    {
+      "name": "number-integer",
+      "script": "constant 1.75 & param_cast integer & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast integer",
+      "query_result": "2"
+    },
+    {
+      "name": "number-float",
+      "script": "constant 1.75 & param_cast float & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast float",
+      "query_result": "1.75"
+    },
+    {
+      "name": "number-bare",
+      "script": "constant 1.75 & param_cast & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "constant 1.75 & param_cast",
+      "query_result": "error:-2147024809"
+    }
+  ],
+  "complete": true,
+  "before": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "after": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

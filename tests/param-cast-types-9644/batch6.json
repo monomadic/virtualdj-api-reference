@@ -1,0 +1,92 @@
+{
+  "build": "9644",
+  "batch": 6,
+  "suite": "casts",
+  "cases": [
+    {
+      "name": "text-text",
+      "script": "get_text '1.75' & param_cast text & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast text",
+      "query_result": "1.75"
+    },
+    {
+      "name": "text-boolean",
+      "script": "get_text '1.75' & param_cast boolean & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast boolean",
+      "query_result": "no"
+    },
+    {
+      "name": "text-beats",
+      "script": "get_text '1.75' & param_cast beats & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast beats",
+      "query_result": "1.75bt"
+    },
+    {
+      "name": "text-ms",
+      "script": "get_text '1.75' & param_cast ms & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast ms",
+      "query_result": "2ms"
+    },
+    {
+      "name": "text-percentage",
+      "script": "get_text '1.75' & param_cast percentage & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast percentage",
+      "query_result": "1.75%"
+    },
+    {
+      "name": "text-integer",
+      "script": "get_text '1.75' & param_cast integer & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast integer",
+      "query_result": "2"
+    },
+    {
+      "name": "text-float",
+      "script": "get_text '1.75' & param_cast float & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast float",
+      "query_result": "1.75"
+    },
+    {
+      "name": "text-bare",
+      "script": "get_text '1.75' & param_cast & debug",
+      "execute_return": "true",
+      "observation": "Requires saved debug screenshot",
+      "query_script": "get_text '1.75' & param_cast",
+      "query_result": "error:-2147024809"
+    }
+  ],
+  "complete": true,
+  "before": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "after": {
+    "deck 1 loaded": "yes",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}
