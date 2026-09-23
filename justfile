@@ -413,6 +413,10 @@ plugin-collect-leads:
 plugin-probe name:
     @{{python}} tools/plugin_introspect.py --get "{{name}}"
 
+# Fixed safe predicate calibration. No args prints the plan; --run needs a fresh --output.
+statement-branches *args:
+    @{{python}} tools/probe_statement_branches.py {{args}}
+
 # --- cross-corpus topic search ----------------------------------------------
 # One term -> matching verbs, effects, XML elements, REAL example files, docs,
 # and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
@@ -427,6 +431,7 @@ lint-mappers *paths:
     {{python}} tools/lint_mappers.py "$@"
 
 check:
+    {{python}} tools/probe_statement_branches.py --check tests/statement-branches-9644.json
     just check-lyrics-cache
     just check-linked-sid
     just check-runtime-grammar

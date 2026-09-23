@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "channel": "HTTP query and execute with independent numeric marker readback",
+  "variable": "$statement_branch_probe_9644",
+  "cases": [
+    {
+      "round": 1,
+      "case": "true",
+      "predicate": "true",
+      "execute_script": "true ? set '$statement_branch_probe_9644' 1 : set '$statement_branch_probe_9644' 2",
+      "execute_return": "true",
+      "marker": "1",
+      "true_code": 1,
+      "false_code": 2,
+      "outcome": "TRUE_BRANCH",
+      "query_script": "true ? get_text 'TRUE_BRANCH' : get_text 'FALSE_BRANCH'",
+      "query_result": "TRUE_BRANCH"
+    },
+    {
+      "round": 1,
+      "case": "false",
+      "predicate": "false",
+      "execute_script": "false ? set '$statement_branch_probe_9644' 1 : set '$statement_branch_probe_9644' 2",
+      "execute_return": "true",
+      "marker": "2",
+      "true_code": 1,
+      "false_code": 2,
+      "outcome": "FALSE_BRANCH",
+      "query_script": "false ? get_text 'TRUE_BRANCH' : get_text 'FALSE_BRANCH'",
+      "query_result": "FALSE_BRANCH"
+    },
+    {
+      "round": 1,
+      "case": "on",
+      "predicate": "on",
+      "execute_script": "on ? set '$statement_branch_probe_9644' 1 : set '$statement_branch_probe_9644' 2",
+      "execute_return": "true",
+      "marker": "1",
+      "true_code": 1,
+      "false_code": 2,
+      "outcome": "TRUE_BRANCH",
+      "query_script": "on ? get_text 'TRUE_BRANCH' : get_text 'FALSE_BRANCH'",
+      "query_result": "TRUE_BRANCH"
+    }
+  ],
+  "complete": false,
+  "limitations": [
+    "Fixed simple predicates only; not a general grammar validator.",
+    "NO_BRANCH does not identify syntax error versus missing evaluation capability or state.",
+    "A taken branch does not prove all arguments were consumed.",
+    "An initially unset temporary variable is restored to zero, not deleted."
+  ],
+  "build": "9644",
+  "version": "2026",
+  "context_before": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "marker_before": "",
+  "error": "timed out",
+  "restoration": {
+    "expected_marker": "0",
+    "observed_marker": "0",
+    "context_after": {
+      "deck 1 loaded": "no",
+      "deck 1 play": "no",
+      "deck 2 loaded": "no",
+      "deck 2 play": "no",
+      "deck 3 loaded": "no",
+      "deck 3 play": "no",
+      "deck 4 loaded": "no",
+      "deck 4 play": "no"
+    },
+    "verified": true,
+    "exact_marker_restoration": false
+  }
+}

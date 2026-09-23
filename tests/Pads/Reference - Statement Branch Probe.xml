@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Project-authored diagnostic fixture, not proof of validity.
+     First verify pad 1 opens a popup. If it does not, STOP: silence elsewhere
+     cannot be interpreted. Record build, custom-button/pad/editor surface,
+     each popup and screenshots. Main pads show branch labels; shift pads
+     reproduce the user's bare-debug false-branch form. No media actions.
+     HTTP marker calibration on 9644 takes the false branch for unknown verbs;
+     this page is for investigating the reported surface/build difference. -->
+<page name="REF: STATEMENT BRANCH">
+  <pad1 name="CALIBRATE" color="color 'white'">debug 'CALIBRATION'</pad1>
+  <pad2 name="TRUE" color="color 'green'">true ? debug 'TRUE' : debug 'FALSE'</pad2>
+  <pad3 name="FALSE" color="color 'orange'">false ? debug 'TRUE' : debug 'FALSE'</pad3>
+  <pad4 name="TEXT" color="color 'cyan'">get_text 'hi' ? debug 'TRUE' : debug 'FALSE'</pad4>
+  <pad5 name="TYPO" color="color 'red'">gettext 'hi' ? debug 'TRUE' : debug 'FALSE'</pad5>
+  <pad6 name="UNKNOWN A" color="color 'red'">zzinvalidalpha ? debug 'TRUE' : debug 'FALSE'</pad6>
+  <pad7 name="UNKNOWN B" color="color 'red'">zzinvalidbeta ? debug 'TRUE' : debug 'FALSE'</pad7>
+  <pad8 name="EXTRA TAIL" color="color 'orange'">on zzinvalidalpha ? debug 'TRUE' : debug 'FALSE'</pad8>
+  <shift_pad1 name="NO PARAM" color="color 'white'">debug</shift_pad1>
+  <shift_pad2 name="TRUE FALSE-ARM" color="color 'green'">true ? nothing : debug</shift_pad2>
+  <shift_pad3 name="FALSE FALSE-ARM" color="color 'orange'">false ? nothing : debug</shift_pad3>
+  <shift_pad4 name="TEXT EXACT" color="color 'cyan'">get_text 'hi' ? nothing : debug</shift_pad4>
+  <shift_pad5 name="TYPO EXACT" color="color 'red'">gettext 'hi' ? nothing : debug</shift_pad5>
+  <shift_pad6 name="UNKNOWN A EXACT" color="color 'red'">zzinvalidalpha ? nothing : debug</shift_pad6>
+  <shift_pad7 name="UNKNOWN B EXACT" color="color 'red'">zzinvalidbeta ? nothing : debug</shift_pad7>
+  <shift_pad8 name="EMPTY TEXT" color="color 'cyan'">get_text '' ? nothing : debug</shift_pad8>
+</page>

@@ -1,0 +1,38 @@
+{
+  "build": "18.0.9644",
+  "date": "2026-09-24",
+  "channel": "HTTP execute, debug log observed in user-supplied and agent-captured screenshots",
+  "source": "User identified current 9644 instance and supplied screenshot after receiving labelled probe output.",
+  "observed_messages": [
+    "BP_CALIBRATION",
+    "BP_VALID_FALSE",
+    "BP_TYPO_FALSE",
+    "BP_ALPHA_FALSE",
+    "BP_BETA_FALSE"
+  ],
+  "conclusion": "Unknown predicate names reached false debug branch; no reliable validity discriminator in this HTTP wrapper.",
+  "limitations": [
+    "Screenshot supplied by user; no attribution of unrelated Text: hi rows.",
+    "Earlier agent screenshot showed a partial log, not a completed negative result.",
+    "User-reported original custom-button/pad silence is not reproduced by this HTTP calibration."
+  ],
+  "hashes": {
+    "http-isolated.jsonl": "ca8780c45b8b0222048d0a4aba6d40a5b33e526f41fb944928e006d170ca83e1",
+    "http-tagged.png": "a8fc7613e5fccbfb792fea24c4537fa93205026b3df1158f0025c9802776dc13",
+    "http.jsonl": "4edb0bf59cb15405462155e10c4b22094ebead2d7f5b16056a4f4da252faf0f1",
+    "http-tagged.jsonl": "5fc6863bae8800e9715097317d54d7287dd33c2709592cd38d76471175d62d3d",
+    "user-captured-http-tagged.png": "002db3a6f94d3142f827193aaed8bcc30b5c06418759ed8487c19e1ebfa328f6",
+    "http-retry-exact.jsonl": "3f4cc50357970e8dda5e00ca38a50db258a05021e137a268290a07e4dabae546",
+    "http-retry-exact.png": "b93b7b1eae655a88e6189d5d6aa4ea00e2810eeef43e75a16ed653bf11abe218"
+  },
+  "exact_form_retry": {
+    "journal": "http-retry-exact.jsonl",
+    "screenshot": "http-retry-exact.png",
+    "observations": {
+      "VALID": "No param between matching BEGIN and END labels",
+      "TYPO": "No param between matching BEGIN and END labels",
+      "ALPHA": "No param between matching BEGIN and END labels"
+    },
+    "isolated_prior_output": "BP_ISOLATED_A_FALSE visible in final log"
+  }
+}

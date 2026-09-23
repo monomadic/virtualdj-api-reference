@@ -4,6 +4,19 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## Statement branch recognition calibration — 2026-09-24
+
+**Partial**, build 18.0.9644, HTTP query/execute, empty stopped decks. The
+[probe report](Statement%20Branch%20Probe.md) retains reversed-order and swapped-code
+numeric marker rounds, initial timeout/verified restoration, and the user-captured
+tagged debug log plus an agent-captured exact bare-debug retry. Valid text, typo and
+nonsense predicates each produced `No param` between matching retry labels.
+Unknown verb names reached the false branch, so this wrapper is
+not a statement validity oracle on HTTP. The user's original custom-button/pad
+silence remains unreproduced; immediate popup absence was not reliable. No per-verb
+status was promoted. The temporary marker was restored to zero from initially unset;
+the synthetic skin was removed after verified original-skin/deck restoration.
+
 ## Skin rendering as a recognition oracle — 2026-09-24
 
 **Partial**, desktop build 18.0.9644, arm64, empty stopped decks. The

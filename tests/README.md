@@ -137,6 +137,7 @@ Test assets are important evidence for the documentation project. They are kept 
 | File | Purpose |
 | --- | --- |
 | [Pads/Reference - Sparse Helper Tests.xml](Pads/Reference%20-%20Sparse%20Helper%20Tests.xml) | Sparse official helper checks such as `connect`, `system`, `open_stem_creator`, and `dualdeckmode_decks`. |
+| [Pads/Reference - Statement Branch Probe.xml](Pads/Reference%20-%20Statement%20Branch%20Probe.xml) | Calibrate debug branches against true, false, valid text and unknown names; not a general validity test. See [Statement Branch Probe](../docs/Statement%20Branch%20Probe.md). |
 | [Pads/Reference - Sampler Loaded Test.xml](Pads/Reference%20-%20Sampler%20Loaded%20Test.xml) | Page-aware sampler loaded-state checks. |
 | [Pads/Reference - Hidden Button Editor Tests.xml](Pads/Reference%20-%20Hidden%20Button%20Editor%20Tests.xml) | Low-risk flag1-hidden Button Editor taxonomy probes such as `stem_volume`, `sampler_inputgain`, pad-page helpers, and plugin query helpers. |
 | [Pads/Reference - Mix FX Query Test.xml](Pads/Reference%20-%20Mix%20FX%20Query%20Test.xml) | Mix FX selected-state and active-state query checks. |
