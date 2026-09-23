@@ -102,6 +102,17 @@ STRUCTURAL_FAMILIES = (
     ("percent-multiplier", re.compile(r"^(deck \S+ )?[a-z_]+ \d+%$")),
     ("slot-arg", re.compile(r"^(deck \S+ )?[a-z_]+ ('all'|all|\d+)( .*)?$")),
     ("quoted-list", re.compile(r"^(deck \S+ )?[a-z_]+ [\"'][^\"']*,[^\"']*[\"']")),
+    # A quoted keyword that names a WRITE: `zoom 'save'` stores the current
+    # zoom, so query position rejects it exactly as it rejects `zoom 2`.
+    # Probed on build 18.0.9644 (2026-09-24) before adding this family:
+    # `zoom` alone answers `0.18` and `zoom 'recall'` answers `no`, so the verb
+    # and the keyword tail both evaluate here; `zoom 'save'` and `zoom 2` both
+    # answer E_INVALIDARG. The nonsense control `zoom 'zzqqx'` answers
+    # E_INVALIDARG too, so this rejection does NOT separate `save` from junk —
+    # it is the channel's write boundary, not evidence about the keyword.
+    # Kept to the one attested keyword rather than all quoted tails, so a
+    # genuinely novel construct still surfaces as unexplained.
+    ("state-write-keyword", re.compile(r"^(deck \S+ )?[a-z_]+ 'save'$")),
     ("ternary-with-action", re.compile(r"\?")),
 )
 
