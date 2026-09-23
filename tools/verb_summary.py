@@ -51,7 +51,7 @@ def resolve(name: str, store: dict) -> tuple[str, dict | None, str | None]:
 def pick_examples(snippets: list[dict], verb: str, limit: int) -> list[dict]:
     """Short, diverse, vendor-shipped first: one per source, then by length."""
     mine = [s for s in snippets if verb in s["verbs"]]
-    mine.sort(key=lambda s: (0 if {"builtin", "factory"} & set(s["sources"])
+    mine.sort(key=lambda s: (0 if {"builtin", "factory", "addon"} & set(s["sources"])
                              else 1 if "catalog" in s["sources"] else 2, len(s["script"])))
     out, seen = [], set()
     for s in mine:
