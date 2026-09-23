@@ -1,0 +1,341 @@
+{"utc": "2026-09-23T19:31:05.980455+00:00", "intent": {"kind": "query", "script": "get_build"}}
+{"utc": "2026-09-23T19:31:05.994570+00:00", "response": "9644"}
+{"utc": "2026-09-23T19:31:06.099696+00:00", "intent": {"kind": "query", "script": "deck 1 loaded"}}
+{"utc": "2026-09-23T19:31:06.101514+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.202087+00:00", "intent": {"kind": "query", "script": "deck 1 play"}}
+{"utc": "2026-09-23T19:31:06.204431+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.307361+00:00", "intent": {"kind": "query", "script": "deck 2 loaded"}}
+{"utc": "2026-09-23T19:31:06.309525+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.411980+00:00", "intent": {"kind": "query", "script": "deck 2 play"}}
+{"utc": "2026-09-23T19:31:06.413582+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.518697+00:00", "intent": {"kind": "query", "script": "deck 3 loaded"}}
+{"utc": "2026-09-23T19:31:06.520634+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.625767+00:00", "intent": {"kind": "query", "script": "deck 3 play"}}
+{"utc": "2026-09-23T19:31:06.627537+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.732321+00:00", "intent": {"kind": "query", "script": "deck 4 loaded"}}
+{"utc": "2026-09-23T19:31:06.734532+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.839838+00:00", "intent": {"kind": "query", "script": "deck 4 play"}}
+{"utc": "2026-09-23T19:31:06.843099+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:06.946046+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:06.948315+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:07.052754+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_source_9644'"}}
+{"utc": "2026-09-23T19:31:07.054493+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:07.159627+00:00", "baseline": {"build": "9644", "phase": "values", "consumer": "multiply", "complete": false, "cases": [], "matrix": "extended", "context_before": {"deck 1 loaded": "no", "deck 1 play": "no", "deck 2 loaded": "no", "deck 2 play": "no", "deck 3 loaded": "no", "deck 3 play": "no", "deck 4 loaded": "no", "deck 4 play": "no"}, "variables_before": {"$argtype_target_9644": "0", "$argtype_source_9644": "0"}}}
+{"utc": "2026-09-23T19:31:07.160041+00:00", "intent": {"kind": "execute", "script": "set '$argtype_source_9644' 0.37"}}
+{"utc": "2026-09-23T19:31:07.161399+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:07.263882+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_source_9644'"}}
+{"utc": "2026-09-23T19:31:07.265718+00:00", "response": "0.37"}
+{"utc": "2026-09-23T19:31:07.366205+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:07.367917+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:07.473048+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:07.474609+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:07.579833+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:07.582562+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:07.687791+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:07.691393+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:07.793760+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 1 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:07.797122+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:07.901470+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:07.903978+00:00", "response": "0.8"}
+{"utc": "2026-09-23T19:31:08.008172+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 1"}}
+{"utc": "2026-09-23T19:31:08.011573+00:00", "response": "0.8"}
+{"utc": "2026-09-23T19:31:08.113527+00:00", "observation": {"round": 1, "case": "integer", "argument": "1", "execute_return": "true", "value": "0.8", "execute_script": "param_multiply 0.8 1 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 1", "query_result": "0.8"}}
+{"utc": "2026-09-23T19:31:08.114446+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:08.116595+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:08.221763+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.225561+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:08.326420+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.330310+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:08.432134+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.434664+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:08.539722+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 0.5"}}
+{"utc": "2026-09-23T19:31:08.542872+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:08.646673+00:00", "observation": {"round": 1, "case": "decimal", "argument": "0.5", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 0.5", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:08.651461+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:08.657750+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:08.758887+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.760337+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:08.865478+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 50% & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.868014+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:08.972122+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:08.975448+00:00", "response": "40%"}
+{"utc": "2026-09-23T19:31:09.078207+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 50%"}}
+{"utc": "2026-09-23T19:31:09.081326+00:00", "response": "40%"}
+{"utc": "2026-09-23T19:31:09.186761+00:00", "observation": {"round": 1, "case": "percent", "argument": "50%", "execute_return": "true", "value": "40%", "execute_script": "param_multiply 0.8 50% & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 50%", "query_result": "40%"}}
+{"utc": "2026-09-23T19:31:09.187161+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:09.189546+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:09.294265+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:09.296018+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:09.401238+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:09.403297+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:09.508296+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:09.509723+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:09.610826+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 '0.5'"}}
+{"utc": "2026-09-23T19:31:09.612805+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:09.716964+00:00", "observation": {"round": 1, "case": "quoted-number", "argument": "'0.5'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 '0.5'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:09.717636+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:09.719152+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:09.823913+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:09.825595+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:09.929861+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:09.931743+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:10.034071+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:10.036341+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:10.140120+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 '$argtype_source_9644'"}}
+{"utc": "2026-09-23T19:31:10.142904+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:10.246056+00:00", "observation": {"round": 1, "case": "source-variable", "argument": "'$argtype_source_9644'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 '$argtype_source_9644'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:10.246948+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:10.250605+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:10.355020+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:10.358574+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:10.463911+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:10.468751+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:10.571263+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:10.573805+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:10.679354+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'zzargalpha'"}}
+{"utc": "2026-09-23T19:31:10.683086+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:10.789098+00:00", "observation": {"round": 1, "case": "junk-alpha", "argument": "'zzargalpha'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'zzargalpha'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:10.789743+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:10.792078+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:10.897131+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:10.900751+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:11.001309+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.004345+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:11.109521+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.111206+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:11.212323+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'zzargbeta'"}}
+{"utc": "2026-09-23T19:31:11.214177+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:11.319315+00:00", "observation": {"round": 1, "case": "junk-beta", "argument": "'zzargbeta'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'zzargbeta'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:11.319470+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:11.320655+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:11.423500+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.425680+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:11.530868+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.532429+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:11.637551+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.639453+00:00", "response": "1"}
+{"utc": "2026-09-23T19:31:11.744593+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8"}}
+{"utc": "2026-09-23T19:31:11.746384+00:00", "response": "error:1"}
+{"utc": "2026-09-23T19:31:11.851514+00:00", "observation": {"round": 1, "case": "missing", "argument": "", "execute_return": "true", "value": "1", "execute_script": "param_multiply 0.8 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8", "query_result": "error:1"}}
+{"utc": "2026-09-23T19:31:11.852236+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:11.854087+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:11.959276+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:11.962817+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:12.068290+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:12.071356+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:12.172389+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:12.176073+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:12.281503+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 +0.5"}}
+{"utc": "2026-09-23T19:31:12.285006+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:12.390501+00:00", "observation": {"round": 1, "case": "signed", "argument": "+0.5", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 +0.5", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:12.390904+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:12.392235+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:12.497351+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:12.499353+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:12.602009+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 500ms & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:12.603906+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:12.707231+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:12.709966+00:00", "response": "400ms"}
+{"utc": "2026-09-23T19:31:12.813938+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 500ms"}}
+{"utc": "2026-09-23T19:31:12.815734+00:00", "response": "400ms"}
+{"utc": "2026-09-23T19:31:12.918667+00:00", "observation": {"round": 1, "case": "milliseconds", "argument": "500ms", "execute_return": "true", "value": "400ms", "execute_script": "param_multiply 0.8 500ms & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 500ms", "query_result": "400ms"}}
+{"utc": "2026-09-23T19:31:12.918992+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:12.921147+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:13.025482+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.028205+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:13.133329+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 0 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.134770+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:13.239882+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.241446+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:13.343322+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 0"}}
+{"utc": "2026-09-23T19:31:13.344737+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:13.448953+00:00", "observation": {"round": 1, "case": "zero", "argument": "0", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 0 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 0", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:13.449445+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:13.450701+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:13.555822+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.558705+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:13.659882+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'constant 0.5' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.661613+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:13.763276+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:13.764994+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:13.870188+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'constant 0.5'"}}
+{"utc": "2026-09-23T19:31:13.871841+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:13.976521+00:00", "observation": {"round": 1, "case": "quoted-action", "argument": "'constant 0.5'", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 'constant 0.5' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'constant 0.5'", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:13.976938+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:13.978315+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:14.080512+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.082048+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:14.187160+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 `constant 0.5` & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.188990+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:14.292041+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.293740+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:14.398354+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 `constant 0.5`"}}
+{"utc": "2026-09-23T19:31:14.400477+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:14.505893+00:00", "observation": {"round": 1, "case": "computed-action", "argument": "`constant 0.5`", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 `constant 0.5` & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 `constant 0.5`", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:14.506855+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:14.511397+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:14.617034+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.618666+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:14.721677+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 `constant 0.5` & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.723696+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:14.826534+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:14.828258+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:14.929842+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 `constant 0.5`"}}
+{"utc": "2026-09-23T19:31:14.931809+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:15.036920+00:00", "observation": {"round": 2, "case": "computed-action", "argument": "`constant 0.5`", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 `constant 0.5` & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 `constant 0.5`", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:15.037363+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:15.038925+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:15.144070+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.145882+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:15.251024+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'constant 0.5' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.252681+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:15.356625+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.358655+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:15.463846+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'constant 0.5'"}}
+{"utc": "2026-09-23T19:31:15.469915+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:15.571646+00:00", "observation": {"round": 2, "case": "quoted-action", "argument": "'constant 0.5'", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 'constant 0.5' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'constant 0.5'", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:15.571946+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:15.573678+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:15.676743+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.679540+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:15.780402+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 0 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.784141+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:15.886490+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:15.889509+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:15.990249+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 0"}}
+{"utc": "2026-09-23T19:31:15.993454+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:16.096723+00:00", "observation": {"round": 2, "case": "zero", "argument": "0", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 0 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 0", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:16.097632+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:16.100051+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:16.204786+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.207771+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:16.310960+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 500ms & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.314671+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:16.420170+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.423571+00:00", "response": "400ms"}
+{"utc": "2026-09-23T19:31:16.524545+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 500ms"}}
+{"utc": "2026-09-23T19:31:16.528275+00:00", "response": "400ms"}
+{"utc": "2026-09-23T19:31:16.630771+00:00", "observation": {"round": 2, "case": "milliseconds", "argument": "500ms", "execute_return": "true", "value": "400ms", "execute_script": "param_multiply 0.8 500ms & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 500ms", "query_result": "400ms"}}
+{"utc": "2026-09-23T19:31:16.631436+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:16.633731+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:16.739131+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.742509+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:16.848047+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.854127+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:16.959005+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:16.961530+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:17.066911+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 +0.5"}}
+{"utc": "2026-09-23T19:31:17.070367+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:17.174916+00:00", "observation": {"round": 2, "case": "signed", "argument": "+0.5", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 +0.5", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:17.175407+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:17.176655+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:17.279836+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:17.281776+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:17.386893+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:17.388690+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:17.493201+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:17.494971+00:00", "response": "1"}
+{"utc": "2026-09-23T19:31:17.599876+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8"}}
+{"utc": "2026-09-23T19:31:17.602393+00:00", "response": "error:1"}
+{"utc": "2026-09-23T19:31:17.706920+00:00", "observation": {"round": 2, "case": "missing", "argument": "", "execute_return": "true", "value": "1", "execute_script": "param_multiply 0.8 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8", "query_result": "error:1"}}
+{"utc": "2026-09-23T19:31:17.707309+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:17.708640+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:17.813769+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:17.815717+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:17.919903+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:17.921544+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:18.026155+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.027485+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:18.132656+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'zzargbeta'"}}
+{"utc": "2026-09-23T19:31:18.133852+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:18.235970+00:00", "observation": {"round": 2, "case": "junk-beta", "argument": "'zzargbeta'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'zzargbeta'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:18.236452+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:18.238129+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:18.343382+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.345015+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:18.450201+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.452598+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:18.557724+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.559934+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:18.665125+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 'zzargalpha'"}}
+{"utc": "2026-09-23T19:31:18.667197+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:18.769062+00:00", "observation": {"round": 2, "case": "junk-alpha", "argument": "'zzargalpha'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 'zzargalpha'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:18.769641+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:18.772723+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:18.876556+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.882569+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:18.985666+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:18.988936+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:19.093254+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:19.095585+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:19.201004+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 '$argtype_source_9644'"}}
+{"utc": "2026-09-23T19:31:19.204642+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:19.306242+00:00", "observation": {"round": 2, "case": "source-variable", "argument": "'$argtype_source_9644'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 '$argtype_source_9644'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:19.307087+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:19.309059+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:19.412710+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:19.417171+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:19.522637+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:19.525183+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:19.627588+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:19.630976+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:19.731739+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 '0.5'"}}
+{"utc": "2026-09-23T19:31:19.734847+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:19.835711+00:00", "observation": {"round": 2, "case": "quoted-number", "argument": "'0.5'", "execute_return": "true", "value": "0", "execute_script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 '0.5'", "query_result": "0"}}
+{"utc": "2026-09-23T19:31:19.835875+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:19.837255+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:19.938043+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:19.939947+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:20.045118+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 50% & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:20.046890+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:20.148568+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:20.150242+00:00", "response": "40%"}
+{"utc": "2026-09-23T19:31:20.255356+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 50%"}}
+{"utc": "2026-09-23T19:31:20.257192+00:00", "response": "40%"}
+{"utc": "2026-09-23T19:31:20.359857+00:00", "observation": {"round": 2, "case": "percent", "argument": "50%", "execute_return": "true", "value": "40%", "execute_script": "param_multiply 0.8 50% & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 50%", "query_result": "40%"}}
+{"utc": "2026-09-23T19:31:20.360332+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:20.361946+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:20.467145+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:20.470688+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:20.573450+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:20.576436+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:20.681866+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:20.685336+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:20.789781+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 0.5"}}
+{"utc": "2026-09-23T19:31:20.792782+00:00", "response": "0.4"}
+{"utc": "2026-09-23T19:31:20.898177+00:00", "observation": {"round": 2, "case": "decimal", "argument": "0.5", "execute_return": "true", "value": "0.4", "execute_script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 0.5", "query_result": "0.4"}}
+{"utc": "2026-09-23T19:31:20.898695+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0.12"}}
+{"utc": "2026-09-23T19:31:20.901531+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:21.003786+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:21.007037+00:00", "response": "0.12"}
+{"utc": "2026-09-23T19:31:21.110272+00:00", "intent": {"kind": "execute", "script": "param_multiply 0.8 1 & set '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:21.113494+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:21.216729+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:21.219774+00:00", "response": "0.8"}
+{"utc": "2026-09-23T19:31:21.321196+00:00", "intent": {"kind": "query", "script": "param_multiply 0.8 1"}}
+{"utc": "2026-09-23T19:31:21.323407+00:00", "response": "0.8"}
+{"utc": "2026-09-23T19:31:21.423774+00:00", "observation": {"round": 2, "case": "integer", "argument": "1", "execute_return": "true", "value": "0.8", "execute_script": "param_multiply 0.8 1 & set '$argtype_target_9644'", "query_script": "param_multiply 0.8 1", "query_result": "0.8"}}
+{"utc": "2026-09-23T19:31:21.424303+00:00", "intent": {"kind": "execute", "script": "set '$argtype_target_9644' 0"}}
+{"utc": "2026-09-23T19:31:21.425662+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:21.529243+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_target_9644'"}}
+{"utc": "2026-09-23T19:31:21.531459+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:21.636604+00:00", "intent": {"kind": "execute", "script": "set '$argtype_source_9644' 0"}}
+{"utc": "2026-09-23T19:31:21.638497+00:00", "response": "true"}
+{"utc": "2026-09-23T19:31:21.743186+00:00", "intent": {"kind": "query", "script": "get_var '$argtype_source_9644'"}}
+{"utc": "2026-09-23T19:31:21.744677+00:00", "response": "0"}
+{"utc": "2026-09-23T19:31:21.848093+00:00", "intent": {"kind": "query", "script": "deck 1 loaded"}}
+{"utc": "2026-09-23T19:31:21.849574+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:21.954894+00:00", "intent": {"kind": "query", "script": "deck 1 play"}}
+{"utc": "2026-09-23T19:31:21.956640+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.059912+00:00", "intent": {"kind": "query", "script": "deck 2 loaded"}}
+{"utc": "2026-09-23T19:31:22.064126+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.166771+00:00", "intent": {"kind": "query", "script": "deck 2 play"}}
+{"utc": "2026-09-23T19:31:22.169399+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.274646+00:00", "intent": {"kind": "query", "script": "deck 3 loaded"}}
+{"utc": "2026-09-23T19:31:22.277794+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.382806+00:00", "intent": {"kind": "query", "script": "deck 3 play"}}
+{"utc": "2026-09-23T19:31:22.384701+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.485926+00:00", "intent": {"kind": "query", "script": "deck 4 loaded"}}
+{"utc": "2026-09-23T19:31:22.487366+00:00", "response": "no"}
+{"utc": "2026-09-23T19:31:22.592625+00:00", "intent": {"kind": "query", "script": "deck 4 play"}}
+{"utc": "2026-09-23T19:31:22.595749+00:00", "response": "no"}

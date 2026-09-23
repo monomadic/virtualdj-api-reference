@@ -47,6 +47,57 @@ internal parameter or prove all verbs share its conversions. The numeric source 
 restored before the separate debug batches; those batches observe the literal name
 as text, not the source value. No general accepted-type schema is claimed.
 
+## Second consumer: param_multiply
+
+Local test, 2026-09-24, same build and empty/stopped-deck context. The bundled
+catalog documents two explicit operands, each a value or action. The
+[base capture](../tests/argument-types-multiply-9644/values.json) and
+[expanded capture](../tests/argument-types-multiply-9644/values-expanded.json)
+retain two opposite-order rounds each. The expanded capture adds zero and valid
+action-valued controls. Each execute case resets the target to `0.12` and runs:
+
+```text
+param_multiply 0.8 <argument> & set '$argtype_target_9644'
+```
+
+A separate query tests `param_multiply 0.8 <argument>`. A separate execute batch
+replaces the final `set` with bare `debug`, which **does display the incoming
+calculated parameter** on this path. The [UI observations and screenshot hashes](../tests/argument-types-multiply-9644/debug-observations.json)
+join each case to its retained screenshot and exact request journal.
+
+| Second operand | Query result | Stored result | Output from chained debug |
+| --- | --- | --- | --- |
+| `1` | `0.8` | `0.8` | `Val: 0.80` |
+| `0.5` | `0.4` | `0.4` | `Val: 0.40` |
+| `50%` | `40%` | `40%` | `Percent: 40.00%` |
+| `+0.5` | `0.4` | `0.4` | `Val: 0.40` (no relative suffix) |
+| `500ms` | `400ms` | `400ms` | `Time: 400.00ms` |
+| `'0.5'` | `0` | `0` | `Val: 0.00` |
+| `'$argtype_source_9644'` | `0` | `0` | `Val: 0.00` |
+| `'zzargalpha'`, `'zzargbeta'` | `0` | `0` | `Val: 0.00` |
+| omitted | `error:1` | `1` | `No param` |
+| `0` | `0` | `0` | `Val: 0.00` |
+| `'constant 0.5'` | `0.4` | `0.4` | `Val: 0.40` |
+| `` `constant 0.5` `` | `0.4` | `0.4` | `Val: 0.40` |
+
+The prepared source variable held `0.37` during both numeric sweeps. Its quoted
+name alone did not reproduce `set`'s copy behavior. In contrast, quoted and
+backtick-wrapped `constant 0.5` both produced the expected product. Therefore text
+arguments cannot all be rejected based on a direct-debug Text label: what the
+consumer does with the text matters.
+
+Zero is not an invalid-argument verdict: the valid literal zero and both nonsense
+controls produce the same numeric result and output type. The missing operand is
+also a trap: the stored `1` matches bare `set`'s default from the first experiment;
+the `No param` debug output supports interpreting it as absence of an incoming
+calculated value, not a product of one. These comparisons establish bounded
+behavior, not an internal parser rejection reason or a universal type schema.
+
+The relative flag on the second operand was not present in this operation's
+observed output. This does not establish the behavior of relative first operands
+or other arithmetic verbs. Both numeric runs restored the temporary variables to
+zero and verified unchanged deck state. Native plugin HRESULTs were not measured.
+
 ## Reproduce
 
 ```sh
@@ -71,6 +122,9 @@ calibration because `get_var` rendered `0.375` as `0.38`. Cleanup passed. The co
 run instead uses exact two-decimal fixture values and retains the aborted journal.
 This is a display-precision observation, not evidence that storage was rounded.
 
-Next: apply the same labelled-type/independent-result pairing to another selected
-consumer and argument position. Native HRESULTs can add evidence on query-capable
+For the second consumer, add `--consumer multiply`. Its plan includes the extra
+controls, and `--phase debug3` captures their calculated output types. The saved
+expanded capture is checked by `just check`.
+
+Next: compare argument positions or another consumer with the same controls. Native HRESULTs can add evidence on query-capable
 consumers, but a query HRESULT is not proof that an execute argument was consumed.

@@ -1,0 +1,58 @@
+{
+  "build": "9644",
+  "phase": "debug2",
+  "consumer": "multiply",
+  "complete": true,
+  "cases": [
+    {
+      "case": "junk-alpha",
+      "script": "param_multiply 0.8 'zzargalpha' & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "junk-beta",
+      "script": "param_multiply 0.8 'zzargbeta' & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "missing",
+      "script": "param_multiply 0.8 & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "signed",
+      "script": "param_multiply 0.8 +0.5 & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "milliseconds",
+      "script": "param_multiply 0.8 500ms & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    }
+  ],
+  "context_before": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "context_after": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

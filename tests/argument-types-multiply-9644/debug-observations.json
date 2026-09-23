@@ -1,0 +1,91 @@
+{
+  "build": "18.0.9644",
+  "date": "2026-09-24",
+  "channel": "HTTP execute followed by direct desktop debug observation",
+  "script_template": "param_multiply 0.8 <argument> & debug",
+  "observations": [
+    {
+      "case": "integer",
+      "argument": "1",
+      "observed_debug": "Val: 0.80",
+      "screenshot": "debug1.png"
+    },
+    {
+      "case": "decimal",
+      "argument": "0.5",
+      "observed_debug": "Val: 0.40",
+      "screenshot": "debug1.png"
+    },
+    {
+      "case": "percent",
+      "argument": "50%",
+      "observed_debug": "Percent: 40.00%",
+      "screenshot": "debug1.png"
+    },
+    {
+      "case": "quoted-number",
+      "argument": "'0.5'",
+      "observed_debug": "Val: 0.00",
+      "screenshot": "debug1.png"
+    },
+    {
+      "case": "source-variable",
+      "argument": "'$argtype_source_9644'",
+      "observed_debug": "Val: 0.00",
+      "screenshot": "debug1.png"
+    },
+    {
+      "case": "junk-alpha",
+      "argument": "'zzargalpha'",
+      "observed_debug": "Val: 0.00",
+      "screenshot": "debug2.png"
+    },
+    {
+      "case": "junk-beta",
+      "argument": "'zzargbeta'",
+      "observed_debug": "Val: 0.00",
+      "screenshot": "debug2.png"
+    },
+    {
+      "case": "missing",
+      "argument": "",
+      "observed_debug": "No param",
+      "screenshot": "debug2.png"
+    },
+    {
+      "case": "signed",
+      "argument": "+0.5",
+      "observed_debug": "Val: 0.40",
+      "screenshot": "debug2.png"
+    },
+    {
+      "case": "milliseconds",
+      "argument": "500ms",
+      "observed_debug": "Time: 400.00ms",
+      "screenshot": "debug2.png"
+    },
+    {
+      "case": "zero",
+      "argument": "0",
+      "observed_debug": "Val: 0.00",
+      "screenshot": "debug3.png"
+    },
+    {
+      "case": "quoted-action",
+      "argument": "'constant 0.5'",
+      "observed_debug": "Val: 0.40",
+      "screenshot": "debug3.png"
+    },
+    {
+      "case": "computed-action",
+      "argument": "`constant 0.5`",
+      "observed_debug": "Val: 0.40",
+      "screenshot": "debug3.png"
+    }
+  ],
+  "sha256": {
+    "debug1.png": "731ac3aba120cfa504ba9ff451aed7cdc20c4ac855ecca84f36d404617870616",
+    "debug2.png": "f9ac6593d6f1b931f1506bf24e6f3ceed0f756cae1a5729476aaeeaf350bc04a",
+    "debug3.png": "75f216f511ebdf55d019ce71eeabca0df92a2d615062e83400788e3fb277764c"
+  }
+}

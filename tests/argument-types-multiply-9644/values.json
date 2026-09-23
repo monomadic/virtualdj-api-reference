@@ -1,0 +1,240 @@
+{
+  "build": "9644",
+  "phase": "values",
+  "consumer": "multiply",
+  "complete": true,
+  "cases": [
+    {
+      "round": 1,
+      "case": "integer",
+      "argument": "1",
+      "execute_return": "true",
+      "value": "0.8",
+      "execute_script": "param_multiply 0.8 1 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 1",
+      "query_result": "0.8"
+    },
+    {
+      "round": 1,
+      "case": "decimal",
+      "argument": "0.5",
+      "execute_return": "true",
+      "value": "0.4",
+      "execute_script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 0.5",
+      "query_result": "0.4"
+    },
+    {
+      "round": 1,
+      "case": "percent",
+      "argument": "50%",
+      "execute_return": "true",
+      "value": "40%",
+      "execute_script": "param_multiply 0.8 50% & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 50%",
+      "query_result": "40%"
+    },
+    {
+      "round": 1,
+      "case": "quoted-number",
+      "argument": "'0.5'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 '0.5'",
+      "query_result": "0"
+    },
+    {
+      "round": 1,
+      "case": "source-variable",
+      "argument": "'$argtype_source_9644'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 '$argtype_source_9644'",
+      "query_result": "0"
+    },
+    {
+      "round": 1,
+      "case": "junk-alpha",
+      "argument": "'zzargalpha'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 'zzargalpha'",
+      "query_result": "0"
+    },
+    {
+      "round": 1,
+      "case": "junk-beta",
+      "argument": "'zzargbeta'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 'zzargbeta'",
+      "query_result": "0"
+    },
+    {
+      "round": 1,
+      "case": "missing",
+      "argument": "",
+      "execute_return": "true",
+      "value": "1",
+      "execute_script": "param_multiply 0.8 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8",
+      "query_result": "error:1"
+    },
+    {
+      "round": 1,
+      "case": "signed",
+      "argument": "+0.5",
+      "execute_return": "true",
+      "value": "0.4",
+      "execute_script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 +0.5",
+      "query_result": "0.4"
+    },
+    {
+      "round": 1,
+      "case": "milliseconds",
+      "argument": "500ms",
+      "execute_return": "true",
+      "value": "400ms",
+      "execute_script": "param_multiply 0.8 500ms & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 500ms",
+      "query_result": "400ms"
+    },
+    {
+      "round": 2,
+      "case": "milliseconds",
+      "argument": "500ms",
+      "execute_return": "true",
+      "value": "400ms",
+      "execute_script": "param_multiply 0.8 500ms & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 500ms",
+      "query_result": "400ms"
+    },
+    {
+      "round": 2,
+      "case": "signed",
+      "argument": "+0.5",
+      "execute_return": "true",
+      "value": "0.4",
+      "execute_script": "param_multiply 0.8 +0.5 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 +0.5",
+      "query_result": "0.4"
+    },
+    {
+      "round": 2,
+      "case": "missing",
+      "argument": "",
+      "execute_return": "true",
+      "value": "1",
+      "execute_script": "param_multiply 0.8 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8",
+      "query_result": "error:1"
+    },
+    {
+      "round": 2,
+      "case": "junk-beta",
+      "argument": "'zzargbeta'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 'zzargbeta' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 'zzargbeta'",
+      "query_result": "0"
+    },
+    {
+      "round": 2,
+      "case": "junk-alpha",
+      "argument": "'zzargalpha'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 'zzargalpha' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 'zzargalpha'",
+      "query_result": "0"
+    },
+    {
+      "round": 2,
+      "case": "source-variable",
+      "argument": "'$argtype_source_9644'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 '$argtype_source_9644' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 '$argtype_source_9644'",
+      "query_result": "0"
+    },
+    {
+      "round": 2,
+      "case": "quoted-number",
+      "argument": "'0.5'",
+      "execute_return": "true",
+      "value": "0",
+      "execute_script": "param_multiply 0.8 '0.5' & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 '0.5'",
+      "query_result": "0"
+    },
+    {
+      "round": 2,
+      "case": "percent",
+      "argument": "50%",
+      "execute_return": "true",
+      "value": "40%",
+      "execute_script": "param_multiply 0.8 50% & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 50%",
+      "query_result": "40%"
+    },
+    {
+      "round": 2,
+      "case": "decimal",
+      "argument": "0.5",
+      "execute_return": "true",
+      "value": "0.4",
+      "execute_script": "param_multiply 0.8 0.5 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 0.5",
+      "query_result": "0.4"
+    },
+    {
+      "round": 2,
+      "case": "integer",
+      "argument": "1",
+      "execute_return": "true",
+      "value": "0.8",
+      "execute_script": "param_multiply 0.8 1 & set '$argtype_target_9644'",
+      "query_script": "param_multiply 0.8 1",
+      "query_result": "0.8"
+    }
+  ],
+  "context_before": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "variables_before": {
+    "$argtype_target_9644": "0",
+    "$argtype_source_9644": "0"
+  },
+  "restoration": {
+    "values": {
+      "$argtype_target_9644": "0",
+      "$argtype_source_9644": "0"
+    },
+    "verified": true,
+    "limitation": "Initially unset variables restored to zero, not deleted"
+  },
+  "context_after": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

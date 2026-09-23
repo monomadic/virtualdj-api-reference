@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fixed debug/set argument comparison; default prints plan, --phase executes it."""
+"""Fixed debug/consumer argument comparison; default prints plan, --phase executes it."""
 import argparse
 from datetime import datetime, timezone
 import json
@@ -15,12 +15,16 @@ CASES = [('integer', '1'), ('decimal', '0.5'), ('percent', '50%'),
          ('quoted-number', "'0.5'"), ('source-variable', f"'{SOURCE}'"),
          ('junk-alpha', "'zzargalpha'"), ('junk-beta', "'zzargbeta'"),
          ('missing', ''), ('signed', '+0.5'), ('milliseconds', '500ms')]
+MULTIPLY_EXTRA = [('zero', '0'), ('quoted-action', "'constant 0.5'"),
+                  ('computed-action', '`constant 0.5`')]
 
 
-def run(phase, output):
+def run(phase, output, consumer='set'):
     if output.exists() or output.with_suffix('.jsonl').exists():
         raise ValueError('Use a fresh capture path')
-    data = {'build': None, 'phase': phase, 'complete': False, 'cases': []}
+    data = {'build': None, 'phase': phase, 'consumer': consumer, 'complete': False, 'cases': []}
+    cases = CASES + MULTIPLY_EXTRA if consumer=='multiply' else CASES
+    data['matrix'] = 'extended' if consumer=='multiply' else 'base'
     stream = output.with_suffix('.jsonl').open('x')
     def log(**row):
         stream.write(json.dumps({'utc': datetime.now(timezone.utc).isoformat(), **row})+'\n')
@@ -55,19 +59,29 @@ def run(phase, output):
             dirty=True
             write(SOURCE,'0.37')
             if read(SOURCE)!='0.37': raise ValueError('Source calibration failed')
+            if consumer=='multiply':
+                request(f"param_multiply 0.8 0.5 & set '{TARGET}'", 'execute')
+                if read(TARGET)!='0.4': raise ValueError('Multiply pipeline calibration failed')
             for round_number in (1,2):
-                for name,tail in (CASES if round_number==1 else list(reversed(CASES))):
+                for name,tail in (cases if round_number==1 else list(reversed(cases))):
                     write(TARGET,'0.12')
                     if read(TARGET)!='0.12': raise ValueError('Reset failed')
-                    returned=write(TARGET,tail)
+                    script=(f"set '{TARGET}' {tail}".rstrip() if consumer=='set' else
+                            f"param_multiply 0.8 {tail}".rstrip()+f" & set '{TARGET}'")
+                    returned=request(script,'execute')
                     row={'round':round_number,'case':name,'argument':tail,'execute_return':returned,'value':read(TARGET)}
+                    row['execute_script']=script
+                    if consumer=='multiply':
+                        row['query_script']=f"param_multiply 0.8 {tail}".rstrip()
+                        row['query_result']=request(row['query_script'])
                     data['cases'].append(row)
                     log(observation=row)
         else:
             group=int(phase[-1])
-            for name,tail in CASES[(group-1)*5:group*5]:
-                request(f"debug 'TYPE_{name}'", 'execute')
-                script=('debug '+tail).rstrip()
+            for name,tail in cases[(group-1)*5:group*5]:
+                request(f"debug '{consumer}_TYPE_{name}'", 'execute')
+                script=(('debug '+tail).rstrip() if consumer=='set' else
+                        f"param_multiply 0.8 {tail}".rstrip()+' & debug')
                 returned=request(script,'execute')
                 data['cases'].append({'case':name,'script':script,'execute_return':returned,'type':'requires retained UI readback'})
             request(f"debug 'TYPE_GROUP_{group}_END'", 'execute')
@@ -94,28 +108,38 @@ def run(phase, output):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--phase',choices=['values','debug1','debug2'])
+    p.add_argument('--phase',choices=['values','debug1','debug2','debug3'])
     p.add_argument('--output',type=Path)
+    p.add_argument('--consumer',choices=['set','multiply'],default='set')
     p.add_argument('--check',type=Path,help='check a completed values capture offline')
     a=p.parse_args()
     if a.check:
         d=json.loads(a.check.read_text())
         assert d['complete'] and d['build']=='9644' and d['phase']=='values'
         assert d['restoration']['verified'] and d['context_before']==d['context_after']
-        expected={(r,n) for r in (1,2) for n,_ in CASES}
+        cases=CASES + MULTIPLY_EXTRA if d.get('matrix')=='extended' else CASES
+        expected={(r,n) for r in (1,2) for n,_ in cases}
         seen=set()
         outcomes={}
         for row in d['cases']:
             key=(row['round'],row['case'])
             assert key in expected and key not in seen
-            assert row['argument']==dict(CASES)[row['case']]
+            assert row['argument']==dict(cases)[row['case']]
             seen.add(key)
             outcomes.setdefault(row['case'],set()).add(row['value'])
         assert seen==expected and all(len(v)==1 for v in outcomes.values())
-        assert outcomes['integer']=={'1'} and outcomes['source-variable']=={'0.37'}
+        if d.get('consumer','set')=='set':
+            assert outcomes['integer']=={'1'} and outcomes['source-variable']=={'0.37'}
+        else:
+            assert outcomes['integer']=={'0.8'} and outcomes['decimal']=={'0.4'}
+            queries={}
+            for row in d['cases']:
+                queries.setdefault(row['case'],set()).add(row['query_result'])
+            assert all(len(v)==1 for v in queries.values())
         print('Argument capture: complete, rounds agree, controls and restoration verified')
-    elif not a.phase: print(json.dumps(CASES,indent=2))
+    elif a.phase=='debug3' and a.consumer!='multiply': p.error('debug3 requires multiply')
+    elif not a.phase: print(json.dumps(CASES + MULTIPLY_EXTRA if a.consumer=='multiply' else CASES,indent=2))
     elif not a.output: p.error('--phase requires a fresh --output')
-    else: run(a.phase,a.output)
+    else: run(a.phase,a.output,a.consumer)
 
 if __name__=='__main__': main()

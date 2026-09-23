@@ -1,0 +1,58 @@
+{
+  "build": "9644",
+  "phase": "debug1",
+  "consumer": "multiply",
+  "complete": true,
+  "cases": [
+    {
+      "case": "integer",
+      "script": "param_multiply 0.8 1 & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "decimal",
+      "script": "param_multiply 0.8 0.5 & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "percent",
+      "script": "param_multiply 0.8 50% & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "quoted-number",
+      "script": "param_multiply 0.8 '0.5' & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "source-variable",
+      "script": "param_multiply 0.8 '$argtype_source_9644' & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    }
+  ],
+  "context_before": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "context_after": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

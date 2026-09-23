@@ -1,0 +1,47 @@
+{
+  "build": "9644",
+  "phase": "debug3",
+  "consumer": "multiply",
+  "complete": true,
+  "cases": [
+    {
+      "case": "zero",
+      "script": "param_multiply 0.8 0 & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "quoted-action",
+      "script": "param_multiply 0.8 'constant 0.5' & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    },
+    {
+      "case": "computed-action",
+      "script": "param_multiply 0.8 `constant 0.5` & debug",
+      "execute_return": "true",
+      "type": "requires retained UI readback"
+    }
+  ],
+  "matrix": "extended",
+  "context_before": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  },
+  "context_after": {
+    "deck 1 loaded": "no",
+    "deck 1 play": "no",
+    "deck 2 loaded": "no",
+    "deck 2 play": "no",
+    "deck 3 loaded": "no",
+    "deck 3 play": "no",
+    "deck 4 loaded": "no",
+    "deck 4 play": "no"
+  }
+}

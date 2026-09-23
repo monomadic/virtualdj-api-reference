@@ -4,6 +4,17 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## Arithmetic argument type continuation — 2026-09-24
+
+**Bounded pass**, build 18.0.9644, empty stopped decks, HTTP query/execute and saved
+desktop debug screenshots. [Argument Type Probe](Argument%20Type%20Probe.md#second-consumer-param_multiply)
+compares the second operand of `param_multiply 0.8 ...` through direct queries,
+independent stored results and chained debug types. Percentage/time units survive;
+quoted and backtick constant actions calculate correctly; quoted numeric/source-name
+and nonsense operands yield zero, matching a valid zero control. Missing operand
+produces `No param` downstream, distinct from the zero result but not a universal
+syntax rejection signal. Temporary variables restored and deck state verified.
+
 ## Argument type and consumer calibration — 2026-09-24
 
 **Bounded pass**, build 18.0.9644, HTTP with desktop debug screenshots, empty stopped
