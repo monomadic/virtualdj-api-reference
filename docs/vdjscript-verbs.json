@@ -15,11 +15,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 41,
-    "Pass": 121,
-    "Untested": 867
+    "Pass": 122,
+    "Untested": 866
    },
    "documented": 772,
-   "tested_pass": 121,
+   "tested_pass": 122,
    "needs_test": 20,
    "blocked": 28,
    "active_incomplete": 3
@@ -2238,16 +2238,18 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_debug implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_debug implements onExecute and onQuery -> Dual; HTTP sweep classed it 'action-only'.",
+    "Build 18.0.9644, 2026-09-24, HTTP execute and retained desktop debug screenshots in tests/argument-types-9644/debug-observations.json: explicit 1, 0.5, 50%, quoted text, +0.5 and 500ms display Int, Val, Percent, Text, relative Val and Time respectively; bare debug displays No param. Explicit-argument scope only; not validation of another verb."
    ],
    "section": "Developer & Debug",
    "description": "Display the incoming parameter value",
    "example": "debug",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test"
   },
   "deck": {
    "name": "deck",
@@ -15796,7 +15798,8 @@
     "VirtualDJ 2026 (HTTP interface, 2026-07-22): 'set $v on' stores yes and 'set $v off' stores no, but 'true'/'false' are NOT constants and store nothing. Quoting decides type: 5 and '5' are different values. Storing a string makes the variable unreadable and uncomparable — use numeric codes.",
     "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: variable scope prefixes are separate names and really isolate. A bare name is per-deck ('deck 1 set X 11' and 'deck 2 set X 22' read back 11 and 22); a $ name is shared across decks (set on deck 1, reads 33 from deck 2); bare/$/@ forms of one base name held 1/2/3 simultaneously. An unset name reads blank. Earlier: 'set $v on' stores yes and 'set $v off' stores no; string-valued variables are unsafe (see get_var, var_equal).",
     "build 18.0.9598, HTTP, capture tests/variable-scope-probe-9598.json: '@' is a PERSISTENCE MODIFIER on the scope prefix, not a scope. Confirmed across a real restart: names left at 0 before a full quit came back as 0 for '@X' and blank for X, $X, #X, %X. '@X' is persistent AND deck-local (7 on deck 1, 8 on deck 2 at once); '@$X' is persistent AND global. Stored in settings.xml <VDJScriptGlobalVariables> as name=index=float with the '@' stripped, one row per deck for a deck-local name, written on quit.",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation)."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_set implements onExecute and onQuery -> Dual; HTTP sweep classed it 'needs-args'. Replaces the curated value 'Action' (2026-09-15 normalisation).",
+    "Build 18.0.9644, 2026-09-24, HTTP, empty stopped decks; tests/argument-types-9644/values.json and docs/Argument Type Probe.md: two reversed-order rounds with reset 0.12; 1, 0.5, 50%, 500ms read back respectively; +0.5 yields 0.62; prepared quoted source variable copies 0.37. Quoted numeric and two nonsense text controls read blank, cause unresolved. Missing second argument yields 1. Restoration verified."
    ],
    "section": "Variables",
    "description": "Set variable value",

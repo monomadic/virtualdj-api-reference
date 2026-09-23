@@ -417,6 +417,9 @@ plugin-probe name:
 statement-branches *args:
     @{{python}} tools/probe_statement_branches.py {{args}}
 
+argument-types *args:
+    @{{python}} tools/probe_argument_types.py {{args}}
+
 # --- cross-corpus topic search ----------------------------------------------
 # One term -> matching verbs, effects, XML elements, REAL example files, docs,
 # and known quirks. Start here for "how do I do X"; drill in with get-verb etc.
@@ -431,6 +434,7 @@ lint-mappers *paths:
     {{python}} tools/lint_mappers.py "$@"
 
 check:
+    {{python}} tools/probe_argument_types.py --check tests/argument-types-9644/values.json
     {{python}} tools/probe_statement_branches.py --check tests/statement-branches-9644.json
     just check-lyrics-cache
     just check-linked-sid

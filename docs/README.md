@@ -114,6 +114,7 @@ Start here:
 
 - [Skin Element Discovery](Skin%20Element%20Discovery.md)
 - [Statement Branch Probe](Statement%20Branch%20Probe.md) — calibrated conditional
+- [Argument Type Probe](Argument%20Type%20Probe.md) — observed debug types, units and relative flags paired with set readback on build 9644.
   branch markers and debug controls; limits of statement validation.
 - [Skin Element Validity](Skin%20Element%20Validity.md) — contextual recognition,
   native instrumentation targets, and controlled element/attribute/script canaries.

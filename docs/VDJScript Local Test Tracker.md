@@ -4,6 +4,15 @@ Focused manual-test log for verbs marked **Needs local test** in [Official VDJSc
 
 Result values: `Untested`, `Pass`, `Partial`, `Fail`, `N/A`.
 
+## Argument type and consumer calibration — 2026-09-24
+
+**Bounded pass**, build 18.0.9644, HTTP with desktop debug screenshots, empty stopped
+decks. [Argument Type Probe](Argument%20Type%20Probe.md) pairs explicit debug type/unit
+labels with independent `set`/`get_var` results in reversed-order rounds. Relative,
+percentage, time, numeric and text forms separated; prepared text source-variable
+lookup worked while quoted numeric/nonsense controls read blank. No general argument
+validator is established. Temporary variables restored to zero and deck state verified.
+
 ## Statement branch recognition calibration — 2026-09-24
 
 **Partial**, build 18.0.9644, HTTP query/execute, empty stopped decks. The
