@@ -338,7 +338,8 @@ def summary(name: str, limit: int) -> dict:
         "relationships": relationships(name),
         "schema_pilot": pilot,
         "families": {fam: {"uses": e["uses"], "files": e["files"],
-                           "name_documented": e["documented"]}
+                           "name_documented": e["documented"],
+                           "source_files": e.get("source_files", {})}
                      for fam, e in found},
         "attributes": [{"name": a, "uses": attributes[a], "kind": kind[a],
                         "documented": kind[a] == "documented"}
@@ -374,6 +375,8 @@ def render(s: dict) -> str:
         doc = {True: "name documented", False: "NAME UNDOCUMENTED",
                None: "no doc to check"}[f["name_documented"]]
         L.append(f"  {fam:<14} uses={f['uses']:<6} files={f['files']:<4} {doc}")
+        for kind, paths in f["source_files"].items():
+            L.append(f"    {kind}: {len(paths)} file(s); {paths[0]}")
 
     v = s["reader_vocabulary"]
     if v.get("available"):

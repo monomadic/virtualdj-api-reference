@@ -41,16 +41,22 @@ READER_VOCABULARY = ROOT / "tests" / "skin-reader-vocabulary.json"
 APP = Path("/Applications/VirtualDJ.app")
 
 # family name -> (glob patterns, reference docs to cross-check)
+# Catalog downloads are Tier 2 Published skins, but stay distinct from bundle
+# copies: check_bundle_copies.py can verify the latter against the installed app.
+# Preserve that distinction per element so an add-on-only name has a traceable
+# file rather than inheriting an undifferentiated "shipped skin" count.
+SKIN_SOURCES = (
+    ("builtin", "examples/Skins/Built-In/**/*.xml"),
+    ("addon", "examples/Skins/Official-Addons/**/*.xml"),
+    ("official_example", "examples/Skins/SDK Example - Custom Browser Skin/skin.xml"),
+    ("project", "examples/Skins/ModularSkeleton/build/*.xml"),
+    ("project", "examples/Skins/GraveRaver/build/*.xml"),
+    ("fixture", "tests/Skins/**/*.xml"),
+)
 FAMILIES: list[tuple[str, list[str], list[str]]] = [
     (
         "skins",
-        [
-            "examples/Skins/Built-In/**/*.xml",
-            "examples/Skins/SDK Example - Custom Browser Skin/skin.xml",
-            "examples/Skins/ModularSkeleton/build/*.xml",
-            "examples/Skins/GraveRaver/build/*.xml",
-            "tests/Skins/**/*.xml",
-        ],
+        [pattern for _, pattern in SKIN_SOURCES],
         ["docs/Skin SDK.md", "docs/Skin Waveforms.md"],
     ),
     (
@@ -85,6 +91,8 @@ FAMILIES: list[tuple[str, list[str], list[str]]] = [
 EXCLUDE = (
     "tests/Skins/clickthrough-probe/",
     "tests/Skins/reader-candidates-probe/",
+    # Deliberately misspelled element: parser-survival negative control.
+    "tests/Skins/runtime-probe/waveform-control.xml",
 )
 
 NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_.:-]*")
@@ -95,6 +103,7 @@ class ElementStats:
     uses: int = 0
     files: set[str] = field(default_factory=set)
     attributes: Counter = field(default_factory=Counter)
+    source_files: dict[str, set[str]] = field(default_factory=dict)
 
 
 def scan_tags(text: str) -> list[tuple[str, list[str]]]:
@@ -171,9 +180,11 @@ def is_device_definition(path: Path) -> bool:
     return bool(tags) and tags[0][0] == "device"
 
 
-def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[Path]]:
+def collect_family(patterns: list[str], family: str = "") -> tuple[dict[str, ElementStats], list[Path]]:
     files: list[Path] = []
     seen: set[Path] = set()
+    skin_sources = {pattern: kind for kind, pattern in SKIN_SOURCES} if family == "skins" else {}
+    source_by_file: dict[Path, str] = {}
     for pattern in patterns:
         for path in sorted(ROOT.glob(pattern)):
             if any(str(path.relative_to(ROOT)).startswith(x) for x in EXCLUDE):
@@ -181,6 +192,8 @@ def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[P
             if path.is_file() and path not in seen:
                 seen.add(path)
                 files.append(path)
+                if pattern in skin_sources:
+                    source_by_file[path] = skin_sources[pattern]
     # A controller add-on ships its <device> definition beside the mapper;
     # definition vocabulary belongs to tests/controller-schema-inventory.json.
     files = [p for p in files if not is_device_definition(p)]
@@ -193,6 +206,8 @@ def collect_family(patterns: list[str]) -> tuple[dict[str, ElementStats], list[P
             entry.uses += 1
             entry.files.add(rel)
             entry.attributes.update(attrs)
+            if path in source_by_file:
+                entry.source_files.setdefault(source_by_file[path], set()).add(rel)
     return stats, files
 
 
@@ -286,7 +301,7 @@ def build_inventory() -> dict:
     total_undocumented = 0
 
     for family, patterns, doc_paths in FAMILIES:
-        stats, files = collect_family(patterns)
+        stats, files = collect_family(patterns, family)
         doc_text, fenced_text, availability = load_doc_texts(doc_paths)
         ordered = sorted(stats.items(), key=lambda kv: (-kv[1].uses, kv[0]))
 
@@ -305,6 +320,10 @@ def build_inventory() -> dict:
                 "attributes": dict(sorted(entry.attributes.items(),
                                           key=lambda kv: (-kv[1], kv[0]))),
             }
+            if family == "skins":
+                elements[name]["source_files"] = {
+                    kind: sorted(paths) for kind, paths in sorted(entry.source_files.items())
+                }
 
         families[family] = {
             "files_scanned": len(files),

@@ -18,9 +18,12 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "tests/skin-xml-relations.json"
 SOURCES = (
-    ("skins", "Built-in skin", "examples/Skins/Built-In/**/*.xml"),
-    ("skins", "Official example", "examples/Skins/SDK Example - Custom Browser Skin/skin.xml"),
-    ("video_skins", "Built-in skin", "examples/VideoSkins/Built-In/**/*.xml"),
+    ("skins", "builtin", "Built-in skin", "examples/Skins/Built-In/**/*.xml"),
+    # Atomix catalog downloads are Published skins (Tier 2). Keep `addon`
+    # separate: unlike bundle copies, they cannot be checked against the app.
+    ("skins", "addon", "Published skin", "examples/Skins/Official-Addons/**/*.xml"),
+    ("skins", "official_example", "Published skin", "examples/Skins/SDK Example - Custom Browser Skin/skin.xml"),
+    ("video_skins", "builtin", "Built-in skin", "examples/VideoSkins/Built-In/**/*.xml"),
 )
 NOTE = ("Observed literal direct nesting in vendor XML (Tier 2); not a supported-child "
         "schema. Templates and includes are not expanded. Missing edges are unknown. "
@@ -97,21 +100,23 @@ def scan(text: str) -> tuple[list[dict], list[dict]]:
 
 def build() -> dict:
     groups, sources, diagnostics = defaultdict(list), [], []
-    for family, label, pattern in SOURCES:
+    for family, kind, label, pattern in SOURCES:
         for path in sorted(ROOT.glob(pattern)):
             raw = path.read_bytes()
             rel = path.relative_to(ROOT).as_posix()
             edges, errors = scan(raw.decode("utf-8-sig"))
-            sources.append({"path": rel, "family": family, "source_label": label,
+            sources.append({"path": rel, "family": family, "source_kind": kind,
+                            "source_label": label,
                             "sha256": hashlib.sha256(raw).hexdigest(),
                             "status": "omitted" if errors else "scanned"})
             diagnostics.extend({"path": rel, **error} for error in errors)
             for edge in edges:
-                groups[family, edge["parent"], edge["child"], rel, label].append(
+                groups[family, edge["parent"], edge["child"], rel, kind, label].append(
                     [edge["parent_line"], edge["line"]])
     relations = defaultdict(list)
-    for (family, parent, child, path, label), lines in sorted(groups.items()):
-        relations[family, parent, child].append({"path": path, "source_label": label,
+    for (family, parent, child, path, kind, label), lines in sorted(groups.items()):
+        relations[family, parent, child].append({"path": path, "source_kind": kind,
+                                                "source_label": label,
                                                 "lines": lines})
     return {"schema_version": 1, "line_format": "[parent_line, child_line]", "generated_by": "tools/skin_relations.py", "note": NOTE,
             "sources": sources, "diagnostics": diagnostics,

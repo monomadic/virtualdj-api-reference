@@ -136,6 +136,30 @@ Available elements as children of `<skin>`:
 - `<sampler>` - Sampler trigger-pad view
 - `<prelisten>` - Standalone prelisten player (also a `<browser><colors>` styling child)
 
+### Names found only in Atomix add-on skins
+
+Source: `Published skin` (the Atomix catalog downloads in
+[Official-Addons](../examples/Skins/Official-Addons/README.md)). These are
+literal XML uses, not behavior tests. Query `just element <name>` for the
+current inventory and observed nesting. The first group already had a route in
+this guide; the second group records newly visible syntax without assigning
+behavior to a name. A discriminating live skin fixture is needed for that.
+
+| Element | Add-on example | Prior route or observed syntax |
+| --- | --- | --- |
+| `<browsertoolbar>` | [Denon PRIMEGO Screen](../examples/Skins/Official-Addons/Denon%20PRIMEGO%20Screen/Denon%20PRIMEGO%20Screen.xml) | Browser Elements above |
+| `<filelist>` | [Denon PRIMEGO Screen](../examples/Skins/Official-Addons/Denon%20PRIMEGO%20Screen/Denon%20PRIMEGO%20Screen.xml) | Browser Elements above |
+| `<sampler>` | [Denon PRIMEGO Screen](../examples/Skins/Official-Addons/Denon%20PRIMEGO%20Screen/Denon%20PRIMEGO%20Screen.xml) | Browser Elements above |
+| `<pannel>` | [American Audio 10MXR v8](../examples/Skins/Official-Addons/American%20Audio%2010MXR%20v8/skin.xml) | The [reader-candidate probe](#elements-the-parser-knows-that-this-doc-does-not-describe) already tested this spelling in a deck skin; the add-on independently writes it. |
+| `<window>` | [Reloop Touch Skin](../examples/Skins/Official-Addons/Reloop%20Touch%20Skin/relooptouch.xml) | [Window Elements](#window-elements) and the [`window` section](#window) |
+| `<disabled>` | [skin2018, 4 Decks](../examples/Skins/Official-Addons/skin2018/4%20Decks.xml) | Child of a circular `<slider>`; written with `x` and `y`. |
+| `<edit>` | [Pioneer DDJ-RZX Screens](../examples/Skins/Official-Addons/Pioneer%20DDJ-RZX%20Screens/Pioneer%20DDJ-RZX%20Screens.xml) | Child of a `<define>`; has `<pos>`, `<size>`, `<font>`, and `<colors>` children. |
+| `<nobackground>` | [skin2018, 2 Decks](../examples/Skins/Official-Addons/skin2018/2%20Decks.xml) | Child of a `<panel>`; written with `x` and `y`. |
+| `<reset>` | [Pioneer DDJ-Ergo v8](../examples/Skins/Official-Addons/Pioneer%20DDJ-Ergo%20v8/skin.xml) | Inside a slider template; written with `value`. |
+| `<text4>` | [Numark IDJLIVE II](../examples/Skins/Official-Addons/Numark%20IDJLIVE%20II/skin.xml) | Child of a `<textzone>` alongside other text variants; written with `format`, `scroll`, and font attributes. |
+| `<tooltip_localized>` | [skin2018, Tablet](../examples/Skins/Official-Addons/skin2018/Tablet.xml) | Text child of button templates; its content is a string such as `pitch_reset_tooltip`. |
+| `<volume>` | [Remote 8 Default Skin](../examples/Skins/Official-Addons/Remote%208%20Default%20Skin/skin7T.xml) | Child of a `<songpos>`; written with `x` and `y`. |
+
 ### Simple Shapes
 - `<square>` - Rectangle/rounded rectangle
 - `<circle>` - Circle/ellipse

@@ -83,6 +83,8 @@ def cmd_get(args):
         doc = {True: "documented", False: "UNDOCUMENTED", None: "no doc to check"}[
             e["documented"]]
         print(f"<{n}>  [{family}]  {e['category']['label']}  uses={e['uses']} files={e['files']}  {doc}")
+        for kind, paths in e.get("source_files", {}).items():
+            print(f"    {kind}: {len(paths)} file(s); {paths[0]}")
         attrs = e["attributes"]
         if attrs:
             for attr, count in attrs.items():

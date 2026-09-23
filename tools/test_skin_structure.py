@@ -33,7 +33,10 @@ class StructureTests(unittest.TestCase):
         button=describe(self.data,'button')
         self.assertIn('panel',button['observed_vendor_parents'])
         self.assertIn('Observed',button['parent_evidence'])
-        self.assertTrue(button['parent_source_matches_capture'])
+        # S7 expanded the live relations corpus after this build-9246 capture.
+        # The capture must report that its pinned source is now historical;
+        # observed parents still come from the current vendor XML report.
+        self.assertFalse(button['parent_source_matches_capture'])
         self.assertEqual(describe(self.data,'font')['own_attribute_candidates'],[])
 
 
