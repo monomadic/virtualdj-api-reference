@@ -46,6 +46,23 @@ The older [plugin-panel experiment](VDJScript%20Local%20Test%20Tracker.md#a-plug
 reported dropped `group` contents. Today's desktop result must not be generalized
 to that surface or used to claim the earlier behavior changed on the same surface.
 
+## An unknown sibling does not suppress the tested valid child
+
+Follow-up local test on 2026-09-24, desktop build 18.0.9644, arm64:
+[sibling fixture and captures](../tests/Skins/sibling-validity-probe/README.md).
+Each panel held a valid textzone and one self-closing nonsense element. Both
+`zzinvalidalpha` and `zzinvalidbeta` were tested before and after the valid child.
+Additional group controls placed alpha before and beta after the valid child.
+The valid textzone rendered in every case, matching the valid-only panel baseline,
+in both reloads with reversed row order and fresh revision labels.
+
+Thus these unknown siblings neither suppress the entire valid container nor stop
+a later valid sibling from rendering. Combined with the earlier nested-wrapper
+result, this distinguishes ignoring an unknown sibling from traversing its
+descendants. A surviving known-good sibling is a useful fixture-health control,
+but it cannot prove the adjacent candidate was recognized. This tests well-formed
+XML with unknown names, not malformed XML or every container/surface.
+
 ## Attributes and script-valued attributes
 
 Follow-up local tests on 2026-09-24, desktop build 18.0.9644, arm64:

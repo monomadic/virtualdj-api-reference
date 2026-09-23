@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-24",
+  "build": "18.0.9644",
+  "architecture": "arm64",
+  "surface": "desktop skin",
+  "channel": "HTTP fixture load/readback and CUA screenshots",
+  "rounds": 2,
+  "visible_valid_child_both_rounds": [
+    "panel baseline",
+    "panel valid then alpha",
+    "panel alpha then valid",
+    "panel valid then beta",
+    "panel beta then valid",
+    "group alpha then valid",
+    "group valid then beta"
+  ],
+  "screenshot_provenance": "Live main VirtualDJ window captured with cua_repl; rows reversed and revision labels changed in second reload.",
+  "conclusion": "Unknown self-closing sibling tags did not prevent the valid textzone from rendering in these panel/group cases.",
+  "limitations": [
+    "Well-formed XML with unknown tag names; not malformed XML.",
+    "No global element validity, child execution or other surface claim.",
+    "Two reloads in one process, not two app launches."
+  ],
+  "restoration": {
+    "original_skin_verified": true,
+    "empty_stopped_decks_verified": true,
+    "fixture_uninstalled": true
+  },
+  "hashes": {
+    "preview.png": "14463ae23a76ee5bf605ad724e7340f04002d13e4f4f86adbc9d61881dc46e9f",
+    "round-2.xml": "74ecc3ce30c30024f2e29f998e3fd256b80d2e9f62a3c43d0ef7cee0d1e903bb",
+    "round-2.png": "51ce19caa09aa7c251c274731c18c899b9da30ef04712a7869abe8c63c47f3f9",
+    "round-1.xml": "885ab382da1b209a791790fb068002b231f5278df78b12fa6816d5d9ba314ff2",
+    "round-1.png": "055a8561a51d6a08323ae6905e4cde0201dc1f592f62f7cf3925d9e1006fd9de",
+    "run-9644.jsonl": "02842d7c164c21753795c437ca593e913dbb2514deec0b0a05b2e6be256f041f",
+    "skin.png": "c948810b8334fa4ac2fa8815361c58edca6761d8d72f3a3bc01a19ecf6e8f332"
+  }
+}
