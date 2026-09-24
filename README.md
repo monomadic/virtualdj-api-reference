@@ -54,6 +54,7 @@ missing is quiet rather than loud.
 | Look up the pad-page XML format | [docs/Pad Page XML.md](docs/Pad%20Page%20XML.md) |
 | Build skin waveforms | [docs/Skin Waveforms.md](docs/Skin%20Waveforms.md) |
 | Browse the rendered reference | `just build-reference` → `build/reference/index.html` (`--open` opens it in the browser) (VDJScript verbs and searchable skin elements) |
+| Try the parallel Guides template | `just build-reference --guides --open` → `build/reference-guides/index.html` (Markdown articles, heading navigation, and section search; original template remains the default) |
 | Browse skin elements / check XML doc coverage | `just list-skin-elements` / `just list-skin-elements --family=all --undocumented` (data: [docs/skin-xml-inventory.json](docs/skin-xml-inventory.json), refreshed by `just inventory`) |
 | Browse skin categories / observed nesting | `just list-skin-categories`, `just list-skin-elements --category=assets`, `just element button --children`, `just element text --parents` ([scope and evidence](docs/Skin%20Element%20Discovery.md)) |
 | Look up verbs programmatically | [docs/vdjscript-verb-index.json](docs/vdjscript-verb-index.json) (generated; `just verb-index`) |
@@ -65,6 +66,12 @@ missing is quiet rather than loud.
 | Write a native plugin, or understand where VDJScript results are still typed | [docs/Plugin SDK.md](docs/Plugin%20SDK.md) |
 | Understand macOS paths and databases | [docs/Application Internals.md](docs/Application%20Internals.md) |
 | Inspect or create `.vdjstems` sidecars | [docs/Stem File Format.md](docs/Stem%20File%20Format.md) |
+
+The Guides preview uses a separate `design/human-api-reference-guides.template.html`;
+the original template remains unchanged. Run `just install` after updating to install
+the Markdown renderer. Both default output directories are git-ignored. Guides are
+rendered from existing Markdown without editing it; links outside the selected guides
+continue to point into the checkout, so this preview is not yet a standalone site export.
 
 ## Agent Entry Point
 

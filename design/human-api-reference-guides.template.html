@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VirtualDJ Reference · Guides preview</title>
+  <!-- TEMPLATE for tools/render_reference.py, which lists the placeholder tokens it fills
+       (verb and skin record payloads, verb count, build, stamp, render date). Each token must
+       occur exactly once, so do not spell them out here (tools/test_reference.py counts them). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #08090e; --bg-2: #0b0c13; --surface: #10111c; --surface-2: #181b27;
+      --border: #1d1f2b; --border-2: #2c2f40;
+      --text: #eef0f6; --text-2: #c3c7d8; --muted: #8d91a6; --faint: #5f647c;
+      --red: #ff2b2b; --blue: #4da3ff; --amber: #ffb020; --sel: rgba(77,163,255,.12);
+      --tier-observed: #eef0f6; --tier-local: #eef0f6; --tier-curated: #4da3ff; --tier-structural: #ffb020; --tier-unresolved: #5f647c;
+      --sans: Rajdhani, ui-sans-serif, system-ui, sans-serif; --mono: "Space Mono", ui-monospace, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { background: var(--bg); color: var(--text); font: 500 15px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+    button, input { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    code { font-family: var(--mono); }
+    a { color: var(--blue); }
+    input::placeholder { color: var(--faint); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; } ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 4px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .label { font: 700 11px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+
+    .app { display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: minmax(0, 1fr); height: 100vh; overflow: hidden; }
+
+    /* header */
+    .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; min-height: 108px; padding: 10px 22px; min-width: 0; overflow: hidden;
+      background: linear-gradient(180deg, #0e0f17, var(--bg)); border-bottom: 1px solid var(--border); }
+    .logo { height: 86px; width: auto; display: block; }
+    .domains { display: flex; gap: 6px; margin-left: 6px; padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); }
+    .domain { padding: 5px 14px; border: 0; border-radius: 999px; background: transparent; color: var(--faint); font: 700 14px var(--sans); letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+    .domain[aria-selected="true"] { background: var(--red); color: #fff; }
+    .domain[disabled] { cursor: not-allowed; }
+    .search { position: relative; flex: 1 1 220px; min-width: 0; max-width: 540px; margin-left: auto; display: block; }
+    .search input { width: 100%; height: 38px; padding: 0 60px 0 16px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font: 400 14px var(--mono); outline: 0; }
+    .search input:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(255,43,43,.15); }
+    .search kbd { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); padding: 1px 7px; border: 1px solid var(--border-2); border-radius: 4px; color: var(--muted); font: 12px var(--mono); }
+    .count { display: flex; align-items: center; gap: 12px; font: 600 14px var(--sans); color: var(--muted); white-space: nowrap; }
+    .count strong { font: 700 14px var(--mono); color: var(--text); }
+    .count i { width: 1px; height: 16px; background: var(--border); }
+
+    /* body */
+    .workspace { display: grid; grid-template-columns: minmax(160px, .7fr) minmax(220px, 1fr) minmax(360px, 2.6fr); min-height: 0; min-width: 0; }
+    .rail { overflow-y: auto; border-right: 1px solid var(--border); background: var(--bg-2); padding: 16px 10px; }
+    .rail .label { padding: 0 10px 10px; }
+    .section { display: block; width: 100%; padding: 9px 10px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); text-align: left; }
+    .section:hover { background: var(--surface); }
+    .section[aria-selected="true"] { background: var(--sel); color: var(--text); }
+    .section-row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font: 600 16px var(--sans); }
+    .section-row span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rail[data-domain="xml"] .section-row span:first-child { white-space: normal; overflow-wrap: anywhere; }
+    .section-row span:last-child { font: 400 12px var(--mono); color: var(--faint); }
+    .cover { display: block; height: 4px; margin-top: 5px; border-radius: 2px; background: var(--surface-2); overflow: hidden; }
+    .cover b { display: block; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--red), var(--amber)); }
+
+    .list { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--border); }
+    .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .chip { padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; background: transparent; color: var(--muted); font: 700 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+    .chip[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: #fff; }
+    .hits { margin-left: auto; font: 400 12px var(--mono); color: var(--faint); }
+    .results { overflow-y: auto; flex: 1; padding: 6px; }
+    .result { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; padding: 10px 12px; margin-bottom: 4px;
+      border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--text); text-align: left; }
+    .result:hover { background: var(--surface); }
+    .result[aria-selected="true"] { background: var(--sel); border-color: var(--blue); }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #3a3f5a; }
+    .dot.verified { background: var(--text); box-shadow: 0 0 8px var(--text); }
+    .dot.partial, .dot.caveat { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+    .result code { display: block; font: 700 14px var(--mono); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .result p { margin: 2px 0 0; font: 500 14px var(--sans); color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .kind { font: 700 11px var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+    .kind.action { color: var(--red); } .kind.query { color: var(--blue); } .kind.dual { color: var(--text-2); } .kind.element { color: var(--amber); }
+    .empty { padding: 48px 20px; color: var(--muted); text-align: center; }
+
+    /* detail */
+    .detail { overflow-y: auto; padding: 32px 44px 64px; min-width: 0; }
+    .detail-inner { max-width: 860px; }
+    .crumbs { margin: 0 0 10px; font: 600 13px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--faint); }
+    .title { display: flex; align-items: baseline; gap: 10px 14px; flex-wrap: wrap; }
+    .title h1 { flex: 1 1 auto; min-width: 0; margin: 0; font: 700 clamp(22px, 3.2vw, 34px)/1.15 var(--mono); letter-spacing: -.02em; overflow-wrap: anywhere; }
+    .tag { padding: 3px 9px; border: 1px solid currentColor; border-radius: 3px; font: 700 12px var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+    .tag.hidden { color: var(--amber); } .tag.undocumented { color: var(--muted); border-color: var(--faint); }
+    .description { margin: 12px 0 0; max-width: 680px; font: 500 18px/1.45 var(--sans); color: var(--text-2); }
+    .aliases { margin: 6px 0 0; font: 500 14px var(--sans); color: var(--faint); }
+    .aliases code { font: 400 13px var(--mono); color: var(--muted); }
+
+    .best { margin: 24px 0 0; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); box-shadow: inset 3px 0 var(--red); }
+    .best-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid var(--surface-2); }
+    .best-head .label { color: var(--muted); }
+    .rung { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 3px; background: var(--bg); font: 700 11px var(--mono); }
+    .rung::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
+    .best-head small { font: 500 13px var(--sans); color: var(--faint); }
+    .best-body { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: center; padding: 18px 16px; }
+    .best-body code.call { display: block; font: 700 20px/1.35 var(--mono); overflow-wrap: anywhere; }
+    .best-body .meta { display: block; margin-top: 8px; font: 500 14px var(--sans); color: var(--muted); }
+    .best-body .meta code { font: 700 13px var(--mono); }
+    .copy-primary { padding: 12px 22px; border: 0; border-radius: 4px; background: var(--red); color: #fff; font: 700 15px var(--sans); letter-spacing: .12em; text-transform: uppercase; box-shadow: 0 0 24px rgba(255,43,43,.35); }
+    .copy-primary:hover { background: #ff4747; }
+
+    .signal { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px; align-items: start; margin: 14px 0 0; padding: 14px 16px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-2); }
+    .signal-head { display: flex; align-items: center; gap: 8px; font: 700 15px var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+    .signal-head .dot { box-shadow: 0 0 10px currentColor; }
+    .signal p { margin: 6px 0 0; font: 500 14px/1.5 var(--sans); color: var(--muted); }
+    .signal.verified .signal-head { color: var(--text); } .signal.partial .signal-head, .signal.caveat .signal-head { color: var(--amber); } .signal.unverified .signal-head { color: var(--faint); }
+    .dims { text-align: right; }
+    .dims .label { margin-bottom: 6px; }
+    .pips { display: flex; gap: 6px; justify-content: flex-end; }
+    .pip { display: flex; flex-direction: column; align-items: center; gap: 4px; font: 600 10px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--faint); }
+    .pip b { width: 26px; height: 8px; border-radius: 2px; background: var(--amber); }
+    .pip.settled b { background: var(--text); } .pip.na b { background: var(--border); }
+
+    .block { margin-top: 32px; }
+    .block-head { display: flex; align-items: center; gap: 16px; margin: 0 0 10px; flex-wrap: wrap; }
+    .block-head h2 { margin: 0; font: 700 14px var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+    .block-head span { font: 500 13px var(--sans); color: var(--faint); }
+    .legend { margin-left: auto; display: flex; gap: 12px; flex-wrap: wrap; }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; font: 600 12px var(--sans); color: var(--muted); }
+    .legend span::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+
+    .forms { border: 1px solid var(--border); border-radius: 6px; background: var(--surface); overflow: hidden; }
+    .form { display: grid; grid-template-columns: 4px minmax(0, 1fr); gap: 0 14px; padding: 0 14px 0 0; border-bottom: 1px solid var(--surface-2); }
+    .form:last-child { border-bottom: 0; }
+    .form > i { background: var(--c); }
+    .form > div { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 10px 0; min-width: 0; }
+    .form code.call { flex: 1 1 220px; min-width: 0; font: 400 13.5px var(--mono); overflow-wrap: anywhere; }
+    .form code.result { font: 700 13px var(--mono); color: var(--c); }
+    .form .tier { font: 600 13px var(--sans); color: var(--muted); white-space: nowrap; }
+    .form .tier em { font-style: normal; color: var(--faint); }
+    .copy { padding: 4px 10px; border: 1px solid var(--border-2); border-radius: 3px; background: transparent; color: var(--muted); font: 700 11px var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+    .copy:hover { color: var(--text); border-color: var(--red); }
+    .none-box { padding: 14px; border: 1px dashed var(--border-2); border-radius: 6px; color: var(--faint); font-size: 13px; }
+
+    .examples { display: grid; gap: 6px; }
+    .example { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-2); }
+    .example .src { flex: 0 0 136px; font: 600 13px var(--sans); color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .example code { flex: 1 1 200px; min-width: 0; font: 400 13px var(--mono); color: var(--text-2); overflow-wrap: anywhere; }
+
+    .facts { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
+    .facts .label { margin-bottom: 4px; }
+    .facts code { font: 400 13px var(--mono); overflow-wrap: anywhere; }
+    .facts code.quiet { color: var(--muted); }
+
+    .skin-doc { margin: 0 0 8px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-2); }
+    .skin-doc a { font: 700 14px var(--mono); }
+    .skin-doc small { display: block; margin: 2px 0 6px; font: 500 12px var(--sans); color: var(--faint); }
+    .skin-doc summary { cursor: pointer; color: var(--muted); font: 500 12px/1.6 var(--sans); }
+    .skin-doc p { margin: 0; font: 500 14px/1.5 var(--sans); color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+    .attribute-table-wrap { overflow-x: auto; }
+    .attribute-table { width: 100%; border-collapse: collapse; text-align: left; font: 400 13px/1.55 var(--sans); }
+    .attribute-table th, .attribute-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .attribute-table th { color: var(--muted); font-weight: 600; }
+    .attribute-table td:first-child { font-family: var(--mono); white-space: nowrap; }
+    .attribute-table td:nth-child(2) { min-width: 150px; }
+    .attribute-table small { display: block; margin-top: 4px; color: var(--muted); font: 400 11px/1.5 var(--sans); }
+    .attrs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .attrs span { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); font: 400 12.5px var(--mono); }
+    .attrs span b { margin-left: 6px; font-weight: 400; color: var(--faint); }
+    .probe { margin: 6px 0; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-2); font: 500 13px/1.5 var(--sans); color: var(--muted); }
+    .probe summary { cursor: pointer; color: var(--text-2); font-weight: 600; }
+    .probe p { margin: 6px 0 0; white-space: pre-wrap; }
+    .footer { padding: 10px 22px; border-top: 1px solid var(--border); color: var(--faint); font: 500 12px var(--sans); }
+    @media (max-width: 760px) {
+      .app { height: auto; overflow: visible; }
+      .workspace { grid-template-columns: 1fr; }
+      .rail, .list { border-right: 0; border-bottom: 1px solid var(--border); max-height: 40vh; }
+    }
+    .guide-meta { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; color:var(--muted); margin-bottom:24px; }
+    .rail[data-domain="docs"] .section { text-decoration:none; }
+    .rail[data-domain="docs"] .section span, .rail[data-domain="docs"] .section small { display:block; }
+    .rail[data-domain="docs"] .section small { color:var(--muted); font-size:12px; }
+    .rail[data-domain="docs"] [aria-current="page"] { background:var(--sel); color:var(--text); }
+    .guide-result { display:block; padding:12px 16px; border-bottom:1px solid var(--border); text-decoration:none; color:var(--text-2); overflow-wrap:anywhere; }
+    .guide-result:hover, .guide-result:focus-visible { background:var(--sel); }
+    .guide-result small { display:block; color:var(--blue); }
+    .guide-result p { color:var(--muted); font:13px/1.5 system-ui,sans-serif; margin:6px 0 0; }
+    .prose { max-width:80ch; margin:auto; font:16px/1.75 system-ui,sans-serif; color:var(--text-2); overflow-wrap:anywhere; }
+    .prose h1,.prose h2,.prose h3,.prose h4 { color:var(--text); line-height:1.3; scroll-margin-top:24px; }
+    .prose h1 { font-size:30px; } .prose h2 { font-size:24px; margin-top:2em; border-top:1px solid var(--border); padding-top:24px; }
+    .prose h3 { font-size:19px; margin-top:1.8em; }
+    .prose pre { overflow:auto; padding:16px; background:var(--surface); border:1px solid var(--border); border-radius:6px; font:13px/1.7 var(--mono); }
+    .prose code { font-size:.85em; color:var(--text); } .prose pre code { font-size:inherit; }
+    .prose table { display:block; overflow:auto; border-collapse:collapse; font-size:14px; }
+    .prose th,.prose td { padding:10px; border:1px solid var(--border); vertical-align:top; min-width:110px; }
+    .prose blockquote { border-left:3px solid var(--blue); margin:20px 0; padding:4px 20px; color:var(--muted); }
+    .prose img { max-width:100%; } .prose li { margin:6px 0; }
+    .prose hr { border:0; border-top:1px solid var(--border); margin:28px 0; }
+    @media (max-width: 900px) { .domains { max-width:100%; overflow-x:auto; } .guides .detail { min-width:0; } }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="bar">
+    <a href="#" title="VirtualDJ unofficial API reference"><img class="logo" src="logo.png" alt="VirtualDJ unofficial API reference"></a>
+    <nav class="domains" role="tablist" aria-label="Reference domains">
+      <button class="domain" type="button" role="tab" data-domain="verbs" aria-selected="true">Verbs</button>
+      <button class="domain" type="button" role="tab" data-domain="xml" aria-selected="false">Skin XML</button>
+      <button class="domain" type="button" role="tab" data-domain="docs" aria-selected="false">Guides</button>
+      <button class="domain" type="button" role="tab" aria-selected="false" disabled title="Not yet rendered">Internals</button>
+    </nav>
+    <label class="search"><span class="sr-only">Search</span><input id="search" type="search" placeholder="Search verbs, aliases, sections" autocomplete="off"><kbd>/</kbd></label>
+    <div class="count" title="__STAMP__"><span><strong>__VERB_COUNT__</strong> verbs</span><i></i><span>build __BUILD__</span></div>
+  </header>
+  <main class="workspace">
+    <aside class="rail" id="rail" aria-label="Sections"><div class="label">Categories</div></aside>
+    <div class="list">
+      <div class="tools" role="group" aria-label="Kind">
+        <button class="chip" type="button" data-kind="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-kind="Action" aria-pressed="false">Action</button>
+        <button class="chip" type="button" data-kind="Query" aria-pressed="false">Query</button>
+        <button class="chip" type="button" data-kind="Dual" aria-pressed="false">Dual</button>
+        <button class="chip" type="button" data-family="all" aria-pressed="true" hidden>All</button>
+        <button class="chip" type="button" data-family="skins" aria-pressed="false" hidden>Skins</button>
+        <button class="chip" type="button" data-family="video_skins" aria-pressed="false" hidden>Video skins</button>
+        <span class="hits" id="hits"></span>
+      </div>
+      <div class="results" id="results" role="listbox" aria-label="Results"></div>
+    </div>
+    <article class="detail" id="detail" aria-live="polite"></article>
+  </main>
+  <footer class="footer">Rendered __RENDERED__ from the verb store, skin inventory and evidence artifacts · __STAMP__ · Evidence tiers: observed and local are direct observation; vendor text and binary leads are leads, not proof.</footer>
+</div>
+
+<script>
+  // Each domain keeps its own data and detail renderer. Skin links are namespaced #xml/<name>.
+  const domains = { verbs: { records: __RECORDS__ }, xml: { records: __SKIN_RECORDS__ }, docs: { records: __GUIDES__ } };
+  let domain = "verbs", records = domains.verbs.records;
+
+  const RANK = { observed: 0, local: 1, curated: 2, structural: 3, unresolved: 4 };
+  const TIER_LABEL = { observed: "Observed live", local: "Ran locally", curated: "Vendor text", structural: "Binary lead", unresolved: "Unresolved" };
+  const state = { query: "", kind: "all", section: "all", family: "all", selected: "" };
+  const $ = id => document.getElementById(id);
+  const rail = $("rail"), results = $("results"), detail = $("detail"), hits = $("hits");
+  const esc = v => String(v ?? "").replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[c]);
+  const tierColor = k => `var(--tier-${k})`;
+  const settled = r => Object.values(r.dimensions || {}).filter(v => v === "settled").length;
+
+  function renderRail() {
+    if (domain === "docs") { renderGuideRail(); return; }
+    const by = {};
+    const skin = domain === "xml";
+    rail.dataset.domain = domain;
+    const eligible = records.filter(r => !skin || state.family === "all" || r.surfaces.includes(state.family));
+    const labels = r => skin ? [...new Set(Object.entries(r.categories).filter(([f]) => state.family === "all" || f === state.family).map(([,c]) => c.label))] : [r.section];
+    for (const r of eligible) for (const s of labels(r)) (by[s] ||= []).push(r);
+    let html = `<div class="label">Categories</div>
+      <button class="section" type="button" data-section="all" aria-selected="${state.section === "all"}"><span class="section-row"><span>${skin ? "All elements" : "All verbs"}</span><span>${eligible.length}</span></span></button>`;
+    for (const name of Object.keys(by).sort()) {
+      const list = by[name], local = list.filter(r => skin ? r.documented : r.status === "verified" || r.status === "partial").length;
+      html += `<button class="section" type="button" data-section="${esc(name)}" aria-selected="${state.section === name}">
+        <span class="section-row"><span>${esc(name)}</span><span>${list.length}</span></span>
+        <span class="cover"><b style="width:${Math.round(100 * local / list.length)}%"></b></span></button>`;
+    }
+    rail.innerHTML = html;
+    rail.querySelectorAll("[data-section]").forEach(b => b.addEventListener("click", () => { state.section = b.dataset.section; refresh(); }));
+  }
+
+  function visibleRecords() {
+    const q = state.query.trim().toLowerCase();
+    return records.filter(r => {
+      const hay = [...(r.headings || []).map(h => h.title + " " + h.text), r.name, r.description, r.section, r.aliases, ...(r.surfaces || []),
+        ...(r.attributes || []).map(a => a.name), ...(r.docs || []).map(d => d.heading)];
+      if (q && !hay.join(" ").toLowerCase().includes(q)) return false;
+      if (state.kind !== "all" && r.kind !== state.kind) return false;
+      if (domain === "xml" && state.family !== "all" && !r.surfaces.includes(state.family)) return false;
+      if (state.section !== "all" && (domain === "xml" ? !Object.entries(r.categories).some(([f,c]) => (state.family === "all" || f === state.family) && c.label === state.section) : r.section !== state.section)) return false;
+      return true;
+    }).sort((a, b) => {
+      if (q) { const ra = a.name.toLowerCase().startsWith(q) ? 0 : 1, rb = b.name.toLowerCase().startsWith(q) ? 0 : 1; if (ra !== rb) return ra - rb; }
+      return a.name.localeCompare(b.name);
+    });
+  }
+
+  function renderResults() {
+    if (domain === "docs") { renderGuideResults(); return; }
+    const visible = visibleRecords();
+    hits.textContent = `${visible.length} / ${records.length}`;
+    if (!visible.length) { results.innerHTML = '<div class="empty">No results match.</div>'; detail.innerHTML = '<div class="empty">Nothing selected</div>'; return; }
+    if (!visible.some(r => r.name === state.selected)) state.selected = visible[0].name;
+    results.innerHTML = visible.map(r => `<button class="result" type="button" role="option" data-record="${esc(r.name)}" aria-selected="${r.name === state.selected}">
+      <span class="dot ${esc(r.status)}" title="${esc(r.statusLabel)}"></span>
+      <span><code>${esc(domain === "xml" ? `<${r.name}>` : r.name)}</code><p>${esc(r.description || "No description")}</p></span>
+      <span class="kind ${esc(r.kind.toLowerCase())}">${esc(r.kind)}</span></button>`).join("");
+    results.querySelectorAll("[data-record]").forEach(b => b.addEventListener("click", () => select(b.dataset.record)));
+  }
+
+  function select(name, scroll) {
+    state.selected = name;
+    history.pushState(null, "", domain === "docs" ? guideRoute(records.find(r => r.name === name)) : `#${domain === "xml" ? "xml/" : ""}${encodeURIComponent(name)}`);
+    results.querySelectorAll("[data-record]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.record === name)));
+    if (scroll) scrollListTo(name);
+    renderDetail();
+    if (domain === "docs") { renderRail(); renderGuideResults(); detail.scrollTop = 0; }
+  }
+  function scrollListTo(name, center) {
+    const el = results.querySelector(`[data-record="${CSS.escape(name)}"]`); if (!el) return;
+    const top = el.offsetTop, bottom = top + el.offsetHeight, view = results.clientHeight;
+    if (center) results.scrollTop = top - view / 2 + el.offsetHeight / 2;
+    else if (top < results.scrollTop) results.scrollTop = top - 6;
+    else if (bottom > results.scrollTop + view) results.scrollTop = bottom - view + 6;
+  }
+
+  function renderDetail() {
+    const r = (domain === "docs" ? records : visibleRecords()).find(x => x.name === state.selected); if (!r) return;
+    if (domain === "docs") { renderGuideDetail(r); return; }
+    if (domain === "xml") { renderSkinDetail(r); return; }
+    const contracts = [...r.contracts].sort((a, b) => RANK[a.sourceClass] - RANK[b.sourceClass]);
+    const best = contracts[0];
+    const dims = ["return_type", "arguments", "execute", "behaviour"].map(k => { const v = r.dimensions?.[k] || "n/a"; return `<span class="pip ${v === "settled" ? "settled" : v === "n/a" ? "na" : ""}" title="${esc(k)}: ${esc(v)}"><b></b>${k.slice(0, 3)}</span>`; }).join("");
+    const legend = Object.keys(RANK).map(k => `<span style="--c:${tierColor(k)}">${TIER_LABEL[k]}</span>`).join("");
+    const forms = contracts.length ? contracts.map(c => `<div class="form" style="--c:${tierColor(c.sourceClass)}"><i></i><div>
+        <code class="call">${esc(c.call)}</code><code class="result">${esc(c.result)}</code>
+        <span class="tier">${TIER_LABEL[c.sourceClass]} <em>· ${esc(c.mode)}</em></span>
+        <button class="copy" type="button" data-copy="${esc(c.call)}">Copy</button></div></div>`).join("")
+      : '<div class="none-box">No callable form recorded for this verb.</div>';
+    const examples = r.examples.length ? r.examples.map(e => `<div class="example"><span class="src" title="${esc(e.label)}">${esc(e.label)}</span><code>${esc(e.code)}</code><button class="copy" type="button" data-copy="${esc(e.code)}">Copy</button></div>`).join("")
+      : '<div class="none-box">No example recorded.</div>';
+    detail.innerHTML = `<div class="detail-inner">
+      <p class="crumbs">Verbs / ${esc(r.section)} / ${esc(r.tier)} tier</p>
+      <div class="title"><h1>${esc(r.name)}</h1><span class="tag kind ${esc(r.kind.toLowerCase())}">${esc(r.kind)}</span>
+        ${r.hidden ? '<span class="tag hidden">Editor-hidden</span>' : ""}${r.documented ? "" : '<span class="tag undocumented">Undocumented</span>'}</div>
+      <p class="description">${esc(r.description || "No authored description yet.")}</p>
+      ${r.aliases && r.aliases !== "None" ? `<p class="aliases">Also spelled ${r.aliases.split(", ").map(a => `<code>${esc(a)}</code>`).join(", ")}</p>` : ""}
+      ${best ? `<div class="best"><div class="best-head"><span class="label">Best form</span><span class="rung" style="color:${tierColor(best.sourceClass)}">${TIER_LABEL[best.sourceClass]}</span><small>strongest evidence of ${contracts.length} recorded forms</small></div>
+        <div class="best-body"><div><code class="call">${esc(best.call)}</code><span class="meta">${esc(best.mode)} · returns <code style="color:${tierColor(best.sourceClass)}">${esc(best.result)}</code></span></div>
+        <button class="copy-primary" type="button" data-copy="${esc(best.call)}">Copy</button></div></div>` : ""}
+      <div class="signal ${esc(r.status)}"><div><div class="signal-head"><span class="dot ${esc(r.status)}"></span>${esc(r.statusLabel)}</div><p>${esc(r.note)}</p></div>
+        <div class="dims"><div class="label">Contract ${settled(r)}/4 settled</div><div class="pips">${dims}</div></div></div>
+      <section class="block"><div class="block-head"><h2>All forms</h2><span>sorted strongest evidence first</span><div class="legend">${legend}</div></div><div class="forms">${forms}</div></section>
+      <section class="block"><div class="block-head"><h2>In the wild</h2><span>store first, then shipped mapper scripts</span></div><div class="examples">${examples}</div></section>
+      <section class="facts">
+        <div><div class="label">HTTP return</div><code>${esc(r.returns)}</code></div>
+        <div><div class="label">Editor category</div><code>${esc(r.category)}</code></div>
+        <div><div class="label">Module</div><code>${esc(r.module)}</code></div>
+        <div><div class="label">Sampled builds</div><code class="quiet">${(r.sampledBuilds || []).map(esc).join(", ") || "—"}</code></div>
+      </section></div>`;
+    detail.querySelectorAll("[data-copy]").forEach(b => b.addEventListener("click", async e => {
+      const btn = e.currentTarget, was = btn.textContent;
+      try { await navigator.clipboard.writeText(btn.dataset.copy); btn.textContent = "Copied"; } catch { btn.textContent = "Select"; }
+      setTimeout(() => btn.textContent = was, 1200);
+    }));
+  }
+
+  function renderSkinDetail(r) {
+    const families = Object.entries(r.families).map(([name, f]) => `<div><div class="label">${esc(name)} · ${esc(r.categories[name].label)}</div><code>${f.uses.toLocaleString()} uses · ${f.files} files · ${f.documented ? "name documented" : "name undocumented"}</code></div>`).join("");
+    const relations = ["parents", "children"].map(direction => {
+      const other = direction === "parents" ? "parent" : "child";
+      const edges = r.relationships[direction].filter(e => state.family === "all" || e.family === state.family);
+      return `<section class="block"><div class="block-head"><h2>${direction === "parents" ? "Parents" : "Children"}</h2><span>${edges.length} · vendor XML</span></div>${edges.map(e => `<div class="skin-doc"><a data-related="${esc(e[other])}" href="#xml/${encodeURIComponent(e[other])}">${esc(`<${e[other]}>`)}</a><small>${esc(e.family)} · ${e.uses} occurrences · Tier 2</small><details><summary>Source files · first location in each</summary>${e.locations.map(l => `<p><a href="${esc(l.url)}">${esc(l.path)}</a>:${l.line} (parent line ${l.parent_line}) · ${esc(l.source_label)}</p>`).join("")}</details></div>`).join("") || '<p>None recorded; support unknown.</p>'}</section>`;
+    }).join("");
+    const attributes = r.attributeRows.map(a => `<tr><td>${esc(a.name)}<small>${a.uses ? `${a.uses.toLocaleString()} observed uses` : 'Reference candidate'}</small></td><td>${esc(a.value)}</td><td>${esc(a.description)}<small>${esc(a.status === 'reader_candidate' ? `Reader candidate · build ${a.build} · behavior unverified` : a.status === 'documented' ? 'Documentation summary' : 'Not yet documented')}</small><details><summary>Context and evidence</summary><small>${esc(a.context)}<br>${a.sources.map(esc).join('<br>') || 'Observed XML inventory; no value contract recorded.'}<br>Default: ${esc(a.default === null ? 'not recorded' : a.default)}<br>Constraints: ${esc(a.constraints === null ? 'not recorded' : a.constraints)}</small></details></td></tr>`).join("");
+    const docs = r.docs.map(d => `<div class="skin-doc"><a href="${esc(d.url)}">${esc(d.heading)}</a><small>${esc(d.doc)}:${d.line}</small><p>${esc(d.excerpt)}</p></div>`).join("");
+    const reader = r.reader || {};
+    const readerText = !reader.available ? "Reader vocabulary unavailable." : reader.readers.length ?
+      `Named by ${reader.readers.join(", ")} on build ${reader.build}. Structural lead; does not prove behavior.` :
+      "Not named by the bounded reader extraction; this is not evidence of absence from the parser.";
+    const probes = (r.probes || []).map(p => `<details class="probe"><summary>${esc(p.fixture)}</summary>${p.lines.map(l => `<p>${esc(l)}</p>`).join("")}</details>`).join("");
+    detail.innerHTML = `<div class="detail-inner">
+      <p class="crumbs">Skin XML / ${esc(r.section)} / ${esc(r.tier)} tier</p>
+      <div class="title"><h1>${esc(`<${r.name}>`)}</h1><span class="tag kind element">Element</span>${r.documented ? "" : '<span class="tag undocumented">Undocumented</span>'}</div>
+      <p class="description">${esc(r.description)}</p>
+      <div class="signal unverified"><div><div class="signal-head"><span class="dot"></span>${esc(r.statusLabel)}</div><p>Observed XML attests syntax, not behavior. Documentation coverage checks the element name; it does not validate every attribute. Parent and child links reflect literal vendor XML, not a complete support schema.</p></div></div>
+      <section class="facts">${families}</section>
+      <section class="block"><div class="block-head"><h2>Attributes</h2><span>Values and descriptions from shared records · unknown rules stay explicit</span></div><div class="attribute-table-wrap"><table class="attribute-table"><thead><tr><th scope="col">Attribute</th><th scope="col">Value</th><th scope="col">Description</th></tr></thead><tbody>${attributes || '<tr><td colspan="3">No attribute records available.</td></tr>'}</tbody></table></div></section>
+      ${relations}
+      <section class="block"><div class="block-head"><h2>Documentation</h2></div>${docs || '<div class="none-box">No dedicated heading found. The element may be covered in a broader section.</div>'}</section>
+      <section class="block"><div class="block-head"><h2>Reader vocabulary</h2></div><p class="signal" style="display:block">${esc(readerText)}</p></section>
+      <section class="block"><div class="block-head"><h2>Probe notes</h2><span>skin fixture README mentions</span></div>${probes || '<div class="none-box">No skin fixture README mentions this element.</div>'}</section>
+    </div>`;
+    detail.querySelectorAll("[data-related]").forEach(link => link.addEventListener("click", event => {
+      event.preventDefault();
+      state.query = ""; state.section = "all"; $("search").value = "";
+      state.selected = link.dataset.related;
+      refresh(); select(link.dataset.related, true); detail.scrollTop = 0;
+    }));
+  }
+
+  const verbCount = document.querySelector(".count").innerHTML;
+  function switchDomain(next, updateHash = true) {
+    if (!domains[next]) return;
+    domain = next; records = domains[next].records;
+    delete detail.dataset.guide;
+    const skin = next === "xml", guide = next === "docs";
+    document.querySelector(".workspace").classList.toggle("guides", guide);
+    document.querySelectorAll(".domain[data-domain]").forEach(b => b.setAttribute("aria-selected", String(b.dataset.domain === next)));
+    document.querySelector(".count").innerHTML = guide ? "Guides preview" : skin ? `<strong>${records.length}</strong> skin elements` : verbCount;
+    $("search").placeholder = guide ? "Search guide headings and text" : skin ? "Search elements, categories, attributes" : "Search verbs, aliases, sections";
+    $("search").value = "";
+    document.querySelectorAll("[data-kind]").forEach(b => { b.hidden = skin || guide; b.setAttribute("aria-pressed", String(b.dataset.kind === "all")); });
+    document.querySelector(".tools").setAttribute("aria-label", skin ? "XML family" : "Kind");
+    document.querySelectorAll("[data-family]").forEach(b => { b.hidden = !skin; b.setAttribute("aria-pressed", String(b.dataset.family === "all")); });
+    Object.assign(state, { query: "", kind: "all", section: "all", family: "all", selected: "" });
+    if (updateHash) history.pushState(null, "", guide ? "#docs/" : skin ? "#xml/" : "#");
+    refresh();
+  }
+  document.querySelectorAll(".domain[data-domain]").forEach(b => b.addEventListener("click", () => { if (b.dataset.domain !== domain) switchDomain(b.dataset.domain); }));
+
+  function refresh() {
+    if (domain === "docs" && !records.some(r => r.name === state.selected)) state.selected = records[0].name;
+    renderRail(); renderResults();
+    if (domain !== "docs" || detail.dataset.guide !== state.selected) renderDetail();
+  }
+  $("search").addEventListener("input", e => { state.query = e.target.value; refresh(); });
+  document.querySelectorAll("[data-kind]").forEach(b => b.addEventListener("click", () => {
+    state.kind = b.dataset.kind;
+    document.querySelectorAll("[data-kind]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    refresh();
+  }));
+  document.querySelectorAll("[data-family]").forEach(b => b.addEventListener("click", () => {
+    state.family = b.dataset.family; state.section = "all";
+    document.querySelectorAll("[data-family]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    refresh();
+  }));
+  document.addEventListener("keydown", e => {
+    const typing = ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName);
+    if (e.key === "/" && !typing) { e.preventDefault(); $("search").focus(); $("search").select(); return; }
+    if (e.key === "Escape" && typing) { document.activeElement.blur(); return; }
+    if ((e.key === "ArrowDown" || e.key === "ArrowUp") && (!typing || document.activeElement.id === "search")) {
+      const visible = visibleRecords(), i = visible.findIndex(r => r.name === state.selected);
+      const next = visible[Math.min(Math.max(i + (e.key === "ArrowDown" ? 1 : -1), 0), visible.length - 1)];
+      if (next) { e.preventDefault(); select(next.name, true); }
+    }
+  });
+  const guideRoute = (g, anchor = "") => `#docs/${encodeURIComponent(g.id)}${anchor ? "/" + encodeURIComponent(anchor) : ""}`;
+  function renderGuideRail() {
+    rail.dataset.domain = "docs";
+    rail.innerHTML = '<div class="label">Guides</div>' + domains.docs.records.map(g =>
+      `<a class="section" aria-current="${g.name === state.selected ? 'page' : 'false'}" href="${guideRoute(g)}"><small>${esc(g.section)}</small><span>${esc(g.name)}</span></a>`).join("");
+  }
+  function renderGuideResults() {
+    const q = state.query.trim().toLowerCase();
+    const g = records.find(r => r.name === state.selected) || records[0];
+    if (!state.selected) state.selected = g.name;
+    const matches = q ? records.flatMap(r => r.headings.filter(h => (r.name + " " + h.title + " " + h.text).toLowerCase().includes(q)).map(h => ({r,h}))) : g.headings.map(h => ({r:g,h}));
+    hits.textContent = q ? `${matches.length} matches` : 'On this page';
+    results.innerHTML = matches.map(({r,h}) => {
+      const at = h.text.toLowerCase().indexOf(q), excerpt = q ? h.text.slice(Math.max(0,at-45), Math.max(0,at-45)+160).replace(/\s+/g,' ') : '';
+      return `<a class="guide-result" href="${guideRoute(r,h.id)}" style="padding-left:${q ? 16 : 16 + Math.max(0,h.level-2)*10}px">${q ? `<small>${esc(r.name)}</small>` : ''}<span>${esc(h.title)}</span>${q ? `<p>${esc(excerpt)}</p>` : ''}</a>`;
+    }).join('') || '<div class="empty">No guide sections match.</div>';
+  }
+  function renderGuideDetail(g) {
+    detail.dataset.guide = g.name;
+    detail.innerHTML = `<div class="guide-meta">${esc(g.section)} · Guides preview <a href="${esc(g.sourceUrl)}">Markdown source</a></div><div class="prose">${g.html}</div>`;
+  }
+  function applyRoute() {
+    const hash = location.hash.slice(1), parts = hash.split('/');
+    const next = parts[0] === 'docs' ? 'docs' : parts[0] === 'xml' ? 'xml' : 'verbs';
+    let name = '', anchor = '';
+    try {
+      if (next === 'docs') {
+        name = domains.docs.records.find(g => g.id === decodeURIComponent(parts[1] || ''))?.name || domains.docs.records[0].name;
+        anchor = decodeURIComponent(parts.slice(2).join('/'));
+      } else name = decodeURIComponent(next === 'xml' ? hash.slice(4) : hash);
+    } catch { name = ''; }
+    if (domain !== next || next !== "docs") switchDomain(next, false);
+    if (next !== 'docs') { state.query = ''; state.section = 'all'; state.family = 'all'; state.kind = 'all'; $('search').value = ''; }
+    state.selected = name;
+    refresh(); detail.scrollTop = 0;
+    if (anchor) document.getElementById(anchor)?.scrollIntoView({block:'start'});
+  }
+  document.addEventListener('click', event => {
+    const a = event.target.closest('a[href^="#"]');
+    if (!a || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault(); history.pushState(null, '', a.getAttribute('href')); applyRoute();
+  });
+  window.addEventListener('popstate', applyRoute);
+  window.addEventListener('hashchange', applyRoute);
+  applyRoute();
+
+</script>
+</body>
+</html>

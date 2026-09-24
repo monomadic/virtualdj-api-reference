@@ -3,13 +3,15 @@
 
     just build-reference                # → build/reference/index.html
     just build-reference --open         # …and open it in the default browser
+    just build-reference --guides       # → build/reference-guides/index.html
     python3 tools/render_reference.py --out /tmp/x.html
 
-The template is `design/human-api-reference.template.html`; the page it
+The default template is `design/human-api-reference.template.html`; the page it
 produces is a rendered *copy* of store data, so it is written to the
 git-ignored `build/` tree and never committed. Nothing here is new evidence:
 every field is the existing store record and artifacts, joined the same way
 `just verb` joins them, with the tier of each piece carried into the page.
+The optional Guides template also projects selected existing Markdown documents.
 """
 
 from __future__ import annotations
@@ -286,7 +288,7 @@ def skin_records(out: Path) -> list[dict]:
     return records
 
 
-def render(out: Path) -> tuple[int, str]:
+def render(out: Path, *, guides: bool = False) -> tuple[int, str]:
     ctx = load_context()
     corpus = load("vdjscript-corpus.json", "snippets")
     shapes_art = load("attested-tails.json", "shapes")
@@ -300,10 +302,20 @@ def render(out: Path) -> tuple[int, str]:
                if r.get("test_status") != "Disproved"]
     payload = json.dumps(records, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     skins = skin_records(out)
+    guide_data = []
+    if guides:
+        from reference_guides import guide_records, connect_skin_docs
+        guide_data = guide_records(out)
+        connect_skin_docs(skins, guide_data)
     skin_payload = json.dumps(skins, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     stamp = build_stamp()
     build = (vt.get("summary") or {}).get("build", "unknown")
-    html = TEMPLATE.read_text()
+    template = TEMPLATE.with_name("human-api-reference-guides.template.html") if guides else TEMPLATE
+    html = template.read_text()
+    if guides:
+        if html.count("__GUIDES__") != 1:
+            sys.exit("guides template must contain one guide payload placeholder")
+        html = html.replace("__GUIDES__", json.dumps(guide_data, ensure_ascii=False).replace("</", "<\\/"))
     for token in ("__RECORDS__", "__SKIN_RECORDS__", "__VERB_COUNT__", "__BUILD__", "__STAMP__", "__RENDERED__"):
         if token not in html:
             sys.exit(f"template is missing placeholder {token}")
@@ -321,11 +333,13 @@ def render(out: Path) -> tuple[int, str]:
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    ap.add_argument("--out", type=Path)
+    ap.add_argument("--guides", action="store_true", help="build the parallel template with Markdown guides")
     ap.add_argument("--open", action="store_true",
                     help="open the rendered page in the default browser")
     args = ap.parse_args(argv)
-    n, stamp = render(args.out)
+    args.out = args.out or (ROOT / "build/reference-guides/index.html" if args.guides else DEFAULT_OUT)
+    n, stamp = render(args.out, guides=args.guides)
     print(f"{args.out.relative_to(ROOT) if args.out.is_relative_to(ROOT) else args.out}: "
           f"{n} records rendered from {stamp}")
     if args.open:
