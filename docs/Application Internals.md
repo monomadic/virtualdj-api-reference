@@ -1044,19 +1044,23 @@ files — the index keeps the first.
 
 Comparing raw library tags against the stored post-cleanup metadata for the same
 file bounds the open cleanup question with real data rather than more reading.
-On this install every comparable pair but one reproduced its stored SID directly
-from raw tags, so **`CTagEngine::cleanup` is identity for the large majority of
-ordinary tracks**. The single exception names an actual rule:
+**Correction (2026-09-25):** the earlier comparison observed one raw `Remix`
+value of `Original Mix` paired with an empty stored remix. It did **not** establish
+that `CTagEngine::cleanup` always discards `Original Mix`, nor that cleanup is
+identity for other tracks. Stored metadata may differ from current tags for
+other reasons, including retagging.
 
-| Field | Raw tag | Stored after cleanup |
-| --- | --- | --- |
-| `Remix` | `Original Mix` | *(empty)* |
+A read-only database comparison on 2026-09-25 found a counterexample: an endpoint
+stores `Original Mix`, and hashing its stored artist/title/remix reproduces the
+SID of its outgoing relationship. Dropping the remix instead produces a different
+SID with no relationship rows. This is offline corroboration (Tier 2), not a
+complete cleanup specification or a live external-write test.
 
-So cleanup discards `Original Mix` as a non-distinguishing remix. That is one
-rule from one example, not the cleanup specification — the useful part is the
-method: any disagreement between a raw-tag SID and a stored SID for the same file
-isolates a cleanup behavior, and `--resolve-from-library` surfaces those
-disagreements as misses.
+**Reader consequence:** preserve `Original Mix` when computing candidate SIDs.
+Do not implement unconditional remix stripping from the earlier observation.
+Compare candidates against stored identities and keep metadata-cleanup uncertainty
+explicit. The Python calculator and `--resolve-from-library` already preserve
+this field; consumers must not add the retracted stripping rule.
 
 #### Lookup and relationship consequences
 
