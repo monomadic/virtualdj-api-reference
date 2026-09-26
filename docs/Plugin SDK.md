@@ -187,12 +187,157 @@ on this build); use `get_time 'total'`, in milliseconds.
 Typeinfo names present in `/Applications/VirtualDJ.app/Contents/MacOS/VirtualDJ` but absent
 from every public header (`Binary symbol table`, 2026-07-30):
 
-- **`IVdjPluginHelperBeats`** — unexplored. The name is suggestive given that beatgrids and
-  waveforms are a standing gap in this repo.
-- **`IVdjTransitionCallbacks8`**
+- **`IVdjPluginHelperBeats`** — see below, now characterized.
+- **`IVdjTransitionCallbacks8`** — see below.
 
 The public surface is a **subset** of the live one. Treat the SDK as a partial export of an
 internal framework, not a complete description of it.
+
+**Full re-pass (`Binary symbol table`, VirtualDJ 2026 bundle `18.0.9246`, macOS universal
+x86_64+arm64, 2026-09-27)** against a debug-symbol-rich build turned up more of the internal
+surface than the stripped installed copy exposes (321k demangled symbols vs. 1,238 on the
+Mac App Store-style bundle at `18.0.9482`). Every RTTI-backed class name present:
+
+```
+IVdjFolder  IVdjString  IVdjPlugin8  IVdjCallbacks8  IVdjPluginDsp8  IVdjTracksList
+IVdjContextMenu  IVdjPluginVideoFx8  IVdjSubfoldersList  IVdjVideoCallbacks8
+IVdjPluginStartStop8  IVdjPluginHelperBeats  IVdjPluginOnlineSource  IVdjPluginPositionDsp8
+IVdjTransitionCallbacks8  IVdjVideoMouseCallbacks8  IVdjPluginVideoTransition8
+IVdjPluginVideoTransitionMultiDeck8  IVdjOAuth
+```
+
+`IVdjFolder`, `IVdjString`, `IVdjTracksList`, `IVdjSubfoldersList`, `IVdjContextMenu`, and
+`IVdjOAuth` are the data-model types passed into `IVdjPluginOnlineSource` methods
+(`GetFolder`, `GetFolderList`, `onSearch`, context menus, `OnOAuth`) — named here for the
+first time but not yet individually characterized.
+
+#### `IVdjPluginHelperBeats` — characterized
+
+Four real method bodies exist in the binary (not just a typeinfo stub), all under a private
+namespace so no plugin-facing header declares them:
+
+```cpp
+class IVdjPluginHelperBeats
+{
+    virtual void onLoadBeats(std::vector<float> beats, int deck, IVdjPlugin8 *plugin);
+    virtual void onParameterBeats(int id, IVdjPlugin8 *plugin);
+    virtual void onGetParameterStringBeats(int id, char *outParam, int outParamSize);
+    virtual void formatBeats(char *outParam, int outParamSize, float value);
+};
+```
+
+(Signatures inferred from the demangled linkage names — `onLoadBeats(std::vector<float,
+std::allocator<float>>, int, IVdjPlugin8*)` etc. — parameter names are guesses; HRESULT
+vs. `void` return is not yet confirmed.)
+
+This is a mixin in the same family as `IVdjPluginDsp8`/`IVdjPluginPositionDsp8`: a plugin
+that also inherits it gets `onLoadBeats` called with **the full beatgrid as a
+`vector<float>`** whenever a track loads — almost certainly beat timestamps, at a
+granularity VDJScript does not expose (no `get_beat`-family verb returns the whole grid).
+The `*Beats`-suffixed calls shadow the ordinary `OnParameter`/`OnGetParameterString` so a
+beat-specific control group can exist independently of the plugin's main one, and
+`formatBeats` looks like a value→string formatter for that group. The only confirmed
+implementer of the mixin is VirtualDJ's own built-in beatgrid editor
+(`CInternalPluginAFX_BeatGrid`) — not established as available to third-party bundles from
+evidence gathered so far.
+
+Unresolved: whether a third-party (non-internal) plugin can actually opt into this mixin
+the way it can `IVdjPluginDsp8`, or whether it is reserved to `CInternalPluginAFX_BeatGrid`.
+No header exists to declare the base class, so a plugin would have to hand-declare a
+matching vtable shape — untested.
+
+#### `IVdjTransitionCallbacks8` and the deck video-draw path
+
+`CPlugin` (VirtualDJ's own plugin-host wrapper object, not a plugin) carries:
+
+```cpp
+CPlugin::registerTransitionCallbacks(IVdjTransitionCallbacks8*)
+CPlugin::unregisterTransitionCallbacks(IVdjTransitionCallbacks8*)
+CPlugin::transitionCallbacks     // stored pointer
+CPlugin::transitionCallbackUse   // guard flag
+```
+
+No method bodies for `IVdjTransitionCallbacks8` itself survive (it is implemented by the
+plugin side, called by the host — same shape as `IVdjPluginVideoFx8`), so its virtuals are
+still unknown; only the registration plumbing is characterized.
+
+Adjacent and newly named: **`IVdjVideoCallbacks8`** and **`IVdjVideoMouseCallbacks8`** —
+also RTTI-only, also host-calls-plugin. The name of the second strongly implies the video-FX
+render target (`GetDevice`/`GetTexture` from `IVdjPluginVideoFx8`) can also receive mouse
+input, not just accept draw calls — unconfirmed, no method bodies recovered yet.
+
+The video draw/composite path that backs all of this, from `CPlugin` and `CVideoEngine`:
+
+```cpp
+CPlugin::GetDevice(EVdjVideoEngine, void**)
+CPlugin::GetTexture(EVdjVideoEngine, void**, TVertex**)
+CPlugin::setVideoDevice(IRenderTarget*, int, int)
+CPlugin::DrawDeck()
+CVideoEngine::DrawDeck(int deck)
+CVideoEngine::_DrawDeck(int deck, TVertex*)
+```
+
+plus ten free-function overloads `DrawDeck0(int, TVertex*)` … `DrawDeck9(int, TVertex*)` and
+a `__DrawDeck` data symbol (a dispatch table, by name and by being a `d`-type symbol next to
+ten near-identical functions) — consistent with up to 10 video decks, each with its own
+compiled draw routine, selected by table lookup rather than a runtime switch.
+`setVideoDevice` taking an `IRenderTarget*` confirms the texture handed to a video-FX plugin
+is a real GPU render target (this build is Metal-only on macOS arm64), not a copied buffer.
+
+**Caller trace, decompiled (`Binary decompiler`, Ghidra 12.1.3 headless, full auto-analysis of
+the arm64 slice of `18.0.9246`, 2026-09-27 — first decompiler pass on this build; prior
+findings in this file were symbol-table/disassembly only).** `CPlugin::DrawDeck()` has no
+plain call sites in code at all — its only two references are vtable-slot data references
+(one for the primary vtable, one for the `Thn8_` secondary-base thunk), i.e. it is reached
+purely through virtual dispatch, never called by name. Its body is a one-line forward:
+
+```c
+void CPlugin::DrawDeck(CPlugin *this) {
+    CVideoEngine::DrawDeck(&_videoEngine, *(int *)(this + 0x30));
+}
+```
+
+— `this + 0x30` is the `CPlugin` instance's own deck index, confirming each plugin instance
+knows which deck it's bound to and forwards into the single global `CVideoEngine`.
+`CVideoEngine::DrawDeck(int)` and `CVideoEngine::_DrawDeck(int, TVertex*)` are in turn called
+from exactly three places:
+
+- **`CVideoEngine::thread()`** — the video engine's own per-frame render loop. For each deck,
+  per frame, it calls `CPlugin::setVideoDevice(...)` then invokes the transition plugin's
+  public virtual — `CPlugin::onDraw(crossfader)` (`IVdjPluginVideoTransition8::OnDraw`) or
+  `CPlugin::onDrawMultiDeck(...)` (`IVdjPluginVideoTransitionMultiDeck8::OnDrawMultiDeck`) —
+  and only falls back to the raw `_DrawDeck(deckIndex, NULL)` compositing when that call
+  returns non-zero, i.e. **this is the exact frame in the exact function where third-party
+  video-transition plugins get invoked**, sitting right beside (not instead of) the internal
+  no-transition path.
+- **`CSamplerEngine::drawVideo(CDeck*, int, int)`** — the sample-pad grid's live video
+  thumbnails; it calls `CVideoEngine::DrawDeck` first to render a deck's current frame, then
+  composites that into a sampler-pad thumbnail surface. A second, independent consumer of the
+  same per-deck render path, confined to the sampler grid, not exposed to plugins.
+- **`CPlugin::create()`** — not a runtime call; a huge dispatcher matching a plugin's
+  `internal://` path against known built-in class names (`.lrc` reader, and so on) to decide
+  which concrete C++ class to construct. The `DrawDeck` reference here is a class/vtable
+  identity check, not an invocation.
+
+No third path exists: a third-party plugin never gets a call to `DrawDeck` itself, and never
+calls it either. The only plugin-facing hook into this whole system remains the public
+`OnDraw`/`OnDrawMultiDeck` virtuals on `IVdjPluginVideoTransition8`/
+`IVdjPluginVideoTransitionMultiDeck8` (transitions) and `IVdjPluginVideoFx8` (effects) —
+`DrawDeck`/`_DrawDeck` are the internal fallback/base-compositing routines the engine calls
+around those, not an additional entry point.
+
+Built-in video transitions (`CInternalPluginVT_Fade`, `CInternalPluginVT_None`,
+`CInternalPluginVT_Additive`) each implement a lowercase `drawDeck(int, TVertex*)`, distinct
+from the traced `DrawDeck`/`_DrawDeck` above and not yet reconciled with it — plausibly a
+separate per-built-in-transition draw call reached through the same `onDraw`/`onDrawMultiDeck`
+virtual slots the public interface exposes, but this is inferred from naming, not traced.
+
+**Bearing on the "custom draw surface inside the app" question:** nothing here adds a fourth
+option beyond `VDJINTERFACE_SKIN`/`VDJINTERFACE_DIALOG`/video-FX texture (see above). The
+video-FX render target remains the only drawable surface a plugin can get handed, and it is
+scoped to the video mixer's output (deck video / transition compositing), not to app chrome.
+`IVdjVideoMouseCallbacks8` suggests that surface can also take pointer input, which would
+make it interactive as well as drawable — still confined to the video plane.
 
 ## Parameters, and the manifest every native plugin uses
 
