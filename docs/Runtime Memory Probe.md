@@ -569,6 +569,31 @@ an unloaded time-query sweep would not settle either question.
 
 ## Ghidra output-pointer follow-up — 2026-09-27, build 18.0.9246, arm64
 
+### Persistent project location
+
+The analyzed project is now available under
+`/Users/nom/src/virtualdj-api-reference-resources/ghidra/`:
+
+- `README.md`: cache inventory and invocation examples.
+- `vdj_proj_9246/`: project directory; project name `vdj_proj`.
+- `VirtualDJ-9246.arm64`: imported program name and retained binary slice.
+- `evidence/`: raw xrefs, decompilations, symbol searches and run logs.
+
+The retained slice's SHA-256 was rechecked against the time-consumer export on
+2026-09-27 and matches. Prefer this persistent location over the earlier temporary
+scratch project. For inspection/export, pass `-readOnly -noanalysis`; do not
+repeat import or auto-analysis. The project/database and raw cache are local,
+not committed evidence by themselves.
+
+Tracking clarification, checked 2026-09-27: `tools/ghidra/VDJTailExport.java`
+**is tracked** (commit `bc34998`). The three DrawDeck/symbol/decompile scripts
+were present but untracked when this route was added. The cache README's claim
+that the tail exporter is also untracked is stale; there is no blanket Git ignore
+rule for Ghidra scripts in this checkout. Check `git ls-files tools/ghidra` rather
+than inferring tracking policy from a neighboring script.
+
+### Verified export and interpretation
+
 The completed Ghidra 12.1.3 project was reused with `-readOnly -noanalysis`.
 The [export](../tests/ghidra-time-consumers-9246.json) contains only the shared
 reader and `ACTION_get_time::onQueryText`, including decompiled C, function bounds,
