@@ -826,6 +826,13 @@ tail-consumers *args:
 tail-consumers-test:
     @{{python}} -m unittest discover -s tools -p test_tail_consumers.py
 
+# Verified Ghidra export from the existing analyzed build-9246 project.
+ghidra-time-consumers *args:
+    @{{python}} tools/ghidra_time_consumers.py {{args}}
+
+ghidra-time-consumers-test:
+    @{{python}} -m unittest discover -s tools -p test_ghidra_time_consumers.py
+
 # Fixed-input, build-gated parser object experiment; never executes parsed scripts.
 plugin-parser-build *args:
     tools/plugin/build.sh --parser {{args}}

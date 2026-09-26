@@ -566,3 +566,82 @@ Next: model the shared reader's output parameter and its conditional selection
 before assigning a position to `short`. Then choose a loaded synthetic fixture
 that distinguishes formatting and pitch-scaled versus absolute time. Repeating
 an unloaded time-query sweep would not settle either question.
+
+## Ghidra output-pointer follow-up — 2026-09-27, build 18.0.9246, arm64
+
+The completed Ghidra 12.1.3 project was reused with `-readOnly -noanalysis`.
+The [export](../tests/ghidra-time-consumers-9246.json) contains only the shared
+reader and `ACTION_get_time::onQueryText`, including decompiled C, function bounds,
+guard-byte hashes, language and imported-program hash. The new bundle at
+`/Users/nom/src/virtualdj-api-reference-resources/VirtualDJ-9246.app` matches the
+existing universal-binary hash and memory-anchor UUID. Its independently extracted
+arm64 slice matches Ghidra's imported-program SHA-256. Both guarded code intervals
+match the earlier shared-consumer artifact byte for byte. The target decompilations
+completed without target warnings; this is not a claim that the project's entire
+auto-analysis was error-free or that inferred C types are authoritative.
+
+**Structural interpretation, conditional on a successful shared read:** the
+returned `SActionParam*` is selected as follows (positions below are one-based):
+
+| Input condition | Parameter pointer returned to the text formatter |
+| --- | --- |
+| First argument has a non-text tag | First argument |
+| First argument has a text tag; second argument does not match text `absolute` | Second argument |
+| First argument has a text tag; second argument matches text `absolute` | Third argument |
+
+The assembly retained in the earlier artifact cross-checks the decisive route:
+`x22` initially receives parameter 1; the non-text path sets it to parameter 0;
+on the text path, `csel x22, x23, x22, ne` at `0x1004d6a7c` selects parameter 2
+when the second-position comparison succeeds. `str x22, [x20]` at `0x1004d6aa8`
+writes the selected pointer through the output argument. These are zero-based
+parameter indices, unlike the table's human-readable positions.
+
+The text wrapper uses this returned pointer for its `short` comparison. The
+comparison is reached only when the computed hour component is zero; it selects
+the minutes/seconds format without tenths. With a nonzero hour component, the
+wrapper selects the hours/minutes/seconds format without checking `short`.
+It also rejects integer/value-tagged returned parameters before formatting.
+This explains why a single fixed argument position for `short` would be misleading.
+
+The next **test candidates**, not promoted supported forms, are
+`get_time elapsed short`, `get_time elapsed absolute short`, and
+`get_time absolute short`, paired with nonsense replacements in the same positions.
+`get_time short` and `get_time elapsed zzunknowna short` are useful wrong-position
+controls suggested by the pointer-selection route. Use a synthetic sub-hour
+fixture with a nonzero fractional second, then an over-hour fixture: a whole-second
+or over-hour-only observation can hide the relevant formatting distinction.
+
+Additional structural leads from this export:
+
+- The `cue` prefix path passes the suffix to Ghidra-resolved `_atoi`, then to
+  `SDBInfo::getCue(int)`. This suggests testing malformed, zero and missing cue
+  suffixes separately; it is not a validated cue grammar.
+- Either the first-position `absolute` path or a matched second-position
+  `absolute` bypasses the final division. The other route clamps a deck float
+  field to at least `0.5` before dividing. Identifying that field's exact scaling
+  semantics still requires a discriminating runtime fixture.
+
+These remain Tier 2 findings from named code. The ordinary HTTP endpoint was
+observed on build 9644 during this continuation, so no historical-build behavior
+was inferred from it and no loaded media or settings were changed. The existing
+conservative dataflow report still labels `short` unresolved: this Ghidra finding
+is a separately reviewable interpretation, not a newly implemented general
+output-pointer model.
+
+```sh
+just ghidra-time-consumers
+just ghidra-time-consumers --show formatter
+just ghidra-time-consumers --show reader
+just ghidra-time-consumers --binary /path/to/VirtualDJ-9246.app/Contents/MacOS/VirtualDJ
+just ghidra-time-consumers-test
+```
+
+To export from an existing analyzed project, run Ghidra's `analyzeHeadless` with
+`PROJECT_DIRECTORY PROJECT_NAME -process PROGRAM_NAME -readOnly -noanalysis
+-scriptPath /path/to/repo/tools/ghidra -postScript VDJTailExport.java OUTPUT.json
+1004d63b4 540 1004d65d0 1296`. The exporter refuses an existing output, caps each
+guard interval and aborts on decompilation failure. The lengths are frozen guards
+for this build, checked against the independent artifact; do not reuse them on
+another image. Java avoids the PyGhidra startup dependency encountered by the
+earlier project scripts. Validation verifies identity/bounds, not the semantics
+of arbitrary edits to decompiled text.
