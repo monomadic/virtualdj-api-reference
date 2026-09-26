@@ -406,9 +406,17 @@ built bundle): no Network Control listener on port 80, no plugin loads, `go.txt`
 unconsumed, while the app itself runs normally. A plain second relaunch, the bundle still
 installed, comes up clean in ~3 s; nothing needs to be removed (the first occurrence's
 remove-then-reinstall dance worked only because it *was* a second launch). Cause unconfirmed —
-first-seen-binary system assessment fits the shape. Practical rule: after installing any new
-bundle, restart VirtualDJ twice, and confirm the HTTP interface answers before reading anything
-else as signal.
+first-seen-binary system assessment fits the shape.
+
+**Counter-observation (`Local test`, same bundle `18.0.9644`, macOS 27.0, 2026-09-26):** a
+freshly built AutoStart bundle (`UpNext`, never loaded by the running instance) was installed
+over the previous build while VirtualDJ ran; VirtualDJ was quit cleanly and launched **once**.
+Within 25 s the plugin's log had grown, its window was listed by System Events, and the HTTP
+interface answered `get_version`. So the inert first launch is not a rule about new binaries in
+general. What distinguished the two 2026-09-22 occurrences is not known — candidates are a
+first-ever install of a bundle *name* into the folder (both were), or an unrelated startup
+race — and the double restart should be treated as a fallback, not a step: install, launch
+once, confirm the HTTP interface answers, and only relaunch if it does not.
 
 The skin-interface path is also confirmed language-agnostic (same session): the Rust plugin's
 `OnGetUserInterface` returned `VDJINTERFACE_SKIN` buffers and VirtualDJ rendered the panel,
