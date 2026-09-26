@@ -46,8 +46,9 @@ TESTS = ROOT / "tests"
 APP = Path("/Applications/VirtualDJ.app")
 CHANNEL = "http://localhost/query?script=get_version"
 
-# Distribution name -> module name, for the cases where they differ. A missing
-# entry reads as "not importable" even when the package is installed.
+# Distribution name -> module name, for the cases where hyphen-to-underscore
+# spelling is not enough. A missing entry reads as "not importable" even when
+# the package is installed.
 MODULE_NAMES: dict[str, str] = {"markdown-it-py": "markdown_it"}
 
 OK, WARN, BAD = "ok  ", "note", "FAIL"
