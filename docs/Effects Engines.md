@@ -721,6 +721,10 @@ effect_active 'beatgrid'
 
 ## Pad FX
 
+Named assignments such as `padfx 'echo out' 'Feedback:80%' 'Reverb:78%' on`
+also set controls (HTTP, build 9644). See [Pad FX Argument Contract](Pad%20FX%20Argument%20Contract.md)
+for verified forms, positional mixing, ignored keys and evidence limits.
+
 ### What is Pad FX?
 
 **Quick-trigger effects** with pre-configured parameters, designed for single-button effect execution.
@@ -769,7 +773,7 @@ padfx 'reverb' 'stemfx:vocal'           # Apply effect only to vocal
 
 Official `padfx` stem names are `Vocal`, `HiHat`, `Bass`, `Instru`, `Kick`, `Melody`, `Rhythm`, `MeloVocal`, and `MeloRhythm`. Existing local pad pages normally use lowercase strings.
 
-**Full Pad FX syntax:**
+**Positional Pad FX syntax:**
 
 ```
 padfx 'effectname' param1 param2 param3 param4 'stemfx:stemname'

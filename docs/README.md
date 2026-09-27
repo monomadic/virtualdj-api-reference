@@ -101,6 +101,7 @@ Start here:
   The mental model: which FX engines exist (deck slots, ColorFX, master, video, ...) and how each is driven from skins and pad pages. Start here.
 
 - [Effects Engines](Effects%20Engines.md)
+- [Pad FX Argument Contract](Pad%20FX%20Argument%20Contract.md) — named and positional assignment evidence
   The deep per-engine control reference (~1,700 lines, section-addressed): verbs, slot semantics, and usage patterns for every engine.
 
 - [Native Effects](Native%20Effects.md)
