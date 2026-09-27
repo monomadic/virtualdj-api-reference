@@ -1062,6 +1062,16 @@ Compare candidates against stored identities and keep metadata-cleanup uncertain
 explicit. The Python calculator and `--resolve-from-library` already preserve
 this field; consumers must not add the retracted stripping rule.
 
+**Counter-observation (`Local test`, build 18.0.9644, 2026-09-27):** a link made
+in the running app via the official `mark_linked_tracks` verb (decks 1 and 2 loaded,
+sent from a plugin through `SendCommand`) produced **one** new `related_tracks` row
+and two `track_data` rows whose `remix` columns kept their raw values (`Original Mix`
+and `Extended Mix`), and both SIDs reproduce from the raw tags **with** the remix
+included — so on this build cleanup did *not* discard `Original Mix`. Afterwards
+`has_linked_tracks` answered `yes` on both decks, so a single stored row is a link in
+both directions as far as VirtualDJ is concerned; `(sid1, sid2)` order is insertion
+order, not a direction. Readers should hash both with and without `Original Mix`.
+
 #### Lookup and relationship consequences
 
 `addRelated` computes each cleaned SID, binds them to
