@@ -232,6 +232,19 @@ def t_action_catalog(a):
     return tool_script("extract_action_catalog.py", "--get", a["name"])
 
 
+def t_controllers(a):
+    if a.get("path"):
+        return tool_script("controller_schema_inventory.py", "--path", a["path"])
+    if not a.get("device"):
+        raise ToolError("pass `device` (e.g. DDJGRV6) or `path` (e.g. /device/slider)")
+    args = ["--device", a["device"]]
+    if not a.get("compare"):
+        args.append("--controls")
+        if a.get("match"):
+            args += ["--match", a["match"]]
+    return tool_script("controller_schema_inventory.py", *args)
+
+
 def t_up(a):
     try:
         v = http("query", "get_version")
@@ -531,6 +544,29 @@ TOOLS = [
         "fn": t_action_catalog,
     },
     {
+        "name": "vdj_controllers",
+        "description": (
+            "Controller vocabulary for writing a mapper. device (a built-in identifier such "
+            "as DDJGRV6, substring allowed) lists the control names its shipped definition "
+            "declares — the names <map value=\"\"> refers to — grouped by element, with the "
+            "device's decks and pad layout; match narrows the names. compare instead shows "
+            "how the repo's own mappers for that device line up with the shipped ones. path "
+            "(e.g. /device/slider) shows which attributes shipped definitions use on an XML "
+            "path. All of it is shipped syntax (Tier 2): it says what Atomix wrote, not what "
+            "the parser accepts or what a control does."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "device": S(type="string"),
+                "match": S(type="string", description="With device: keep control names containing this."),
+                "compare": S(type="boolean", description="With device: local-vs-shipped mapper comparison instead."),
+                "path": S(type="string", description="An XML path in device definitions, e.g. /device/slider."),
+            },
+        },
+        "fn": t_controllers,
+    },
+    {
         "name": "vdj_up",
         "description": "Check whether a live VirtualDJ is reachable over the HTTP control interface. Run this before planning any live-test work.",
         "inputSchema": {"type": "object", "properties": {}},
@@ -712,6 +748,10 @@ def self_check():
     check("vdj_list_xml_elements", lambda: t_list_xml_elements({"limit": 3}))
     check("vdj_attested_tails", lambda: t_attested_tails({"verb": "fadeout"}))
     check("vdj_action_catalog", lambda: t_action_catalog({"name": "get_song_event"}))
+    # Committed inventory; the control listing needs the gitignored vendor tree and
+    # says so when it is absent, which is an answer, not a failure.
+    check("vdj_controllers path", lambda: t_controllers({"path": "/device/slider"}))
+    check("vdj_controllers device", lambda: t_controllers({"device": "DDJGRV6", "match": "loop"}))
 
     # vdj_lint must lint the file it is given: a malformed page fails, a real one passes.
     with tempfile.TemporaryDirectory() as tmp:

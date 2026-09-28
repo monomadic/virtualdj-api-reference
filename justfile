@@ -757,7 +757,8 @@ controllers-diff older newer *args:
 controllers-extract *args:
     @uv run tools/read_controllers.py "$@"
 
-# Offline vocabulary and mapper cross-checks; --path /device/slider or --device DDJGRV6.
+# Offline vocabulary and mapper cross-checks; --path /device/slider or --device DDJGRV6
+# (--controls [--match loop] lists the definition's control names).
 controllers *args:
     @{{python}} tools/controller_schema_inventory.py "$@"
 

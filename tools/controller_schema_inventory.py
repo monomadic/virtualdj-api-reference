@@ -97,6 +97,49 @@ def inventory(zip_path, mapper_dir):
     }
 
 
+VENDOR = Path(__file__).resolve().parents[1] / 'vendor/controllers'
+
+
+def build_key(directory):
+    """`18.0.9598-r2241` -> (18, 0, 9598, 2241), for newest-first ordering."""
+    return tuple(int(n) for n in directory.name.replace('-r', '.').split('.') if n.isdigit())
+
+
+def device_controls(members, bundle_version):
+    """Control names in the device definition, from the decoded vendor tree.
+
+    Prefers the manifest's build; otherwise the newest build extracted. The
+    names are what a <map value=""> refers to. Tier 2: shipped vocabulary.
+    """
+    definitions = [m for m in members if m['root'] == 'device']
+    if not definitions:
+        return {'error': 'no device definition among the matched bundled members'}
+    if not VENDOR.is_dir():
+        return {'error': 'vendor/controllers/ is not extracted — run `just controllers-vendor`'}
+    builds = sorted((d for d in VENDOR.iterdir() if d.is_dir()), key=build_key, reverse=True)
+    builds.sort(key=lambda d: not d.name.startswith(bundle_version))
+    out = []
+    for definition in definitions:
+        found = next((f for d in builds for f in sorted(d.glob('block-*/' + definition['name']))), None)
+        if found is None:
+            out.append({'definition': definition['name'], 'error': 'not in any extracted build'})
+            continue
+        root = ET.parse(found).getroot()
+        controls = defaultdict(set)
+        for element in root.iter():
+            if element is not root and element.get('name') and element.tag in ELEMENTS:
+                controls[element.tag].add(element.get('name'))
+        out.append({
+            'definition': definition['name'],
+            'build': found.parts[-3],
+            'device': dict(root.attrib),
+            'controls': {tag: sorted(names) for tag, names in sorted(controls.items())},
+            'scope': 'Names declared by the definition. Lifecycle (ONINIT/ONEXIT), SHIFT_ and '
+                     'generated controls can be valid in a mapper without appearing here.',
+        })
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('zip', type=Path, nargs='?', help='Decoded ZIP to regenerate the complete inventory')
@@ -104,6 +147,8 @@ def main():
     parser.add_argument('--path', help='XML path: exact match preferred, otherwise substring')
     parser.add_argument('--device', help='Built-in device identifier (case-insensitive; exact preferred, otherwise substring)')
     parser.add_argument('--manifest', type=Path, default=None, help='Decoded archive manifest for built-in device lookup (default: the installed build\'s under tests/controllers-manifests/, else the newest)')
+    parser.add_argument('--controls', action='store_true', help='With --device: list the control names its definition declares')
+    parser.add_argument('--match', help='With --controls: keep control names containing this text (case-insensitive)')
     parser.add_argument('--mappers', type=Path, default=Path(__file__).resolve().parents[1] / 'examples/Mappers')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
@@ -136,6 +181,14 @@ def main():
             result_data['bundled_members'] = exact or candidates
             result_data['manifest_source'] = {key: manifest[key] for key in ('source', 'bundle_version', 'source_sha256', 'app_binary_sha256')}
             result_data['manifest_matches_inventory_zip'] = any(block['zip_sha256'] == data['source_zip_sha256'] for block in manifest['blocks'])
+            if args.controls:
+                listed = device_controls(result_data['bundled_members'], manifest['bundle_version'])
+                if args.match and isinstance(listed, list):
+                    for row in listed:
+                        row['controls'] = {tag: kept for tag, names in row.get('controls', {}).items()
+                                           if (kept := [n for n in names if args.match.casefold() in n.casefold()])}
+                # The device-level answer replaces the comparison detail.
+                result_data = {'evidence_tier': data['evidence_tier'], 'device_controls': listed}
     elif args.zip:
         result_data = data
     else:

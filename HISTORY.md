@@ -431,6 +431,26 @@ raises no errors; Quarantine stays out of `just check`. Self-check covers a pad 
 draft.
 
 
+### M4. Expose Controller Vocabulary Through The MCP
+
+Status: Done
+
+Note: Added 2026-09-28. Mapper authoring is a stated MCP use case, but the server can lint a
+mapper without answering which controls a device has. Wrap `tools/controller_schema_inventory.py`
+(`just controllers --device <id>` / `--path /device/slider`) as a read-only `vdj_controllers`
+tool. Its output is shipped syntax, Tier 2 — the tool description must say so, as the script's
+own help does. Offline only; add a `self_check` call.
+
+Landed 2026-09-28 as `vdj_controllers`. Wrapping the existing queries was not enough: `--device`
+returned the device's metadata and the local-vs-shipped mapper comparison, not the control
+names a mapper's `<map value="">` needs. `controller_schema_inventory.py` gained `--controls`
+(`--match` to narrow), which reads the device definition from the extracted
+`vendor/controllers/` tree — the manifest's build when extracted, otherwise the newest — and
+reports which build it read. The tree is gitignored; without it the tool says to run
+`just controllers-vendor`. The MCP tool defaults to the control listing, with `compare` for the
+old comparison and `path` for attribute usage on a definition path.
+
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 ### H1. Clickthrough value matrix
