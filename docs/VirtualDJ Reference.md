@@ -441,6 +441,28 @@ Useful rule of thumb:
 
 Source: `Official`, `Official forum`, `Community`, `Local test`, `Inference`
 
+### Deck Side in Shared Defines
+
+VDJScript has no verb for "which side does this deck belong to". When one define renders mirrored left/right variants, the caller already knows the side, so pass it in as a placeholder. Follow the Denon Prime4 Screen add-on's naming — `placeholders="deckn,deckside"` with `deckside="leftdeck"` / `"rightdeck"` — and select the variant structurally:
+
+```xml
+<define class="TRACK_INFO" placeholders="*deck,*deckside">
+  <deck deck="[DECK]">
+    <group condition="param_equal '[DECKSIDE]' 'leftdeck'"> ... </group>
+    <group condition="param_equal '[DECKSIDE]' 'rightdeck'"> ... </group>
+  </deck>
+</define>
+
+<panel class="track_info" deck="1" deckside="leftdeck"/>
+<panel class="track_info" deck="2" deckside="rightdeck"/>
+```
+
+- The Prime4 add-on uses the value as live script (`<visual source="[DECKSIDE]">`, i.e. `leftdeck`/`rightdeck` as a query). Its values double as verb names, so quote the placeholder when comparing it: `param_equal '[DECKSIDE]' 'leftdeck'`. On build 18.0.9644 over HTTP, bare `param_equal leftdeck 'leftdeck'` also compared as a string (true even under `deck 2`), but quoting removes the ambiguity. The Built-In Remote skins use `*side`, and Built-In Performance uses `[LEFTDECK]` / `[RIGHTDECK]` deck-number placeholders for the same job.
+- Do not select the side at runtime with `get_deck 1 ? … : get_deck 3 ? …`. `get_deck` has no attested argument form, so `get_deck 1` is not an "is deck 1" test. In the GraveRaver skin it put deck 2's overlay on the left on a cold boot. If a live check is truly needed inside a `<deck>` scope, compare the number: ``param_equal `get_deck` 1``.
+- Do not use `leftdeck` / `rightdeck` as a side test either. They report whether the deck is the *active* deck on that side (`deck 3 leftdeck` is false while deck 1 is showing), which is why the built-in skins use them only to swap 1↔3 and 2↔4.
+
+Source: `Built-in skin`, `Published skin`, `Local test`
+
 ### Buttons, State, and Query
 
 The current button SDK page is explicit: `query=""` enables the `<on>` graphics when true.
