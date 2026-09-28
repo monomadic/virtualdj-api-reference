@@ -22,6 +22,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -555,7 +556,7 @@ TOOLS = [
             "properties": {
                 "kind": S(type="string", enum=["skin", "pad", "mapper"]),
                 "paths": S(type="array", items={"type": "string"},
-                           description="Paths relative to the repo root."),
+                           description="Absolute paths, or paths relative to the repo root."),
             },
             "required": ["kind", "paths"],
         },
@@ -680,6 +681,21 @@ def self_check():
     check("vdj_list_xml_elements", lambda: t_list_xml_elements({"limit": 3}))
     check("vdj_attested_tails", lambda: t_attested_tails({"verb": "fadeout"}))
     check("vdj_action_catalog", lambda: t_action_catalog({"name": "get_song_event"}))
+
+    # vdj_lint must lint the file it is given: a malformed page fails, a real one passes.
+    with tempfile.TemporaryDirectory() as tmp:
+        bad = Path(tmp) / "broken.xml"
+        bad.write_text("<page name=\"broken\">\n<pad><<<\n")
+        out = t_lint({"kind": "pad", "paths": [str(bad)]})
+        if "parse error" not in out:
+            failures.append(f"vdj_lint pad passed a malformed file: {out[:200]}")
+    # A repo test page, not a Built-In copy: shipped pages omit name="", which
+    # the linter rightly requires of authored ones.
+    good = sorted((REPO / "tests" / "Pads").rglob("*.xml"))[:1]
+    out = t_lint({"kind": "pad", "paths": [str(p) for p in good]})
+    if "passed: 1 XML files" not in out:
+        failures.append(f"vdj_lint pad did not lint exactly the given file: {out[:200]}")
+    print("  ok    vdj_lint pad fails a malformed file and lints only the paths given")
 
     # The execute gate must refuse, whether or not the opt-in is set.
     for script in ("system 'x'", "deck 2 system 'x'", "browser_delete", "timecode_cd_mode 1"):

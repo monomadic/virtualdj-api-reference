@@ -25,7 +25,7 @@ Everything below is therefore reverse-engineered from:
 
 - User pages live in the VirtualDJ home folder's `Pads/` directory — `~/Library/Application Support/VirtualDJ/Pads/*.xml` on this macOS install (`Local test`); older official docs cite `Documents/VirtualDJ/Pads/`. Shipped pages live in the app bundle (`/Applications/VirtualDJ.app/Contents/Resources/pads_*.xml` on macOS). Source: `Official`, `Built-in pad page`, `Local test`.
 - For local files, the pad-page selector generally shows the *filename stem*, not `<page name="">`. The `name=""` value still matters as the `pad_page` scripting target. Source: [examples/Pads/README.md](../examples/Pads/README.md), `Local test`.
-- `tools/lint_pads.py` enforces: root element `<page>`, non-empty unique `name=""` (for `examples/Pads/*.xml` and `tests/Pads/**` only — shipped `Built-In/` copies are exempt and often omit `name`), and that every literal `pad_page '...'` target matches a known page name.
+- `tools/lint_pads.py` enforces: root element `<page>`, non-empty unique `name=""` (for `examples/Pads/*.xml` and `tests/Pads/**` only — shipped `Built-In/` copies are exempt and often omit `name`), and that every literal `pad_page '...'` target matches a known page name. Given explicit paths (`python3 tools/lint_pads.py FILE…`, or the MCP `vdj_lint` tool), it lints only those files, and an unresolved `pad_page` target is a warning rather than an error, since it may name a page installed outside the repo.
 
 ## Root Element: `<page>`
 
