@@ -1635,6 +1635,68 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
+### M1. Make The Skin Linter Check Well-Formedness
+
+Status: Ready
+
+Note: Added 2026-09-28, found alongside the pad-lint pass-through fixed in `0b84148`.
+`tools/lint_skins.py` scans tags with a regex (`scan_tags`) and never parses the file, so a
+malformed skin produces vocabulary warnings and "Skins lint passed" — the MCP `vdj_lint` tool
+told an agent a truncated file was fine. Parse each file with `xml.etree` first and report a parse
+error as an error (non-zero exit, as `lint_mappers.py` already does), keeping the regex scan for
+vocabulary. Check `examples/Skins/Built-In/` still passes, since shipped skins may rely on entities
+or XInclude the stdlib parser rejects; if they do, scope the parse check to explicit paths. Add a
+malformed-skin case next to the pad one in `mcp_server.py`'s `self_check`.
+
+### M2. A Static VDJScript Linter For `vdj_lint`
+
+Status: Ready
+
+Note: Added 2026-09-28. The MCP validates XML but not the script inside `action=""` / `query=""`,
+and VirtualDJ reports no syntax error — wrong script silently does something else — so this is
+the largest gap in the authoring toolset. Add `tools/lint_script.py` and a `kind: "script"` for
+`vdj_lint` that takes a bare script string, plus a pass over `action`/`query`/backtick attributes
+when linting pad, skin and mapper files.
+
+Every rule must cite a settled record, per [Evidence Standards](docs/Evidence%20Standards.md):
+flag unknown verbs against the verb table (a `Disproved` record is a hard error; a name merely
+absent from the store is a warning), and encode only rules with `local_test` evidence — the
+[Tested Grammar Rules](docs/VirtualDJ%20Reference.md) section is the source: unsigned
+`beatjump`, backtick-computed arguments to `loop`/`beatjump`/`phrase_sync`,
+`sampler_loaded <n> 'auto'`, and `filter_selectcolorfx` in a query (already in `lint_pads.py`;
+move it here). Tokenise per [VDJScript Grammar](docs/VDJScript%20Grammar.md), not with ad-hoc
+regex. Each finding prints its rule's evidence source. Validate against the vendor corpus
+(`tests/vdjscript-corpus.json`): shipped scripts should raise no errors, and any that do are either a
+rule bug or a finding worth recording.
+
+### M3. Let `vdj_lint` Take Content As Well As Paths
+
+Status: Ready
+
+Note: Added 2026-09-28. An agent working from another repo usually holds a draft, not a file
+this server can read. Add an optional `content` string to `vdj_lint` (mutually exclusive with
+`paths`), written to a temp file and linted with the same scripts so output is identical. Do it
+after M2 so `kind: "script"` is content-first from the start. Cover both forms in `self_check`.
+
+### M4. Expose Controller Vocabulary Through The MCP
+
+Status: Ready
+
+Note: Added 2026-09-28. Mapper authoring is a stated MCP use case, but the server can lint a
+mapper without answering which controls a device has. Wrap `tools/controller_schema_inventory.py`
+(`just controllers --device <id>` / `--path /device/slider`) as a read-only `vdj_controllers`
+tool. Its output is shipped syntax, Tier 2 — the tool description must say so, as the script's
+own help does. Offline only; add a `self_check` call.
+
+### M5. Expose The Sysicon Atlas Through The MCP
+
+Status: Parking lot
+
+Note: Added 2026-09-28. Skins and pads name built-in icons, and an agent currently guesses the
+names. Wrap `tools/sysicon_atlas.py` (`--cell`, `--unnamed`, `--format json`; never `--extract`)
+as a read-only `vdj_sysicons` tool, carrying each cell's evidence tier through. Lower value than
+M1–M4 because icon use is rarer than script or mapper authoring.
+
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
