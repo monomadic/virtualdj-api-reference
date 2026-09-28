@@ -148,6 +148,7 @@ def inventory():
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--cell', type=str.upper)
+    p.add_argument('--search', help='Keep rows whose description, wiki key, tested key or candidate contains this text')
     p.add_argument('--unnamed', action='store_true', help='Wiki N/A entries, including subsequently recovered keys')
     p.add_argument('--format', choices=('text', 'json'), default='text')
     p.add_argument('--extract', action='store_true')
@@ -159,7 +160,11 @@ def main():
         return
     data = inventory()
     data['rows'] = [r for r in data['rows'] if (not args.cell or r['cell'] == args.cell)
-                    and (not args.unnamed or r['wiki_sysicon_action'] == 'N/A')]
+                    and (not args.unnamed or r['wiki_sysicon_action'] == 'N/A')
+                    and (not args.search or args.search.casefold() in ' '.join(
+                        [r['description'], r['wiki_sysicon_action']]
+                        + [k['key'] for k in r['tested_keys']]
+                        + [c['form'] for c in r['binary_candidates']]).casefold())]
     if args.cell and not data['rows']:
         p.error('No matching cell; the wiki skips J and ends at K9')
     if args.format == 'json':

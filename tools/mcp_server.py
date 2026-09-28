@@ -245,6 +245,17 @@ def t_controllers(a):
     return tool_script("controller_schema_inventory.py", *args)
 
 
+def t_sysicons(a):
+    args = []
+    if a.get("cell"):
+        args += ["--cell", a["cell"]]
+    if a.get("search"):
+        args += ["--search", a["search"]]
+    if a.get("unnamed"):
+        args.append("--unnamed")
+    return tool_script("sysicon_atlas.py", *args)
+
+
 def t_up(a):
     try:
         v = http("query", "get_version")
@@ -567,6 +578,26 @@ TOOLS = [
         "fn": t_controllers,
     },
     {
+        "name": "vdj_sysicons",
+        "description": (
+            "Built-in skin icon atlas: each cell's description and the key that names it for "
+            "skins and pads, with how the key is known — wiki-listed, tested live, or only a "
+            "binary candidate (a lead, not proof). search matches descriptions and keys "
+            "('sideview', 'play'); cell takes an atlas cell such as H6; unnamed lists the "
+            "cells the wiki gives no key. Unknown means no key established here, not that "
+            "none exists."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "search": S(type="string"),
+                "cell": S(type="string"),
+                "unnamed": S(type="boolean"),
+            },
+        },
+        "fn": t_sysicons,
+    },
+    {
         "name": "vdj_up",
         "description": "Check whether a live VirtualDJ is reachable over the HTTP control interface. Run this before planning any live-test work.",
         "inputSchema": {"type": "object", "properties": {}},
@@ -752,6 +783,7 @@ def self_check():
     # says so when it is absent, which is an answer, not a failure.
     check("vdj_controllers path", lambda: t_controllers({"path": "/device/slider"}))
     check("vdj_controllers device", lambda: t_controllers({"device": "DDJGRV6", "match": "loop"}))
+    check("vdj_sysicons", lambda: t_sysicons({"search": "sideview"}))
 
     # vdj_lint must lint the file it is given: a malformed page fails, a real one passes.
     with tempfile.TemporaryDirectory() as tmp:

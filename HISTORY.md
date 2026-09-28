@@ -451,6 +451,22 @@ reports which build it read. The tree is gitignored; without it the tool says to
 old comparison and `path` for attribute usage on a definition path.
 
 
+### M5. Expose The Sysicon Atlas Through The MCP
+
+Status: Done
+
+Note: Added 2026-09-28. Skins and pads name built-in icons, and an agent currently guesses the
+names. Wrap `tools/sysicon_atlas.py` (`--cell`, `--unnamed`, `--format json`; never `--extract`)
+as a read-only `vdj_sysicons` tool, carrying each cell's evidence tier through. Lower value than
+M1–M4 because icon use is rarer than script or mapper authoring.
+
+Landed 2026-09-28 as `vdj_sysicons`, taken off the parking lot when the user asked for the
+remaining MCP work. The atlas could filter only by cell, so `sysicon_atlas.py` gained
+`--search` over descriptions, wiki keys, tested keys and binary candidates — the question an
+author actually has is "which key draws the sideview icon", not "what is in H6". Each row keeps
+its `key_status`, so a binary candidate is never presented as a tested key.
+
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 ### H1. Clickthrough value matrix

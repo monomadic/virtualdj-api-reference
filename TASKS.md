@@ -1635,15 +1635,6 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
-### M5. Expose The Sysicon Atlas Through The MCP
-
-Status: Parking lot
-
-Note: Added 2026-09-28. Skins and pads name built-in icons, and an agent currently guesses the
-names. Wrap `tools/sysicon_atlas.py` (`--cell`, `--unnamed`, `--format json`; never `--extract`)
-as a read-only `vdj_sysicons` tool, carrying each cell's evidence tier through. Lower value than
-M1–M4 because icon use is rarer than script or mapper authoring.
-
 ## Blocked Or Hardware-Gated
 
 - Controller display helpers: `controllerscreen_deck`, `controller_battery`.
