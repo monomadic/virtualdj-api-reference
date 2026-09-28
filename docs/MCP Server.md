@@ -58,7 +58,7 @@ Offline — these read the store and artifacts and need no running VirtualDJ:
 | `vdj_list_skin_categories` | `xmldb.py categories` | Editorial category IDs and derived unique-name totals |
 | `vdj_attested_tails` | `extract_attested_tails.py` | Argument tails Atomix wrote in shipped scripts, with return evidence |
 | `vdj_action_catalog` | `extract_action_catalog.py` | The vendor's own description and parameters, read from the app bundle |
-| `vdj_lint` | `lint_{skins,pads,mappers}.py` | Validate authored XML before handing it back |
+| `vdj_lint` | `lint_{skins,pads,mappers}.py`, `lint_script.py` | Validate what you author: XML files and the script inside them, or one script string (`kind: "script"`, `content`, `context`) |
 
 Live — these need VirtualDJ running with the network interface enabled:
 

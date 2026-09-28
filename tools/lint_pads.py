@@ -20,10 +20,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PADS_DIR = ROOT / "examples" / "Pads"
 TEST_PADS_DIR = ROOT / "tests" / "Pads"
 PAD_PAGE_REF = re.compile(r"\bpad_page\s+['\"]([^'\"]+)['\"]")
-FILTER_SELECT_IN_QUERY = re.compile(
-    r"\bquery\s*=\s*(['\"])(?:(?!\1).)*\bfilter_selectcolorfx\b",
-    re.IGNORECASE,
-)
 
 
 def line_number(text: str, offset: int) -> int:
@@ -83,12 +79,6 @@ def main() -> int:
 
         for match in PAD_PAGE_REF.finditer(text):
             refs.append((path, line_number(text, match.start()), match.group(1)))
-
-        for match in FILTER_SELECT_IN_QUERY.finditer(text):
-            errors.append(
-                f"{rel}:{line_number(text, match.start())}: "
-                "query uses filter_selectcolorfx; use filter_label 'name' for read-only selected-state checks"
-            )
 
     for name, paths in sorted(names_to_paths.items()):
         if len(paths) > 1:

@@ -1635,27 +1635,6 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
-### M2. A Static VDJScript Linter For `vdj_lint`
-
-Status: Ready
-
-Note: Added 2026-09-28. The MCP validates XML but not the script inside `action=""` / `query=""`,
-and VirtualDJ reports no syntax error — wrong script silently does something else — so this is
-the largest gap in the authoring toolset. Add `tools/lint_script.py` and a `kind: "script"` for
-`vdj_lint` that takes a bare script string, plus a pass over `action`/`query`/backtick attributes
-when linting pad, skin and mapper files.
-
-Every rule must cite a settled record, per [Evidence Standards](docs/Evidence%20Standards.md):
-flag unknown verbs against the verb table (a `Disproved` record is a hard error; a name merely
-absent from the store is a warning), and encode only rules with `local_test` evidence — the
-[Tested Grammar Rules](docs/VirtualDJ%20Reference.md) section is the source: unsigned
-`beatjump`, backtick-computed arguments to `loop`/`beatjump`/`phrase_sync`,
-`sampler_loaded <n> 'auto'`, and `filter_selectcolorfx` in a query (already in `lint_pads.py`;
-move it here). Do not make raw `&` in an XML attribute an error: M1 found it in 43 shipped skins that load, so it is at most a style note. Tokenise per [VDJScript Grammar](docs/VDJScript%20Grammar.md), not with ad-hoc
-regex. Each finding prints its rule's evidence source. Validate against the vendor corpus
-(`tests/vdjscript-corpus.json`): shipped scripts should raise no errors, and any that do are either a
-rule bug or a finding worth recording.
-
 ### M3. Let `vdj_lint` Take Content As Well As Paths
 
 Status: Ready

@@ -274,9 +274,17 @@ def t_execute(a):
 
 def t_lint(a):
     kind = a["kind"]
-    script = {"skin": "lint_skins.py", "pad": "lint_pads.py",
+    if kind == "script":
+        if not a.get("content"):
+            raise ToolError("kind 'script' takes the script in `content`")
+        return tool_script("lint_script.py", "--script", a["content"],
+                           "--context", a.get("context", "action"))
+    if not a.get("paths"):
+        raise ToolError(f"kind '{kind}' takes file `paths`")
+    linter = {"skin": "lint_skins.py", "pad": "lint_pads.py",
               "mapper": "lint_mappers.py"}[kind]
-    return tool_script(script, *a["paths"])
+    # The XML check, then the script inside it (action/query attributes, pad bodies).
+    return tool_script(linter, *a["paths"]) + "\n\n" + tool_script("lint_script.py", "--xml", *a["paths"])
 
 
 # --------------------------------------------------------------------------
@@ -550,15 +558,25 @@ TOOLS = [
     },
     {
         "name": "vdj_lint",
-        "description": "Validate skin, pad-page, or mapper XML files before handing them back. Run this on anything you author.",
+        "description": (
+            "Validate what you author before handing it back. kind skin/pad/mapper checks XML "
+            "files and then the VDJScript inside them; kind script checks one script string. "
+            "The runtime never reports a script error, so this is the only static check there "
+            "is. Each finding cites its evidence: ERROR is broken, WARNING is legal but tested "
+            "to misbehave, NOTE is a known trap that may be intended. It does not run anything; "
+            "verify behaviour with vdj_query."
+        ),
         "inputSchema": {
             "type": "object",
             "properties": {
-                "kind": S(type="string", enum=["skin", "pad", "mapper"]),
+                "kind": S(type="string", enum=["skin", "pad", "mapper", "script"]),
                 "paths": S(type="array", items={"type": "string"},
-                           description="Absolute paths, or paths relative to the repo root."),
+                           description="For skin/pad/mapper: absolute paths, or paths relative to the repo root."),
+                "content": S(type="string", description="For script: the VDJScript to check."),
+                "context": S(type="string", enum=["action", "query"],
+                             description="For script: where it runs, e.g. action= vs query=/visibility= (default action)."),
             },
-            "required": ["kind", "paths"],
+            "required": ["kind"],
         },
         "fn": t_lint,
     },
@@ -700,6 +718,14 @@ def self_check():
     if "passed: 1 XML files" not in out:
         failures.append(f"vdj_lint pad did not lint exactly the given file: {out[:200]}")
     print("  ok    vdj_lint pad/skin fail a malformed file; pad lints only the paths given")
+
+    out = t_lint({"kind": "script", "content": "shift ? loop 32 ? : off"})
+    if "empty-branch" not in out or "FAILED" not in out:
+        failures.append(f"vdj_lint script missed an empty branch: {out[:200]}")
+    out = t_lint({"kind": "script", "content": "var_equal '$x' 1 ? play : nothing"})
+    if "passed" not in out:
+        failures.append(f"vdj_lint script failed a clean script: {out[:200]}")
+    print("  ok    vdj_lint script fails an empty branch and passes a clean ternary")
 
     # The execute gate must refuse, whether or not the opt-in is set.
     for script in ("system 'x'", "deck 2 system 'x'", "browser_delete", "timecode_cd_mode 1"):

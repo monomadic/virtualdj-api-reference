@@ -52,10 +52,10 @@ Use these as `Built-in pad page` evidence when a shipped page demonstrates a VDJ
 
 ## Maintenance Checklist
 
-- Run `python3 tools/lint_pads.py` after editing pad XML.
+- Run `python3 tools/lint_pads.py` and `just lint-script --xml <file>` after editing pad XML.
 - Keep each `<page name="...">` unique so VirtualDJ and `pad_page "..."` links are unambiguous.
 - Keep literal `pad_page "..."` targets pointed at page names that exist in this folder.
-- Keep `query=""` attributes read-only where possible. For ColorFX selected-state checks, prefer `filter_label 'name'` instead of selector actions such as `filter_selectcolorfx`.
+- Keep `query=""` attributes read-only where possible. For ColorFX selected-state checks, prefer `filter_label 'name'` instead of selector actions such as `filter_selectcolorfx`. This is a convention, not a tested failure — the vendor corpus uses `filter_selectcolorfx` in queries — so `lint_script.py` reports it as a note.
 - Promote a page to `Canonical` only after it has matching reference notes and either official/source-backed rationale or local VirtualDJ verification.
 - Do not hand-edit files in [Built-In/](Built-In/); refresh them from the app bundle and review diffs when VirtualDJ is updated.
 - Keep test harnesses in [tests/Pads/](../../tests/Pads/) unless the page is meant to remain installed as a normal working/reference pad page.

@@ -434,6 +434,10 @@ lint-skins *paths:
 lint-mappers *paths:
     {{python}} tools/lint_mappers.py "$@"
 
+# Static VDJScript check: `--script "…" [--context query]`, `--xml FILE…`, `--repo`, `--corpus`.
+lint-script *args:
+    {{python}} tools/lint_script.py "$@"
+
 check:
     {{python}} tools/probe_query_cast_debug.py --check tests/param-cast-types-9644
     {{python}} tools/probe_argument_types.py --check tests/argument-types-multiply-9644/values-expanded.json
@@ -448,6 +452,8 @@ check:
     {{python}} tools/lint_pads.py
     {{python}} tools/lint_skins.py
     {{python}} tools/lint_mappers.py
+    {{python}} tools/lint_script.py --repo
+    {{python}} tools/test_lint_script.py
     {{python}} tools/extract_verb_index.py --check
     {{python}} tools/verbdb.py check
     {{python}} tools/fxdb.py check

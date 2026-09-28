@@ -1069,6 +1069,14 @@ read-only:
 just vdj-query 'on ? get_version : get_clock'
 ```
 
+Before that, a static pass catches the forms this document has already shown go wrong —
+empty branches, `&&` in front of an action, a trailing chain after a ternary, a truthiness
+trap, a name the verb table does not hold — with the section each rule comes from:
+
+```bash
+just lint-script --script "cond && play" --context action
+```
+
 Remember what an answer does and does not prove: a returned value means the construct
 *evaluated*, not that it parsed the way you intended, and no output at all is far more
 often a silently-dropped argument than a rejected script. Prefer probes whose two possible

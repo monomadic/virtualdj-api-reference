@@ -359,6 +359,57 @@ quoted values, unmatched close tags, unclosed elements and a missing root. It re
 across all 166 skin files in `examples/Skins` and `tests/Skins`. The MCP `self_check` now lints a
 truncated skin and expects a failure. Tolerances recorded in `tools/README.md`.
 
+### M2. A Static VDJScript Linter For `vdj_lint`
+
+Status: Done
+
+Note: Added 2026-09-28. The MCP validates XML but not the script inside `action=""` / `query=""`,
+and VirtualDJ reports no syntax error — wrong script silently does something else — so this is
+the largest gap in the authoring toolset. Add `tools/lint_script.py` and a `kind: "script"` for
+`vdj_lint` that takes a bare script string, plus a pass over `action`/`query`/backtick attributes
+when linting pad, skin and mapper files.
+
+Every rule must cite a settled record, per [Evidence Standards](docs/Evidence%20Standards.md):
+flag unknown verbs against the verb table (a `Disproved` record is a hard error; a name merely
+absent from the store is a warning), and encode only rules with `local_test` evidence — the
+[Tested Grammar Rules](docs/VirtualDJ%20Reference.md) section is the source: unsigned
+`beatjump`, backtick-computed arguments to `loop`/`beatjump`/`phrase_sync`,
+`sampler_loaded <n> 'auto'`, and `filter_selectcolorfx` in a query (already in `lint_pads.py`;
+move it here). Do not make raw `&` in an XML attribute an error: M1 found it in 43 shipped skins that load, so it is at most a style note. Tokenise per [VDJScript Grammar](docs/VDJScript%20Grammar.md), not with ad-hoc
+regex. Each finding prints its rule's evidence source. Validate against the vendor corpus
+(`tests/vdjscript-corpus.json`): shipped scripts should raise no errors, and any that do are either a
+rule bug or a finding worth recording.
+
+Landed 2026-09-28 as `tools/lint_script.py`, `just lint-script`, and `vdj_lint` `kind: "script"`;
+pad, skin and mapper kinds now also lint the script inside the files. Three levels — error,
+warning, note — each finding naming its source; rule list in `tools/README.md`, one case per
+rule in `tools/test_lint_script.py`. `just check` runs `--repo` (no errors; the warnings are the
+deliberate invalid-verb and tested-bad forms in probe fixtures) and the tests.
+
+Calibration against the vendor corpus (factory, built-in, add-on and wiki snippets, 2026-09-28)
+changed three rules. Quotes and backticks nest (`'`pitch_slider`'`), and parentheses group a
+branch (`? (a ? b : c) : (…)`), so neither is an error. `effect`, `sampler` and `get` take
+sub-keywords rather than verbs and are skipped, as are skin define placeholders (`[ACTION]`).
+The truthiness-trap rule is a warning only for query-only and slider verbs; for a dual verb
+such as `effect_select` or `video_transition` the sweep read false at rest, Atomix uses them as
+conditions, so it is a note. The `filter_selectcolorfx`-in-query rule moved here from
+`lint_pads.py` as a note: it is repo convention, and the vendor corpus uses that form.
+
+Fourteen vendor scripts still raise errors, and each is a real mistake in a shipped file rather
+than a linter bug: stray quotes and backticks (`deck all effect_stems 'rhythm''` in the Astro
+Audio DJ KONTROL 4 mapping, `'Filter'`` twice in the Traktor Kontrol MX2 mapping,
+`'$decksubassign[SUBDECK]''` in the Denon SC5000 Screen skin), and empty ternary branches
+(`shift ? loop 32 ? : off` in the Numark 4Trak mapping, trailing `… : zoom -2% :` in the Denon
+SC5000 mapping, `? : off` / `: :` ladders in the Pioneer DDJ-800, XDJ-AERO and Traktor S8
+mappings). Most sit on rarely taken branches, which is how they ship. The unknown-verb warning
+also surfaces vendor typos: `lopp_roll`, `ar_equal`, `veffect_3slots_layout`, `deck1`.
+`just lint-script --corpus` reproduces the list.
+
+Open overlap: `lint_mappers.py` already resolves each action's leading verb against the
+doc-derived verb index, so a mapper passed to `vdj_lint` can report an unknown verb twice (once
+per source). Retire one when M3 touches `vdj_lint` again.
+
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 ### H1. Clickthrough value matrix
