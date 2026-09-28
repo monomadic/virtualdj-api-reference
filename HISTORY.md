@@ -402,7 +402,7 @@ Audio DJ KONTROL 4 mapping, `'Filter'`` twice in the Traktor Kontrol MX2 mapping
 (`shift ? loop 32 ? : off` in the Numark 4Trak mapping, trailing `… : zoom -2% :` in the Denon
 SC5000 mapping, `? : off` / `: :` ladders in the Pioneer DDJ-800, XDJ-AERO and Traktor S8
 mappings). Most sit on rarely taken branches, which is how they ship. The unknown-verb warning
-also surfaces vendor typos: `lopp_roll`, `ar_equal`, `veffect_3slots_layout`, `deck1`.
+also surfaces vendor typos: `lopp_roll`, `ar_equal`, `veffect_3slots_layout`, `deck1`; the deck-target warning, once placeholders were skipped, `deck masster`.
 `just lint-script --corpus` reproduces the list.
 
 Open overlap: `lint_mappers.py` already resolves each action's leading verb against the

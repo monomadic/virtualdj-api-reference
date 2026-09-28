@@ -375,7 +375,7 @@ REPO_GLOBS = [
 
 
 def corpus_report(vocab: Vocabulary) -> int:
-    """Lint every vendor snippet. Errors here are linter bugs or vendor findings."""
+    """Summarise findings over every vendor snippet. Always exits 0."""
     snippets = json.loads(CORPUS.read_text())["snippets"]
     by_rule: Counter = Counter()
     examples: dict[str, str] = {}
@@ -389,8 +389,10 @@ def corpus_report(vocab: Vocabulary) -> int:
             errors += f.level == "error"
     for (level, rule), n in sorted(by_rule.items(), key=lambda kv: -kv[1]):
         print(f"{n:6} {level:7} {rule:20} e.g. {examples[rule]}")
-    print(f"\nvendor corpus: {errors} error findings")
-    return 1 if errors else 0
+    # A report, not a gate: the errors are mistakes in shipped files (HISTORY task M2).
+    # A change to the linter shows up as a change in these counts.
+    print(f"\nvendor corpus: {errors} error findings (shipped-file mistakes; see HISTORY.md task M2)")
+    return 0
 
 
 def main() -> int:
