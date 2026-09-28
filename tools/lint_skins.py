@@ -16,7 +16,16 @@ Default lint targets: the repo's own hand-authored skins
 (examples/Skins/ModularSkeleton/build, examples/Skins/GraveRaver/build,
 tests/Skins). Pass explicit paths to lint generated or external skin XML.
 
-Findings are warnings by default (exit 0); --strict makes them fail.
+Vocabulary findings are warnings by default (exit 0); --strict makes them fail.
+
+Structure is checked first, against what VirtualDJ's own parser demonstrably
+accepts rather than against the XML spec: shipped skins load with raw `&` in
+attribute values, tag names whose case differs between open and close
+(`<Tooltip>...</tooltip>`), duplicate attributes, and stray text before the root.
+A stdlib parser rejects most of the shipped corpus for those, so it is not used.
+What remains an error is what a truncated or hand-broken file looks like: an
+unterminated tag, comment or quoted value, a close tag that matches nothing,
+an element left open at end of file, or no root element. Those always fail.
 
 Usage:
   python3 tools/lint_skins.py [paths ...]
@@ -27,6 +36,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import re
 import sys
 from pathlib import Path
 
@@ -63,11 +73,103 @@ def build_vocabulary() -> dict[str, set[str]]:
     return vocab
 
 
-def lint_file(path: Path, vocab: dict[str, set[str]], findings: list[str]) -> None:
+NAME_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_.:-]*")
+ATTR_RE = re.compile(r"\s*([A-Za-z_][A-Za-z0-9_.:-]*)\s*=\s*")
+
+
+def display(path: Path) -> Path:
     try:
-        rel = path.relative_to(ROOT)
+        return path.relative_to(ROOT)
     except ValueError:
-        rel = path
+        return path
+
+
+def check_structure(text: str) -> tuple[list[str], list[str]]:
+    """Tag balance under VirtualDJ's tolerances. Returns (errors, warnings)."""
+    errors: list[str] = []
+    warnings: list[str] = []
+    stack: list[tuple[str, str, int]] = []  # (lowercase name, as written, line)
+    roots = 0
+    i, n = 0, len(text)
+
+    def line(at: int) -> int:
+        return text.count("\n", 0, at) + 1
+
+    while True:
+        i = text.find("<", i)
+        if i == -1:
+            break
+        for opener, closer in (("<!--", "-->"), ("<![CDATA[", "]]>")):
+            if text.startswith(opener, i):
+                end = text.find(closer, i + len(opener))
+                if end == -1:
+                    errors.append(f"line {line(i)}: unterminated {opener}")
+                    return errors, warnings
+                i = end + len(closer)
+                break
+        else:
+            if text.startswith("<?", i) or text.startswith("<!", i):
+                end = text.find(">", i)
+                i = n if end == -1 else end + 1
+                continue
+            closing = text.startswith("</", i)
+            match = NAME_RE.match(text, i + (2 if closing else 1))
+            if not match:
+                i += 1  # a bare `<` in text, not a tag
+                continue
+            name, start = match.group(0), i
+            # Walk to the tag's `>`, skipping quoted values (which may hold `<`, `>`, `&`).
+            k, attrs, quote = match.end(), [], None
+            while k < n:
+                c = text[k]
+                if quote:
+                    if c == quote:
+                        quote = None
+                elif c in "\"'":
+                    quote = c
+                elif c == ">":
+                    break
+                elif not closing:
+                    m = ATTR_RE.match(text, k)
+                    if m:
+                        attrs.append(m.group(1).lower())
+                        k = m.end()
+                        continue
+                k += 1
+            if k >= n:
+                what = "quoted value" if quote else "tag"
+                errors.append(f"line {line(start)}: unterminated {what} in <{'/' if closing else ''}{name}")
+                return errors, warnings
+            i = k + 1
+            lower = name.lower()
+            if closing:
+                depth = next((d for d in range(len(stack) - 1, -1, -1) if stack[d][0] == lower), None)
+                if depth is None:
+                    errors.append(f"line {line(start)}: </{name}> closes no open element")
+                    continue
+                for _, written, opened in stack[depth + 1:]:
+                    errors.append(f"line {opened}: <{written}> is not closed before </{name}> "
+                                  f"at line {line(start)}")
+                del stack[depth:]
+                continue
+            dupes = sorted({a for a in attrs if attrs.count(a) > 1})
+            if dupes:
+                warnings.append(f"line {line(start)}: <{name}> repeats {', '.join(dupes)} "
+                                "(shipped skins do this; which value wins is untested)")
+            if not stack:
+                roots += 1
+            if text[k - 1] != "/":
+                stack.append((lower, name, line(start)))
+            continue
+    for _, written, opened in stack:
+        errors.append(f"line {opened}: <{written}> is never closed")
+    if roots == 0:
+        errors.append("no root element")
+    return errors, warnings
+
+
+def lint_file(path: Path, vocab: dict[str, set[str]], findings: list[str]) -> None:
+    rel = display(path)
     all_attrs = set().union(*vocab.values()) if vocab else set()
     for element, attrs in scan_tags(path.read_text(errors="replace")):
         element_lc = element.lower()
@@ -118,11 +220,25 @@ def main() -> int:
         return 1
 
     findings: list[str] = []
+    errors: list[str] = []
     for path in files:
+        try:
+            text = path.read_text(errors="replace")
+        except OSError as exc:
+            errors.append(f"{display(path)}: cannot read: {exc.strerror}")
+            continue
+        structural, warned = check_structure(text)
+        errors += [f"{display(path)}: {e}" for e in structural]
+        findings += [f"{display(path)}: {w}" for w in warned]
         lint_file(path, vocab, findings)
 
     for line in findings:
         print(f"WARN  {line}")
+    for line in errors:
+        print(f"ERROR {line}")
+    if errors:
+        print(f"Skins lint FAILED: {len(errors)} structural errors in {len(files)} files")
+        return 1
     if findings and args.strict:
         return 1
     print(

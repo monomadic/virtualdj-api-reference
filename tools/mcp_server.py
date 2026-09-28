@@ -689,13 +689,17 @@ def self_check():
         out = t_lint({"kind": "pad", "paths": [str(bad)]})
         if "parse error" not in out:
             failures.append(f"vdj_lint pad passed a malformed file: {out[:200]}")
+        bad.write_text("<skin>\n<panel>\n<button action=\"play_pause\"\n")
+        out = t_lint({"kind": "skin", "paths": [str(bad)]})
+        if "FAILED" not in out:
+            failures.append(f"vdj_lint skin passed a malformed file: {out[:200]}")
     # A repo test page, not a Built-In copy: shipped pages omit name="", which
     # the linter rightly requires of authored ones.
     good = sorted((REPO / "tests" / "Pads").rglob("*.xml"))[:1]
     out = t_lint({"kind": "pad", "paths": [str(p) for p in good]})
     if "passed: 1 XML files" not in out:
         failures.append(f"vdj_lint pad did not lint exactly the given file: {out[:200]}")
-    print("  ok    vdj_lint pad fails a malformed file and lints only the paths given")
+    print("  ok    vdj_lint pad/skin fail a malformed file; pad lints only the paths given")
 
     # The execute gate must refuse, whether or not the opt-in is set.
     for script in ("system 'x'", "deck 2 system 'x'", "browser_delete", "timecode_cd_mode 1"):

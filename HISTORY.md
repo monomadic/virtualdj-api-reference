@@ -334,6 +334,31 @@ observable effect in the fixture) recorded as such; or not reached, with the rea
 negative needs the R2 boundary — which reader, which values tried, which branch was not
 exercised. Do not extend to the waveform questions in 10a; they share no fixture with this.
 
+## MCP authoring tools (2026-09-28)
+
+### M1. Make The Skin Linter Check Well-Formedness
+
+Status: Done
+
+Note: Added 2026-09-28, found alongside the pad-lint pass-through fixed in `0b84148`.
+`tools/lint_skins.py` scans tags with a regex (`scan_tags`) and never parses the file, so a
+malformed skin produces vocabulary warnings and "Skins lint passed" — the MCP `vdj_lint` tool
+told an agent a truncated file was fine. Parse each file with `xml.etree` first and report a parse
+error as an error (non-zero exit, as `lint_mappers.py` already does), keeping the regex scan for
+vocabulary. Check `examples/Skins/Built-In/` still passes, since shipped skins may rely on entities
+or XInclude the stdlib parser rejects; if they do, scope the parse check to explicit paths. Add a
+malformed-skin case next to the pad one in `mcp_server.py`'s `self_check`.
+
+Landed 2026-09-28. The planned stdlib parse was dropped on evidence: it rejects 50 of the 64
+files under `examples/Skins` — raw `&` in values (43), case-differing close tags
+(`<Tooltip>…</tooltip>`, the two DDJ-WeGO skins), duplicate attributes (built-in `Lite.xml`
+among them) and a stray `?` before the root (`AFX_beatgrid.xml`) — all of which ship, so the
+parser tolerates them. `lint_skins.py` now runs a quote-aware tag-balance check that permits
+exactly those (duplicate attributes as a warning) and errors on unterminated tags, comments or
+quoted values, unmatched close tags, unclosed elements and a missing root. It reports zero errors
+across all 166 skin files in `examples/Skins` and `tests/Skins`. The MCP `self_check` now lints a
+truncated skin and expects a failure. Tolerances recorded in `tools/README.md`.
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 ### H1. Clickthrough value matrix

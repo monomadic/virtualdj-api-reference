@@ -1635,19 +1635,6 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
-### M1. Make The Skin Linter Check Well-Formedness
-
-Status: Ready
-
-Note: Added 2026-09-28, found alongside the pad-lint pass-through fixed in `0b84148`.
-`tools/lint_skins.py` scans tags with a regex (`scan_tags`) and never parses the file, so a
-malformed skin produces vocabulary warnings and "Skins lint passed" — the MCP `vdj_lint` tool
-told an agent a truncated file was fine. Parse each file with `xml.etree` first and report a parse
-error as an error (non-zero exit, as `lint_mappers.py` already does), keeping the regex scan for
-vocabulary. Check `examples/Skins/Built-In/` still passes, since shipped skins may rely on entities
-or XInclude the stdlib parser rejects; if they do, scope the parse check to explicit paths. Add a
-malformed-skin case next to the pad one in `mcp_server.py`'s `self_check`.
-
 ### M2. A Static VDJScript Linter For `vdj_lint`
 
 Status: Ready
@@ -1664,7 +1651,7 @@ absent from the store is a warning), and encode only rules with `local_test` evi
 [Tested Grammar Rules](docs/VirtualDJ%20Reference.md) section is the source: unsigned
 `beatjump`, backtick-computed arguments to `loop`/`beatjump`/`phrase_sync`,
 `sampler_loaded <n> 'auto'`, and `filter_selectcolorfx` in a query (already in `lint_pads.py`;
-move it here). Tokenise per [VDJScript Grammar](docs/VDJScript%20Grammar.md), not with ad-hoc
+move it here). Do not make raw `&` in an XML attribute an error: M1 found it in 43 shipped skins that load, so it is at most a style note. Tokenise per [VDJScript Grammar](docs/VDJScript%20Grammar.md), not with ad-hoc
 regex. Each finding prints its rule's evidence source. Validate against the vendor corpus
 (`tests/vdjscript-corpus.json`): shipped scripts should raise no errors, and any that do are either a
 rule bug or a finding worth recording.
