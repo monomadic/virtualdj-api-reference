@@ -279,12 +279,25 @@ def t_lint(a):
             raise ToolError("kind 'script' takes the script in `content`")
         return tool_script("lint_script.py", "--script", a["content"],
                            "--context", a.get("context", "action"))
-    if not a.get("paths"):
-        raise ToolError(f"kind '{kind}' takes file `paths`")
     linter = {"skin": "lint_skins.py", "pad": "lint_pads.py",
               "mapper": "lint_mappers.py"}[kind]
-    # The XML check, then the script inside it (action/query attributes, pad bodies).
-    return tool_script(linter, *a["paths"]) + "\n\n" + tool_script("lint_script.py", "--xml", *a["paths"])
+
+    def lint(paths):
+        # The XML check, then the script inside it (action/query attributes, pad bodies).
+        return tool_script(linter, *paths) + "\n\n" + tool_script("lint_script.py", "--xml", *paths)
+
+    if a.get("content") and a.get("paths"):
+        raise ToolError("pass `paths` or `content`, not both")
+    if a.get("content"):
+        # A draft from another repo: lint it from a temp file and report it as <content>.
+        with tempfile.TemporaryDirectory() as tmp:
+            draft = Path(tmp) / f"content.{kind}.xml"
+            draft.write_text(a["content"])
+            # Linters print the resolved path; on macOS the temp dir is a symlink.
+            return lint([draft]).replace(str(draft.resolve()), "<content>").replace(str(draft), "<content>")
+    if not a.get("paths"):
+        raise ToolError(f"kind '{kind}' takes file `paths` or the XML itself in `content`")
+    return lint(a["paths"])
 
 
 # --------------------------------------------------------------------------
@@ -572,7 +585,7 @@ TOOLS = [
                 "kind": S(type="string", enum=["skin", "pad", "mapper", "script"]),
                 "paths": S(type="array", items={"type": "string"},
                            description="For skin/pad/mapper: absolute paths, or paths relative to the repo root."),
-                "content": S(type="string", description="For script: the VDJScript to check."),
+                "content": S(type="string", description="The VDJScript to check (kind script), or an unsaved XML draft instead of paths."),
                 "context": S(type="string", enum=["action", "query"],
                              description="For script: where it runs, e.g. action= vs query=/visibility= (default action)."),
             },
@@ -726,6 +739,14 @@ def self_check():
     if "passed" not in out:
         failures.append(f"vdj_lint script failed a clean script: {out[:200]}")
     print("  ok    vdj_lint script fails an empty branch and passes a clean ternary")
+
+    out = t_lint({"kind": "pad", "content": "<page name=\"draft\">\n<pad1>shift ? loop 32 ? : off</pad1>\n</page>\n"})
+    if "Pads lint passed: 1 XML files" not in out or " <content>:2" not in out or "empty-branch" not in out:
+        failures.append(f"vdj_lint pad content did not lint the draft: {out[:300]}")
+    out = t_lint({"kind": "mapper", "content": "<mapper device=\"x\">\n<map value=\"PLAY\" action=\"none\"/>\n</mapper>"})
+    if "disproved" not in out:
+        failures.append(f"vdj_lint mapper content missed a disproved verb: {out[:300]}")
+    print("  ok    vdj_lint content: a pad draft and a mapper draft are linted as <content>")
 
     # The execute gate must refuse, whether or not the opt-in is set.
     for script in ("system 'x'", "deck 2 system 'x'", "browser_delete", "timecode_cd_mode 1"):

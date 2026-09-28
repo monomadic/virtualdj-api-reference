@@ -410,6 +410,27 @@ doc-derived verb index, so a mapper passed to `vdj_lint` can report an unknown v
 per source). Retire one when M3 touches `vdj_lint` again.
 
 
+### M3. Let `vdj_lint` Take Content As Well As Paths
+
+Status: Done
+
+Note: Added 2026-09-28. An agent working from another repo usually holds a draft, not a file
+this server can read. Add an optional `content` string to `vdj_lint` (mutually exclusive with
+`paths`), written to a temp file and linted with the same scripts so output is identical. Do it
+after M2 so `kind: "script"` is content-first from the start. Cover both forms in `self_check`.
+
+Landed 2026-09-28. `vdj_lint` takes `content` in place of `paths` for pad, skin and mapper
+drafts (written to a temp file, reported as `<content>:<line>`); `kind: "script"` already took
+it. The M2 overlap is closed: `lint_mappers.py` no longer checks verbs, and the script inside
+mapper actions is `lint_script.py`'s alone, against the verb table. Retiring the old check
+mattered: it read the doc-derived verb index, which still lists `none`, `browser_filter` and
+`browser_search` — names the binary disproves — so it passed quarantined user mappers that call
+them (`AKAI APC Mini MK2 - Custom Mapping.xml`, `KEYBOARD - DeathDisco Keybindings
+v2025.12.xml`). `lint_script.py --repo` now includes `examples/Mappers/Official-Addons`, which
+raises no errors; Quarantine stays out of `just check`. Self-check covers a pad and a mapper
+draft.
+
+
 ## Historical-installer follow-ups (2026-09-07 review)
 
 ### H1. Clickthrough value matrix

@@ -1635,15 +1635,6 @@ Start here:
 - `just verb custom_button_edit` — contract state before probing
 - project memory "Driving the VirtualDJ GUI" — keycodes, point-versus-pixel coordinates, the minimized-window trap
 
-### M3. Let `vdj_lint` Take Content As Well As Paths
-
-Status: Ready
-
-Note: Added 2026-09-28. An agent working from another repo usually holds a draft, not a file
-this server can read. Add an optional `content` string to `vdj_lint` (mutually exclusive with
-`paths`), written to a temp file and linted with the same scripts so output is identical. Do it
-after M2 so `kind: "script"` is content-first from the start. Cover both forms in `self_check`.
-
 ### M4. Expose Controller Vocabulary Through The MCP
 
 Status: Ready
