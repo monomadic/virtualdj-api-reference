@@ -65,7 +65,7 @@ structural parser.
 `zzz_bogus`, `browser_filter` — render identically (`Local test`, 2026-07-30, screenshots). A
 ternary built entirely from nonexistent verbs colours perfectly. Autocomplete has the verb list;
 the highlighter does not. That makes this a **grammar-mapping instrument, not a linter**, and it
-is why `tools/lint_mappers.py` still has a job.
+is why a static verb check (now `tools/lint_script.py`) still has a job.
 
 ### The editor reports the guard of the statement under the cursor (2026-07-30)
 

@@ -29,6 +29,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import difflib
 import html
 import json
 import re
@@ -243,7 +244,9 @@ def lint_script(script: str, context: str, vocab: Vocabulary) -> list[Finding]:
             out.append(Finding("error", "disproved", f"{head.text!r} is not a verb",
                                f"verb store: test_status=Disproved (`just verb {name}`)"))
         elif name not in vocab.known:
-            out.append(Finding("warning", "unknown-verb", f"{head.text!r} is not in the verb table",
+            close = difflib.get_close_matches(name, vocab.verbs, n=1)
+            hint = f" (closest: {close[0]!r})" if close else ""
+            out.append(Finding("warning", "unknown-verb", f"{head.text!r} is not in the verb table{hint}",
                                f"{vocab.stamp}; a newer build may add it"))
 
         # Tested per-verb argument rules.
@@ -367,6 +370,7 @@ REPO_GLOBS = [
     "examples/Skins/GraveRaver/build/*.xml",
     "tests/Skins/**/*.xml",
     "examples/Mappers/Local/*.xml",
+    "examples/Mappers/Official-Addons/**/*.xml",
 ]
 
 
