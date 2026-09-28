@@ -46,10 +46,9 @@ TESTS = ROOT / "tests"
 APP = Path("/Applications/VirtualDJ.app")
 CHANNEL = "http://localhost/query?script=get_version"
 
-# Distribution name -> module name, for the cases where they differ. Nothing in
-# this repo needs an entry yet; the map exists so adding `pyyaml` later does not
-# turn into a mystery.
-MODULE_NAMES: dict[str, str] = {}
+# Distribution name -> module name, for the cases where they differ. A missing
+# entry reads as "not importable" even when the package is installed.
+MODULE_NAMES: dict[str, str] = {"markdown-it-py": "markdown_it"}
 
 OK, WARN, BAD = "ok  ", "note", "FAIL"
 
