@@ -181,6 +181,25 @@ Gotchas the table implies:
 4. Record results in [VDJScript Local Test Tracker.md](VDJScript%20Local%20Test%20Tracker.md)
    with the build and the note that the run used the HTTP interface.
 
+## A relaunch occasionally comes up without the listener (2026-09-29)
+
+`Local test`, build 18.0.9644, macOS. `just vdj-restart` quit an idle instance gracefully
+(14.3s) and relaunched it. The app loaded normally — decks, mixer and pads drawn, no dialog
+([screenshot](../tests/screenshots/relaunch-no-listener-9644.png)) — but nothing answered on
+`http://localhost/` for 120s, and `lsof` showed no TCP listener in the VirtualDJ process at
+all; its only sockets were outbound HTTPS. A second quit and relaunch answered `get_version`
+1.0s after launch. The operator reports the same intermittent failure from ordinary use.
+
+What this does not settle: why. `settings.xml` has an empty `<masterEffects />` and
+`PluginsMacArm/AutoStart/` holds only the introspection plugin, yet the listener normally
+does come up on launch, so neither is where Network Control's start-up is recorded, and an
+empty `<masterEffects />` must not be read as "not auto-started". One failure and one success
+is not a rate. `tools/vdj_restart.py` therefore treats a silent launch as retryable — it quits
+that instance and relaunches, `--retries` times — rather than diagnosing a configuration.
+
+This is distinct from the crash-recover hang in `tools/fixtures.py`, where the socket listens
+but stops accepting: there the listener exists; here it was never opened.
+
 ## GET has a URL-length limit; POST does not
 
 `Local test` 2026-07-30. Scripts longer than roughly **2,650 characters** sent as

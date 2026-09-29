@@ -58,9 +58,11 @@ forums are leads. Do not say a verb works unless its record is test_status=Pass
 or you verified it with vdj_query. Shipped files are the authority for XML format
 vocabulary only.
 
-Writes: vdj_execute runs actions on a live instance. It is off unless the server
-was started with VDJ_MCP_EXECUTE=1 and refuses destructive verbs. Use it only
-when the task asks for a change to the running app.
+Writes: vdj_execute runs actions on a live instance and vdj_restart quits and
+relaunches the app. Each is off unless the server was started with its opt-in
+(VDJ_MCP_EXECUTE=1, VDJ_MCP_RESTART=1); execute refuses destructive verbs and
+restart refuses while a deck plays. Use them only when the task asks for a change
+to the running app. If vdj_up stops answering mid-session, vdj_restart is the fix.
 """
 
 SUBPROCESS_TIMEOUT = 60
@@ -335,6 +337,25 @@ def t_execute(a):
     result = http("execute", script)
     return (f"{result!r}\n\n(This is the verb's own true/false result, not transport "
             "success — `nothing` returns 'false'.)")
+
+
+def t_restart(a):
+    if a.get("status"):
+        return tool_script("vdj_restart.py", "--status")
+    if os.environ.get("VDJ_MCP_RESTART") != "1":
+        raise ToolError(
+            "vdj_restart is disabled. It quits and relaunches VirtualDJ, so it is opt-in: "
+            "restart this server with VDJ_MCP_RESTART=1. status (read-only) needs no opt-in."
+        )
+    args = []
+    if a.get("force"):
+        args.append("--force")
+    if a.get("allow_playing"):
+        args.append("--allow-playing")
+    for launch_arg in a.get("launch_args") or []:
+        args.append(f"--arg={launch_arg}")
+    # Up to three quit + launch-and-wait cycles (20s + 60s each) outlast the default timeout.
+    return run([PY, str(REPO / "tools" / "vdj_restart.py"), *args], timeout=330)
 
 
 def t_lint(a):
@@ -652,6 +673,27 @@ TOOLS = [
         "fn": t_screenshot,
     },
     {
+        "name": "vdj_restart",
+        "description": (
+            "Quit and relaunch VirtualDJ (macOS), then wait until its HTTP interface answers. "
+            "Use it when the interface stops answering after a crash-recover, to clear session "
+            "state or timecode_cd_mode, or to launch with arguments (launch_args, e.g. -remote). "
+            "Off unless the server runs with VDJ_MCP_RESTART=1. Refuses while any deck plays "
+            "(allow_playing overrides) and when playback cannot be checked (force overrides; "
+            "force also terminates a quit that stalls). status reports state and changes nothing."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "status": S(type="boolean", description="Report running / answering / playing; change nothing."),
+                "force": S(type="boolean"),
+                "allow_playing": S(type="boolean"),
+                "launch_args": S(type="array", items={"type": "string"}),
+            },
+        },
+        "fn": t_restart,
+    },
+    {
         "name": "vdj_up",
         "description": "Check whether a live VirtualDJ is reachable over the HTTP control interface. Run this before planning any live-test work.",
         "inputSchema": {"type": "object", "properties": {}},
@@ -734,6 +776,9 @@ ANNOTATIONS = {
     # Writes a PNG under tests/screenshots/; changes nothing it did not create.
     "vdj_screenshot": {"readOnlyHint": False, "destructiveHint": False,
                        "idempotentHint": False, "openWorldHint": True},
+    # Quits and relaunches the app; `status` is the only read-only form.
+    "vdj_restart": {"readOnlyHint": False, "destructiveHint": True,
+                    "idempotentHint": False, "openWorldHint": True},
     # Runs actions on the live app; the denylist narrows it, it does not make it safe.
     "vdj_execute": {"readOnlyHint": False, "destructiveHint": True,
                     "idempotentHint": False, "openWorldHint": True},
@@ -824,6 +869,7 @@ def stdio_check(failures):
         {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "vdj_nope", "arguments": {}}},
         {"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "vdj_execute", "arguments": {"script": "play"}}},
         {"jsonrpc": "2.0", "id": 6, "method": "ping"},
+        {"jsonrpc": "2.0", "id": 7, "method": "tools/call", "params": {"name": "vdj_restart", "arguments": {}}},
     ]
     stdin = "\n".join(json.dumps(r) for r in requests[:4]) + "\n{not json\n" + \
             "\n".join(json.dumps(r) for r in requests[4:]) + "\n"
@@ -842,8 +888,8 @@ def stdio_check(failures):
         except json.JSONDecodeError:
             failures.append(f"stdio: non-JSON on stdout: {line[:120]!r}")
     by_id = {f.get("id"): f for f in frames}
-    if sorted(by_id) != [1, 2, 3, 4, 5, 6]:
-        failures.append(f"stdio: expected one response per request id 1-6, got {sorted(by_id, key=str)}")
+    if sorted(by_id) != [1, 2, 3, 4, 5, 6, 7]:
+        failures.append(f"stdio: expected one response per request id 1-7, got {sorted(by_id, key=str)}")
         return
     if "instructions" not in by_id[1].get("result", {}):
         failures.append("stdio: initialize carried no instructions")
@@ -858,8 +904,10 @@ def stdio_check(failures):
         failures.append("stdio: vdj_execute ran without VDJ_MCP_EXECUTE=1")
     if by_id[6].get("result") != {}:
         failures.append("stdio: ping did not answer")
+    if not by_id[7]["result"].get("isError") or "disabled" not in by_id[7]["result"]["content"][0]["text"]:
+        failures.append("stdio: vdj_restart ran without VDJ_MCP_RESTART=1")
     print(f"  ok    stdio from a foreign cwd: {len(frames)} frames, bad JSON survived, "
-          "execute refused without opt-in")
+          "execute and restart refused without opt-in")
 
 
 def live_check(failures):
@@ -876,6 +924,10 @@ def live_check(failures):
     if not unknown.startswith("'error:"):
         failures.append(f"vdj_query did not report an unknown verb as error: {unknown[:120]}")
     print(f"  ok    vdj_query  (get_version -> {version.splitlines()[0]}; an unknown verb -> error body)")
+    state = t_restart({"status": True})
+    if "running:" not in state:
+        failures.append(f"vdj_restart status failed: {state[:120]}")
+    print(f"  ok    vdj_restart status  ({state.strip()})")
 
 
 def self_check(live=False):

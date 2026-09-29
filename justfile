@@ -113,6 +113,11 @@ vdj-up:
 screenshot *args:
     @{{python}} tools/vdj_screenshot.py {{args}}
 
+# Quit and relaunch VirtualDJ, then wait for HTTP. Refuses while a deck plays.
+# --status, --force, --allow-playing, --arg -remote. MCP twin: vdj_restart.
+vdj-restart *args:
+    @{{python}} tools/vdj_restart.py {{args}}
+
 # Serve the store, FX catalog, XML inventory, grammar, linters and the live HTTP
 # probe channel to any MCP client over stdio. Zero dependencies; stdout is
 # protocol only. `vdj_execute` stays disabled unless VDJ_MCP_EXECUTE=1.
