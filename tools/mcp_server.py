@@ -256,6 +256,18 @@ def t_sysicons(a):
     return tool_script("sysicon_atlas.py", *args)
 
 
+def t_screenshot(a):
+    """Capture the VirtualDJ window; returns text plus the PNG as an image block."""
+    import base64
+    args = []
+    if a.get("out"):
+        args += ["--out", a["out"]]
+    path = tool_script("vdj_screenshot.py", *args).strip().splitlines()[-1]
+    data = base64.b64encode(Path(path).read_bytes()).decode()
+    return [{"type": "text", "text": f"Saved {path}"},
+            {"type": "image", "data": data, "mimeType": "image/png"}]
+
+
 def t_up(a):
     try:
         v = http("query", "get_version")
@@ -598,6 +610,19 @@ TOOLS = [
         "fn": t_sysicons,
     },
     {
+        "name": "vdj_screenshot",
+        "description": (
+            "Screenshot the VirtualDJ window (macOS; needs Screen Recording permission). "
+            "Saves a PNG under tests/screenshots/ (or out) and returns it as an image. A UI "
+            "observation is evidence only if the file is kept: cite the returned path."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {"out": S(type="string", description="Output PNG path; default tests/screenshots/virtualdj-<timestamp>.png.")},
+        },
+        "fn": t_screenshot,
+    },
+    {
         "name": "vdj_up",
         "description": "Check whether a live VirtualDJ is reachable over the HTTP control interface. Run this before planning any live-test work.",
         "inputSchema": {"type": "object", "properties": {}},
@@ -705,6 +730,8 @@ def handle(msg):
             return err(mid, -32602, f"unknown tool: {name}")
         try:
             text = tool["fn"](args)
+            if isinstance(text, list):  # tool returned ready-made content blocks
+                return ok(mid, {"content": text})
             return ok(mid, {"content": [{"type": "text", "text": text}]})
         except ToolError as e:
             return ok(mid, {"content": [{"type": "text", "text": str(e)}], "isError": True})

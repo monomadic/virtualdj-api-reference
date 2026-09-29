@@ -108,6 +108,11 @@ vdj-up:
       && echo "VirtualDJ HTTP interface reachable on http://localhost/" \
       || { echo "VirtualDJ HTTP interface NOT reachable (is VirtualDJ running with the network interface enabled?)"; exit 1; }
 
+# Screenshot the VirtualDJ window into tests/screenshots/ (macOS; needs Screen
+# Recording permission). Pass --out PATH or --list. MCP twin: vdj_screenshot.
+screenshot *args:
+    @{{python}} tools/vdj_screenshot.py {{args}}
+
 # Serve the store, FX catalog, XML inventory, grammar, linters and the live HTTP
 # probe channel to any MCP client over stdio. Zero dependencies; stdout is
 # protocol only. `vdj_execute` stays disabled unless VDJ_MCP_EXECUTE=1.

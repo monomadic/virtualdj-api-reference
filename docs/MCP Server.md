@@ -58,6 +58,7 @@ Offline — these read the store and artifacts and need no running VirtualDJ:
 | `vdj_list_skin_categories` | `xmldb.py categories` | Editorial category IDs and derived unique-name totals |
 | `vdj_attested_tails` | `extract_attested_tails.py` | Argument tails Atomix wrote in shipped scripts, with return evidence |
 | `vdj_controllers` | `controller_schema_inventory.py` | A device's control names for mapper authoring (`device`, `match`), mapper comparison (`compare`), or attributes on a definition path (`path`); shipped syntax, Tier 2 |
+| `vdj_screenshot` | `vdj_screenshot.py` | PNG of the VirtualDJ window (macOS), saved under `tests/screenshots/` and returned as an image; cite the path as evidence |
 | `vdj_sysicons` | `sysicon_atlas.py` | Built-in icon keys by description (`search`), `cell` or `unnamed`, each with how it is known |
 | `vdj_action_catalog` | `extract_action_catalog.py` | The vendor's own description and parameters, read from the app bundle |
 | `vdj_lint` | `lint_{skins,pads,mappers}.py`, `lint_script.py` | Validate what you author: XML files and the script inside them, or one script string (`kind: "script"`, `content`, `context`). XML kinds take `content` in place of `paths` for an unsaved draft |
