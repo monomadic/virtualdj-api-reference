@@ -809,8 +809,77 @@ def err(mid, code, message):
     return {"jsonrpc": "2.0", "id": mid, "error": {"code": code, "message": message}}
 
 
-def self_check():
-    """Exercise the handlers in-process: no client, no live app, no state change."""
+def stdio_check(failures):
+    """Drive the real server over stdio from a foreign cwd, as another repo's client would.
+
+    The in-process checks call handlers directly, so they cannot see a stray print on
+    stdout, a path that only resolves from the repo root, or a framing bug.
+    """
+    requests = [
+        {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-06-18"}},
+        {"jsonrpc": "2.0", "method": "notifications/initialized"},
+        {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
+        {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "vdj_lint", "arguments": {
+            "kind": "pad", "content": "<page name=\"draft\">\n<pad1>shift ? play : </pad1>\n</page>\n"}}},
+        {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "vdj_nope", "arguments": {}}},
+        {"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "vdj_execute", "arguments": {"script": "play"}}},
+        {"jsonrpc": "2.0", "id": 6, "method": "ping"},
+    ]
+    stdin = "\n".join(json.dumps(r) for r in requests[:4]) + "\n{not json\n" + \
+            "\n".join(json.dumps(r) for r in requests[4:]) + "\n"
+    env = {k: v for k, v in os.environ.items() if k not in ("VDJ_MCP_EXECUTE", "VDJ_MCP_RESTART")}
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            proc = subprocess.run([PY, str(Path(__file__).resolve())], input=stdin, cwd=tmp, env=env,
+                                  capture_output=True, text=True, timeout=SUBPROCESS_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            failures.append("stdio: server did not exit at end of input")
+            return
+    frames = []
+    for line in proc.stdout.splitlines():
+        try:
+            frames.append(json.loads(line))
+        except json.JSONDecodeError:
+            failures.append(f"stdio: non-JSON on stdout: {line[:120]!r}")
+    by_id = {f.get("id"): f for f in frames}
+    if sorted(by_id) != [1, 2, 3, 4, 5, 6]:
+        failures.append(f"stdio: expected one response per request id 1-6, got {sorted(by_id, key=str)}")
+        return
+    if "instructions" not in by_id[1].get("result", {}):
+        failures.append("stdio: initialize carried no instructions")
+    if len(by_id[2]["result"]["tools"]) != len(TOOLS):
+        failures.append("stdio: tools/list did not return every tool")
+    text = by_id[3]["result"]["content"][0]["text"]
+    if "<content>:2" not in text or "empty-branch" not in text or tmp in text:
+        failures.append(f"stdio: lint of a draft from a foreign cwd went wrong: {text[:200]}")
+    if by_id[4].get("error", {}).get("code") != -32602:
+        failures.append("stdio: unknown tool was not a -32602 error")
+    if not by_id[5]["result"].get("isError") or "disabled" not in by_id[5]["result"]["content"][0]["text"]:
+        failures.append("stdio: vdj_execute ran without VDJ_MCP_EXECUTE=1")
+    if by_id[6].get("result") != {}:
+        failures.append("stdio: ping did not answer")
+    print(f"  ok    stdio from a foreign cwd: {len(frames)} frames, bad JSON survived, "
+          "execute refused without opt-in")
+
+
+def live_check(failures):
+    """Read-only calls against a running VirtualDJ; skipped when it does not answer."""
+    up = t_up({})
+    if "reachable at" not in up:
+        print(f"  skip  live tools: {up.splitlines()[0]}")
+        return
+    print(f"  ok    vdj_up  ({up})")
+    version = t_query({"script": "get_version"})
+    if "error:" in version:
+        failures.append(f"vdj_query get_version failed: {version}")
+    unknown = t_query({"script": "zzinvalidalpha"})
+    if not unknown.startswith("'error:"):
+        failures.append(f"vdj_query did not report an unknown verb as error: {unknown[:120]}")
+    print(f"  ok    vdj_query  (get_version -> {version.splitlines()[0]}; an unknown verb -> error body)")
+
+
+def self_check(live=False):
+    """Exercise the handlers in-process, then over stdio; --live adds read-only live calls."""
     failures = []
 
     def check(label, fn):
@@ -922,12 +991,16 @@ def self_check():
             os.environ.pop("VDJ_MCP_EXECUTE", None)
     print("  ok    execute denylist refuses system / scope-wrapped / browser_delete / timecode_cd_mode")
 
+    stdio_check(failures)
+    if live:
+        live_check(failures)
+
     if failures:
         print(f"\n{len(failures)} failure(s):")
         for f in failures:
             print(f"  - {f}")
         return 1
-    print("\nself-check passed (live HTTP tools not exercised; use `just vdj-up`)")
+    print("\nself-check passed" + ("" if live else " (live tools not exercised; `just mcp-check --live`)"))
     return 0
 
 
@@ -956,7 +1029,7 @@ def main():
 
 if __name__ == "__main__":
     if "--self-check" in sys.argv[1:]:
-        raise SystemExit(self_check())
+        raise SystemExit(self_check(live="--live" in sys.argv[1:]))
     try:
         main()
     except (KeyboardInterrupt, BrokenPipeError):

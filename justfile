@@ -121,9 +121,10 @@ mcp-serve:
     @{{python}} tools/mcp_server.py
 
 # Smoke-test the MCP server without a client: lists tools and calls a few.
-mcp-check:
+# `--live` adds read-only calls against a running VirtualDJ (skipped if it does not answer).
+mcp-check *args:
     {{python}} tools/doctor.py --deps-only
-    @{{python}} tools/mcp_server.py --self-check
+    @{{python}} tools/mcp_server.py --self-check {{args}}
 
 inventory:
     {{python}} tools/extract_xml_inventory.py
