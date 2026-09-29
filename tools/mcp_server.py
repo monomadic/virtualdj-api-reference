@@ -718,9 +718,31 @@ TOOLS = [
 
 BY_NAME = {t["name"]: t for t in TOOLS}
 
+# MCP tool annotations: clients use them to auto-approve safe calls and to ask
+# before others. Every tool is listed explicitly — the self-check fails on a tool
+# missing here, so a new write tool cannot inherit a read-only label by default.
+READ = {"readOnlyHint": True, "openWorldHint": False}
+LIVE_READ = {"readOnlyHint": True, "openWorldHint": True}  # asks the running app
+ANNOTATIONS = {
+    **{name: READ for name in (
+        "vdj_topic", "vdj_verb", "vdj_get_verb", "vdj_list_verbs", "vdj_verb_stats",
+        "vdj_grammar", "vdj_get_fx", "vdj_list_fx", "vdj_element", "vdj_list_xml_elements",
+        "vdj_list_skin_categories", "vdj_attested_tails", "vdj_action_catalog",
+        "vdj_controllers", "vdj_sysicons", "vdj_lint")},
+    "vdj_up": LIVE_READ,
+    "vdj_query": LIVE_READ,
+    # Writes a PNG under tests/screenshots/; changes nothing it did not create.
+    "vdj_screenshot": {"readOnlyHint": False, "destructiveHint": False,
+                       "idempotentHint": False, "openWorldHint": True},
+    # Runs actions on the live app; the denylist narrows it, it does not make it safe.
+    "vdj_execute": {"readOnlyHint": False, "destructiveHint": True,
+                    "idempotentHint": False, "openWorldHint": True},
+}
+
 
 def public_tools():
-    return [{k: t[k] for k in ("name", "description", "inputSchema")} for t in TOOLS]
+    return [{**{k: t[k] for k in ("name", "description", "inputSchema")},
+             "annotations": ANNOTATIONS[t["name"]]} for t in TOOLS if t["name"] in ANNOTATIONS]
 
 
 # --------------------------------------------------------------------------
@@ -801,6 +823,11 @@ def self_check():
         print(f"  ok    {label}  ({len(out)} chars)")
 
     print(f"{len(TOOLS)} tools declared")
+    for t in TOOLS:
+        if t["name"] not in ANNOTATIONS:
+            failures.append(f"{t['name']}: no entry in ANNOTATIONS (read-only or not must be stated)")
+    for name in set(ANNOTATIONS) - set(BY_NAME):
+        failures.append(f"ANNOTATIONS lists {name}, which is not a tool")
     for t in TOOLS:
         for field in ("name", "description", "inputSchema"):
             if not t.get(field):
