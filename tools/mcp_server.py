@@ -32,7 +32,7 @@ REPO = Path(__file__).resolve().parent.parent
 PY = sys.executable or "python3"
 
 PROTOCOL_VERSIONS = ("2025-06-18", "2025-03-26", "2024-11-05")
-SERVER_INFO = {"name": "virtualdj-reference", "version": "0.1.0"}
+SERVER_INFO = {"name": "virtualdj-reference", "version": "0.2.0"}
 
 # Sent at initialize; clients hand it to the model before any tool description.
 INSTRUCTIONS = """\

@@ -15,7 +15,14 @@ and no virtualenv to maintain. stdout carries protocol frames only; logs go to s
 
 ## Registering it
 
-Claude Code (`.mcp.json` in the repo root, or `~/.claude.json` for a user-level entry):
+Inside this checkout nothing is needed: the repo's `.mcp.json` registers it. To use it from
+every project — the point of it — register it once at user scope with Claude Code:
+
+```bash
+claude mcp add --scope user virtualdj -- python3 /absolute/path/to/virtualdj-api-reference/tools/mcp_server.py
+```
+
+The equivalent JSON (`.mcp.json` in a repo root, or `~/.claude.json` for a user-level entry):
 
 ```json
 {
@@ -31,13 +38,29 @@ Claude Code (`.mcp.json` in the repo root, or `~/.claude.json` for a user-level 
 Claude Desktop uses the same shape in `claude_desktop_config.json`. Any other MCP client
 that speaks stdio takes the same command. `just mcp-serve` runs it by hand for debugging.
 
-To allow writes to a live instance, add the opt-in:
+The two tools that change the running app are each off until opted in, separately, so
+you can allow script execution without allowing restarts:
 
 ```json
-"env": { "VDJ_MCP_EXECUTE": "1" }
+"env": { "VDJ_MCP_EXECUTE": "1", "VDJ_MCP_RESTART": "1" }
 ```
 
 `VDJ_MCP_HTTP_BASE` overrides `http://localhost` if the network interface is on another host.
+
+## What a client is told
+
+At `initialize` the server returns `instructions`, which clients hand to the model before any
+tool description: the authoring workflow (`vdj_topic` → `vdj_grammar` → drill-in tools →
+`vdj_lint` → `vdj_query`), the evidence rule (a verb works only on a `Pass` record or a
+`vdj_query` round-trip), and what the two write tools do. The self-check fails if they name a
+tool that does not exist.
+
+Every tool also carries MCP annotations. All but three are `readOnlyHint: true`, so a client
+can approve them without asking; `vdj_screenshot` writes a PNG it creates
+(`destructiveHint: false`), and `vdj_execute` and `vdj_restart` change the running app
+(`destructiveHint: true`). Annotations are listed per tool in `ANNOTATIONS`, with no default:
+a new tool without an entry fails the self-check, so a write tool cannot inherit a read-only
+label.
 
 ## Tools
 
@@ -58,18 +81,19 @@ Offline — these read the store and artifacts and need no running VirtualDJ:
 | `vdj_list_skin_categories` | `xmldb.py categories` | Editorial category IDs and derived unique-name totals |
 | `vdj_attested_tails` | `extract_attested_tails.py` | Argument tails Atomix wrote in shipped scripts, with return evidence |
 | `vdj_controllers` | `controller_schema_inventory.py` | A device's control names for mapper authoring (`device`, `match`), mapper comparison (`compare`), or attributes on a definition path (`path`); shipped syntax, Tier 2 |
-| `vdj_screenshot` | `vdj_screenshot.py` | PNG of the VirtualDJ window (macOS), saved under `tests/screenshots/` and returned as an image; cite the path as evidence |
 | `vdj_sysicons` | `sysicon_atlas.py` | Built-in icon keys by description (`search`), `cell` or `unnamed`, each with how it is known |
 | `vdj_action_catalog` | `extract_action_catalog.py` | The vendor's own description and parameters, read from the app bundle |
 | `vdj_lint` | `lint_{skins,pads,mappers}.py`, `lint_script.py` | Validate what you author: XML files and the script inside them, or one script string (`kind: "script"`, `content`, `context`). XML kinds take `content` in place of `paths` for an unsaved draft |
 
-Live — these need VirtualDJ running with the network interface enabled:
+Live — these need VirtualDJ running (all but `vdj_screenshot` and `vdj_restart` need its network interface too):
 
 | Tool | Use for |
 | --- | --- |
 | `vdj_up` | Reachability check; run before planning live-test work |
 | `vdj_query` | **Verify script.** Read-only, safe to sweep |
 | `vdj_execute` | Run an action. Opt-in and denylisted — see below |
+| `vdj_restart` | Quit and relaunch the app (launch arguments allowed); `status` is read-only. Opt-in — see below |
+| `vdj_screenshot` | PNG of the VirtualDJ window (macOS), saved under `tests/screenshots/` and returned as an image; cite the path as evidence |
 
 ## Two things the tool descriptions enforce
 
@@ -96,8 +120,28 @@ from script and only a restart clears. Over-matching an argument costs a refusal
 the safe direction to fail. This mirrors the allowlist discipline in
 `tools/probe_execute_forms.py`.
 
+## Restart safety
+
+`vdj_restart` (`tools/vdj_restart.py`, `just vdj-restart`) is off unless the server starts
+with `VDJ_MCP_RESTART=1`. It refuses while any deck is playing — only an explicit `no` from
+`deck N play` counts as stopped — and refuses when the HTTP interface is down, since playback
+then cannot be checked; `allow_playing` and `force` override those. It quits through an
+AppleEvent so the app saves its settings, and terminates only on `force` when that stalls.
+After relaunching it waits for `get_version`; a launch that stays silent is quit and retried,
+because the Network Control listener occasionally does not open — see
+[HTTP Control Interface](HTTP%20Control%20Interface.md#a-relaunch-occasionally-comes-up-without-the-listener-2026-09-29).
+
 ## Checking it
 
-`just mcp-check` drives every offline tool in-process and asserts the execute denylist
-refuses its four known-bad shapes. It runs as the first step of `just check`, so a tool
-that stops working fails the repo's own gate rather than failing silently in a client.
+`just mcp-check` drives every offline tool in-process, asserts the execute denylist refuses
+its four known-bad shapes, and checks that every tool is annotated and that the
+instructions name only real tools. It then starts the real server as a subprocess from a
+temp directory and talks to it over stdio — initialize, tools/list, a draft lint, an unknown
+tool, a malformed line, and both write tools without their opt-ins — which catches what
+in-process calls cannot: a stray print on stdout, a path that resolves only from the repo
+root, a framing bug. It runs inside `just check`, so a tool that stops working fails the
+repo's own gate rather than failing silently in a client.
+
+`just mcp-check --live` adds read-only calls against a running VirtualDJ — `vdj_up`,
+`vdj_query` with a real and an unknown verb, `vdj_restart` status — and skips them when the
+app does not answer. It never restarts or executes anything.
