@@ -34,6 +34,35 @@ PY = sys.executable or "python3"
 PROTOCOL_VERSIONS = ("2025-06-18", "2025-03-26", "2024-11-05")
 SERVER_INFO = {"name": "virtualdj-reference", "version": "0.1.0"}
 
+# Sent at initialize; clients hand it to the model before any tool description.
+INSTRUCTIONS = """\
+Reference and live-verification tools for VirtualDJ skins, pad pages, controller
+mappers and VDJScript. VirtualDJ publishes no complete developer docs; this is the
+evidence-graded reference that fills the gap.
+
+Workflow for authoring:
+1. vdj_topic <term> first. It returns the verbs, effects and XML elements for a
+   topic plus real shipped files that use them; a working example often answers
+   the task outright.
+2. vdj_grammar before writing any VDJScript. The runtime never reports a syntax
+   error, so wrong script silently does something else; the summary is short.
+3. Drill in with vdj_verb, vdj_get_fx, vdj_element, vdj_controllers (mapper
+   control names) or vdj_sysicons (icon keys).
+4. vdj_lint everything you write: XML files or an unsaved draft (content), or one
+   script string (kind script). Fix every ERROR; read every WARNING.
+5. If vdj_up answers, round-trip each construct with vdj_query (read-only).
+
+Evidence: every record carries a tier. Only local tests (HTTP interface, pad
+runs, the running app) prove that something works; vendor files, the binary and
+forums are leads. Do not say a verb works unless its record is test_status=Pass
+or you verified it with vdj_query. Shipped files are the authority for XML format
+vocabulary only.
+
+Writes: vdj_execute runs actions on a live instance. It is off unless the server
+was started with VDJ_MCP_EXECUTE=1 and refuses destructive verbs. Use it only
+when the task asks for a change to the running app.
+"""
+
 SUBPROCESS_TIMEOUT = 60
 HTTP_BASE = os.environ.get("VDJ_MCP_HTTP_BASE", "http://localhost")
 HTTP_TIMEOUT = 5
@@ -711,6 +740,7 @@ def handle(msg):
             "protocolVersion": version,
             "capabilities": {"tools": {"listChanged": False}},
             "serverInfo": SERVER_INFO,
+            "instructions": INSTRUCTIONS,
         })
 
     if method in ("notifications/initialized", "notifications/cancelled"):
@@ -784,6 +814,10 @@ def self_check():
                 "params": {"protocolVersion": "2025-06-18"}})
     if r["result"]["protocolVersion"] != "2025-06-18":
         failures.append("initialize did not echo a supported protocol version")
+    # Every tool the instructions name must exist.
+    for named in sorted(set(re.findall(r"\bvdj_[a-z_]+", r["result"].get("instructions", "")))):
+        if named not in BY_NAME:
+            failures.append(f"instructions name {named}, which is not a tool")
     if handle({"jsonrpc": "2.0", "method": "notifications/initialized"}) is not None:
         failures.append("notification produced a response")
     if len(handle({"jsonrpc": "2.0", "id": 2, "method": "tools/list"})["result"]["tools"]) != len(TOOLS):
