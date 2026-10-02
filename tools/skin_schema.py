@@ -93,8 +93,11 @@ def transfer(insn, state, getters, strings=None, conditional_select=False):
     return result
 
 
-def analyze(instructions, initial, getters, strings, conditional_select=False):
-    """Monotone may-analysis. Follow both branch edges; never infer runtime reachability."""
+def analyze(instructions, initial, getters, strings, conditional_select=False, return_states=False):
+    """Monotone may-analysis. Follow both branch edges; never infer runtime reachability.
+
+    With return_states, also return the entry state of every reached instruction.
+    """
     code = {i.address: i for i in instructions}
     if not code:
         raise ValueError('empty function')
@@ -132,6 +135,8 @@ def analyze(instructions, initial, getters, strings, conditional_select=False):
         if i.mnemonic == 'b' and target in code:
             continue
         calls.append((i, target, state))
+    if return_states:
+        return calls, {pc: (code[pc], state) for pc, state in states.items()}
     return calls
 
 

@@ -47,5 +47,20 @@ class StructureTests(unittest.TestCase):
                          current==self.data['anchors']['tests/skin-xml-relations.json'])
         self.assertEqual(describe(self.data,'font')['own_attribute_candidates'],[])
 
+    def test_helpers_are_followed_and_child_slots_get_attributes(self):
+        button=describe(self.data,'button')
+        # getRectangle and the image helpers are followed into, so slot geometry appears.
+        self.assertTrue({'x','y','width','height'}<=set(button['child_slot_attributes']['clipmask']))
+        self.assertIn('attribute_boolean',button['attribute_readings']['actiononover']['roles'])
+
+    def test_closure_is_explicit(self):
+        # A directive has no reader, so closure does not apply rather than passing.
+        self.assertIsNone(describe(self.data,'font')['closure']['structurally_closed'])
+        browser=describe(self.data,'browser')['closure']
+        self.assertFalse(browser['structurally_closed'])
+        self.assertTrue(all(r['reason'] for r in browser['open_routes']))
+        # Child iteration a reviewed loader rule explains does not keep an element open.
+        self.assertTrue(describe(self.data,'stack')['closure']['structurally_closed'])
+
 
 if __name__=='__main__':unittest.main()

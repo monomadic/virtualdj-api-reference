@@ -136,6 +136,13 @@ the static reading is ambiguous, settle it with the watchpoint host
 Done when every K1 entry is either structurally closed (all reader routes accounted for) or
 lists the routes it still has open. Closure is about structure, not rendering.
 
+Progress (2026-10-02): the extractor follows node-carrying calls into helpers, binds
+attribute names passed as arguments, records getter defaults, and reports closure with
+open routes per element (`just skin-structure`, [method](docs/Skin%20Schema%20Recovery.md)).
+Some factory elements are closed; the rest list their routes. Next: project the
+iteration-reached contexts the dispatch rules name (rack units, stack items, menu entries,
+multibutton choices), then work down the open routes, browser readers first.
+
 ### B1. Carry the recovered syntax to the current build
 
 Status: Ready

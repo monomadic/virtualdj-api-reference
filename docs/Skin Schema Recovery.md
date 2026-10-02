@@ -1,5 +1,44 @@
 # Skin schema recovery
 
+## Followed helpers and closure — 2026-10-02, build 18.0.9246, arm64
+
+The structure extractor now follows every call that passes a node into a function
+taking a `CXMLNode`. Before, it stopped at the constructor, the shared base reader and
+the button text helper. A helper's reads now count under the caller's path, so a child
+slot's own attributes appear. Example: `button` → `clipmask` → `x`, `y`, `width`,
+`height`, read inside `ISkinObject::getRectangle`. An attribute name a helper receives
+as an argument (`ISkinObject::getColorParam(node, name)`) is bound from the call site.
+Integer and boolean getters record the default the caller passes.
+
+`just skin-structure <tag>` adds three fields:
+
+- `child_slot_attributes`: attributes read on each direct child.
+- `attribute_readings`: getter roles and defaults per own attribute.
+- `closure`: whether every route by which the element's XML reaches code is
+  accounted for, and if not, `open_routes` with the address, function and reason.
+
+The reasons are:
+
+| Reason | Meaning |
+| --- | --- |
+| `node argument only partly resolved` | A followed helper may also receive a node the analysis could not identify, typically after a conditional selection |
+| `children iterated without names` | Code walks the child vector, so no name says which children it reads |
+| `call not followed` / `indirect or unnamed call` | The node reaches a function the extractor did not enter |
+
+Child iteration is not an open route when a reviewed rule explains it: the container
+loaders in [Skin Tag Dispatch](Skin%20Tag%20Dispatch.md) and the class merge in
+[Skin Expansion](Skin%20Expansion.md). Directives and child-only names have no reader,
+so their closure is reported as not applicable rather than as passing.
+
+Child XML nodes are freed once the panel loader has processed them. A read after
+construction can therefore only reach a node that was copied, and copies are open
+routes. Reads on nodes reached by iteration (rack units, stack items, menu entries)
+are not projected onto an element yet; the dispatch rules name those contexts.
+
+`just skin-structure` lists every element with `structurally_closed` and its
+open-route count. Tier 2 throughout: closure means the routes are accounted for in
+the binary, not that the attributes behave as named.
+
 ## Breadth-first structure — 2026-09-23, build 18.0.9246, arm64
 
 The active S6 plan now inventories element structure before finishing descendant
