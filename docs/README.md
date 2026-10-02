@@ -4,6 +4,8 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Skin Expansion](Skin%20Expansion.md) — how `define`, `class=`, placeholders and `condition=` rewrite skin XML on build 9246, with paired native fixtures (`just skin-expansion check`)
+
 - [Skin Tag Dispatch](Skin%20Tag%20Dispatch.md) — which tag names build 9246 recognizes, in which context, and what each becomes (`just skin-dispatch`)
 
 - [Skin Manifest Recovery Tasks](Skin%20Manifest%20Recovery%20Tasks.md) — prioritized implementation proposal for recovering contextual XML rules and building a linter/compiler

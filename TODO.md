@@ -136,21 +136,6 @@ the static reading is ambiguous, settle it with the watchpoint host
 Done when every K1 entry is either structurally closed (all reader routes accounted for) or
 lists the routes it still has open. Closure is about structure, not rendering.
 
-### K3. Recover template, class, include and condition expansion
-
-Status: Ready
-
-Note: The factory host never sees these rules because the skin loader applies them first.
-The [Offline Skin Host](docs/Offline%20Skin%20Host.md) now runs `CSkinEngine::load` through
-`loadEnd()`, so the loader stage can be observed. Recover the rules for the template and
-class mechanism, includes, and conditional constructs, including plain `group` turning into
-a panel when it has `visibility`. Each rule needs paired fixtures in that host: one expanded
-form and one control.
-
-Done when every expansion directive the 9246 loader handles has a stated rule and a fixture,
-or is listed as unresolved. Whether a condition evaluates to true is a behaviour question
-and stays out.
-
 ### B1. Carry the recovered syntax to the current build
 
 Status: Ready

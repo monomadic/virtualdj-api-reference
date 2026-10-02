@@ -103,4 +103,5 @@ children through that call.
   `browser`.
 
 Child lookups whose node the linear scan loses keep role `unknown`. Template,
-class and condition expansion (`define`, `class=`, `CSkinClass::apply`) is task K3.
+class and condition expansion (`define`, `class=`, `condition=`) is in
+[Skin Expansion](Skin%20Expansion.md).

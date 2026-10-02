@@ -8,6 +8,32 @@ progress log of open tasks whose narrative outgrew a `Note:`. Each completed blo
 kept as [RETIRED.md](RETIRED.md)). Blocks are the record of what was established and where it was
 recorded; they are not startable and `just next-task` never reads this file.
 
+## Syntax recovery (TODO.md, 2026-10-01)
+
+### K3. Recover template, class, include and condition expansion
+
+Status: Done
+
+Note: The factory host never sees these rules because the skin loader applies them first.
+The [Offline Skin Host](docs/Offline%20Skin%20Host.md) now runs `CSkinEngine::load` through
+`loadEnd()`, so the loader stage can be observed. Recover the rules for the template and
+class mechanism, includes, and conditional constructs, including plain `group` turning into
+a panel when it has `visibility`. Each rule needs paired fixtures in that host: one expanded
+form and one control.
+
+Done when every expansion directive the 9246 loader handles has a stated rule and a fixture,
+or is listed as unresolved. Whether a condition evaluates to true is a behaviour question
+and stays out.
+
+Done 2026-10-02. The rules are in [Skin Expansion](docs/Skin%20Expansion.md), read from
+`CSkinClass::add`/`apply`/`applyXml`/`applyPlaceholders` and the condition functions on
+9246, and checked against paired native fixtures in the composition host
+(`just skin-expansion check`, [capture](tests/skin-expansion-9246.json)). Every
+prediction held beside its control. There is no include mechanism on this build. Rules
+without a fixture (named colours, mixer-order pseudo-decks, placeholder attribute
+removal, deck context for conditions) are listed under Open in that doc. Tier 2.
+
+
 ## Accepted next sequence (2026-09-05 review)
 
 ### R1. Repair queue selection

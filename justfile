@@ -510,6 +510,7 @@ check:
     {{python}} -m unittest discover -s tools -p test_skin_structure.py
     {{python}} -m unittest discover -s tools -p test_skin_dispatch.py
     {{python}} tools/skin_dispatch.py --check
+    {{python}} tools/probe_skin_expansion.py check
     {{python}} tools/skin_condition_evidence.py --check > /dev/null
     {{python}} tools/extract_skin_readers.py --check
     {{python}} tools/extract_skin_classes.py --check
@@ -885,6 +886,11 @@ skin-reader-audit *args:
 # Breadth-first structural entries with canonical shared readers; no behavior claim.
 skin-structure *args:
     @{{python}} tools/skin_structure.py {{args}}
+
+# Paired native fixtures for class, placeholder and condition expansion on 9246 (Tier 2).
+# `check` reads the saved capture; prepare/run need the binary and capstone.
+skin-expansion *args:
+    @{{python}} tools/probe_skin_expansion.py {{args}}
 
 # Which tags 9246 recognizes where, and the role each plays (object, wrapper, directive,
 # slot, container, data). Queries read the saved capture; --extract/--check --app need the binary.
