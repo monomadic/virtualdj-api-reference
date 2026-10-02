@@ -4,6 +4,8 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Skin Manifest Recovery Tasks](Skin%20Manifest%20Recovery%20Tasks.md) — prioritized implementation proposal for recovering contextual XML rules and building a linter/compiler
+
 - [Offline Skin Host](Offline%20Skin%20Host.md) — native composition trees, class/coordinate resolution, offscreen rendering, and full-loader boundary
 - [Native Skin Child Relationships](Native%20Skin%20Child%20Relationships.md) — contextual parent/child manifest, named slots, wrappers, and native source-path traces
 - [Offline XML Parser](Offline%20XML%20Parser.md) — native XML diagnostics, skin factory, and field/script call traces
