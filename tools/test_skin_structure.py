@@ -62,5 +62,12 @@ class StructureTests(unittest.TestCase):
         # Child iteration a reviewed loader rule explains does not keep an element open.
         self.assertTrue(describe(self.data,'stack')['closure']['structurally_closed'])
 
+    def test_iteration_contexts_come_from_reviewed_dispatch_rules(self):
+        choice=describe(self.data,'multibutton/choice')
+        self.assertEqual(choice['kind'],'context_element')
+        self.assertIn('selected',choice['own_attribute_candidates'])
+        self.assertEqual(choice['variants'][0]['binding']['dispatch_loader'],'CSkinMultiButton::CSkinMultiButton')
+        self.assertNotIn('panel/*',self.data['elements'])
+
 
 if __name__=='__main__':unittest.main()

@@ -7,6 +7,24 @@
     "evidence_tier": 2
   },
   "elements": {
+    "(root)": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+            "callsite": "0x10050c42c",
+            "dispatch_loader": "CSkinEngine::load"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1004a3910:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
     "active": {
       "kind": "reader_child_identity",
       "variants": [],
@@ -651,6 +669,60 @@
       ],
       "status": "partial_structure"
     },
+    "menu/item": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "SSkinMenuItem::SSkinMenuItem(CXMLNode*)",
+            "callsite": "0x1001bfa9c",
+            "dispatch_loader": "CSkinMenu::CSkinMenu"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1001bfbc8:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "menu/separator": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "SSkinMenuItem::SSkinMenuItem(CXMLNode*)",
+            "callsite": "0x1001bfa9c",
+            "dispatch_loader": "CSkinMenu::CSkinMenu"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1001bfbc8:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "menu/submenu": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "SSkinMenuItem::SSkinMenuItem(CXMLNode*)",
+            "callsite": "0x1001bfa9c",
+            "dispatch_loader": "CSkinMenu::CSkinMenu"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1001bfbc8:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
     "menuover": {
       "kind": "reader_child_identity",
       "variants": [],
@@ -682,6 +754,24 @@
           "xml_register": "x1",
           "binding_gap": null,
           "reader_ref": "0x1005a3da8:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "multibutton/choice": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CMultiButton::add(CXMLNode*)",
+            "callsite": "0x1005a3e40",
+            "dispatch_loader": "CSkinMultiButton::CSkinMultiButton"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1005a3714:x1"
         }
       ],
       "status": "partial_structure"
@@ -766,6 +856,24 @@
       ],
       "status": "partial_structure"
     },
+    "panel/window": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+            "callsite": "0x1007bb984",
+            "dispatch_loader": "CSkinPanel::loadChildren"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1004a3910:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
     "pannel": {
       "kind": "factory_element",
       "variants": [
@@ -837,6 +945,42 @@
           "xml_register": "x1",
           "binding_gap": null,
           "reader_ref": "0x1006577c0:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "rack/unit": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CSkinRack::addUnit(CXMLNode*, CImage*, CSkinWindow*)",
+            "callsite": "0x100657a00",
+            "dispatch_loader": "CSkinRack::loadChildren"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x100657a38:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "rack/unit/panel": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CSkinResizePanel::CSkinResizePanel(CXMLNode*, CImage*, CSkinWindow*)",
+            "callsite": "0x100657c34",
+            "dispatch_loader": "CSkinRack::addUnitChildren"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x100519db0:x1"
         }
       ],
       "status": "partial_structure"
@@ -1126,6 +1270,24 @@
           "xml_register": "x1",
           "binding_gap": null,
           "reader_ref": "0x100474638:x1"
+        }
+      ],
+      "status": "partial_structure"
+    },
+    "stack/item": {
+      "kind": "context_element",
+      "variants": [
+        {
+          "class": null,
+          "binding": {
+            "symbol": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+            "callsite": "0x1004748b4",
+            "dispatch_loader": "CSkinStack::CSkinStack"
+          },
+          "factory_binding_verified": false,
+          "xml_register": "x1",
+          "binding_gap": null,
+          "reader_ref": "0x1007bbce4:x1"
         }
       ],
       "status": "partial_structure"
@@ -3155,13 +3317,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/over"
@@ -3173,6 +3328,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3180,9 +3342,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -3192,13 +3354,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/down",
@@ -3211,6 +3366,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3218,9 +3380,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -3230,13 +3392,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/off",
@@ -3249,6 +3404,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3256,9 +3418,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -3268,13 +3430,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/selected"
@@ -3286,6 +3441,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3293,9 +3455,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -3305,13 +3467,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/overselected"
@@ -3323,6 +3478,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3330,9 +3492,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -3342,13 +3504,6 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/downselected"
@@ -3360,6 +3515,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -3367,9 +3529,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -5127,16 +5289,16 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x2": {
-              "paths": [
-                "$node"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/off",
                 "$node/up"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
               ],
               "unresolved": false
             }
@@ -5146,8 +5308,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x2": "0x100369f14:x2:follow",
-            "x3": "0x100369f14:x3:follow"
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
           }
         },
         {
@@ -6894,16 +7056,16 @@
               ],
               "unresolved": false
             },
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            },
             "x3": {
               "paths": [
                 "$node/background",
                 "$node/down"
-              ],
-              "unresolved": false
-            },
-            "x2": {
-              "paths": [
-                "$node"
               ],
               "unresolved": false
             }
@@ -6914,8 +7076,8 @@
           "binding_name_unresolved": false,
           "callee_refs": {
             "x4": "0x100369f14:x4:follow",
-            "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x3": "0x100369f14:x3:follow"
           }
         },
         {
@@ -18380,16 +18542,16 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x2": {
-              "paths": [
-                "$node"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/on",
                 "$node/up"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
               ],
               "unresolved": false
             }
@@ -18399,8 +18561,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x2": "0x100369f14:x2:follow",
-            "x3": "0x100369f14:x3:follow"
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
           }
         },
         {
@@ -18410,16 +18572,16 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x2": {
-              "paths": [
-                "$node"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/down",
                 "$node/off"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
               ],
               "unresolved": false
             }
@@ -18429,8 +18591,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x2": "0x100369f14:x2:follow",
-            "x3": "0x100369f14:x3:follow"
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
           }
         },
         {
@@ -19464,16 +19626,16 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x2": {
-              "paths": [
-                "$node"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/background",
                 "$node/up"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
               ],
               "unresolved": false
             }
@@ -19483,8 +19645,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x2": "0x100369f14:x2:follow",
-            "x3": "0x100369f14:x3:follow"
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
           }
         },
         {
@@ -19494,16 +19656,16 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x2": {
-              "paths": [
-                "$node"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/clipmask",
                 "$node/mask"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
               ],
               "unresolved": false
             }
@@ -19513,8 +19675,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x2": "0x100369f14:x2:follow",
-            "x3": "0x100369f14:x3:follow"
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
           }
         }
       ],
@@ -20951,6 +21113,403 @@
       ],
       "child_iterations": []
     },
+    "0x100657a38:x1": {
+      "function": "0x100657a38",
+      "symbol": "CSkinRack::addUnit(CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x1",
+      "sha256": "269d647e284a31092b135b60b5bab5810ee0f3547a14efa096c6cce29264580c",
+      "reads": [
+        {
+          "pc": "0x100657a90",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "name"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x100657a64",
+          "target": "0x103ade240",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": null,
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x100657ab8",
+          "target": "0x100657b58",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": "CSkinRack::addUnitChildren(SRackUnit*, CXMLNode*, CImage*, CSkinWindow*)",
+          "node_arguments": {
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x2": "0x100657b58:x2:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x100519db0:x1": {
+      "function": "0x100519db0",
+      "symbol": "CSkinResizePanel::CSkinResizePanel(CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x1",
+      "sha256": "1151abd792743b0c5e4ce04976a66517f095d2f839b51db648c5cb6ddfbe45eb",
+      "reads": [],
+      "calls": [
+        {
+          "pc": "0x100519db0",
+          "target": "0x100519b88",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": "CSkinResizePanel::CSkinResizePanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x100519b88:x1:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x1007bbce4:x1": {
+      "function": "0x1007bbce4",
+      "symbol": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x1",
+      "sha256": "30797deaf1394684701f4b7aba46f67d0484d50fdbcb5b579edf7d1a6febbe3a",
+      "reads": [],
+      "calls": [
+        {
+          "pc": "0x1007bbce4",
+          "target": "0x1007bb138",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x1007bb138:x1:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x1001bfbc8:x1": {
+      "function": "0x1001bfbc8",
+      "symbol": "SSkinMenuItem::SSkinMenuItem(CXMLNode*)",
+      "node_register": "x1",
+      "sha256": "da96b0035d170b78c260d1d766120f207dc053453ac7169e26be079288b9454b",
+      "reads": [
+        {
+          "pc": "0x1001bfc28",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "text"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1001bfc78",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "visibility"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1001bfd24",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "action"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1001bfd84",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "check"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1001bfdf0",
+          "getter": "0x100432b04",
+          "role": "attribute_boolean",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "hascheck"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 0
+        },
+        {
+          "pc": "0x1001bfe08",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "action"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1001bffcc",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "action"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x1001bfc44",
+          "target": "0x100299d44",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": "CMessageEngine::localizeSkin(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, CXMLNode*, bool)",
+          "node_arguments": {
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x2": "0x100299d44:x2:follow"
+          }
+        },
+        {
+          "pc": "0x1001bfcf0",
+          "target": "0x100588464",
+          "string_arguments": {
+            "x1": [
+              "submenu"
+            ]
+          },
+          "parameter_arguments": {},
+          "symbol": "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)",
+          "node_arguments": {
+            "x0": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x1001bfe80",
+          "target": "0x100588464",
+          "string_arguments": {
+            "x1": [
+              "separator"
+            ]
+          },
+          "parameter_arguments": {},
+          "symbol": "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)",
+          "node_arguments": {
+            "x0": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        }
+      ],
+      "child_iterations": [
+        {
+          "pc": "0x1001c0018",
+          "node_paths": [
+            "$node"
+          ]
+        },
+        {
+          "pc": "0x1001c002c",
+          "node_paths": [
+            "$node"
+          ]
+        }
+      ]
+    },
+    "0x1005a3714:x1": {
+      "function": "0x1005a3714",
+      "symbol": "CMultiButton::add(CXMLNode*)",
+      "node_register": "x1",
+      "sha256": "c0de2b348256134912cc9a17aad26421f14b5d45de5ba9d0edf734d8e1cc6a12",
+      "reads": [
+        {
+          "pc": "0x1005a376c",
+          "getter": "0x100432b04",
+          "role": "attribute_boolean",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "selected"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 0
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x1005a3734",
+          "target": "0x103ade240",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": null,
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x1005a3740",
+          "target": "0x1005a362c",
+          "string_arguments": {},
+          "parameter_arguments": {},
+          "symbol": "CMultiButtonChoice::CMultiButtonChoice(CXMLNode*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x1005a362c:x1:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
     "0x100607d04:x0:follow": {
       "function": "0x100607d04",
       "symbol": "CSkinClass::apply(CXMLNode*, unsigned int)",
@@ -21954,13 +22513,13 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getRectangle(CXMLNode*, SRect const&)",
           "node_arguments": {
-            "x0": {
+            "x1": {
               "paths": [
                 "$node/clipmask"
               ],
               "unresolved": true
             },
-            "x1": {
+            "x0": {
               "paths": [
                 "$node/clipmask"
               ],
@@ -21972,8 +22531,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x0": "0x100369d94:x0:follow",
-            "x1": "0x100369d94:x1:follow"
+            "x1": "0x100369d94:x1:follow",
+            "x0": "0x100369d94:x0:follow"
           }
         }
       ],
@@ -23299,13 +23858,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/over"
@@ -23317,6 +23869,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23324,9 +23883,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -23340,13 +23899,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/down",
@@ -23359,6 +23911,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23366,9 +23925,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -23382,13 +23941,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/off",
@@ -23401,6 +23953,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23408,9 +23967,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -23424,13 +23983,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/selected"
@@ -23442,6 +23994,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23449,9 +24008,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -23465,13 +24024,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/overselected"
@@ -23483,6 +24035,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23490,9 +24049,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -23506,13 +24065,6 @@
           },
           "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
           "node_arguments": {
-            "x4": {
-              "paths": [
-                "$node/clipmask",
-                "$node/mask"
-              ],
-              "unresolved": false
-            },
             "x3": {
               "paths": [
                 "$node/downselected"
@@ -23524,6 +24076,13 @@
                 "$node"
               ],
               "unresolved": false
+            },
+            "x4": {
+              "paths": [
+                "$node/clipmask",
+                "$node/mask"
+              ],
+              "unresolved": false
             }
           },
           "shared_reader_ref": null,
@@ -23531,9 +24090,9 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x4": "0x100369f14:x4:follow",
             "x3": "0x100369f14:x3:follow",
-            "x2": "0x100369f14:x2:follow"
+            "x2": "0x100369f14:x2:follow",
+            "x4": "0x100369f14:x4:follow"
           }
         },
         {
@@ -26315,13 +26874,13 @@
           "parameter_arguments": {},
           "symbol": "ISkinObject::getRectangle(CXMLNode*, SRect const&)",
           "node_arguments": {
-            "x0": {
+            "x1": {
               "paths": [
                 "$node/clipmask"
               ],
               "unresolved": true
             },
-            "x1": {
+            "x0": {
               "paths": [
                 "$node/clipmask"
               ],
@@ -26333,8 +26892,8 @@
           "name_bindings": {},
           "binding_name_unresolved": false,
           "callee_refs": {
-            "x0": "0x100369d94:x0:follow",
-            "x1": "0x100369d94:x1:follow"
+            "x1": "0x100369d94:x1:follow",
+            "x0": "0x100369d94:x0:follow"
           }
         }
       ],
@@ -26702,6 +27261,738 @@
           "symbol": "ISkinObject::checkCondition(CXMLNode*)",
           "node_arguments": {
             "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x100657b58:x2:follow": {
+      "function": "0x100657b58",
+      "symbol": "CSkinRack::addUnitChildren(SRackUnit*, CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x2",
+      "sha256": "98eeea412df8cc0a16b2a86f6bd3b2258fa0cb79c4632af1c49aae780e80fefb",
+      "reads": [
+        {
+          "pc": "0x100657bdc",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [],
+          "name_parameters": [],
+          "names": [
+            "deck"
+          ],
+          "receiver_unresolved": true,
+          "name_unresolved": false
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x100657bb8",
+          "target": "0x100588464",
+          "string_arguments": {
+            "x1": [
+              "deck"
+            ]
+          },
+          "parameter_arguments": {
+            "x3": [
+              "x3"
+            ],
+            "x4": [
+              "x4"
+            ],
+            "x5": [
+              "x5"
+            ],
+            "x6": [
+              "x6"
+            ],
+            "x7": [
+              "x7"
+            ]
+          },
+          "symbol": "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)",
+          "node_arguments": {
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": true
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        }
+      ],
+      "child_iterations": [
+        {
+          "pc": "0x100657b78",
+          "node_paths": [
+            "$node"
+          ]
+        },
+        {
+          "pc": "0x100657c5c",
+          "node_paths": [
+            "$node"
+          ]
+        }
+      ]
+    },
+    "0x100519b88:x1:follow": {
+      "function": "0x100519b88",
+      "symbol": "CSkinResizePanel::CSkinResizePanel(CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x1",
+      "sha256": "2029d94adc8600abd527d80404990d35bfff1d05f78e27d8d2584c9efbadd616",
+      "reads": [
+        {
+          "pc": "0x100519be8",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "direction"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x100519c60",
+          "getter": "0x1004326e0",
+          "role": "attribute_integer",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "grabSize"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 4
+        },
+        {
+          "pc": "0x100519c7c",
+          "getter": "0x1004326e0",
+          "role": "attribute_integer",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "minSize"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x100519c9c",
+          "getter": "0x1004326e0",
+          "role": "attribute_integer",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "maxSize"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x100519cb4",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "name"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x100519cd4",
+          "getter": "0x10043213c",
+          "role": "child_node",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "background"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x100519bac",
+          "target": "0x10051951c",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x2": [
+              "x2"
+            ],
+            "x3": [
+              "x3"
+            ],
+            "x5": [
+              "x5"
+            ],
+            "x6": [
+              "x6"
+            ],
+            "x7": [
+              "x7"
+            ]
+          },
+          "symbol": "ISkinResizePanel::ISkinResizePanel(CXMLNode*, CImage*, CSkinWindow*, SRect*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x10051951c:x1:follow"
+          }
+        },
+        {
+          "pc": "0x100519cec",
+          "target": "0x100369f14",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x1": [
+              "x2"
+            ]
+          },
+          "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
+          "node_arguments": {
+            "x3": {
+              "paths": [
+                "$node/background"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x1007bb138:x1:follow": {
+      "function": "0x1007bb138",
+      "symbol": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+      "node_register": "x1",
+      "sha256": "226306e118dc68d3096f21b2baa238edd1b4a83cd16887c35d67fbda48d1221c",
+      "reads": [
+        {
+          "pc": "0x1007bb1ac",
+          "getter": "0x10043213c",
+          "role": "child_node",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "background"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb1c8",
+          "getter": "0x10043213c",
+          "role": "child_node",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "down"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb1e0",
+          "getter": "0x10043213c",
+          "role": "child_node",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "clipmask"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb22c",
+          "getter": "0x1004321b8",
+          "role": "attribute_presence",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "name"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb250",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "id",
+            "name"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb28c",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "group"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb2c0",
+          "getter": "0x100432b04",
+          "role": "attribute_boolean",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "available"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 1
+        },
+        {
+          "pc": "0x1007bb2e8",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "displayname"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb318",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "forceshow"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb4d0",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "visible"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb634",
+          "getter": "0x100432b04",
+          "role": "attribute_boolean",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "applyfx"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 0
+        },
+        {
+          "pc": "0x1007bb6b0",
+          "getter": "0x100432b04",
+          "role": "attribute_boolean",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "childtooltip"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": 0
+        },
+        {
+          "pc": "0x1007bb6e4",
+          "getter": "0x1004326e0",
+          "role": "attribute_integer",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "breakline1"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": -1
+        },
+        {
+          "pc": "0x1007bb700",
+          "getter": "0x1004326e0",
+          "role": "attribute_integer",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "breakline2"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false,
+          "default": -1
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x1007bb15c",
+          "target": "0x100813a0c",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x2": [
+              "x2"
+            ],
+            "x3": [
+              "x3"
+            ],
+            "x4": [
+              "x4"
+            ],
+            "x5": [
+              "x5"
+            ],
+            "x6": [
+              "x6"
+            ],
+            "x7": [
+              "x7"
+            ]
+          },
+          "symbol": "ISkinContainer::ISkinContainer()",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb198",
+          "target": "0x100369310",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x2": [
+              "x2"
+            ]
+          },
+          "symbol": "ISkinObject::load(CXMLNode*, CImage*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": "0x100369310:x1",
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x100369310:x1"
+          }
+        },
+        {
+          "pc": "0x1007bb1f8",
+          "target": "0x100369f14",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x1": [
+              "x2"
+            ]
+          },
+          "symbol": "ISkinObject::getImage(CImage*, CXMLNode*, CXMLNode*, CXMLNode*)",
+          "node_arguments": {
+            "x4": {
+              "paths": [
+                "$node/clipmask"
+              ],
+              "unresolved": false
+            },
+            "x3": {
+              "paths": [
+                "$node/background",
+                "$node/down"
+              ],
+              "unresolved": false
+            },
+            "x2": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x4": "0x100369f14:x4:follow",
+            "x3": "0x100369f14:x3:follow",
+            "x2": "0x100369f14:x2:follow"
+          }
+        },
+        {
+          "pc": "0x1007bb664",
+          "target": "0x100588464",
+          "string_arguments": {
+            "x1": [
+              "item"
+            ]
+          },
+          "parameter_arguments": {},
+          "symbol": "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)",
+          "node_arguments": {
+            "x0": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb6c4",
+          "target": "0x100588464",
+          "string_arguments": {
+            "x1": [
+              "skin"
+            ]
+          },
+          "parameter_arguments": {},
+          "symbol": "strIsEqualCI(std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>> const&, char const*)",
+          "node_arguments": {
+            "x0": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false
+        },
+        {
+          "pc": "0x1007bb744",
+          "target": "0x1007bb7f4",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x2": [
+              "x2"
+            ],
+            "x3": [
+              "x3"
+            ]
+          },
+          "symbol": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "node_arguments": {
+            "x1": {
+              "paths": [
+                "$node"
+              ],
+              "unresolved": false
+            }
+          },
+          "shared_reader_ref": null,
+          "shared_node_register": "x1",
+          "name_bindings": {},
+          "binding_name_unresolved": false,
+          "callee_refs": {
+            "x1": "0x1007bb7f4:x1:follow"
+          }
+        }
+      ],
+      "child_iterations": []
+    },
+    "0x1005a362c:x1:follow": {
+      "function": "0x1005a362c",
+      "symbol": "CMultiButtonChoice::CMultiButtonChoice(CXMLNode*)",
+      "node_register": "x1",
+      "sha256": "d58ab9bf646e610fa3de2ff28139af29c6864193fbb35f583c87320edf65ab05",
+      "reads": [
+        {
+          "pc": "0x1005a365c",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "name"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        },
+        {
+          "pc": "0x1005a367c",
+          "getter": "0x10043222c",
+          "role": "attribute_string",
+          "key_register": "x1",
+          "node_paths": [
+            "$node"
+          ],
+          "name_parameters": [],
+          "names": [
+            "action"
+          ],
+          "receiver_unresolved": false,
+          "name_unresolved": false
+        }
+      ],
+      "calls": [
+        {
+          "pc": "0x1005a36ac",
+          "target": "0x10056af3c",
+          "string_arguments": {},
+          "parameter_arguments": {
+            "x3": [
+              "x3"
+            ],
+            "x4": [
+              "x4"
+            ],
+            "x5": [
+              "x5"
+            ],
+            "x6": [
+              "x6"
+            ],
+            "x7": [
+              "x7"
+            ]
+          },
+          "symbol": "IAction::create(char const*, char const**, int)",
+          "node_arguments": {
+            "x1": {
               "paths": [
                 "$node"
               ],
@@ -35780,7 +37071,8 @@
     "tests/plugin-memory-9246.json": "a254ae27d31c9f2051c7f3568496879e12962c08624c626935b7a43afd924b98",
     "tests/skin-reader-audit-9246.json": "fca5a28070f24996f34e41219f7e3517d7f9e4a38994f4a06418415facce723e",
     "tests/skin-node-helpers-9246.json": "54e006c06726caef81c1a35a340006efd99733a0425509ded72c395e26d837fa",
-    "tests/skin-xml-relations.json": "85440dd9e815ad5d03879b0233dd05aed3e55edb8410c6f1846c83d2306b4ccf"
+    "tests/skin-xml-relations.json": "85440dd9e815ad5d03879b0233dd05aed3e55edb8410c6f1846c83d2306b4ccf",
+    "tests/skin-dispatch-9246.json": "ee8db8e76ba61e57d040c5dc4a42a5de1608aa6a346ad88918fc36a85084bdd6"
   },
   "limitations": [
     "Structural reads only; no runtime behavior or completeness promotion.",

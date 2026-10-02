@@ -139,9 +139,11 @@ lists the routes it still has open. Closure is about structure, not rendering.
 Progress (2026-10-02): the extractor follows node-carrying calls into helpers, binds
 attribute names passed as arguments, records getter defaults, and reports closure with
 open routes per element (`just skin-structure`, [method](docs/Skin%20Schema%20Recovery.md)).
-Some factory elements are closed; the rest list their routes. Next: project the
-iteration-reached contexts the dispatch rules name (rack units, stack items, menu entries,
-multibutton choices), then work down the open routes, browser readers first.
+Some factory elements are closed; the rest list their routes. Contexts reached by
+iteration that a reviewed dispatch rule binds (`rack/unit`, `menu/item`,
+`multibutton/choice`, `stack/item`, `(root)`, …) are projected as `context_element`
+entries. Next: the open routes, browser readers first; then stack `slot` and split sides,
+which are read inline or through a literal and have no binding call yet.
 
 ### B1. Carry the recovered syntax to the current build
 

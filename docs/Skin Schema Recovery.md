@@ -32,8 +32,11 @@ so their closure is reported as not applicable rather than as passing.
 
 Child XML nodes are freed once the panel loader has processed them. A read after
 construction can therefore only reach a node that was copied, and copies are open
-routes. Reads on nodes reached by iteration (rack units, stack items, menu entries)
-are not projected onto an element yet; the dispatch rules name those contexts.
+routes. Children reached by iteration are projected as `context_element` entries when a
+reviewed dispatch rule cites the call that receives them, for example `rack/unit`
+(`CSkinRack::addUnit`), `menu/item` (`SSkinMenuItem`) and `multibutton/choice`
+(`CMultiButton::add`). A stack `slot` (read inline) and split sides (selected through a
+literal) have no such call, so they are not projected.
 
 `just skin-structure` lists every element with `structurally_closed` and its
 open-route count. Tier 2 throughout: closure means the routes are accounted for in

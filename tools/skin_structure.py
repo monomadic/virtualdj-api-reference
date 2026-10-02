@@ -173,6 +173,27 @@ def extract(app):
                                       'xml_register':xml_register,
                                       'binding_gap':None if bound else 'Constructor XML argument not established; initialization helpers remain untraced.',
                                       'reader_ref':unit(fn,xml_register) if bound else None})
+    # Contexts a reviewed dispatch rule names but no factory branch reaches: the child is
+    # found by iterating the parent's children, so the rule's cited call is the binding.
+    dispatch_path=ROOT/'tests/skin-dispatch-9246.json'
+    if dispatch_path.exists():
+        dispatch=json.loads(dispatch_path.read_text())
+        for loader,row in dispatch['dispatch']['loaders'].items():
+            parent=re.split(r'[ ,(]',row['used_by'],1)[0]
+            for rule in row['rules']:
+                if not rule.get('call') or rule.get('literal'):continue
+                pc=int(rule['pc'],16)
+                insn=next((i for i in decoded(a,a.owner(pc)) if i.address==pc),None)
+                target=insn.operands[0].imm if insn is not None and insn.mnemonic=='bl' else None
+                name=symbols.get(target,'')
+                if not name.startswith(rule['call']+'(') or not name.split('(',1)[1].startswith('CXMLNode*'):continue
+                for child in rule['names']:
+                    if child=='*':continue  # the factory fallback, not a context
+                    tag=child if child.startswith('(') else f'{parent}/{child}'
+                    elements.setdefault(tag,{'kind':'context_element','variants':[],'status':'partial_structure'})
+                    elements[tag]['variants'].append({'class':None,'binding':{'symbol':name,'callsite':rule['pc'],'dispatch_loader':loader},
+                                                      'factory_binding_verified':False,'xml_register':'x1',
+                                                      'binding_gap':None,'reader_ref':unit(target,'x1')})
     # Follow every node-carrying call into a function that takes a CXMLNode, so a
     # helper's reads count for the caller's path. Getters, CXMLNode members and the
     # two shared readers already modelled are not re-entered.
@@ -211,7 +232,7 @@ def extract(app):
     return {'schema_version':1,'source':source['source'],'elements':dict(sorted(elements.items())),
             'readers':units,'getters':{hex(k):v for k,v in getters.items()},
             'factory':{'function':hex(factory),'dispatch':source['factory']['dispatch']},
-            'anchors':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [memory,audit_path,node_path,RELATIONS]},
+            'anchors':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [memory,audit_path,node_path,RELATIONS,ROOT/'tests/skin-dispatch-9246.json']},
             'limitations':['Structural reads only; no runtime behavior or completeness promotion.',
                            'Factory constructors and every function they pass a node to (when its signature takes a CXMLNode) are analyzed; attribute names passed as arguments are bound from the call site. Indirect calls, and calls whose node argument is only partly resolved, are listed per element as open routes.',
                            'Child XML nodes are freed once the panel loader has processed them, so reads after construction can only reach a node that was copied; copies are open routes.',
