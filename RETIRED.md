@@ -1,45 +1,17 @@
-# Tasks
+# Retired Tasks
 
-This is the operational queue for open-ended VirtualDJ reference work.
+The task queue as it stood on 2026-10-01, when [TODO.md](TODO.md) replaced it with a short
+queue aimed at a complete verb syntax and skin syntax. Nothing here was completed by being
+retired. Each block is kept whole as the record of what it established and what it left open,
+and the line under its status names the state it held when it was retired. Tasks that landed
+before then are in [HISTORY.md](HISTORY.md).
 
-Agents should start here for maintenance, cleanup, documentation, and evidence-pass tasks. Pick the first `Ready` task unless the user names a different task. Read the task-listed files before running broad repository searches.
-
-## Queue Rules
-
-### Status convention
-
-Every `### <id>. <title>` task carries exactly one status line, and it is the first line under
-the heading:
-
-```
-Status: <state>
-```
-
-The state is one word from a closed vocabulary and nothing else — no date, no bold, no
-qualifier, no trailing prose. Everything else goes in a `Note:` paragraph directly below it.
-This is machine-readable on purpose: `just next-task` parses it, and a status line it cannot
-read stops the run instead of quietly skipping the task.
-
-| State | Meaning |
-| --- | --- |
-| `Ready` | Startable now with the listed files and fixtures. Launching VirtualDJ locally counts as startable. |
-| `Blocked` | Needs hardware or an external source not available here. |
-| `Conditional` | Start only when the named trigger occurs; the `Note:` names it. |
-| `Parking lot` | Useful later, but not the next best use of time. |
-| `Done` | Complete; kept as the record of what was established. |
-
-The state describes the task **now**. For a task whose first pass landed with work remaining,
-it describes that remaining work — `Ready` if the remainder is startable, `Blocked` if it is
-not — and the `Note:` carries what already landed. Task identifiers must be unique;
-`just check` fails on a duplicate.
-
-### Working rules
-
-- Record manual VirtualDJ observations in [docs/VDJScript Local Test Tracker.md](docs/VDJScript%20Local%20Test%20Tracker.md).
-- Promote stable conclusions into the topical docs named by the task.
-- Run `just check` after documentation, fixture, or status edits.
-- `Read first` lists are section-scoped: read only the named rows/sections. Use `just grep-verb-docs <name>` for verb lookups instead of opening `docs/VDJScript Verbs.md`.
-- [docs/VDJScript Reference Consolidation Plan.md](docs/VDJScript%20Reference%20Consolidation%20Plan.md) and [docs/Completeness Roadmap.md](docs/Completeness%20Roadmap.md) are frozen design references. Do not refresh, reorder, or re-scope them; this file is the only active queue; completed tasks move to [HISTORY.md](HISTORY.md).
+These blocks are not startable. `just next-task` never reads this file, and `just check`
+fails if a task here is anything but `Retired` or if an identifier here reappears in
+`TODO.md` or `HISTORY.md`. To revive one, move its block to `TODO.md` under a new identifier
+and give it a current status. The behaviour work these tasks owned (live fixtures, the
+introspection plugin, render tests, the hardware-gated helpers) is outside the new queue's
+goal, not abandoned: start from the relevant block here when it comes back.
 
 ## Accepted next sequence (2026-09-05 review)
 
@@ -49,7 +21,9 @@ remain the owners of their broader work. Read their scoped evidence before probi
 
 ### R4. Only the infrastructure change demonstrated by R2 or R3
 
-Status: Conditional
+Status: Retired
+
+Retired from: Conditional (2026-10-01).
 
 Note: Start only with a concrete blocker from R2 or R3. **Neither produced one (2026-09-06).** R2's wall was that many shipped skin attributes are `class=""` template placeholders rather than reader vocabulary — a fact about the format, not a reference the extractor failed to resolve. R3's fixture fitted the existing capture contract without change. So this stays Conditional and waits for a later finding the current record genuinely cannot hold; index inversion remains task 11 and is not a prerequisite for anything here.
 
@@ -62,11 +36,13 @@ recovers it, with a focused regression. Follow `CSkinEngine::createAction` or an
 helper only when the investigation supplies a concrete question. No upfront coverage schema,
 general extractor rebuild, or agent-cost bookkeeping is part of this task.
 
-## Ready Tasks
+## Task queue (all retired)
 
 ### 0. Build The Verb Record Store And `just` Data API
 
-Status: Conditional
+Status: Retired
+
+Retired from: Conditional (2026-10-01).
 
 Note: Foundation landed (2026-07-22) — generation + migration remain
 
@@ -95,7 +71,9 @@ Tasks 1-4 are one FX cluster: they share the same VirtualDJ session and the same
 
 ### 1. Complete The Per-Effect FX Introspection Sweep
 
-Status: Conditional
+Status: Retired
+
+Retired from: Conditional (2026-10-01).
 
 Note: Structural sweep complete 2026-07-22; the rendering half closed 2026-09-06. One settings-UI question is left, named at the end.
 
@@ -171,7 +149,9 @@ Done when:
 
 ### 3. Separate Release FX From Normal Slot FX
 
-Status: Conditional
+Status: Retired
+
+Retired from: Conditional (2026-10-01).
 
 Note: 2026-09-06. The done-when is met — the release path is now described separately from
 ordinary deck FX, in `docs/Effects Engines.md` §Release FX and `docs/Effects Usage.md`, with
@@ -209,7 +189,9 @@ unestablished.
 
 ### 7. Repeat `dualdeckmode_decks` In A Better Context
 
-Status: Parking lot
+Status: Retired
+
+Retired from: Parking lot (2026-10-01).
 
 Note: Low expected yield until a concrete context is identified. Deprioritised by the operator
 2026-09-06 in favour of tasks 10b/11/12/13; move it back to Ready when a concrete context turns
@@ -241,7 +223,9 @@ Done when:
 
 ### 10. Discover The Full Function Contract Per Verb
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: 2026-07-29 — the ratified priority now that existence, aliases, hidden flag, and
 categories are settled. Goal: for every verb, the complete calling contract — **query return
@@ -338,7 +322,9 @@ Contract fields to establish per verb:
 
 ### 10a. A read-only introspection plugin — the only instrument for four questions
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: **The channel is OPEN (2026-08-15).** The plugin builds, loads, and has returned its
 first full capture: 1,028 verbs × both query callbacks, in `tests/plugin-introspection.json`
@@ -584,7 +570,9 @@ Done when:
 
 ### 10b. State-fixture harness + argument prober (do this first — it is the cheap unblock)
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: **Steps 1-2 built and the first full sweep run 2026-09-02** (results below). Python
 over the existing HTTP channel; no build toolchain, no SDK, no new evidence tier. Added
@@ -912,7 +900,9 @@ state-dependent, with the fixture that decided it recorded alongside.
 
 ### 12. Mine Argument Tails From The Vendor Corpus
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: The cheapest source left — static extraction, no live VirtualDJ, no fixtures. Added
 2026-09-03.
@@ -1131,7 +1121,9 @@ waveform measurement, not a prober.
 
 ### 13. Probe The Shared Enumerations The Binary Serialises
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: 2026-09-03 — candidates extracted, fixtures exist, needs `just vdj-up`. **Two groups done
 2026-09-06**, with opposite outcomes; the rest of the list below is still open. Full evidence:
@@ -1219,7 +1211,9 @@ make a claim.
 
 ### 13b. Fixtures For The Documented-But-Unconfirmed Parameters
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: Needs a live instance — the expensive one of this group. Added 2026-09-03. **Three more
 verbs closed 2026-09-06, and the premise needs qualifying**: two of the three were not waiting on
@@ -1344,7 +1338,9 @@ verdict had silently deleted four confirmations.
 
 ### S6. Recover The Build-Scoped Skin XML Schema
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: User-directed breadth-first scope, 2026-09-23. The button pilot is now a
 calibration/reference capture, not a prerequisite for inventorying other elements.
@@ -1386,7 +1382,9 @@ shared records, retaining unknown values and context/evidence metadata.
 
 ### S1. Render-Test The Element-Specific Skin Attributes
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: Added 2026-09-08. [docs/Skin SDK.md](docs/Skin%20SDK.md) §"Element-Specific Attributes
 Recovered From The Reader" landed with every row carrying its own Needs-test and **no Tier-1
@@ -1420,7 +1418,9 @@ Read first: the Skin SDK section above; `just skin-classes --get CSkinPanel` (an
 
 ### S2. Triage The Reader Candidates No Shipped File Writes
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: Added 2026-09-08. `just skin-classes --unwritten` is the lead queue: attribute names the
 bounded traversal recovered that **no shipped skin, pad, samplerbank or mapper writes**. This is
@@ -1446,7 +1446,9 @@ unwritten name is not a rejected name — record negatives as negatives.
 
 ### S3. Give Recovered Attributes A Precision Field
 
-Status: Conditional
+Status: Retired
+
+Retired from: Conditional (2026-10-01).
 
 Note: Added 2026-09-08. Trigger: S2 reaching step 2 and finding the per-query split too coarse
 to work with. `tests/skin-classes.json` lists candidates per class, but the classes share a base
@@ -1465,7 +1467,9 @@ re-run the binary traversal for it.
 
 ### H5. Establish remote parser mode through the `-remote` launch argument
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: Opened 2026-09-19 from a desk review after H4 closed with `remote-entry` as a named
 limit. It was filed as `Parking lot` pending a second instance; the operator ran one the same
@@ -1570,7 +1574,9 @@ Start here:
 
 ### H6. Read Button Editor token spans without the pointer
 
-Status: Ready
+Status: Retired
+
+Retired from: Ready (2026-10-01).
 
 Note: Opened 2026-09-19. H4 closed with `editor-structure` as a blocked limit; a desk review
 and an operator report the same day reassessed it as startable, and the `limit` record in

@@ -5,7 +5,7 @@ parent–child relationships, attributes, defaults, and embedded script bindings
 then use it for useful linting and compiler development.
 
 This is the requested implementation proposal, in priority order. Execution
-status belongs in [TASKS.md](../TASKS.md); this document is not a second live queue.
+status belongs in [TODO.md](../TODO.md) (tasks K1–K3); this document is not a second live queue.
 The priority order does not change the repository's existing task selection.
 
 ## Starting point and boundaries

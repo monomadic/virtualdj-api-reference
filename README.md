@@ -43,7 +43,7 @@ missing is quiet rather than loud.
 | --- | --- |
 | **Answer anything about one verb** | `just verb <name>` — the one-screen join: store record, vendor description, real usages, argument shapes with return evidence, every tail candidate by source, vocabulary groups, probe state, each labelled with its evidence tier. `just get-verb <name>` is the bare store record |
 | **Answer "how do I do X"** | `just topic <term>` — the matching verbs, effects and XML elements, plus the real example files that use them, ranked by how much of the topic each demonstrates |
-| Pick the next active maintenance task | [TASKS.md](TASKS.md); what already landed is in [HISTORY.md](HISTORY.md) |
+| Pick the next active task | [TODO.md](TODO.md) — recovering the full verb and skin syntax; what already landed is in [HISTORY.md](HISTORY.md), the queue it replaced in [RETIRED.md](RETIRED.md) |
 | Route a topic to the right docs and fixtures | [INDEX.yml](INDEX.yml) |
 | Understand the repo structure and source labeling | [docs/README.md](docs/README.md) |
 | Pick the right VDJScript verb or pattern | [docs/VirtualDJ Reference.md](docs/VirtualDJ%20Reference.md) |
@@ -198,7 +198,11 @@ rather than assembled from documentation.
 
 ### Recommended next steps
 
-1. **Confirm the documented-but-unprobed parameters** ([TASKS.md](TASKS.md) task 13b). The
+The active queue, [TODO.md](TODO.md), is aimed at one thing: the full verb syntax and skin
+syntax, recovered from the binary through the offline parser and skin hosts. The steps below
+are the behaviour work it retired; each is a block in [RETIRED.md](RETIRED.md).
+
+1. **Confirm the documented-but-unprobed parameters** (task 13b). The
    fixture harness and argument prober are built and have run: `just fixtures` lists the named
    states, `just check` reports the probe run's verb/form/recognized totals, and
    `just verb-arg-forms <name>` shows one verb's. What is left is the state, not the tooling —
@@ -206,7 +210,7 @@ rather than assembled from documentation.
    verb whose parameters the vendor documents and no probe has confirmed, each one a state the
    existing fixtures never build. Its `probe_confirmed_but_undocumented` set is the mirror
    worklist.
-2. **Spend the native channel on what only it reaches** ([TASKS.md](TASKS.md) task 10a). The
+2. **Spend the native channel on what only it reaches** (task 10a). The
    plugin is built and the verb sweep is done, so the remaining value is not throughput:
    `GetSongBuffer` and `OnProcessSamples` give the actual PCM behind every waveform element;
    `OnKey(ch, vkey, modifiers, flag, scancode)` is the first channel that may expose

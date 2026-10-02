@@ -217,8 +217,8 @@ indirect routes remain open. This is not a closed button schema.
 
 ## Named-reader audit — 2026-09-22, build 18.0.9246, arm64
 
-The active execution plan and resumption checkpoint are task **S6** in
-[TASKS.md](../TASKS.md). The objective remains element/attribute vocabulary and
+The execution plan and resumption checkpoint were task **S6**, retired on 2026-10-01 to
+[RETIRED.md](../RETIRED.md); tasks K1 and K2 in [TODO.md](../TODO.md) continue it. The objective remains element/attribute vocabulary and
 node ownership; runtime-access setup is complete. Historical and current-build
 evidence stay separate.
 

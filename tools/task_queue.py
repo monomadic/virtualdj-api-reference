@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Parse, validate, and select from the TASKS.md task queue.
+"""Parse, validate, and select from the TODO.md task queue.
 
-`TASKS.md` holds the open tasks and is the repository's only active planning
+`TODO.md` holds the open tasks and is the repository's only active planning
 state; `just next-task` picks work out of it. `HISTORY.md` holds the tasks that
-landed, moved there whole so their identifiers stay unique and their record
-stays addressable. `check` validates both files together. The selector used to grep for an exact `Status: Ready`
+landed and `RETIRED.md` the queue TODO.md replaced, each moved there whole so
+their identifiers stay unique and their record stays addressable. `check`
+validates all three files together. The selector used to grep for an exact `Status: Ready`
 line, so every decorated variant that had accumulated in the file --
 `Status: **Ready.**`, `Status: Ready -- reframed`, `Status: Ready, but low
 expected yield` -- was silently invisible, and the queue looked empty while
@@ -26,8 +27,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TASKS = ROOT / "TASKS.md"
+TASKS = ROOT / "TODO.md"
 HISTORY = ROOT / "HISTORY.md"
+RETIRED = ROOT / "RETIRED.md"
 FIXTURES = ROOT / "tests" / "todo-status"
 
 # The closed vocabulary. The state describes what is true of the task *now*:
@@ -39,6 +41,7 @@ STATES = {
     "Conditional": "start only when the named trigger occurs",
     "Parking lot": "deliberately deferred; not the next best use of time",
     "Done": "complete; kept as the record of what was established",
+    "Retired": "taken out of the queue unfinished; kept as the record, never selected",
 }
 
 SELECTABLE = ("Ready",)
@@ -147,44 +150,53 @@ def load(path: Path = TASKS) -> tuple[list[Task], list[str]]:
 def cmd_check(_args: argparse.Namespace) -> int:
     tasks, errors = load()
     history, history_errors = load(HISTORY)
-    errors = list(errors) + history_errors
+    retired, retired_errors = load(RETIRED)
+    errors = list(errors) + history_errors + retired_errors
     for task in tasks:
-        if task.state == "Done":
+        if task.state in ("Done", "Retired"):
+            target = "HISTORY.md" if task.state == "Done" else "RETIRED.md"
             errors.append(
-                f"TASKS.md:{task.line}: task {task.ident!r} is Done; move its block to HISTORY.md"
+                f"TODO.md:{task.line}: task {task.ident!r} is {task.state}; move its block to {target}"
             )
-    for task in history:
-        if task.state != "Done":
-            errors.append(
-                f"HISTORY.md:{task.line}: task {task.ident!r} is {task.state!r}; only Done tasks live here"
-            )
-    open_ids = {task.ident for task in tasks}
-    for task in history:
-        if task.ident in open_ids:
-            errors.append(
-                f"HISTORY.md:{task.line}: task {task.ident!r} also appears in TASKS.md"
-            )
+    for name, archive, state in (("HISTORY.md", history, "Done"), ("RETIRED.md", retired, "Retired")):
+        for task in archive:
+            if task.state != state:
+                errors.append(
+                    f"{name}:{task.line}: task {task.ident!r} is {task.state!r}; only {state} tasks live here"
+                )
+    owner: dict[str, str] = {}
+    for name, group in (("TODO.md", tasks), ("HISTORY.md", history), ("RETIRED.md", retired)):
+        for task in group:
+            if task.ident in owner:
+                errors.append(
+                    f"{name}:{task.line}: task {task.ident!r} also appears in {owner[task.ident]}"
+                )
+            else:
+                owner[task.ident] = name
     if errors:
-        print("TASKS.md/HISTORY.md status metadata is malformed:", file=sys.stderr)
+        print("TODO.md/HISTORY.md/RETIRED.md status metadata is malformed:", file=sys.stderr)
         for error in errors:
             print(f"  {error}", file=sys.stderr)
         return 1
     if not any(task.selectable for task in tasks):
         print(
-            "TASKS.md: no task is startable; every task is Blocked, "
+            "TODO.md: no task is startable; every task is Blocked, "
             "Conditional, or parked. If that is wrong, a status is wrong.",
             file=sys.stderr,
         )
         return 1
     ready = sum(1 for task in tasks if task.selectable)
-    print(f"task queue OK: {len(tasks)} open tasks, {ready} startable; {len(history)} completed in HISTORY.md")
+    print(
+        f"task queue OK: {len(tasks)} open tasks, {ready} startable; "
+        f"{len(history)} completed in HISTORY.md, {len(retired)} in RETIRED.md"
+    )
     return 0
 
 
 def cmd_next(_args: argparse.Namespace) -> int:
     tasks, errors = load()
     if errors:
-        print("TASKS.md status metadata is malformed; refusing to select:", file=sys.stderr)
+        print("TODO.md status metadata is malformed; refusing to select:", file=sys.stderr)
         for error in errors:
             print(f"  {error}", file=sys.stderr)
         return 1
@@ -192,7 +204,7 @@ def cmd_next(_args: argparse.Namespace) -> int:
         if task.selectable:
             print("\n".join(task.block).rstrip())
             return 0
-    print("No startable task in TASKS.md.", file=sys.stderr)
+    print("No startable task in TODO.md.", file=sys.stderr)
     return 1
 
 

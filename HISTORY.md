@@ -1,10 +1,11 @@
 # History
 
-Completed tasks, moved here from [TASKS.md](TASKS.md) when they landed, plus the dated
+Completed tasks, moved here from the task queue when they landed, plus the dated
 progress log of open tasks whose narrative outgrew a `Note:`. Each completed block keeps its
 `### <id>. <title>` heading and `Status: Done` line so identifiers stay unique across both files;
 `just check` enforces that and that nothing here is anything but `Done`, and that nothing
-`Done` remains in `TASKS.md`. Blocks are the record of what was established and where it was
+`Done` remains in [TODO.md](TODO.md), the queue since 2026-10-01 (its predecessor, `TASKS.md`, is
+kept as [RETIRED.md](RETIRED.md)). Blocks are the record of what was established and where it was
 recorded; they are not startable and `just next-task` never reads this file.
 
 ## Accepted next sequence (2026-09-05 review)

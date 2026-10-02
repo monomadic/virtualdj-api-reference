@@ -44,7 +44,7 @@ download-sdk *args:
 doctor:
     @{{python}} tools/doctor.py
 
-# The first startable task in TASKS.md (HISTORY.md holds finished ones). Refuses to select if any status line
+# The first startable task in TODO.md (HISTORY.md holds finished ones, RETIRED.md the old queue). Refuses to select if any status line
 # in the file is malformed, rather than skipping the task it cannot read.
 next-task:
     @{{python}} tools/task_queue.py next
@@ -71,7 +71,7 @@ needs-test:
       "docs/VDJScript Local Test Tracker.md" \
       "docs/Completeness Roadmap.md" \
       "docs/Undocumented VDJScript Candidates.md" \
-      "TASKS.md"
+      "TODO.md"
 
 official-needs-test:
     @awk '\

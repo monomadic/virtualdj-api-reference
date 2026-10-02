@@ -135,7 +135,7 @@ REASONS = {
     "prose_only":      "evidence exists only in store prose, not in an artifact row",
 }
 
-# Worked-out fixtures for frontier verbs, copied from TASKS.md so `just verb`
+# Worked-out fixtures for frontier verbs, copied from RETIRED.md so `just verb`
 # can name the next test instead of "needs a discriminating state". A hint is
 # a pointer to a recipe, not evidence; drop it when the verb closes.
 NEXT_TEST_HINTS = {
