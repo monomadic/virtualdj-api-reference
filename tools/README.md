@@ -1,5 +1,11 @@
 # Tools
 
+`just native-skin-children --parent button` queries the partial 9246 native child manifest. `just skin-child-readers --class CSkinButton` exposes static reader leads; `just skin-child-probe` and `just skin-child-trace` reproduce the isolated relationship tests; `just skin-child-check` validates the saved evidence without vendor execution. See [Native Skin Child Relationships](../docs/Native%20Skin%20Child%20Relationships.md).
+
+`just offline-skin-host` prepares/runs the native headless rendering experiment; `just offline-skin-host-check` validates the saved frame without executing vendor code. `just offline-skin-composition` prepares/runs fixed composition fixtures or shows saved native trees (`show --case nested_relative`); `just offline-skin-composition-check` checks their hierarchy, class merging, coordinates and layout round trips. Scope and dependencies: [Offline Skin Host](../docs/Offline%20Skin%20Host.md).
+
+XML spike: `just offline-xml`, `just offline-xml-trace`, and `just offline-xml-check` prepare/run fixed inputs, trace native calls, and validate saved evidence. See [Offline XML Parser](../docs/Offline%20XML%20Parser.md).
+
 The [offline parser host](../docs/Offline%20Parser%20Host.md) uses a copied,
 build-pinned executable to parse a fixed script suite in sandboxed subprocesses.
 `just offline-parser-check` validates saved comparisons and converter rejection

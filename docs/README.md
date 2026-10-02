@@ -4,6 +4,9 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Offline Skin Host](Offline%20Skin%20Host.md) — native composition trees, class/coordinate resolution, offscreen rendering, and full-loader boundary
+- [Native Skin Child Relationships](Native%20Skin%20Child%20Relationships.md) — contextual parent/child manifest, named slots, wrappers, and native source-path traces
+- [Offline XML Parser](Offline%20XML%20Parser.md) — native XML diagnostics, skin factory, and field/script call traces
 - [Offline Parser Host](Offline%20Parser%20Host.md)
   Build-pinned standalone parsing experiment, saved live-baseline comparison,
   execution controls and limits for future linter/compiler work.

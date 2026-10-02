@@ -1,5 +1,15 @@
 # Documentation Tests
 
+Native child relationships: [partial manifest](skin-container-manifest-9246.json), [paired trees](skin-child-relations-9246.json), and [source-path traces](skin-child-trace-9246.json) recover contextual construction on symbol-rich 18.0.9246 arm64. `just skin-child-check` checks positive/negative controls and evidence integrity; `just native-skin-children --parent button` queries the findings. See [scope and reproduction](../docs/Native%20Skin%20Child%20Relationships.md). This does not close the allowed-child vocabulary.
+
+Native composition: [object-tree capture](offline-skin-composition-9246.json) and [ABI evidence](skin-composition-layout-9246.json) record class merging, source-order sensitivity, coordinate evaluation, deck propagation, and layout round trips in the 18.0.9246 arm64 custom host. `just offline-skin-composition-check` validates the saved paired cases; `just offline-skin-composition show --case nested_relative` prints a tree without vendor execution. These remain offline leads, not live-app parity or a complete schema.
+
+Native skin host: [capture](offline-skin-host-9246.json), [rendered frame](offline-skin-host-9246.png), and [routine evidence](skin-host-layout-9246.json) record a verified offscreen render on 18.0.9246 arm64. `just offline-skin-host-check` verifies all fixture pixels and retains the full-engine graphics-startup limitation.
+
+Unknown-name follow-up: [paired native results](offline-xml-unknowns-9246.json) and [hardware read-watch traces](offline-xml-unknowns-trace-9246.json) distinguish context-specific non-consumption from global name recognition on 18.0.9246 arm64. Validate with `just offline-xml-unknowns-check`.
+
+Offline XML spike: [native results](offline-xml-9246.json), [call/return traces](offline-xml-trace-9246.json), and [layout evidence](xml-reader-layout-9246.json) are pinned to 18.0.9246 arm64. `just offline-xml-check` validates saved evidence without executing vendor code. See [scope and reproduction](../docs/Offline%20XML%20Parser.md); these are offline leads, not live rendering proof.
+
 Symbol-rich offline parser: [offline-parser-9246.json](offline-parser-9246.json)
 is the confirmed copied-image run; its `-initial` capture remains separate.
 [parser-object-layout-9246.json](parser-object-layout-9246.json) retains named

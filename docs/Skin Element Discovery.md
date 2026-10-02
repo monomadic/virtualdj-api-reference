@@ -4,6 +4,11 @@ For recognition versus rendering, native probe options and the controlled
 nested-child experiment, see [Skin Element Validity](Skin%20Element%20Validity.md).
 Child survival tests containers; it is not a general validity oracle.
 
+For native reader relationships, named child slots, wrapper flattening, and
+source-path traces on symbol-rich 9246, see [Native Skin Child Relationships](Native%20Skin%20Child%20Relationships.md).
+`just native-skin-children --parent button` queries that partial manifest; it is
+separate from the vendor-source nesting graph below.
+
 Start with `just list-skin-categories`, then filter by the returned category ID:
 
 ```sh

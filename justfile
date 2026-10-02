@@ -451,6 +451,10 @@ lint-script *args:
 
 check:
     just offline-parser-check
+    just offline-xml-check
+    just offline-skin-host-check
+    just offline-skin-composition-check
+    just skin-child-check
     {{python}} tools/probe_query_cast_debug.py --check tests/param-cast-types-9644
     {{python}} tools/probe_argument_types.py --check tests/argument-types-multiply-9644/values-expanded.json
     {{python}} tools/probe_argument_types.py --check tests/argument-types-9644/values.json
@@ -883,3 +887,53 @@ skin-structure *args:
 # Shared skin attribute contracts; Markdown is a stdout artifact, JSON retains evidence.
 skin-attributes element *args:
     @{{python}} tools/skin_attributes.py {{quote(element)}} {{args}}
+
+# Fixed-input native XML/skin factory spike on symbol-rich 9246.
+offline-xml *args:
+    @{{python}} tools/offline_xml.py {{args}}
+
+offline-xml-trace *args:
+    @{{python}} tools/trace_offline_xml.py {{args}}
+
+# Saved evidence only; does not load vendor code or start a debugger.
+offline-xml-check:
+    @{{python}} tools/check_offline_xml.py
+    just offline-xml-unknowns-check
+
+# Paired known/unknown XML inputs and hardware read watches.
+offline-xml-unknowns *args:
+    @{{python}} tools/probe_xml_unknowns.py {{args}}
+
+offline-xml-unknowns-check:
+    @{{python}} tools/check_xml_unknowns.py
+
+# Native skin loading and GPU-backed headless preview spike.
+offline-skin-host *args:
+    @{{python}} tools/probe_skin_host.py {{args}}
+
+# Validate saved frame and traces without executing vendor code.
+offline-skin-host-check:
+    @{{python}} tools/check_skin_host.py
+
+# Native composition fixtures, or show a saved tree without running vendor code.
+offline-skin-composition *args:
+    @{{python}} tools/probe_skin_composition.py {{args}}
+
+offline-skin-composition-check:
+    @{{python}} tools/check_skin_composition.py
+
+# Partial native parent/child rules; unknown coverage is not a rejection rule.
+native-skin-children *args:
+    @{{python}} tools/native_skin_children.py {{args}}
+
+skin-child-readers *args:
+    @{{python}} tools/extract_skin_relationships.py {{args}}
+
+skin-child-probe *args:
+    @{{python}} tools/probe_skin_relationships.py {{args}}
+
+skin-child-trace *args:
+    @{{python}} tools/trace_skin_relationships.py {{args}}
+
+skin-child-check:
+    @{{python}} tools/check_skin_relationships.py

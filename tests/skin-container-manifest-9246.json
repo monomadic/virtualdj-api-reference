@@ -1,0 +1,1878 @@
+{
+  "schema_version": 1,
+  "source": {
+    "build": "18.0.9246",
+    "architecture": "arm64",
+    "binary_sha256": "15ff1b26a8e6e2697726ce1f165a545cbab9580d4f349edc648adbaa60a0e240",
+    "evidence_tier": 2
+  },
+  "scope": "Partial contextual relationships observed in an isolated native host; not a complete allowed-child schema or live-app parity.",
+  "evidence_sha256": {
+    "skin-child-readers-9246.json": "a53198be61985236a100b8192d27dba662b1b1424f1790e1f278f4df47d7b315",
+    "skin-child-relations-9246.json": "a695903cbc6080d50f6e2247f6d02017a0e589700b04798985fbc5d419a1cd53",
+    "skin-child-trace-9246.json": "ccf111b9d923bd21fc5c544849732817a868fe41f5906eec72af3480ce0661fa",
+    "skin-child-layout-9246.json": "d5179bae9a77560132fb6dbd59d970e21c04556ce385ba5bab34fe25282760e3"
+  },
+  "relationships": [
+    {
+      "parent": "skin",
+      "native_reader_class": "CSkinWindow",
+      "mechanism": "general factory",
+      "finding": "Authored children enter the panel loader; generated grab zones also appear.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "skin_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "ordered_repeat",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[2]",
+            "/skin/button[2]/pos[1]",
+            "/skin/button[2]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinButton",
+            "/CSkinWindow[3]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+          "function": "0x1004a3910",
+          "pc": "0x1004a3b58",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+          "function": "0x1004a3910",
+          "pc": "0x1004a3f74",
+          "name": "breaklines",
+          "target": "0x10036922c",
+          "callee": "ISkinObject::getCondition(CXMLNode*, char const*)",
+          "argument_register": "x2"
+        }
+      ],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x1004a3b90",
+          "function": "0x1004a3910",
+          "caller": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1004a3e28",
+          "function": "0x1004a3910",
+          "caller": "CSkinWindow::load(CXMLNode*, CImage*, char const*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "panel",
+      "native_reader_class": "CSkinPanel",
+      "mechanism": "general factory",
+      "finding": "Retains nested objects; unknown wrappers do not flatten their contents.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "panel_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><panel name=\"p\"><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/panel[1]",
+            "/skin/panel[1]/pos[1]",
+            "/skin/panel[1]/size[1]",
+            "/skin/panel[1]/button[1]",
+            "/skin/panel[1]/button[1]/pos[1]",
+            "/skin/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "panel_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><panel name=\"outer\"><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><panel name=\"inner\"><pos x=\"30\" y=\"40\"/><size width=\"100\" height=\"80\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></panel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/panel[1]",
+            "/skin/panel[1]/pos[1]",
+            "/skin/panel[1]/size[1]",
+            "/skin/panel[1]/panel[1]",
+            "/skin/panel[1]/panel[1]/pos[1]",
+            "/skin/panel[1]/panel[1]/size[1]",
+            "/skin/panel[1]/panel[1]/button[1]",
+            "/skin/panel[1]/panel[1]/button[1]/pos[1]",
+            "/skin/panel[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "panel_text",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><panel name=\"p\"><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><text text=\"literal child\"/></panel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/panel[1]",
+            "/skin/panel[1]/pos[1]",
+            "/skin/panel[1]/size[1]",
+            "/skin/panel[1]/text[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinText",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "panel_unknown",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><panel name=\"p\"><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><zzunknown><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></zzunknown></panel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/panel[1]",
+            "/skin/panel[1]/pos[1]",
+            "/skin/panel[1]/size[1]",
+            "/skin/panel[1]/zzunknown[1]",
+            "/skin/panel[1]/zzunknown[1]/button[1]",
+            "/skin/panel[1]/zzunknown[1]/button[1]/pos[1]",
+            "/skin/panel[1]/zzunknown[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1ac",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1c8",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1e0",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x1007bb744",
+          "function": "0x1007bb138",
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bb920",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bbb7c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bba1c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x10036abcc",
+          "callee": "ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "group",
+      "native_reader_class": "CSkinPanel",
+      "mechanism": "conditional wrapper",
+      "finding": "Plain group flattens into the owning container; the visibility fixture constructs a panel.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "group_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><group x=\"10\" y=\"20\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></group></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/group[1]",
+            "/skin/group[1]/button[1]",
+            "/skin/group[1]/button[1]/pos[1]",
+            "/skin/group[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "group_visibility_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><group visibility=\"true\" x=\"10\" y=\"20\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></group></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/group[1]",
+            "/skin/group[1]/button[1]",
+            "/skin/group[1]/button[1]/pos[1]",
+            "/skin/group[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "group_nested",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><panel name=\"p\"><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><group x=\"+5\" y=\"+6\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></group></panel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/panel[1]",
+            "/skin/panel[1]/pos[1]",
+            "/skin/panel[1]/size[1]",
+            "/skin/panel[1]/group[1]",
+            "/skin/panel[1]/group[1]/button[1]",
+            "/skin/panel[1]/group[1]/button[1]/pos[1]",
+            "/skin/panel[1]/group[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1ac",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1c8",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1e0",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x1007bb744",
+          "function": "0x1007bb138",
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bb920",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bbb7c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bba1c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x10036abcc",
+          "callee": "ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "deck",
+      "native_reader_class": "CSkinPanel",
+      "mechanism": "context wrapper",
+      "finding": "Flattens children into the current container while passing deck context.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "deck_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><deck deck=\"2\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></deck></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/deck[1]",
+            "/skin/deck[1]/button[1]",
+            "/skin/deck[1]/button[1]/pos[1]",
+            "/skin/deck[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1ac",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1c8",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1e0",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x1007bb744",
+          "function": "0x1007bb138",
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bb920",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bbb7c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bba1c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x10036abcc",
+          "callee": "ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "setdeck",
+      "native_reader_class": "CSkinPanel",
+      "mechanism": "context wrapper",
+      "finding": "Flattens children into the current container while passing deck context.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "setdeck_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><setdeck deck=\"2\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></setdeck></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/setdeck[1]",
+            "/skin/setdeck[1]/button[1]",
+            "/skin/setdeck[1]/button[1]/pos[1]",
+            "/skin/setdeck[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1ac",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1c8",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1007bb138",
+          "pc": "0x1007bb1e0",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x1007bb744",
+          "function": "0x1007bb138",
+          "caller": "CSkinPanel::CSkinPanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bb920",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bbb7c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x1007bb7f4",
+          "callee": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1007bba1c",
+          "function": "0x1007bb7f4",
+          "caller": "CSkinPanel::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x10036abcc",
+          "callee": "ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "button",
+      "native_reader_class": "CSkinButton",
+      "mechanism": "named object slots",
+      "finding": "Text state slots construct CSkinText; repeated text selects the first. Nested buttons/panels and text hidden inside an unknown wrapper do not become children.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "button_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/button[1]",
+            "/skin/button[1]/button[1]/pos[1]",
+            "/skin/button[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "button_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><panel name=\"p\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/panel[1]",
+            "/skin/button[1]/panel[1]/button[1]",
+            "/skin/button[1]/panel[1]/button[1]/pos[1]",
+            "/skin/button[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "button_text",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><text text=\"literal child\"/></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/text[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[1]/CSkinButton[0]/CSkinText",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "button_text_repeat",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><text text=\"first\"/><text text=\"second\"/></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/text[1]",
+            "/skin/button[1]/text[2]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[1]/CSkinButton[0]/CSkinText",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "button_text_states",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><text text=\"normal\"/><textdown text=\"down\"/><textover text=\"over\"/><textselected text=\"selected\"/></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/text[1]",
+            "/skin/button[1]/textdown[1]",
+            "/skin/button[1]/textover[1]",
+            "/skin/button[1]/textselected[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[1]/CSkinButton[0]/CSkinText",
+            "/CSkinWindow[1]/CSkinButton[1]/CSkinText",
+            "/CSkinWindow[1]/CSkinButton[2]/CSkinText",
+            "/CSkinWindow[1]/CSkinButton[3]/CSkinText",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "button_unknown_text",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><button><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><zzunknown><text text=\"literal child\"/></zzunknown></button></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/button[1]",
+            "/skin/button[1]/pos[1]",
+            "/skin/button[1]/size[1]",
+            "/skin/button[1]/zzunknown[1]",
+            "/skin/button[1]/zzunknown[1]/text[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb2f8",
+          "name": "icon",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb450",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb480",
+          "name": "selected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb4b0",
+          "name": "overselected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb684",
+          "name": "mask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb6a0",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb6b8",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb6e8",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb704",
+          "name": "on",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb734",
+          "name": "up",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb750",
+          "name": "off",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb780",
+          "name": "selected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb7b0",
+          "name": "overselected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cb7e0",
+          "name": "downselected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cc0ec",
+          "name": "text",
+          "target": "0x1004cd318",
+          "callee": "CSkinButton::addTextObject(char const*, CXMLNode*, CImage*)",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cc108",
+          "name": "textdown",
+          "target": "0x1004cd318",
+          "callee": "CSkinButton::addTextObject(char const*, CXMLNode*, CImage*)",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cc124",
+          "name": "textover",
+          "target": "0x1004cd318",
+          "callee": "CSkinButton::addTextObject(char const*, CXMLNode*, CImage*)",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinButton::CSkinButton(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x1004cb21c",
+          "pc": "0x1004cc140",
+          "name": "textselected",
+          "target": "0x1004cd318",
+          "callee": "CSkinButton::addTextObject(char const*, CXMLNode*, CImage*)",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "slider",
+      "native_reader_class": "CSkinSlider",
+      "mechanism": "named object slot",
+      "finding": "Fader constructs CSkinSliderFader; arbitrary button/text children do not become objects in these controls.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "slider_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><slider><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></slider></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/slider[1]",
+            "/skin/slider[1]/pos[1]",
+            "/skin/slider[1]/size[1]",
+            "/skin/slider[1]/button[1]",
+            "/skin/slider[1]/button[1]/pos[1]",
+            "/skin/slider[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSlider",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "slider_text",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><slider><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><text text=\"literal child\"/></slider></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/slider[1]",
+            "/skin/slider[1]/pos[1]",
+            "/skin/slider[1]/size[1]",
+            "/skin/slider[1]/text[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSlider",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "slider_fader",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><slider><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><fader><size width=\"12\" height=\"14\"/><up x=\"0\" y=\"0\"/></fader></slider></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/slider[1]",
+            "/skin/slider[1]/pos[1]",
+            "/skin/slider[1]/size[1]",
+            "/skin/slider[1]/fader[1]",
+            "/skin/slider[1]/fader[1]/size[1]",
+            "/skin/slider[1]/fader[1]/up[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSlider",
+            "/CSkinWindow[1]/CSkinSlider[0]/CSkinSliderFader",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016bdb8",
+          "name": "clipmask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016bdd0",
+          "name": "off",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016bdec",
+          "name": "up",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016be70",
+          "name": "on",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016beb8",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016bee8",
+          "name": "overOn",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c4bc",
+          "name": "circle",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c534",
+          "name": "disabled",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c610",
+          "name": "fader",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c6f4",
+          "name": "up",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c70c",
+          "name": "selected",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c7a4",
+          "name": "fader",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c95c",
+          "name": "images",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c978",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c990",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c9bc",
+          "name": "images",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016c9d4",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016caf0",
+          "name": "mask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cb58",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cd10",
+          "name": "circle",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016ce04",
+          "name": "mask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cef8",
+          "name": "pos",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cf2c",
+          "name": "over",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cf58",
+          "name": "pos",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016cf94",
+          "name": "mask",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d06c",
+          "name": "fill",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d088",
+          "name": "off",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d0a4",
+          "name": "up",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d0d4",
+          "name": "on",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d0f0",
+          "name": "down",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d120",
+          "name": "disabled",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d370",
+          "name": "on",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinSlider::CSkinSlider(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10016bc9c",
+          "pc": "0x10016d3a0",
+          "name": "off",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "textzone",
+      "native_reader_class": "CSkinText",
+      "mechanism": "leaf control",
+      "finding": "The nested marker button does not become an object.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "textzone_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><textzone><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></textzone></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/textzone[1]",
+            "/skin/textzone[1]/pos[1]",
+            "/skin/textzone[1]/size[1]",
+            "/skin/textzone[1]/button[1]",
+            "/skin/textzone[1]/button[1]/pos[1]",
+            "/skin/textzone[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinText",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9c3c",
+          "name": "up",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9c58",
+          "name": "off",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9e28",
+          "name": "colors",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9e44",
+          "name": "color",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9e90",
+          "name": "colors",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9eac",
+          "name": "color",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9efc",
+          "name": "font",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9f20",
+          "name": "font",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9f60",
+          "name": "font",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9f88",
+          "name": "colors",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006a9fa4",
+          "name": "color",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        },
+        {
+          "caller": "CSkinText::CSkinText(CXMLNode*, CImage*, CXMLNode*)",
+          "function": "0x1006a9ad0",
+          "pc": "0x1006aa008",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "stack",
+      "native_reader_class": "CSkinStack",
+      "mechanism": "item wrapper",
+      "finding": "Each tested item creates a CSkinPanel that dispatches its children; direct button/panel controls do not.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "stack_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><stack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></stack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/stack[1]",
+            "/skin/stack[1]/pos[1]",
+            "/skin/stack[1]/size[1]",
+            "/skin/stack[1]/button[1]",
+            "/skin/stack[1]/button[1]/pos[1]",
+            "/skin/stack[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinStack",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "stack_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><stack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><panel name=\"stacked\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></stack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/stack[1]",
+            "/skin/stack[1]/pos[1]",
+            "/skin/stack[1]/size[1]",
+            "/skin/stack[1]/panel[1]",
+            "/skin/stack[1]/panel[1]/button[1]",
+            "/skin/stack[1]/panel[1]/button[1]/pos[1]",
+            "/skin/stack[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinStack",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "stack_item",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><stack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><item><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></item></stack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/stack[1]",
+            "/skin/stack[1]/pos[1]",
+            "/skin/stack[1]/size[1]",
+            "/skin/stack[1]/item[1]",
+            "/skin/stack[1]/item[1]/button[1]",
+            "/skin/stack[1]/item[1]/button[1]/pos[1]",
+            "/skin/stack[1]/item[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinStack",
+            "/CSkinWindow[1]/CSkinStack[0]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinStack[0]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        },
+        {
+          "name": "stack_item_repeat",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><stack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><item><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></item><item><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></item></stack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/stack[1]",
+            "/skin/stack[1]/pos[1]",
+            "/skin/stack[1]/size[1]",
+            "/skin/stack[1]/item[1]",
+            "/skin/stack[1]/item[1]/button[1]",
+            "/skin/stack[1]/item[1]/button[1]/pos[1]",
+            "/skin/stack[1]/item[1]/button[1]/size[1]",
+            "/skin/stack[1]/item[2]",
+            "/skin/stack[1]/item[2]/button[1]",
+            "/skin/stack[1]/item[2]/button[1]/pos[1]",
+            "/skin/stack[1]/item[2]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinStack",
+            "/CSkinWindow[1]/CSkinStack[0]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinStack[0]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[1]/CSkinStack[1]/CSkinPanel",
+            "/CSkinWindow[1]/CSkinStack[1]/CSkinPanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "rack",
+      "native_reader_class": "CSkinRack",
+      "mechanism": "unit/panel wrapper",
+      "finding": "A unit/panel creates CSkinResizePanel, which dispatches its contents. Direct buttons/panels and a unit/button control do not.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "rack_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><rack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></rack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/rack[1]",
+            "/skin/rack[1]/pos[1]",
+            "/skin/rack[1]/size[1]",
+            "/skin/rack[1]/button[1]",
+            "/skin/rack[1]/button[1]/pos[1]",
+            "/skin/rack[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinRack",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "rack_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><rack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><panel name=\"racked\"><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></rack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/rack[1]",
+            "/skin/rack[1]/pos[1]",
+            "/skin/rack[1]/size[1]",
+            "/skin/rack[1]/panel[1]",
+            "/skin/rack[1]/panel[1]/button[1]",
+            "/skin/rack[1]/panel[1]/button[1]/pos[1]",
+            "/skin/rack[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinRack",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "rack_unit_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><rack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><unit><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></unit></rack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/rack[1]",
+            "/skin/rack[1]/pos[1]",
+            "/skin/rack[1]/size[1]",
+            "/skin/rack[1]/unit[1]",
+            "/skin/rack[1]/unit[1]/button[1]",
+            "/skin/rack[1]/unit[1]/button[1]/pos[1]",
+            "/skin/rack[1]/unit[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinRack",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "rack_unit_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><rack><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><unit><panel><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></unit></rack></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/rack[1]",
+            "/skin/rack[1]/pos[1]",
+            "/skin/rack[1]/size[1]",
+            "/skin/rack[1]/unit[1]",
+            "/skin/rack[1]/unit[1]/panel[1]",
+            "/skin/rack[1]/unit[1]/panel[1]/pos[1]",
+            "/skin/rack[1]/unit[1]/panel[1]/size[1]",
+            "/skin/rack[1]/unit[1]/panel[1]/button[1]",
+            "/skin/rack[1]/unit[1]/panel[1]/button[1]/pos[1]",
+            "/skin/rack[1]/unit[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinRack",
+            "/CSkinWindow[1]/CSkinRack[0]/CSkinResizePanel",
+            "/CSkinWindow[1]/CSkinRack[0]/CSkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        }
+      ],
+      "static_named_child_leads": [],
+      "static_dispatch_sites": [
+        {
+          "pc": "0x10065785c",
+          "function": "0x1006577c0",
+          "caller": "CSkinRack::CSkinRack(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x100657934",
+          "callee": "CSkinRack::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        },
+        {
+          "pc": "0x1006579d4",
+          "function": "0x100657934",
+          "caller": "CSkinRack::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "target": "0x100657934",
+          "callee": "CSkinRack::loadChildren(CXMLNode*, CImage*, CSkinWindow*)",
+          "instruction": "bl"
+        }
+      ]
+    },
+    {
+      "parent": "split",
+      "native_reader_class": "CSkinSplit",
+      "mechanism": "named side wrappers",
+      "finding": "Default split constructs left/right ISkinResizePanel objects. Side content is dispatched, directly or through content; root-level button/content/panel controls do not populate the sides.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "split_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><split><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></split></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/split[1]",
+            "/skin/split[1]/pos[1]",
+            "/skin/split[1]/size[1]",
+            "/skin/split[1]/button[1]",
+            "/skin/split[1]/button[1]/pos[1]",
+            "/skin/split[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSplit",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "split_content",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><split><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><content><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></content></split></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/split[1]",
+            "/skin/split[1]/pos[1]",
+            "/skin/split[1]/size[1]",
+            "/skin/split[1]/content[1]",
+            "/skin/split[1]/content[1]/button[1]",
+            "/skin/split[1]/content[1]/button[1]/pos[1]",
+            "/skin/split[1]/content[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSplit",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "split_panel",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><split><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><panel><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></panel></split></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/split[1]",
+            "/skin/split[1]/pos[1]",
+            "/skin/split[1]/size[1]",
+            "/skin/split[1]/panel[1]",
+            "/skin/split[1]/panel[1]/button[1]",
+            "/skin/split[1]/panel[1]/button[1]/pos[1]",
+            "/skin/split[1]/panel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSplit",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "split_left_right",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><split><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><left><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></left><right><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></right></split></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/split[1]",
+            "/skin/split[1]/pos[1]",
+            "/skin/split[1]/size[1]",
+            "/skin/split[1]/left[1]",
+            "/skin/split[1]/left[1]/button[1]",
+            "/skin/split[1]/left[1]/button[1]/pos[1]",
+            "/skin/split[1]/left[1]/button[1]/size[1]",
+            "/skin/split[1]/right[1]",
+            "/skin/split[1]/right[1]/button[1]",
+            "/skin/split[1]/right[1]/button[1]/pos[1]",
+            "/skin/split[1]/right[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSplit",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "split_left_content",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><split><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><left><content><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></content></left></split></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/split[1]",
+            "/skin/split[1]/pos[1]",
+            "/skin/split[1]/size[1]",
+            "/skin/split[1]/left[1]",
+            "/skin/split[1]/left[1]/content[1]",
+            "/skin/split[1]/left[1]/content[1]/button[1]",
+            "/skin/split[1]/left[1]/content[1]/button[1]/pos[1]",
+            "/skin/split[1]/left[1]/content[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinSplit",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel",
+            "/CSkinWindow[1]/CSkinSplit[0]/ISkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[1]/CSkinSplit[1]/ISkinResizePanel",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": "skin-child-trace-9246.json"
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinSplit::CSkinSplit(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x10057e248",
+          "pc": "0x10057e454",
+          "name": "separator",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "resizepanel",
+      "native_reader_class": "CSkinResizePanel",
+      "mechanism": "content dispatcher",
+      "finding": "Dispatches direct children or children inside content in the tested inputs.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "resizepanel_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><resizepanel><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></resizepanel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/resizepanel[1]",
+            "/skin/resizepanel[1]/pos[1]",
+            "/skin/resizepanel[1]/size[1]",
+            "/skin/resizepanel[1]/button[1]",
+            "/skin/resizepanel[1]/button[1]/pos[1]",
+            "/skin/resizepanel[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinResizePanel",
+            "/CSkinWindow[1]/CSkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        },
+        {
+          "name": "resizepanel_content",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><resizepanel><pos x=\"10\" y=\"20\"/><size width=\"280\" height=\"160\"/><content><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></content></resizepanel></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/resizepanel[1]",
+            "/skin/resizepanel[1]/pos[1]",
+            "/skin/resizepanel[1]/size[1]",
+            "/skin/resizepanel[1]/content[1]",
+            "/skin/resizepanel[1]/content[1]/button[1]",
+            "/skin/resizepanel[1]/content[1]/button[1]/pos[1]",
+            "/skin/resizepanel[1]/content[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinResizePanel",
+            "/CSkinWindow[1]/CSkinResizePanel[0]/CSkinButton",
+            "/CSkinWindow[2]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [
+        {
+          "caller": "CSkinResizePanel::CSkinResizePanel(CXMLNode*, CImage*, CSkinWindow*)",
+          "function": "0x100519b88",
+          "pc": "0x100519cd4",
+          "name": "background",
+          "target": "0x10043213c",
+          "callee": "CXMLNode::getChild(std::__1::basic_string_view<char, std::__1::char_traits<char>>) const",
+          "argument_register": "x1"
+        }
+      ],
+      "static_dispatch_sites": []
+    },
+    {
+      "parent": "zzunknown",
+      "native_reader_class": null,
+      "mechanism": "unknown wrapper control",
+      "finding": "The unknown wrapper and its marker button are absent from the native tree.",
+      "closed_world": false,
+      "cases": [
+        {
+          "name": "unknown_button",
+          "xml": "<skin name=\"Child relationships\" version=\"8\" width=\"320\" height=\"200\"><zzunknown><button><pos x=\"101\" y=\"103\"/><size width=\"17\" height=\"19\"/></button></zzunknown></skin>",
+          "xml_paths": [
+            "/skin",
+            "/skin/zzunknown[1]",
+            "/skin/zzunknown[1]/button[1]",
+            "/skin/zzunknown[1]/button[1]/pos[1]",
+            "/skin/zzunknown[1]/button[1]/size[1]"
+          ],
+          "native_class_paths": [
+            "/CSkinWindow",
+            "/CSkinWindow[0]/CSkinGrabZone",
+            "/CSkinWindow[1]/CSkinGrabZone"
+          ],
+          "capture": "skin-child-relations-9246.json",
+          "trace_capture": null
+        }
+      ],
+      "static_named_child_leads": [],
+      "static_dispatch_sites": []
+    }
+  ],
+  "limitations": [
+    "Do not reject unlisted child names: coverage is open.",
+    "RTTI container inheritance is not XML child acceptance.",
+    "Configuration nodes such as pos and size may be consumed by a reader and also return null from factory dispatch.",
+    "The manifest records loaded trees; subsequent direct panel-move snapshots are experimental layout operations.",
+    "The unsized rack panel failed with nonfinite geometry; the confirmed case supplies explicit dimensions.",
+    "Rendering, script evaluation and conditions were not exercised; same-build live fixtures are required for Tier 1."
+  ]
+}
