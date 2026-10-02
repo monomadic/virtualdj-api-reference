@@ -4,6 +4,8 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Skin Tag Dispatch](Skin%20Tag%20Dispatch.md) — which tag names build 9246 recognizes, in which context, and what each becomes (`just skin-dispatch`)
+
 - [Skin Manifest Recovery Tasks](Skin%20Manifest%20Recovery%20Tasks.md) — prioritized implementation proposal for recovering contextual XML rules and building a linter/compiler
 
 - [Offline Skin Host](Offline%20Skin%20Host.md) — native composition trees, class/coordinate resolution, offscreen rendering, and full-loader boundary

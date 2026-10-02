@@ -84,6 +84,13 @@ owner.
 Done when every tag the 9246 factory and named child lookups recognize has a role and a
 code-path reference, and every dispatch branch that is not resolved is listed as such.
 
+Progress (2026-10-02): steps 1 and 2 are done; step 3 is partial. The window binds through
+`CSkinWindow::load`. `just skin-dispatch` holds the factory's gates, comparison rule,
+selectors and directives, the reviewed container loaders, and every name-matching site
+with its role. What is left is listed by `just skin-dispatch --unresolved`, plus the child
+lookups with role `unknown` and the tag compares in functions not yet reviewed. Findings:
+[Skin Tag Dispatch](docs/Skin%20Tag%20Dispatch.md).
+
 ### V2. Recover each verb's argument syntax from its named consumer
 
 Status: Ready
