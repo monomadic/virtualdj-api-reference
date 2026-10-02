@@ -97,7 +97,16 @@ def extract(app):
             if target!=fn:
                 thunk=decoded(a,target) if target in a.starts else []
                 bound=bound and len(thunk)==1 and thunk[0].mnemonic=='b' and thunk[0].operands[0].imm==fn
+            initializer=None
+            if c['class']=='CSkinWindow' and not bound:
+                # The window is default-constructed; the factory then passes the node to
+                # CSkinWindow::load(window, node, image, nullptr). Bind that call instead.
+                loads=[f for f,n in symbols.items() if n=='CSkinWindow::load(CXMLNode*, CImage*, char const*)']
+                calls=[(p,st) for p,(t,st) in states.items() if loads and t==loads[0]]
+                if len(loads)==1 and len(calls)==1 and calls[0][1].get('x1',UNKNOWN)==frozenset({('node','$node')}):
+                    bound,fn,initializer=True,loads[0],{'symbol':symbols[loads[0]],'callsite':hex(calls[0][0])}
             entry['variants'].append({'class':c['class'],'factory_callsite':hex(pc),
+                                      **({'initializer':initializer} if initializer else {}),
                                       'factory_binding_verified':bound,'dispatch_exhausted':d['traversal_exhausted'],
                                       'xml_register':xml_register,
                                       'binding_gap':None if bound else 'Constructor XML argument not established; initialization helpers remain untraced.',

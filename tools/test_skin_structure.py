@@ -1,7 +1,8 @@
 """Keep broad structural identities separate from behavior and descendants."""
+import hashlib
 import json
 import unittest
-from skin_structure import DEFAULT, describe
+from skin_structure import DEFAULT, RELATIONS, describe
 
 
 class StructureTests(unittest.TestCase):
@@ -23,20 +24,27 @@ class StructureTests(unittest.TestCase):
         self.assertIn('clickthrough',row['own_attribute_candidates'])
         self.assertEqual(row['status'],'partial_structure')
 
-    def test_nonstandard_binding_and_unknown_initialization_stay_distinct(self):
+    def test_nonstandard_bindings_are_explicit(self):
         edit=self.data['elements']['edit']['variants']
         self.assertTrue(all(v['factory_binding_verified'] and v['xml_register']=='x2' for v in edit))
+        # The window is default-constructed and receives its node through CSkinWindow::load,
+        # so its binding is that call, not the constructor.
         window=self.data['elements']['window']['variants']
-        self.assertTrue(any(not v['factory_binding_verified'] and v['binding_gap'] for v in window))
+        self.assertTrue(all(v['factory_binding_verified'] and v['binding_gap'] is None for v in window))
+        self.assertEqual({v['initializer']['symbol'] for v in window},
+                         {'CSkinWindow::load(CXMLNode*, CImage*, char const*)'})
+        self.assertTrue(all('initializer' not in v for t,e in self.data['elements'].items()
+                            if t!='window' for v in e['variants']))
 
     def test_parent_observation_does_not_promote_behavior(self):
         button=describe(self.data,'button')
         self.assertIn('panel',button['observed_vendor_parents'])
         self.assertIn('Observed',button['parent_evidence'])
-        # S7 expanded the live relations corpus after this build-9246 capture.
-        # The capture must report that its pinned source is now historical;
-        # observed parents still come from the current vendor XML report.
-        self.assertFalse(button['parent_source_matches_capture'])
+        # The flag must report whether the relations corpus still matches the one the
+        # capture pinned; observed parents always come from the current vendor XML report.
+        current=hashlib.sha256(RELATIONS.read_bytes()).hexdigest()
+        self.assertEqual(button['parent_source_matches_capture'],
+                         current==self.data['anchors']['tests/skin-xml-relations.json'])
         self.assertEqual(describe(self.data,'font')['own_attribute_candidates'],[])
 
 
