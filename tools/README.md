@@ -1,5 +1,17 @@
 # Tools
 
+The [offline parser host](../docs/Offline%20Parser%20Host.md) uses a copied,
+build-pinned executable to parse a fixed script suite in sandboxed subprocesses.
+`just offline-parser-check` validates saved comparisons and converter rejection
+tests without loading vendor code; `just offline-parser prepare` and `run` are
+explicit experimental operations. Source: `offline_parser.py` and
+`plugin/offline_parser_host.cpp`.
+
+For the symbol-rich 9246 host, `prepare_symbol_parser.py --app APP --check`
+reproduces the named parser manifest (optional capstone/numpy dependencies).
+Preparation chooses each build's own guard manifest; the checker labels 9246's
+comparison with the saved 9644 live baseline as cross-build.
+
 Scripts supporting the reference. Two groups: **offline** tools that run against repo content only (safe anywhere, wired into `just check`), and **extraction** tools that read a local VirtualDJ install (macOS, Apple Silicon) and are version-pinned.
 
 ## Offline: validators and generators

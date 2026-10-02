@@ -1,5 +1,19 @@
 # Documentation Tests
 
+Symbol-rich offline parser: [offline-parser-9246.json](offline-parser-9246.json)
+is the confirmed copied-image run; its `-initial` capture remains separate.
+[parser-object-layout-9246.json](parser-object-layout-9246.json) retains named
+routine bounds, disassembly, hashes and reviewed layout evidence. Comparison is
+explicitly against the **9644** live parser baseline, not a same-build live test.
+`just offline-parser-check` checks both builds without loading vendor code.
+
+Offline parser pilot: [offline-parser-9644.json](offline-parser-9644.json) retains
+the copied-image run and its comparison with the saved in-app parser fields.
+The `-initial` and `-sandbox-initial` files retain the blocked and first successful
+attempts. `just offline-parser-check` validates the confirmed capture and runs
+converter/comparison rejection tests without executing vendor code. Scope and
+reproduction: [Offline Parser Host](../docs/Offline%20Parser%20Host.md).
+
 Skin XML discovery: [skin-xml-relations.json](skin-xml-relations.json) retains
 vendor source hashes and direct parent/child locations. Regenerate with
 `just skin-relations`; validate with `just skin-relations --check` and

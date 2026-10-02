@@ -450,6 +450,7 @@ lint-script *args:
     {{python}} tools/lint_script.py "$@"
 
 check:
+    just offline-parser-check
     {{python}} tools/probe_query_cast_debug.py --check tests/param-cast-types-9644
     {{python}} tools/probe_argument_types.py --check tests/argument-types-multiply-9644/values-expanded.json
     {{python}} tools/probe_argument_types.py --check tests/argument-types-9644/values.json
@@ -834,6 +835,16 @@ ghidra-time-consumers-test:
     @{{python}} -m unittest discover -s tools -p test_ghidra_time_consumers.py
 
 # Fixed-input, build-gated parser object experiment; never executes parsed scripts.
+offline-parser *args:
+    @{{python}} tools/offline_parser.py {{args}}
+
+# Saved-capture parity and converter rejection tests; does not load vendor code.
+offline-parser-check:
+    @{{python}} -m unittest discover -s tools -p test_offline_parser.py
+    @{{python}} tools/offline_parser.py check --output tests/offline-parser-9644.json
+    @{{python}} tools/offline_parser.py check --output tests/offline-parser-9246.json
+    @{{python}} tools/offline_parser.py check --output tests/offline-parser-9644-generated-guards.json
+
 plugin-parser-build *args:
     tools/plugin/build.sh --parser {{args}}
 
