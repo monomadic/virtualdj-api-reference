@@ -755,10 +755,25 @@ and, after `loop_load 3`, `get_loop`. The tag layouts are Serato DJ's, as docume
 | `SERATO_BEATGRID` | one marker: 133.33 BPM from 0.222 s (the track is 135 from 0.000); `SERATO_AUTOGAIN` tempo set to match | `get_bpm` → `135`, `get_firstbeat` → `28444.88`, same as an untouched copy | ignored |
 | `BPM=131.00` | plain comment | `135`, same grid | ignored |
 
-So from file tags VirtualDJ takes cues, saved loops and the key; tempo and grid always come from its
-own analysis and live in `Scan/@Bpm` and `Scan/@Phase`. A beat grid can only be given to VirtualDJ
-through `database.xml`, which has not been attempted (see *Editing database.xml*). `get_firstbeat`
-returned the `Scan/@Phase` value in milliseconds, not the first beat of the file.
+For these fresh FLAC imports on build 18.0.9644, VirtualDJ took cues, saved loops and the key.
+The tested `SERATO_BEATGRID` and plain `BPM` comments did not override its analysed tempo or
+grid; this does not rule out other tag layouts or import paths. The observed analysed values
+live in `Scan/@Bpm` and `Scan/@Phase`. Importing a beat grid through `database.xml` has not been
+attempted (see *Editing database.xml*). `get_firstbeat` returned the `Scan/@Phase` value in
+milliseconds, not the first beat of the file.
+
+#### Binary lead: Serato Markers2 reader
+
+`Binary analysis` (Tier 2): the symbol-rich arm64 build 18.0.9246 names
+`CTagEngineID3::handleSeratoMarkers2(SDBInfo*, std::string const&)` at `0x1005d15d8`.
+Its disassembly compares record prefixes `CUE`, `COLOR` and `LOOP`. The `CUE` path calls
+`SDBInfo::addCue`, stores a three-byte colour, and copies a name; `COLOR` writes a track colour;
+`LOOP` calls `SDBInfo::getLoop` or `SDBInfo::addPoi` with position and length. This adds a
+**track colour** candidate to the import tests. No beat-grid or tempo record branch was found
+in this handler. This is a finding about one historical handler, not proof that build 18.0.9644
+cannot import grids by another route. Both binaries contain `SERATO_MARKERS_V2`; only the
+installed build's FLAC cue/loop behavior was tested above. A fresh-copy FLAC with a distinct
+Serato `COLOR` record, read back from the VirtualDJ database/UI, would settle that candidate.
 
 ### Realistic No-Manual-Touch Workflow On macOS
 
