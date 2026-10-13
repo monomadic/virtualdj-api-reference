@@ -35,6 +35,17 @@ alongside a genuinely absent app bundle and promoted 30 of the vendor's own
 example placeholders into the probe worklist, and the only symptom was a
 cross-check drift in an unrelated-looking artifact.
 
+**For a new binary investigation, run `just binary-source` before disassembly.**
+Start method and vtable identification with the preferred symbol-rich arm64
+historical bundle it reports (`just binary-source --path` for scripts). Then
+compare the identified path against `/Applications/VirtualDJ.app` when the
+question concerns the installed build. Treat cross-build matches as leads;
+the installed binary establishes current code paths, and live probes establish
+behavior. Do not infer unnamed vtable slots from order alone while a named historical vtable is
+available. The selector fails rather than silently returning a stripped image
+when no named bundle is present. Existing artifact checks and live tools that
+are explicitly anchored to the installed build keep their stated source.
+
 ## Open-ended work
 
 For “what should I do next?”, maintenance, documentation cleanup, or evidence-pass work, read `TODO.md` first. Treat `TODO.md` as the canonical active queue and start with the first `Ready` task unless the user names another task. `just next-task` prints that task; `just task-queue` lists every task with its state. Each task carries one machine-readable `Status:` line — one word from `Ready`/`Blocked`/`Conditional`/`Parking lot`/`Done` (`Retired` only in `RETIRED.md`), with the explanation in the `Note:` paragraph below it — and selection fails loudly rather than skipping a status it cannot read, so keep that shape when editing the queue. A task that lands moves, block and all, to `HISTORY.md`; `just check` fails on a `Done` task left in `TODO.md`. The queue's goal is syntax, not behaviour: live behaviour work lives in the retired blocks of `RETIRED.md`, to be revived into `TODO.md` under a new identifier when the user asks.

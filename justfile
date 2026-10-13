@@ -628,6 +628,11 @@ sysicon-atlas *args:
 skin-classes *args:
     @{{python}} tools/extract_skin_classes.py "$@"
 
+# Print the preferred symbol-rich bundle for method discovery, alongside the
+# installed build for an explicit current-image comparison. --path is scriptable.
+binary-source *args:
+    @{{python}} tools/binary_source.py "$@"
+
 # Build-stamped XML ownership pilot; ordinary queries require only stdlib.
 skin-schema *args:
     @{{python}} tools/skin_schema.py "$@"
