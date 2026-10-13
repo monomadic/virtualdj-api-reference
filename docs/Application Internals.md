@@ -792,6 +792,11 @@ No FLAC `SERATO_BEATGRID` match was found in this reader; the tested tag did not
 deck grid on build 18.0.9644. The separate ID3 (`TBPM`), QuickTime, Ogg/Opus, and database
 readers are other input paths, not evidence that they import a first beat or grid.
 
+Binary analysis agrees (`Binary analysis`, reported 2026-10-14, build not stamped): the Markers2
+reader in the executable branches on the entry names `CUE`, `LOOP` and `COLOR` only; it has no
+branch for a tempo or beat-grid entry, so `SERATO_BEATGRID` is never parsed, not merely ignored.
+`COLOR` (the Serato track colour) is therefore read, but what VirtualDJ does with it was not tested.
+
 ### Realistic No-Manual-Touch Workflow On macOS
 
 Tag-first workflow, best for external DJ-library tools:
