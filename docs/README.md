@@ -4,6 +4,10 @@ This folder is moving toward a reliable local API reference for the VirtualDJ sc
 
 Start here:
 
+- [Verb Tail and Linter Tasks](Verb%20Tail%20and%20Linter%20Tasks.md)
+  Prioritized proposal for consumer argument recovery and an evidence-backed
+  VDJScript linter, with dependencies, deliverables and acceptance criteria.
+
 - [Skin Expansion](Skin%20Expansion.md) — how `define`, `class=`, placeholders and `condition=` rewrite skin XML on build 9246, with paired native fixtures (`just skin-expansion check`)
 
 - [Skin Tag Dispatch](Skin%20Tag%20Dispatch.md) — which tag names build 9246 recognizes, in which context, and what each becomes (`just skin-dispatch`)

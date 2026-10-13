@@ -37,6 +37,68 @@ probe channel answers. Only the python section can fail — the extraction tools
 read the VirtualDJ Mach-O binary through numpy, and the failure when it is
 missing is quiet rather than loud.
 
+## Connect an AI assistant through MCP
+
+The MCP server exposes reference lookups, grammar guidance, and linting to an
+assistant without loading the whole documentation set. It runs locally over STDIO;
+keep this checkout available because the server reads its tools and reference data.
+See [MCP Server](docs/MCP%20Server.md) for the tool list and full configuration.
+
+### ChatGPT desktop and Codex
+
+After the setup above, register the server with the Codex CLI. Replace
+`/absolute/path/to/virtualdj-api-reference` in both arguments with your checkout path:
+
+```bash
+codex mcp add virtualdj -- \
+  /absolute/path/to/virtualdj-api-reference/.venv/bin/python3 \
+  /absolute/path/to/virtualdj-api-reference/tools/mcp_server.py
+```
+
+Alternatively, open **Settings → MCP servers → Add server**, choose **STDIO**, and
+enter `virtualdj` as the name, the absolute `.venv/bin/python3` path as the command,
+and the absolute `tools/mcp_server.py` path as its argument. Save and select
+**Restart**. Local clients on the same Codex host share MCP configuration;
+the repo's Claude-style `.mcp.json` is not a substitute for this registration.
+See the [official MCP setup guide](https://learn.chatgpt.com/docs/extend/mcp?surface=cli).
+
+### ChatGPT on the web
+
+The web connection needs a reachable MCP endpoint. For personal use with this
+local STDIO server, use
+[Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels):
+
+1. Create a tunnel in OpenAI Platform and obtain its `tunnel_id`. This requires
+   the appropriate Platform tunnel permissions and a runtime API key.
+2. Follow the tunnel guide to install and run `tunnel-client` on the computer
+   containing this checkout. Configure its STDIO target with the same Python
+   command and server-script argument shown above, and keep the client running.
+3. In ChatGPT, enable **Settings → Security and login → Developer mode**.
+   Availability depends on your account and workspace policy.
+4. Open **Plugins → +**, name the connection `VirtualDJ`, and choose
+   **Connection → Tunnel**. Select your tunnel or enter its `tunnel_id`, then
+   create the connection and review the discovered tools.
+5. Start a chat and select the connection from the tools menu.
+
+The tunnel can use the existing server without adding an HTTP listener. Direct
+URL-based setup instead requires a Streamable HTTP adapter or server at an HTTPS
+endpoint, with appropriate authentication; this repository does not currently
+provide that transport. See the
+[official connection guide](https://developers.openai.com/plugins/deploy/connect-chatgpt).
+
+### Verify the connection
+
+Run `just mcp-check` to check the local server, then ask the connected assistant:
+“Use the VirtualDJ MCP server to show the VDJScript grammar summary.” The local
+self-check does not establish that a particular ChatGPT connection works.
+
+Reference lookups and linting need no running VirtualDJ. Live queries require
+VirtualDJ's Network Control extension; use `just vdj-up` to check it and consult
+the [HTTP Control Interface](docs/HTTP%20Control%20Interface.md) for setup.
+Actions and app restarts are disabled by default and require separate server
+environment opt-ins, `VDJ_MCP_EXECUTE=1` and `VDJ_MCP_RESTART=1`; neither is needed
+for reference use.
+
 ## Where to start
 
 | Goal | File |
