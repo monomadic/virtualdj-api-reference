@@ -408,6 +408,28 @@ trace mouse-up, drag, alternate buttons, or every nested container. In
 particular, it does not trace the plain-group construction split; the linked
 live run reproduces that split for the tested fixture.
 
+### Neighboring container handlers
+
+The capture also retains shared `CSkinPanel`/`CSkinWindow` vtable slots 10,
+12, 13 and 14. Their names are not recovered from the stripped image, so the
+following is **Tier 2 structure**, not a mouse-up or drag contract:
+
+- Slot 10 (`0x100808c48`) walks children in reverse, hit tests them, calls
+  each hit child's slot 10, and stops when that call returns true. It does
+  **not** read the child's `clickthrough` field at `0x38`.
+- Slot 12 (`0x100808d14`) walks children in reverse and calls child slots 12
+  or 13 according to hit/hover state. It reads `0x38` only before assigning a
+  global target pointer, and only when that field is zero. This is distinct
+  from the mouse-down skip/continue decision.
+- Slot 13 (`0x100808e38`) clears hover state through child slot 13. Slot 14
+  (`0x1008090f8`) visits hit children in forward order and calls child slot
+  14. Neither reads `0x38`.
+
+The neighboring handlers therefore do not duplicate the mouse-down
+`clickthrough` branches. Their caller paths and the app's handling of a
+pressed target still need tracing before identifying which one handles release
+or drag, or predicting what a live drag will do.
+
 The original capture left the shape helper unresolved: it can substitute another node before reading `color`, `shape`,
 `border_size` and related fields. Its unresolved return path remains visible in the original capture beside
 known state-node paths; the current guarded model resolves the matching-sibling case. A class-only attribute union would erase that uncertainty.

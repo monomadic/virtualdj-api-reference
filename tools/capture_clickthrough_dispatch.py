@@ -64,6 +64,10 @@ def capture(app: Path) -> dict:
     if panel[8] != window[8]:
         raise ValueError('panel/window container mouse-down slots differ')
     dispatch = int(panel[8], 16)
+    adjacent_slots = (10, 12, 13, 14)
+    for slot in adjacent_slots:
+        if panel[slot] != window[slot]:
+            raise ValueError(f'panel/window adjacent slot {slot} differs')
     return {
         'source': {'build': build, 'arch': 'arm64',
                    'binary_sha256': hashlib.sha256(binary.read_bytes()).hexdigest(),
@@ -79,10 +83,15 @@ def capture(app: Path) -> dict:
             for word in ('yes', 'true', 'no', 'false')
         },
         'container_mouse_down': function_record(a, dispatch),
+        'adjacent_container_slots': {
+            str(slot): function_record(a, int(panel[slot], 16))
+            for slot in adjacent_slots
+        },
         'limitations': [
             'Class and method identities are structural cross-build inferences on the stripped image.',
             'Disassembly shows code paths, not which paths a running skin takes.',
-            'This does not trace mouse-up, drag, alternate buttons, or every nested container.',
+            'Adjacent virtual slots are captured without method names; their event roles require caller evidence.',
+            'This does not establish mouse-up, drag, alternate-button, or every nested-container behavior.',
         ],
     }
 
