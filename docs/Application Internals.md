@@ -753,11 +753,12 @@ and, after `loop_load 3`, `get_loop`. The tag layouts are Serato DJ's, as docume
 | `INITIALKEY=6A` | Camelot | `06A` | imported |
 | `INITIALKEY=11M` | Open Key | `09B`, VirtualDJ's own analysis (which hears G major) | not understood |
 | `SERATO_BEATGRID` | one marker: 133.33 BPM from 0.222 s (the track is 135 from 0.000); `SERATO_AUTOGAIN` tempo set to match | `get_bpm` → `135`, `get_firstbeat` → `28444.88`, same as an untouched copy | ignored |
-| `BPM=131.00` | plain comment | `135`, same grid | ignored |
+| `BPM=131.00` | plain comment | `get_bpm` → `135`, same analysed grid | did not determine deck BPM; tag-read status was not checked |
 
 For these fresh FLAC imports on build 18.0.9644, VirtualDJ took cues, saved loops and the key.
 The tested `SERATO_BEATGRID` and plain `BPM` comments did not override its analysed tempo or
-grid; this does not rule out other tag layouts or import paths. The observed analysed values
+grid on the deck; this does not establish whether the `BPM` comment was read into `Tags/@Bpm`,
+or rule out other tag layouts or import paths. The observed analysed values
 live in `Scan/@Bpm` and `Scan/@Phase`. Importing a beat grid through `database.xml` has not been
 attempted (see *Editing database.xml*). `get_firstbeat` returned the `Scan/@Phase` value in
 milliseconds, not the first beat of the file.
@@ -774,6 +775,22 @@ in this handler. This is a finding about one historical handler, not proof that 
 cannot import grids by another route. Both binaries contain `SERATO_MARKERS_V2`; only the
 installed build's FLAC cue/loop behavior was tested above. A fresh-copy FLAC with a distinct
 Serato `COLOR` record, read back from the VirtualDJ database/UI, would settle that candidate.
+
+#### Binary lead: separate FLAC BPM field
+
+`Binary analysis` (Tier 2): build 18.0.9246 has a distinct
+`CTagEngineFlac::handleVC` reader. It compares Vorbis comments `BPM=`, `KEY=`,
+`INITIALKEY=`, `COLOR=`, `CUEPOINT` and `SERATO_MARKERS_V2` (among ordinary text fields).
+The `BPM=` branch, at `0x10005c250`, calls `CTagEngineID3::getBPMFromTBPM`, converts the
+result to seconds per beat, and writes the tag-BPM field of `SDBInfo`. The FLAC loader calls
+this reader for Vorbis-comment blocks. Thus the prior `get_bpm` result alone is insufficient
+to call `BPM=131.00` ignored: deck BPM can differ from a parsed file-tag BPM. The installed
+18.0.9644 binary still contains `BPM=`, but this historical code path has not been matched
+instruction by instruction to that build. A fresh tagged FLAC, read back through
+`database.xml` `Tags/@Bpm` **before and after analysis**, would settle current behavior.
+No FLAC `SERATO_BEATGRID` match was found in this reader; the tested tag did not affect the
+deck grid on build 18.0.9644. The separate ID3 (`TBPM`), QuickTime, Ogg/Opus, and database
+readers are other input paths, not evidence that they import a first beat or grid.
 
 ### Realistic No-Manual-Touch Workflow On macOS
 
