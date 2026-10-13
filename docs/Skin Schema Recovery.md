@@ -410,25 +410,34 @@ live run reproduces that split for the tested fixture.
 
 ### Neighboring container handlers
 
-The capture also retains shared `CSkinPanel`/`CSkinWindow` vtable slots 10,
-12, 13 and 14. Their names are not recovered from the stripped image, so the
-following is **Tier 2 structure**, not a mouse-up or drag contract:
+The symbol-rich build 18.0.9246 **arm64** bundle identifies the shared
+`CSkinPanel`/`CSkinWindow` slots by name: slot 9 is
+`ISkinObject::onMouseUp`, 10 is `ISkinContainer::onMouseDblClick`, 12 is
+`ISkinContainer::onMouseMove`, 13 is `ISkinContainer::onMouseMoveOut`, and 14
+is `ISkinContainer::onMouseScroll`. This mapping comes from the named
+historical vtable; applying it to the matching slots in stripped 9644 is a
+cross-build **Tier 2 inference**. The bounded current-build instructions are
+retained in the capture.
 
-- Slot 10 (`0x100808c48`) walks children in reverse, hit tests them, calls
-  each hit child's slot 10, and stops when that call returns true. It does
-  **not** read the child's `clickthrough` field at `0x38`.
-- Slot 12 (`0x100808d14`) walks children in reverse and calls child slots 12
-  or 13 according to hit/hover state. It reads `0x38` only before assigning a
-  global target pointer, and only when that field is zero. This is distinct
-  from the mouse-down skip/continue decision.
-- Slot 13 (`0x100808e38`) clears hover state through child slot 13. Slot 14
-  (`0x1008090f8`) visits hit children in forward order and calls child slot
-  14. Neither reads `0x38`.
+- Current slot 9 (`0x10004374c`) is a one-instruction return inherited from
+  `ISkinObject::onMouseUp`. Thus this container slot does not itself traverse
+  children on release. The skin engine's separate pressed-target path remains
+  to be traced.
+- Current slot 10 (`0x100808c48`, double-click) walks children in reverse,
+  hit tests them, calls each hit child's slot 10, and stops when that call
+  returns true. It does **not** read the child's `clickthrough` field at
+  `0x38`.
+- Current slot 12 (`0x100808d14`, move) walks children in reverse and calls
+  child slots 12 or 13 according to hit/hover state. It reads `0x38` only
+  before assigning a global target pointer, and only when that field is zero.
+  This is distinct from the mouse-down skip/continue decision.
+- Current slot 13 (`0x100808e38`, move-out) clears hover state through child
+  slot 13. Slot 14 (`0x1008090f8`, scroll) visits hit children in forward
+  order and calls child slot 14. Neither reads `0x38`.
 
-The neighboring handlers therefore do not duplicate the mouse-down
-`clickthrough` branches. Their caller paths and the app's handling of a
-pressed target still need tracing before identifying which one handles release
-or drag, or predicting what a live drag will do.
+These handlers do not duplicate the mouse-down `clickthrough` branches.
+Current engine call paths and a live release/drag fixture are still needed to
+establish release and drag behavior.
 
 The original capture left the shape helper unresolved: it can substitute another node before reading `color`, `shape`,
 `border_size` and related fields. Its unresolved return path remains visible in the original capture beside

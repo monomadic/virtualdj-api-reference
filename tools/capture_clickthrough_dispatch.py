@@ -64,7 +64,7 @@ def capture(app: Path) -> dict:
     if panel[8] != window[8]:
         raise ValueError('panel/window container mouse-down slots differ')
     dispatch = int(panel[8], 16)
-    adjacent_slots = (10, 12, 13, 14)
+    adjacent_slots = (9, 10, 12, 13, 14)
     for slot in adjacent_slots:
         if panel[slot] != window[slot]:
             raise ValueError(f'panel/window adjacent slot {slot} differs')
