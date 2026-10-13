@@ -24,9 +24,9 @@ In `ISkinObject::load(CXMLNode*, CImage*)`, the historical binaries:
 | 18.0.9246 | `0x100381a58`–`0x100381ab3` | `CXMLNode::getBoolParam` |
 
 The named accessor call is the additional evidence that the earlier literal-only
-scan missed. It does **not** establish what the stored boolean does to event
-delivery. The current build's demonstrated additive `pass` behavior remains
-valid; the universal negative has been corrected in
+scan missed. Its effect on event delivery is traced in the container mouse-down
+section below. The live build-9598 additive `pass` observation remains valid;
+the universal negative has been corrected in
 [Skin SDK](Skin%20SDK.md#clickthrough).
 
 ### The accepted spellings are readable (2026-09-07)
@@ -106,6 +106,31 @@ Evidence: `*-panel-children.asm` in the capture directory. This is separate from
 the panel constructor; function boundaries come from the next distinct text-symbol
 address, because `otool -p` can print subsequent functions without labels.
 
+## How `clickthrough` affects mouse-down dispatch
+
+**Tier 2, build 18.0.9246 (x86_64).** The named
+`ISkinContainer::onMouseDown(int, int, int)` routine at `0x10086d662` walks its
+child vector in reverse order. At `0x10086d6d2` it reads the integer at child
+offset `0x38`, the field into which `ISkinObject::load` stores the parsed
+`clickthrough` value. A value greater than zero skips that child before its
+hit test or mouse-down handler runs. Otherwise, a successful hit test calls
+the child's virtual mouse-down handler. After the call, `-2` at the same field
+forces traversal to continue to the next child; for other values, a non-null
+handler return stops traversal. `CSkinButton::onMouseDown` normally returns its
+own pointer after handling the action, so a default button stops the walk.
+
+This explains the three observed states in the build-9598 deck-skin fixture:
+`yes`/`true` is skipped, `pass` handles the current child and continues, and
+the default handles the current child and stops. It also explains why `pass`
+on only the top of a three-button stack reaches the middle but not the bottom.
+The explanation is an inference across builds; the [live fixture](../tests/Skins/clickthrough-probe/)
+is the evidence for build-9598 behavior. This trace covers mouse-down traversal,
+not every mouse button, drag, release, nested-container, or current-build path.
+
+Evidence: [`9246-container-mouse-down.asm`](../tests/build-history-2026-09-06/9246-container-mouse-down.asm),
+bounded by the next text symbol. `extract_build_history.py` names this routine
+as `container-mouse-down` for future historical extraction.
+
 ## A sampled compatibility history, not release-introduction dates
 
 The same sorted name/id/flags structure is readable in every installer. Exact
@@ -171,16 +196,11 @@ new build without a current observation.
 
 ### Immediate follow-ups: event delivery and group construction
 
-**Clickthrough event delivery.** Follow the field written by `ISkinObject::load`
-into its consumers, including `ISkinObject::onMouseDown(int, int, int)` and the
-container's event traversal. The `onMouseDown` method name is available on each named
-sample; on build 18.0.9246 (x86_64), `ISkinObject::onMouseDown` starts at
-`0x10015c2c4`. That is an entry point, not evidence that it alone implements
-pass-through. Recover the decisions for the boolean values and the `-2` sentinel,
-including whether they affect the object itself, traversal to siblings, or both.
-Then run the overlapping-button controls described above on the current app.
-A useful result would be an independently tested event-delivery matrix, with the
-historical branch explanation kept separate from the current runtime contract.
+**Clickthrough event delivery.** The build-9246 container mouse-down walk is
+traced above. Next, check whether the current build retains those branch
+decisions, and run the overlapping-button controls on that build. Mouse-up,
+drag, alternate mouse buttons, and nested-container propagation remain outside
+the historical trace.
 
 **Group attribute handling.** Follow the alternate paths in `loadChildren` through
 `ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)`, whose named entry

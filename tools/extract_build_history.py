@@ -24,6 +24,7 @@ TARGETS = {
     'object-load': ('__ZN11ISkinObject4loadEP8CXMLNodeP6CImage',),
     'panel-constructor': ('__ZN10CSkinPanelC2EP8CXMLNodeP6CImageP11CSkinWindow',),
     'panel-children': ('__ZN10CSkinPanel12loadChildrenEP8CXMLNodeP6CImageP11CSkinWindow',),
+    'container-mouse-down': ('__ZN14ISkinContainer11onMouseDownEiii',),
     'bool-param': ('__ZNK8CXMLNode12getBoolParamENSt3__117basic_string_viewIcNS0_11char_traitsIcEEEEb',
                    '__ZNK8CXMLNode14getBoolParamNSEPKcib'),
 }
