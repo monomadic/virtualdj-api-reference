@@ -200,9 +200,10 @@ new build without a current observation.
 traced above. The build-9644 arm64 trace now retains the same branch decisions
 ([capture and interpretation](Skin%20Schema%20Recovery.md#clickthrough-loader-and-mouse-down-traversal--build-1809644)).
 The overlapping-button controls and wrapper variants were then run on that
-build ([live capture](../tests/Skins/clickthrough-probe/result-9644.json)). Mouse-up,
-drag, alternate mouse buttons, and nested-container propagation remain outside
-the historical trace.
+build ([live capture](../tests/Skins/clickthrough-probe/result-9644.json)).
+The subsequent [named/current release trace](Skin%20Schema%20Recovery.md#press-target-and-release-path)
+follows `CSkinEngine::onMouseUp`; live release/drag behavior, alternate mouse
+buttons, and broader nested-container propagation remain unresolved.
 
 **Group attribute handling.** Follow the alternate paths in `loadChildren` through
 `ISkinObject::createSkinObject(CXMLNode*, CImage*, CSkinWindow*)`, whose named entry

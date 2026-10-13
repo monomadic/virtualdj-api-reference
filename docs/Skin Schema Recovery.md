@@ -436,8 +436,41 @@ retained in the capture.
   order and calls child slot 14. Neither reads `0x38`.
 
 These handlers do not duplicate the mouse-down `clickthrough` branches.
-Current engine call paths and a live release/drag fixture are still needed to
-establish release and drag behavior.
+The engine's release path is traced below; a live release/drag fixture is still
+needed to establish behavior.
+
+### Press target and release path
+
+The [named 9246 / current 9644 capture](../tests/clickthrough-release-9644.json)
+starts from the symbol-rich arm64 `CSkinEngine::onMouseDown` and
+`CSkinEngine::onMouseUp`, then selects unique current functions by a guarded
+instruction signature. The historical names are direct symbols; the 9644
+identities are **Tier 2 cross-build matches**. This capture supersedes the
+earlier uncertainty about *which* current routine handles release.
+
+For the ordinary mouse path on 9644, `CSkinEngine::onMouseDown` at
+`0x1005262b4` invokes the window's virtual mouse-down slot (`0x40`), keeps
+its returned object pointer, and writes that pointer and the window into a
+press record at `0x100526490`. The record is keyed by the two event ids carried
+in `x5` and `x6`. The container's `pass` walk can run several hit handlers,
+but returns one object pointer to this engine path.
+
+At `0x100526838`, the matched `CSkinEngine::onMouseUp` scans those press
+records for the same event ids, loads the saved object pointer, clears the
+record, and calls that object's vtable slot `0x48` at `0x100526b88`–
+`0x100526b9c`. The named historical slot is `onMouseUp`; the current
+`CSkinButton` slot at `0x1004eb940` is separately matched to the historical named
+`CSkinButton::onMouseUp`. This ordinary path does not rewalk the overlapping
+children or read their `clickthrough` fields at release. It can update the
+record's stored release coordinates.
+
+The same engine method has a **separate touch-record path** at its start:
+it looks up an object at the release coordinates and calls a different virtual
+slot (`0x18`) on that object. That branch is not evidence that ordinary mouse
+release retargets by position. The binary trace establishes the dispatch
+structure, not a live statement about which element's release action fires
+after dragging or after a `pass` press. A live fixture with a release-visible
+control is still needed for that behavior.
 
 The original capture left the shape helper unresolved: it can substitute another node before reading `color`, `shape`,
 `border_size` and related fields. Its unresolved return path remains visible in the original capture beside
