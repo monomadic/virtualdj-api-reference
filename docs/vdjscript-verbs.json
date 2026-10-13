@@ -15,11 +15,11 @@
    "by_test_status": {
     "Fail": 6,
     "Partial": 41,
-    "Pass": 123,
-    "Untested": 865
+    "Pass": 125,
+    "Untested": 863
    },
    "documented": 772,
-   "tested_pass": 123,
+   "tested_pass": 125,
    "needs_test": 20,
    "blocked": 28,
    "active_incomplete": 3
@@ -6373,15 +6373,17 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
     "Source module (bundle 18.0.9246 STABS): ACTION_get_firstbeat is compiled in action_get.cpp, a module graded mixed, its 23 already-sectioned verbs (Hidden Button Editor excluded) are 73% 'Get (Query Actions)'; that majority is applied as the best available grouping. Vendor build metadata about where the code lives (Tier 2) — it groups the verb, and says nothing about whether it works.",
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_firstbeat implements onQuery only -> Query; HTTP sweep classed it 'false-here'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_get_firstbeat implements onQuery only -> Query; HTTP sweep classed it 'false-here'.",
+    "HTTP local test 2026-10-14, build 18.0.9644: on three copies of one 135 BPM track that starts on a beat at 0 s, 'deck 1 get_firstbeat' returned 28444.88 = Scan/@Phase (the analysis anchor, bar 1) in milliseconds, not the first beat of the file; unaffected by SERATO_BEATGRID or BPM tags in the file (Application Internals, Serato tags in FLAC)"
    ],
    "section": "Beatgrid & BPM",
-   "kind": "Query"
+   "kind": "Query",
+   "confidence": "local_test"
   },
   "get_firstbeat_local": {
    "name": "get_firstbeat_local",
@@ -10436,16 +10438,18 @@
    "official": true,
    "aliases": [],
    "surfaces": [],
-   "test_status": "Untested",
+   "test_status": "Pass",
    "needs_test": false,
    "blocked": false,
    "evidence": [
-    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_loop_load implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'."
+    "Kind from the vtable override matrix (tests/action-contracts.json, build 18.0.9598): ACTION_loop_load implements onExecute and onQuery -> Dual; HTTP sweep classed it 'query'.",
+    "HTTP local test 2026-10-14, build 18.0.9644: as a query, 'deck 2 loop_load N' answers on/off for whether saved-loop slot N holds a loop (on for 1-8, off for 9 on a file whose SERATO_MARKERS_V2 tag carried 8 loops; off on a file without); executing 'deck 2 loop_load 3' on a stopped deck jumped to the loop start (0:28.4) and set a 42667 ms loop (get_loop), the slot's exact length; 'loop_load \"NAME\"' as a query returned off for names that exist"
    ],
    "section": "Loops",
    "description": "Load saved loop",
    "example": "loop_load 1",
-   "kind": "Dual"
+   "kind": "Dual",
+   "confidence": "local_test"
   },
   "loop_load_prepare": {
    "name": "loop_load_prepare",

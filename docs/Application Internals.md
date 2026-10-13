@@ -605,15 +605,34 @@ date -r 1767225600 '+%Y-%m-%d %H:%M:%S %Z'
 
 ### Scan
 
-`<Scan>` stores analysis output such as:
+`<Scan>` stores analysis output. A steady track, as written by build 18.0.9644 (`Version="801"`),
+observed 2026-10-14:
 
-- `Version`
-- `Bpm`
-- `Volume`
-- `Key`
-- `Flag`
+```xml
+<Scan Version="801" Bpm="0.444444" Phase="28.444876" AltBpm="0.333333" Volume="1.718810" Key="G"
+      AudioSig="iXWot7ZzqKiI867Wd_Ag0_kF" Flag="32768" />
+```
 
-Treat `Scan/@Flag` as an unknown bit field unless a specific value has been verified.
+- `Bpm` is the **beat period in seconds**, not a BPM: 0.444444 s is 135 BPM (`60 / Bpm`). `Tags/@Bpm`
+  repeats it. `AltBpm` is the alternative period (3/4 of it here).
+- `Phase` is the time in seconds of one beat, from which the constant grid is laid; on the tracks
+  checked it sat on the first downbeat the analysis chose (bar 1), 28.44 s into a track that starts
+  on a beat at 0.
+- `Key` is a plain note name (`G`, `C#`). `AudioSig` is an audio fingerprint. `Flag` is an unknown bit
+  field unless a specific value has been verified.
+- A track whose tempo varies carries two more attributes: `Rigid` (the period a constant grid would
+  have) and `BeatGrid`, a string of segments:
+
+  ```text
+  BeatGrid="9482[0.061467:117,0.46878][54.9:7,0.46863][58.18:3][59.56:1][60.065:92][103.2:1,0.48963]…[139.5:7,0.46874,1/4]…[178.67:0,0.457085]"
+  ```
+
+  Each `[start:beats,period]` is a run of equal beats from `start` seconds; `period` is omitted when
+  unchanged; an occasional third field such as `1/4` appears. The leading number and the third field
+  are not understood. On the local database (3,341 songs, 2026-10-14) 181 of 2,180 scanned songs had
+  one, the longest about 5 KB. In `Poi`, the older `Type="beatgrid"` form stores a BPM, not a period.
+
+Source: `Local observation` (build 18.0.9644, `~/Library/Application Support/VirtualDJ/database.xml`)
 
 ### Comment
 
@@ -664,9 +683,11 @@ Common forms:
 
 Observed interpretation:
 
-- `Pos` is seconds.
-- cue `Num` is the cue number.
-- loop `Size` is in beats.
+- `Pos` is seconds, and is omitted when it is 0 (a cue at the very start has no `Pos`).
+- cue `Num` is the cue number, 1-based. There is no small limit: a file whose tags carried 255 cues
+  was imported with all 255 `Poi` rows (build 18.0.9644, 2026-10-14; see *Serato tags in FLAC* below).
+- loop `Size` is in beats. Loops imported from file tags are written with `Seconds` (length) and
+  `Slot` instead, and `Num="-1"`: `<Poi Pos="28.4440" Num="-1" Type="loop" Seconds="42.6670" Slot="3" />`.
 - `Color` is a decimal ARGB-like integer. For example, red is commonly `4294901760`, which is `0xFFFF0000`.
 
 Convert decimal color to hex:
@@ -707,10 +728,37 @@ Source: `Official`, `Local observation`, `Inference`
 If the goal is "drop new tracks into a folder and have Hot Cues appear on pads with no manual VirtualDJ work," one of these steps has to happen before performance time:
 
 - Write recognized cue/hotcue metadata into the media file tags before VirtualDJ first indexes the file, then leave `getCuesFromTags` at its default "for new files" behavior or set it to `always` for a tag-authoritative workflow.
-- Use a library-conversion tool, tag editor, or custom script that understands the Serato/Traktor/Rekordbox-style cue metadata you want to feed VirtualDJ. The exact tag-frame grammar is not mapped in this repo yet.
+- Use a library-conversion tool, tag editor, or custom script that understands the Serato/Traktor/Rekordbox-style cue metadata you want to feed VirtualDJ. For FLAC, the Serato Vorbis comments are tested below: cues, saved loops and the key import; the beat grid and BPM do not.
 - Generate or update VirtualDJ `database.xml` cue POIs directly after VirtualDJ has created the `<Song>` rows. This is the most controllable path for custom auto-cue algorithms, but it is also the path that needs the strict backup/validation rules from this file.
 
 Source: `Official`, `Official forum`, `Local observation`, `Inference`
+
+### Serato tags in FLAC: what VirtualDJ imports
+
+`Local test`, build 18.0.9644 (macOS, VirtualDJ 2026), 2026-10-14, over the HTTP control interface.
+Options at the time: `getCuesFromTags` = `always`, `useKeyFromTag` = `Yes`, `getTagsAuto` = `Yes`,
+`setTagsAuto` = `No`. Every file was a fresh copy of one 135 BPM FLAC under a path VirtualDJ had never
+seen, with one Vorbis comment altered, loaded with `deck 1 load "<absolute path>"` and read back with
+`get_bpm`, `get_firstbeat`, `get_key`, `cue_name N`, `cue_pos N 'absolute'`, `loop_load N` (as a query)
+and, after `loop_load 3`, `get_loop`. The tag layouts are Serato DJ's, as documented by the
+[triseratops](https://holzhaus.github.io/triseratops/triseratops/) project: a base64 envelope of
+`application/octet-stream\0\0<name>\0<data>`.
+
+| Vorbis comment | Content tried | Deck showed | Verdict |
+| --- | --- | --- | --- |
+| `SERATO_MARKERS_V2` `CUE` entries | 8 named, coloured cues | all 8, names and positions exact | imported |
+| same | 16, 64 and 255 cues (one per beat) | every cue present and in place; `cue_name 256` → `N/A`; all 255 in `database.xml` | imported; the limit is the format's one-byte slot, not VirtualDJ |
+| `SERATO_MARKERS_V2` `LOOP` entries | 8 named saved loops | `loop_load 1..8` → `on`, `loop_load 9` → `off`; `loop_load 3` set a 42,667 ms loop at 28.4 s, the loop's exact length; a file without the tag has no slots | imported (into `Poi Type="loop"` with `Seconds` and `Slot`; the loop names were not seen in the UI query) |
+| `INITIALKEY=Am` (track is G minor) | wrong on purpose | `get_key` → `08A` | imported |
+| `INITIALKEY=6A` | Camelot | `06A` | imported |
+| `INITIALKEY=11M` | Open Key | `09B`, VirtualDJ's own analysis (which hears G major) | not understood |
+| `SERATO_BEATGRID` | one marker: 133.33 BPM from 0.222 s (the track is 135 from 0.000); `SERATO_AUTOGAIN` tempo set to match | `get_bpm` → `135`, `get_firstbeat` → `28444.88`, same as an untouched copy | ignored |
+| `BPM=131.00` | plain comment | `135`, same grid | ignored |
+
+So from file tags VirtualDJ takes cues, saved loops and the key; tempo and grid always come from its
+own analysis and live in `Scan/@Bpm` and `Scan/@Phase`. A beat grid can only be given to VirtualDJ
+through `database.xml`, which has not been attempted (see *Editing database.xml*). `get_firstbeat`
+returned the `Scan/@Phase` value in milliseconds, not the first beat of the file.
 
 ### Realistic No-Manual-Touch Workflow On macOS
 
@@ -1697,6 +1745,9 @@ Known unknown:
 - `extra.db lyrics.lid`: packed Chromaprint statistics and count recovered (see Lyrics Cache);
   end-to-end audio preprocessing equivalence and current-build lyric insertion/rendering remain unverified.
 - Full `Song/@Flag`, `Tags/@Flag`, and `Scan/@Flag` bit maps.
+- `Scan/@BeatGrid`: the leading number and the occasional third segment field (`1/4`); whether
+  VirtualDJ re-reads a `Scan` edited by hand or re-analyses (what `Scan/@Flag` and
+  `Infos/@LastModified` trigger).
 - `Cache/cache2.db`, `Cache/cache3.db`, `Cache/cache4.db`, and `Cache/fft`.
 - Complete `.vdjsample` structure.
 - Whether prepared `.vdjstems` sidecar metadata has fields beyond stream titles that matter to every VirtualDJ version.
@@ -1723,4 +1774,5 @@ Known unknown:
 - [VDJPedia: Lists](https://de.virtualdj.com/wiki/Lists.html) - `Official`
 - [Matroska stem files Internet-Draft](https://www.ietf.org/archive/id/draft-swhited-mka-stems-06.html) - `External`
 - Local files under `~/Library/Application Support/VirtualDJ` - `Local observation`
+- [triseratops: Serato tag layouts and supported file types](https://holzhaus.github.io/triseratops/triseratops/) - `External`
 - Local app bundle under `/Applications/VirtualDJ.app` - `Local observation`
