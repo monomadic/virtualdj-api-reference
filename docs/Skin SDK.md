@@ -267,6 +267,15 @@ Fixture: [tests/Skins/clickthrough-probe/](../tests/Skins/clickthrough-probe/)
 (seven generated deck skins, one attribute apart, with a calibration variant,
 both a nonsense-value and a nonsense-attribute control, and the two boolean forms).
 
+**Current-build check:** A focused run on build 18.0.9644 (arm64, 2026-10-13)
+reproduced the absent, `pass`, `yes`, unknown-value, unknown-attribute,
+three-layer, panel, visible-group, and plain-group cases above. Exact fixture
+variants and HTTP counter readbacks are in the
+[run capture](../tests/Skins/clickthrough-probe/result-9644.json); the matching
+[binary dispatch capture](../tests/clickthrough-dispatch-9644.json) is structural
+evidence for the reader and mouse-down walk. The live run did not repeat every
+spelling and wrapper variant from the earlier build.
+
 ### `<mousecircle>` and `r`
 
 **Source: Local test** (2026-09-07, build 18.0.9598, deck-skin surface). `r`

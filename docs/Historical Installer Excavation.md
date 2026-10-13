@@ -197,8 +197,10 @@ new build without a current observation.
 ### Immediate follow-ups: event delivery and group construction
 
 **Clickthrough event delivery.** The build-9246 container mouse-down walk is
-traced above. Next, check whether the current build retains those branch
-decisions, and run the overlapping-button controls on that build. Mouse-up,
+traced above. The build-9644 arm64 trace now retains the same branch decisions
+([capture and interpretation](Skin%20Schema%20Recovery.md#clickthrough-loader-and-mouse-down-traversal--build-1809644)).
+The overlapping-button controls and wrapper variants were then run on that
+build ([live capture](../tests/Skins/clickthrough-probe/result-9644.json)). Mouse-up,
 drag, alternate mouse buttons, and nested-container propagation remain outside
 the historical trace.
 

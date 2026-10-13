@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-13",
+  "build": "18.0.9644",
+  "arch": "arm64",
+  "channel": "VirtualDJ desktop UI click plus HTTP control interface readback",
+  "fixture_generator": "tests/Skins/clickthrough-probe/generate.py",
+  "context": {
+    "skin_before_and_after": "DeathDisco Grave Raver v1/:skin",
+    "deck_1_play_before_and_after": "no",
+    "deck_2_play_before_and_after": "no",
+    "test_skin_prefix": "ZZ Clickthrough",
+    "click_screen_xy": [
+      1430,
+      820
+    ],
+    "screen_pixels": [
+      2880,
+      1800
+    ]
+  },
+  "procedure": {
+    "before_each_variant": [
+      "just vdj-execute \"set '$ct_top' 0\"",
+      "just vdj-execute \"set '$ct_mid' 0\"",
+      "just vdj-execute \"set '$ct_bottom' 0\"",
+      "just vdj-execute \"load_skin 'ZZ Clickthrough <variant>/:skin'\""
+    ],
+    "action": "Observe variant title and overlapping button in VirtualDJ; click screen point [1430,820] once with CUA.",
+    "after_each_variant": [
+      "just vdj-query \"get_var '$ct_top'\"",
+      "just vdj-query \"get_var '$ct_mid'\"",
+      "just vdj-query \"get_var '$ct_bottom'\""
+    ]
+  },
+  "results": [
+    {
+      "variant": "baseline",
+      "skin_xml_sha256": "6ac1f1897168b3bb5408ae9b1eb3998352e75e82329cfdbb70945c609b624608",
+      "top": 1,
+      "mid": 0,
+      "bottom": 0
+    },
+    {
+      "variant": "visible-off",
+      "skin_xml_sha256": "61351bf74a672e37140ea9b05445b2af260720aa7d80f2496efcb4bf26db75fd",
+      "top": 0,
+      "mid": 0,
+      "bottom": 1
+    },
+    {
+      "variant": "pass",
+      "skin_xml_sha256": "02b58c13b973ef04d6243d87255f2691a25658c5233208225c9c580582566089",
+      "top": 1,
+      "mid": 0,
+      "bottom": 1
+    },
+    {
+      "variant": "yes",
+      "skin_xml_sha256": "71bfc00e85809725abff6f0084dd466359c2ec1cf71feef3aef99c4a6da35efd",
+      "top": 0,
+      "mid": 0,
+      "bottom": 1
+    },
+    {
+      "variant": "value-control",
+      "skin_xml_sha256": "04327ab215ff7399ae8860eaf5368f668541a250cefbe9460053358512cc62a3",
+      "top": 1,
+      "mid": 0,
+      "bottom": 0
+    },
+    {
+      "variant": "attr-control",
+      "skin_xml_sha256": "c0773324a36986153c95940090e2085e1225fda2b1a5b48f85fd4f74d2ca098b",
+      "top": 1,
+      "mid": 0,
+      "bottom": 0
+    },
+    {
+      "variant": "3-top-pass",
+      "skin_xml_sha256": "0dc9a8629f1bb967882f000afcdb3a0de3340ea4a4b8852a7e2074f8816860bf",
+      "top": 1,
+      "mid": 1,
+      "bottom": 0
+    },
+    {
+      "variant": "3-both-pass",
+      "skin_xml_sha256": "8e4e92740d6623813725050f399ec66b5d0630f0cfebece72e8c2cbdc953f450",
+      "top": 1,
+      "mid": 1,
+      "bottom": 1
+    },
+    {
+      "variant": "group-pass",
+      "skin_xml_sha256": "675e92218b7a58d8d491909571d4a048087fea2f22e645e255cee2637a1b6f06",
+      "top": 1,
+      "mid": 0,
+      "bottom": 0
+    },
+    {
+      "variant": "group-vis-pass",
+      "skin_xml_sha256": "970aaa46e990cbb0b874c99aa56f4dc17cb084cef1d7098a5bc1dcf698030a5f",
+      "top": 1,
+      "mid": 0,
+      "bottom": 1
+    },
+    {
+      "variant": "panel-pass",
+      "skin_xml_sha256": "badff45917f5e57773a3fd7e2d4cd5456d3ec127fbeb2c87e472242259cb5700",
+      "top": 1,
+      "mid": 0,
+      "bottom": 1
+    }
+  ],
+  "screenshot_provenance": "CUA screenshots were observed in the active session but not retained as files. The repository screenshot helper failed with AppleScript error -2700 during window enumeration. The recorded result is the HTTP counter readback after the UI click; the screen observations establish fixture title and rendered target only within this session.",
+  "scope": "One click per variant on this build. Mouse-up, drag, alternate buttons, nested containers beyond these wrappers, and untested spelling variants are not covered.",
+  "cleanup": "Original skin restored and load_skin query verified; both decks queried paused; all ZZ Clickthrough installed skins removed."
+}

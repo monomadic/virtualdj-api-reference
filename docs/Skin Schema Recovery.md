@@ -373,6 +373,41 @@ These are positive structural paths, **not exclusive ownership or behavior
 claims**. In particular, the icon result does not disprove a direct button
 `sysicon` form elsewhere, or template forwarding of that name.
 
+## `clickthrough` loader and mouse-down traversal — build 18.0.9644
+
+The [bounded disassembly capture](../tests/clickthrough-dispatch-9644.json) follows
+the current arm64 image beyond attribute discovery. Its source hash, class
+vtable anchors, function bounds and instruction hashes are retained in the
+capture. This is **Tier 2** code-path evidence. A separate
+[live fixture run](../tests/Skins/clickthrough-probe/result-9644.json) tests
+the important branches on build 18.0.9644.
+
+The shared loader at `0x10039505c` checks for `clickthrough`, compares its
+value with `pass`, and stores `-2` at object offset `0x38` on that branch.
+Otherwise it calls the boolean accessor at `0x100456a14` with a false default
+and stores the result at the same offset. That accessor compares values with
+`yes`, `true`, `no` and `false` literals; the capture retains their reference
+sites. The loader and accessor paths account for the three field states used
+by the current mouse-down routine.
+
+`CSkinPanel` and `CSkinWindow` share vtable slot 8, the historical container
+mouse-down slot. In the current image it points to `0x100808b40`. This routine
+walks children in reverse order. A positive `clickthrough` field skips a child
+before hit testing. A hit child receives mouse-down; when its field is `-2`,
+the walk continues to the next child regardless of the handler return. For
+other states, a non-null handler return stops the walk. This matches the
+historical named routine and is consistent with the live button and three-layer
+results on build 18.0.9644. The code path alone does not establish every skin
+element's construction behavior.
+
+Reproduce with `PYTHONPATH=/path/to/capstone:tools .venv/bin/python3
+tools/capture_clickthrough_dispatch.py --check`. The extractor refuses a
+non-unique reader owner, field store, accessor call or shared container slot;
+it compares every retained instruction and hash with the capture. It does not
+trace mouse-up, drag, alternate buttons, or every nested container. In
+particular, it does not trace the plain-group construction split; the linked
+live run reproduces that split for the tested fixture.
+
 The original capture left the shape helper unresolved: it can substitute another node before reading `color`, `shape`,
 `border_size` and related fields. Its unresolved return path remains visible in the original capture beside
 known state-node paths; the current guarded model resolves the matching-sibling case. A class-only attribute union would erase that uncertainty.
