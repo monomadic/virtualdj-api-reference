@@ -38,12 +38,16 @@ The equivalent JSON (`.mcp.json` in a repo root, or `~/.claude.json` for a user-
 Claude Desktop uses the same shape in `claude_desktop_config.json`. Any other MCP client
 that speaks stdio takes the same command. `just mcp-serve` runs it by hand for debugging.
 
-The two tools that change the running app are each off until opted in, separately, so
-you can allow script execution without allowing restarts:
+`vdj_execute` is available by default. To restrict a client to read-only
+operations, set `VDJ_MCP_READ_ONLY=1`; this also disables start/restart.
+App start/restart remains separately opt-in when read-only mode is off:
 
 ```json
-"env": { "VDJ_MCP_EXECUTE": "1", "VDJ_MCP_RESTART": "1" }
+"env": { "VDJ_MCP_READ_ONLY": "1" }
 ```
+
+For a client that can start or restart VirtualDJ, use
+`"env": { "VDJ_MCP_RESTART": "1" }` instead.
 
 `VDJ_MCP_HTTP_BASE` overrides `http://localhost` if the network interface is on another host.
 
@@ -91,8 +95,8 @@ Live — these need VirtualDJ running (all but `vdj_screenshot` and `vdj_restart
 | --- | --- |
 | `vdj_up` | Reachability check; run before planning live-test work |
 | `vdj_query` | **Verify script.** Read-only, safe to sweep |
-| `vdj_execute` | Run an action. Opt-in and denylisted — see below |
-| `vdj_restart` | Quit and relaunch the app (launch arguments allowed); `status` is read-only. Opt-in — see below |
+| `vdj_execute` | Run an action. Enabled unless read-only mode is set; destructive verbs are denied — see below |
+| `vdj_restart` | Start the app if stopped, or quit and relaunch it (launch arguments allowed); `status` is read-only. Opt-in — see below |
 | `vdj_screenshot` | PNG of the VirtualDJ window (macOS), saved under `tests/screenshots/` and returned as an image; cite the path as evidence |
 
 ## Two things the tool descriptions enforce
@@ -111,8 +115,8 @@ record.
 
 ## Execute safety
 
-`vdj_execute` writes to a running application, so it is off unless the server starts with
-`VDJ_MCP_EXECUTE=1`. Even then it screens every identifier in the script — not just
+`vdj_execute` writes to a running application. Set `VDJ_MCP_READ_ONLY=1` to disable
+it for a client. It screens every identifier in the script — not just
 statement starts, so a verb hidden in a scope wrapper (`deck 2 system …`) is caught — and
 refuses destructive families: `system`, anything matching *delete* or *database*, `file_*`,
 destructive `browser_*` forms, settings writes, and `timecode_cd_mode`, which can be set
@@ -122,7 +126,8 @@ the safe direction to fail. This mirrors the allowlist discipline in
 
 ## Restart safety
 
-`vdj_restart` (`tools/vdj_restart.py`, `just vdj-restart`) is off unless the server starts
+`vdj_restart` (`tools/vdj_restart.py`, `just vdj-restart`) can also start a stopped app.
+Changing state is off in read-only mode and unless the server starts
 with `VDJ_MCP_RESTART=1`. It refuses while any deck is playing — only an explicit `no` from
 `deck N play` counts as stopped — and refuses when the HTTP interface is down, since playback
 then cannot be checked; `allow_playing` and `force` override those. It quits through an
@@ -137,7 +142,7 @@ because the Network Control listener occasionally does not open — see
 its four known-bad shapes, and checks that every tool is annotated and that the
 instructions name only real tools. It then starts the real server as a subprocess from a
 temp directory and talks to it over stdio — initialize, tools/list, a draft lint, an unknown
-tool, a malformed line, and both write tools without their opt-ins — which catches what
+tool, a malformed line, execute in read-only mode, and restart without its opt-in — which catches what
 in-process calls cannot: a stray print on stdout, a path that resolves only from the repo
 root, a framing bug. It runs inside `just check`, so a tool that stops working fails the
 repo's own gate rather than failing silently in a client.

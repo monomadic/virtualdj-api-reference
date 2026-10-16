@@ -12,9 +12,8 @@ frames only; everything else goes to stderr.
 Run:      python3 tools/mcp_server.py
 Register: see docs/MCP Server.md
 
-Executing script against a live instance is off by default. Set
-VDJ_MCP_EXECUTE=1 to enable `vdj_execute`; `vdj_query` is read-only and always
-available.
+`vdj_execute` is available by default; set VDJ_MCP_READ_ONLY=1 to disable
+actions. `vdj_query` is always read-only.
 """
 
 import json
@@ -58,10 +57,10 @@ forums are leads. Do not say a verb works unless its record is test_status=Pass
 or you verified it with vdj_query. Shipped files are the authority for XML format
 vocabulary only.
 
-Writes: vdj_execute runs actions on a live instance and vdj_restart quits and
-relaunches the app. Each is off unless the server was started with its opt-in
-(VDJ_MCP_EXECUTE=1, VDJ_MCP_RESTART=1); execute refuses destructive verbs and
-restart refuses while a deck plays. Use them only when the task asks for a change
+Writes: vdj_execute runs actions on a live instance unless VDJ_MCP_READ_ONLY=1;
+vdj_restart quits and relaunches the app only with VDJ_MCP_RESTART=1.
+Execute refuses destructive verbs and restart refuses while a deck plays.
+Use them only when the task asks for a change
 to the running app. If vdj_up stops answering mid-session, vdj_restart is the fix.
 """
 
@@ -317,11 +316,10 @@ def t_query(a):
 
 
 def t_execute(a):
-    if os.environ.get("VDJ_MCP_EXECUTE") != "1":
+    if os.environ.get("VDJ_MCP_READ_ONLY") == "1":
         raise ToolError(
-            "vdj_execute is disabled. It writes to a live VirtualDJ instance, so it "
-            "is opt-in: restart this server with VDJ_MCP_EXECUTE=1. Use vdj_query "
-            "for read-only probing, which needs no opt-in."
+            "vdj_execute is disabled by VDJ_MCP_READ_ONLY=1. Use vdj_query "
+            "for read-only probing."
         )
     script = a["script"]
     # Every identifier-ish token, not just statement starts: a denied verb can hide
@@ -342,6 +340,8 @@ def t_execute(a):
 def t_restart(a):
     if a.get("status"):
         return tool_script("vdj_restart.py", "--status")
+    if os.environ.get("VDJ_MCP_READ_ONLY") == "1":
+        raise ToolError("vdj_restart is disabled by VDJ_MCP_READ_ONLY=1. status remains available.")
     if os.environ.get("VDJ_MCP_RESTART") != "1":
         raise ToolError(
             "vdj_restart is disabled. It quits and relaunches VirtualDJ, so it is opt-in: "
@@ -720,8 +720,8 @@ TOOLS = [
         "name": "vdj_execute",
         "description": (
             "Run a VDJScript action against the live instance. WRITES TO A RUNNING APP — "
-            "disabled unless the server was started with VDJ_MCP_EXECUTE=1, and "
-            "destructive verb families are refused outright. Execute only verbs the "
+            "disabled when VDJ_MCP_READ_ONLY=1; destructive verb families are "
+            "refused outright. Execute only verbs the "
             "current task names. Prefer vdj_query, which proves existence and value "
             "without changing state."
         ),
@@ -873,7 +873,8 @@ def stdio_check(failures):
     ]
     stdin = "\n".join(json.dumps(r) for r in requests[:4]) + "\n{not json\n" + \
             "\n".join(json.dumps(r) for r in requests[4:]) + "\n"
-    env = {k: v for k, v in os.environ.items() if k not in ("VDJ_MCP_EXECUTE", "VDJ_MCP_RESTART")}
+    env = {k: v for k, v in os.environ.items() if k not in ("VDJ_MCP_READ_ONLY", "VDJ_MCP_RESTART")}
+    env["VDJ_MCP_READ_ONLY"] = "1"
     with tempfile.TemporaryDirectory() as tmp:
         try:
             proc = subprocess.run([PY, str(Path(__file__).resolve())], input=stdin, cwd=tmp, env=env,
@@ -901,13 +902,13 @@ def stdio_check(failures):
     if by_id[4].get("error", {}).get("code") != -32602:
         failures.append("stdio: unknown tool was not a -32602 error")
     if not by_id[5]["result"].get("isError") or "disabled" not in by_id[5]["result"]["content"][0]["text"]:
-        failures.append("stdio: vdj_execute ran without VDJ_MCP_EXECUTE=1")
+        failures.append("stdio: vdj_execute ran with VDJ_MCP_READ_ONLY=1")
     if by_id[6].get("result") != {}:
         failures.append("stdio: ping did not answer")
     if not by_id[7]["result"].get("isError") or "disabled" not in by_id[7]["result"]["content"][0]["text"]:
-        failures.append("stdio: vdj_restart ran without VDJ_MCP_RESTART=1")
+        failures.append("stdio: vdj_restart ran in read-only mode")
     print(f"  ok    stdio from a foreign cwd: {len(frames)} frames, bad JSON survived, "
-          "execute and restart refused without opt-in")
+          "read-only execute and unapproved restart refused")
 
 
 def live_check(failures):
@@ -1029,9 +1030,8 @@ def self_check(live=False):
         failures.append(f"vdj_lint mapper content missed a disproved verb: {out[:300]}")
     print("  ok    vdj_lint content: a pad draft and a mapper draft are linted as <content>")
 
-    # The execute gate must refuse, whether or not the opt-in is set.
+    # The destructive-verb gate must refuse with execution enabled.
     for script in ("system 'x'", "deck 2 system 'x'", "browser_delete", "timecode_cd_mode 1"):
-        os.environ["VDJ_MCP_EXECUTE"] = "1"
         try:
             t_execute({"script": script})
         except ToolError as e:
@@ -1039,8 +1039,6 @@ def self_check(live=False):
                 failures.append(f"execute gate wrong refusal for {script!r}: {e}")
         else:
             failures.append(f"execute gate did NOT refuse {script!r}")
-        finally:
-            os.environ.pop("VDJ_MCP_EXECUTE", None)
     print("  ok    execute denylist refuses system / scope-wrapped / browser_delete / timecode_cd_mode")
 
     stdio_check(failures)
@@ -1058,7 +1056,7 @@ def self_check(live=False):
 
 def main():
     log(f"serving {len(TOOLS)} tools from {REPO}"
-        f"{'' if os.environ.get('VDJ_MCP_EXECUTE') == '1' else ' (execute disabled)'}")
+        f"{' (execute disabled)' if os.environ.get('VDJ_MCP_READ_ONLY') == '1' else ''}")
     for line in sys.stdin:
         line = line.strip()
         if not line:

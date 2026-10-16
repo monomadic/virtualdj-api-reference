@@ -95,9 +95,10 @@ self-check does not establish that a particular ChatGPT connection works.
 Reference lookups and linting need no running VirtualDJ. Live queries require
 VirtualDJ's Network Control extension; use `just vdj-up` to check it and consult
 the [HTTP Control Interface](docs/HTTP%20Control%20Interface.md) for setup.
-Actions and app restarts are disabled by default and require separate server
-environment opt-ins, `VDJ_MCP_EXECUTE=1` and `VDJ_MCP_RESTART=1`; neither is needed
-for reference use.
+Actions are available by default; set `VDJ_MCP_READ_ONLY=1` to disable actions
+and app start/restart for a client. Start/restart otherwise requires
+`VDJ_MCP_RESTART=1`. Neither is needed for
+reference use.
 
 ## Where to start
 
